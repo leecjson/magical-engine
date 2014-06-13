@@ -12,6 +12,9 @@ MAG_IOS
 MAG_LINUX
 MAG_MAC
 */
+#ifdef _WIN32
+#define MAG_WIN32
+#endif
 
 #if defined( MAG_WIN32 ) && !defined( __cplusplus )
 #define inline __inline
