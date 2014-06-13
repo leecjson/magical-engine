@@ -25,4 +25,11 @@ static inline std::string&& magicalToString(float num, const char* format = "%f"
 	return std::move(std::string(buf));
 }
 
+static inline std::string&& magicalToString(double num, const char* format = "%d")
+{
+	char buf[128];
+	sprintf(buf, format, num);
+	return std::move(std::string(buf));
+}
+
 #endif //__UTILS_H__
