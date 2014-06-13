@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project1", "Project1\Project1.vcxproj", "{6C7263FD-F9D6-4974-9640-48DB23F81787}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "magical-renderer", "magical-renderer\magical-renderer.vcxproj", "{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "magical-common", "magical-common\magical-common.vcxproj", "{396D811B-7BF7-4C4F-85F2-71CC03D32A33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +11,14 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6C7263FD-F9D6-4974-9640-48DB23F81787}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6C7263FD-F9D6-4974-9640-48DB23F81787}.Debug|Win32.Build.0 = Debug|Win32
-		{6C7263FD-F9D6-4974-9640-48DB23F81787}.Release|Win32.ActiveCfg = Release|Win32
-		{6C7263FD-F9D6-4974-9640-48DB23F81787}.Release|Win32.Build.0 = Release|Win32
+		{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}.Debug|Win32.Build.0 = Debug|Win32
+		{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}.Release|Win32.ActiveCfg = Release|Win32
+		{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}.Release|Win32.Build.0 = Release|Win32
+		{396D811B-7BF7-4C4F-85F2-71CC03D32A33}.Debug|Win32.ActiveCfg = Debug|Win32
+		{396D811B-7BF7-4C4F-85F2-71CC03D32A33}.Debug|Win32.Build.0 = Debug|Win32
+		{396D811B-7BF7-4C4F-85F2-71CC03D32A33}.Release|Win32.ActiveCfg = Release|Win32
+		{396D811B-7BF7-4C4F-85F2-71CC03D32A33}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

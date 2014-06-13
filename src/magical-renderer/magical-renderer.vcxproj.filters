@@ -4,5 +4,8 @@
     <Filter Include="src">
       <UniqueIdentifier>{891fbd9c-af4f-4d21-8a24-6782c45c9df9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\context">
+      <UniqueIdentifier>{f67a91fd-2128-45dc-ac18-52664bf61606}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

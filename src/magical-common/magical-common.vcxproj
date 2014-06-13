@@ -43,6 +43,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)/magical-common/src;$(SolutionDir)/magical-common/src/common;$(SolutionDir)/magical-common/src/utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -62,6 +63,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\common\Object.h" />
+    <ClInclude Include="src\PlatformMacros.h" />
+    <ClInclude Include="src\utils\Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\common\Object.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
