@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+﻿/******************************************************************************
 The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
@@ -21,24 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "PlatformMacros.h"
-#include "Object.h"
-#include "Utils.h"
+#ifndef __UTILS_H__
+#define __UTILS_H__
 
-Object::Object()
-: _reference_count(0)
+#include <string>
+#include <memory>
+#include <iostream>
+
+template< class _Type >
+const std::string magicalToString(const char* format, _Type param)
 {
-
+	char buf[128];
+	sprintf(buf, format, param);
+	return std::move(std::string(buf));
 }
 
-Object::~Object()
-{
-
-}
-
-std::string&& Object::toString() const
-{
-	std::string info;
-
-	return std::move(info);
-}
+#endif //__UTILS_H__
