@@ -21,18 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef __DIRECTOR_H__
+#define __DIRECTOR_H__
 
-#include <string>
-#include <memory>
+#include "PlatformMacros.h"
+#include "Geometry.h"
 
-template< class Type >
-inline std::string magicalToString(const char* format, Type param)
+class _Director
 {
-	char buf[128];
-	sprintf(buf, format, param);
-	return std::move(std::string(buf));
-}
+public:
+	const Vec2& magicalGetWinSize() const;
 
-#endif //__UTILS_H__
+public:
+	void magicalSetupSystems( void );
+	void shutdownSystems( void );
+	void setWinSize( float width, float height );
+
+public:
+	_Director();
+	~_Director();
+
+private:
+	Vec2 s_win_size;
+};
+
+extern _Director s_director;
+
+
+#endif //__DIRECTOR_H__

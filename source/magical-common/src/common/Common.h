@@ -21,18 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef __COMMON_H__
+#define __COMMON_H__
 
-#include <string>
-#include <memory>
+#include <assert.h>
+#include "GLFunction.h"
 
-template< class Type >
-inline std::string magicalToString(const char* format, Type param)
-{
-	char buf[128];
-	sprintf(buf, format, param);
-	return std::move(std::string(buf));
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+MAGAPI int  maigcalIsError( void );
+MAGAPI void magicalIgnoreLastError( void );
+MAGAPI const char* magicalSetLastErrorInfo( const char* info );
+MAGAPI const char* magicalGetLastErrorInfo( void );
+
+#ifdef __cplusplus
 }
+#endif
 
-#endif //__UTILS_H__
+#endif //__COMMON_H__

@@ -21,18 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef __VEC2_H__
+#define __VEC2_H__
 
-#include <string>
-#include <memory>
-
-template< class Type >
-inline std::string magicalToString(const char* format, Type param)
+struct Vec2
 {
-	char buf[128];
-	sprintf(buf, format, param);
-	return std::move(std::string(buf));
-}
+public:
+	Vec2();
+	Vec2(const Vec2& other);
+	Vec2(float x, float y);
+	Vec2& operator=(const Vec2& other);
 
-#endif //__UTILS_H__
+public:
+	float x;
+	float y;
+};
+
+//struct Size
+//{
+//public:
+//	Size();
+//	Size(const Size& other);
+//	Size(float w, float h);
+//	Size& operator=(const Size& other);
+//
+//public:
+//	float w;
+//	float h;
+//};
+
+#endif //__VEC2_H__

@@ -1,49 +1,10 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
 # Visual Studio
 *.sdf
 *.suo
 *.opensdf
-*.tlog
-*.log
-*.exe
-*.lib
-*.dll
-*.obj
-*.pdb
-*.aps
 *.vcproj.*.user
 *.vspscc
-*_i.c
-*.i
-*.icf
-*_p.c
-*.ncb
-*.tlb
-*.tlh
 *.bak
-*.cache
-*.ilk
 win32-debug/
 release-debug/
 ipch/

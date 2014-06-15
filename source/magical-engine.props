@@ -5,7 +5,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)magical-common\src;$(SolutionDir)magical-common\src\common;$(SolutionDir)magical-common\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)magical-common\src;$(SolutionDir)magical-common\src\include;$(SolutionDir)magical-common\src\common;$(SolutionDir)magical-common\src\utils;$(SolutionDir)magical-renderer\src;$(SolutionDir)magical-renderer\src\context;$(SolutionDir)magical-renderer\src\context\win32;$(SolutionDir)magical-renderer\src\renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>

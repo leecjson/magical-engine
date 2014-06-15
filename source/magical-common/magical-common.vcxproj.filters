@@ -10,6 +10,9 @@
     <Filter Include="src\utils">
       <UniqueIdentifier>{18039662-c427-4d1d-b682-8531ef6b8339}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\include">
+      <UniqueIdentifier>{33702693-6268-4caa-9994-357bc40a66e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common\Object.h">
@@ -21,9 +24,24 @@
     <ClInclude Include="src\PlatformMacros.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\MagicalEngine.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\common\Common.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\common\Geometry.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\common\Object.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\common\Common.c">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\common\Geometry.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
   </ItemGroup>

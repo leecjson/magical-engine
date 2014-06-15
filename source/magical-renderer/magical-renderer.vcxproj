@@ -10,6 +10,23 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\context\Application.h" />
+    <ClInclude Include="src\context\win32\glut\freeglut.h" />
+    <ClInclude Include="src\context\win32\glut\freeglut_ext.h" />
+    <ClInclude Include="src\context\win32\glut\freeglut_std.h" />
+    <ClInclude Include="src\context\win32\glut\glut.h" />
+    <ClInclude Include="src\context\win32\gl\glew.h" />
+    <ClInclude Include="src\context\win32\gl\glxew.h" />
+    <ClInclude Include="src\context\win32\gl\wglew.h" />
+    <ClInclude Include="src\Director.h" />
+    <ClInclude Include="src\renderer\GLFunction.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\context\Application.cpp" />
+    <ClCompile Include="src\Director.cpp" />
+    <ClCompile Include="src\renderer\GLFunction.c" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}</ProjectGuid>
     <RootNamespace>magicalrenderer</RootNamespace>
@@ -40,7 +57,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\win32-debug\libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\win32-debug\</OutDir>
     <TargetExt>.lib</TargetExt>
     <IntDir>win32-debug\</IntDir>
   </PropertyGroup>
@@ -49,6 +66,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
+      <PreprocessorDefinitions>FREEGLUT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -67,8 +85,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

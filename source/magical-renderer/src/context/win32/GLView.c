@@ -21,18 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#include "PlatformMacros.h"
+#include "Application.h"
 
-#include <string>
-#include <memory>
+/**
+win32 gl context
+*/
+#include "glut/glut.h"
 
-template< class Type >
-inline std::string magicalToString(const char* format, Type param)
-{
-	char buf[128];
-	sprintf(buf, format, param);
-	return std::move(std::string(buf));
-}
 
-#endif //__UTILS_H__

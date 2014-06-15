@@ -36,7 +36,7 @@ Object::~Object()
 
 }
 
-std::string&& Object::toString() const
+std::string Object::toString() const
 {
 	std::string info;
 

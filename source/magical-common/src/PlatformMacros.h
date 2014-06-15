@@ -54,15 +54,7 @@ MAG_MAC
 
 #if !defined( MAGAPI )
 #define MAGAPI extern
-#define MAGAPI_INLINE static inline
-#endif
-
-#if !defined( MAGGLOBAL )
-#define MAGGLOBAL
-#endif
-
-#if !defined( MAGCONST )
-#define MAGCONST static const
+#define MAGAPI_ENGINE extern
 #endif
 
 #endif //__PLATFORM_MACROS_H__

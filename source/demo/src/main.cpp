@@ -1,15 +1,8 @@
-#include <iostream>
-
-#include "PlatformMacros.h"
-#include "Object.h"
-#include "Utils.h"
-
+#include "MagicalEngine.h"
 using namespace std;
 
-
-int main()
+int main(int argc, char* argv[])
 {
-
-	getchar();
+	magicalRun();
 	return 0;
 }

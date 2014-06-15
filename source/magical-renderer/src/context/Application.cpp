@@ -23,18 +23,93 @@ SOFTWARE.
 *******************************************************************************/
 #include "PlatformMacros.h"
 #include "Application.h"
+#include "Common.h"
+#include "Director.h"
 
-Application::Application()
+#include "glut/glut.h"
+
+
+MAGAPI void magicalRun( void )
+{
+	GLint argc = 0;
+
+	// init custom window
+	glutInit(&argc, NULL);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitWindowSize(960, 640);
+	glutCreateWindow("Magical Engine");
+
+	// bind call function
+	glutReshapeFunc(magicalOnReshape);
+	glutDisplayFunc(magicalOnRender);
+
+	// setup gl context
+	if( magicalSetupGL() == false )
+	{
+		MessageBoxA(NULL, magicalGetLastErrorInfo(), "", MB_OK);
+		return;
+	}
+
+	s_director.setupSystems();
+
+	// engine begin
+	maigcalDirectorInit();
+	maigcalDirectorSetupSystems();
+
+	maigcalAssetsLoadTexture
+
+	magicalDirectorGetWinSize();
+
+	glutMainLoop();
+
+	EngineDirector.
+
+	// engine end
+	maigcalDirectorShutdownSystems();
+	maigcalDirectorDelc();
+
+	// shutdown gl context
+	magicalShutdownGL();
+}
+
+//MAGAPI void magicalApplicationInit( void )
+//{
+//	
+//}
+//
+//MAGAPI void magicalApplicationDelc( void )
+//{
+//	
+//}
+
+MAGAPI int magicalSetupGL( void )
+{
+	GLenum result;
+
+	result = glewInit();
+	if( result != GLEW_OK )
+	{
+		magicalSetLastErrorInfo("[magical-error-win32]: glew init error");
+		return false;
+	}
+
+	return true;
+}
+
+MAGAPI int magicalShutdownGL( void )
+{
+	return true;
+}
+
+MAGAPI void magicalOnReshape( int w, int h )
 {
 
 }
 
-Application::~Application()
+MAGAPI void magicalOnRender( void )
 {
-	
-}
 
-void Application::run()
-{
-	
+
+	glutSwapBuffers();
+	glutPostRedisplay();
 }

@@ -21,13 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#ifndef __APPLICATION_H__
+#define __APPLICATION_H__
+
+#include "PlatformMacros.h"
+#include "GLFunction.h"
 
 class Application
 {
 public:
-	Application();
-	~Application();
-
-	void run();
-
+	
 };
+
+MAGAPI void magicalRun( void );
+
+//MAGAPI void magicalApplicationInit( void );
+//MAGAPI void magicalApplicationDelc( void );
+MAGAPI int magicalSetupGL( void );
+MAGAPI int magicalShutdownGL( void );
+MAGAPI void magicalOnReshape( int w, int h );
+MAGAPI void magicalOnRender( void );
+
+
+#endif //__APPLICATION_H__

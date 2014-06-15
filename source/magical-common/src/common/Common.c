@@ -21,18 +21,48 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#include "PlatformMacros.h"
+#include "Common.h"
 
-#include <string>
-#include <memory>
+#include <stdlib.h>
+#include <string.h>
 
-template< class Type >
-inline std::string magicalToString(const char* format, Type param)
+int   s_last_error = false;
+char* s_last_error_info = NULL;
+
+MAGAPI int maigcalIsError( void )
 {
-	char buf[128];
-	sprintf(buf, format, param);
-	return std::move(std::string(buf));
+	return s_last_error;
 }
 
-#endif //__UTILS_H__
+MAGAPI void magicalIgnoreLastError( void )
+{
+	s_last_error = false;
+}
+
+MAGAPI const char* magicalSetLastErrorInfo( const char* info )
+{
+	if( s_last_error_info )
+	{
+		free(s_last_error_info);
+	}
+
+	s_last_error_info = (char*) malloc(strlen(info) + 1);
+	strcpy(s_last_error_info, info);
+
+	s_last_error = true;
+
+	return magicalGetLastErrorInfo();
+}
+
+MAGAPI const char* magicalGetLastErrorInfo( void )
+{
+	if( s_last_error_info )
+	{
+		return s_last_error_info;
+	}
+	else
+	{
+		return "none";
+	}
+}

@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
 The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
@@ -21,18 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef __MAGICAL_ENGINE_H__
+#define __MAGICAL_ENGINE_H__
 
-#include <string>
-#include <memory>
+#include "PlatformMacros.h"
 
-template< class Type >
-inline std::string magicalToString(const char* format, Type param)
-{
-	char buf[128];
-	sprintf(buf, format, param);
-	return std::move(std::string(buf));
-}
+/**
+magical common
+*/
+#include "Common.h"
+#include "Object.h"
+#include "Utils.h"
 
-#endif //__UTILS_H__
+/**
+magical renderer
+*/
+#include "Application.h"
+#include "GLFunction.h"
+
+#endif //__MAGICAL_ENGINE_H__

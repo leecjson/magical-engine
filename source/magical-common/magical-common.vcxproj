@@ -40,7 +40,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\win32-debug\libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\win32-debug\</OutDir>
     <TargetExt>.lib</TargetExt>
     <IntDir>win32-debug\</IntDir>
   </PropertyGroup>
@@ -55,6 +55,11 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-dependencies\win32\glut\*.*" "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-dependencies\win32\glew\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -70,11 +75,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\common\Common.h" />
+    <ClInclude Include="src\common\Geometry.h" />
     <ClInclude Include="src\common\Object.h" />
+    <ClInclude Include="src\include\MagicalEngine.h" />
     <ClInclude Include="src\PlatformMacros.h" />
     <ClInclude Include="src\utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\common\Common.c" />
+    <ClCompile Include="src\common\Geometry.cpp" />
     <ClCompile Include="src\common\Object.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
