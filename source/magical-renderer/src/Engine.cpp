@@ -27,22 +27,46 @@ SOFTWARE.
 #include "kazmath.h"
 #include "GL/matrix.h"
 #include "GL/mat4stack.h"
+#include "Common.h"
 
 static Vec2 s_win_size;
-
 static kmMat4 s_orthographic_projection2d;
+static timeval s_last_update_time;
+static float s_delta_time;
 
 
+static void magicalCalcDeltaTime( void )
+{
+	static struct timeval tv_now;
 
+	if( gettimeofday(&tv_now, nullptr) != 0 )
+	{
+		magicalSetLastErrorInfo("[magical-error]: gettimeofday error");
+		return;
+	}
+
+	s_delta_time = (tv_now.tv_sec - s_last_update_time.tv_sec) + (tv_now.tv_usec - s_last_update_time.tv_usec) / 1000000.0f;
+	s_delta_time = MAX(0, s_delta_time);
+
+	s_last_update_time = tv_now;
+}
 
 MAGAPI_USER const Vec2& magicalGetWinSize()
 {
 	return s_win_size;
 }
 
+MAGAPI_USER float magicalGetDeltaTime()
+{
+	return s_delta_time;
+}
+
 MAGAPI void magicalEngineInit( void )
 {
 	s_win_size = Vec2(0, 0);
+	s_delta_time = 0.0f;
+	
+	magicalGetCurrentTime(&s_last_update_time, nullptr);
 
 	magicalSetGLDefault();
 }
@@ -81,6 +105,8 @@ MAGAPI void magicalOnReshape( int w, int h )
 
 MAGAPI void magicalOnRender( void )
 {
+	magicalCalcDeltaTime();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	kmGLMatrixMode(KM_GL_PROJECTION);
@@ -104,6 +130,8 @@ MAGAPI void magicalOnRender( void )
 		kmGLPopMatrix();
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLPopMatrix();
+
+	
 }
 
 MAGAPI void magicalSetGLDefault( void )

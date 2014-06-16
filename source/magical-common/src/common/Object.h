@@ -31,7 +31,7 @@ class Object
 public:
 	Object();
 	virtual ~Object();
-	virtual std::string toString() const;
+	std::string toString() const;
 
 private:
 	int _reference_count;

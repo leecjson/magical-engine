@@ -90,7 +90,8 @@ MAGAPI bool magicalSetupGL( void )
 	result = glewInit();
 	if( result != GLEW_OK )
 	{
-		magicalSetLastErrorInfo("[magical-error-win32]: glew init error");
+		magicalSetLastErrorInfo("error-win32 glew init error");
+		magicalReport( magicalGetLastErrorInfo() );
 		return false;
 	}
 

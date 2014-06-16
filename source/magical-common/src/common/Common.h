@@ -24,17 +24,70 @@ SOFTWARE.
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#include <assert.h>
+#include "PlatformMacros.h"
 #include "GLFunction.h"
+
+#include <assert.h>
+
+#ifdef MAG_WIN32
+#include <WinSock2.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGAPI_USER int  maigcalIsError( void );
-MAGAPI_USER void magicalIgnoreLastError( void );
-MAGAPI_USER const char* magicalSetLastErrorInfo( const char* info );
-MAGAPI_USER const char* magicalGetLastErrorInfo( void );
+#ifndef MIN
+#define MIN(a,b) (((a) > (b)) ? (b) : (a))
+#endif
+#ifndef MAX
+#define MAX(a,b) (((a) < (b)) ? (b) : (a))
+#endif
+
+
+/*
+log
+*/
+#ifndef MAG_DEBUG
+#define magicalLog
+#else
+#define magicalLog( __str ) magicalLogImpl( __str )
+#endif
+MAGAPI_USER void magicalLogImpl( const char* str );
+
+/*
+report
+*/
+#ifndef MAG_DEBUG
+#define magicalReport
+#else
+#define magicalReport( __str ) magicalReportImpl( __str, __FUNCTION__, __LINE__ )
+#endif
+MAGAPI void magicalReportImpl( const char* str, const char* function, int line );
+
+/*
+general error signal
+*/
+MAGAPI int maigcalIsError( void );
+MAGAPI void magicalIgnoreLastError( void );
+MAGAPI const char* magicalSetLastErrorInfo( const char* info );
+MAGAPI const char* magicalGetLastErrorInfo( void );
+
+/*
+time function
+*/
+#ifdef MAG_WIN32
+extern int gettimeofday( struct timeval* tv, struct timezone* tz );
+#endif
+#define magicalGetCurrentTime( __tv, __tz ) gettimeofday( __tv, __tz )
+
+MAGAPI void magicalBeginTimer( void );
+MAGAPI float magicalEndTimer( void );
+
+
+
+
+
 
 #ifdef __cplusplus
 }

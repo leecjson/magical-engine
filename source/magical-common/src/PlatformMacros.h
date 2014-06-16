@@ -37,6 +37,7 @@ MAG_MAC
 */
 #ifdef _WIN32
 #define MAG_WIN32
+#define MAG_PLATFORM "win32"
 #endif
 
 #if defined( MAG_WIN32 ) && !defined( __cplusplus )

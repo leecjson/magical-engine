@@ -28,6 +28,7 @@ SOFTWARE.
 #include "Geometry.h"
 
 MAGAPI_USER const Vec2& magicalGetWinSize();
+MAGAPI_USER float magicalGetDeltaTime();
 
 MAGAPI void magicalEngineInit( void );
 MAGAPI void magicalEngineDelc( void );

@@ -24,11 +24,13 @@ SOFTWARE.
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
+#include "Object.h"
+
 #include <string>
 #include <memory>
 
 template< class Type >
-inline std::string magicalToString(const char* format, Type param)
+inline std::string magicalToString( const char* format, Type param )
 {
 	char buf[128];
 	sprintf(buf, format, param);

@@ -23,3 +23,23 @@ SOFTWARE.
 *******************************************************************************/
 #include "PlatformMacros.h"
 #include "Node.h"
+#include "kazmath.h"
+#include "GL/matrix.h"
+#include "GL/mat4stack.h"
+
+Node::Node()
+{
+
+}
+
+Node::~Node()
+{
+
+}
+
+void Node::onUpdate()
+{
+	kmGLPushMatrix();
+
+	kmGLPopMatrix();
+}

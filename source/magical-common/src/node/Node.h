@@ -24,6 +24,14 @@ SOFTWARE.
 #ifndef __NODE_H__
 #define __NODE_H__
 
+#include "Object.h"
 
+class Node : public Object
+{
+public:
+	Node();
+	virtual ~Node();
+	virtual void onUpdate();
+};
 
 #endif //__NODE_H__
