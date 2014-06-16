@@ -13,6 +13,15 @@
     <Filter Include="src\include">
       <UniqueIdentifier>{33702693-6268-4caa-9994-357bc40a66e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\kazmath">
+      <UniqueIdentifier>{53a86ce0-29c1-4dad-b677-6f0d3d0fd53d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\kazmath\GL">
+      <UniqueIdentifier>{0de3abd5-49aa-486a-90a3-41a3d6dc2ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\node">
+      <UniqueIdentifier>{b7c84fd9-5b91-4917-8083-37ecc9a27634}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common\Object.h">
@@ -33,6 +42,51 @@
     <ClInclude Include="src\common\Geometry.h">
       <Filter>src\common</Filter>
     </ClInclude>
+    <ClInclude Include="src\kazmath\aabb.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\kazmath.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\mat3.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\mat4.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\plane.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\quaternion.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\ray2.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\ray3.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\utility.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\vec2.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\vec3.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\vec4.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\GL\mat4stack.h">
+      <Filter>src\kazmath\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kazmath\GL\matrix.h">
+      <Filter>src\kazmath\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\node\Node.h">
+      <Filter>src\node</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\common\Object.cpp">
@@ -43,6 +97,48 @@
     </ClCompile>
     <ClCompile Include="src\common\Geometry.cpp">
       <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\aabb.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\mat3.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\mat4.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\plane.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\quaternion.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\ray2.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\ray3.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\utility.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\vec2.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\vec3.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\vec4.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\GL\mat4stack.c">
+      <Filter>src\kazmath\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kazmath\GL\matrix.c">
+      <Filter>src\kazmath\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\node\Node.cpp">
+      <Filter>src\node</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

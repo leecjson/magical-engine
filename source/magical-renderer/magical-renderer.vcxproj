@@ -19,12 +19,12 @@
     <ClInclude Include="src\context\win32\gl\glew.h" />
     <ClInclude Include="src\context\win32\gl\glxew.h" />
     <ClInclude Include="src\context\win32\gl\wglew.h" />
-    <ClInclude Include="src\Director.h" />
+    <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\renderer\GLFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\Application.cpp" />
-    <ClCompile Include="src\Director.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\renderer\GLFunction.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

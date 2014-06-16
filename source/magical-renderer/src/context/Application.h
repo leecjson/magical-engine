@@ -27,18 +27,10 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "GLFunction.h"
 
-class Application
-{
-public:
-	
-};
+MAGAPI_USER void magicalRun( void );
 
-MAGAPI void magicalRun( void );
-
-//MAGAPI void magicalApplicationInit( void );
-//MAGAPI void magicalApplicationDelc( void );
-MAGAPI int magicalSetupGL( void );
-MAGAPI int magicalShutdownGL( void );
+MAGAPI bool magicalSetupGL( void );
+MAGAPI bool magicalShutdownGL( void );
 MAGAPI void magicalOnReshape( int w, int h );
 MAGAPI void magicalOnRender( void );
 

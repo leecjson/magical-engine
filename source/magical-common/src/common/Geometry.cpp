@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "PlatformMacros.h"
-#include "Vec2.h"
+#include "Geometry.h"
 
 Vec2::Vec2()
 : x(0)

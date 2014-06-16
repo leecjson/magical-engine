@@ -21,40 +21,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __PLATFORM_MACROS_H__
-#define __PLATFORM_MACROS_H__
-
-/*
-MAG_DEBUG
-*/
-
-/*
-MAG_WIN32
-MAG_ANDROID
-MAG_IOS
-MAG_LINUX
-MAG_MAC
-*/
-#ifdef _WIN32
-#define MAG_WIN32
-#endif
-
-#if defined( MAG_WIN32 ) && !defined( __cplusplus )
-#define inline __inline
-#endif
-
-#if !defined( __cplusplus )
-#ifndef true
-#define true 1
-#endif
-#ifndef false
-#define false 0
-#endif
-#endif
-
-#if !defined( MAGAPI )
-#define MAGAPI extern
-#define MAGAPI_USER extern
-#endif
-
-#endif //__PLATFORM_MACROS_H__
+#include "PlatformMacros.h"
+#include "Node.h"

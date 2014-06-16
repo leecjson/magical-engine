@@ -30,17 +30,17 @@ SOFTWARE.
 int   s_last_error = false;
 char* s_last_error_info = NULL;
 
-MAGAPI int maigcalIsError( void )
+MAGAPI_USER int maigcalIsError( void )
 {
 	return s_last_error;
 }
 
-MAGAPI void magicalIgnoreLastError( void )
+MAGAPI_USER void magicalIgnoreLastError( void )
 {
 	s_last_error = false;
 }
 
-MAGAPI const char* magicalSetLastErrorInfo( const char* info )
+MAGAPI_USER const char* magicalSetLastErrorInfo( const char* info )
 {
 	if( s_last_error_info )
 	{
@@ -55,7 +55,7 @@ MAGAPI const char* magicalSetLastErrorInfo( const char* info )
 	return magicalGetLastErrorInfo();
 }
 
-MAGAPI const char* magicalGetLastErrorInfo( void )
+MAGAPI_USER const char* magicalGetLastErrorInfo( void )
 {
 	if( s_last_error_info )
 	{

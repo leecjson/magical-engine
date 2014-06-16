@@ -24,65 +24,66 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Application.h"
 #include "Common.h"
-#include "Director.h"
+#include "Engine.h"
 
 #include "glut/glut.h"
 
+static void magicalWin32GlutReshape( int w, int h )
+{
+	magicalOnReshape(w, h);
+}
 
-MAGAPI void magicalRun( void )
+static void magicalWin32GlutRender( void )
+{
+	magicalOnRender();
+
+	glutSwapBuffers();
+	glutPostRedisplay();
+}
+
+
+MAGAPI_USER void magicalRun( void )
 {
 	GLint argc = 0;
 
-	// init custom window
 	glutInit(&argc, NULL);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(960, 640);
 	glutCreateWindow("Magical Engine");
 
-	// bind call function
-	glutReshapeFunc(magicalOnReshape);
-	glutDisplayFunc(magicalOnRender);
+	glutReshapeFunc(magicalWin32GlutReshape);
+	glutDisplayFunc(magicalWin32GlutRender);
 
-	// setup gl context
 	if( magicalSetupGL() == false )
 	{
-		MessageBoxA(NULL, magicalGetLastErrorInfo(), "", MB_OK);
+		MessageBoxA(NULL, magicalGetLastErrorInfo(), "Error", MB_OK);
 		return;
 	}
 
-	s_director.setupSystems();
-
-	// engine begin
-	maigcalDirectorInit();
-	maigcalDirectorSetupSystems();
-
-	maigcalAssetsLoadTexture
-
-	magicalDirectorGetWinSize();
+	magicalEngineInit();
+	if( magicalSetupSystems() == false )
+	{
+		MessageBoxA(NULL, magicalGetLastErrorInfo(), "Error", MB_OK);
+		return;
+	}
 
 	glutMainLoop();
 
-	EngineDirector.
+	if( magicalShutdownSystems() == false )
+	{
+		MessageBoxA(NULL, magicalGetLastErrorInfo(), "Error", MB_OK);
+		return;
+	}
+	magicalEngineDelc();
 
-	// engine end
-	maigcalDirectorShutdownSystems();
-	maigcalDirectorDelc();
-
-	// shutdown gl context
-	magicalShutdownGL();
+	if( magicalShutdownGL() == false )
+	{
+		MessageBoxA(NULL, magicalGetLastErrorInfo(), "Error", MB_OK);
+		return;
+	}
 }
 
-//MAGAPI void magicalApplicationInit( void )
-//{
-//	
-//}
-//
-//MAGAPI void magicalApplicationDelc( void )
-//{
-//	
-//}
-
-MAGAPI int magicalSetupGL( void )
+MAGAPI bool magicalSetupGL( void )
 {
 	GLenum result;
 
@@ -96,20 +97,7 @@ MAGAPI int magicalSetupGL( void )
 	return true;
 }
 
-MAGAPI int magicalShutdownGL( void )
+MAGAPI bool magicalShutdownGL( void )
 {
 	return true;
-}
-
-MAGAPI void magicalOnReshape( int w, int h )
-{
-
-}
-
-MAGAPI void magicalOnRender( void )
-{
-
-
-	glutSwapBuffers();
-	glutPostRedisplay();
 }

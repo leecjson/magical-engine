@@ -21,31 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __DIRECTOR_H__
-#define __DIRECTOR_H__
+#ifndef __ENGINE_H__
+#define __ENGINE_H__
 
 #include "PlatformMacros.h"
 #include "Geometry.h"
 
-class _Director
-{
-public:
-	const Vec2& magicalGetWinSize() const;
+MAGAPI_USER const Vec2& magicalGetWinSize();
 
-public:
-	void magicalSetupSystems( void );
-	void shutdownSystems( void );
-	void setWinSize( float width, float height );
+MAGAPI void magicalEngineInit( void );
+MAGAPI void magicalEngineDelc( void );
+MAGAPI bool magicalSetupSystems( void );
+MAGAPI bool magicalShutdownSystems( void );
 
-public:
-	_Director();
-	~_Director();
+MAGAPI void magicalOnReshape( int w, int h );
+MAGAPI void magicalOnRender( void );
 
-private:
-	Vec2 s_win_size;
-};
-
-extern _Director s_director;
+MAGAPI void magicalSetGLDefault( void );
 
 
-#endif //__DIRECTOR_H__
+
+#endif //__ENGINE_H__

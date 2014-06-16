@@ -31,10 +31,10 @@ SOFTWARE.
 extern "C" {
 #endif
 
-MAGAPI int  maigcalIsError( void );
-MAGAPI void magicalIgnoreLastError( void );
-MAGAPI const char* magicalSetLastErrorInfo( const char* info );
-MAGAPI const char* magicalGetLastErrorInfo( void );
+MAGAPI_USER int  maigcalIsError( void );
+MAGAPI_USER void magicalIgnoreLastError( void );
+MAGAPI_USER const char* magicalSetLastErrorInfo( const char* info );
+MAGAPI_USER const char* magicalGetLastErrorInfo( void );
 
 #ifdef __cplusplus
 }

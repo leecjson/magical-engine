@@ -21,37 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "PlatformMacros.h"
-#include "Director.h"
+#ifndef __NODE_H__
+#define __NODE_H__
 
-_Director s_director;
 
-_Director::_Director()
-{
 
-}
-
-_Director::~_Director()
-{
-
-}
-
-const Vec2& _Director::getWinSize() const
-{
-	return s_win_size;
-}
-
-void _Director::setupSystems( void )
-{
-
-}
-
-void _Director::shutdownSystems( void )
-{
-
-}
-
-void _Director::setWinSize( float width, float height )
-{
-	
-}
+#endif //__NODE_H__
