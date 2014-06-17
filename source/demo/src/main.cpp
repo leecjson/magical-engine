@@ -1,4 +1,5 @@
-#include "MagicalEngine.h"
+﻿#include "MagicalEngine.h"
+#include "Common.h"
 using namespace std;
 
 int main(int argc, char* argv[])

@@ -126,6 +126,7 @@ MAGAPI void magicalOnRender( void )
 	kmGLPushMatrix();
 		kmGLMatrixMode(KM_GL_MODELVIEW);
 		kmGLPushMatrix();
+
 	
 		kmGLPopMatrix();
 	kmGLMatrixMode(KM_GL_PROJECTION);
