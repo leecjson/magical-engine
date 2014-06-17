@@ -28,6 +28,27 @@ SOFTWARE.
 
 #include "glut/glut.h"
 
+static bool magicalWin32SetupGL( void )
+{
+	GLenum result;
+
+	result = glewInit();
+	if( result != GLEW_OK )
+	{
+		magicalSetLastErrorInfo("error-win32 glew init error");
+		magicalReport( magicalGetLastErrorInfo() );
+		return false;
+	}
+
+	return true;
+}
+
+static bool magicalWin32ShutdownGL( void )
+{
+	return true;
+}
+
+
 static void magicalWin32GlutReshape( int w, int h )
 {
 	magicalOnReshape(w, h);
@@ -54,7 +75,7 @@ MAGAPI_USER void magicalRun( void )
 	glutReshapeFunc(magicalWin32GlutReshape);
 	glutDisplayFunc(magicalWin32GlutRender);
 
-	if( magicalSetupGL() == false )
+	if( magicalWin32SetupGL() == false )
 	{
 		MessageBoxA(NULL, magicalGetLastErrorInfo(), "Error", MB_OK);
 		return;
@@ -76,29 +97,10 @@ MAGAPI_USER void magicalRun( void )
 	}
 	magicalEngineDelc();
 
-	if( magicalShutdownGL() == false )
+	if( magicalWin32ShutdownGL() == false )
 	{
 		MessageBoxA(NULL, magicalGetLastErrorInfo(), "Error", MB_OK);
 		return;
 	}
 }
 
-MAGAPI bool magicalSetupGL( void )
-{
-	GLenum result;
-
-	result = glewInit();
-	if( result != GLEW_OK )
-	{
-		magicalSetLastErrorInfo("error-win32 glew init error");
-		magicalReport( magicalGetLastErrorInfo() );
-		return false;
-	}
-
-	return true;
-}
-
-MAGAPI bool magicalShutdownGL( void )
-{
-	return true;
-}

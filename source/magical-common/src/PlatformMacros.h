@@ -55,6 +55,8 @@ MAG_MAC
 
 #if !defined( MAGAPI )
 #define MAGAPI extern
+#endif
+#if !defined( MAGAPI_USER )
 #define MAGAPI_USER extern
 #endif
 

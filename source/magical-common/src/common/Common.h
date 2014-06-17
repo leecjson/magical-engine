@@ -25,12 +25,15 @@ SOFTWARE.
 #define __COMMON_H__
 
 #include "PlatformMacros.h"
-#include "GLFunction.h"
 
 /*
 std include
 */
 #include <assert.h>
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 /*
 platform include
@@ -54,14 +57,17 @@ general macros
 #endif
 
 /*
-log and report system
+log and report function
 */
 #ifndef MAG_DEBUG
 #define magicalLog
+#define magicalLogFormat
 #else
 #define magicalLog( __str ) magicalLogImpl( __str )
+#define magicalLogFormat( __format, ... ) magicalLogFormatImpl( __format, ##__VA_ARGS__)
 #endif
-MAGAPI_USER void magicalLogImpl( const char* __str );
+MAGAPI_USER void magicalLogImpl( const char* str );
+MAGAPI_USER void magicalLogFormatImpl( const char* format, ... );
 
 #ifndef MAG_DEBUG
 #define magicalReport
@@ -75,7 +81,7 @@ MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
 /*
 general error signal
 */
-MAGAPI int maigcalIsError( void );
+MAGAPI int magicalIsError( void );
 MAGAPI void magicalIgnoreLastError( void );
 MAGAPI const char* magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
@@ -86,7 +92,11 @@ time function
 #ifdef MAG_WIN32
 extern int gettimeofday( struct timeval* tv, struct timezone* tz );
 #endif
-MAGAPI_USER int magicalGetCurrentTime( struct timeval* tv, struct timezone* tz );
+MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
+MAGAPI_USER time_t magicalGetTime();
+MAGAPI_USER struct tm magicalLocalTime( time_t sec );
+MAGAPI_USER time_t magicalMakeTime( struct tm* t );
+MAGAPI_USER time_t magicalDiffTime( time_t t1, time_t t2 );
 
 MAGAPI void magicalBeginTimer( void );
 MAGAPI float magicalEndTimer( void );

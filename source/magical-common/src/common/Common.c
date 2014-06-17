@@ -24,96 +24,7 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-/*
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-	typedef struct _SYSTEMTIME {
-		WORD wYear;
-		WORD wMonth;
-		WORD wDayOfWeek;
-		WORD wDay;
-		WORD wHour;
-		WORD wMinute;
-		WORD wSecond;
-		WORD wMilliseconds;
-	} SYSTEMTIME;
-#endif
-
-/// time_t转SYSTEMTIME
-SYSTEMTIME Time_tToSystemTime(time_t t);
-/// SYSTEMTIME转time_t
-time_t SystemTimeToTime_t(const SYSTEMTIME& st);
-/// 获取格式时间
-string FormatTimeSecond(int time);
-/// 获取月份天数
-int GetDayth(int nYear, int nMonth);
-
-/// time_t转SYSTEMTIME
-SYSTEMTIME Time_tToSystemTime(time_t t)
-{
-	tm temptm = *localtime(&t);
-
-	SYSTEMTIME st = {1900 + temptm.tm_year, 
-		1 + temptm.tm_mon, 
-		temptm.tm_wday, 
-		temptm.tm_mday, 
-		temptm.tm_hour, 
-		temptm.tm_min, 
-		temptm.tm_sec, 
-		0};
-
-	return st;
-}
-
-/// SYSTEMTIME转time_t
-time_t SystemTimeToTime_t(const SYSTEMTIME& st)
-{
-	tm temptm = {st.wSecond, 
-		st.wMinute, 
-		st.wHour, 
-		st.wDay, 
-		st.wMonth - 1, 
-		st.wYear - 1900, 
-		st.wDayOfWeek, 
-		0, 
-		-1};
-
-	return mktime(&temptm);
-}
-
-/// 获取格式时间
-string FormatTimeSecond(int time)
-{
-	WORD wHour=0;WORD wMinute=0;WORD wSecond=0;
-	char strTemp[64] = "";
-
-	wHour = time/3600;
-	wMinute = (time - wHour * 3600) / 60;
-	wSecond = time%60;
-
-	sprintf(strTemp, "%02d:%02d:%02d", wHour, wMinute, wSecond);
-
-	return strTemp;
-}
-
-/// 获取月份天数
-int GetDayth(int nYear, int nMonth)
-{
-	if (((nMonth==2)&&(nYear%4==0)&&(nYear%100!=0))||((nMonth==2)&&(nYear%400==0)))
-		return 29;
-	else if(nMonth==2)
-		return 28;
-	else if((nMonth==1)||(nMonth==3)||(nMonth==5)||(nMonth==7)||(nMonth==8)||(nMonth==10)||(nMonth==12))
-		return 31;
-	else if(nMonth!=2)
-		return 30;
-}
-*/
-
-static const int kMaxLogLength = 1024 * 16;
+#define kMaxLogLength 1024 * 16
 
 static int s_last_error = false;
 static char* s_last_error_info = NULL;
@@ -128,15 +39,33 @@ MAGAPI_USER void magicalLogImpl( const char* str )
 #endif
 }
 
+MAGAPI_USER void magicalLogFormatImpl( const char* format, ... )
+{
+	char buf[kMaxLogLength];
+
+	va_list args;
+	va_start(args, format);
+	vsnprintf(buf, kMaxLogLength, format, args);
+	va_end(args);
+
+	magicalLogImpl(buf);
+}
+
 MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
 {
+	time_t now;
+	tm tm_now;
+
 	if( function && line > 0 )
 	{	
-		magicalGetCurrentTime(
+		now = magicalGetCurrentSecondTime();
+		tm = magicalFromSecondTime
 
-		char buf[kMaxLogLength];
+		//magicalGetCurrentTime(
+
+		/*char buf[kMaxLogLength];
 		sprintf(buf, "%s (%s:%d)", str, function, line);
-		magicalLog(buf);
+		magicalLog(buf);*/
 	}
 	else
 	{
@@ -144,7 +73,7 @@ MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
 	}
 }
 
-MAGAPI int maigcalIsError( void )
+MAGAPI int magicalIsError( void )
 {
 	return s_last_error;
 }
@@ -184,43 +113,72 @@ MAGAPI const char* magicalGetLastErrorInfo( void )
 #ifdef MAG_WIN32
 extern int gettimeofday( struct timeval* tv, struct timezone* tz )
 {
-	LARGE_INTEGER time;
-	LARGE_INTEGER freq;
-	if( tv )
+	LARGE_INTEGER time, freq;
+	if( tv != NULL )
     {
         QueryPerformanceFrequency( &freq );
         QueryPerformanceCounter( &time );
         tv->tv_sec  = (long)( time.QuadPart / freq.QuadPart );
         tv->tv_usec = (long)( time.QuadPart * 1000000.0 / freq.QuadPart - tv->tv_sec * 1000000.0 );
     }
-    return 0;
+	return 0;
 }
 #endif
 
-MAGAPI_USER int magicalGetCurrentTime( struct timeval* tv, struct timezone* tz )
+MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
 {
-	if( gettimeofday(tv, tz) != 0 )
+	if( gettimeofday(tv, tz) == false )
 	{
-		magicalSetLastErrorInfo("[magical-error]: gettimeofday error");
+		magicalSetLastErrorInfo("[magical-error]: magicalGetTimeOfDay error");
 		magicalReportLastError();
-		return false;
 	}
-	return true;
+}
+
+MAGAPI_USER time_t magicalGetCurrentSecondTime()
+{
+	time_t now;
+	time( &now );
+	return now;
+}
+
+/*MAGAPI_USER time_t magicalGetCurrentMillionsTime()
+{
+	struct timeval tv;
+	time_t t;
+
+	magicalGetTimeOfDay(&tv, NULL);
+	t = tv.tv_sec;  
+	t *= 1000;  
+	t += tv.tv_usec / 1000;  
+	return t; 
+}*/
+
+MAGAPI_USER struct tm magicalFromSecondTime( time_t now )
+{
+	return *(localtime(&now));
+}
+
+MAGAPI_USER time_t magicalToSecondTime( struct tm* now )
+{
+	return mktime(now);
+}
+
+MAGAPI_USER time_t magicalDiffTime( time_t t1, time_t t2 )
+{
+	return difftime(t1, t2);
 }
 
 MAGAPI void magicalBeginTimer( void )
 {
-	magicalGetCurrentTime(&s_tv_timer, NULL);
+	magicalGetTimeOfDay(&s_tv_timer, NULL);
 }
 
 MAGAPI float magicalEndTimer( void )
 {
-	static struct timeval tv_now;
+	struct timeval tv_now;
 	float  result;
 
-	if( magicalGetCurrentTime(&tv_now, NULL) == false )
-		return 0.0f;
-
+	magicalGetTimeOfDay(&tv_now, NULL);
 	result = (tv_now.tv_sec - s_tv_timer.tv_sec) + (tv_now.tv_usec - s_tv_timer.tv_usec) / 1000000.0f;
 	result = MAX(0.0f, result);
 

@@ -29,10 +29,5 @@ SOFTWARE.
 
 MAGAPI_USER void magicalRun( void );
 
-MAGAPI bool magicalSetupGL( void );
-MAGAPI bool magicalShutdownGL( void );
-MAGAPI void magicalOnReshape( int w, int h );
-MAGAPI void magicalOnRender( void );
-
 
 #endif //__APPLICATION_H__

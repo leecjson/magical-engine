@@ -28,6 +28,7 @@ SOFTWARE.
 #include "GL/matrix.h"
 #include "GL/mat4stack.h"
 #include "Common.h"
+#include "Utils.h"
 
 static Vec2 s_win_size;
 static kmMat4 s_orthographic_projection2d;
@@ -37,14 +38,9 @@ static float s_delta_time;
 
 static void magicalCalcDeltaTime( void )
 {
-	static struct timeval tv_now;
+	struct timeval tv_now;
 
-	if( gettimeofday(&tv_now, nullptr) != 0 )
-	{
-		magicalSetLastErrorInfo("[magical-error]: gettimeofday error");
-		return;
-	}
-
+	magicalGetTimeOfDay(&tv_now, nullptr);
 	s_delta_time = (tv_now.tv_sec - s_last_update_time.tv_sec) + (tv_now.tv_usec - s_last_update_time.tv_usec) / 1000000.0f;
 	s_delta_time = MAX(0, s_delta_time);
 
@@ -66,8 +62,7 @@ MAGAPI void magicalEngineInit( void )
 	s_win_size = Vec2(0, 0);
 	s_delta_time = 0.0f;
 	
-	magicalGetCurrentTime(&s_last_update_time, nullptr);
-
+	magicalGetTimeOfDay(&s_last_update_time, nullptr);
 	magicalSetGLDefault();
 }
 
@@ -111,15 +106,17 @@ MAGAPI void magicalOnRender( void )
 	
 	kmGLMatrixMode(KM_GL_PROJECTION);
 
+#if 0
 	// 3d render
-	/*kmGLLoadMatrix(&s_orthographic_projection2d);
+	kmGLLoadMatrix(&s_orthographic_projection2d);
 	kmGLPushMatrix();
 		kmGLMatrixMode(KM_GL_MODELVIEW);
 		kmGLPushMatrix();
 		
 		kmGLPopMatrix();
 	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLPopMatrix();*/
+	kmGLPopMatrix();
+#endif
 
 	// 2d render
 	kmGLLoadMatrix(&s_orthographic_projection2d);
@@ -127,7 +124,7 @@ MAGAPI void magicalOnRender( void )
 		kmGLMatrixMode(KM_GL_MODELVIEW);
 		kmGLPushMatrix();
 
-	
+
 		kmGLPopMatrix();
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLPopMatrix();
@@ -137,7 +134,7 @@ MAGAPI void magicalOnRender( void )
 
 MAGAPI void magicalSetGLDefault( void )
 {
-	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
 	glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
