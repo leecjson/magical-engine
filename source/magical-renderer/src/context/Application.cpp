@@ -35,8 +35,8 @@ static bool magicalWin32SetupGL( void )
 	result = glewInit();
 	if( result != GLEW_OK )
 	{
-		magicalSetLastErrorInfo("error-win32 glew init error");
-		magicalReport( magicalGetLastErrorInfo() );
+		magicalSetLastErrorInfo(magicalTagError("glew init error"));
+		magicalReportLastError();
 		return false;
 	}
 

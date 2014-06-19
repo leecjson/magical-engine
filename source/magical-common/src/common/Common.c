@@ -51,26 +51,28 @@ MAGAPI_USER void magicalLogFormatImpl( const char* format, ... )
 	magicalLogImpl(buf);
 }
 
-MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
+MAGAPI void magicalReportImpl( const char* str, const char* file, const char* function, int line )
 {
+	char buf[kMaxLogLength];
+
+	struct tm tm_now;
 	time_t now;
-	tm tm_now;
+	
+	time(&now);
+	tm_now = *localtime(&now);
 
-	if( function && line > 0 )
-	{	
-		now = magicalGetCurrentSecondTime();
-		tm = magicalFromSecondTime
+	sprintf(buf, "%s (%d/%02d/%02d %02d:%02d:%02d %s:%s:%d)", str,
+		tm_now.tm_year + 1900,
+		tm_now.tm_mon + 1,
+		tm_now.tm_mday,
+		tm_now.tm_hour,
+		tm_now.tm_min,
+		tm_now.tm_sec,
+		file,
+		function, 
+		line);
 
-		//magicalGetCurrentTime(
-
-		/*char buf[kMaxLogLength];
-		sprintf(buf, "%s (%s:%d)", str, function, line);
-		magicalLog(buf);*/
-	}
-	else
-	{
-		magicalLog(str);
-	}
+	magicalLog(buf);
 }
 
 MAGAPI int magicalIsError( void )
@@ -127,46 +129,34 @@ extern int gettimeofday( struct timeval* tv, struct timezone* tz )
 
 MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
 {
-	if( gettimeofday(tv, tz) == false )
+	if( gettimeofday(tv, tz) != 0 )
 	{
-		magicalSetLastErrorInfo("[magical-error]: magicalGetTimeOfDay error");
+		magicalSetLastErrorInfo(magicalTagError("magicalGetTimeOfDay error"));
 		magicalReportLastError();
 	}
 }
 
-MAGAPI_USER time_t magicalGetCurrentSecondTime()
-{
-	time_t now;
-	time( &now );
-	return now;
-}
-
-/*MAGAPI_USER time_t magicalGetCurrentMillionsTime()
-{
-	struct timeval tv;
-	time_t t;
-
-	magicalGetTimeOfDay(&tv, NULL);
-	t = tv.tv_sec;  
-	t *= 1000;  
-	t += tv.tv_usec / 1000;  
-	return t; 
-}*/
-
-MAGAPI_USER struct tm magicalFromSecondTime( time_t now )
-{
-	return *(localtime(&now));
-}
-
-MAGAPI_USER time_t magicalToSecondTime( struct tm* now )
-{
-	return mktime(now);
-}
-
-MAGAPI_USER time_t magicalDiffTime( time_t t1, time_t t2 )
-{
-	return difftime(t1, t2);
-}
+//MAGAPI_USER time_t magicalGetCurrentSecondTime()
+//{
+//	time_t now;
+//	time( &now );
+//	return now;
+//}
+//
+//MAGAPI_USER struct tm magicalFromSecondTime( time_t now )
+//{
+//	return *(localtime(&now));
+//}
+//
+//MAGAPI_USER time_t magicalToSecondTime( struct tm* now )
+//{
+//	return mktime(now);
+//}
+//
+//MAGAPI_USER time_t magicalDiffTime( time_t t1, time_t t2 )
+//{
+//	return difftime(t1, t2);
+//}
 
 MAGAPI void magicalBeginTimer( void )
 {

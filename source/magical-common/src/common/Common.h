@@ -69,14 +69,17 @@ log and report function
 MAGAPI_USER void magicalLogImpl( const char* str );
 MAGAPI_USER void magicalLogFormatImpl( const char* format, ... );
 
+#define magicalTagError( __msg )  "[magical-" ##MAG_PLATFORM "-error]: " ##__msg
+#define magicalTagAssert( __msg ) "[magical-" ##MAG_PLATFORM "-assert]: " ##__msg
+
 #ifndef MAG_DEBUG
-#define magicalReport
-#define magicalReportLastError
+#define magicalReport( __str )
+#define magicalReportLastError()
 #else
-#define magicalReport( __str ) magicalReportImpl( __str, __FUNCTION__, __LINE__ )
-#define magicalReportLastError() magicalReportImpl( magicalGetLastErrorInfo(), __FUNCTION__, __LINE__ )
+#define magicalReport( __str ) magicalReportImpl( __str, __FILE__, __FUNCTION__, __LINE__ )
+#define magicalReportLastError() magicalReportImpl( magicalGetLastErrorInfo(), __FILE__, __FUNCTION__, __LINE__ )
 #endif
-MAGAPI void magicalReportImpl( const char* str, const char* function, int line );
+MAGAPI void magicalReportImpl( const char* str, const char* file, const char* function, int line );
 
 /*
 general error signal
@@ -87,22 +90,34 @@ MAGAPI const char* magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
 
 /*
+assert function
+*/
+#ifdef MAG_DEBUG
+#define magicalAssert( __con, __msg ) do {                   \
+	if( !(__con) ) {                                         \
+		magicalSetLastErrorInfo( magicalTagError( __msg ) ); \
+		magicalReportLastError();                            \
+		assert(0);                                           \
+	}                                                        \
+	} while(0)
+#else
+#define magicalAssert( __con, __msg )
+#endif
+
+/*
 time function
 */
 #ifdef MAG_WIN32
 extern int gettimeofday( struct timeval* tv, struct timezone* tz );
 #endif
 MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
-MAGAPI_USER time_t magicalGetTime();
-MAGAPI_USER struct tm magicalLocalTime( time_t sec );
-MAGAPI_USER time_t magicalMakeTime( struct tm* t );
-MAGAPI_USER time_t magicalDiffTime( time_t t1, time_t t2 );
+//MAGAPI_USER time_t magicalGetTime();
+//MAGAPI_USER struct tm magicalLocalTime( time_t sec );
+//MAGAPI_USER time_t magicalMakeTime( struct tm* t );
+//MAGAPI_USER time_t magicalDiffTime( time_t t1, time_t t2 );
 
 MAGAPI void magicalBeginTimer( void );
 MAGAPI float magicalEndTimer( void );
-
-
-
 
 
 

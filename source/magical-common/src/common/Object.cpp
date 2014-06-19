@@ -25,18 +25,18 @@ SOFTWARE.
 #include "Object.h"
 #include "Utils.h"
 
-Object::Object()
+Object::Object( void )
 : _reference_count(0)
 {
 
 }
 
-Object::~Object()
+Object::~Object( void )
 {
 
 }
 
-std::string Object::toString() const
+std::string Object::toString( void ) const
 {
 	std::string info;
 

@@ -21,10 +21,75 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
+#include "PlatformMacros.h"
+#include "LuaState.h"
+#include "Common.h"
 
-int main(int argc, char* argv[])
+MAGAPI_USER void magicalLuaPrintError( lua_State* L )
 {
-	magicalRun();
+	if( lua_type(L, -1) == LUA_TSTRING )
+	{
+		char  buff[2048];
+		const char* info  = lua_tostring(L, -1);
+		const char* title = magicalTagError("%s");
+		sprintf(buff, title, info);
+
+		magicalSetLastErrorInfo(buff);
+		magicalReportLastError();
+
+		lua_pop(L, -1);
+	}
+}
+
+LuaState::LuaState( void )
+: _L(nullptr)
+{
+	_L = luaL_newstate();
+	magicalAssert(_L, magicalTagAssert("_L = luaL_newstate()"));
+	luaL_openlibs(_L);
+}
+
+LuaState::LuaState( LuaState& other )
+{
+	operator=(other);
+}
+
+LuaState::LuaState( LuaState&& other )
+{
+	operator=(std::forward<LuaState>(other));
+}
+
+LuaState& LuaState::operator=( LuaState& other )
+{
+	_L = other._L;
+	other._L = nullptr;
+	return *this;
+}
+
+LuaState& LuaState::operator=( LuaState&& other )
+{
+	_L = other._L;
+	other._L = nullptr;
+	return *this;
+}
+
+LuaState::~LuaState( void )
+{
+	if( _L != nullptr ) 
+	{
+		lua_close(_L);
+	}
+}
+
+int LuaState::executeScriptFile( const char* file )
+{
+	int ret = luaL_dofile(_L, file);
+	if( ret != 0 )
+	{
+		magicalLuaPrintError(_L);
+		lua_pop(_L, 1);
+		return ret;
+	}
 	return 0;
 }
+

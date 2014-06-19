@@ -33,9 +33,6 @@
     <ClInclude Include="src\PlatformMacros.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\MagicalEngine.h">
-      <Filter>src\include</Filter>
-    </ClInclude>
     <ClInclude Include="src\common\Common.h">
       <Filter>src\common</Filter>
     </ClInclude>
@@ -86,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="src\node\Node.h">
       <Filter>src\node</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\magical-engine.h">
+      <Filter>src\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

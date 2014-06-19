@@ -21,10 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
+#include "Object.h"
+#include "lua.hpp"
 
-int main(int argc, char* argv[])
+MAGAPI_USER void magicalLuaPrintError( lua_State* L );
+
+class LuaState : public Object
 {
-	magicalRun();
-	return 0;
-}
+public:
+	LuaState( void );
+	LuaState( LuaState& other );
+	LuaState( LuaState&& other );
+	LuaState& operator=( LuaState& other );
+	LuaState& operator=( LuaState&& other );
+	virtual ~LuaState( void );
+
+	int executeScriptFile( const char* file );
+
+private:
+	lua_State* _L;
+};

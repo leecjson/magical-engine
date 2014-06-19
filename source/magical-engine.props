@@ -5,8 +5,8 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)magical-common\src;$(SolutionDir)magical-common\src\include;$(SolutionDir)magical-common\src\common;$(SolutionDir)magical-common\src\node;$(SolutionDir)magical-common\src\kazmath;$(SolutionDir)magical-common\src\utils;$(SolutionDir)magical-renderer\src;$(SolutionDir)magical-renderer\src\context;$(SolutionDir)magical-renderer\src\context\win32;$(SolutionDir)magical-renderer\src\renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAG_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)magical-common\src;$(SolutionDir)magical-common\src\include;$(SolutionDir)magical-common\src\common;$(SolutionDir)magical-common\src\node;$(SolutionDir)magical-common\src\kazmath;$(SolutionDir)magical-common\src\utils;$(SolutionDir)magical-renderer\src;$(SolutionDir)magical-renderer\src\context;$(SolutionDir)magical-renderer\src\context\win32;$(SolutionDir)magical-renderer\src\renderer;$(SolutionDir)magical-lua\src;$(SolutionDir)magical-lua\src\lua;$(SolutionDir)magical-lua\src\support;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>

@@ -29,9 +29,9 @@ SOFTWARE.
 class Object
 {
 public:
-	Object();
-	virtual ~Object();
-	std::string toString() const;
+	Object( void );
+	virtual ~Object( void );
+	std::string toString( void ) const;
 
 private:
 	int _reference_count;

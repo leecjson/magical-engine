@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{396D811B-7BF7-4C4F-85F2-71CC03D32A33}</ProjectGuid>
-    <RootNamespace>magicalcommon</RootNamespace>
+    <ProjectGuid>{643DC676-9471-4E7F-AF40-1AC6E6F22FC4}</ProjectGuid>
+    <RootNamespace>magicallua</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,28 +42,18 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)bin\win32-debug\</OutDir>
-    <TargetExt>.lib</TargetExt>
     <IntDir>win32-debug\</IntDir>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <MinimalRebuild>false</MinimalRebuild>
-      <CompileAs>Default</CompileAs>
-      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessorDefinitions>MAG_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(SolutionDir)magical-dependencies\win32\glut\*.*" "$(OutDir)"
-xcopy /Y /Q "$(SolutionDir)magical-dependencies\win32\glew\*.*" "$(OutDir)"</Command>
-    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -79,46 +69,64 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\win32\glew\*.*" "$(OutDir)"</Com
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\common\Common.h" />
-    <ClInclude Include="src\common\Geometry.h" />
-    <ClInclude Include="src\common\Object.h" />
-    <ClInclude Include="src\include\magical-engine.h" />
-    <ClInclude Include="src\kazmath\aabb.h" />
-    <ClInclude Include="src\kazmath\GL\mat4stack.h" />
-    <ClInclude Include="src\kazmath\GL\matrix.h" />
-    <ClInclude Include="src\kazmath\kazmath.h" />
-    <ClInclude Include="src\kazmath\mat3.h" />
-    <ClInclude Include="src\kazmath\mat4.h" />
-    <ClInclude Include="src\kazmath\plane.h" />
-    <ClInclude Include="src\kazmath\quaternion.h" />
-    <ClInclude Include="src\kazmath\ray2.h" />
-    <ClInclude Include="src\kazmath\ray3.h" />
-    <ClInclude Include="src\kazmath\utility.h" />
-    <ClInclude Include="src\kazmath\vec2.h" />
-    <ClInclude Include="src\kazmath\vec3.h" />
-    <ClInclude Include="src\kazmath\vec4.h" />
-    <ClInclude Include="src\node\Node.h" />
-    <ClInclude Include="src\PlatformMacros.h" />
-    <ClInclude Include="src\utils\Utils.h" />
+    <ClCompile Include="src\lua-support\LuaState.cpp" />
+    <ClCompile Include="src\lua\lapi.c" />
+    <ClCompile Include="src\lua\lauxlib.c" />
+    <ClCompile Include="src\lua\lbaselib.c" />
+    <ClCompile Include="src\lua\lcode.c" />
+    <ClCompile Include="src\lua\ldblib.c" />
+    <ClCompile Include="src\lua\ldebug.c" />
+    <ClCompile Include="src\lua\ldo.c" />
+    <ClCompile Include="src\lua\ldump.c" />
+    <ClCompile Include="src\lua\lfunc.c" />
+    <ClCompile Include="src\lua\lgc.c" />
+    <ClCompile Include="src\lua\linit.c" />
+    <ClCompile Include="src\lua\liolib.c" />
+    <ClCompile Include="src\lua\llex.c" />
+    <ClCompile Include="src\lua\lmathlib.c" />
+    <ClCompile Include="src\lua\lmem.c" />
+    <ClCompile Include="src\lua\loadlib.c" />
+    <ClCompile Include="src\lua\lobject.c" />
+    <ClCompile Include="src\lua\lopcodes.c" />
+    <ClCompile Include="src\lua\loslib.c" />
+    <ClCompile Include="src\lua\lparser.c" />
+    <ClCompile Include="src\lua\lstate.c" />
+    <ClCompile Include="src\lua\lstring.c" />
+    <ClCompile Include="src\lua\lstrlib.c" />
+    <ClCompile Include="src\lua\ltable.c" />
+    <ClCompile Include="src\lua\ltablib.c" />
+    <ClCompile Include="src\lua\ltm.c" />
+    <ClCompile Include="src\lua\lundump.c" />
+    <ClCompile Include="src\lua\lvm.c" />
+    <ClCompile Include="src\lua\lzio.c" />
+    <ClCompile Include="src\lua\print.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\common\Common.c" />
-    <ClCompile Include="src\common\Geometry.cpp" />
-    <ClCompile Include="src\common\Object.cpp" />
-    <ClCompile Include="src\kazmath\aabb.c" />
-    <ClCompile Include="src\kazmath\GL\mat4stack.c" />
-    <ClCompile Include="src\kazmath\GL\matrix.c" />
-    <ClCompile Include="src\kazmath\mat3.c" />
-    <ClCompile Include="src\kazmath\mat4.c" />
-    <ClCompile Include="src\kazmath\plane.c" />
-    <ClCompile Include="src\kazmath\quaternion.c" />
-    <ClCompile Include="src\kazmath\ray2.c" />
-    <ClCompile Include="src\kazmath\ray3.c" />
-    <ClCompile Include="src\kazmath\utility.c" />
-    <ClCompile Include="src\kazmath\vec2.c" />
-    <ClCompile Include="src\kazmath\vec3.c" />
-    <ClCompile Include="src\kazmath\vec4.c" />
-    <ClCompile Include="src\node\Node.cpp" />
+    <ClInclude Include="src\lua-support\LuaState.h" />
+    <ClInclude Include="src\lua\lapi.h" />
+    <ClInclude Include="src\lua\lauxlib.h" />
+    <ClInclude Include="src\lua\lcode.h" />
+    <ClInclude Include="src\lua\ldebug.h" />
+    <ClInclude Include="src\lua\ldo.h" />
+    <ClInclude Include="src\lua\lfunc.h" />
+    <ClInclude Include="src\lua\lgc.h" />
+    <ClInclude Include="src\lua\llex.h" />
+    <ClInclude Include="src\lua\llimits.h" />
+    <ClInclude Include="src\lua\lmem.h" />
+    <ClInclude Include="src\lua\lobject.h" />
+    <ClInclude Include="src\lua\lopcodes.h" />
+    <ClInclude Include="src\lua\lparser.h" />
+    <ClInclude Include="src\lua\lstate.h" />
+    <ClInclude Include="src\lua\lstring.h" />
+    <ClInclude Include="src\lua\ltable.h" />
+    <ClInclude Include="src\lua\ltm.h" />
+    <ClInclude Include="src\lua\lua.h" />
+    <ClInclude Include="src\lua\lua.hpp" />
+    <ClInclude Include="src\lua\luaconf.h" />
+    <ClInclude Include="src\lua\lualib.h" />
+    <ClInclude Include="src\lua\lundump.h" />
+    <ClInclude Include="src\lua\lvm.h" />
+    <ClInclude Include="src\lua\lzio.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
