@@ -30,11 +30,12 @@ SOFTWARE.
 #include "Common.h"
 #include "Utils.h"
 
+#include "LuaSystem.h"
+
 static Vec2 s_win_size;
 static kmMat4 s_orthographic_projection2d;
 static timeval s_last_update_time;
 static float s_delta_time;
-
 
 static void magicalCalcDeltaTime( void )
 {
@@ -71,13 +72,17 @@ MAGAPI void magicalEngineDelc( void )
 	
 }
 
-MAGAPI bool magicalSetupSystems( void )
+MAGAPI bool magicalEngineInitSystems( void )
 {
+	magicalLuaSystemInit();
+
 	return true;
 }
 
-MAGAPI bool magicalShutdownSystems( void )
+MAGAPI bool magicalEngineDelcSystems( void )
 {
+	magicalLuaSystemDelc();
+
 	return true;
 }
 
@@ -123,8 +128,6 @@ MAGAPI void magicalOnRender( void )
 	kmGLPushMatrix();
 		kmGLMatrixMode(KM_GL_MODELVIEW);
 		kmGLPushMatrix();
-
-		magicalLog("haha");
 
 		kmGLPopMatrix();
 	kmGLMatrixMode(KM_GL_PROJECTION);

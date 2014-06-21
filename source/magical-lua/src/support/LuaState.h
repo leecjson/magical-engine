@@ -21,28 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
+#ifndef __LUA_STATE_H__
+#define __LUA_STATE_H__
 
-void onFinishLaunching( void )
+#include "Object.h"
+#include "LuaSupport.h"
+
+class LuaState : public Object
 {
-	magicalLog("c++ begin for");
-	magicalBeginTimer();
-	
-	for( int i=0; i < 20000; ++i)
-		magicalLog("for");
-	
-	float t = magicalEndTimer();
-	
-	LuaState* L = magicalGetGlobalLuaState();
-	L->executeScriptFile("main.lua");
-	L->executeGlobalFunction(MAG_LUA_ON_FINISH_LAUNCHING);
+public:
+	LuaState( void );
+	LuaState( LuaState& other );
+	LuaState( LuaState&& other );
+	LuaState& operator=( LuaState& other );
+	LuaState& operator=( LuaState&& other );
+	virtual ~LuaState( void );
 
-	magicalLog(magicalToString("c++ end for : %fs", t).c_str());
-}
+	int executeScriptFile( const char* file );
+	int executeScriptCode( const char* codes );
+	int executeGlobalFunction(const char* func_name, int retc = 0, int argc = 0 );
+	void pushNil( void );
+	void pushInt( int num );
+	void pushFloat( float num );
+	void pushBoolean( bool con );
+	void pushString( const char* str );
+	void pushString( const char* str, int len );
+	//void pushUserData( void* obj, const char* type );
+	void clean( void );
 
-int main(int argc, char* argv[])
-{
-	magicalApplicationInit(onFinishLaunching);
-	magicalRun();
-	return 0;
-}
+private:
+	lua_State* _L;
+};
+
+#endif //__LUA_STATE_H__

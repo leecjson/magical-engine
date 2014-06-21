@@ -26,17 +26,25 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 
-/**
+/*
 magical common
 */
 #include "Common.h"
 #include "Object.h"
 #include "Utils.h"
 
-/**
+/*
 magical renderer
 */
 #include "Application.h"
 #include "GLFunction.h"
+
+/*
+magical lua
+*/
+#include "lua.hpp"
+#include "LuaState.h"
+#include "LuaSupport.h"
+#include "LuaSystem.h"
 
 #endif //__MAGICAL_ENGINE_H__

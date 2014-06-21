@@ -21,28 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
+#ifndef __LUA_COMMON_H__
+#define __LUA_COMMON_H__
 
-void onFinishLaunching( void )
-{
-	magicalLog("c++ begin for");
-	magicalBeginTimer();
-	
-	for( int i=0; i < 20000; ++i)
-		magicalLog("for");
-	
-	float t = magicalEndTimer();
-	
-	LuaState* L = magicalGetGlobalLuaState();
-	L->executeScriptFile("main.lua");
-	L->executeGlobalFunction(MAG_LUA_ON_FINISH_LAUNCHING);
+#include "PlatformMacros.h"
+#include "tolua++.h"
 
-	magicalLog(magicalToString("c++ end for : %fs", t).c_str());
-}
+/* Exported function */
+TOLUA_API int luaopen_common (lua_State* tolua_S);
 
-int main(int argc, char* argv[])
-{
-	magicalApplicationInit(onFinishLaunching);
-	magicalRun();
-	return 0;
-}
+
+#endif //__LUA_COMMON_H__

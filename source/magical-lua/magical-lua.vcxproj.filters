@@ -7,8 +7,14 @@
     <Filter Include="src\lua">
       <UniqueIdentifier>{1850dbbe-6b20-496b-bebe-715db4c33334}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\lua-support">
+    <Filter Include="src\support">
       <UniqueIdentifier>{eee32e8c-55f5-49f9-9d3b-e60030a2538d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\binding">
+      <UniqueIdentifier>{407c3a94-4364-4cce-887f-0d522ebf3e6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tolua">
+      <UniqueIdentifier>{900ce62d-74f6-4a61-be6c-6fc8a3c50338}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,8 +108,32 @@
     <ClCompile Include="src\lua\print.c">
       <Filter>src\lua</Filter>
     </ClCompile>
-    <ClCompile Include="src\lua-support\LuaState.cpp">
-      <Filter>src\lua-support</Filter>
+    <ClCompile Include="src\support\LuaState.cpp">
+      <Filter>src\support</Filter>
+    </ClCompile>
+    <ClCompile Include="src\support\LuaSupport.cpp">
+      <Filter>src\support</Filter>
+    </ClCompile>
+    <ClCompile Include="src\binding\LuaCommon.cpp">
+      <Filter>src\binding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tolua\tolua_event.c">
+      <Filter>src\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tolua\tolua_is.c">
+      <Filter>src\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tolua\tolua_map.c">
+      <Filter>src\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tolua\tolua_push.c">
+      <Filter>src\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tolua\tolua_to.c">
+      <Filter>src\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\support\LuaSystem.cpp">
+      <Filter>src\support</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,8 +209,23 @@
     <ClInclude Include="src\lua\lua.hpp">
       <Filter>src\lua</Filter>
     </ClInclude>
-    <ClInclude Include="src\lua-support\LuaState.h">
-      <Filter>src\lua-support</Filter>
+    <ClInclude Include="src\support\LuaState.h">
+      <Filter>src\support</Filter>
+    </ClInclude>
+    <ClInclude Include="src\support\LuaSupport.h">
+      <Filter>src\support</Filter>
+    </ClInclude>
+    <ClInclude Include="src\binding\LuaCommon.h">
+      <Filter>src\binding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tolua\tolua_event.h">
+      <Filter>src\tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tolua\tolua++.h">
+      <Filter>src\tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\support\LuaSystem.h">
+      <Filter>src\support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

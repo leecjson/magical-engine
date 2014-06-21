@@ -21,23 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Object.h"
-#include "lua.hpp"
+#include "PlatformMacros.h"
+#include "LuaSystem.h"
 
-MAGAPI_USER void magicalLuaPrintError( lua_State* L );
+static LuaState* s_global_lua_state = nullptr;
 
-class LuaState : public Object
+MAGAPI void magicalLuaSystemInit( void )
 {
-public:
-	LuaState( void );
-	LuaState( LuaState& other );
-	LuaState( LuaState&& other );
-	LuaState& operator=( LuaState& other );
-	LuaState& operator=( LuaState&& other );
-	virtual ~LuaState( void );
+	s_global_lua_state = new LuaState();
+}
 
-	int executeScriptFile( const char* file );
+MAGAPI void magicalLuaSystemDelc( void )
+{
+	delete s_global_lua_state;
+	s_global_lua_state = nullptr;
+}
 
-private:
-	lua_State* _L;
-};
+MAGAPI_USER LuaState* magicalGetGlobalLuaState()
+{
+	return s_global_lua_state;
+}

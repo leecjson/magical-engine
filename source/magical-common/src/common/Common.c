@@ -51,7 +51,7 @@ MAGAPI_USER void magicalLogFormatImpl( const char* format, ... )
 	magicalLogImpl(buf);
 }
 
-MAGAPI void magicalReportImpl( const char* str, const char* file, const char* function, int line )
+MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
 {
 	char buf[kMaxLogLength];
 
@@ -61,14 +61,13 @@ MAGAPI void magicalReportImpl( const char* str, const char* file, const char* fu
 	time(&now);
 	tm_now = *localtime(&now);
 
-	sprintf(buf, "%s (%d/%02d/%02d %02d:%02d:%02d %s:%s:%d)", str,
+	sprintf(buf, "%s (%d/%02d/%02d %02d:%02d:%02d %s:%d)", str,
 		tm_now.tm_year + 1900,
 		tm_now.tm_mon + 1,
 		tm_now.tm_mday,
 		tm_now.tm_hour,
 		tm_now.tm_min,
 		tm_now.tm_sec,
-		file,
 		function, 
 		line);
 
@@ -135,28 +134,6 @@ MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
 		magicalReportLastError();
 	}
 }
-
-//MAGAPI_USER time_t magicalGetCurrentSecondTime()
-//{
-//	time_t now;
-//	time( &now );
-//	return now;
-//}
-//
-//MAGAPI_USER struct tm magicalFromSecondTime( time_t now )
-//{
-//	return *(localtime(&now));
-//}
-//
-//MAGAPI_USER time_t magicalToSecondTime( struct tm* now )
-//{
-//	return mktime(now);
-//}
-//
-//MAGAPI_USER time_t magicalDiffTime( time_t t1, time_t t2 )
-//{
-//	return difftime(t1, t2);
-//}
 
 MAGAPI void magicalBeginTimer( void )
 {

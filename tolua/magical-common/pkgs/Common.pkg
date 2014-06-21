@@ -1,0 +1,3 @@
+void magicalLog( const char* __str );
+void magicalBeginTimer( void );
+float magicalEndTimer( void );

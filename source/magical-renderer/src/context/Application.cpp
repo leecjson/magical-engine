@@ -28,6 +28,8 @@ SOFTWARE.
 
 #include "glut/glut.h"
 
+static EventOnFinishLaunching s_on_finish_launching_callback;
+
 static bool magicalWin32SetupGL( void )
 {
 	GLenum result;
@@ -62,6 +64,10 @@ static void magicalWin32GlutRender( void )
 	glutPostRedisplay();
 }
 
+MAGAPI_USER void magicalApplicationInit( EventOnFinishLaunching callback )
+{
+	s_on_finish_launching_callback = callback;
+}
 
 MAGAPI_USER void magicalRun( void )
 {
@@ -82,15 +88,17 @@ MAGAPI_USER void magicalRun( void )
 	}
 
 	magicalEngineInit();
-	if( magicalSetupSystems() == false )
+	if( magicalEngineInitSystems() == false )
 	{
 		MessageBoxA(NULL, magicalGetLastErrorInfo(), "Error", MB_OK);
 		return;
 	}
 
+	s_on_finish_launching_callback();
+
 	glutMainLoop();
 
-	if( magicalShutdownSystems() == false )
+	if( magicalEngineDelcSystems() == false )
 	{
 		MessageBoxA(NULL, magicalGetLastErrorInfo(), "Error", MB_OK);
 		return;

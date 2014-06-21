@@ -27,6 +27,12 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "GLFunction.h"
 
+#ifndef MAG_APP_DELEGATE
+#define MAG_APP_DELEGATE
+typedef void (*EventOnFinishLaunching)( void );
+#endif
+
+MAGAPI_USER void magicalApplicationInit( EventOnFinishLaunching callback );
 MAGAPI_USER void magicalRun( void );
 
 

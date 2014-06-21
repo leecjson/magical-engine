@@ -32,8 +32,8 @@ MAGAPI_USER float magicalGetDeltaTime();
 
 MAGAPI void magicalEngineInit( void );
 MAGAPI void magicalEngineDelc( void );
-MAGAPI bool magicalSetupSystems( void );
-MAGAPI bool magicalShutdownSystems( void );
+MAGAPI bool magicalEngineInitSystems( void );
+MAGAPI bool magicalEngineDelcSystems( void );
 
 MAGAPI void magicalOnReshape( int w, int h );
 MAGAPI void magicalOnRender( void );
