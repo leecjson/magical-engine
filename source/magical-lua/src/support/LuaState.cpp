@@ -27,7 +27,7 @@ SOFTWARE.
 #include "LuaCommon.h"
 #include "lua.hpp"
 
-LuaState::LuaState( void )
+LuaState_t::LuaState_t( void )
 : _L(nullptr)
 {
 	_L = luaL_newstate();
@@ -36,31 +36,31 @@ LuaState::LuaState( void )
 	luaopen_common(_L);
 }
 
-LuaState::LuaState( LuaState& other )
+LuaState_t::LuaState_t( LuaState_t& other )
 {
 	operator=(other);
 }
 
-LuaState::LuaState( LuaState&& other )
+LuaState_t::LuaState_t( LuaState_t&& other )
 {
-	operator=(std::forward<LuaState>(other));
+	operator=(std::forward<LuaState_t>(other));
 }
 
-LuaState& LuaState::operator=( LuaState& other )
-{
-	_L = other._L;
-	other._L = nullptr;
-	return *this;
-}
-
-LuaState& LuaState::operator=( LuaState&& other )
+LuaState_t& LuaState_t::operator=( LuaState_t& other )
 {
 	_L = other._L;
 	other._L = nullptr;
 	return *this;
 }
 
-LuaState::~LuaState( void )
+LuaState_t& LuaState_t::operator=( LuaState_t&& other )
+{
+	_L = other._L;
+	other._L = nullptr;
+	return *this;
+}
+
+LuaState_t::~LuaState_t( void )
 {
 	if( _L != nullptr ) 
 	{
@@ -68,7 +68,7 @@ LuaState::~LuaState( void )
 	}
 }
 
-int LuaState::executeScriptFile( const char* file )
+int LuaState_t::executeScriptFile( const char* file )
 {
 	int ret = luaL_dofile(_L, file);
 	if( ret != 0 )
@@ -80,7 +80,7 @@ int LuaState::executeScriptFile( const char* file )
 	return 0;
 }
 
-int LuaState::executeScriptCode( const char* codes )
+int LuaState_t::executeScriptCode( const char* codes )
 {
 	int ret = luaL_dostring(_L, codes);
 	if( ret != 0 )
@@ -92,7 +92,7 @@ int LuaState::executeScriptCode( const char* codes )
 	return 0;
 }
 
-int LuaState::executeGlobalFunction( const char* func_name, int retc, int argc )
+int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc )
 {
 	lua_getglobal(_L, func_name);
 	if( lua_isfunction(_L, -1) )
@@ -121,42 +121,42 @@ int LuaState::executeGlobalFunction( const char* func_name, int retc, int argc )
 	return -1;
 }
 
-void LuaState::pushNil( void )
+void LuaState_t::pushNil( void )
 {
 	lua_pushnil(_L);
 }
 
-void LuaState::pushInt( int num )
+void LuaState_t::pushInt( int num )
 {
 	lua_pushinteger(_L, num);
 }
 
-void LuaState::pushFloat( float num )
+void LuaState_t::pushFloat( float num )
 {
 	lua_pushnumber(_L, num);
 }
 
-void LuaState::pushBoolean( bool con )
+void LuaState_t::pushBoolean( bool con )
 {
 	lua_pushboolean(_L, con);
 }
 
-void LuaState::pushString( const char* str )
+void LuaState_t::pushString( const char* str )
 {
 	lua_pushstring(_L, str);
 }
 
-void LuaState::pushString( const char* str, int len )
+void LuaState_t::pushString( const char* str, int len )
 {
 	lua_pushlstring(_L, str, len);
 }
 
-//void LuaState::pushUserData(void* obj, const char* type)
+//void LuaState_t::pushUserData(void* obj, const char* type)
 //{
 //	tolua_pushusertype(_L, obj, type);
 //}
 
-void LuaState::clean( void )
+void LuaState_t::clean( void )
 {
 	lua_settop(_L, 0);
 }

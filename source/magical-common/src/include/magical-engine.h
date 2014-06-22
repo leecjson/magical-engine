@@ -30,8 +30,9 @@ SOFTWARE.
 magical common
 */
 #include "Common.h"
-#include "Object.h"
 #include "Utils.h"
+#include "Object.h"
+#include "Node.h"
 
 /*
 magical renderer

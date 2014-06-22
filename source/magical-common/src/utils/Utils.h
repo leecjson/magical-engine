@@ -24,8 +24,6 @@ SOFTWARE.
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
-#include "Object.h"
-
 #include <string>
 #include <memory>
 

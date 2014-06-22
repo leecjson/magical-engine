@@ -26,12 +26,20 @@ SOFTWARE.
 
 #include "Object.h"
 
-class Node : public Object
+class Node_t;
+
+typedef std::shared_ptr<Node_t> Node;
+#define newNode() (std::move(std::shared_ptr<Node_t>(new Node_t())))
+#define newNode_LuaGC() (new std::shared_ptr<Node_t>(new Node_t()))
+
+class Node_t : public Object_t
 {
 public:
-	Node();
-	virtual ~Node();
-	virtual void onUpdate();
+	Node_t( void );
+	virtual ~Node_t( void );
+	std::string toString( void ) const;
 };
+
+
 
 #endif //__NODE_H__

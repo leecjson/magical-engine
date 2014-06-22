@@ -27,15 +27,15 @@ SOFTWARE.
 #include "Object.h"
 #include "LuaSupport.h"
 
-class LuaState : public Object
+class LuaState_t : public Object_t
 {
 public:
-	LuaState( void );
-	LuaState( LuaState& other );
-	LuaState( LuaState&& other );
-	LuaState& operator=( LuaState& other );
-	LuaState& operator=( LuaState&& other );
-	virtual ~LuaState( void );
+	LuaState_t( void );
+	LuaState_t( LuaState_t& other );
+	LuaState_t( LuaState_t&& other );
+	LuaState_t& operator=( LuaState_t& other );
+	LuaState_t& operator=( LuaState_t&& other );
+	virtual ~LuaState_t( void );
 
 	int executeScriptFile( const char* file );
 	int executeScriptCode( const char* codes );
@@ -52,5 +52,9 @@ public:
 private:
 	lua_State* _L;
 };
+
+typedef std::shared_ptr<LuaState_t> LuaState;
+#define newLuaState() (std::move(std::shared_ptr<LuaState_t>(new LuaState_t())))
+#define newNode_LuaGC() (new std::shared_ptr<Node_t>(new Node_t()))
 
 #endif //__LUA_STATE_H__

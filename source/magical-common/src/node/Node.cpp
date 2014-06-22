@@ -27,19 +27,16 @@ SOFTWARE.
 #include "GL/matrix.h"
 #include "GL/mat4stack.h"
 
-Node::Node()
+Node_t::Node_t( void )
 {
-
 }
 
-Node::~Node()
+Node_t::~Node_t( void )
 {
-
 }
 
-void Node::onUpdate()
+std::string Node_t::toString( void ) const
 {
-	kmGLPushMatrix();
-
-	kmGLPopMatrix();
+	std::string info = "Node_t";
+	return std::move(info);
 }

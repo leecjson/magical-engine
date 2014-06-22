@@ -24,21 +24,23 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Object.h"
 #include "Utils.h"
+#include "Common.h"
 
-Object::Object( void )
-: _reference_count(0)
+Object_t::Object_t( void )
 {
-
 }
 
-Object::~Object( void )
+Object_t::~Object_t( void )
 {
-
 }
 
-std::string Object::toString( void ) const
+std::string Object_t::toString( void ) const
 {
-	std::string info;
-
+	std::string info = "Object_t";
 	return std::move(info);
+}
+
+Object Object_t::copy()
+{
+	
 }

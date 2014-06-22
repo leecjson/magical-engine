@@ -24,10 +24,8 @@ SOFTWARE.
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#include "PlatformMacros.h"
-
 /*
-std include
+c std include
 */
 #include <assert.h>
 #include <time.h>
@@ -41,6 +39,8 @@ platform include
 #ifdef MAG_WIN32
 #include <WinSock2.h>
 #endif
+
+#include "PlatformMacros.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,6 +69,7 @@ log and report function
 MAGAPI_USER void magicalLogImpl( const char* str );
 MAGAPI_USER void magicalLogFormatImpl( const char* format, ... );
 
+#define magicalTagTimer( __msg ) "[magical-" ##MAG_PLATFORM "-timer]: " ##__msg
 #define magicalTagError( __msg )  "[magical-" ##MAG_PLATFORM "-error]: " ##__msg
 #define magicalTagAssert( __msg ) "[magical-" ##MAG_PLATFORM "-assert]: " ##__msg
 
@@ -112,10 +113,33 @@ extern int gettimeofday( struct timeval* tv, struct timezone* tz );
 #endif
 MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
 
-MAGAPI void magicalBeginTimer( void );
+MAGAPI void  magicalBeginTimer( void );
 MAGAPI float magicalEndTimer( void );
 
+#ifndef MAG_DEBUG
+#define magicalBeginTimerAndReport()
+#define magicalEndTimerAndReport()
+#else
+#define magicalBeginTimerAndReport() do {                                      \
+	magicalReport( magicalTagTimer("begin timer : --------") );                           \
+	magicalBeginTimer();                                                       \
+	} while(0)
+#define magicalEndTimerAndReport() do {                                        \
+	char __tmbf[128];                                                          \
+	sprintf( __tmbf, magicalTagTimer("ended timer : %.6f"), magicalEndTimer() ); \
+	magicalReport( __tmbf );                                                   \
+	} while(0)
+#endif
 
+/*
+object count
+*/
+#ifndef MAG_DEBUG
+#define magicalBeginObjCounting
+#define
+#else
+
+#endif
 
 #ifdef __cplusplus
 }

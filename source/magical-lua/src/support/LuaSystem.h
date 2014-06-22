@@ -31,7 +31,7 @@ SOFTWARE.
 MAGAPI void magicalLuaSystemInit( void );
 MAGAPI void magicalLuaSystemDelc( void );
 
-MAGAPI_USER LuaState* magicalGetGlobalLuaState();
+MAGAPI_USER LuaState& magicalGetLuaSystemState();
 
 
 #endif //__LUA_SYSTEM_H__

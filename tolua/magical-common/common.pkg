@@ -1,5 +1,7 @@
 $#include "PlatformMacros.h"
 $#include "LuaCommon.h"
-$#include "Common.h"
+$#include "magical-engine.h"
 
 $pfile "magical-common/pkgs/Common.pkg"
+$pfile "magical-common/pkgs/Object.pkg"
+$pfile "magical-common/pkgs/Node.pkg"

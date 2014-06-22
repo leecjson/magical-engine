@@ -25,19 +25,14 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
-	magicalLog("c++ begin for");
-	magicalBeginTimer();
-	
-	for( int i=0; i < 20000; ++i)
-		magicalLog("for");
-	
-	float t = magicalEndTimer();
-	
-	LuaState* L = magicalGetGlobalLuaState();
+	/*Object obj = newObject();
+	obj.reset();
+	std::string str = obj->toString();*/
+
+	LuaState& L = magicalGetLuaSystemState();
 	L->executeScriptFile("main.lua");
 	L->executeGlobalFunction(MAG_LUA_ON_FINISH_LAUNCHING);
-
-	magicalLog(magicalToString("c++ end for : %fs", t).c_str());
+	L->clean();
 }
 
 int main(int argc, char* argv[])

@@ -1,14 +1,16 @@
 
+
+
 function onFinishLaunching() --> void
 
-	magicalLog("lua begin for");
-	magicalBeginTimer();
+	local o = Object();
+	magicalLog(o:toString());
 	
-	for i=0,20000 do
-		magicalLog("for");
-	end
+	local n = tolua.cast(o, "Node");
+	magicalLog(n:toString());
 	
-	local t = magicalEndTimer();
-	magicalLog("lua end for : " .. t .. "s");
+	-- local n = Node();
+	-- local o = 
 
 end
+

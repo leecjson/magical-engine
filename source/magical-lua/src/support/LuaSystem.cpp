@@ -24,20 +24,19 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "LuaSystem.h"
 
-static LuaState* s_global_lua_state = nullptr;
+static LuaState s_global_lua_state = nullptr;
 
 MAGAPI void magicalLuaSystemInit( void )
 {
-	s_global_lua_state = new LuaState();
+	s_global_lua_state = newLuaState();
 }
 
 MAGAPI void magicalLuaSystemDelc( void )
 {
-	delete s_global_lua_state;
-	s_global_lua_state = nullptr;
+	s_global_lua_state.reset();
 }
 
-MAGAPI_USER LuaState* magicalGetGlobalLuaState()
+MAGAPI_USER LuaState& magicalGetLuaSystemState()
 {
 	return s_global_lua_state;
 }

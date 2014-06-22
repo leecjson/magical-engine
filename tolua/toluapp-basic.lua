@@ -1,10 +1,33 @@
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+-- magical type declaration list
+
+local magical_reg_objs = {
+	"Object",
+	"Node"
+};
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+
 _is_functions = _is_functions or {}
 _to_functions = _to_functions or {}
 _push_functions = _push_functions or {}
 
 _to_functions["LuaFunctionRef"] = "tolua_ext_tofunction"
 _is_functions["LuaFunctionRef"] = "tolua_ext_isfunction"
-
 
 local toWrite = {}
 local currentString = ''
@@ -43,10 +66,18 @@ function post_output_hook(package)
             end
         until not e
         result = currentString..string.sub(result, nxt)
-        if k == 0 then print('Pattern not replaced', pattern) end
+        if k == 0 then print('Pattern not replaced', pattern .. "\n") end
     end
 	replace([[*((LuaFunctionRef*)]], [[(]])
 	replace([[#ifndef TOLUA_RELEASE]], [[#ifdef MAG_DEBUG]])
+	
+	local size = table.getn(magical_reg_objs);
+	for i=1,size do
+		replace([[Mtolua_new((]] .. magical_reg_objs[i] ..  [[)())]], [[new]] .. magical_reg_objs[i] .. [[_LuaGC()]]);
+		replace(
+		[[const ]] .. magical_reg_objs[i] .. [[* self = (const ]] .. magical_reg_objs[i] .. [[*)  tolua_tousertype(tolua_S,1,0)]],
+		[[const ]] .. magical_reg_objs[i] .. [[_t* self = ((const ]] .. magical_reg_objs[i] .. [[*) tolua_tousertype(tolua_S,1,0))->get()]]);
+	end
 	
     WRITE(result)
 end

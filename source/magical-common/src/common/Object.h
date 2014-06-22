@@ -25,16 +25,22 @@ SOFTWARE.
 #define __OBJECT_H__
 
 #include <string>
+#include <memory>
+#include "Common.h"
 
-class Object
+class Object_t;
+
+typedef std::shared_ptr<Object_t> Object;
+#define newObject() (std::move(std::shared_ptr<Object_t>(new Object_t())))
+#define newObject_LuaGC() (new std::shared_ptr<Object_t>(new Object_t()))
+
+class Object_t
 {
 public:
-	Object( void );
-	virtual ~Object( void );
+	Object_t( void );
+	virtual ~Object_t( void );
 	std::string toString( void ) const;
-
-private:
-	int _reference_count;
+	virtual Object copy();
 };
 
 
