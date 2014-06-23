@@ -30,6 +30,12 @@ static int s_last_error = false;
 static char* s_last_error_info = NULL;
 static struct timeval s_tv_timer;
 
+#ifdef MAG_DEBUG
+static int s_is_observing = false;
+static int s_observer_construct_count = 0;
+static int s_observer_destruct_count = 0;
+#endif
+
 MAGAPI_USER void magicalLogImpl( const char* str )
 {
 #ifdef MAG_WIN32
@@ -61,7 +67,7 @@ MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
 	time(&now);
 	tm_now = *localtime(&now);
 
-	sprintf(buf, "%s (%d/%02d/%02d %02d:%02d:%02d %s:%d)", str,
+	sprintf(buf, "%s ( %d/%02d/%02d %02d:%02d:%02d %s:%d )", str,
 		tm_now.tm_year + 1900,
 		tm_now.tm_mon + 1,
 		tm_now.tm_mday,
@@ -151,3 +157,45 @@ MAGAPI float magicalEndTimer( void )
 
 	return result;
 }
+
+#ifdef MAG_DEBUG
+MAGAPI void magicalBeginObjectObserver( const char* __msg )
+{
+	char buf[256];
+	const char* info;
+	s_is_observing = true;
+	s_observer_construct_count = 0;
+	s_observer_destruct_count = 0;
+
+	info = magicalTagObserv("%s begin : ");
+	sprintf(buf, info, __msg);
+	magicalReport(buf);
+}
+
+MAGAPI void magicalEndObjectObserver( const char* __msg )
+{
+	char buf[256];
+	const char* info;
+	s_is_observing = false;
+	info = magicalTagObserv("%s ended : construct=%d destruct=%d");
+
+	sprintf(buf, info, __msg, s_observer_construct_count, s_observer_destruct_count);
+	magicalReport(buf);
+}
+
+MAGAPI void magicalObjectObserverPlus()
+{
+	if( s_is_observing )
+	{
+		++ s_observer_construct_count;
+	}
+}
+
+MAGAPI void magicalObjectObserverSub()
+{
+	if( s_is_observing )
+	{
+		++ s_observer_destruct_count;
+	}
+}
+#endif

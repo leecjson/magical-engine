@@ -69,8 +69,9 @@ log and report function
 MAGAPI_USER void magicalLogImpl( const char* str );
 MAGAPI_USER void magicalLogFormatImpl( const char* format, ... );
 
-#define magicalTagTimer( __msg ) "[magical-" ##MAG_PLATFORM "-timer]: " ##__msg
-#define magicalTagError( __msg )  "[magical-" ##MAG_PLATFORM "-error]: " ##__msg
+#define magicalTagObserv( __msg ) "[magical-" ##MAG_PLATFORM "-observ]: " ##__msg
+#define magicalTagTimer( __msg )  "[magical-" ##MAG_PLATFORM "-timer]: "  ##__msg
+#define magicalTagError( __msg )  "[magical-" ##MAG_PLATFORM "-error]: "  ##__msg
 #define magicalTagAssert( __msg ) "[magical-" ##MAG_PLATFORM "-assert]: " ##__msg
 
 #ifndef MAG_DEBUG
@@ -111,34 +112,39 @@ time function
 #ifdef MAG_WIN32
 extern int gettimeofday( struct timeval* tv, struct timezone* tz );
 #endif
-MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
+MAGAPI void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
 
 MAGAPI void  magicalBeginTimer( void );
 MAGAPI float magicalEndTimer( void );
 
 #ifndef MAG_DEBUG
-#define magicalBeginTimerAndReport()
-#define magicalEndTimerAndReport()
+#define magicalBeginTimerAndReport( __msg )
+#define magicalEndTimerAndReport( __msg )
 #else
-#define magicalBeginTimerAndReport() do {                                      \
-	magicalReport( magicalTagTimer("begin timer : --------") );                           \
-	magicalBeginTimer();                                                       \
+#define magicalBeginTimerAndReport( __msg ) do {                                          \
+	magicalReport( magicalTagTimer( __msg ## "begin : --------" ) );                \
+	magicalBeginTimer();                                                                  \
 	} while(0)
-#define magicalEndTimerAndReport() do {                                        \
-	char __tmbf[128];                                                          \
-	sprintf( __tmbf, magicalTagTimer("ended timer : %.6f"), magicalEndTimer() ); \
-	magicalReport( __tmbf );                                                   \
+#define magicalEndTimerAndReport( __msg ) do {                                            \
+	char __tmbf[256];                                                                     \
+	sprintf( __tmbf, magicalTagTimer( __msg ##"ended : %.6f"), magicalEndTimer() ); \
+	magicalReport( __tmbf );                                                              \
 	} while(0)
 #endif
 
 /*
 object count
 */
-#ifndef MAG_DEBUG
-#define magicalBeginObjCounting
-#define
+#ifdef MAG_DEBUG
+MAGAPI void magicalBeginObjectObserver( const char* __msg );
+MAGAPI void magicalEndObjectObserver( const char* __msg );
+MAGAPI void magicalObjectObserverPlus();
+MAGAPI void magicalObjectObserverSub();
 #else
-
+#define magicalBeginObjectObserver( __msg )
+#define magicalEndObjectObserver( __msg )
+#define magicalObjectObserverPlus()
+#define magicalObjectObserverSub()
 #endif
 
 #ifdef __cplusplus

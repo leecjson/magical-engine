@@ -28,10 +28,12 @@ SOFTWARE.
 
 Object_t::Object_t( void )
 {
+	magicalObjectObserverPlus();
 }
 
 Object_t::~Object_t( void )
 {
+	magicalObjectObserverSub();
 }
 
 std::string Object_t::toString( void ) const
@@ -42,5 +44,5 @@ std::string Object_t::toString( void ) const
 
 Object Object_t::copy()
 {
-	
+	return newObject();
 }
