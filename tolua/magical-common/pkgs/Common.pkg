@@ -1,3 +1,21 @@
-void magicalLog( const char* __str );
-void magicalBeginTimer( void );
-float magicalEndTimer( void );
+/*
+log and report function
+*/
+extern void magicalLog( const char* __str );
+extern void magicalReport( const char* __str );
+
+/*
+time function
+*/
+extern void magicalBeginTicking( void );
+extern float magicalEndTicking( void );
+extern void magicalBeginTickingAndReport( void );
+extern void magicalEndTickingAndReport( void );
+
+/*
+object observer
+*/
+extern void magicalBeginObserveObject( void );
+extern void magicalEndObserveObject( void );
+
+

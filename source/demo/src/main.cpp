@@ -25,14 +25,6 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
-	magicalBeginObjectObserver("Test");
-
-	Object obj = newObject();
-	obj.reset();
-	std::string str = obj->toString();
-
-	magicalEndObjectObserver("Test");
-
 	LuaState& L = magicalGetLuaSystemState();
 	L->executeScriptFile("main.lua");
 	L->executeGlobalFunction(MAG_LUA_ON_FINISH_LAUNCHING);

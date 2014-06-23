@@ -1,16 +1,19 @@
-
-
-
 function onFinishLaunching() --> void
 
+	magicalBeginTickingAndReport();
+	magicalBeginObserveObject();
+
 	local o = Object();
-	magicalLog(o:toString());
+	o = Object();
+	o = Object();
+	o = Object();
+	o = Object();
+	o = nil;
 	
-	local n = tolua.cast(o, "Node");
-	magicalLog(n:toString());
+	collectgarbage();
 	
-	-- local n = Node();
-	-- local o = 
+	magicalEndObserveObject(); -- 5
+	magicalEndTickingAndReport();
 
 end
 

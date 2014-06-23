@@ -1,6 +1,6 @@
 /*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 06/22/14 22:29:26.
+** Generated automatically by tolua++-1.0.92 on 06/24/14 00:59:40.
 */
 
 #ifndef __cplusplus
@@ -71,35 +71,37 @@ static int tolua_common_magicalLog00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: magicalBeginTimer */
-#ifndef TOLUA_DISABLE_tolua_common_magicalBeginTimer00
-static int tolua_common_magicalBeginTimer00(lua_State* tolua_S)
+/* function: magicalReport */
+#ifndef TOLUA_DISABLE_tolua_common_magicalReport00
+static int tolua_common_magicalReport00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isnoobj(tolua_S,1,&tolua_err)
+     !tolua_isstring(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
+  const char* __str = ((const char*)  tolua_tostring(tolua_S,1,0));
   {
-   magicalBeginTimer();
+   magicalReport(__str);
   }
  }
  return 0;
 #ifdef MAG_DEBUG
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'magicalBeginTimer'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'magicalReport'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: magicalEndTimer */
-#ifndef TOLUA_DISABLE_tolua_common_magicalEndTimer00
-static int tolua_common_magicalEndTimer00(lua_State* tolua_S)
+/* function: magicalBeginTicking */
+#ifndef TOLUA_DISABLE_tolua_common_magicalBeginTicking00
+static int tolua_common_magicalBeginTicking00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
@@ -111,14 +113,144 @@ static int tolua_common_magicalEndTimer00(lua_State* tolua_S)
 #endif
  {
   {
-   float tolua_ret = (float)  magicalEndTimer();
+   magicalBeginTicking();
+  }
+ }
+ return 0;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'magicalBeginTicking'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: magicalEndTicking */
+#ifndef TOLUA_DISABLE_tolua_common_magicalEndTicking00
+static int tolua_common_magicalEndTicking00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   float tolua_ret = (float)  magicalEndTicking();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
  return 1;
 #ifdef MAG_DEBUG
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'magicalEndTimer'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'magicalEndTicking'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: magicalBeginTickingAndReport */
+#ifndef TOLUA_DISABLE_tolua_common_magicalBeginTickingAndReport00
+static int tolua_common_magicalBeginTickingAndReport00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   magicalBeginTickingAndReport();
+  }
+ }
+ return 0;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'magicalBeginTickingAndReport'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: magicalEndTickingAndReport */
+#ifndef TOLUA_DISABLE_tolua_common_magicalEndTickingAndReport00
+static int tolua_common_magicalEndTickingAndReport00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   magicalEndTickingAndReport();
+  }
+ }
+ return 0;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'magicalEndTickingAndReport'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: magicalBeginObserveObject */
+#ifndef TOLUA_DISABLE_tolua_common_magicalBeginObserveObject00
+static int tolua_common_magicalBeginObserveObject00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   magicalBeginObserveObject();
+  }
+ }
+ return 0;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'magicalBeginObserveObject'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: magicalEndObserveObject */
+#ifndef TOLUA_DISABLE_tolua_common_magicalEndObserveObject00
+static int tolua_common_magicalEndObserveObject00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   magicalEndObserveObject();
+  }
+ }
+ return 0;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'magicalEndObserveObject'.",&tolua_err);
  return 0;
 #endif
 }
@@ -328,6 +460,38 @@ static int tolua_common_Node_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: toString of class  Node */
+#ifndef TOLUA_DISABLE_tolua_common_Node_toString00
+static int tolua_common_Node_toString00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Node",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Node_t* self = ((const Node*) tolua_tousertype(tolua_S,1,0))->get();
+#ifdef MAG_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'toString'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->toString();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'toString'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* Open function */
 TOLUA_API int tolua_common_open (lua_State* tolua_S)
 {
@@ -336,8 +500,13 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
  tolua_module(tolua_S,NULL,0);
  tolua_beginmodule(tolua_S,NULL);
   tolua_function(tolua_S,"magicalLog",tolua_common_magicalLog00);
-  tolua_function(tolua_S,"magicalBeginTimer",tolua_common_magicalBeginTimer00);
-  tolua_function(tolua_S,"magicalEndTimer",tolua_common_magicalEndTimer00);
+  tolua_function(tolua_S,"magicalReport",tolua_common_magicalReport00);
+  tolua_function(tolua_S,"magicalBeginTicking",tolua_common_magicalBeginTicking00);
+  tolua_function(tolua_S,"magicalEndTicking",tolua_common_magicalEndTicking00);
+  tolua_function(tolua_S,"magicalBeginTickingAndReport",tolua_common_magicalBeginTickingAndReport00);
+  tolua_function(tolua_S,"magicalEndTickingAndReport",tolua_common_magicalEndTickingAndReport00);
+  tolua_function(tolua_S,"magicalBeginObserveObject",tolua_common_magicalBeginObserveObject00);
+  tolua_function(tolua_S,"magicalEndObserveObject",tolua_common_magicalEndObserveObject00);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"Object","Object","",tolua_collect_Object);
   #else
@@ -360,6 +529,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_common_Node_new00_local);
    tolua_function(tolua_S,".call",tolua_common_Node_new00_local);
    tolua_function(tolua_S,"delete",tolua_common_Node_delete00);
+   tolua_function(tolua_S,"toString",tolua_common_Node_toString00);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

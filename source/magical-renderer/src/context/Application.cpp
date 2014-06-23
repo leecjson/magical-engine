@@ -37,7 +37,7 @@ static bool magicalWin32SetupGL( void )
 	result = glewInit();
 	if( result != GLEW_OK )
 	{
-		magicalSetLastErrorInfo(magicalTagError("glew init error"));
+		magicalSetLastErrorInfo(magicalTagError("init glew"));
 		magicalReportLastError();
 		return false;
 	}
@@ -49,7 +49,6 @@ static bool magicalWin32ShutdownGL( void )
 {
 	return true;
 }
-
 
 static void magicalWin32GlutReshape( int w, int h )
 {

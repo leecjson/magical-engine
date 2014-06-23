@@ -28,12 +28,12 @@ SOFTWARE.
 
 static int s_last_error = false;
 static char* s_last_error_info = NULL;
-static struct timeval s_tv_timer;
+static struct timeval s_tv_ticking;
 
 #ifdef MAG_DEBUG
-static int s_is_observing = false;
-static int s_observer_construct_count = 0;
-static int s_observer_destruct_count = 0;
+int g_is_observing = false;
+int g_observer_construct_count = 0;
+int g_observer_destruct_count = 0;
 #endif
 
 MAGAPI_USER void magicalLogImpl( const char* str )
@@ -67,15 +67,17 @@ MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
 	time(&now);
 	tm_now = *localtime(&now);
 
-	sprintf(buf, "%s ( %d/%02d/%02d %02d:%02d:%02d %s:%d )", str,
+	sprintf(buf, "[Report %d/%02d/%02d %02d:%02d:%02d]: %s  %s:%d", 
 		tm_now.tm_year + 1900,
 		tm_now.tm_mon + 1,
 		tm_now.tm_mday,
 		tm_now.tm_hour,
 		tm_now.tm_min,
 		tm_now.tm_sec,
+		str,
 		function, 
-		line);
+		line
+		);
 
 	magicalLog(buf);
 }
@@ -136,66 +138,62 @@ MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
 {
 	if( gettimeofday(tv, tz) != 0 )
 	{
-		magicalSetLastErrorInfo(magicalTagError("magicalGetTimeOfDay error"));
+		magicalSetLastErrorInfo(magicalTagError("gettimeofday(tv, tz)"));
 		magicalReportLastError();
 	}
 }
 
-MAGAPI void magicalBeginTimer( void )
+MAGAPI void magicalBeginTicking( void )
 {
-	magicalGetTimeOfDay(&s_tv_timer, NULL);
+	magicalGetTimeOfDay(&s_tv_ticking, NULL);
 }
 
-MAGAPI float magicalEndTimer( void )
+MAGAPI float magicalEndTicking( void )
 {
 	struct timeval tv_now;
 	float  result;
 
 	magicalGetTimeOfDay(&tv_now, NULL);
-	result = (tv_now.tv_sec - s_tv_timer.tv_sec) + (tv_now.tv_usec - s_tv_timer.tv_usec) / 1000000.0f;
+	result = (tv_now.tv_sec - s_tv_ticking.tv_sec) + (tv_now.tv_usec - s_tv_ticking.tv_usec) / 1000000.0f;
 	result = MAX(0.0f, result);
 
 	return result;
 }
 
-#ifdef MAG_DEBUG
-MAGAPI void magicalBeginObjectObserver( const char* __msg )
-{
-	char buf[256];
-	const char* info;
-	s_is_observing = true;
-	s_observer_construct_count = 0;
-	s_observer_destruct_count = 0;
-
-	info = magicalTagObserv("%s begin : ");
-	sprintf(buf, info, __msg);
-	magicalReport(buf);
-}
-
-MAGAPI void magicalEndObjectObserver( const char* __msg )
-{
-	char buf[256];
-	const char* info;
-	s_is_observing = false;
-	info = magicalTagObserv("%s ended : construct=%d destruct=%d");
-
-	sprintf(buf, info, __msg, s_observer_construct_count, s_observer_destruct_count);
-	magicalReport(buf);
-}
-
-MAGAPI void magicalObjectObserverPlus()
-{
-	if( s_is_observing )
-	{
-		++ s_observer_construct_count;
-	}
-}
-
-MAGAPI void magicalObjectObserverSub()
-{
-	if( s_is_observing )
-	{
-		++ s_observer_destruct_count;
-	}
-}
-#endif
+//#ifdef MAG_DEBUG
+//MAGAPI void magicalBeginObserveObject()
+//{
+//	//char buf[256];
+//	//const char* info;
+//	s_is_observing = true;
+//	s_observer_construct_count = 0;
+//	s_observer_destruct_count = 0;
+//
+//	magicalReport("Observe Object Begin : ");
+//}
+//
+//MAGAPI void magicalEndObserveObject()
+//{
+//	char buf[256];
+//	sprintf(buf, "Observe Object Ended : construct=%d destruct=%d", s_observer_construct_count, s_observer_destruct_count);
+//	s_is_observing = false;
+//	
+//	magicalReport(buf);
+//}
+//
+//MAGAPI void magicalObjectConstruct()
+//{
+//	if( s_is_observing )
+//	{
+//		++ s_observer_construct_count;
+//	}
+//}
+//
+//MAGAPI void magicalObjectDestruct()
+//{
+//	if( s_is_observing )
+//	{
+//		++ s_observer_destruct_count;
+//	}
+//}
+//#endif

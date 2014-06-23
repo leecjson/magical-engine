@@ -31,7 +31,7 @@ LuaState_t::LuaState_t( void )
 : _L(nullptr)
 {
 	_L = luaL_newstate();
-	magicalAssert(_L, magicalTagAssert("_L = luaL_newstate()"));
+	magicalAssert(_L, "_L = luaL_newstate()");
 	luaL_openlibs(_L);
 	luaopen_common(_L);
 }
@@ -113,11 +113,14 @@ int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc
 		}
 		return ret;
 	}
-	char buf[256];
-	sprintf(buf, magicalTagError("name '%s' does not represent a lua function"), func_name);
-	magicalSetLastErrorInfo(buf);
-	magicalReportLastError();
-	lua_pop(_L, 1);
+	else
+	{
+		char buf[256];
+		sprintf(buf, magicalTagError("name '%s' does not represent a lua function"), func_name);
+		magicalSetLastErrorInfo(buf);
+		magicalReportLastError();
+		lua_pop(_L, 1);
+	}
 	return -1;
 }
 
