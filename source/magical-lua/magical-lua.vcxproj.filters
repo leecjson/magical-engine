@@ -135,6 +135,9 @@
     <ClCompile Include="src\support\LuaSystem.cpp">
       <Filter>src\support</Filter>
     </ClCompile>
+    <ClCompile Include="src\tolua\tolua_ext.c">
+      <Filter>src\tolua</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lua\lapi.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="src\support\LuaSystem.h">
       <Filter>src\support</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tolua\tolua_ext.h">
+      <Filter>src\tolua</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

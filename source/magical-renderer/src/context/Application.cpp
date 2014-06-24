@@ -96,7 +96,7 @@ MAGAPI_USER void magicalRun( void )
 
 	s_on_finish_launching_callback();
 
-	LuaState& L = magicalGetLuaSystemState();
+	LuaState& L = magicalGetLuaState();
 	L->executeScriptFile(kLuaMain);
 	L->executeGlobalFunction(kLuaOnFinishLaunching);
 	L->clean();

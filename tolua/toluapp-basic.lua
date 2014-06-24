@@ -74,10 +74,11 @@ function post_output_hook(package)
 	local size = table.getn(magical_reg_objs);
 	for i=1,size do
 		replace([[Mtolua_new((]] .. magical_reg_objs[i] ..  [[)())]], [[new]] .. magical_reg_objs[i] .. [[_LuaGC()]]);
-		replace(
-		[[const ]] .. magical_reg_objs[i] .. [[* self = (const ]] .. magical_reg_objs[i] .. [[*)  tolua_tousertype(tolua_S,1,0)]],
-		[[const ]] .. magical_reg_objs[i] .. [[_t* self = ((const ]] .. magical_reg_objs[i] .. [[*) tolua_tousertype(tolua_S,1,0))->get()]]);
+		-- replace(
+		-- [[const ]] .. magical_reg_objs[i] .. [[* self = (const ]] .. magical_reg_objs[i] .. [[*)  tolua_tousertype(tolua_S,1,0)]],
+		-- [[const ]] .. magical_reg_objs[i] .. [[_t* self = ((const ]] .. magical_reg_objs[i] .. [[*) tolua_tousertype(tolua_S,1,0))->get()]]);
 	end
+	replace([[self->]], [[self->get()->]]);
 	
     WRITE(result)
 end

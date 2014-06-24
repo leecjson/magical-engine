@@ -42,7 +42,7 @@ std::string Object_t::toString( void ) const
 	return std::move(info);
 }
 
-Object Object_t::copy()
+void Object_t::getlua( LuaFunctionRef ref )
 {
-	return newObject();
+	
 }

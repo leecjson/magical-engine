@@ -104,6 +104,7 @@
     <ClCompile Include="src\support\LuaSupport.cpp" />
     <ClCompile Include="src\support\LuaSystem.cpp" />
     <ClCompile Include="src\tolua\tolua_event.c" />
+    <ClCompile Include="src\tolua\tolua_ext.c" />
     <ClCompile Include="src\tolua\tolua_is.c" />
     <ClCompile Include="src\tolua\tolua_map.c" />
     <ClCompile Include="src\tolua\tolua_push.c" />
@@ -140,6 +141,7 @@
     <ClInclude Include="src\support\LuaSystem.h" />
     <ClInclude Include="src\tolua\tolua++.h" />
     <ClInclude Include="src\tolua\tolua_event.h" />
+    <ClInclude Include="src\tolua\tolua_ext.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

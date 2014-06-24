@@ -27,20 +27,22 @@ SOFTWARE.
 #include <string>
 #include <memory>
 #include "Common.h"
+#include "LuaSupport.h"
 
 class Object_t;
 
 typedef std::shared_ptr<Object_t> Object;
+typedef std::shared_ptr<const Object_t> Object_const;
 #define newObject() (std::move(std::shared_ptr<Object_t>(new Object_t())))
 #define newObject_LuaGC() (new std::shared_ptr<Object_t>(new Object_t()))
 
-class Object_t
+class Object_t : public std::enable_shared_from_this<Object_t>
 {
 public:
 	Object_t( void );
 	virtual ~Object_t( void );
 	std::string toString( void ) const;
-	virtual Object copy();
+	void getlua( LuaFunctionRef ref );
 };
 
 

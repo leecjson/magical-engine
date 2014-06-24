@@ -1,6 +1,6 @@
 /*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 06/24/14 10:30:43.
+** Generated automatically by tolua++-1.0.92 on 06/24/14 23:29:08.
 */
 
 #ifndef __cplusplus
@@ -14,6 +14,7 @@
 TOLUA_API int  tolua_common_open (lua_State* tolua_S);
 
 #include "PlatformMacros.h"
+#include "tolua_ext.h"
 #include "LuaCommon.h"
 #include "magical-engine.h"
 
@@ -39,6 +40,7 @@ static int tolua_collect_Node (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
+ tolua_usertype(tolua_S,"LuaFunctionRef");
  tolua_usertype(tolua_S,"Object");
  tolua_usertype(tolua_S,"Node");
 }
@@ -303,12 +305,12 @@ static int tolua_common_Object_toString00(lua_State* tolua_S)
  else
 #endif
  {
-  const Object_t* self = ((const Object*) tolua_tousertype(tolua_S,1,0))->get();
+  const Object* self = (const Object*)  tolua_tousertype(tolua_S,1,0);
 #ifdef MAG_DEBUG
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'toString'", NULL);
 #endif
   {
-   std::string tolua_ret = (std::string)  self->toString();
+   std::string tolua_ret = (std::string)  self->get()->toString();
    tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
   }
  }
@@ -316,6 +318,39 @@ static int tolua_common_Object_toString00(lua_State* tolua_S)
 #ifdef MAG_DEBUG
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'toString'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getlua of class  Object */
+#ifndef TOLUA_DISABLE_tolua_common_Object_getlua00
+static int tolua_common_Object_getlua00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Object",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_ext_isfunction(tolua_S,2,"LuaFunctionRef",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Object* self = (Object*)  tolua_tousertype(tolua_S,1,0);
+  LuaFunctionRef ref = (  tolua_ext_tofunction(tolua_S,2,0));
+#ifdef MAG_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getlua'", NULL);
+#endif
+  {
+   self->get()->getlua(ref);
+  }
+ }
+ return 0;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getlua'.",&tolua_err);
  return 0;
 #endif
 }
@@ -421,12 +456,12 @@ static int tolua_common_Node_toString00(lua_State* tolua_S)
  else
 #endif
  {
-  const Node_t* self = ((const Node*) tolua_tousertype(tolua_S,1,0))->get();
+  const Node* self = (const Node*)  tolua_tousertype(tolua_S,1,0);
 #ifdef MAG_DEBUG
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'toString'", NULL);
 #endif
   {
-   std::string tolua_ret = (std::string)  self->toString();
+   std::string tolua_ret = (std::string)  self->get()->toString();
    tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
   }
  }
@@ -463,6 +498,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,".call",tolua_common_Object_new00_local);
    tolua_function(tolua_S,"delete",tolua_common_Object_delete00);
    tolua_function(tolua_S,"toString",tolua_common_Object_toString00);
+   tolua_function(tolua_S,"getlua",tolua_common_Object_getlua00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"Node","Node","Object",tolua_collect_Node);

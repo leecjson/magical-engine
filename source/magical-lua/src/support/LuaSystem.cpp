@@ -31,8 +31,6 @@ static LuaState s_global_lua_state = nullptr;
 MAGAPI void magicalLuaSystemInit( void )
 {
 	s_global_lua_state = newLuaState();
-	luaL_openlibs(s_global_lua_state());
-	luaopen_common(_L);
 }
 
 MAGAPI void magicalLuaSystemDelc( void )

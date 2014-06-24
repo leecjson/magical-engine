@@ -1,3 +1,7 @@
+function go()
+print("ok");
+end
+
 function onFinishLaunching() --> void
 
 	magicalBeginObserveObject();
@@ -9,9 +13,17 @@ function onFinishLaunching() --> void
 	o = Object();
 	o = nil;
 	
-	collectgarbage();
+	-- collectgarbage();
 	
 	magicalEndObserveObject(); -- 5
+	
+	o = Object();
+	
+	-- local a = function()
+		-- print("ok");
+	-- end
+	
+	o:getlua( go );
 
 end
 

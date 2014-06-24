@@ -43,7 +43,40 @@ MAGAPI_USER void magicalLuaPrintError( lua_State* L )
 
 		magicalSetLastErrorInfo(buff);
 		magicalReportLastError();
-
 		lua_pop(L, -1);
 	}
+}
+
+MAGAPI_USER void magicalLuaStateDump( lua_State* L, const char* tag )
+{
+	int  i = 0;
+	int  top = lua_gettop(L);
+	char buf[kMaxErrLength];
+	std::string str_buffer;
+
+	sprintf(buf, "Total [%d] in lua stack: %s\n", top, tag ? tag : "");
+	str_buffer += buf;
+
+	for( i = -1; i >= -top; i-- )
+	{
+		int t = lua_type(L, i);
+		switch( t )
+		{
+		case LUA_TSTRING:
+			sprintf(buf, "  [%02d] string %s\n", i, lua_tostring(L, i));
+			break;
+		case LUA_TBOOLEAN:
+			sprintf(buf, "  [%02d] boolean %s\n", i, lua_toboolean(L, i) ? "true" : "false");
+			break;
+		case LUA_TNUMBER:
+			sprintf(buf, "  [%02d] number %g\n", i, lua_tonumber(L, i));
+			break;
+		default:
+			sprintf(buf, "  [%02d] %s\n", i, lua_typename(L, t));
+		}
+		str_buffer += buf;
+	}
+
+	str_buffer += "\n";
+	magicalReport( str_buffer.c_str() );
 }

@@ -4,4 +4,5 @@ public:
 	Object( void );
 	virtual ~Object( void );
 	virtual std::string toString( void ) const;
+	void getlua( LuaFunctionRef ref );
 };

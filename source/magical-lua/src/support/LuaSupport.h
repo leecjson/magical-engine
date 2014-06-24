@@ -26,6 +26,8 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "lua.hpp"
+#include "tolua++.h"
+#include "tolua_ext.h"
 
 #ifndef MAG_LUA_DELEGATE
 #define MAG_LUA_DELEGATE
@@ -37,6 +39,8 @@ extern const char* const kLuaOnDestroy;
 #endif
 
 MAGAPI_USER void magicalLuaPrintError( lua_State* L );
+MAGAPI_USER void magicalLuaStateDump( lua_State* L, const char* tag = nullptr );
+
 
 
 #endif //__LUA_SUPPORT_H__
