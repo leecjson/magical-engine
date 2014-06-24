@@ -26,11 +26,17 @@ SOFTWARE.
 #include "Common.h"
 #include "LuaState.h"
 
+const char* const kLuaMain = "main.lua";
+const char* const kLuaOnFinishLaunching = "onFinishLaunching";
+const char* const kLuaOnCreate = "onCreate";
+const char* const kLuaOnUpdate = "onUpdate";
+const char* const kLuaOnDestroy = "onDestroy";
+
 MAGAPI_USER void magicalLuaPrintError( lua_State* L )
 {
 	if( lua_type(L, -1) == LUA_TSTRING )
 	{
-		char  buff[2048];
+		char  buff[kMaxErrLength];
 		const char* info  = lua_tostring(L, -1);
 		const char* title = magicalTagError("%s");
 		sprintf(buff, title, info);

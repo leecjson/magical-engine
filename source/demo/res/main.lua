@@ -1,6 +1,5 @@
 function onFinishLaunching() --> void
 
-	magicalBeginTickingAndReport();
 	magicalBeginObserveObject();
 
 	local o = Object();
@@ -13,7 +12,6 @@ function onFinishLaunching() --> void
 	collectgarbage();
 	
 	magicalEndObserveObject(); -- 5
-	magicalEndTickingAndReport();
 
 end
 

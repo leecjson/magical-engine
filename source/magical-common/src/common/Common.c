@@ -24,11 +24,12 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
-#define kMaxLogLength 1024 * 16
-
 static int s_last_error = false;
-static char* s_last_error_info = NULL;
-static struct timeval s_tv_ticking;
+static char s_last_error_info[kMaxErrLength] = {0};
+
+#ifdef MAG_DEBUG
+struct timeval g_tv_ticking;
+#endif
 
 #ifdef MAG_DEBUG
 int g_is_observing = false;
@@ -67,7 +68,7 @@ MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
 	time(&now);
 	tm_now = *localtime(&now);
 
-	sprintf(buf, "[Report %d/%02d/%02d %02d:%02d:%02d]: %s  %s:%d", 
+	sprintf(buf, "[Report %d/%02d/%02d %02d:%02d:%02d]: %s  ( %s:%d )", 
 		tm_now.tm_year + 1900,
 		tm_now.tm_mon + 1,
 		tm_now.tm_mday,
@@ -94,14 +95,7 @@ MAGAPI void magicalIgnoreLastError( void )
 
 MAGAPI const char* magicalSetLastErrorInfo( const char* info )
 {
-	if( s_last_error_info )
-	{
-		free(s_last_error_info);
-	}
-
-	s_last_error_info = (char*) malloc(strlen(info) + 1);
 	strcpy(s_last_error_info, info);
-
 	s_last_error = true;
 
 	return magicalGetLastErrorInfo();
@@ -109,7 +103,7 @@ MAGAPI const char* magicalSetLastErrorInfo( const char* info )
 
 MAGAPI const char* magicalGetLastErrorInfo( void )
 {
-	if( s_last_error_info )
+	if( strlen(s_last_error_info) > 0 )
 	{
 		return s_last_error_info;
 	}
@@ -142,58 +136,3 @@ MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
 		magicalReportLastError();
 	}
 }
-
-MAGAPI void magicalBeginTicking( void )
-{
-	magicalGetTimeOfDay(&s_tv_ticking, NULL);
-}
-
-MAGAPI float magicalEndTicking( void )
-{
-	struct timeval tv_now;
-	float  result;
-
-	magicalGetTimeOfDay(&tv_now, NULL);
-	result = (tv_now.tv_sec - s_tv_ticking.tv_sec) + (tv_now.tv_usec - s_tv_ticking.tv_usec) / 1000000.0f;
-	result = MAX(0.0f, result);
-
-	return result;
-}
-
-//#ifdef MAG_DEBUG
-//MAGAPI void magicalBeginObserveObject()
-//{
-//	//char buf[256];
-//	//const char* info;
-//	s_is_observing = true;
-//	s_observer_construct_count = 0;
-//	s_observer_destruct_count = 0;
-//
-//	magicalReport("Observe Object Begin : ");
-//}
-//
-//MAGAPI void magicalEndObserveObject()
-//{
-//	char buf[256];
-//	sprintf(buf, "Observe Object Ended : construct=%d destruct=%d", s_observer_construct_count, s_observer_destruct_count);
-//	s_is_observing = false;
-//	
-//	magicalReport(buf);
-//}
-//
-//MAGAPI void magicalObjectConstruct()
-//{
-//	if( s_is_observing )
-//	{
-//		++ s_observer_construct_count;
-//	}
-//}
-//
-//MAGAPI void magicalObjectDestruct()
-//{
-//	if( s_is_observing )
-//	{
-//		++ s_observer_destruct_count;
-//	}
-//}
-//#endif

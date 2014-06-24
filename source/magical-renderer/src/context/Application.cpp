@@ -25,10 +25,11 @@ SOFTWARE.
 #include "Application.h"
 #include "Common.h"
 #include "Engine.h"
+#include "LuaSystem.h"
 
 #include "glut/glut.h"
 
-static EventOnFinishLaunching s_on_finish_launching_callback;
+static EventOnFinishLaunching s_on_finish_launching_callback = nullptr;
 
 static bool magicalWin32SetupGL( void )
 {
@@ -51,7 +52,7 @@ static bool magicalWin32ShutdownGL( void )
 }
 
 static void magicalWin32GlutReshape( int w, int h )
-{
+{ 
 	magicalOnReshape(w, h);
 }
 
@@ -94,6 +95,11 @@ MAGAPI_USER void magicalRun( void )
 	}
 
 	s_on_finish_launching_callback();
+
+	LuaState& L = magicalGetLuaSystemState();
+	L->executeScriptFile(kLuaMain);
+	L->executeGlobalFunction(kLuaOnFinishLaunching);
+	L->clean();
 
 	glutMainLoop();
 

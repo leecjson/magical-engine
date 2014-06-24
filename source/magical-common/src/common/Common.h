@@ -56,6 +56,12 @@ general macros
 #define MAX(a,b) (((a) < (b)) ? (b) : (a))
 #endif
 
+#ifndef MAG_LENGTH
+#define MAG_LENGTH
+#define kMaxLogLength 1024 * 16
+#define kMaxErrLength 1024
+#endif
+
 /*
 log and report function
 */
@@ -112,22 +118,27 @@ extern int gettimeofday( struct timeval* tv, struct timezone* tz );
 #endif
 MAGAPI void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
 
-MAGAPI void  magicalBeginTicking( void );
-MAGAPI float magicalEndTicking( void );
+#ifdef MAG_DEBUG
+extern struct timeval g_tv_ticking;
+#endif
 
-#ifndef MAG_DEBUG
-#define magicalBeginTickingAndReport()
-#define magicalEndTickingAndReport()
+#ifdef MAG_DEBUG
+#define magicalBeginTicking() do {                                                \
+	magicalReport( "Begin Ticking : --------" );                                  \
+	magicalGetTimeOfDay(&g_tv_ticking, NULL);                                     \
+	} while(0)
+#define magicalEndTicking() do {                                                  \
+	struct timeval __tv_now; float __result; char __tmbf[256];                    \
+	magicalGetTimeOfDay(&__tv_now, NULL);                                         \
+	__result = (__tv_now.tv_sec - g_tv_ticking.tv_sec) +                          \
+	(__tv_now.tv_usec - g_tv_ticking.tv_usec) / 1000000.0f;                       \
+	__result = MAX(0.0f, __result);                                               \
+	sprintf( __tmbf, "Ended Ticking : %.6f", __result );                          \
+	magicalReport( __tmbf );                                                      \
+	} while(0)
 #else
-#define magicalBeginTickingAndReport() do {                             \
-	magicalReport("Begin Ticking : --------    ");                      \
-	magicalBeginTicking();                                              \
-	} while(0)
-#define magicalEndTickingAndReport() do {                               \
-	char __tmbf[256];                                                   \
-	sprintf( __tmbf, "Ended Ticking : %.6f    ", magicalEndTicking() ); \
-	magicalReport( __tmbf );                                            \
-	} while(0)
+#define magicalBeginTicking()
+#define magicalEndTicking()
 #endif
 
 /*
@@ -140,25 +151,27 @@ extern int g_observer_destruct_count;
 #endif
 
 #ifdef MAG_DEBUG
-#define magicalBeginObserveObject() do {                                        \
-	g_is_observing = true;                                                      \
-	g_observer_construct_count = 0;                                             \
-	g_observer_destruct_count = 0;                                              \
-	magicalReport("Begin Observe Object : ---------------------------    ");    \
+#define magicalBeginObserveObject() do {                                               \
+	if( g_is_observing ) break;                                                        \
+	magicalReport( "Begin Observe Object : ----------------------------------" );      \
+	g_is_observing = true;                                                             \
+	g_observer_construct_count = 0;                                                    \
+	g_observer_destruct_count  = 0;                                                    \
 	} while(0)
-#define magicalEndObserveObject() do {                                          \
-	char __tmbf[256];                                                           \
-	sprintf( __tmbf, "Ended Observe Object : Construct = %d Destruct = %d    ", \
-	g_observer_construct_count,                                                 \
-	g_observer_destruct_count );                                                \
-	g_is_observing = false;                                                     \
-	magicalReport( __tmbf );                                                    \
+#define magicalEndObserveObject() do {                                                 \
+	if(! g_is_observing ) break;                                                       \
+	char __tmbf[256];                                                                  \
+	sprintf( __tmbf, "Ended Observe Object : Construct = %05d Destruct = %05d",        \
+	g_observer_construct_count,                                                        \
+	g_observer_destruct_count );                                                       \
+	g_is_observing = false;                                                            \
+	magicalReport( __tmbf );                                                           \
 	} while(0)
-#define magicalObjectConstruct() do {                                           \
-	if( g_is_observing ) ++ g_observer_construct_count;                         \
+#define magicalObjectConstruct() do {                                                  \
+	if( g_is_observing ) ++ g_observer_construct_count;                                \
 	} while(0)
-#define magicalObjectDestruct() do {                                            \
-	if( g_is_observing ) ++ g_observer_destruct_count;                          \
+#define magicalObjectDestruct() do {                                                   \
+	if( g_is_observing ) ++ g_observer_destruct_count;                                 \
 	} while(0)
 #else
 #define magicalBeginObserveObject()

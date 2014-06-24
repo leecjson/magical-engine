@@ -24,40 +24,12 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "LuaState.h"
 #include "Common.h"
-#include "LuaCommon.h"
-#include "lua.hpp"
 
 LuaState_t::LuaState_t( void )
 : _L(nullptr)
 {
 	_L = luaL_newstate();
 	magicalAssert(_L, "_L = luaL_newstate()");
-	luaL_openlibs(_L);
-	luaopen_common(_L);
-}
-
-LuaState_t::LuaState_t( LuaState_t& other )
-{
-	operator=(other);
-}
-
-LuaState_t::LuaState_t( LuaState_t&& other )
-{
-	operator=(std::forward<LuaState_t>(other));
-}
-
-LuaState_t& LuaState_t::operator=( LuaState_t& other )
-{
-	_L = other._L;
-	other._L = nullptr;
-	return *this;
-}
-
-LuaState_t& LuaState_t::operator=( LuaState_t&& other )
-{
-	_L = other._L;
-	other._L = nullptr;
-	return *this;
 }
 
 LuaState_t::~LuaState_t( void )

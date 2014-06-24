@@ -23,12 +23,16 @@ SOFTWARE.
 *******************************************************************************/
 #include "PlatformMacros.h"
 #include "LuaSystem.h"
+#include "LuaCommon.h"
+#include "lua.hpp"
 
 static LuaState s_global_lua_state = nullptr;
 
 MAGAPI void magicalLuaSystemInit( void )
 {
 	s_global_lua_state = newLuaState();
+	luaL_openlibs(s_global_lua_state());
+	luaopen_common(_L);
 }
 
 MAGAPI void magicalLuaSystemDelc( void )
@@ -36,7 +40,7 @@ MAGAPI void magicalLuaSystemDelc( void )
 	s_global_lua_state.reset();
 }
 
-MAGAPI_USER LuaState& magicalGetLuaSystemState()
+MAGAPI_USER LuaState& magicalGetLuaState( void )
 {
 	return s_global_lua_state;
 }

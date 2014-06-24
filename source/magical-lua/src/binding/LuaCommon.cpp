@@ -1,6 +1,6 @@
 /*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 06/24/14 00:59:40.
+** Generated automatically by tolua++-1.0.92 on 06/24/14 10:30:43.
 */
 
 #ifndef __cplusplus
@@ -139,66 +139,13 @@ static int tolua_common_magicalEndTicking00(lua_State* tolua_S)
 #endif
  {
   {
-   float tolua_ret = (float)  magicalEndTicking();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   magicalEndTicking();
   }
  }
- return 1;
+ return 0;
 #ifdef MAG_DEBUG
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'magicalEndTicking'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* function: magicalBeginTickingAndReport */
-#ifndef TOLUA_DISABLE_tolua_common_magicalBeginTickingAndReport00
-static int tolua_common_magicalBeginTickingAndReport00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isnoobj(tolua_S,1,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   magicalBeginTickingAndReport();
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'magicalBeginTickingAndReport'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* function: magicalEndTickingAndReport */
-#ifndef TOLUA_DISABLE_tolua_common_magicalEndTickingAndReport00
-static int tolua_common_magicalEndTickingAndReport00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isnoobj(tolua_S,1,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   magicalEndTickingAndReport();
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'magicalEndTickingAndReport'.",&tolua_err);
  return 0;
 #endif
 }
@@ -503,8 +450,6 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
   tolua_function(tolua_S,"magicalReport",tolua_common_magicalReport00);
   tolua_function(tolua_S,"magicalBeginTicking",tolua_common_magicalBeginTicking00);
   tolua_function(tolua_S,"magicalEndTicking",tolua_common_magicalEndTicking00);
-  tolua_function(tolua_S,"magicalBeginTickingAndReport",tolua_common_magicalBeginTickingAndReport00);
-  tolua_function(tolua_S,"magicalEndTickingAndReport",tolua_common_magicalEndTickingAndReport00);
   tolua_function(tolua_S,"magicalBeginObserveObject",tolua_common_magicalBeginObserveObject00);
   tolua_function(tolua_S,"magicalEndObserveObject",tolua_common_magicalEndObserveObject00);
   #ifdef __cplusplus

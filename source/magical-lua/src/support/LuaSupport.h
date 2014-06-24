@@ -29,7 +29,11 @@ SOFTWARE.
 
 #ifndef MAG_LUA_DELEGATE
 #define MAG_LUA_DELEGATE
-#define MAG_LUA_ON_FINISH_LAUNCHING "onFinishLaunching"
+extern const char* const kLuaMain;
+extern const char* const kLuaOnFinishLaunching;
+extern const char* const kLuaOnCreate;
+extern const char* const kLuaOnUpdate;
+extern const char* const kLuaOnDestroy;
 #endif
 
 MAGAPI_USER void magicalLuaPrintError( lua_State* L );

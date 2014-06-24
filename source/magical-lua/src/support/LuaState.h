@@ -31,10 +31,6 @@ class LuaState_t : public Object_t
 {
 public:
 	LuaState_t( void );
-	LuaState_t( LuaState_t& other );
-	LuaState_t( LuaState_t&& other );
-	LuaState_t& operator=( LuaState_t& other );
-	LuaState_t& operator=( LuaState_t&& other );
 	virtual ~LuaState_t( void );
 
 	int executeScriptFile( const char* file );

@@ -8,9 +8,7 @@ extern void magicalReport( const char* __str );
 time function
 */
 extern void magicalBeginTicking( void );
-extern float magicalEndTicking( void );
-extern void magicalBeginTickingAndReport( void );
-extern void magicalEndTickingAndReport( void );
+extern void magicalEndTicking( void );
 
 /*
 object observer

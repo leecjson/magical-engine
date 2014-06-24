@@ -25,10 +25,7 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
-	LuaState& L = magicalGetLuaSystemState();
-	L->executeScriptFile("main.lua");
-	L->executeGlobalFunction(MAG_LUA_ON_FINISH_LAUNCHING);
-	L->clean();
+	
 }
 
 int main(int argc, char* argv[])
