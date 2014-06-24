@@ -48,16 +48,10 @@
     <ClInclude Include="src\context\win32\gl\wglew.h">
       <Filter>src\context\win32\gl</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine.h">
-      <Filter>src</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderer\GLFunction.c">
       <Filter>src\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\context\Application.cpp">
       <Filter>src\context\win32</Filter>

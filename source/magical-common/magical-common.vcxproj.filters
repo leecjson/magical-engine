@@ -22,6 +22,9 @@
     <Filter Include="src\node">
       <UniqueIdentifier>{b7c84fd9-5b91-4917-8083-37ecc9a27634}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{aa305815-01b9-479a-a322-fbcd322c0d05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common\Object.h">
@@ -87,6 +90,9 @@
     <ClInclude Include="src\include\magical-engine.h">
       <Filter>src\include</Filter>
     </ClInclude>
+    <ClInclude Include="src\engine\Engine.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\common\Object.cpp">
@@ -139,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="src\node\Node.cpp">
       <Filter>src\node</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Engine.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
