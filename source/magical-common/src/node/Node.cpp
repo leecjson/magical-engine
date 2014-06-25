@@ -37,10 +37,6 @@ Node_t::~Node_t( void )
 
 std::string Node_t::toString( void ) const
 {
-	const Object_t* gs  = shared_from_this().get();
-
-	gs->getlua();
-
 	std::string info = "Node_t";
 	return std::move(info);
 }

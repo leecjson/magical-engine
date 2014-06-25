@@ -24,29 +24,37 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
-static int s_last_error = false;
+static bool s_last_error = false;
 static char s_last_error_info[kMaxErrLength] = {0};
 
-#ifdef MAG_DEBUG
 struct timeval g_tv_ticking;
+
+#ifdef MAG_DEBUG
+bool g_is_observing = false;
+int  g_observer_construct_count = 0;
+int  g_observer_destruct_count = 0;
 #endif
 
 #ifdef MAG_DEBUG
-int g_is_observing = false;
-int g_observer_construct_count = 0;
-int g_observer_destruct_count = 0;
-#endif
 
-MAGAPI_USER void magicalLogImpl( const char* str )
+MAGAPI void magicalLogImpl( const char* str )
 {
 #ifdef MAG_WIN32
     OutputDebugStringA(str);
     OutputDebugStringA("\n");
 	printf("%s\n", str);
 #endif
+#ifdef MAG_ANDROID
+#endif
+#ifdef MAG_IOS
+#endif
+#ifdef MAG_LINUX
+#endif
+#ifdef MAG_MAC
+#endif
 }
 
-MAGAPI_USER void magicalLogFormatImpl( const char* format, ... )
+MAGAPI void magicalLogFormatImpl( const char* format, ... )
 {
 	char buf[kMaxLogLength];
 
@@ -58,32 +66,69 @@ MAGAPI_USER void magicalLogFormatImpl( const char* format, ... )
 	magicalLogImpl(buf);
 }
 
-MAGAPI void magicalReportImpl( const char* str, const char* function, int line )
-{
-	char buf[kMaxLogLength];
+#endif
 
+#ifdef MAG_DEBUG
+
+MAGAPI void magicalReportImpl( int level, const char* str, const char* function, int line )
+{
+	char   buf[ kMaxLogLength ];
+#ifdef MAG_WIN32
 	struct tm tm_now;
 	time_t now;
-	
-	time(&now);
-	tm_now = *localtime(&now);
+#endif
+#ifdef MAG_ANDROID
+#endif
+#ifdef MAG_IOS
+#endif
+#ifdef MAG_LINUX
+#endif
+#ifdef MAG_MAC
+#endif
 
-	sprintf(buf, "[Report %d/%02d/%02d %02d:%02d:%02d]: %s  ( %s:%d )", 
-		tm_now.tm_year + 1900,
-		tm_now.tm_mon + 1,
-		tm_now.tm_mday,
-		tm_now.tm_hour,
-		tm_now.tm_min,
-		tm_now.tm_sec,
-		str,
-		function, 
-		line
-		);
-
-	magicalLog(buf);
+#ifdef MAG_WIN32
+	time( &now );
+	tm_now = *localtime( &now );
+	switch( level )
+	{
+	case MAG_REPORT_DEBUG:
+		sprintf(buf, "[Report-Debug %02d/%02d %02d:%02d:%02d]: %s",
+			tm_now.tm_mon + 1,
+			tm_now.tm_mday,
+			tm_now.tm_hour,
+			tm_now.tm_min,
+			tm_now.tm_sec,
+			str);
+		break;
+	case MAG_REPORT_ERROR:
+		sprintf(buf, "[Report-Error %02d/%02d %02d:%02d:%02d]: %s  ( %s:%d )",
+			tm_now.tm_mon + 1,
+			tm_now.tm_mday,
+			tm_now.tm_hour,
+			tm_now.tm_min,
+			tm_now.tm_sec,
+			str,
+			function, 
+			line);
+		break;
+	}
+    OutputDebugStringA(buf);
+    OutputDebugStringA("\n");
+	printf("%s\n", buf);
+#endif
+#ifdef MAG_ANDROID
+#endif
+#ifdef MAG_IOS
+#endif
+#ifdef MAG_LINUX
+#endif
+#ifdef MAG_MAC
+#endif
 }
 
-MAGAPI int magicalIsError( void )
+#endif
+
+MAGAPI bool magicalIsError( void )
 {
 	return s_last_error;
 }
@@ -114,7 +159,8 @@ MAGAPI const char* magicalGetLastErrorInfo( void )
 }
 
 #ifdef MAG_WIN32
-extern int gettimeofday( struct timeval* tv, struct timezone* tz )
+
+extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz )
 {
 	LARGE_INTEGER time, freq;
 	if( tv != NULL )
@@ -126,13 +172,30 @@ extern int gettimeofday( struct timeval* tv, struct timezone* tz )
     }
 	return 0;
 }
+
 #endif
 
 MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
 {
 	if( gettimeofday(tv, tz) != 0 )
 	{
-		magicalSetLastErrorInfo(magicalTagError("gettimeofday(tv, tz)"));
+		magicalSetLastErrorInfo("gettimeofday(tv, tz) return != 0");
 		magicalReportLastError();
 	}
 }
+
+MAGAPI_USER void magicalBeginTicking( void )
+{
+	magicalGetTimeOfDay(&g_tv_ticking, NULL);
+}
+
+MAGAPI_USER float magicalEndTicking( void )
+{
+	float  result;
+	struct timeval tv_now;
+	magicalGetTimeOfDay(&tv_now, NULL);
+	result = (tv_now.tv_sec - g_tv_ticking.tv_sec) +  (tv_now.tv_usec - g_tv_ticking.tv_usec) / 1000000.0f;
+	result = MAX(0.0f, result);
+	return result;
+}
+

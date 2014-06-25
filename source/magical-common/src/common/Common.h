@@ -42,10 +42,6 @@ platform include
 
 #include "PlatformMacros.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
 general macros
 */
@@ -56,10 +52,10 @@ general macros
 #define MAX(a,b) (((a) < (b)) ? (b) : (a))
 #endif
 
-#ifndef MAG_LENGTH
-#define MAG_LENGTH
-#define kMaxLogLength 1024 * 16
-#define kMaxErrLength 1024
+#ifndef MAG_BUFF_LENGTH
+#define MAG_BUFF_LENGTH
+#define kMaxLogLength (1024 * 16)
+#define kMaxErrLength (1024)
 #endif
 
 /*
@@ -70,27 +66,29 @@ log and report function
 #define magicalLogFormat( __format, ... )
 #else
 #define magicalLog( __str ) magicalLogImpl( __str )
-#define magicalLogFormat( __format, ... ) magicalLogFormatImpl( __format, ##__VA_ARGS__)
+#define magicalLogFormat( __format, ... ) magicalLogFormatImpl( __format, ##__VA_ARGS__ )
+MAGAPI void magicalLogImpl( const char* str );
+MAGAPI void magicalLogFormatImpl( const char* format, ... );
 #endif
-MAGAPI_USER void magicalLogImpl( const char* str );
-MAGAPI_USER void magicalLogFormatImpl( const char* format, ... );
 
-#define magicalTagError( __msg )  ("Error " ##__msg)
-#define magicalTagAssert( __msg ) ("Assert " ##__msg)
+#if defined( MAG_DEBUG )
+#define MAG_REPORT_DEBUG 1
+#define MAG_REPORT_ERROR 2
+#endif
 
 #ifndef MAG_DEBUG
 #define magicalReport( __str )
 #define magicalReportLastError()
 #else
-#define magicalReport( __str ) magicalReportImpl( __str, __FUNCTION__, __LINE__ )
-#define magicalReportLastError() magicalReportImpl( magicalGetLastErrorInfo(), __FUNCTION__, __LINE__ )
+#define magicalReport( __str ) magicalReportImpl( MAG_REPORT_DEBUG, __str, __FUNCTION__, __LINE__ )
+#define magicalReportLastError() magicalReportImpl( MAG_REPORT_ERROR, magicalGetLastErrorInfo(), __FUNCTION__, __LINE__ )
+MAGAPI void magicalReportImpl( int level, const char* str, const char* function, int line );
 #endif
-MAGAPI void magicalReportImpl( const char* str, const char* function, int line );
 
 /*
 general error signal
 */
-MAGAPI int magicalIsError( void );
+MAGAPI bool magicalIsError( void );
 MAGAPI void magicalIgnoreLastError( void );
 MAGAPI const char* magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
@@ -101,7 +99,7 @@ assert function
 #ifdef MAG_DEBUG
 #define magicalAssert( __con, __msg ) do {                    \
 	if( !(__con) ) {                                          \
-		magicalSetLastErrorInfo( magicalTagAssert( __msg ) ); \
+		magicalSetLastErrorInfo( "Assert " ##__msg );         \
 		magicalReportLastError();                             \
 		assert(0);                                            \
 	}                                                         \
@@ -114,54 +112,49 @@ assert function
 time function
 */
 #ifdef MAG_WIN32
-extern int gettimeofday( struct timeval* tv, struct timezone* tz );
+extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz );
 #endif
 MAGAPI void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
 
-#ifdef MAG_DEBUG
-extern struct timeval g_tv_ticking;
-#endif
+MAGAPI_USER void magicalBeginTicking( void );
+MAGAPI_USER float magicalEndTicking( void );
 
-#ifdef MAG_DEBUG
-#define magicalBeginTicking() do {                                                \
-	magicalReport( "Begin Ticking : --------" );                                  \
-	magicalGetTimeOfDay(&g_tv_ticking, NULL);                                     \
-	} while(0)
-#define magicalEndTicking() do {                                                  \
-	struct timeval __tv_now; float __result; char __tmbf[256];                    \
-	magicalGetTimeOfDay(&__tv_now, NULL);                                         \
-	__result = (__tv_now.tv_sec - g_tv_ticking.tv_sec) +                          \
-	(__tv_now.tv_usec - g_tv_ticking.tv_usec) / 1000000.0f;                       \
-	__result = MAX(0.0f, __result);                                               \
-	sprintf( __tmbf, "Ended Ticking : %.6f", __result );                          \
-	magicalReport( __tmbf );                                                      \
-	} while(0)
+#ifndef MAG_DEBUG
+#define magicalBeginTickingAndReport()
+#define magicalEndTickingAndReport()
 #else
-#define magicalBeginTicking()
-#define magicalEndTicking()
+#define magicalBeginTickingAndReport() do {                             \
+	magicalReport("Begin Ticking : --------");                          \
+	magicalBeginTicking();                                              \
+	} while(0)                                                          
+#define magicalEndTickingAndReport() do {                               \
+	char __bf[ 256 ];                                                   \
+	sprintf( __bf, "Ended Ticking : %.6f", magicalEndTicking() );       \
+	magicalReport( __bf );                                              \
+	} while(0)
 #endif
 
 /*
 object observer
 */
 #ifdef MAG_DEBUG
-extern int g_is_observing;
-extern int g_observer_construct_count;
-extern int g_observer_destruct_count;
+extern bool g_is_observing;
+extern int  g_observer_construct_count;
+extern int  g_observer_destruct_count;
 #endif
 
 #ifdef MAG_DEBUG
-#define magicalBeginObserveObject() do {                                               \
+#define magicalBeginObserveObjectAndReport() do {                                      \
 	if( g_is_observing ) break;                                                        \
-	magicalReport( "Begin Observe Object : ----------------------------------" );      \
+	magicalReport( "Begin Observe Object : ----------------------------" );            \
 	g_is_observing = true;                                                             \
 	g_observer_construct_count = 0;                                                    \
 	g_observer_destruct_count  = 0;                                                    \
 	} while(0)
-#define magicalEndObserveObject() do {                                                 \
+#define magicalEndObserveObjectAndReport() do {                                        \
 	if(! g_is_observing ) break;                                                       \
 	char __tmbf[256];                                                                  \
-	sprintf( __tmbf, "Ended Observe Object : Construct = %05d Destruct = %05d",        \
+	sprintf( __tmbf, "Ended Observe Object : Construct = %d Destruct = %d",            \
 	g_observer_construct_count,                                                        \
 	g_observer_destruct_count );                                                       \
 	g_is_observing = false;                                                            \
@@ -174,14 +167,10 @@ extern int g_observer_destruct_count;
 	if( g_is_observing ) ++ g_observer_destruct_count;                                 \
 	} while(0)
 #else
-#define magicalBeginObserveObject()
-#define magicalEndObserveObject()
+#define magicalBeginObserveObjectAndReport()
+#define magicalEndObserveObjectAndReport()
 #define magicalObjectConstruct()
 #define magicalObjectDestruct()
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif //__COMMON_H__

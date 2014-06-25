@@ -98,9 +98,6 @@
     <ClCompile Include="src\common\Object.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="src\common\Common.c">
-      <Filter>src\common</Filter>
-    </ClCompile>
     <ClCompile Include="src\common\Geometry.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
@@ -148,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="src\engine\Engine.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\common\Common.cpp">
+      <Filter>src\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -38,9 +38,12 @@ extern const char* const kLuaOnUpdate;
 extern const char* const kLuaOnDestroy;
 #endif
 
-MAGAPI_USER void magicalLuaPrintError( lua_State* L );
-MAGAPI_USER void magicalLuaStateDump( lua_State* L, const char* tag = nullptr );
-
+#ifdef MAG_DEBUG
+#define magicalLuaStateDump( __L ) magicalLuaStateDumpImpl( __L )
+MAGAPI_USER void magicalLuaStateDumpImpl( lua_State* L );
+#else
+#define magicalLuaStateDump( __L )
+#endif
 
 
 #endif //__LUA_SUPPORT_H__

@@ -27,11 +27,14 @@ SOFTWARE.
 #include <string>
 #include <memory>
 
-template< class Type >
-inline std::string magicalToString( const char* format, Type param )
+template< int __Size >
+inline std::string magicalStringFormat( const char* format, ... )
 {
-	char buf[128];
-	sprintf(buf, format, param);
+	char buf[__Size];
+	va_list args;
+	va_start(args, format);
+	vsnprintf(buf, __Size, format, args);
+	va_end(args);
 	return std::move(std::string(buf));
 }
 

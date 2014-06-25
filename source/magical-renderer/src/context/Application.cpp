@@ -38,7 +38,7 @@ static bool magicalWin32SetupGL( void )
 	result = glewInit();
 	if( result != GLEW_OK )
 	{
-		magicalSetLastErrorInfo(magicalTagError("init glew"));
+		magicalSetLastErrorInfo("init glew error");
 		magicalReportLastError();
 		return false;
 	}
@@ -95,11 +95,6 @@ MAGAPI_USER void magicalRun( void )
 	}
 
 	s_on_finish_launching_callback();
-
-	LuaState& L = magicalGetLuaState();
-	L->executeScriptFile(kLuaMain);
-	L->executeGlobalFunction(kLuaOnFinishLaunching);
-	L->clean();
 
 	glutMainLoop();
 

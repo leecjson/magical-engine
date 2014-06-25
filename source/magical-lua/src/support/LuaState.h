@@ -27,30 +27,40 @@ SOFTWARE.
 #include "Object.h"
 #include "LuaSupport.h"
 
+class LuaState_t;
+
+typedef std::shared_ptr<LuaState_t> LuaState;
+typedef std::shared_ptr<const LuaState_t> LuaState_const;
+#define newLuaState() (std::move(std::shared_ptr<LuaState_t>(new LuaState_t())))
+
 class LuaState_t : public Object_t
 {
 public:
 	LuaState_t( void );
 	virtual ~LuaState_t( void );
 
-	int executeScriptFile( const char* file );
-	int executeScriptCode( const char* codes );
-	int executeGlobalFunction(const char* func_name, int retc = 0, int argc = 0 );
-	void pushNil( void );
-	void pushInt( int num );
-	void pushFloat( float num );
-	void pushBoolean( bool con );
-	void pushString( const char* str );
-	void pushString( const char* str, int len );
-	//void pushUserData( void* obj, const char* type );
-	void clean( void );
+	lua_State* getState( void ) const;
+	int executeScriptFile( const char* file ) const;
+	int executeScriptCode( const char* codes ) const;
+	int executeGlobalFunction( const char* func_name, int retc = 0, int argc = 0 ) const;
+	int isGlobalFunctionExists( const char* func_name ) const;
+
+	void pushNil( void ) const;
+	void pushInt( int num ) const;
+	void pushFloat( float num ) const;
+	void pushBoolean( bool con ) const;
+	void pushString( const char* str ) const;
+	void pushString( const char* str, int len ) const;
+	void pushUserData( void* obj, const char* type ) const;
+	void clean( void ) const;
+
+private:
+	void handleLuaError( void ) const;
 
 private:
 	lua_State* _L;
 };
 
-typedef std::shared_ptr<LuaState_t> LuaState;
-#define newLuaState() (std::move(std::shared_ptr<LuaState_t>(new LuaState_t())))
-#define newNode_LuaGC() (new std::shared_ptr<Node_t>(new Node_t()))
+
 
 #endif //__LUA_STATE_H__

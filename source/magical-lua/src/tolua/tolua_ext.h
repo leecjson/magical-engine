@@ -33,7 +33,7 @@ extern "C" {
 typedef int LuaFunctionRef;
 
 #ifndef TOLUA_REFID_FUNCTION_MAPPING
-#define TOLUA_REFID_FUNCTION_MAPPING "trfm"
+#define TOLUA_REFID_FUNCTION_MAPPING "__trfm__"
 #endif
 
 TOLUA_API void luaopen_tolua_ext( lua_State* L );

@@ -41,8 +41,3 @@ std::string Object_t::toString( void ) const
 	std::string info = "Object_t";
 	return std::move(info);
 }
-
-void Object_t::getlua( LuaFunctionRef ref )
-{
-	
-}

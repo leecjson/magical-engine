@@ -42,7 +42,6 @@ public:
 	Object_t( void );
 	virtual ~Object_t( void );
 	std::string toString( void ) const;
-	void getlua( LuaFunctionRef ref );
 };
 
 

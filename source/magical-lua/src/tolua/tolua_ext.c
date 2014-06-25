@@ -51,7 +51,7 @@ TOLUA_API int tolua_ext_tofunction( lua_State* L, int lo, int def )
 {
     if(!lua_isfunction(L, lo)) return 0;
     
-    s_function_ref_id++;
+    ++s_function_ref_id;
     
     lua_pushstring(L, TOLUA_REFID_FUNCTION_MAPPING);
     lua_rawget(L, LUA_REGISTRYINDEX);

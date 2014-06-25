@@ -2,28 +2,29 @@ function go()
 print("ok");
 end
 
+a = {};
+
 function onFinishLaunching() --> void
 
-	magicalBeginObserveObject();
-
+	magicalBeginTickingAndReport();
+	magicalBeginObserveObjectAndReport();
+	
 	local o = Object();
 	o = Object();
 	o = Object();
 	o = Object();
 	o = Object();
 	o = nil;
-	
 	-- collectgarbage();
 	
-	magicalEndObserveObject(); -- 5
+	magicalEndObserveObjectAndReport(); -- 5
+	magicalEndTickingAndReport();
 	
 	o = Object();
 	
 	-- local a = function()
 		-- print("ok");
 	-- end
-	
-	o:getlua( go );
 
 end
 

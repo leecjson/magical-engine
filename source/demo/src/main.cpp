@@ -25,7 +25,13 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
-	
+	LuaState& L = magicalGetLuaState();
+	L->executeScriptFile(kLuaMain);
+	L->executeGlobalFunction(kLuaOnFinishLaunching);
+
+	magicalLuaStateDump(L->getState());
+
+	L->clean();
 }
 
 int main(int argc, char* argv[])
@@ -34,3 +40,11 @@ int main(int argc, char* argv[])
 	magicalRun();
 	return 0;
 }
+
+//class A : std::enable_shared_from_this<A>
+//{
+//public:
+//	A() {
+//		std::shared_ptr<A> a = shared_from_this();
+//	}
+//};

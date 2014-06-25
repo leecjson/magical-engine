@@ -25,37 +25,24 @@ SOFTWARE.
 #include "LuaSupport.h"
 #include "Common.h"
 #include "LuaState.h"
+#include "LuaSystem.h"
 
 const char* const kLuaMain = "main.lua";
 const char* const kLuaOnFinishLaunching = "onFinishLaunching";
-const char* const kLuaOnCreate = "onCreate";
-const char* const kLuaOnUpdate = "onUpdate";
+const char* const kLuaOnCreate  = "onCreate";
+const char* const kLuaOnUpdate  = "onUpdate";
 const char* const kLuaOnDestroy = "onDestroy";
 
-MAGAPI_USER void magicalLuaPrintError( lua_State* L )
-{
-	if( lua_type(L, -1) == LUA_TSTRING )
-	{
-		char  buff[kMaxErrLength];
-		const char* info  = lua_tostring(L, -1);
-		const char* title = magicalTagError("%s");
-		sprintf(buff, title, info);
+#ifdef MAG_DEBUG
 
-		magicalSetLastErrorInfo(buff);
-		magicalReportLastError();
-		lua_pop(L, -1);
-	}
-}
-
-MAGAPI_USER void magicalLuaStateDump( lua_State* L, const char* tag )
+MAGAPI_USER void magicalLuaStateDumpImpl( lua_State* L )
 {
+	char buf[kMaxErrLength];
 	int  i = 0;
 	int  top = lua_gettop(L);
-	char buf[kMaxErrLength];
-	std::string str_buffer;
 
-	sprintf(buf, "Total [%d] in lua stack: %s\n", top, tag ? tag : "");
-	str_buffer += buf;
+	sprintf(buf, "Total [%d] in lua stack: ", top);
+	magicalReport(buf);
 
 	for( i = -1; i >= -top; i-- )
 	{
@@ -63,20 +50,19 @@ MAGAPI_USER void magicalLuaStateDump( lua_State* L, const char* tag )
 		switch( t )
 		{
 		case LUA_TSTRING:
-			sprintf(buf, "  [%02d] string %s\n", i, lua_tostring(L, i));
+			sprintf(buf, "[%02d] string %s\n", i, lua_tostring(L, i));
 			break;
 		case LUA_TBOOLEAN:
-			sprintf(buf, "  [%02d] boolean %s\n", i, lua_toboolean(L, i) ? "true" : "false");
+			sprintf(buf, "[%02d] boolean %s\n", i, lua_toboolean(L, i) ? "true" : "false");
 			break;
 		case LUA_TNUMBER:
-			sprintf(buf, "  [%02d] number %g\n", i, lua_tonumber(L, i));
+			sprintf(buf, "[%02d] number %g\n", i, lua_tonumber(L, i));
 			break;
 		default:
-			sprintf(buf, "  [%02d] %s\n", i, lua_typename(L, t));
+			sprintf(buf, "[%02d] %s\n", i, lua_typename(L, t));
 		}
-		str_buffer += buf;
+		magicalReport(buf);
 	}
-
-	str_buffer += "\n";
-	magicalReport( str_buffer.c_str() );
 }
+
+#endif

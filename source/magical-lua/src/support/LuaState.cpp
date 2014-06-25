@@ -46,31 +46,36 @@ LuaState_t::~LuaState_t( void )
 	}
 }
 
-int LuaState_t::executeScriptFile( const char* file )
+lua_State* LuaState_t::getState( void ) const
+{
+	return _L;
+}
+
+int LuaState_t::executeScriptFile( const char* file ) const
 {
 	int ret = luaL_dofile(_L, file);
 	if( ret != 0 )
 	{
-		magicalLuaPrintError(_L);
+		handleLuaError();
 		lua_pop(_L, 1);
 		return ret;
 	}
 	return 0;
 }
 
-int LuaState_t::executeScriptCode( const char* codes )
+int LuaState_t::executeScriptCode( const char* codes ) const
 {
 	int ret = luaL_dostring(_L, codes);
 	if( ret != 0 )
 	{
-		magicalLuaPrintError(_L);
+		handleLuaError();
 		lua_pop(_L, 1);
 		return ret;
 	}
 	return 0;
 }
 
-int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc )
+int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc ) const
 {
 	lua_getglobal(_L, func_name);
 	if( lua_isfunction(_L, -1) )
@@ -87,14 +92,15 @@ int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc
 		}
 		if( ret != 0 )
 		{
-			magicalLuaPrintError(_L);
+			handleLuaError();
 		}
 		return ret;
 	}
 	else
 	{
 		char buf[256];
-		sprintf(buf, magicalTagError("name '%s' does not represent a lua function"), func_name);
+		sprintf(buf, "name '%s' does not represent a lua global function", func_name);
+
 		magicalSetLastErrorInfo(buf);
 		magicalReportLastError();
 		lua_pop(_L, 1);
@@ -102,42 +108,62 @@ int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc
 	return -1;
 }
 
-void LuaState_t::pushNil( void )
+int LuaState_t::isGlobalFunctionExists( const char* func_name ) const
+{
+	int ret = 0;
+	lua_getglobal(_L, func_name);
+	ret = lua_isfunction(_L, -1);
+	lua_pop(_L, 1);
+	return ret;
+}
+
+void LuaState_t::pushNil( void ) const
 {
 	lua_pushnil(_L);
 }
 
-void LuaState_t::pushInt( int num )
+void LuaState_t::pushInt( int num ) const
 {
 	lua_pushinteger(_L, num);
 }
 
-void LuaState_t::pushFloat( float num )
+void LuaState_t::pushFloat( float num ) const
 {
 	lua_pushnumber(_L, num);
 }
 
-void LuaState_t::pushBoolean( bool con )
+void LuaState_t::pushBoolean( bool con ) const
 {
 	lua_pushboolean(_L, con);
 }
 
-void LuaState_t::pushString( const char* str )
+void LuaState_t::pushString( const char* str ) const
 {
 	lua_pushstring(_L, str);
 }
 
-void LuaState_t::pushString( const char* str, int len )
+void LuaState_t::pushString( const char* str, int len ) const
 {
 	lua_pushlstring(_L, str, len);
 }
 
-//void LuaState_t::pushUserData(void* obj, const char* type)
-//{
-//	tolua_pushusertype(_L, obj, type);
-//}
+void LuaState_t::pushUserData( void* obj, const char* type ) const
+{
+	tolua_pushusertype(_L, obj, type);
+}
 
-void LuaState_t::clean( void )
+void LuaState_t::clean( void ) const
 {
 	lua_settop(_L, 0);
+}
+
+void LuaState_t::handleLuaError( void ) const
+{
+	if( lua_type(_L, -1) == LUA_TSTRING )
+	{
+		const char* info  = lua_tostring(_L, -1);
+		magicalSetLastErrorInfo(info);
+		magicalReportLastError();
+		lua_pop(_L, -1);
+	}
 }
