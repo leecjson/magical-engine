@@ -33,6 +33,7 @@ magical common
 #include "Utils.h"
 #include "Object.h"
 #include "Node.h"
+#include "kazmath.h"
 
 /*
 magical renderer

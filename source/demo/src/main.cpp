@@ -25,6 +25,7 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
+
 	LuaState& L = magicalGetLuaState();
 	L->executeScriptFile(kLuaMain);
 	L->executeGlobalFunction(kLuaOnFinishLaunching);

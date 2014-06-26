@@ -29,6 +29,7 @@ SOFTWARE.
 class Node_t;
 
 typedef std::shared_ptr<Node_t> Node;
+typedef std::shared_ptr<const Node_t> Node_const;
 #define newNode() (std::move(std::shared_ptr<Node_t>(new Node_t())))
 #define newNode_LuaGC() (new std::shared_ptr<Node_t>(new Node_t()))
 

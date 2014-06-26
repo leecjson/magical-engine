@@ -72,21 +72,12 @@ MAGAPI void magicalLogFormatImpl( const char* format, ... )
 
 MAGAPI void magicalReportImpl( int level, const char* str, const char* function, int line )
 {
-	char   buf[ kMaxLogLength ];
+	char buf[ kMaxLogLength ];
+
 #ifdef MAG_WIN32
 	struct tm tm_now;
 	time_t now;
-#endif
-#ifdef MAG_ANDROID
-#endif
-#ifdef MAG_IOS
-#endif
-#ifdef MAG_LINUX
-#endif
-#ifdef MAG_MAC
-#endif
 
-#ifdef MAG_WIN32
 	time( &now );
 	tm_now = *localtime( &now );
 	switch( level )

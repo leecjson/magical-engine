@@ -3,5 +3,5 @@ class Object
 public:
 	Object( void );
 	virtual ~Object( void );
-	virtual std::string toString( void ) const;
+	std::string toString( void ) const;
 };

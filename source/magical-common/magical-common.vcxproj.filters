@@ -10,9 +10,6 @@
     <Filter Include="src\utils">
       <UniqueIdentifier>{18039662-c427-4d1d-b682-8531ef6b8339}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\include">
-      <UniqueIdentifier>{33702693-6268-4caa-9994-357bc40a66e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\kazmath">
       <UniqueIdentifier>{53a86ce0-29c1-4dad-b677-6f0d3d0fd53d}</UniqueIdentifier>
     </Filter>
@@ -24,6 +21,12 @@
     </Filter>
     <Filter Include="src\engine">
       <UniqueIdentifier>{aa305815-01b9-479a-a322-fbcd322c0d05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\include">
+      <UniqueIdentifier>{33702693-6268-4caa-9994-357bc40a66e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry">
+      <UniqueIdentifier>{c99adc52-dec6-4bb6-8bab-3daf5be9ae59}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,9 +40,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\common\Common.h">
-      <Filter>src\common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\Geometry.h">
       <Filter>src\common</Filter>
     </ClInclude>
     <ClInclude Include="src\kazmath\aabb.h">
@@ -93,12 +93,12 @@
     <ClInclude Include="src\engine\Engine.h">
       <Filter>src\engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\geometry\vec2.hpp">
+      <Filter>src\geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\common\Object.cpp">
-      <Filter>src\common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\common\Geometry.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
     <ClCompile Include="src\kazmath\aabb.c">
