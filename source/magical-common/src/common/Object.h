@@ -26,6 +26,7 @@ SOFTWARE.
 
 #include <string>
 #include <memory>
+
 #include "Common.h"
 #include "LuaSupport.h"
 
