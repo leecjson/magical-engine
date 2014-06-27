@@ -28,6 +28,12 @@
     <Filter Include="src\geometry">
       <UniqueIdentifier>{c99adc52-dec6-4bb6-8bab-3daf5be9ae59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\file">
+      <UniqueIdentifier>{c020df48-445b-4d6e-bc85-02d09f75c3e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\file\win32">
+      <UniqueIdentifier>{fd7e4e5f-9c2b-4563-afd0-b3e4db9684c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common\Object.h">
@@ -96,6 +102,9 @@
     <ClInclude Include="src\geometry\vec2.hpp">
       <Filter>src\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="src\file\FileSystem.h">
+      <Filter>src\file</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\common\Object.cpp">
@@ -148,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="src\common\Common.cpp">
       <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\file\win32\FileSystem.cpp">
+      <Filter>src\file\win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
