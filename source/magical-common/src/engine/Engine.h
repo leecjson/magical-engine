@@ -25,10 +25,9 @@ SOFTWARE.
 #define __ENGINE_H__
 
 #include "PlatformMacros.h"
-#include "Geometry.h"
 
 
-MAGAPI_USER const Vec2& magicalGetWinSize();
+//MAGAPI_USER const Vec2& magicalGetWinSize();
 MAGAPI_USER float magicalGetDeltaTime( void );
 
 MAGAPI void magicalEngineInit( void );

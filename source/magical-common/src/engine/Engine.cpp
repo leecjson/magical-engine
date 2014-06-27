@@ -32,7 +32,7 @@ SOFTWARE.
 
 #include "LuaSystem.h"
 
-static Vec2 s_win_size;
+//static Vec2 s_win_size;
 static kmMat4 s_orthographic_projection2d;
 static timeval s_last_update_time;
 static float s_delta_time;
@@ -48,10 +48,10 @@ static void magicalCalcDeltaTime( void )
 	s_last_update_time = tv_now;
 }
 
-MAGAPI_USER const Vec2& magicalGetWinSize()
-{
-	return s_win_size;
-}
+//MAGAPI_USER const Vec2& magicalGetWinSize()
+//{
+//	return s_win_size;
+//}
 
 MAGAPI_USER float magicalGetDeltaTime( void )
 {
@@ -60,7 +60,7 @@ MAGAPI_USER float magicalGetDeltaTime( void )
 
 MAGAPI void magicalEngineInit( void )
 {
-	s_win_size = Vec2(0, 0);
+	//s_win_size = Vec2(0, 0);
 	s_delta_time = 0.0f;
 	
 	magicalGetTimeOfDay(&s_last_update_time, nullptr);
@@ -100,7 +100,7 @@ MAGAPI void magicalOnReshape( int w, int h )
 
 	kmMat4OrthographicProjection(&s_orthographic_projection2d, 0, w, 0, h, -1.0f, 1.0f);
 	
-	s_win_size = Vec2(w, h);
+	//s_win_size = Vec2(w, h);
 }
 
 MAGAPI void magicalOnRender( void )

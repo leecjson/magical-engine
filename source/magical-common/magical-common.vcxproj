@@ -83,6 +83,7 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="src\common\Object.h" />
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\geometry\vec2.hpp" />
+    <ClInclude Include="src\geometry\vec3.hpp" />
     <ClInclude Include="src\include\magical-engine.h" />
     <ClInclude Include="src\kazmath\aabb.h" />
     <ClInclude Include="src\kazmath\GL\mat4stack.h" />

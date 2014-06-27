@@ -22,9 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "magical-engine.h"
+//#include "vec2.hpp"
+//#include "vec3.hpp"
+
+inline const bool operator==( const kmVec2& lhs, const kmVec2& rhs )
+{
+	return (kmVec2AreEqual( (kmVec2*)(&lhs), (kmVec2*)(&rhs) ) != 0 );
+};
 
 void onFinishLaunching( void )
 {
+	/*vec3 c(5, 6, 0);
+	vec3 a = c.cross(vec3(5, 6, 6));*/
+
+	kmVec2 a, b;
+	if( a == b )
+	{
+	
+	}
+
 
 	LuaState& L = magicalGetLuaState();
 	L->executeScriptFile(kLuaMain);

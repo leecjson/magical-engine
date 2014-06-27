@@ -31,9 +31,12 @@ magical common
 */
 #include "Common.h"
 #include "Utils.h"
+
 #include "Object.h"
 #include "Node.h"
+
 #include "kazmath.h"
+#include "vec2.hpp"
 
 /*
 magical renderer

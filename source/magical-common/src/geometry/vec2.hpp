@@ -27,185 +27,189 @@ SOFTWARE.
 #include "Common.h"
 #include "kazmath.h"
 
-struct vec2
-{
-public:
-	float x;
-	float y;
+typedef kmVec2 vec2;
 
-public:
-	vec2( void ): x(0.0f), y(0.0f)
-	{
-	
-	}
+inline float vec2Length( const vec2 )
 
-	vec2( const float _x, const float _y )
-	{
-		x = _x;
-		y = _y;
-	}
-	
-	// 返回坐标系原点到当前向量的距离
-	inline const float length( void ) const
-	{
-		return kmVec2Length( (kmVec2*)this );
-	}
+//
+//struct vec2
+//{
+//public:
+//	float x;
+//	float y;
+//
+//public:
+//	vec2( void ): x(0.0f), y(0.0f)
+//	{
+//
+//	}
+//
+//	vec2( const float _x, const float _y )
+//	{
+//		x = _x;
+//		y = _y;
+//	}
+//	
+//	inline const float length( void ) const
+//	{
+//		return kmVec2Length( (kmVec2*)this );
+//	}
+//
+//	// Returns the square of the length of the vector
+//	inline const float lengthSq( void ) const
+//	{
+//		return kmVec2LengthSq( (kmVec2*)this );
+//	}
+//
+//	// Returns the vector passed in set to unit length
+//	inline const vec2 normalize( void ) const
+//	{
+//		vec2 result;
+//		kmVec2Normalize( (kmVec2*)(&result), (kmVec2*)this );
+//		return result;
+//	}
+//
+//	// Transform the Vector
+//	inline const vec2 transform( const kmMat3& mat ) const
+//	{
+//		vec2 result;
+//		kmVec2Transform( (kmVec2*)(&result), (kmVec2*)this, &mat );
+//		return result;
+//	}
+//
+//	// Transforms a 3D vector by a given matrix, projecting the result back into w = 1.
+//	inline const vec2 transformCoord( const kmMat3& mat ) const
+//	{
+//		vec2 result;
+//		kmVec2TransformCoord( (kmVec2*)(&result), (kmVec2*)this, &mat );
+//		return result;
+//	}
+//
+//	inline const float dot( const vec2& rhs ) const
+//	{
+//		return kmVec2Dot( (kmVec2*)this, (kmVec2*)&rhs );
+//	}
+//
+//	inline const float cross( const vec2& rhs ) const
+//	{
+//		return kmVec2Cross( (kmVec2*)this, (kmVec2*)(&rhs) );
+//	}
+//
+//	inline vec2 operator+( const vec2& rhs ) const
+//	{
+//		return vec2( x + rhs.x, y + rhs.y );
+//	}
+//
+//	inline vec2 operator+( float rhs ) const 
+//	{
+//		return vec2( x + rhs, y + rhs );
+//	}
+//
+//	inline vec2& operator+=( const vec2& rhs )
+//	{
+//		x += rhs.x;
+//		y += rhs.y;
+//		return *this;
+//	}
+//
+//	inline vec2& operator+=( float rhs )
+//	{
+//		x += rhs;
+//		y += rhs;
+//		return *this;
+//	}
+//
+//	inline vec2 operator-( const vec2& rhs ) const
+//	{
+//		return vec2( x - rhs.x, y - rhs.y );
+//	}
+//
+//	inline vec2& operator-=( const vec2& rhs )
+//	{
+//		x -= rhs.x;
+//		y -= rhs.y;
+//		return *this;
+//	}
+//
+//	inline vec2& operator-=( float rhs )
+//	{
+//		x -= rhs;
+//		y -= rhs;
+//		return *this;
+//	}
+//
+//	inline vec2 operator*( const vec2& rhs ) const
+//	{
+//		return vec2( x * rhs.x, y * rhs.y );
+//	}
+//
+//	inline vec2 operator*( float rhs ) const
+//	{
+//		return vec2( x * rhs, y * rhs );
+//	}
+//
+//	inline vec2& operator*=( const vec2& rhs )
+//	{
+//		x *= rhs.x;
+//		y *= rhs.y;
+//		return *this;
+//	}
+//
+//	inline vec2& operator*=( float rhs  )
+//	{
+//		x *= rhs;
+//		y *= rhs;
+//		return *this;
+//	}
+//
+//	inline vec2 operator/( const vec2& rhs ) const
+//	{
+//		magicalAssert( rhs.x && rhs.y, "division by 0.f" );
+//		return vec2( x / rhs.x, y / rhs.y );
+//	}
+//
+//	inline vec2 operator/( float rhs ) const
+//	{
+//		magicalAssert( rhs, "division by 0.f" );
+//		return vec2( x / rhs, y / rhs );
+//	}
+//
+//	inline vec2& operator/=( const vec2& rhs )
+//	{
+//		magicalAssert( rhs.x && rhs.y, "division by 0.f" );
+//		x /= rhs.x;
+//		y /= rhs.y;
+//		return *this;
+//	}
+//
+//	inline vec2& operator/=( float rhs  )
+//	{
+//		magicalAssert( rhs, "division by 0.f" );
+//		x /= rhs;
+//		y /= rhs;
+//		return *this;
+//	}
+//};
+//
+//// Multiply with scalar
+//inline const vec2 operator*( const float lhs, const vec2& rhs )
+//{
+//	return rhs * lhs;
+//};
+//
+//// Transform through matrix	
+//inline const vec2 operator*( const kmMat3& lhs, const vec2& rhs )
+//{
+//	vec2 result;
+//	kmVec2Transform( (kmVec2*)(&result), (kmVec2*)(&rhs), &lhs );
+//	return result;
+//};
+//
+//// Checks for equality (with a small threshold epsilon)
+//inline const bool operator==( const vec2& lhs, const vec2& rhs )
+//{
+//	return (kmVec2AreEqual( (kmVec2*)(&lhs), (kmVec2*)(&rhs) ) != 0 );
+//};
 
-	// Returns the square of the length of the vector
-	inline const kmScalar lengthSq( void ) const
-	{
-		return kmVec2LengthSq( (kmVec2*)this );
-	}
 
-	// Returns the vector passed in set to unit length
-	inline const vec2 normalize( void ) const
-	{
-		vec2 result;
-		kmVec2Normalize( (kmVec2*)(&result), (kmVec2*)this );
-		return result;
-	}
-
-	// Transform the Vector
-	inline const vec2 transform( const kmMat3& mat ) const
-	{
-		vec2 result;
-		kmVec2Transform( (kmVec2*)(&result), (kmVec2*)this, &mat );
-		return result;
-	}
-
-	// Transforms a 3D vector by a given matrix, projecting the result back into w = 1.
-	inline const vec2 transformCoord( const kmMat3& mat ) const
-	{
-		vec2 result;
-		kmVec2TransformCoord( (kmVec2*)(&result), (kmVec2*)this, &mat );
-		return result;
-	}
-
-	inline kmScalar dot( const vec2& rhs ) const
-	{
-		return kmVec2Dot( (kmVec2*)this, (kmVec2*)&rhs );
-	}
-
-	inline float cross( const vec2& rhs )
-	{
-		return kmVec2Cross( (kmVec2*)this, (kmVec2*)(&rhs) );
-	}
-
-	inline vec2 operator+( const vec2& rhs ) const
-	{
-		return vec2( x + rhs.x, y + rhs.y );
-	}
-
-	inline vec2 operator+( kmScalar rhs ) const 
-	{
-		return vec2( x + rhs, y + rhs );
-	}
-
-	inline vec2& operator+=( const vec2& rhs )
-	{
-		x += rhs.x;
-		y += rhs.y;
-		return *this;
-	}
-
-	inline vec2& operator+=( kmScalar rhs )
-	{
-		x += rhs;
-		y += rhs;
-		return *this;
-	}
-
-	inline vec2 operator-(const vec2& rhs) const
-	{
-		return vec2( x - rhs.x, y - rhs.y );
-	}
-
-	inline vec2& operator-=( const vec2& rhs )
-	{
-		x -= rhs.x;
-		y -= rhs.y;
-		return *this;
-	}
-
-	inline vec2& operator-=( kmScalar rhs )
-	{
-		x -= rhs;
-		y -= rhs;
-		return *this;
-	}
-
-	inline vec2 operator*(const vec2& rhs) const
-	{
-		return vec2( x * rhs.x, y * rhs.y );
-	}
-
-	inline vec2 operator*( kmScalar rhs ) const
-	{
-		return vec2( x * rhs, y * rhs );
-	}
-
-	inline vec2& operator*=( const vec2& rhs )
-	{
-		x *= rhs.x;
-		y *= rhs.y;
-		return *this;
-	}
-
-	inline vec2& operator*=( kmScalar rhs  )
-	{
-		x *= rhs;
-		y *= rhs;
-		return *this;
-	}
-
-	inline vec2 operator/(const vec2& rhs) const
-	{
-		magicalAssert( rhs.x && rhs.y, "division by 0.f" );
-		return vec2( x / rhs.x, y / rhs.y );
-	}
-
-	inline vec2 operator/( kmScalar rhs ) const
-	{
-		magicalAssert( rhs, "division by 0.f" );
-		return vec2( x / rhs, y / rhs );
-	}
-
-	inline vec2& operator/=( const vec2& rhs )
-	{
-		magicalAssert( rhs.x && rhs.y, "division by 0.f" );
-		x /= rhs.x;
-		y /= rhs.y;
-		return *this;
-	}
-
-	inline vec2& operator/=( kmScalar rhs  )
-	{
-		magicalAssert( rhs, "division by 0.f" );
-		x /= rhs;
-		y /= rhs;
-		return *this;
-	}
-};
-
-///< Multiply with scalar
-inline const vec2 operator*(const kmScalar lhs, const vec2& rhs)
-{
-	return rhs * lhs;
-};
-
-///< Transform through matrix	
-inline const vec2 operator*(const kmMat3& lhs, const vec2& rhs)
-{
-	vec2 result;
-	kmVec2Transform(&result, &rhs, &lhs);
-	return result;
-};
-
-///< Checks for equality (with a small threshold epsilon)
-inline const bool operator==(const vec2& lhs, const vec2& rhs)
-{
-	return (kmVec2AreEqual(&lhs,&rhs) != 0);
-};
-
-
-#endif //__VEC2_H__
+#endif //__VEC2_HPP__
