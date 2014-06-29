@@ -21,25 +21,70 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
-#include "vec2.hpp"
+#include "PlatformMacros.h"
+#include "LogSystem.h"
+#include "Common.h"
 
-void onFinishLaunching( void )
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <Windows.h>
+#include <WinSock2.h>
+
+#ifdef MAG_DEBUG
+
+static void win32Log( const char* channel, const char* msg )
 {
-	vec2 a(5, 6);
-	vec2 b(1, 1);
+	char buf[ kMaxLogLength ];
+	struct tm tm_now;
+	time_t now;
 
-	LuaState& L = LuaSystem::luaState();
-	L->executeScriptFile("main.lua");
-	L->executeGlobalFunction(kLuaOnCreate);
-	magicalLuaStateDump(L->getState());
-	L->clean();
+	time( &now );
+	tm_now = *localtime( &now );
+
+	sprintf(buf, "[%s %02d/%02d %02d:%02d:%02d]: %s",
+		channel,
+		tm_now.tm_mon + 1,
+		tm_now.tm_mday,
+		tm_now.tm_hour,
+		tm_now.tm_min,
+		tm_now.tm_sec,
+		msg);
+
+	OutputDebugStringA( buf);
+    OutputDebugStringA("\n");
+	printf("%s\n", buf);
 }
 
-int main(int argc, char* argv[])
+#endif
+
+void LogSystem::init( void )
 {
-	Application::setOnFinishLaunching(onFinishLaunching);
-	Application::run();
-	return 0;
+	
 }
 
+void LogSystem::delc( void )
+{
+	
+}
+
+void LogSystem::I( const char* msg )
+{
+#ifdef MAG_DEBUG
+	win32Log("Info ", msg);
+#endif
+}
+
+void LogSystem::D( const char* msg )
+{
+#ifdef MAG_DEBUG
+	win32Log("Debug", msg);
+#endif
+}
+
+void LogSystem::E( const char* msg )
+{
+#ifdef MAG_DEBUG
+	win32Log("Error", msg);
+#endif
+}

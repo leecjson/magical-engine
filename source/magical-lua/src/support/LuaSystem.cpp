@@ -26,19 +26,19 @@ SOFTWARE.
 #include "LuaCommon.h"
 #include "lua.hpp"
 
-static LuaState s_global_lua_state = nullptr;
+static LuaState s_lua_state;
 
-MAGAPI void magicalLuaSystemInit( void )
+void LuaSystem::init( void )
 {
-	s_global_lua_state = newLuaState();
+	s_lua_state = newLuaState();
 }
 
-MAGAPI void magicalLuaSystemDelc( void )
+void LuaSystem::delc( void )
 {
-	s_global_lua_state.reset();
+	s_lua_state.reset();
 }
 
-MAGAPI_USER LuaState& magicalGetLuaState( void )
+LuaState& LuaSystem::luaState( void )
 {
-	return s_global_lua_state;
+	return s_lua_state;
 }

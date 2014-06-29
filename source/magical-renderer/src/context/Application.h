@@ -24,16 +24,16 @@ SOFTWARE.
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
+#include <functional>
 #include "PlatformMacros.h"
-#include "GLFunction.h"
 
-#ifndef MAG_APP_DELEGATE
-#define MAG_APP_DELEGATE
-typedef void (*EventOnFinishLaunching)( void );
-#endif
+typedef std::function<void (void)> FinishLaunchingEvent;
 
-MAGAPI_USER void magicalApplicationInit( EventOnFinishLaunching callback );
-MAGAPI_USER void magicalRun( void );
-
+class Application
+{
+public:
+	static void run( void );
+	static void setOnFinishLaunching( FinishLaunchingEvent callback );
+};
 
 #endif //__APPLICATION_H__

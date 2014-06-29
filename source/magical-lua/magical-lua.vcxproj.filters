@@ -111,9 +111,6 @@
     <ClCompile Include="src\support\LuaState.cpp">
       <Filter>src\support</Filter>
     </ClCompile>
-    <ClCompile Include="src\support\LuaSupport.cpp">
-      <Filter>src\support</Filter>
-    </ClCompile>
     <ClCompile Include="src\binding\LuaCommon.cpp">
       <Filter>src\binding</Filter>
     </ClCompile>
@@ -137,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="src\tolua\tolua_ext.c">
       <Filter>src\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\support\LuaMacros.cpp">
+      <Filter>src\support</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +215,6 @@
     <ClInclude Include="src\support\LuaState.h">
       <Filter>src\support</Filter>
     </ClInclude>
-    <ClInclude Include="src\support\LuaSupport.h">
-      <Filter>src\support</Filter>
-    </ClInclude>
     <ClInclude Include="src\binding\LuaCommon.h">
       <Filter>src\binding</Filter>
     </ClInclude>
@@ -232,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="src\tolua\tolua_ext.h">
       <Filter>src\tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\support\LuaMacros.h">
+      <Filter>src\support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

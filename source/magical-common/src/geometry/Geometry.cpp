@@ -21,25 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
-#include "vec2.hpp"
+#include "Geometry.h"
 
-void onFinishLaunching( void )
-{
-	vec2 a(5, 6);
-	vec2 b(1, 1);
-
-	LuaState& L = LuaSystem::luaState();
-	L->executeScriptFile("main.lua");
-	L->executeGlobalFunction(kLuaOnCreate);
-	magicalLuaStateDump(L->getState());
-	L->clean();
-}
-
-int main(int argc, char* argv[])
-{
-	Application::setOnFinishLaunching(onFinishLaunching);
-	Application::run();
-	return 0;
-}
-
+const vec2 vec2::ZERO = vec2(0.0f, 0.0f);

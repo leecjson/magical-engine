@@ -21,48 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#ifndef __LOG_SYSTEM_H__
+#define __LOG_SYSTEM_H__
+
 #include "PlatformMacros.h"
-#include "LuaSupport.h"
 #include "Common.h"
-#include "LuaState.h"
-#include "LuaSystem.h"
 
-const char* const kLuaMain = "main.lua";
-const char* const kLuaOnFinishLaunching = "onFinishLaunching";
-const char* const kLuaOnCreate  = "onCreate";
-const char* const kLuaOnUpdate  = "onUpdate";
-const char* const kLuaOnDestroy = "onDestroy";
-
-#ifdef MAG_DEBUG
-
-MAGAPI_USER void magicalLuaStateDumpImpl( lua_State* L )
-{
-	char buf[kMaxErrLength];
-	int  i = 0;
-	int  top = lua_gettop(L);
-
-	sprintf(buf, "Total [%d] in lua stack: ", top);
-	magicalReport(buf);
-
-	for( i = -1; i >= -top; i-- )
-	{
-		int t = lua_type(L, i);
-		switch( t )
-		{
-		case LUA_TSTRING:
-			sprintf(buf, "[%02d] string %s\n", i, lua_tostring(L, i));
-			break;
-		case LUA_TBOOLEAN:
-			sprintf(buf, "[%02d] boolean %s\n", i, lua_toboolean(L, i) ? "true" : "false");
-			break;
-		case LUA_TNUMBER:
-			sprintf(buf, "[%02d] number %g\n", i, lua_tonumber(L, i));
-			break;
-		default:
-			sprintf(buf, "[%02d] %s\n", i, lua_typename(L, t));
-		}
-		magicalReport(buf);
-	}
-}
-
+#ifndef MAG_DEBUG
+#define magicalLogI( __msg )
+#define magicalLogD( __msg )
+#define magicalLogE( __msg )
+#define magicalLogLastError()
+#else
+#define magicalLogI( __msg ) LogSystem::I( __msg )
+#define magicalLogD( __msg ) LogSystem::D( __msg )
+#define magicalLogE( __msg ) LogSystem::E( __msg )
+#define magicalLogLastError() LogSystem::E( magicalGetLastErrorInfo() )
 #endif
+
+class LogSystem
+{
+public:
+	static void init( void );
+	static void delc( void );
+	static void I( const char* msg );
+	static void D( const char* msg );
+	static void E( const char* msg );
+};
+
+#endif  //__LOG_SYSTEM_H__

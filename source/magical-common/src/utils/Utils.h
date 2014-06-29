@@ -27,15 +27,19 @@ SOFTWARE.
 #include <string>
 #include <memory>
 
-template< int __Size >
-inline std::string magicalStringFormat( const char* format, ... )
+class Utils
 {
-	char buf[__Size];
-	va_list args;
-	va_start(args, format);
-	vsnprintf(buf, __Size, format, args);
-	va_end(args);
-	return std::move(std::string(buf));
-}
+public:
+	template< int __size >
+	static inline std::string format( const char* format, ... )
+	{
+		char buf[__size];
+		va_list args;
+		va_start(args, format);
+		vsnprintf(buf, __size, format, args);
+		va_end(args);
+		return std::move(std::string(buf));
+	}
+};
 
 #endif //__UTILS_H__

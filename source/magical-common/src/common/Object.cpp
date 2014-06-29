@@ -28,12 +28,12 @@ SOFTWARE.
 
 Object_t::Object_t( void )
 {
-	magicalObjectConstruct();
+	//magicalObjectConstruct();
 }
 
 Object_t::~Object_t( void )
 {
-	magicalObjectDestruct();
+	//magicalObjectDestruct();
 }
 
 std::string Object_t::toString( void ) const

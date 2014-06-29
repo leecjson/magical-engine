@@ -25,7 +25,7 @@ SOFTWARE.
 #define __LUA_STATE_H__
 
 #include "Object.h"
-#include "LuaSupport.h"
+#include "LuaMacros.h"
 
 class LuaState_t;
 

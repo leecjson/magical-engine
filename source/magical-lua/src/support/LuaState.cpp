@@ -102,7 +102,7 @@ int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc
 		sprintf(buf, "name '%s' does not represent a lua global function", func_name);
 
 		magicalSetLastErrorInfo(buf);
-		magicalReportLastError();
+		magicalLogLastError();
 		lua_pop(_L, 1);
 	}
 	return -1;
@@ -163,7 +163,7 @@ void LuaState_t::handleLuaError( void ) const
 	{
 		const char* info  = lua_tostring(_L, -1);
 		magicalSetLastErrorInfo(info);
-		magicalReportLastError();
+		magicalLogLastError();
 		lua_pop(_L, -1);
 	}
 }

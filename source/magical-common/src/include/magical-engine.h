@@ -35,8 +35,10 @@ magical common
 #include "Object.h"
 #include "Node.h"
 
+#include "GL/matrix.h"
+#include "GL/mat4stack.h"
 #include "kazmath.h"
-#include "vec2.hpp"
+#include "Geometry.h"
 
 /*
 magical renderer
@@ -49,7 +51,7 @@ magical lua
 */
 #include "lua.hpp"
 #include "LuaState.h"
-#include "LuaSupport.h"
+#include "LuaMacros.h"
 #include "LuaSystem.h"
 
 #endif //__MAGICAL_ENGINE_H__

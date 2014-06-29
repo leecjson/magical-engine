@@ -32,61 +32,52 @@ SOFTWARE.
 
 #include "LuaSystem.h"
 
-//static Vec2 s_win_size;
-static kmMat4 s_orthographic_projection2d;
-static timeval s_last_update_time;
+//static timeval s_last_update_time;
 static float s_delta_time;
 
-static void magicalCalcDeltaTime( void )
-{
-	struct timeval tv_now;
-
-	magicalGetTimeOfDay(&tv_now, nullptr);
-	s_delta_time = (tv_now.tv_sec - s_last_update_time.tv_sec) + (tv_now.tv_usec - s_last_update_time.tv_usec) / 1000000.0f;
-	s_delta_time = MAX(0, s_delta_time);
-
-	s_last_update_time = tv_now;
-}
-
-//MAGAPI_USER const Vec2& magicalGetWinSize()
+//static void calcDeltaTime( void )
 //{
-//	return s_win_size;
+//	struct timeval tv_now;
+//
+//	magicalGetTimeOfDay(&tv_now, nullptr);
+//	s_delta_time = (tv_now.tv_sec - s_last_update_time.tv_sec) + (tv_now.tv_usec - s_last_update_time.tv_usec) / 1000000.0f;
+//	s_delta_time = MAX(0, s_delta_time);
+//
+//	s_last_update_time = tv_now;
 //}
 
-MAGAPI_USER float magicalGetDeltaTime( void )
+static void setGLDefault( void )
 {
-	return s_delta_time;
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+
+	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 }
 
-MAGAPI void magicalEngineInit( void )
+void Engine::init( void )
 {
-	//s_win_size = Vec2(0, 0);
 	s_delta_time = 0.0f;
 	
-	magicalGetTimeOfDay(&s_last_update_time, nullptr);
-	magicalSetGLDefault();
+	//magicalGetTimeOfDay(&s_last_update_time, nullptr);
+	setGLDefault();
 }
 
-MAGAPI void magicalEngineDelc( void )
+void Engine::delc( void )
 {
-	
+
 }
 
-MAGAPI bool magicalEngineInitSystems( void )
+void Engine::initSystems( void )
 {
-	magicalLuaSystemInit();
-
-	return true;
+	LuaSystem::init();
 }
 
-MAGAPI bool magicalEngineDelcSystems( void )
+void Engine::delcSystems( void )
 {
-	magicalLuaSystemDelc();
-
-	return true;
+	LuaSystem::delc();
 }
 
-MAGAPI void magicalOnReshape( int w, int h )
+void Engine::onReshape( int w, int h )
 {
 	glViewport(0, 0, w, h);
 
@@ -98,14 +89,12 @@ MAGAPI void magicalOnReshape( int w, int h )
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLLoadIdentity();
 
-	kmMat4OrthographicProjection(&s_orthographic_projection2d, 0, w, 0, h, -1.0f, 1.0f);
-	
-	//s_win_size = Vec2(w, h);
+	//kmMat4OrthographicProjection(&s_orthographic_projection2d, 0, w, 0, h, -1.0f, 1.0f);
 }
 
-MAGAPI void magicalOnRender( void )
+void Engine::onLoop( void )
 {
-	magicalCalcDeltaTime();
+	//calcDeltaTime();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -123,6 +112,7 @@ MAGAPI void magicalOnRender( void )
 	kmGLPopMatrix();
 #endif
 
+#if 0
 	// 2d render
 	kmGLLoadMatrix(&s_orthographic_projection2d);
 	kmGLPushMatrix();
@@ -132,14 +122,10 @@ MAGAPI void magicalOnRender( void )
 		kmGLPopMatrix();
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLPopMatrix();
-
-	
+#endif
 }
 
-MAGAPI void magicalSetGLDefault( void )
+float Engine::deltaTime( void )
 {
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-
-	glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+	return s_delta_time;
 }

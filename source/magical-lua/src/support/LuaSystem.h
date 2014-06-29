@@ -26,12 +26,14 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "LuaState.h"
-#include "lua.hpp"
 
-MAGAPI void magicalLuaSystemInit( void );
-MAGAPI void magicalLuaSystemDelc( void );
-
-MAGAPI_USER LuaState& magicalGetLuaState( void );
+class LuaSystem
+{
+public:
+	static void init( void );
+	static void delc( void );
+	static LuaState& luaState( void );
+};
 
 
 #endif //__LUA_SYSTEM_H__

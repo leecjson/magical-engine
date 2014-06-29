@@ -26,19 +26,20 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 
+class Engine
+{
+public:
+	static void init( void );
+	static void delc( void );
+	static void initSystems( void );
+	static void delcSystems( void );
+	
+	static void onReshape( int w, int h );
+	static void onLoop( void );
 
-//MAGAPI_USER const Vec2& magicalGetWinSize();
-MAGAPI_USER float magicalGetDeltaTime( void );
-
-MAGAPI void magicalEngineInit( void );
-MAGAPI void magicalEngineDelc( void );
-MAGAPI bool magicalEngineInitSystems( void );
-MAGAPI bool magicalEngineDelcSystems( void );
-
-MAGAPI void magicalOnReshape( int w, int h );
-MAGAPI void magicalOnRender( void );
-
-MAGAPI void magicalSetGLDefault( void );
+public:
+	static float deltaTime( void );
+};
 
 
 

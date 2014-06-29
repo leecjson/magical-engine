@@ -24,10 +24,10 @@ SOFTWARE.
 #ifndef __FILE_SYSTEM_H__
 #define __FILE_SYSTEM_H__
 
-#include "PlatformMacros.h
+//#include "PlatformMacros.h
+//
+//MAGAPI void magicalFileSystemInit();
+//MAGAPI void magicalFileSystemDelc();
 
-MAGAPI void magicalFileSystemInit();
-MAGAPI void magicalFileSystemDelc();
 
-
-#endif //__FILE_SYSTEM_H__
+#endif //__FILE_SY STEM_H__

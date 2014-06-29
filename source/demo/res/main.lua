@@ -1,19 +1,12 @@
 
-function onFinishLaunching() --> void
+function onCreate() --> void
 
-	magicalBeginTickingAndReport();
-	magicalBeginObserveObjectAndReport();
-
-	local o = Object();
+	local a = vec2(5,6);
+	local b = vec2(10, 10);
 	
-	magicalEndObserveObjectAndReport(); -- 5
-	magicalEndTickingAndReport();
+	local c = a * 5.0;
 	
-	o = Object();
-	
-	-- local a = function()
-		-- print("ok");
-	-- end
+	print( c.x .. "   " .. c.y  );
 
 end
 

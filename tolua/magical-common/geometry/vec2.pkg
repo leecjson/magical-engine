@@ -1,0 +1,38 @@
+struct vec2
+{
+public:
+	float x;
+	float y;
+	
+public:
+	vec2( const float rx, const float ry );
+	vec2( void );
+	vec2 operator+( float rhs ) const;
+	vec2 operator+( const vec2& rhs ) const;
+	vec2 operator-( float rhs ) const;
+	vec2 operator-( const vec2& rhs ) const;
+	vec2 operator*( float rhs ) const;
+	vec2 operator*( const vec2& rhs ) const;
+	vec2 operator/( float rhs ) const;
+	vec2 operator/( const vec2& rhs ) const;
+	bool operator==( const vec2& rhs ) const;
+	
+public:
+	static vec2 fill( const float x, const float y );
+	static float length( const vec2& v );
+	static float lengthSq( const vec2& v );
+	static vec2 normalize( const vec2& v );
+	static vec2 lerp( const vec2& v1, const vec2& v2, float t );
+	static float dot( const vec2& v1, const vec2& v2 );
+	static float cross( const vec2& v1, const vec2& v2 );
+	static vec2 transform( const vec2& v, const mat3& m );
+	static vec2 transformCoord( const vec2& v, const mat3& m );
+	static vec2 scale( const vec2& v, const float s );
+	static vec2 rotateBy( const vec2& v, const float degrees, const vec2& center );
+	static float degreesBetween( const vec2& v1, const vec2& v2 );
+	static float distanceBetween( const vec2& v1, const vec2& v2 );
+	static vec2 midPointBetween( const vec2& v1, const vec2& v2 );
+	
+public:
+	static const vec2 ZERO;
+};

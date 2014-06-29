@@ -23,9 +23,6 @@ SOFTWARE.
 *******************************************************************************/
 #include "PlatformMacros.h"
 #include "Node.h"
-#include "kazmath.h"
-#include "GL/matrix.h"
-#include "GL/mat4stack.h"
 
 Node_t::Node_t( void )
 {

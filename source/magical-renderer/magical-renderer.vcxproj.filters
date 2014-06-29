@@ -36,9 +36,6 @@
     <ClInclude Include="src\renderer\GLFunction.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\context\Application.h">
-      <Filter>src\context\win32</Filter>
-    </ClInclude>
     <ClInclude Include="src\context\win32\gl\glew.h">
       <Filter>src\context\win32\gl</Filter>
     </ClInclude>
@@ -47,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="src\context\win32\gl\wglew.h">
       <Filter>src\context\win32\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\Application.h">
+      <Filter>src\context</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -21,19 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __GLVIEW_H__
-#define __GLVIEW_H__
+#ifndef __LUA_MACROS_H__
+#define __LUA_MACROS_H__
 
 #include "PlatformMacros.h"
+#include "lua.hpp"
 
-#ifdef __cplusplus
-extern "C" {
+extern const char* const kLuaOnCreate;
+extern const char* const kLuaOnUpdate;
+extern const char* const kLuaOnDestroy;
+
+#ifdef MAG_DEBUG
+#define magicalDebugLuaStateDump( __L ) magicalLuaStateDumpImpl( __L )
+#else
+#define magicalDebugLuaStateDump( __L )
 #endif
+MAGAPI_USER void magicalLuaStateDump( lua_State* L );
 
 
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif //__GLVIEW_H__
+#endif //__LUA_MACROS_H__

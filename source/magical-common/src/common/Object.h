@@ -27,8 +27,7 @@ SOFTWARE.
 #include <string>
 #include <memory>
 
-#include "Common.h"
-#include "LuaSupport.h"
+#include "PlatformMacros.h"
 
 class Object_t;
 

@@ -1,8 +1,7 @@
 $#include "PlatformMacros.h"
 $#include "tolua_ext.h"
-$#include "LuaCommon.h"
 $#include "magical-engine.h"
 
-$pfile "magical-common/pkgs/Common.pkg"
-$pfile "magical-common/pkgs/Object.pkg"
-$pfile "magical-common/pkgs/Node.pkg"
+$pfile "magical-common/common/Object.pkg"
+$pfile "magical-common/node/Node.pkg"
+$pfile "magical-common/geometry/vec2.pkg"

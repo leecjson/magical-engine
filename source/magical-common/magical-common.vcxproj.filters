@@ -34,6 +34,12 @@
     <Filter Include="src\file\win32">
       <UniqueIdentifier>{fd7e4e5f-9c2b-4563-afd0-b3e4db9684c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\log">
+      <UniqueIdentifier>{52e145e4-b8df-4af6-a596-ba7f1f0a695a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\log\win32">
+      <UniqueIdentifier>{e2adb298-7953-433d-930b-2d33f84b859c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common\Object.h">
@@ -44,9 +50,6 @@
     </ClInclude>
     <ClInclude Include="src\PlatformMacros.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\Common.h">
-      <Filter>src\common</Filter>
     </ClInclude>
     <ClInclude Include="src\kazmath\aabb.h">
       <Filter>src\kazmath</Filter>
@@ -104,9 +107,27 @@
     </ClInclude>
     <ClInclude Include="src\geometry\vec3.hpp">
       <Filter>src\geometry</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="src\file\FileSystem.h">
       <Filter>src\file</Filter>
+    </ClInclude>
+    <ClInclude Include="src\log\LogSystem.h">
+      <Filter>src\log</Filter>
+    </ClInclude>
+    <ClInclude Include="src\common\Common.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\vec4.hpp">
+      <Filter>src\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\mat3.hpp">
+      <Filter>src\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\mat4.hpp">
+      <Filter>src\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\Geometry.h">
+      <Filter>src\geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,11 +179,17 @@
     <ClCompile Include="src\engine\Engine.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\file\win32\FileSystem.cpp">
+      <Filter>src\file\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\log\win32\LogSystem.cpp">
+      <Filter>src\log\win32</Filter>
+    </ClCompile>
     <ClCompile Include="src\common\Common.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="src\file\win32\FileSystem.cpp">
-      <Filter>src\file\win32</Filter>
+    <ClCompile Include="src\geometry\Geometry.cpp">
+      <Filter>src\geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
