@@ -30,6 +30,13 @@ SOFTWARE.
 class vec3 : public kmVec3
 {
 public:
+	vec3( const vec2& v )
+	{
+		x = v.x;
+		y = v.y;
+		z = 0.0f;
+	}
+
 	vec3( const float rx, const float ry, const float rz )
 	{
 		x = rx;
@@ -42,72 +49,6 @@ public:
 		x = y = z = 0.0f;
 	}
 
-	inline float length( void ) const
-	{
-		return kmVec3Length( this );
-	}
-
-	inline float lengthSq( void ) const
-	{
-		return kmVec3LengthSq( this );
-	}
-
-	inline vec3 normalize( void ) const
-	{
-		vec3 result;
-		kmVec3Normalize( &result, this );
-		return result;
-	}
-
-	//inline const vec3 transform( const kmMat4& mat ) const
-	//{
-	//	vec3 result;
-	//	kmVec3Transform( &result, this, &mat );
-	//	return result;
-	//}
-
-	//// Transforms a 3D vector by a given matrix, projecting the result back into w = 1.
-	//inline const vec3 transformCoord( const kmMat4& mat ) const
-	//{
-	//	vec3 result;
-	//	kmVec3TransformCoord( (kmVec3*)(&result), (kmVec3*)this, &mat);
-	//	return result;
-	//}
-
-	//// Transforms the vector ignoring the translation part
-	//inline const vec3 transformNormal( const kmMat4& mat ) const
-	//{
-	//	vec3 result;
-	//	kmVec3TransformNormal( (kmVec3*)(&result), (kmVec3*)this, &mat);
-	//	return result;
-	//}
-
-	inline vec3 cross( const vec3& vec ) const
-	{
-		vec3 result;
-		kmVec3Cross( &result, this, &vec );
-		return result;
-	}
-
-	inline float dot( const vec3& rhs ) const
-	{
-		return kmVec3Dot( this, &rhs );
-	}
-
-	/*inline vec3 inverseTransform( const kmMat4& mat ) const
-	{
-		vec3 result;
-		kmVec3InverseTransform( &result, this, &mat );
-		return result;
-	}
-
-	inline vec3 inverseTransformNormal( const kmMat4& mat ) const
-	{
-		vec3 result;
-		kmVec3InverseTransformNormal( &result, this, &mat );
-		return result;
-	}*/
-
 	inline vec3 operator+( float rhs ) const
 	{
 		return vec3( x + rhs, y + rhs, z + rhs );
@@ -117,6 +58,39 @@ public:
 	{
 		return vec3( x + rhs.x, y + rhs.y, z + rhs.z );
 	}
+
+	inline vec3 operator-( float rhs ) const
+	{
+		return vec3( x - rhs, y - rhs, z - rhs );
+	}
+
+	inline vec3 operator-( const vec3& rhs ) const
+	{
+		return vec3( x - rhs.x, y - rhs.y, z - rhs.z );
+	}
+
+	inline vec3 operator*( float rhs ) const
+	{
+		return vec3( x * rhs, y * rhs, z * rhs );
+	}
+
+	inline vec3 operator*( const vec3& rhs ) const
+	{
+		return vec3( x * rhs.x, y * rhs.y, z * rhs.z);
+	}
+
+	inline vec3 operator/( float rhs ) const
+	{
+		magicalAssert( rhs, "division by 0.f" );
+		return vec3( x / rhs, y / rhs, z / rhs );
+	}
+
+	inline vec3 operator/( const vec3& rhs ) const
+	{
+		magicalAssert( rhs.x && rhs.y && rhs.z, "division by 0.f" );
+		return vec3( x / rhs.x, y / rhs.y, z / rhs.z );
+	}
+
 
 	inline vec3& operator+=( const vec3& rhs )
 	{
@@ -132,16 +106,6 @@ public:
 		y += rhs;
 		z += rhs;
 		return *this;
-	}
-
-	inline vec3 operator-( float rhs ) const
-	{
-		return vec3( x - rhs, y - rhs, z - rhs );
-	}
-
-	inline vec3 operator-( const vec3& rhs ) const
-	{
-		return vec3( x - rhs.x, y - rhs.y, z - rhs.z );
 	}
 
 	inline vec3& operator-=( const vec3& rhs )
@@ -160,16 +124,6 @@ public:
 		return *this;
 	}
 
-	inline vec3 operator*( float rhs ) const
-	{
-		return vec3( x * rhs, y * rhs, z * rhs );
-	}
-
-	inline vec3 operator*( const vec3& rhs ) const
-	{
-		return vec3( x * rhs.x, y * rhs.y, z * rhs.z);
-	}
-
 	inline vec3& operator*=( const vec3& rhs )
 	{
 		x *= rhs.x;
@@ -184,18 +138,6 @@ public:
 		y *= rhs;
 		z *= rhs;
 		return *this;
-	}
-
-	inline vec3 operator/( float rhs ) const
-	{
-		magicalAssert( rhs, "division by 0.f" );
-		return vec3( x / rhs, y / rhs, z / rhs );
-	}
-
-	inline vec3 operator/( const vec3& rhs ) const
-	{
-		magicalAssert( rhs.x && rhs.y && rhs.z, "division by 0.f" );
-		return vec3( x / rhs.x, y / rhs.y, z / rhs.z );
 	}
 
 	inline vec3& operator/=( const vec3& rhs )
@@ -225,20 +167,128 @@ public:
 	{
 		return kmVec3AreEqual( this, &rhs ) == 0;
 	}
+
+public:
+	static inline vec3 fill( const float x, const float y, const float z )
+	{
+		vec3 result;
+		kmVec3Fill( &result, x, y, z );
+		return result;
+	}
+
+	static inline float length( const vec3& v )
+	{
+		return kmVec3Length( &v );
+	}
+
+	static inline float lengthSq( const vec3& v )
+	{
+		return kmVec3LengthSq( &v );
+	}
+
+	static inline vec3 lerp( const vec3& v1, const vec3& v2, const float t )
+	{
+		vec3 result;
+		kmVec3Lerp( &result, &v1, &v2, t );
+		return result;
+	}
+
+	static inline vec3 normalize( const vec3& v )
+	{
+		vec3 result;
+		kmVec3Normalize( &result, &v );
+		return result;
+	}
+
+	static inline vec3 cross( const vec3& v1, const vec3& v2 )
+	{
+		vec3 result;
+		kmVec3Cross( &result, &v1, &v2 );
+		return result;
+	}
+
+	static inline float dot( const vec3& v1, const vec3& v2 )
+	{
+		return kmVec3Dot( &v1, &v2 );
+	}
+
+	static inline vec3 multiplyMat3( const vec3& v, const mat3& m )
+	{
+		vec3 result;
+		kmVec3MultiplyMat3( &result, &v, &m );
+		return result;
+	}
+
+	static inline vec3 multiplyMat4( const vec3& v, const mat4& m )
+	{
+		vec3 result;
+		kmVec3MultiplyMat4( &result, &v, &m );
+		return result;
+	}
+
+	static inline vec3 transform( const vec3& v, const mat4& m )
+	{
+		vec3 result;
+		kmVec3Transform( &result, &v, &m );
+		return result;
+	}
+
+	static inline vec3 transformNormal( const vec3& v, const mat4& m )
+	{
+		vec3 result;
+		kmVec3TransformNormal( &result, &v, &m );
+		return result;
+	}
+
+	static inline vec3 transformCoord( const vec3& v, const mat4& m )
+	{
+		vec3 result;
+		kmVec3TransformCoord( &result, &v, &m );
+		return result;
+	}
+
+	static inline vec3 scale( const vec3& v, const float s )
+	{
+		vec3 result;
+		kmVec3Scale( &result, &v, s );
+		return result;
+	}
+
+	static inline vec3 inverseTransform( const vec3& v, const mat4& m )
+	{
+		vec3 result;
+		kmVec3InverseTransform( &result, &v, &m );
+		return result;
+	}
+
+	static inline vec3 inverseTransformNormal( const vec3& v, const mat4& m )
+	{
+		vec3 result;
+		kmVec3InverseTransformNormal( &result, &v, &m );
+		return result;
+	}
+
+	static inline vec3 getHorizontalAngle( const vec3& v )
+	{
+		vec3 result;
+		kmVec3GetHorizontalAngle( &result, &v );
+		return result;
+	}
+
+	static inline vec3 rotationToDirection( const vec3& v, const vec3& forwards )
+	{
+		vec3 result;
+		kmVec3RotationToDirection( &result, &v, &forwards );
+		return result;
+	}
+
+	//static inline vec3 projectOnToPlane( const vec3& v,  )	
 };
 
 inline vec3 operator*( const float lhs, const vec3& rhs )
 {
 	return rhs * lhs;
 }
-
-//// Transform through matrix	
-//inline const vec3 operator*( const kmMat4& lhs, const vec3& rhs )
-//{
-//	vec3 result;
-//	kmVec3Transform( (kmVec3*)(&result), (kmVec3*)(&rhs), &lhs);
-//	return result;
-//}
 
 
 

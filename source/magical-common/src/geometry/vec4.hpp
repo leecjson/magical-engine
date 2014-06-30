@@ -26,10 +26,27 @@ SOFTWARE.
 
 #include "Common.h"
 #include "kazmath.h"
+#include "vec3.hpp"
 
 class vec4 : public kmVec4
 {
 public:
+	vec4( const vec2& v )
+	{
+		x = v.x;
+		y = v.y;
+		z = 0.0f;
+		w = 0.0f;
+	}
+
+	vec4( const vec3& v )
+	{
+		x = v.x;
+		y = v.y;
+		z = v.z;
+		w = 0.0f;
+	}
+
 	vec4( const float rx, const float ry, const float rz, const float rw )
 	{
 		x = rx;
@@ -37,45 +54,10 @@ public:
 		z = rz;	
 		w = rw;		
 	}
+
 	vec4( void )
 	{
 		x = y = z = w = 0.0f;
-	}
-
-	inline float length( void ) const
-	{
-		return kmVec4Length( this );
-	}
-
-	inline float lengthSq( void ) const
-	{
-		return kmVec4LengthSq( this );
-	}
-
-	inline vec4 normalize( void ) const
-	{
-		vec4 result;
-		kmVec4Normalize( &result, this );
-		return result;
-	}
-
-	/*const vec4 transform(const kmMat4& mat)
-	{
-		vec4 result;
-		kmVec4Transform(&result,this, &mat);
-		return result;
-	}
-
-	static const vec4 lerp(const kmVec4& pV1, const kmVec4& pV2, float t)
-	{
-		vec4 result;
-		kmVec4Lerp(&result, &pV1, &pV2, t);
-		return result;
-	}*/
-
-	inline float dot( const vec4& rhs )
-	{
-		return kmVec4Dot( this, &rhs );
 	}
 
 	inline vec4 operator+( float rhs ) const
@@ -86,6 +68,38 @@ public:
 	inline vec4 operator+( const vec4& rhs ) const
 	{
 		return vec4( x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w );
+	}
+
+	inline vec4 operator-( float rhs ) const
+	{
+		return vec4( x - rhs, y - rhs, z - rhs, w - rhs );
+	}
+
+	inline vec4 operator-( const vec4& rhs ) const
+	{
+		return vec4( x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w );
+	}
+
+	inline vec4 operator*( float rhs ) const
+	{
+		return vec4( x * rhs, y * rhs, z * rhs, w * rhs );
+	}
+
+	inline vec4 operator*( const vec4& rhs ) const
+	{
+		return vec4( x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w );
+	}
+
+	inline vec4 operator/( float rhs ) const
+	{
+		magicalAssert( rhs, "division by 0.f" );
+		return vec4( x / rhs, y / rhs, z / rhs, w / rhs );
+	}
+
+	inline vec4 operator/( const vec4& rhs ) const
+	{
+		magicalAssert( rhs.x && rhs.y && rhs.z && rhs.w, "division by 0.f" );
+		return vec4( x / rhs.x, y / rhs.y, z / rhs.z, w / rhs.w );
 	}
 
 	inline vec4& operator+=( const vec4& rhs )
@@ -106,16 +120,6 @@ public:
 		return *this;
 	}
 
-	inline vec4 operator-( float rhs ) const
-	{
-		return vec4( x - rhs, y - rhs, z - rhs, w - rhs );
-	}
-
-	inline vec4 operator-( const vec4& rhs ) const
-	{
-		return vec4( x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w );
-	}
-
 	inline vec4& operator-=( const vec4& rhs )
 	{
 		x -= rhs.x;
@@ -134,16 +138,6 @@ public:
 		return *this;
 	}
 
-	inline vec4 operator*( float rhs ) const
-	{
-		return vec4( x * rhs, y * rhs, z * rhs, w * rhs );
-	}
-
-	inline vec4 operator*( const vec4& rhs ) const
-	{
-		return vec4( x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w );
-	}
-
 	inline vec4& operator*=( const vec4& rhs )
 	{
 		x *= rhs.x;
@@ -160,18 +154,6 @@ public:
 		z *= rhs;
 		w *= rhs;
 		return *this;
-	}
-
-	inline vec4 operator/( float rhs ) const
-	{
-		magicalAssert( rhs, "division by 0.f" );
-		return vec4( x / rhs, y / rhs, z / rhs, w / rhs );
-	}
-
-	inline vec4 operator/( const vec4& rhs ) const
-	{
-		magicalAssert( rhs.x && rhs.y && rhs.z && rhs.w, "division by 0.f" );
-		return vec4( x / rhs.x, y / rhs.y, z / rhs.z, w / rhs.w );
 	}
 
 	inline vec4& operator/=( const vec4& rhs )
@@ -203,6 +185,62 @@ public:
 	{
 		return kmVec4AreEqual( this, &rhs ) == 0;
 	}
+
+public:
+	static inline vec4 fill( const float x, const float y, const float z, const float w )
+	{
+		return vec4( x, y, z, w );
+	}
+
+	static inline float dot( const vec4& v1, const vec4& v2 )
+	{
+		return kmVec4Dot( &v1, &v2 );
+	}
+
+	static inline float length( const vec4& v )
+	{
+		return kmVec4Length( &v );
+	}
+
+	static inline float lengthSq( const vec4& v )
+	{
+		return kmVec4LengthSq( &v );
+	}
+
+	static inline vec4 lerp( const vec4& v1, const vec4& v2, const float t )
+	{
+		vec4 result;
+		kmVec4Lerp( &result, &v1, &v2, t );
+		return result;
+	}
+
+	static inline vec4 normalize( const vec4& v )
+	{
+		vec4 result;
+		kmVec4Normalize( &result, &v );
+		return result;
+	}
+
+	static inline vec4 scale( const vec4& v, const float s )
+	{
+		vec4 result;
+		kmVec4Scale( &result, &v, s );
+		return result;
+	}
+
+	static inline vec4 multiplyMat4( const vec4& v, const mat4& m )
+	{
+		vec4 result;
+		kmVec4MultiplyMat4( &result, &v, &m );
+		return result;
+	}
+
+	static const vec4 transform( const vec4& v, const mat4& m )
+	{
+		vec4 result;
+		kmVec4Transform( &result, &v, &m );
+		return result;
+	}
 };
 
 inline vec4 operator*( const float lhs, const vec4& rhs )
@@ -210,18 +248,5 @@ inline vec4 operator*( const float lhs, const vec4& rhs )
 	return rhs * lhs;
 }
 
-
-///< Transform through matrix	
-//inline const vec4 operator*(const kmMat4& lhs, const vec4& rhs)
-//{
-//	vec4 result;
-//	kmVec4Transform(&result, &rhs, &lhs);
-//	return result;
-//}
-
 	
-
-
-
-
 #endif //__VEC4_HPP__

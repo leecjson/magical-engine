@@ -185,6 +185,22 @@ public:
 //	return kmMat4AreEqual(&lhs,&rhs);
 //};
 
+//// Transform through matrix	
+//inline const vec3 operator*( const kmMat4& lhs, const vec3& rhs )
+//{
+//	vec3 result;
+//	kmVec3Transform( (kmVec3*)(&result), (kmVec3*)(&rhs), &lhs);
+//	return result;
+//}
+
+///< Transform through matrix	
+//inline const vec4 operator*(const kmMat4& lhs, const vec4& rhs)
+//{
+//	vec4 result;
+//	kmVec4Transform(&result, &rhs, &lhs);
+//	return result;
+//}
+
 
 
 #endif //__MAT4_HPP__
