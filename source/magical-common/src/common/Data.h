@@ -21,38 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
-
-#include <string>
-#include <memory>
+#ifndef __DATA_H__
+#define __DATA_H__
 
 #include "PlatformMacros.h"
-#include "Common.h"
+#include "Object.h"
 
-class Object_t;
+class Data_t;
 
-typedef std::shared_ptr<Object_t> Object;
-typedef std::shared_ptr<const Object_t> const_Object;
+typedef std::shared_ptr<Data_t> Data;
+typedef std::shared_ptr<const Data_t> const_Data;
+#define newObject() (std::move(Data(new Object_t())))
+#define newObject_LuaGC() (new Data(new Object_t()))
 
-static inline Object newObject()
-{
-	Object_t* o = new Object_t();
-	magicalAssert(o, "failed new Object()");
-	return std::move(Object(o));
-}
-
-#define newObject() ()))
-#define newObject_LuaGC() (new Object(new Object_t()))
-
-class Object_t : public std::enable_shared_from_this<Object_t>
+class Data_t : public Object_t
 {
 public:
-	Object_t( void );
-	virtual ~Object_t( void );
-	std::string toString( void ) const;
+	Data_t( void );
+	virtual ~Data_t( void );
+
+public:
+	void malloc( const size_t t );
+
+private:
+	char* _data;
 };
 
 
-
-#endif //__OBJECT_H__
+#endif //__DATA_H__

@@ -21,38 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
-
-#include <string>
-#include <memory>
-
 #include "PlatformMacros.h"
-#include "Common.h"
+#include "Data.h"
 
-class Object_t;
-
-typedef std::shared_ptr<Object_t> Object;
-typedef std::shared_ptr<const Object_t> const_Object;
-
-static inline Object newObject()
+Data_t::Data_t( void )
+: _data(nullptr)
 {
-	Object_t* o = new Object_t();
-	magicalAssert(o, "failed new Object()");
-	return std::move(Object(o));
+
 }
 
-#define newObject() ()))
-#define newObject_LuaGC() (new Object(new Object_t()))
-
-class Object_t : public std::enable_shared_from_this<Object_t>
+Data_t::~Data_t( void )
 {
-public:
-	Object_t( void );
-	virtual ~Object_t( void );
-	std::string toString( void ) const;
-};
+	if( _data )
+	{
+		free( _data );
+	}
+}
 
-
-
-#endif //__OBJECT_H__
+void Data_t::malloc( const size_t t )
+{
+	if( _data )
+	{
+	}
+}

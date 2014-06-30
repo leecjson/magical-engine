@@ -30,6 +30,7 @@ SOFTWARE.
 #include "Common.h"
 #include "Utils.h"
 
+#include "FileSystem.h"
 #include "LuaSystem.h"
 
 //static timeval s_last_update_time;
@@ -69,12 +70,20 @@ void Engine::delc( void )
 
 void Engine::initSystems( void )
 {
+	FileSystem::init();
+	magicalReturnIfError();
+
 	LuaSystem::init();
+	magicalReturnIfError();
 }
 
 void Engine::delcSystems( void )
 {
 	LuaSystem::delc();
+	magicalReturnIfError();
+
+	FileSystem::delc();
+	magicalReturnIfError();
 }
 
 void Engine::onReshape( int w, int h )
@@ -125,7 +134,7 @@ void Engine::onLoop( void )
 #endif
 }
 
-float Engine::deltaTime( void )
+float Engine::getDeltaTime( void )
 {
 	return s_delta_time;
 }

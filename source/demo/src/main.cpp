@@ -26,14 +26,16 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
-	vec2 a(5, 6);
+	FileSystem::isFileExist("win32\\FileSystem.cpp");
+
+	/*vec2 a(5, 6);
 	vec2 b(1, 1);
 
 	LuaState& L = LuaSystem::luaState();
 	L->executeScriptFile("main.lua");
 	L->executeGlobalFunction(kLuaOnCreate);
 	magicalLuaStateDump(L->getState());
-	L->clean();
+	L->clean();*/
 }
 
 int main(int argc, char* argv[])

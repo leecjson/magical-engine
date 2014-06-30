@@ -32,7 +32,9 @@ class LuaSystem
 public:
 	static void init( void );
 	static void delc( void );
-	static LuaState& luaState( void );
+
+public:
+	static LuaState& getLuaState( void );
 };
 
 

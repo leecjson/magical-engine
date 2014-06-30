@@ -129,6 +129,9 @@
     <ClInclude Include="src\geometry\Geometry.h">
       <Filter>src\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="src\common\Data.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\common\Object.cpp">
@@ -179,9 +182,6 @@
     <ClCompile Include="src\engine\Engine.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\file\win32\FileSystem.cpp">
-      <Filter>src\file\win32</Filter>
-    </ClCompile>
     <ClCompile Include="src\log\win32\LogSystem.cpp">
       <Filter>src\log\win32</Filter>
     </ClCompile>
@@ -190,6 +190,12 @@
     </ClCompile>
     <ClCompile Include="src\geometry\Geometry.cpp">
       <Filter>src\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\file\win32\FileSystem.cpp">
+      <Filter>src\file\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\common\Data.cpp">
+      <Filter>src\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

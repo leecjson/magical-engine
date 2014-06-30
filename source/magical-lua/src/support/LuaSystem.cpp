@@ -38,7 +38,7 @@ void LuaSystem::delc( void )
 	s_lua_state.reset();
 }
 
-LuaState& LuaSystem::luaState( void )
+LuaState& LuaSystem::getLuaState( void )
 {
 	return s_lua_state;
 }

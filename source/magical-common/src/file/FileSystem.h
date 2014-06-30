@@ -24,10 +24,28 @@ SOFTWARE.
 #ifndef __FILE_SYSTEM_H__
 #define __FILE_SYSTEM_H__
 
-//#include "PlatformMacros.h
-//
-//MAGAPI void magicalFileSystemInit();
-//MAGAPI void magicalFileSystemDelc();
+#include "PlatformMacros.h"
+
+#include <vector>
+#include <string>
+#include <unordered_map>
+
+class FileSystem
+{
+public:
+	static void init( void );
+	static void delc( void );
+
+public:
+	static void addSearchPath( const std::string& path );
+	static void removeSearchPath( const std::string& path );
+	static bool isAbsolutePath( const std::string& path );
+	static bool isFileExist( const std::string& file );
+	static const std::string toAbsolutePath( const std::string& path );
+	static const std::vector<std::string>& getSearchPaths( void );
+	static unsigned char* getFileData()
+	
+};
 
 
-#endif //__FILE_SY STEM_H__
+#endif //__FILE_SYSTEM_H__

@@ -35,6 +35,8 @@ magical common
 #include "Object.h"
 #include "Node.h"
 
+#include "FileSystem.h"
+
 #include "GL/matrix.h"
 #include "GL/mat4stack.h"
 #include "kazmath.h"

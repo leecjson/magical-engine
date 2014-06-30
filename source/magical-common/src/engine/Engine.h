@@ -33,12 +33,11 @@ public:
 	static void delc( void );
 	static void initSystems( void );
 	static void delcSystems( void );
-	
 	static void onReshape( int w, int h );
 	static void onLoop( void );
 
 public:
-	static float deltaTime( void );
+	static float getDeltaTime( void );
 };
 
 

@@ -39,8 +39,9 @@ general macros
 #define MAX(a,b) (((a) < (b)) ? (b) : (a))
 #endif
 
-#define kMaxLogLength (1024 * 50)
-#define kMaxErrLength (1024)
+#define kMaxLogLength  (1024 * 50)
+#define kMaxErrLength  (1024)
+#define kMaxPathLength (512)
 
 /*
 general error signal
@@ -49,6 +50,16 @@ MAGAPI bool magicalIsError( void );
 MAGAPI void magicalIgnoreLastError( void );
 MAGAPI void magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
+
+#ifndef magicalReturnIfError
+#define magicalReturnIfError() if( magicalIsError() ) return;
+#endif
+
+#ifndef MAG_SAFE_MEMOEY
+#define MAG_SAFE_MEMOEY
+#define magicalFree( __var ) magicalAssert( __var, "Free nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); ::free( __exp );
+#define magicalDelete( __var ) magicalAssert( __var, "Free nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); delete __exp;
+#endif
 
 /*
 assert function
