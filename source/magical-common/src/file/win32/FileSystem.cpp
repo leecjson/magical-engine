@@ -146,7 +146,7 @@ const std::string FileSystem::toAbsolutePath( const std::string& path )
 			return std::move( abs_path );
 		}
 	}
-	return std::move("");
+	return "";
 }
 
 const std::vector<std::string>& FileSystem::getSearchPaths( void )

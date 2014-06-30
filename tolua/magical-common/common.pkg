@@ -4,4 +4,4 @@ $#include "magical-engine.h"
 
 $pfile "magical-common/common/Object.pkg"
 $pfile "magical-common/node/Node.pkg"
-$pfile "magical-common/geometry/vec2.pkg"
+//$pfile "magical-common/geometry/vec2.pkg"

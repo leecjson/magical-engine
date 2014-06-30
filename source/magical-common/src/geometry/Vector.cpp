@@ -21,17 +21,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __GEOMETRY_HPP__
-#define __GEOMETRY_HPP__
-
-#include "Common.h"
-#include "kazmath.h"
-#include "vec2.hpp"
-#include "vec3.hpp"
-#include "vec4.hpp"
-#include "mat3.hpp"
-#include "mat4.hpp"
-
-
-
-#endif //__GEOMETRY_HPP__
+#include "PlatformMacros.h"
+#include "vec.hpp"

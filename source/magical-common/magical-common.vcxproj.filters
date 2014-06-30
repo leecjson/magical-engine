@@ -102,12 +102,6 @@
     <ClInclude Include="src\engine\Engine.h">
       <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\geometry\vec2.hpp">
-      <Filter>src\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\vec3.hpp">
-      <Filter>src\geometry</Filter>
-    </ClInclude>
     <ClInclude Include="src\file\FileSystem.h">
       <Filter>src\file</Filter>
     </ClInclude>
@@ -116,18 +110,6 @@
     </ClInclude>
     <ClInclude Include="src\common\Common.h">
       <Filter>src\common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\vec4.hpp">
-      <Filter>src\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\mat3.hpp">
-      <Filter>src\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\mat4.hpp">
-      <Filter>src\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\Geometry.h">
-      <Filter>src\geometry</Filter>
     </ClInclude>
     <ClInclude Include="src\common\Data.h">
       <Filter>src\common</Filter>
@@ -187,9 +169,6 @@
     </ClCompile>
     <ClCompile Include="src\common\Common.cpp">
       <Filter>src\common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\Geometry.cpp">
-      <Filter>src\geometry</Filter>
     </ClCompile>
     <ClCompile Include="src\file\win32\FileSystem.cpp">
       <Filter>src\file\win32</Filter>

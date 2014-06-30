@@ -52,13 +52,13 @@ MAGAPI void magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
 
 #ifndef magicalReturnIfError
-#define magicalReturnIfError() if( magicalIsError() ) return;
+#define magicalReturnIfError() if( magicalIsError() ) return
 #endif
 
-#ifndef MAG_SAFE_MEMOEY
-#define MAG_SAFE_MEMOEY
-#define magicalFree( __var ) magicalAssert( __var, "Free nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); ::free( __exp );
-#define magicalDelete( __var ) magicalAssert( __var, "Free nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); delete __exp;
+#ifndef MAG_MEMOEY_SAFE
+#define MAG_MEMOEY_SAFE
+#define magicalFree( __var ) magicalAssert( __var, "free nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); ::free( __exp );
+#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); delete __exp;
 #endif
 
 /*

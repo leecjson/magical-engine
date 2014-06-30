@@ -21,30 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
-
-#include <string>
-#include <memory>
+#ifndef __VEC_HPP__
+#define __VEC_HPP__
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "kazmath.h"
 
-class Object_t;
-
-typedef std::shared_ptr<Object_t> Object;
-typedef std::shared_ptr<const Object_t> const_Object;
-#define newObject() (std::move(Object(new Object_t())))
-#define newObject_LuaGC() (new Object(new Object_t()))
-
-class Object_t : public std::enable_shared_from_this<Object_t>
+struct Vector
 {
 public:
-	Object_t( void );
-	virtual ~Object_t( void );
-	std::string toString( void ) const;
+	float x;
+	float y;
+	float z;
+	float w;
 };
 
 
 
-#endif //__OBJECT_H__
+
+#endif //__VEC_HPP__

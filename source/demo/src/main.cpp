@@ -22,20 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "magical-engine.h"
-#include "vec2.hpp"
 
 void onFinishLaunching( void )
 {
-	FileSystem::isFileExist("win32\\FileSystem.cpp");
-
-	/*vec2 a(5, 6);
-	vec2 b(1, 1);
-
-	LuaState& L = LuaSystem::luaState();
+	LuaState& L = LuaSystem::getLuaState();
 	L->executeScriptFile("main.lua");
 	L->executeGlobalFunction(kLuaOnCreate);
 	magicalLuaStateDump(L->getState());
-	L->clean();*/
+	L->clean();
 }
 
 int main(int argc, char* argv[])

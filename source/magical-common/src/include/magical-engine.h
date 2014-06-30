@@ -40,7 +40,7 @@ magical common
 #include "GL/matrix.h"
 #include "GL/mat4stack.h"
 #include "kazmath.h"
-#include "Geometry.h"
+//#include "Geometry.h"
 
 /*
 magical renderer

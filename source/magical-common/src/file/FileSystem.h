@@ -43,7 +43,7 @@ public:
 	static bool isFileExist( const std::string& file );
 	static const std::string toAbsolutePath( const std::string& path );
 	static const std::vector<std::string>& getSearchPaths( void );
-	static unsigned char* getFileData()
+	//static unsigned char* getFileData()
 	
 };
 

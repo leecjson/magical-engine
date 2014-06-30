@@ -84,12 +84,6 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="src\common\Object.h" />
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\file\FileSystem.h" />
-    <ClInclude Include="src\geometry\Geometry.h" />
-    <ClInclude Include="src\geometry\mat3.hpp" />
-    <ClInclude Include="src\geometry\mat4.hpp" />
-    <ClInclude Include="src\geometry\vec2.hpp" />
-    <ClInclude Include="src\geometry\vec3.hpp" />
-    <ClInclude Include="src\geometry\vec4.hpp" />
     <ClInclude Include="src\include\magical-engine.h" />
     <ClInclude Include="src\kazmath\aabb.h" />
     <ClInclude Include="src\kazmath\GL\mat4stack.h" />
@@ -116,7 +110,6 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClCompile Include="src\common\Object.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\file\win32\FileSystem.cpp" />
-    <ClCompile Include="src\geometry\Geometry.cpp" />
     <ClCompile Include="src\kazmath\aabb.c" />
     <ClCompile Include="src\kazmath\GL\mat4stack.c" />
     <ClCompile Include="src\kazmath\GL\matrix.c" />
