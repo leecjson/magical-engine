@@ -63,17 +63,20 @@ void LogSystem::delc( void )
 	
 }
 
-void LogSystem::I( const std::string& msg )
+void LogSystem::I( const char* msg )
 {
-	win32Log("Info ", msg.c_str());
+	magicalAssert( msg, "should not nullptr" );
+	win32Log( "Info ", msg );
 }
 
-void LogSystem::D( const std::string& msg )
+void LogSystem::D( const char* msg )
 {
-	win32Log("Debug", msg.c_str());
+	magicalAssert( msg, "should not nullptr" );
+	win32Log( "Debug", msg );
 }
 
-void LogSystem::E( const std::string& msg )
+void LogSystem::E( const char* msg )
 {
-	win32Log("Error", msg.c_str());
+	magicalAssert( msg, "should not nullptr" );
+	win32Log( "Error", msg );
 }

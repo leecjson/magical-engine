@@ -93,9 +93,6 @@
     <ClInclude Include="src\kazmath\GL\matrix.h">
       <Filter>src\kazmath\GL</Filter>
     </ClInclude>
-    <ClInclude Include="src\node\Node.h">
-      <Filter>src\node</Filter>
-    </ClInclude>
     <ClInclude Include="src\include\magical-engine.h">
       <Filter>src\include</Filter>
     </ClInclude>
@@ -157,9 +154,6 @@
     </ClCompile>
     <ClCompile Include="src\kazmath\GL\matrix.c">
       <Filter>src\kazmath\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\node\Node.cpp">
-      <Filter>src\node</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\Engine.cpp">
       <Filter>src\engine</Filter>

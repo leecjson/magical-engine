@@ -33,7 +33,7 @@ SOFTWARE.
 #define MAG_WIN32_RETURN_IF_ERROR() \
 if( magicalIsError() == true ) \
 { \
-	MessageBoxA(nullptr, magicalGetLastErrorInfo().c_str(), "Error", MB_OK); \
+	MessageBoxA(nullptr, magicalGetLastErrorInfo(), "Error", MB_OK); \
 	return; \
 }
 

@@ -32,6 +32,24 @@ class Data_t;
 typedef std::shared_ptr<Data_t> Data;
 typedef std::shared_ptr<const Data_t> const_Data;
 
+class Data_t : public Object_t
+{
+public:
+	Data_t( void );
+	virtual ~Data_t( void );
+
+public:
+	void assign( char* data, const tsize size );
+	void malloc( const tsize size );
+	void realloc( const tsize size );
+	char* data( void ) const;
+	bool empty( void ) const;
+
+private:
+	char* _data;
+	tsize _size;
+};
+
 static inline Data newData( void )
 {
 	Data_t* obj = new Data_t();
@@ -47,21 +65,5 @@ static inline Data* newData_LuaGC( void )
 	magicalAssert( ret, "new Data( obj );" );
 	return ret;
 }
-
-class Data_t : public Object_t
-{
-public:
-	Data_t( void );
-	virtual ~Data_t( void );
-
-public:
-	void assign( char* data, const tsize size );
-	void malloc( const tsize size );
-
-private:
-	char* _data;
-	tsize _size;
-};
-
 
 #endif //__DATA_H__

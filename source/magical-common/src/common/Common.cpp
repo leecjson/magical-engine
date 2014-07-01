@@ -64,7 +64,7 @@ MAGAPI const char* magicalGetLastErrorInfo( void )
 	}
 	else
 	{
-		return "";
+		return "none";
 	}
 }
 //

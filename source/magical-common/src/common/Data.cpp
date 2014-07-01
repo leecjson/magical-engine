@@ -42,6 +42,8 @@ Data_t::~Data_t( void )
 
 void Data_t::assign( char* data, const tsize size )
 {
+	magicalAssert( data && size > 0, "data should not nullptr and size should > 0" );
+
 	if( _data )
 	{
 		magicalFree( _data );
@@ -52,11 +54,32 @@ void Data_t::assign( char* data, const tsize size )
 
 void Data_t::malloc( const tsize size )
 {
+	magicalAssert( size > 0, "size should > 0" );
+
 	if( _data )
 	{
 		magicalFree( _data );
 	}
-	_data = (char*)(::malloc( size ));
+	_data = (char*) ::malloc( size );
 	magicalAssert( _data, "(char*)::malloc( size );" );
 	_size = size;
+}
+
+void Data_t::realloc( const tsize size )
+{
+	magicalAssert( size > 0, "size should > 0" );
+	magicalAssert( _data, "_data should not nullptr" );
+
+	_data = (char*) ::realloc( _data, size );
+	magicalAssert( _data, "(char*) ::realloc( _data, size );" );
+}
+
+char* Data_t::data( void ) const
+{
+	return _data;
+}
+
+bool Data_t::empty( void ) const
+{
+	return _data == nullptr;
 }

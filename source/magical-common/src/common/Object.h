@@ -34,6 +34,14 @@ class Object_t;
 typedef std::shared_ptr<Object_t> Object;
 typedef std::shared_ptr<const Object_t> const_Object;
 
+class Object_t : public std::enable_shared_from_this<Object_t>
+{
+public:
+	Object_t( void );
+	virtual ~Object_t( void );
+	std::string toString( void ) const;
+};
+
 static inline Object newObject( void )
 {
 	Object_t* obj = new Object_t();
@@ -49,14 +57,6 @@ static inline Object* newObject_LuaGC( void )
 	magicalAssert( ret, "new Object( obj );" );
 	return ret;
 }
-
-class Object_t : public std::enable_shared_from_this<Object_t>
-{
-public:
-	Object_t( void );
-	virtual ~Object_t( void );
-	std::string toString( void ) const;
-};
 
 
 

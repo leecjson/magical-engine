@@ -100,7 +100,6 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="src\kazmath\vec3.h" />
     <ClInclude Include="src\kazmath\vec4.h" />
     <ClInclude Include="src\log\LogSystem.h" />
-    <ClInclude Include="src\node\Node.h" />
     <ClInclude Include="src\PlatformMacros.h" />
     <ClInclude Include="src\utils\Utils.h" />
   </ItemGroup>
@@ -124,7 +123,6 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClCompile Include="src\kazmath\vec3.c" />
     <ClCompile Include="src\kazmath\vec4.c" />
     <ClCompile Include="src\log\win32\LogSystem.cpp" />
-    <ClCompile Include="src\node\Node.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
