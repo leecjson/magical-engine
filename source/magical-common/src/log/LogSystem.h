@@ -44,9 +44,9 @@ class LogSystem
 public:
 	static void init( void );
 	static void delc( void );
-	static void I( const char* msg );
-	static void D( const char* msg );
-	static void E( const char* msg );
+	static void I( const std::string& msg );
+	static void D( const std::string& msg );
+	static void E( const std::string& msg );
 };
 
 #endif  //__LOG_SYSTEM_H__

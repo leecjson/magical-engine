@@ -24,14 +24,15 @@ SOFTWARE.
 #ifndef __NODE_H__
 #define __NODE_H__
 
+#include "PlatformMacros.h"
 #include "Object.h"
 
 class Node_t;
 
 typedef std::shared_ptr<Node_t> Node;
-typedef std::shared_ptr<const Node_t> Node_const;
-#define newNode() (std::move(std::shared_ptr<Node_t>(new Node_t())))
-#define newNode_LuaGC() (new std::shared_ptr<Node_t>(new Node_t()))
+typedef std::shared_ptr<const Node_t> const_Node;
+#define newNode() (std::move(Node(new Node_t())))
+#define newNode_LuaGC() (new Node(new Node_t()))
 
 class Node_t : public Object_t
 {

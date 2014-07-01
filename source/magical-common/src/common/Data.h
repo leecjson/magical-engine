@@ -26,13 +26,27 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Object.h"
+#include "Common.h"
 
 class Data_t;
-
 typedef std::shared_ptr<Data_t> Data;
 typedef std::shared_ptr<const Data_t> const_Data;
-#define newObject() (std::move(Data(new Object_t())))
-#define newObject_LuaGC() (new Data(new Object_t()))
+
+static inline Data newData( void )
+{
+	Data_t* obj = new Data_t();
+	magicalAssert( obj, "new Data_t();" );
+	return std::move( Data(obj) );
+}
+
+static inline Data* newData_LuaGC( void )
+{
+	Data_t* obj = new Data_t();
+	magicalAssert( obj, "new Data_t();" );
+	Data* ret = new Data( obj );
+	magicalAssert( ret, "new Data( obj );" );
+	return ret;
+}
 
 class Data_t : public Object_t
 {
@@ -41,10 +55,12 @@ public:
 	virtual ~Data_t( void );
 
 public:
-	void malloc( const size_t t );
+	void assign( char* data, const tsize size );
+	void malloc( const tsize size );
 
 private:
 	char* _data;
+	tsize _size;
 };
 
 

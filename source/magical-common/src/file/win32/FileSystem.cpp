@@ -21,11 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "PlatformMacros.h"
 #include "FileSystem.h"
-#include "Common.h"
-
+#include <string.h>
 #include <windows.h>
+#include "Common.h"
+#include "Utils.h"
 
 static std::unordered_map<std::string, std::string> s_absolute_path_cache_map;
 static std::vector<std::string> s_search_path_array;
@@ -53,16 +53,16 @@ void FileSystem::delc( void )
 	
 }
 
-void FileSystem::addSearchPath( const std::string& path )
+void FileSystem::addSearchPath( const char* path )
 {
-	std::string unix_path = std::move( win32ConvertPathFormatToUnixStyle( path ) );
+	std::string unix_path = win32ConvertPathFormatToUnixStyle( std::string(path) );
 	std::string prefix;
-	if( isAbsolutePath( unix_path ) == false )
+	if( isAbsolutePath( unix_path.c_str() ) == false )
 	{
 		prefix = s_default_search_path;
 	}
 
-	std::string real_path = std::move( prefix + unix_path );
+	std::string real_path = prefix + unix_path;
 	if( real_path.length() > 0 && real_path[real_path.length() - 1] != '/' )
 	{
 		real_path += "/";
@@ -70,9 +70,9 @@ void FileSystem::addSearchPath( const std::string& path )
 	s_search_path_array.push_back( real_path );
 }
 
-void FileSystem::removeSearchPath( const std::string& path )
+void FileSystem::removeSearchPath( const char* path )
 {
-	std::string unix_path = std::move( win32ConvertPathFormatToUnixStyle( path ) );
+	std::string unix_path = win32ConvertPathFormatToUnixStyle( std::string(path) );
 	auto path_itr = std::find( s_search_path_array.begin(), s_search_path_array.end(), unix_path );
 	if( path_itr != s_search_path_array.end() )
 	{
@@ -80,9 +80,14 @@ void FileSystem::removeSearchPath( const std::string& path )
 	}
 }
 
-bool FileSystem::isAbsolutePath( const std::string& path )
+const std::vector<std::string>& FileSystem::getSearchPaths( void )
 {
-	if( path.length() > 2
+	return s_search_path_array;
+}
+
+bool FileSystem::isAbsolutePath( const char* path )
+{
+	if( strlen( path ) > 2
 		&& ((path[0] >= 'a' && path[0] <= 'z') 
 		|| ( path[0] >= 'A' && path[0] <= 'Z'))
 		&& ( path[1] == ':') )
@@ -92,6 +97,34 @@ bool FileSystem::isAbsolutePath( const std::string& path )
 	return false;
 }
 
+const std::string FileSystem::toAbsolutePath( const char* path )
+{
+	if( isAbsolutePath(path) )
+	{
+		return path;
+	}
+	std::string unix_path = win32ConvertPathFormatToUnixStyle( path );
+
+	auto cache_itr = s_absolute_path_cache_map.find( unix_path );
+	if( cache_itr != s_absolute_path_cache_map.end() )
+	{
+		return cache_itr->second;
+	}
+
+	std::string abs_path;
+	for( const auto& prefix : s_search_path_array )
+	{
+		abs_path = prefix + unix_path;
+		int ret = GetFileAttributesA( abs_path.c_str() );
+		if( ret != -1 )
+		{
+			s_absolute_path_cache_map.insert( std::make_pair(unix_path, abs_path) );
+			return std::move( abs_path );
+		}
+	}
+	return "";
+}
+
 bool FileSystem::isFileExist( const std::string& file )
 {
 	if( file.length() == 0 )
@@ -99,13 +132,13 @@ bool FileSystem::isFileExist( const std::string& file )
 		return false;
 	}
 
-	std::string file_path = std::move( win32ConvertPathFormatToUnixStyle( file ) );
+	std::string file_path = win32ConvertPathFormatToUnixStyle( file );
 	if( isAbsolutePath( file_path ) == false )
 	{
 		std::string abs_path;
 		for( const auto& prefix : s_search_path_array )
 		{
-			abs_path = std::move( prefix + file_path );
+			abs_path = prefix + file_path;
 			int ret = GetFileAttributesA( abs_path.c_str() );
 			if( ret != -1 )
 			{
@@ -121,40 +154,13 @@ bool FileSystem::isFileExist( const std::string& file )
 	return false;
 }
 
-const std::string FileSystem::toAbsolutePath( const std::string& path )
+Data FileSystem::getFileData( const std::string& file_name, const std::string& mode )
 {
-	if( isAbsolutePath( path ) )
-	{
-		return path;
-	}
-	std::string unix_path = win32ConvertPathFormatToUnixStyle( path );
+	std::string abs_path = toAbsolutePath( file_name );
+	magicalAssert( abs_path.empty() == false, Utils::format<128>("Get file data failed! file(%s) doesn't exist!", file_name).c_str() );
 
-	auto cache_itr = s_absolute_path_cache_map.find( unix_path );
-	if( cache_itr != s_absolute_path_cache_map.end() )
-	{
-		return cache_itr->second;
-	}
-
-	std::string abs_path;
-	for( const auto& prefix : s_search_path_array )
-	{
-		abs_path = std::move( prefix + unix_path );
-		int ret = GetFileAttributesA( abs_path.c_str() );
-		if( ret != -1 )
-		{
-			s_absolute_path_cache_map.insert( std::make_pair(unix_path, abs_path) );
-			return std::move( abs_path );
-		}
-	}
-	return "";
+	return newData();
 }
-
-const std::vector<std::string>& FileSystem::getSearchPaths( void )
-{
-	return s_search_path_array;
-}
-
-
 
 static std::string win32ConvertPathFormatToUnixStyle( const std::string& path )
 {
@@ -175,7 +181,7 @@ static std::string win32GetDefaultSearchPath( void )
 	char buf[ kMaxPathLength ] = {0};
 	GetCurrentDirectoryA( sizeof(buf)-1, buf );
 
-	std::string ret = win32ConvertPathFormatToUnixStyle( std::move(std::string(buf)) );
+	std::string ret = win32ConvertPathFormatToUnixStyle( std::string(buf) );
 	ret.append("/");
 	return std::move(ret);
 }

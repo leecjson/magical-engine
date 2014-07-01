@@ -24,11 +24,12 @@ SOFTWARE.
 #ifndef __FILE_SYSTEM_H__
 #define __FILE_SYSTEM_H__
 
-#include "PlatformMacros.h"
-
 #include <vector>
 #include <string>
 #include <unordered_map>
+
+#include "PlatformMacros.h"
+#include "Data.h"
 
 class FileSystem
 {
@@ -37,13 +38,13 @@ public:
 	static void delc( void );
 
 public:
-	static void addSearchPath( const std::string& path );
-	static void removeSearchPath( const std::string& path );
-	static bool isAbsolutePath( const std::string& path );
-	static bool isFileExist( const std::string& file );
-	static const std::string toAbsolutePath( const std::string& path );
+	static void addSearchPath( const char* path );
+	static void removeSearchPath( const char* path );
 	static const std::vector<std::string>& getSearchPaths( void );
-	//static unsigned char* getFileData()
+	static bool isAbsolutePath( const char* path );
+	static const std::string toAbsolutePath( const char* path );
+	static bool isFileExist( const std::string& file );
+	static Data getFileData( const std::string& file_name, const std::string& mode );
 	
 };
 

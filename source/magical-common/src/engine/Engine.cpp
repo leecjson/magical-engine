@@ -21,17 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "PlatformMacros.h"
 #include "Engine.h"
-#include "GLFunction.h"
-#include "kazmath.h"
-#include "GL/matrix.h"
-#include "GL/mat4stack.h"
+
 #include "Common.h"
 #include "Utils.h"
-
 #include "FileSystem.h"
 #include "LuaSystem.h"
+#include "RenderSystem.h"
 
 //static timeval s_last_update_time;
 static float s_delta_time;
@@ -47,20 +43,20 @@ static float s_delta_time;
 //	s_last_update_time = tv_now;
 //}
 
-static void setGLDefault( void )
-{
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-
-	glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-}
+//static void setGLDefault( void )
+//{
+//	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+//
+//	glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_CULL_FACE);
+//}
 
 void Engine::init( void )
 {
 	s_delta_time = 0.0f;
 	
 	//magicalGetTimeOfDay(&s_last_update_time, nullptr);
-	setGLDefault();
+	//setGLDefault();
 }
 
 void Engine::delc( void )
@@ -75,10 +71,16 @@ void Engine::initSystems( void )
 
 	LuaSystem::init();
 	magicalReturnIfError();
+
+	RenderSystem::init();
+	magicalReturnIfError();
 }
 
 void Engine::delcSystems( void )
 {
+	RenderSystem::delc();
+	magicalReturnIfError();
+
 	LuaSystem::delc();
 	magicalReturnIfError();
 
@@ -86,28 +88,13 @@ void Engine::delcSystems( void )
 	magicalReturnIfError();
 }
 
-void Engine::onReshape( int w, int h )
-{
-	glViewport(0, 0, w, h);
-
-	kmGLFreeAll();
-
-	kmGLMatrixMode(KM_GL_MODELVIEW);
-	kmGLLoadIdentity();
-
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLLoadIdentity();
-
-	//kmMat4OrthographicProjection(&s_orthographic_projection2d, 0, w, 0, h, -1.0f, 1.0f);
-}
-
-void Engine::onLoop( void )
+void Engine::mainLoop( void )
 {
 	//calcDeltaTime();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	kmGLMatrixMode(KM_GL_PROJECTION);
+	//kmGLMatrixMode(KM_GL_PROJECTION);
 
 #if 0
 	// 3d render
@@ -132,6 +119,21 @@ void Engine::onLoop( void )
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLPopMatrix();
 #endif
+}
+
+void Engine::onReshape( int w, int h )
+{
+	/*glViewport(0, 0, w, h);
+
+	kmGLFreeAll();
+
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLLoadIdentity();
+
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();*/
+
+	//kmMat4OrthographicProjection(&s_orthographic_projection2d, 0, w, 0, h, -1.0f, 1.0f);
 }
 
 float Engine::getDeltaTime( void )
