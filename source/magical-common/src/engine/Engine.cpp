@@ -31,12 +31,18 @@ SOFTWARE.
 #include "LuaSystem.h"
 #include "RenderSystem.h"
 
-static std::chrono::time_point<std::chrono::system_clock> s_last_update_time;
+static int64_t s_last_update_time;
 static float s_delta_time;
 
 static void calcDeltaTime( void )
 {
-	
+	std::chrono::system_clock::duration scd = std::chrono::system_clock::now().time_since_epoch();
+	std::chrono::microseconds::rep now = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();
+
+	s_delta_time = ( now - s_last_update_time ) / 1000000.0f;
+	s_delta_time = MAX( 0, s_delta_time );
+
+	s_last_update_time = now;
 }
 
 //static void setGLDefault( void )
@@ -51,12 +57,9 @@ void Engine::init( void )
 {
 	s_delta_time = 0.0f;
 
-	std::chrono::system_clock::duration scd = s_last_update_time.time_since_epoch();
-	std::chrono::duration<std::chrono::microseconds>( scd );
+	std::chrono::system_clock::duration scd = std::chrono::system_clock::now().time_since_epoch();
+	s_last_update_time = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();
 	
-
-	s_last_update_time = std::chrono::system_clock::now();
-	std::chrono::system_clock::rep f = s_last_update_time.time_since_epoch().count();
 	//magicalGetTimeOfDay(&s_last_update_time, nullptr);
 	//setGLDefault();
 }
@@ -92,7 +95,7 @@ void Engine::delcSystems( void )
 
 void Engine::mainLoop( void )
 {
-	//calcDeltaTime();
+	calcDeltaTime();
 
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -121,6 +124,9 @@ void Engine::mainLoop( void )
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLPopMatrix();
 #endif
+
+	magicalLogD( Utils::format<128>("%f", s_delta_time).c_str() );
+
 }
 
 void Engine::onReshape( int w, int h )

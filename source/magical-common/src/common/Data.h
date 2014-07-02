@@ -39,15 +39,15 @@ public:
 	virtual ~Data_t( void );
 
 public:
-	void assign( char* data, const tsize size );
-	void malloc( const tsize size );
-	void realloc( const tsize size );
+	void assign( char* data, const size_t size );
+	void malloc( const size_t size );
+	void realloc( const size_t size );
 	char* data( void ) const;
 	bool empty( void ) const;
 
 private:
 	char* _data;
-	tsize _size;
+	size_t _size;
 };
 
 static inline Data newData( void )

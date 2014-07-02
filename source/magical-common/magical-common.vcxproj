@@ -82,6 +82,7 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="src\common\Common.h" />
     <ClInclude Include="src\common\Data.h" />
     <ClInclude Include="src\common\Object.h" />
+    <ClInclude Include="src\common\Time.h" />
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\file\FileSystem.h" />
     <ClInclude Include="src\include\magical-engine.h" />
@@ -107,6 +108,7 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClCompile Include="src\common\Common.cpp" />
     <ClCompile Include="src\common\Data.cpp" />
     <ClCompile Include="src\common\Object.cpp" />
+    <ClCompile Include="src\common\Time.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\file\win32\FileSystem.cpp" />
     <ClCompile Include="src\kazmath\aabb.c" />

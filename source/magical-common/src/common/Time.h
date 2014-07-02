@@ -21,65 +21,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Data.h"
+#ifndef __TIME_H__
+#define __TIME_H__
+
+#include "PlatformMacros.h"
 #include "Common.h"
 
-Data_t::Data_t( void )
-: _data(nullptr)
-, _size(0)
+class Time
 {
+public:
+	static int64_t getCurrent
+};
 
-}
 
-Data_t::~Data_t( void )
-{
-	if( _data )
-	{
-		magicalFree( _data );
-		_data = nullptr;
-	}
-}
 
-void Data_t::assign( char* data, const size_t size )
-{
-	magicalAssert( data && size > 0, "data should not nullptr and size should > 0" );
-
-	if( _data )
-	{
-		magicalFree( _data );
-	}
-	_data = data;
-	_size = size;
-}
-
-void Data_t::malloc( const size_t size )
-{
-	magicalAssert( size > 0, "size should > 0" );
-
-	if( _data )
-	{
-		magicalFree( _data );
-	}
-	_data = (char*) ::malloc( size );
-	magicalAssert( _data, "(char*)::malloc( size );" );
-	_size = size;
-}
-
-void Data_t::realloc( const size_t size )
-{
-	magicalAssert( size > 0, "size should > 0" );
-	magicalAssert( _data, "_data should not nullptr" );
-
-	_data = (char*) ::realloc( _data, size );
-	magicalAssert( _data, "(char*) ::realloc( _data, size );" );
-}
-
-char* Data_t::data( void ) const
-{
-	return _data;
-}
-
-bool Data_t::empty( void ) const
-{
-	return _data == nullptr;
-}
+#endif //__TIME_H__

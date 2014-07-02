@@ -24,6 +24,9 @@ SOFTWARE.
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
+#include <cstdio>
+#include <cstdlib>
+#include <cstdarg>
 #include <string>
 #include <memory>
 

@@ -32,11 +32,6 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "LogSystem.h"
 
-#ifndef MAG_TYPEDEF
-#define MAG_TYPEDEF
-typedef unsigned int tsize;
-#endif
-
 /*
 general macros
 */
@@ -47,12 +42,9 @@ general macros
 #define MAX(a, b) (((a) < (b)) ? (b) : (a))
 #endif
 
-#ifndef MAG_LENGTHDEF
-#define MAG_LENGTHDEF
 #define kMaxLogLength  ( 1024 * 50 )
 #define kMaxErrLength  ( 1024 )
 #define kMaxPathLength ( 512 )
-#endif
 
 /*
 general
@@ -62,16 +54,10 @@ MAGAPI void magicalIgnoreLastError( void );
 MAGAPI void magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
 
-#ifndef magicalReturnIfError
 #define magicalReturnIfError() if( magicalIsError() ) return
-#endif
-
-#ifndef MAG_MEMOEY_SAFE
-#define MAG_MEMOEY_SAFE
 #define magicalFree( __var ) magicalAssert( __var, "free nullptr at " ##__FUNCTION__ ); ::free( __var )
 #define magicalDelete( __var ) magicalAssert( __var, "delete nullptr at " ##__FUNCTION__ ); delete __var
 #define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr at " ##__FUNCTION__ ); delete[] __var
-#endif
 
 /*
 assert function
