@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Engine.h"
+#include <chrono> 
+#include <ctime> 
 
 #include "Common.h"
 #include "Utils.h"
@@ -29,19 +31,13 @@ SOFTWARE.
 #include "LuaSystem.h"
 #include "RenderSystem.h"
 
-//static timeval s_last_update_time;
+static std::chrono::time_point<std::chrono::system_clock> s_last_update_time;
 static float s_delta_time;
 
-//static void calcDeltaTime( void )
-//{
-//	struct timeval tv_now;
-//
-//	magicalGetTimeOfDay(&tv_now, nullptr);
-//	s_delta_time = (tv_now.tv_sec - s_last_update_time.tv_sec) + (tv_now.tv_usec - s_last_update_time.tv_usec) / 1000000.0f;
-//	s_delta_time = MAX(0, s_delta_time);
-//
-//	s_last_update_time = tv_now;
-//}
+static void calcDeltaTime( void )
+{
+	
+}
 
 //static void setGLDefault( void )
 //{
@@ -54,7 +50,13 @@ static float s_delta_time;
 void Engine::init( void )
 {
 	s_delta_time = 0.0f;
+
+	std::chrono::system_clock::duration scd = s_last_update_time.time_since_epoch();
+	std::chrono::duration<std::chrono::microseconds>( scd );
 	
+
+	s_last_update_time = std::chrono::system_clock::now();
+	std::chrono::system_clock::rep f = s_last_update_time.time_since_epoch().count();
 	//magicalGetTimeOfDay(&s_last_update_time, nullptr);
 	//setGLDefault();
 }

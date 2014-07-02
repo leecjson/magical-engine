@@ -24,8 +24,9 @@ SOFTWARE.
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#include <assert.h>
-#include <stdlib.h>
+#include <cassert>
+#include <cstdlib>
+#include <cstdint>
 #include <string>
 
 #include "PlatformMacros.h"
@@ -40,10 +41,10 @@ typedef unsigned int tsize;
 general macros
 */
 #ifndef MIN
-#define MIN(a,b) (((a) > (b)) ? (b) : (a))
+#define MIN(a, b) (((a) > (b)) ? (b) : (a))
 #endif
 #ifndef MAX
-#define MAX(a,b) (((a) < (b)) ? (b) : (a))
+#define MAX(a, b) (((a) < (b)) ? (b) : (a))
 #endif
 
 #ifndef MAG_LENGTHDEF
@@ -67,9 +68,9 @@ MAGAPI const char* magicalGetLastErrorInfo( void );
 
 #ifndef MAG_MEMOEY_SAFE
 #define MAG_MEMOEY_SAFE
-#define magicalFree( __var ) magicalAssert( __var, "free nullptr at " ##__FUNCTION__ ); ::free( __var );
-#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr " ##__FUNCTION__ ); delete __var;
-#define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr " ##__FUNCTION__ ); delete[] __var;
+#define magicalFree( __var ) magicalAssert( __var, "free nullptr at " ##__FUNCTION__ ); ::free( __var )
+#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr at " ##__FUNCTION__ ); delete __var
+#define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr at " ##__FUNCTION__ ); delete[] __var
 #endif
 
 /*

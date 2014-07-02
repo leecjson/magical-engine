@@ -91,6 +91,8 @@ const std::vector<std::string>& FileSystem::getSearchPaths( void )
 
 bool FileSystem::isAbsolutePath( const char* path )
 {
+	magicalAssert( path, "should not nullptr" );
+
 	if( strlen( path ) > 2
 		&& ((path[0] >= 'a' && path[0] <= 'z') 
 		|| ( path[0] >= 'A' && path[0] <= 'Z'))
@@ -181,7 +183,7 @@ static std::string win32ConvertPathFormatToUnixStyle( const char* path )
             ret[i] = '/';
         }
     }
-    return std::move(ret);
+    return std::move( ret );
 }
 
 static std::string win32GetDefaultSearchPath( void )
@@ -190,6 +192,6 @@ static std::string win32GetDefaultSearchPath( void )
 	GetCurrentDirectoryA( sizeof(buf)-1, buf );
 
 	std::string ret = win32ConvertPathFormatToUnixStyle( buf );
-	ret.append("/");
-	return std::move(ret);
+	ret.append( "/" );
+	return std::move( ret );
 }

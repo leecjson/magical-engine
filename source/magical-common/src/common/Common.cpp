@@ -23,10 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "Common.h"
 
-#include <assert.h>
-#include <stdlib.h>
-#include <stdio.h>
-
+#include <cstdio>
 #include <string>
 
 static bool s_last_error = false;
