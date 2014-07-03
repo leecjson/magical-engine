@@ -33,7 +33,7 @@ SOFTWARE.
 #include <string>
 #include <memory>
 
-class Utils
+class StringUtils
 {
 public:
 	template< int __size >
@@ -48,7 +48,7 @@ public:
 	}
 };
 
-class Time
+class TimeUtils
 {
 public:
 	static int64_t getCurrentMicrosecTime();

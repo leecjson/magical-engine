@@ -33,8 +33,8 @@ static float s_delta_time;
 
 static void calcDeltaTime( void )
 {
-	int64_t now = Time::getCurrentMicrosecTime();
-	s_delta_time = MAX( 0, ( now - s_last_update_time ) / 1000000.0f );
+	int64_t now = TimeUtils::getCurrentMicrosecTime();
+	s_delta_time = MAX(0, (now - s_last_update_time) / 1000000.0f);
 	s_last_update_time = now;
 }
 
@@ -49,7 +49,7 @@ static void calcDeltaTime( void )
 void Engine::init( void )
 {
 	s_delta_time = 0.0f;
-	s_last_update_time = Time::getCurrentMicrosecTime();
+	s_last_update_time = TimeUtils::getCurrentMicrosecTime();
 	//setGLDefault();
 }
 

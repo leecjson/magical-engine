@@ -164,17 +164,17 @@ bool FileSystem::isFileExist( const char* file_name )
 	return false;
 }
 
-Data FileSystem::getFileData( const char* file_name, const char* mode )
+Data FileSystem::getFileData( const char* file_name )
 {
-	magicalAssert( file_name && mode, "should not nullptr" );
+	magicalAssert( file_name, "should not nullptr" );
 
 	std::string abs_path = toAbsolutePath( file_name );
-	magicalAssert( !abs_path.empty(), Utils::format<512>("Get file data failed! file(%s) doesn't exist!", file_name).c_str() );
+	magicalAssert( !abs_path.empty(), StringUtils::format<512>("Get file data failed! file(%s) doesn't exist!", file_name).c_str() );
 
 	FILE* fp = fopen( abs_path.c_str(), mode );
 	if( fp == nullptr )
 	{
-		magicalSetLastErrorInfo( Utils::format<512>("Get file data failed! file(%s)", file_name).c_str() );
+		magicalSetLastErrorInfo( StringUtils::format<512>("Get file data failed! file(%s)", file_name).c_str() );
 		magicalLogLastError();
 		return nullptr;
 	}
@@ -182,12 +182,14 @@ Data FileSystem::getFileData( const char* file_name, const char* mode )
 	size_t size = 0;
 	fseek( fp, 0, SEEK_END );
 	size = (size_t) ftell( fp );
-	fseek( fp, 0, SEEK_SET );
+	rewind( fp );
+	//fseek( fp, 0, SEEK_SET );
 
 	Data data = newData();
-	data->malloc( size );
+	data->malloc( size + 1 );
 
-	size = fread( data->ptr(), sizeof(size_t), size, fp );
+	size_t read_size = fread( data->ptr(), sizeof(size_t), size, fp );
+
 	data->realloc( size );
 	fclose( fp );
 	

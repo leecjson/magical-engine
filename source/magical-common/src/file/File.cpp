@@ -21,32 +21,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __FILE_SYSTEM_H__
-#define __FILE_SYSTEM_H__
-
-#include <vector>
-#include <string>
-#include <unordered_map>
-
-#include "PlatformMacros.h"
-#include "Data.h"
-
-class FileSystem
-{
-public:
-	static void init( void );
-	static void delc( void );
-
-public:
-	static void addSearchPath( const char* path );
-	static void removeSearchPath( const char* path );
-	static const std::vector<std::string>& getSearchPaths( void );
-	static bool isAbsolutePath( const char* path );
-	static std::string toAbsolutePath( const char* path );
-	static bool isFileExist( const char* file_name );
-	static Data getFileData( const char* file_name );
-	
-};
-
-
-#endif //__FILE_SYSTEM_H__
+#include "File.h"

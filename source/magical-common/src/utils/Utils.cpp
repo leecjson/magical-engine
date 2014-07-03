@@ -24,7 +24,7 @@ SOFTWARE.
 #include "Utils.h"
 #include <chrono>
 
-int64_t Time::getCurrentMicrosecTime()
+int64_t TimeUtils::getCurrentMicrosecTime()
 {
 	std::chrono::system_clock::duration scd = std::chrono::system_clock::now().time_since_epoch();
 	std::chrono::microseconds::rep now = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();

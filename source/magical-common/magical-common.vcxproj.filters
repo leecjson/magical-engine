@@ -111,6 +111,9 @@
     <ClInclude Include="src\utils\Utils.h">
       <Filter>src\utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\file\File.h">
+      <Filter>src\file</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\common\Object.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="src\utils\Utils.cpp">
       <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\file\File.cpp">
+      <Filter>src\file</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
