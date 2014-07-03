@@ -21,18 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __TIME_H__
-#define __TIME_H__
+#include "Utils.h"
+#include <chrono>
 
-#include "PlatformMacros.h"
-#include "Common.h"
-
-class Time
+int64_t Time::getCurrentMicrosecTime()
 {
-public:
-	static int64_t getCurrent
-};
-
-
-
-#endif //__TIME_H__
+	std::chrono::system_clock::duration scd = std::chrono::system_clock::now().time_since_epoch();
+	std::chrono::microseconds::rep now = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();
+	return now;
+}

@@ -26,7 +26,10 @@ SOFTWARE.
 
 #include <cassert>
 #include <cstdlib>
+#include <cstdio>
 #include <cstdint>
+#include <ctime>
+
 #include <string>
 
 #include "PlatformMacros.h"

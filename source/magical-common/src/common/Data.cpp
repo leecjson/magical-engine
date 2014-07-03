@@ -36,7 +36,6 @@ Data_t::~Data_t( void )
 	if( _data )
 	{
 		magicalFree( _data );
-		_data = nullptr;
 	}
 }
 
@@ -70,11 +69,18 @@ void Data_t::realloc( const size_t size )
 	magicalAssert( size > 0, "size should > 0" );
 	magicalAssert( _data, "_data should not nullptr" );
 
-	_data = (char*) ::realloc( _data, size );
-	magicalAssert( _data, "(char*) ::realloc( _data, size );" );
+	if( size > _size )
+	{
+		_data = (char*) ::realloc( _data, size );
+		magicalAssert( _data, "(char*) ::realloc( _data, size );" );
+	}
+	else
+	{
+		_size = size;
+	}
 }
 
-char* Data_t::data( void ) const
+char* Data_t::ptr( void ) const
 {
 	return _data;
 }
@@ -82,4 +88,9 @@ char* Data_t::data( void ) const
 bool Data_t::empty( void ) const
 {
 	return _data == nullptr;
+}
+
+size_t Data_t::size( void ) const
+{
+	return _size;
 }

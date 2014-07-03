@@ -42,9 +42,9 @@ public:
 	static void removeSearchPath( const char* path );
 	static const std::vector<std::string>& getSearchPaths( void );
 	static bool isAbsolutePath( const char* path );
-	static const std::string toAbsolutePath( const char* path );
-	static bool isFileExist( const char* file );
-	//static Data getFileData( const std::string& file_name, const std::string& mode );
+	static std::string toAbsolutePath( const char* path );
+	static bool isFileExist( const char* file_name );
+	static Data getFileData( const char* file_name, const char* mode );
 	
 };
 

@@ -42,8 +42,9 @@ public:
 	void assign( char* data, const size_t size );
 	void malloc( const size_t size );
 	void realloc( const size_t size );
-	char* data( void ) const;
+	char* ptr( void ) const;
 	bool empty( void ) const;
+	size_t size( void ) const;
 
 private:
 	char* _data;

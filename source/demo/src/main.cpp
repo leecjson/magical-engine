@@ -22,79 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "magical-engine.h"
-#include <windows.h>
-#include <chrono> 
-#include <ctime> 
-#include <cstdint>
-#include <iostream>
-
-//using namespace std;
-//using namespace std::chrono;
-//
-//const int microSecPerSec = 1000000; 
-//
-//extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz )
-//{
-//	LARGE_INTEGER time, freq;
-//	if( tv != NULL )
-//    {
-//        QueryPerformanceFrequency( &freq );
-//        QueryPerformanceCounter( &time );
-//        tv->tv_sec  = (long)( time.QuadPart / freq.QuadPart );
-//        tv->tv_usec = (long)( time.QuadPart * 1000000.0 / freq.QuadPart - tv->tv_sec * 1000000.0 );
-//    }
-//	return 0;
-//}
 
 void onFinishLaunching( void )
 {
-	/*std::chrono::time_point<std::chrono::system_clock> tp;
-	std::time_t tt = std::chrono::system_clock::to_time_t(tp);
-	magicalLogD( std::ctime( &tt ) );*/
+	Data file = FileSystem::getFileData("main.lua", "rb");
+	std::string str;
+	for( size_t i = 0; i < file->size(); ++i )
+	{
+		str += *(file->ptr() + i);
+	}
+	magicalLogD( str.c_str() );
 
-	/*time_point<system_clock> tp;
-	system_clock::duration s = tp.time_since_epoch();
-	system_clock::rep g = s.count();
-	system_clock().now();
+	//size_t t = file->size();
+	//char* tp = (char*) malloc( file->size() + 1 );
+	//memcpy( tp, file->ptr(), file->size() );
+	//tp[file->size()] = 0;
 
-
-	std::chrono::microseconds::rep r = duration_cast<microseconds>(tp.time_since_epoch()).count();*/
-
-
-	
-	//std::chrono::time_point<std::chrono::system_clock> p1, p2, p3; 
- //   struct timeval tv; 
- //   int64_t mSecond; 
- // 
- //   p2 = std::chrono::system_clock::now(); 
- //   p3 = p2 - std::chrono::hours(24); 
- //   gettimeofday(&tv,NULL); 
- //   mSecond = tv.tv_sec ; 
- // 
- //   std::time_t epoch_time = std::chrono::system_clock::to_time_t(p1); // seconds 
- //   std::cout << "epoch: " << std::ctime(&epoch_time); 
- //   std::time_t today_time = std::chrono::system_clock::to_time_t(p2); 
- //   std::cout << "today: " << std::ctime(&today_time); 
- // 
- //   std::cout << "hours since epoch: " 
- //               << std::chrono::duration_cast<std::chrono::hours>(  //hours 
- //                 p2.time_since_epoch()).count() 
- //               << std::endl; 
- //               
- //   std::cout << "yesterday, hours since epoch: " 
- //               << std::chrono::duration_cast<std::chrono::hours>( 
- //                 p3.time_since_epoch()).count() 
- //               << std::endl; 
- //             
- //   std::cout << "Microseconds since epoch: (chrono) : "  //microseconds 
- //               << std::chrono::duration_cast<std::chrono::microseconds>(p2.time_since_epoch()).count() // p2 - p1 == 
- //               <<std::endl; 
- //               
- //   std::cout << "Microseconds since epoch: (gettimeofday) :" << mSecond * microSecPerSec + tv.tv_usec 
- //               <<std::endl; 
+	//magicalLogD( tp );
 
 	LuaState& L = LuaSystem::getLuaState();
 	L->executeScriptFile("main.lua");
+	//L->executeScriptCode("require 'main.lua'");
 	L->executeGlobalFunction(kLuaOnCreate);
 	magicalLuaStateDump(L->getState());
 	L->clean();

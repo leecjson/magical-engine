@@ -22,9 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Engine.h"
-#include <chrono> 
-#include <ctime> 
-
 #include "Common.h"
 #include "Utils.h"
 #include "FileSystem.h"
@@ -36,12 +33,8 @@ static float s_delta_time;
 
 static void calcDeltaTime( void )
 {
-	std::chrono::system_clock::duration scd = std::chrono::system_clock::now().time_since_epoch();
-	std::chrono::microseconds::rep now = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();
-
-	s_delta_time = ( now - s_last_update_time ) / 1000000.0f;
-	s_delta_time = MAX( 0, s_delta_time );
-
+	int64_t now = Time::getCurrentMicrosecTime();
+	s_delta_time = MAX( 0, ( now - s_last_update_time ) / 1000000.0f );
 	s_last_update_time = now;
 }
 
@@ -56,11 +49,7 @@ static void calcDeltaTime( void )
 void Engine::init( void )
 {
 	s_delta_time = 0.0f;
-
-	std::chrono::system_clock::duration scd = std::chrono::system_clock::now().time_since_epoch();
-	s_last_update_time = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();
-	
-	//magicalGetTimeOfDay(&s_last_update_time, nullptr);
+	s_last_update_time = Time::getCurrentMicrosecTime();
 	//setGLDefault();
 }
 
@@ -125,7 +114,7 @@ void Engine::mainLoop( void )
 	kmGLPopMatrix();
 #endif
 
-	magicalLogD( Utils::format<128>("%f", s_delta_time).c_str() );
+	//magicalLogD( Utils::format<128>("%f", s_delta_time).c_str() );
 
 }
 

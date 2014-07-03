@@ -22,12 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "LogSystem.h"
-#include <time.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <windows.h>
 
 #include "Common.h"
+#include <windows.h>
 
 static void win32Log( const char* channel, const char* msg )
 {

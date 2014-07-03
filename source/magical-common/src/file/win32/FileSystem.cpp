@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "FileSystem.h"
-#include <string.h>
+#include <cstring>
 #include <windows.h>
 #include "Common.h"
 #include "Utils.h"
@@ -103,7 +103,7 @@ bool FileSystem::isAbsolutePath( const char* path )
 	return false;
 }
 
-const std::string FileSystem::toAbsolutePath( const char* path )
+std::string FileSystem::toAbsolutePath( const char* path )
 {
 	magicalAssert( path, "should not nullptr" );
 
@@ -133,16 +133,16 @@ const std::string FileSystem::toAbsolutePath( const char* path )
 	return "";
 }
 
-bool FileSystem::isFileExist( const char* file )
+bool FileSystem::isFileExist( const char* file_name )
 {
-	magicalAssert( file, "should not nullptr" );
+	magicalAssert( file_name, "should not nullptr" );
 
-	if( strlen(file) == 0 )
+	if( strlen(file_name) == 0 )
 	{
 		return false;
 	}
 
-	std::string file_path = win32ConvertPathFormatToUnixStyle( file );
+	std::string file_path = win32ConvertPathFormatToUnixStyle( file_name );
 	if( isAbsolutePath( file_path.c_str() ) == false )
 	{
 		std::string abs_path;
@@ -164,13 +164,35 @@ bool FileSystem::isFileExist( const char* file )
 	return false;
 }
 
-//Data FileSystem::getFileData( const std::string& file_name, const std::string& mode )
-//{
-//	std::string abs_path = toAbsolutePath( file_name );
-//	magicalAssert( abs_path.empty() == false, Utils::format<128>("Get file data failed! file(%s) doesn't exist!", file_name).c_str() );
-//
-//	return newData();
-//}
+Data FileSystem::getFileData( const char* file_name, const char* mode )
+{
+	magicalAssert( file_name && mode, "should not nullptr" );
+
+	std::string abs_path = toAbsolutePath( file_name );
+	magicalAssert( !abs_path.empty(), Utils::format<512>("Get file data failed! file(%s) doesn't exist!", file_name).c_str() );
+
+	FILE* fp = fopen( abs_path.c_str(), mode );
+	if( fp == nullptr )
+	{
+		magicalSetLastErrorInfo( Utils::format<512>("Get file data failed! file(%s)", file_name).c_str() );
+		magicalLogLastError();
+		return nullptr;
+	}
+
+	size_t size = 0;
+	fseek( fp, 0, SEEK_END );
+	size = (size_t) ftell( fp );
+	fseek( fp, 0, SEEK_SET );
+
+	Data data = newData();
+	data->malloc( size );
+
+	size = fread( data->ptr(), sizeof(size_t), size, fp );
+	data->realloc( size );
+	fclose( fp );
+	
+	return std::move( data );
+}
 
 static std::string win32ConvertPathFormatToUnixStyle( const char* path )
 {
