@@ -284,7 +284,7 @@ static int checkint (lua_State *L, int topop) {
 }
 
 
-static void gesize_ts (lua_State *L) {
+static void getsizes (lua_State *L) {
   lua_getfield(L, LUA_REGISTRYINDEX, "LUA_SIZES");
   if (lua_isnil(L, -1)) {  /* no `size' table? */
     lua_pop(L, 1);  /* remove nil */
@@ -309,7 +309,7 @@ LUALIB_API void luaL_setn (lua_State *L, int t, int n) {
     lua_rawset(L, t);
   }
   else {  /* use `sizes' */
-    gesize_ts(L);
+    getsizes(L);
     lua_pushvalue(L, t);
     lua_pushinteger(L, n);
     lua_rawset(L, -3);  /* sizes[t] = n */
@@ -324,7 +324,7 @@ LUALIB_API int luaL_getn (lua_State *L, int t) {
   lua_pushliteral(L, "n");  /* try t.n */
   lua_rawget(L, t);
   if ((n = checkint(L, 1)) >= 0) return n;
-  gesize_ts(L);  /* else try sizes[t] */
+  getsizes(L);  /* else try sizes[t] */
   lua_pushvalue(L, t);
   lua_rawget(L, -2);
   if ((n = checkint(L, 2)) >= 0) return n;
