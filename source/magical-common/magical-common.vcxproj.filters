@@ -25,12 +25,6 @@
     <Filter Include="src\geometry">
       <UniqueIdentifier>{c99adc52-dec6-4bb6-8bab-3daf5be9ae59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\file">
-      <UniqueIdentifier>{c020df48-445b-4d6e-bc85-02d09f75c3e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\file\win32">
-      <UniqueIdentifier>{fd7e4e5f-9c2b-4563-afd0-b3e4db9684c6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\log">
       <UniqueIdentifier>{52e145e4-b8df-4af6-a596-ba7f1f0a695a}</UniqueIdentifier>
     </Filter>
@@ -39,6 +33,12 @@
     </Filter>
     <Filter Include="src\utils">
       <UniqueIdentifier>{524d7778-2d65-410d-a26c-3d582ff8777d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\assets">
+      <UniqueIdentifier>{a4816cad-a80d-4887-b8ec-a5e2117ad650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\assets\win32">
+      <UniqueIdentifier>{a13724ea-b60e-4823-a3a3-b838f8e19096}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -96,9 +96,6 @@
     <ClInclude Include="src\engine\Engine.h">
       <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\file\FileSystem.h">
-      <Filter>src\file</Filter>
-    </ClInclude>
     <ClInclude Include="src\log\LogSystem.h">
       <Filter>src\log</Filter>
     </ClInclude>
@@ -111,8 +108,8 @@
     <ClInclude Include="src\utils\Utils.h">
       <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\file\File.h">
-      <Filter>src\file</Filter>
+    <ClInclude Include="src\assets\AssetsSystem.h">
+      <Filter>src\assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -167,17 +164,14 @@
     <ClCompile Include="src\common\Common.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="src\file\win32\FileSystem.cpp">
-      <Filter>src\file\win32</Filter>
-    </ClCompile>
     <ClCompile Include="src\common\Data.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\Utils.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\file\File.cpp">
-      <Filter>src\file</Filter>
+    <ClCompile Include="src\assets\win32\AssetsSystem.cpp">
+      <Filter>src\assets\win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

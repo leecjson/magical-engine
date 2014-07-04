@@ -24,7 +24,7 @@ SOFTWARE.
 #include "Engine.h"
 #include "Common.h"
 #include "Utils.h"
-#include "FileSystem.h"
+#include "AssetsSystem.h"
 #include "LuaSystem.h"
 #include "RenderSystem.h"
 
@@ -60,7 +60,7 @@ void Engine::delc( void )
 
 void Engine::initSystems( void )
 {
-	FileSystem::init();
+	AssetsSystem::init();
 	magicalReturnIfError();
 
 	LuaSystem::init();
@@ -78,7 +78,7 @@ void Engine::delcSystems( void )
 	LuaSystem::delc();
 	magicalReturnIfError();
 
-	FileSystem::delc();
+	AssetsSystem::delc();
 	magicalReturnIfError();
 }
 

@@ -54,4 +54,10 @@ public:
 	static int64_t getCurrentMicrosecTime();
 };
 
+class FileUtils
+{
+public:
+	static bool isAbsolutePath( const char* path );
+};
+
 #endif //__UTILS_H__

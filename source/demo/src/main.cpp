@@ -25,7 +25,7 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
-	Data file = FileSystem::getFileData("main.lua", "rb");
+	Data file = AssetsSystem::getAssetsFile("main.lua");
 	std::string str;
 	for( size_t i = 0; i < file->size(); ++i )
 	{
@@ -40,12 +40,12 @@ void onFinishLaunching( void )
 
 	//magicalLogD( tp );
 
-	LuaState& L = LuaSystem::getLuaState();
-	L->executeScriptFile("main.lua");
-	//L->executeScriptCode("require 'main.lua'");
-	L->executeGlobalFunction(kLuaOnCreate);
-	magicalLuaStateDump(L->getState());
-	L->clean();
+	//LuaState& L = LuaSystem::getLuaState();
+	//L->executeScriptFile("main.lua");
+	////L->executeScriptCode("require 'main.lua'");
+	//L->executeGlobalFunction(kLuaOnCreate);
+	//magicalLuaStateDump(L->getState());
+	//L->clean();
 }
 
 int main(int argc, char* argv[])

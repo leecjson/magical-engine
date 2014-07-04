@@ -30,3 +30,19 @@ int64_t TimeUtils::getCurrentMicrosecTime()
 	std::chrono::microseconds::rep now = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();
 	return now;
 }
+
+bool FileUtils::isAbsolutePath( const char* path )
+{
+	magicalAssert( path, "should not nullptr" );
+
+#ifdef MAG_WIN32
+	if( strlen( path ) > 2
+		&& ((path[0] >= 'a' && path[0] <= 'z') 
+		|| ( path[0] >= 'A' && path[0] <= 'Z'))
+		&& ( path[1] == ':') )
+	{
+		return true;
+	}
+	return false;
+#endif
+}

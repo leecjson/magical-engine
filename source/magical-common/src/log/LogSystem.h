@@ -28,12 +28,12 @@ SOFTWARE.
 #include "Common.h"
 
 #ifndef MAG_DEBUG
-#define magicalLog ( __msg )
+#define magicalLog( __msg )
 #define magicalLogD( __msg )
 #define magicalLogE( __msg )
 #define magicalLogLastError()
 #else
-#define magicalLog ( __msg ) LogSystem::I( __msg )
+#define magicalLog( __msg ) LogSystem::I( __msg )
 #define magicalLogD( __msg ) LogSystem::D( __msg )
 #define magicalLogE( __msg ) LogSystem::E( __msg )
 #define magicalLogLastError() LogSystem::E( magicalGetLastErrorInfo() )

@@ -79,12 +79,11 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\assets\AssetsSystem.h" />
     <ClInclude Include="src\common\Common.h" />
     <ClInclude Include="src\common\Data.h" />
     <ClInclude Include="src\common\Object.h" />
     <ClInclude Include="src\engine\Engine.h" />
-    <ClInclude Include="src\file\File.h" />
-    <ClInclude Include="src\file\FileSystem.h" />
     <ClInclude Include="src\include\magical-engine.h" />
     <ClInclude Include="src\kazmath\aabb.h" />
     <ClInclude Include="src\kazmath\GL\mat4stack.h" />
@@ -105,12 +104,11 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="src\utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\assets\win32\AssetsSystem.cpp" />
     <ClCompile Include="src\common\Common.cpp" />
     <ClCompile Include="src\common\Data.cpp" />
     <ClCompile Include="src\common\Object.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
-    <ClCompile Include="src\file\File.cpp" />
-    <ClCompile Include="src\file\win32\FileSystem.cpp" />
     <ClCompile Include="src\kazmath\aabb.c" />
     <ClCompile Include="src\kazmath\GL\mat4stack.c" />
     <ClCompile Include="src\kazmath\GL\matrix.c" />

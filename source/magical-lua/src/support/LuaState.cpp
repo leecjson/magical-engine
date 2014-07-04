@@ -26,7 +26,7 @@ SOFTWARE.
 #include "lua.hpp"
 #include "tolua_ext.h"
 #include "Common.h"
-#include "FileSystem.h"
+#include "AssetsSystem.h"
 
 #include "LuaCommon.h"
 
@@ -55,16 +55,17 @@ lua_State* LuaState_t::getState( void ) const
 
 int LuaState_t::executeScriptFile( const char* file ) const
 {
-#ifdef MAG_WIN32
-	std::string abs_path = FileSystem::toAbsolutePath( file );
-	int ret = luaL_dofile( _L, abs_path.c_str() );
-#endif
-	if( ret != 0 )
-	{
-		handleLuaError();
-		lua_pop(_L, 1);
-		return ret;
-	}
+//#ifdef MAG_WIN32
+//	std::string abs_path = AssetsSystem::toAbsolutePath( file );
+//	int ret = luaL_dofile( _L, abs_path.c_str() );
+//#endif
+//	if( ret != 0 )
+//	{
+//		handleLuaError();
+//		lua_pop(_L, 1);
+//		return ret;
+//	}
+//	return 0;
 	return 0;
 }
 
