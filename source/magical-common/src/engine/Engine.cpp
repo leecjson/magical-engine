@@ -31,26 +31,12 @@ SOFTWARE.
 static int64_t s_last_update_time;
 static float s_delta_time;
 
-static void calcDeltaTime( void )
-{
-	int64_t now = TimeUtils::getCurrentMicrosecTime();
-	s_delta_time = MAX(0, (now - s_last_update_time) / 1000000.0f);
-	s_last_update_time = now;
-}
-
-//static void setGLDefault( void )
-//{
-//	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-//
-//	glEnable(GL_DEPTH_TEST);
-//    glEnable(GL_CULL_FACE);
-//}
+static void calcDeltaTime( void );
 
 void Engine::init( void )
 {
 	s_delta_time = 0.0f;
-	s_last_update_time = TimeUtils::getCurrentMicrosecTime();
-	//setGLDefault();
+	s_last_update_time = TimeUtils::currentMicrosecondsTime();
 }
 
 void Engine::delc( void )
@@ -86,54 +72,22 @@ void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	//kmGLMatrixMode(KM_GL_PROJECTION);
-
-#if 0
-	// 3d render
-	kmGLLoadMatrix(&s_orthographic_projection2d);
-	kmGLPushMatrix();
-		kmGLMatrixMode(KM_GL_MODELVIEW);
-		kmGLPushMatrix();
-		
-		kmGLPopMatrix();
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLPopMatrix();
-#endif
-
-#if 0
-	// 2d render
-	kmGLLoadMatrix(&s_orthographic_projection2d);
-	kmGLPushMatrix();
-		kmGLMatrixMode(KM_GL_MODELVIEW);
-		kmGLPushMatrix();
-
-		kmGLPopMatrix();
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLPopMatrix();
-#endif
-
-	//magicalLogD( Utils::format<128>("%f", s_delta_time).c_str() );
-
+	RenderSystem::onRender();
 }
 
-void Engine::onReshape( int w, int h )
+void Engine::reshape( int w, int h )
 {
-	/*glViewport(0, 0, w, h);
-
-	kmGLFreeAll();
-
-	kmGLMatrixMode(KM_GL_MODELVIEW);
-	kmGLLoadIdentity();
-
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLLoadIdentity();*/
-
-	//kmMat4OrthographicProjection(&s_orthographic_projection2d, 0, w, 0, h, -1.0f, 1.0f);
+	RenderSystem::onReshape( w, h );
 }
 
 float Engine::getDeltaTime( void )
 {
 	return s_delta_time;
+}
+
+static void calcDeltaTime( void )
+{
+	int64_t now  = TimeUtils::currentMicrosecondsTime();
+	s_delta_time = MAX(0, (now - s_last_update_time) / 1000000.0f);
+	s_last_update_time = now;
 }

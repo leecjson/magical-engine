@@ -25,20 +25,14 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
+	magicalBeginObserveObject();
+	magicalBeginTicking();
+
 	Data file = AssetsSystem::getAssetsFile("main.lua");
-	std::string str;
-	for( size_t i = 0; i < file->size(); ++i )
-	{
-		str += *(file->ptr() + i);
-	}
-	magicalLogD( str.c_str() );
+	magicalLogD( file->ptr() );
 
-	//size_t t = file->size();
-	//char* tp = (char*) malloc( file->size() + 1 );
-	//memcpy( tp, file->ptr(), file->size() );
-	//tp[file->size()] = 0;
-
-	//magicalLogD( tp );
+	magicalEndTicking();
+	magicalEndObserveObject();
 
 	//LuaState& L = LuaSystem::getLuaState();
 	//L->executeScriptFile("main.lua");

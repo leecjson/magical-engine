@@ -137,18 +137,17 @@ Data AssetsSystem::getAssetsFile( const char* file_name )
 		return nullptr;
 	}
 
-	size_t size = 0;
+	size_t size, read_size = 0;
 	fseek( fp, 0, SEEK_END );
 	size = (size_t) ftell( fp );
-	rewind( fp );
-	//fseek( fp, 0, SEEK_SET );
+	fseek( fp, 0, SEEK_SET );
 
 	Data data = newData();
 	data->malloc( size + 1 );
-	data->ptr()[ size ] = 0;
 
-	size_t read_size = fread( data->ptr(), sizeof(size_t), size, fp );
-	data->realloc( size );
+	read_size = fread( data->ptr(), sizeof(char), size, fp );
+	data->realloc( read_size );
+	data->ptr()[ read_size ] = 0;
 
 	fclose( fp );
 	

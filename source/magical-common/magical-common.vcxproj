@@ -80,6 +80,7 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\assets\AssetsSystem.h" />
+    <ClInclude Include="src\common\Array.h" />
     <ClInclude Include="src\common\Common.h" />
     <ClInclude Include="src\common\Data.h" />
     <ClInclude Include="src\common\Object.h" />
@@ -105,6 +106,7 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\assets\win32\AssetsSystem.cpp" />
+    <ClCompile Include="src\common\Array.cpp" />
     <ClCompile Include="src\common\Common.cpp" />
     <ClCompile Include="src\common\Data.cpp" />
     <ClCompile Include="src\common\Object.cpp" />

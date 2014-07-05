@@ -31,6 +31,8 @@ class RenderSystem
 public:
 	static void init( void );
 	static void delc( void );
+	static void onRender( void );
+	static void onReshape( int w, int h );
 };
 
 

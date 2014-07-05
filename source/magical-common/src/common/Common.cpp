@@ -29,13 +29,11 @@ SOFTWARE.
 static bool s_last_error = false;
 static char s_last_error_info[kMaxErrLength];
 
-//struct timeval g_tv_ticking;
-
-//#ifdef MAG_DEBUG
-//bool g_is_observing = false;
-//int  g_observer_construct_count = 0;
-//int  g_observer_destruct_count = 0;
-//#endif
+#ifdef MAG_DEBUG
+bool g_is_observing = false;
+int  g_observer_construct_count = 0;
+int  g_observer_destruct_count = 0;
+#endif
 
 MAGAPI bool magicalIsError( void )
 {
@@ -64,45 +62,3 @@ MAGAPI const char* magicalGetLastErrorInfo( void )
 		return "none";
 	}
 }
-//
-//#ifdef MAG_WIN32
-//
-//extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz )
-//{
-//	LARGE_INTEGER time, freq;
-//	if( tv != NULL )
-//    {
-//        QueryPerformanceFrequency( &freq );
-//        QueryPerformanceCounter( &time );
-//        tv->tv_sec  = (long)( time.QuadPart / freq.QuadPart );
-//        tv->tv_usec = (long)( time.QuadPart * 1000000.0 / freq.QuadPart - tv->tv_sec * 1000000.0 );
-//    }
-//	return 0;
-//}
-//
-//#endif
-//
-//MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
-//{
-//	if( gettimeofday(tv, tz) != 0 )
-//	{
-//		magicalSetLastErrorInfo("gettimeofday(tv, tz) return != 0");
-//		magicalLogLastError();
-//	}
-//}
-
-//MAGAPI_USER void magicalBeginTicking( void )
-//{
-//	magicalGetTimeOfDay(&g_tv_ticking, NULL);
-//}
-//
-//MAGAPI_USER float magicalEndTicking( void )
-//{
-//	float  result;
-//	struct timeval tv_now;
-//	magicalGetTimeOfDay(&tv_now, NULL);
-//	result = (tv_now.tv_sec - g_tv_ticking.tv_sec) +  (tv_now.tv_usec - g_tv_ticking.tv_usec) / 1000000.0f;
-//	result = MAX(0.0f, result);
-//	return result;
-//}
-

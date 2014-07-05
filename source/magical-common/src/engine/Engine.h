@@ -34,7 +34,7 @@ public:
 	static void initSystems( void );
 	static void delcSystems( void );
 	static void mainLoop( void );
-	static void onReshape( int w, int h );
+	static void reshape( int w, int h );
 
 public:
 	static float getDeltaTime( void );

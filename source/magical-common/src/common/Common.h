@@ -78,71 +78,60 @@ assert function
 #endif
 
 /*
-win32 gettimeofday
+time function
 */
-//#ifdef MAG_WIN32
-//#include <WinSock2.h>
-//#endif
-//#ifdef MAG_WIN32
-//extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz );
-//#endif
-//MAGAPI void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
-
-//MAGAPI_USER void magicalBeginTicking( void );
-//MAGAPI_USER float magicalEndTicking( void );
-//
-//#ifndef MAG_DEBUG
-//#define magicalBeginTickingAndReport()
-//#define magicalEndTickingAndReport()
-//#else
-//#define magicalBeginTickingAndReport() do {                             \
-//	magicalReport("Begin Ticking : --------");                          \
-//	magicalBeginTicking();                                              \
-//	} while(0)                                                          
-//#define magicalEndTickingAndReport() do {                               \
-//	char __bf[ 256 ];                                                   \
-//	sprintf( __bf, "Ended Ticking : %.6f", magicalEndTicking() );       \
-//	magicalReport( __bf );                                              \
-//	} while(0)
-//#endif
+#ifndef MAG_DEBUG
+#define magicalBeginTicking()
+#define magicalEndTicking()
+#else
+#define magicalBeginTicking() do {                                      \
+	magicalLog("Begin Ticking : --------");                             \
+	TimeUtils::beginTicking();                                          \
+	} while(0)                                                          
+#define magicalEndTicking() do {                                        \
+	char __bf[ 256 ];                                                   \
+	sprintf( __bf, "Ended Ticking : %.6f", TimeUtils::endTicking() );   \
+	magicalLog( __bf );                                                 \
+	} while(0)
+#endif
 
 /*
 object observer
 */
-//#ifdef MAG_DEBUG
-//extern bool g_is_observing;
-//extern int  g_observer_construct_count;
-//extern int  g_observer_destruct_count;
-//#endif
-//
-//#ifdef MAG_DEBUG
-//#define magicalBeginObserveObjectAndReport() do {                                      \
-//	if( g_is_observing ) break;                                                        \
-//	magicalReport( "Begin Observe Object : ----------------------------" );            \
-//	g_is_observing = true;                                                             \
-//	g_observer_construct_count = 0;                                                    \
-//	g_observer_destruct_count  = 0;                                                    \
-//	} while(0)
-//#define magicalEndObserveObjectAndReport() do {                                        \
-//	if(! g_is_observing ) break;                                                       \
-//	char __tmbf[256];                                                                  \
-//	sprintf( __tmbf, "Ended Observe Object : Construct = %d Destruct = %d",            \
-//	g_observer_construct_count,                                                        \
-//	g_observer_destruct_count );                                                       \
-//	g_is_observing = false;                                                            \
-//	magicalReport( __tmbf );                                                           \
-//	} while(0)
-//#define magicalObjectConstruct() do {                                                  \
-//	if( g_is_observing ) ++ g_observer_construct_count;                                \
-//	} while(0)
-//#define magicalObjectDestruct() do {                                                   \
-//	if( g_is_observing ) ++ g_observer_destruct_count;                                 \
-//	} while(0)
-//#else
-//#define magicalBeginObserveObjectAndReport()
-//#define magicalEndObserveObjectAndReport()
-//#define magicalObjectConstruct()
-//#define magicalObjectDestruct()
-//#endif
+#ifdef MAG_DEBUG
+extern bool g_is_observing;
+extern int  g_observer_construct_count;
+extern int  g_observer_destruct_count;
+#endif
+
+#ifdef MAG_DEBUG
+#define magicalBeginObserveObject() do {                                               \
+	if( g_is_observing ) break;                                                        \
+	magicalLog( "Begin Observe Object : ----------------------------" );               \
+	g_is_observing = true;                                                             \
+	g_observer_construct_count = 0;                                                    \
+	g_observer_destruct_count  = 0;                                                    \
+	} while(0)
+#define magicalEndObserveObject() do {                                                 \
+	if(! g_is_observing ) break;                                                       \
+	char __tmbf[256];                                                                  \
+	sprintf( __tmbf, "Ended Observe Object : Construct = %d Destruct = %d",            \
+	g_observer_construct_count,                                                        \
+	g_observer_destruct_count );                                                       \
+	g_is_observing = false;                                                            \
+	magicalLog( __tmbf );                                                              \
+	} while(0)
+#define magicalObjectConstruct() do {                                                  \
+	if( g_is_observing ) ++ g_observer_construct_count;                                \
+	} while(0)
+#define magicalObjectDestruct() do {                                                   \
+	if( g_is_observing ) ++ g_observer_destruct_count;                                 \
+	} while(0)
+#else
+#define magicalBeginObserveObject()
+#define magicalEndObserveObject()
+#define magicalObjectConstruct()
+#define magicalObjectDestruct()
+#endif
 
 #endif //__COMMON_H__

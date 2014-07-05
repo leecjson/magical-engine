@@ -60,7 +60,7 @@ void Data_t::malloc( const size_t size )
 		magicalFree( _data );
 	}
 	_data = (char*) ::malloc( size );
-	magicalAssert( _data, "(char*)::malloc( size );" );
+	magicalAssert( _data, "(char*) ::malloc( size );" );
 	_size = size;
 }
 

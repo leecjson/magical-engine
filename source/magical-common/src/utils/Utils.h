@@ -24,14 +24,14 @@ SOFTWARE.
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
-#include "PlatformMacros.h"
-#include "Common.h"
-
 #include <cstdio>
 #include <cstdlib>
 #include <cstdarg>
 #include <string>
 #include <memory>
+
+#include "PlatformMacros.h"
+#include "Common.h"
 
 class StringUtils
 {
@@ -51,7 +51,9 @@ public:
 class TimeUtils
 {
 public:
-	static int64_t getCurrentMicrosecTime();
+	static int64_t currentMicrosecondsTime( void );
+	static void beginTicking( void );
+	static float endTicking( void );
 };
 
 class FileUtils

@@ -111,6 +111,9 @@
     <ClInclude Include="src\assets\AssetsSystem.h">
       <Filter>src\assets</Filter>
     </ClInclude>
+    <ClInclude Include="src\common\Array.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\common\Object.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="src\assets\win32\AssetsSystem.cpp">
       <Filter>src\assets\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\common\Array.cpp">
+      <Filter>src\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

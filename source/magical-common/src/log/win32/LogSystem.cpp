@@ -63,7 +63,7 @@ void LogSystem::delc( void )
 void LogSystem::I( const char* msg )
 {
 	magicalAssert( msg, "should not nullptr" );
-	win32Log( "Info ", msg );
+	win32Log( "Info", msg );
 }
 
 void LogSystem::D( const char* msg )
