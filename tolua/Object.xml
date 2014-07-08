@@ -1,0 +1,5 @@
+<magical-binding>
+
+	<include head="stdio.h" />
+
+</magical-binding>
