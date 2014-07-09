@@ -22,37 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "magical-engine.h"
-#include "Array.h"
 
 void onFinishLaunching( void )
-{
-	/*magicalBeginObserveObject();
-	magicalBeginTicking();
 
-	{
-		Array<Object> arr = newArray<Object>();
-		arr->push_back(newObject());
-		arr->push_back(newObject());
-		arr->push_back(newObject());
-		arr->push_back(newObject());
-		arr->push_back(newObject());
-	}
-
-	magicalEndTicking();
-	magicalEndObserveObject();*/
-
-
-	
-
-	//Data file = AssetsSystem::getAssetsFile("main.lua");
-	//magicalLogD( file->ptr() );
-
-	//LuaState& L = LuaSystem::getLuaState();
-	//L->executeScriptFile("main.lua");
-	////L->executeScriptCode("require 'main.lua'");
-	//L->executeGlobalFunction(kLuaOnCreate);
-	//magicalLuaStateDump(L->getState());
-	//L->clean();
 }
 
 int main(int argc, char* argv[])

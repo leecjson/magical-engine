@@ -69,7 +69,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\binding\LuaCommon.cpp" />
     <ClCompile Include="..\src\lua\lapi.c" />
     <ClCompile Include="..\src\lua\lauxlib.c" />
     <ClCompile Include="..\src\lua\lbaselib.c" />
@@ -100,9 +99,6 @@
     <ClCompile Include="..\src\lua\lvm.c" />
     <ClCompile Include="..\src\lua\lzio.c" />
     <ClCompile Include="..\src\lua\print.c" />
-    <ClCompile Include="..\src\support\LuaMacros.cpp" />
-    <ClCompile Include="..\src\support\LuaState.cpp" />
-    <ClCompile Include="..\src\support\LuaSystem.cpp" />
     <ClCompile Include="..\src\tolua\tolua_event.c" />
     <ClCompile Include="..\src\tolua\tolua_ext.c" />
     <ClCompile Include="..\src\tolua\tolua_is.c" />
@@ -111,7 +107,6 @@
     <ClCompile Include="..\src\tolua\tolua_to.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\binding\LuaCommon.h" />
     <ClInclude Include="..\src\lua\lapi.h" />
     <ClInclude Include="..\src\lua\lauxlib.h" />
     <ClInclude Include="..\src\lua\lcode.h" />
@@ -136,9 +131,6 @@
     <ClInclude Include="..\src\lua\lundump.h" />
     <ClInclude Include="..\src\lua\lvm.h" />
     <ClInclude Include="..\src\lua\lzio.h" />
-    <ClInclude Include="..\src\support\LuaMacros.h" />
-    <ClInclude Include="..\src\support\LuaState.h" />
-    <ClInclude Include="..\src\support\LuaSystem.h" />
     <ClInclude Include="..\src\tolua\tolua++.h" />
     <ClInclude Include="..\src\tolua\tolua_event.h" />
     <ClInclude Include="..\src\tolua\tolua_ext.h" />

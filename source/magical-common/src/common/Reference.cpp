@@ -21,45 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
+#include "Reference.h"
 
-#include <string>
-#include <memory>
-
-#include "PlatformMacros.h"
-#include "Common.h"
-
-class Object_t;
-typedef std::shared_ptr<Object_t> Object;
-typedef std::shared_ptr<const Object_t> const_Object;
-
-class Object_t : public std::enable_shared_from_this<Object_t>
+Reference::Reference( void ) 
 {
-public:
-	Object_t( void );
-	Object_t( const Object_t& other );
-	Object_t( Object_t&& other );
-	virtual ~Object_t( void );
-	std::string toString( void ) const;
-};
 
-static inline Object newObject( void )
-{
-	Object_t* obj = new Object_t();
-	magicalAssert( obj, "new Object_t();" );
-	return std::move( Object(obj) );
 }
 
-static inline Object* newObject_LuaGC( void )
+Reference::~Reference( void )
 {
-	Object_t* obj = new Object_t();
-	magicalAssert( obj, "new Object_t();" );
-	Object* ret = new Object( obj );
-	magicalAssert( ret, "new Object( obj );" );
-	return ret;
+
 }
 
+void Reference::retain( void )
+{
+	magicalAssert( _reference_count > 0, "invalidate _reference_count" );
 
+	++_reference_count;
+}
 
-#endif //__OBJECT_H__
+void Reference::release( void )
+{
+	magicalAssert( _reference_count > 0, "invalidate _reference_count" );
+
+	--_reference_count;
+
+	if( _reference_count == 0 )
+	{
+		delete this;
+	}
+}
+
+void Reference::lazyrelease( void ) const
+{
+	
+}

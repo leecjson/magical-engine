@@ -21,31 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Object.h"
+#ifndef __REFERENCE_H__
+#define __REFERENCE_H__
+
+#include <string>
+#include <memory>
+
+#include "PlatformMacros.h"
 #include "Common.h"
 
-Object_t::Object_t( void )
+class Reference
 {
-	magicalObjectConstruct();
-}
+public:
+	virtual ~Reference( void );
 
-Object_t::Object_t( const Object_t& other )
-{
-	magicalObjectCopy();
-}
+	void retain( void );
+	void release( void );
+	void lazyrelease( void ) const;
 
-Object_t::Object_t( Object_t&& other )
-{
-	magicalObjectMove();
-}
+private:
+	Reference( void );
 
-Object_t::~Object_t( void )
-{
-	magicalObjectDestruct();
-}
+private:
+	int _reference_count = 1;
+};
 
-std::string Object_t::toString( void ) const
-{
-	std::string info = "Object_t";
-	return std::move(info);
-}
+
+
+#endif //__REFERENCE_H__

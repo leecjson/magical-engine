@@ -48,12 +48,6 @@
     <ClCompile Include="..\src\common\Common.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\common\Data.cpp">
-      <Filter>src\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\common\Object.cpp">
-      <Filter>src\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\engine\Engine.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
@@ -105,27 +99,15 @@
     <ClCompile Include="..\src\node\Node.cpp">
       <Filter>src\node</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\Reference.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\assets\AssetsSystem.h">
       <Filter>src\assets</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\Common.h">
-      <Filter>src\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\Data.h">
-      <Filter>src\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\List.h">
-      <Filter>src\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\Map.h">
-      <Filter>src\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\Object.h">
-      <Filter>src\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\Array.h">
       <Filter>src\common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\engine\Engine.h">
@@ -187,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="..\src\PlatformMacros.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Reference.h">
+      <Filter>src\common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

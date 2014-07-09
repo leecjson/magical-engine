@@ -53,14 +53,14 @@ magical common
 magical renderer
 */
 #include "Application.h"
-#include "GLFunction.h"
+//#include "GLFunction.h"
 
 /*
 magical lua
 */
-#include "lua.hpp"
-#include "LuaState.h"
-#include "LuaMacros.h"
-#include "LuaSystem.h"
+//#include "lua.hpp"
+//#include "LuaState.h"
+//#include "LuaMacros.h"
+//#include "LuaSystem.h"
 
 #endif //__MAGICAL_ENGINE_H__
