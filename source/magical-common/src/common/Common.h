@@ -24,17 +24,10 @@ SOFTWARE.
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#include <assert.h>
-#include <stdlib.h>
-#include <string>
-
 #include "PlatformMacros.h"
 #include "LogSystem.h"
 
-#ifndef MAG_TYPEDEF
-#define MAG_TYPEDEF
-typedef unsigned int tsize;
-#endif
+#include <assert.h>
 
 /*
 general macros
@@ -46,15 +39,12 @@ general macros
 #define MAX(a,b) (((a) < (b)) ? (b) : (a))
 #endif
 
-#ifndef MAG_LENGTHDEF
-#define MAG_LENGTHDEF
-#define kMaxLogLength  ( 1024 * 50 )
-#define kMaxErrLength  ( 1024 )
-#define kMaxPathLength ( 512 )
-#endif
+#define kMaxLogLength  (1024 * 50)
+#define kMaxErrLength  (1024)
+#define kMaxPathLength (512)
 
 /*
-general
+general error signal
 */
 MAGAPI bool magicalIsError( void );
 MAGAPI void magicalIgnoreLastError( void );
@@ -67,9 +57,8 @@ MAGAPI const char* magicalGetLastErrorInfo( void );
 
 #ifndef MAG_MEMOEY_SAFE
 #define MAG_MEMOEY_SAFE
-#define magicalFree( __var ) magicalAssert( __var, "free nullptr at " ##__FUNCTION__ ); ::free( __var );
-#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr " ##__FUNCTION__ ); delete __var;
-#define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr " ##__FUNCTION__ ); delete[] __var;
+#define magicalFree( __var ) magicalAssert( __var, "free nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); ::free( __exp );
+#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); delete __exp;
 #endif
 
 /*
@@ -78,7 +67,7 @@ assert function
 #ifdef MAG_DEBUG
 #define magicalAssert( __con, __msg ) do {                    \
 	if( !(__con) ) {                                          \
-		magicalSetLastErrorInfo( __msg );                     \
+		magicalSetLastErrorInfo( "Assert " ##__msg );         \
 		magicalLogLastError();                                \
 		assert(0);                                            \
 	}                                                         \
@@ -90,13 +79,13 @@ assert function
 /*
 win32 gettimeofday
 */
-//#ifdef MAG_WIN32
-//#include <WinSock2.h>
-//#endif
-//#ifdef MAG_WIN32
-//extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz );
-//#endif
-//MAGAPI void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
+#ifdef MAG_WIN32
+#include <WinSock2.h>
+#endif
+#ifdef MAG_WIN32
+extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz );
+#endif
+MAGAPI void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
 
 //MAGAPI_USER void magicalBeginTicking( void );
 //MAGAPI_USER float magicalEndTicking( void );

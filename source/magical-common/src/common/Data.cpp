@@ -21,12 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "PlatformMacros.h"
 #include "Data.h"
-#include "Common.h"
 
 Data_t::Data_t( void )
 : _data(nullptr)
-, _size(0)
 {
 
 }
@@ -35,28 +34,13 @@ Data_t::~Data_t( void )
 {
 	if( _data )
 	{
-		magicalFree( _data );
-		_data = nullptr;
+		free( _data );
 	}
 }
 
-void Data_t::assign( char* data, const tsize size )
+void Data_t::malloc( const size_t t )
 {
 	if( _data )
 	{
-		magicalFree( _data );
 	}
-	_data = data;
-	_size = size;
-}
-
-void Data_t::malloc( const tsize size )
-{
-	if( _data )
-	{
-		magicalFree( _data );
-	}
-	_data = (char*)(::malloc( size ));
-	magicalAssert( _data, "(char*)::malloc( size );" );
-	_size = size;
 }

@@ -21,12 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "PlatformMacros.h"
 #include "LuaState.h"
-#include "lua.hpp"
-#include "tolua_ext.h"
 #include "Common.h"
 #include "LuaCommon.h"
-
+#include "lua.hpp"
+#include "tolua_ext.h"
 
 LuaState_t::LuaState_t( void )
 : _L(nullptr)

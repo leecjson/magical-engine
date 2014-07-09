@@ -32,10 +32,11 @@ extern const char* const kLuaOnUpdate;
 extern const char* const kLuaOnDestroy;
 
 #ifdef MAG_DEBUG
-MAGAPI_USER void magicalLuaStateDump( lua_State* L );
+#define magicalDebugLuaStateDump( __L ) magicalLuaStateDumpImpl( __L )
 #else
-#define magicalLuaStateDump( __L )
+#define magicalDebugLuaStateDump( __L )
 #endif
+MAGAPI_USER void magicalLuaStateDump( lua_State* L );
 
 
 #endif //__LUA_MACROS_H__

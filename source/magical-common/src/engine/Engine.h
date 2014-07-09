@@ -33,8 +33,8 @@ public:
 	static void delc( void );
 	static void initSystems( void );
 	static void delcSystems( void );
-	static void mainLoop( void );
 	static void onReshape( int w, int h );
+	static void onLoop( void );
 
 public:
 	static float getDeltaTime( void );

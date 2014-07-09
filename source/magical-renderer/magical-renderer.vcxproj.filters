@@ -33,6 +33,9 @@
     <ClInclude Include="src\context\win32\glut\glut.h">
       <Filter>src\context\win32\glut</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderer\GLFunction.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\context\win32\gl\glew.h">
       <Filter>src\context\win32\gl</Filter>
     </ClInclude>
@@ -45,16 +48,13 @@
     <ClInclude Include="src\context\Application.h">
       <Filter>src\context</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\RenderSystem.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\context\win32\Application.cpp">
-      <Filter>src\context\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="src\renderer\RenderSystem.cpp">
+    <ClCompile Include="src\renderer\GLFunction.c">
       <Filter>src\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context\Application.cpp">
+      <Filter>src\context\win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -21,13 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "PlatformMacros.h"
 #include "LogSystem.h"
+#include "Common.h"
+
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <windows.h>
+#include <Windows.h>
+#include <WinSock2.h>
 
-#include "Common.h"
+#ifdef MAG_DEBUG
 
 static void win32Log( const char* channel, const char* msg )
 {
@@ -52,6 +56,7 @@ static void win32Log( const char* channel, const char* msg )
 	printf("%s\n", buf);
 }
 
+#endif
 
 void LogSystem::init( void )
 {
@@ -63,17 +68,23 @@ void LogSystem::delc( void )
 	
 }
 
-void LogSystem::I( const std::string& msg )
+void LogSystem::I( const char* msg )
 {
-	win32Log("Info ", msg.c_str());
+#ifdef MAG_DEBUG
+	win32Log("Info ", msg);
+#endif
 }
 
-void LogSystem::D( const std::string& msg )
+void LogSystem::D( const char* msg )
 {
-	win32Log("Debug", msg.c_str());
+#ifdef MAG_DEBUG
+	win32Log("Debug", msg);
+#endif
 }
 
-void LogSystem::E( const std::string& msg )
+void LogSystem::E( const char* msg )
 {
-	win32Log("Error", msg.c_str());
+#ifdef MAG_DEBUG
+	win32Log("Error", msg);
+#endif
 }
