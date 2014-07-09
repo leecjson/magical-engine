@@ -72,6 +72,7 @@ void AssetsSystem::addSearchPath( const char* path )
 		real_path += "/";
 	}
 	s_search_path_array.push_back( real_path );
+	s_absolute_path_cache_map.clear();
 }
 
 void AssetsSystem::removeSearchPath( const char* path )
@@ -83,18 +84,15 @@ void AssetsSystem::removeSearchPath( const char* path )
 	if( path_itr != s_search_path_array.end() )
 	{
 		s_search_path_array.erase( path_itr );
+		s_absolute_path_cache_map.clear();
 	}
 }
 
 void AssetsSystem::clearSearchPath( void )
 {
 	s_search_path_array.clear();
+	s_absolute_path_cache_map.clear();
 }
-
-//const std::vector<std::string>& AssetsSystem::getSearchPaths( void )
-//{
-//	return s_search_path_array;
-//}
 
 bool AssetsSystem::isAssetsFileExist( const char* file_name )
 {
@@ -146,7 +144,7 @@ Data AssetsSystem::getAssetsFile( const char* file_name )
 	data->malloc( size + 1 );
 
 	read_size = fread( data->ptr(), sizeof(char), size, fp );
-	data->realloc( read_size );
+	data->realloc( read_size + 1 );
 	data->ptr()[ read_size ] = 0;
 
 	fclose( fp );

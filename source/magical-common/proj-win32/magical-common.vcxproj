@@ -10,6 +10,58 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp" />
+    <ClCompile Include="..\src\common\Common.cpp" />
+    <ClCompile Include="..\src\common\Data.cpp" />
+    <ClCompile Include="..\src\common\Object.cpp" />
+    <ClCompile Include="..\src\engine\Engine.cpp" />
+    <ClCompile Include="..\src\kazmath\aabb.c" />
+    <ClCompile Include="..\src\kazmath\GL\mat4stack.c" />
+    <ClCompile Include="..\src\kazmath\GL\matrix.c" />
+    <ClCompile Include="..\src\kazmath\mat3.c" />
+    <ClCompile Include="..\src\kazmath\mat4.c" />
+    <ClCompile Include="..\src\kazmath\plane.c" />
+    <ClCompile Include="..\src\kazmath\quaternion.c" />
+    <ClCompile Include="..\src\kazmath\ray2.c" />
+    <ClCompile Include="..\src\kazmath\ray3.c" />
+    <ClCompile Include="..\src\kazmath\utility.c" />
+    <ClCompile Include="..\src\kazmath\vec2.c" />
+    <ClCompile Include="..\src\kazmath\vec3.c" />
+    <ClCompile Include="..\src\kazmath\vec4.c" />
+    <ClCompile Include="..\src\log\win32\LogSystem.cpp" />
+    <ClCompile Include="..\src\node\Node.cpp" />
+    <ClCompile Include="..\src\utils\Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\assets\AssetsSystem.h" />
+    <ClInclude Include="..\src\common\Array.h" />
+    <ClInclude Include="..\src\common\Common.h" />
+    <ClInclude Include="..\src\common\Data.h" />
+    <ClInclude Include="..\src\common\List.h" />
+    <ClInclude Include="..\src\common\Map.h" />
+    <ClInclude Include="..\src\common\Object.h" />
+    <ClInclude Include="..\src\engine\Engine.h" />
+    <ClInclude Include="..\src\include\magical-engine.h" />
+    <ClInclude Include="..\src\kazmath\aabb.h" />
+    <ClInclude Include="..\src\kazmath\GL\mat4stack.h" />
+    <ClInclude Include="..\src\kazmath\GL\matrix.h" />
+    <ClInclude Include="..\src\kazmath\kazmath.h" />
+    <ClInclude Include="..\src\kazmath\mat3.h" />
+    <ClInclude Include="..\src\kazmath\mat4.h" />
+    <ClInclude Include="..\src\kazmath\plane.h" />
+    <ClInclude Include="..\src\kazmath\quaternion.h" />
+    <ClInclude Include="..\src\kazmath\ray2.h" />
+    <ClInclude Include="..\src\kazmath\ray3.h" />
+    <ClInclude Include="..\src\kazmath\utility.h" />
+    <ClInclude Include="..\src\kazmath\vec2.h" />
+    <ClInclude Include="..\src\kazmath\vec3.h" />
+    <ClInclude Include="..\src\kazmath\vec4.h" />
+    <ClInclude Include="..\src\log\LogSystem.h" />
+    <ClInclude Include="..\src\node\Node.h" />
+    <ClInclude Include="..\src\PlatformMacros.h" />
+    <ClInclude Include="..\src\utils\Utils.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{396D811B-7BF7-4C4F-85F2-71CC03D32A33}</ProjectGuid>
     <RootNamespace>magicalcommon</RootNamespace>
@@ -33,11 +85,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\magical-engine.props" />
+    <Import Project="magical-engine-general.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\magical-engine.props" />
+    <Import Project="magical-engine-general.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -78,55 +130,6 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="src\assets\AssetsSystem.h" />
-    <ClInclude Include="src\common\Array.h" />
-    <ClInclude Include="src\common\Common.h" />
-    <ClInclude Include="src\common\Data.h" />
-    <ClInclude Include="src\common\Object.h" />
-    <ClInclude Include="src\engine\Engine.h" />
-    <ClInclude Include="src\include\magical-engine.h" />
-    <ClInclude Include="src\kazmath\aabb.h" />
-    <ClInclude Include="src\kazmath\GL\mat4stack.h" />
-    <ClInclude Include="src\kazmath\GL\matrix.h" />
-    <ClInclude Include="src\kazmath\kazmath.h" />
-    <ClInclude Include="src\kazmath\mat3.h" />
-    <ClInclude Include="src\kazmath\mat4.h" />
-    <ClInclude Include="src\kazmath\plane.h" />
-    <ClInclude Include="src\kazmath\quaternion.h" />
-    <ClInclude Include="src\kazmath\ray2.h" />
-    <ClInclude Include="src\kazmath\ray3.h" />
-    <ClInclude Include="src\kazmath\utility.h" />
-    <ClInclude Include="src\kazmath\vec2.h" />
-    <ClInclude Include="src\kazmath\vec3.h" />
-    <ClInclude Include="src\kazmath\vec4.h" />
-    <ClInclude Include="src\log\LogSystem.h" />
-    <ClInclude Include="src\PlatformMacros.h" />
-    <ClInclude Include="src\utils\Utils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\assets\win32\AssetsSystem.cpp" />
-    <ClCompile Include="src\common\Array.cpp" />
-    <ClCompile Include="src\common\Common.cpp" />
-    <ClCompile Include="src\common\Data.cpp" />
-    <ClCompile Include="src\common\Object.cpp" />
-    <ClCompile Include="src\engine\Engine.cpp" />
-    <ClCompile Include="src\kazmath\aabb.c" />
-    <ClCompile Include="src\kazmath\GL\mat4stack.c" />
-    <ClCompile Include="src\kazmath\GL\matrix.c" />
-    <ClCompile Include="src\kazmath\mat3.c" />
-    <ClCompile Include="src\kazmath\mat4.c" />
-    <ClCompile Include="src\kazmath\plane.c" />
-    <ClCompile Include="src\kazmath\quaternion.c" />
-    <ClCompile Include="src\kazmath\ray2.c" />
-    <ClCompile Include="src\kazmath\ray3.c" />
-    <ClCompile Include="src\kazmath\utility.c" />
-    <ClCompile Include="src\kazmath\vec2.c" />
-    <ClCompile Include="src\kazmath\vec3.c" />
-    <ClCompile Include="src\kazmath\vec4.c" />
-    <ClCompile Include="src\log\win32\LogSystem.cpp" />
-    <ClCompile Include="src\utils\Utils.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

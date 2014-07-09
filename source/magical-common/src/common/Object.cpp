@@ -29,6 +29,16 @@ Object_t::Object_t( void )
 	magicalObjectConstruct();
 }
 
+Object_t::Object_t( const Object_t& other )
+{
+	magicalObjectCopy();
+}
+
+Object_t::Object_t( Object_t&& other )
+{
+	magicalObjectMove();
+}
+
 Object_t::~Object_t( void )
 {
 	magicalObjectDestruct();

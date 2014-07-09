@@ -21,45 +21,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
+#ifndef __MAP_H__
+#define __MAP_H__
 
-#include <string>
+#include <list>
 #include <memory>
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "Object.h"
 
-class Object_t;
-typedef std::shared_ptr<Object_t> Object;
-typedef std::shared_ptr<const Object_t> const_Object;
+template< class T >
+using List = std::shared_ptr< std::list<T> >;
 
-class Object_t : public std::enable_shared_from_this<Object_t>
+template< class T >
+static inline List<T> newList()
 {
-public:
-	Object_t( void );
-	Object_t( const Object_t& other );
-	Object_t( Object_t&& other );
-	virtual ~Object_t( void );
-	std::string toString( void ) const;
-};
-
-static inline Object newObject( void )
-{
-	Object_t* obj = new Object_t();
-	magicalAssert( obj, "new Object_t();" );
-	return std::move( Object(obj) );
+	std::list<T>* obj = new std::list<T>();
+	magicalAssert(obj, "new List<T>();");
+	return std::move( List<T>(obj) );
 }
 
-static inline Object* newObject_LuaGC( void )
-{
-	Object_t* obj = new Object_t();
-	magicalAssert( obj, "new Object_t();" );
-	Object* ret = new Object( obj );
-	magicalAssert( ret, "new Object( obj );" );
-	return ret;
-}
-
-
-
-#endif //__OBJECT_H__
+#endif //__MAP_H__

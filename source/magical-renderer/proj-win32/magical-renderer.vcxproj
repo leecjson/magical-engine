@@ -11,19 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\context\Application.h" />
-    <ClInclude Include="src\context\win32\glut\freeglut.h" />
-    <ClInclude Include="src\context\win32\glut\freeglut_ext.h" />
-    <ClInclude Include="src\context\win32\glut\freeglut_std.h" />
-    <ClInclude Include="src\context\win32\glut\glut.h" />
-    <ClInclude Include="src\context\win32\gl\glew.h" />
-    <ClInclude Include="src\context\win32\gl\glxew.h" />
-    <ClInclude Include="src\context\win32\gl\wglew.h" />
-    <ClInclude Include="src\renderer\RenderSystem.h" />
+    <ClInclude Include="..\src\context\Application.h" />
+    <ClInclude Include="..\src\context\win32\glut\freeglut.h" />
+    <ClInclude Include="..\src\context\win32\glut\freeglut_ext.h" />
+    <ClInclude Include="..\src\context\win32\glut\freeglut_std.h" />
+    <ClInclude Include="..\src\context\win32\glut\glut.h" />
+    <ClInclude Include="..\src\context\win32\gl\glew.h" />
+    <ClInclude Include="..\src\context\win32\gl\glxew.h" />
+    <ClInclude Include="..\src\context\win32\gl\wglew.h" />
+    <ClInclude Include="..\src\renderer\RenderSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\context\win32\Application.cpp" />
-    <ClCompile Include="src\renderer\RenderSystem.cpp" />
+    <ClCompile Include="..\src\context\win32\Application.cpp" />
+    <ClCompile Include="..\src\renderer\RenderSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}</ProjectGuid>
@@ -48,11 +48,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\magical-engine.props" />
+    <Import Project="..\..\magical-common\proj-win32\magical-engine-general.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\magical-engine.props" />
+    <Import Project="..\..\magical-common\proj-win32\magical-engine-general.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

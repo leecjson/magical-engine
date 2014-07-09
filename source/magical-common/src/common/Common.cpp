@@ -31,8 +31,10 @@ static char s_last_error_info[kMaxErrLength];
 
 #ifdef MAG_DEBUG
 bool g_is_observing = false;
-int  g_observer_construct_count = 0;
-int  g_observer_destruct_count = 0;
+int g_observer_move_construct_count = 0;
+int g_observer_copy_construct_count = 0;
+int g_observer_construct_count = 0;
+int g_observer_destruct_count = 0;
 #endif
 
 MAGAPI bool magicalIsError( void )

@@ -31,7 +31,6 @@ SOFTWARE.
 #include "LuaCommon.h"
 
 LuaState_t::LuaState_t( void )
-: _L(nullptr)
 {
 	_L = luaL_newstate();
 	magicalAssert( _L, "_L = luaL_newstate()" );

@@ -59,7 +59,7 @@ private:
 	void handleLuaError( void ) const;
 
 private:
-	lua_State* _L;
+	lua_State* _L = nullptr;
 };
 
 

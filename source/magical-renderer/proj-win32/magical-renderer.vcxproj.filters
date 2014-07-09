@@ -21,39 +21,39 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\context\win32\glut\freeglut.h">
-      <Filter>src\context\win32\glut</Filter>
-    </ClInclude>
-    <ClInclude Include="src\context\win32\glut\freeglut_ext.h">
-      <Filter>src\context\win32\glut</Filter>
-    </ClInclude>
-    <ClInclude Include="src\context\win32\glut\freeglut_std.h">
-      <Filter>src\context\win32\glut</Filter>
-    </ClInclude>
-    <ClInclude Include="src\context\win32\glut\glut.h">
-      <Filter>src\context\win32\glut</Filter>
-    </ClInclude>
-    <ClInclude Include="src\context\win32\gl\glew.h">
+    <ClInclude Include="..\src\context\win32\gl\glew.h">
       <Filter>src\context\win32\gl</Filter>
     </ClInclude>
-    <ClInclude Include="src\context\win32\gl\glxew.h">
+    <ClInclude Include="..\src\context\win32\gl\glxew.h">
       <Filter>src\context\win32\gl</Filter>
     </ClInclude>
-    <ClInclude Include="src\context\win32\gl\wglew.h">
+    <ClInclude Include="..\src\context\win32\gl\wglew.h">
       <Filter>src\context\win32\gl</Filter>
     </ClInclude>
-    <ClInclude Include="src\context\Application.h">
+    <ClInclude Include="..\src\context\win32\glut\freeglut.h">
+      <Filter>src\context\win32\glut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\context\win32\glut\freeglut_ext.h">
+      <Filter>src\context\win32\glut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\context\win32\glut\freeglut_std.h">
+      <Filter>src\context\win32\glut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\context\win32\glut\glut.h">
+      <Filter>src\context\win32\glut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\context\Application.h">
       <Filter>src\context</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\RenderSystem.h">
+    <ClInclude Include="..\src\renderer\RenderSystem.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\context\win32\Application.cpp">
+    <ClCompile Include="..\src\context\win32\Application.cpp">
       <Filter>src\context\win32</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\RenderSystem.cpp">
+    <ClCompile Include="..\src\renderer\RenderSystem.cpp">
       <Filter>src\renderer</Filter>
     </ClCompile>
   </ItemGroup>
