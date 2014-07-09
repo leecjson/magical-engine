@@ -35,7 +35,8 @@ magical common
 #include "Object.h"
 #include "Node.h"
 
-#include "FileSystem.h"
+#include "AssetsSystem.h"
+#include "LogSystem.h"
 
 #include "GL/matrix.h"
 #include "GL/mat4stack.h"

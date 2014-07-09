@@ -21,32 +21,72 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LOG_SYSTEM_H__
-#define __LOG_SYSTEM_H__
+#include "RenderSystem.h"
 
-#include "PlatformMacros.h"
-#include "Common.h"
-
-#ifndef MAG_DEBUG
-#define magicalLog( __msg )
-#define magicalLogD( __msg )
-#define magicalLogE( __msg )
-#define magicalLogLastError()
-#else
-#define magicalLog( __msg ) LogSystem::I( __msg )
-#define magicalLogD( __msg ) LogSystem::D( __msg )
-#define magicalLogE( __msg ) LogSystem::E( __msg )
-#define magicalLogLastError() LogSystem::E( magicalGetLastErrorInfo() )
-#endif
-
-class LogSystem
+void RenderSystem::init( void )
 {
-public:
-	static void init( void );
-	static void delc( void );
-	static void I( const char* msg );
-	static void D( const char* msg );
-	static void E( const char* msg );
-};
 
-#endif  //__LOG_SYSTEM_H__
+}
+
+void RenderSystem::delc( void )
+{
+
+}
+
+void RenderSystem::onRender( void )
+{
+
+}
+
+void RenderSystem::onReshape( int w, int h )
+{
+	
+}
+
+//static void setGLDefault( void )
+//{
+//	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+//
+//	glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_CULL_FACE);
+//}
+
+//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	//kmGLMatrixMode(KM_GL_PROJECTION);
+
+//#if 0
+//	// 3d render
+//	kmGLLoadMatrix(&s_orthographic_projection2d);
+//	kmGLPushMatrix();
+//		kmGLMatrixMode(KM_GL_MODELVIEW);
+//		kmGLPushMatrix();
+//		
+//		kmGLPopMatrix();
+//	kmGLMatrixMode(KM_GL_PROJECTION);
+//	kmGLPopMatrix();
+//#endif
+//
+//#if 0
+//	// 2d render
+//	kmGLLoadMatrix(&s_orthographic_projection2d);
+//	kmGLPushMatrix();
+//		kmGLMatrixMode(KM_GL_MODELVIEW);
+//		kmGLPushMatrix();
+//
+//		kmGLPopMatrix();
+//	kmGLMatrixMode(KM_GL_PROJECTION);
+//	kmGLPopMatrix();
+//#endif
+
+/*glViewport(0, 0, w, h);
+
+	kmGLFreeAll();
+
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLLoadIdentity();
+
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();*/
+
+	//kmMat4OrthographicProjection(&s_orthographic_projection2d, 0, w, 0, h, -1.0f, 1.0f);

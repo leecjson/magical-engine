@@ -1,0 +1,40 @@
+<magical-binding>
+
+	<xml path="Object.xml" />
+
+	<include head="tolua_ext.h" />
+
+	<typedef type="unsigned int" name="size_t" />
+
+	<global>
+		<variable name="test_global_var" type="long long" op="get|set" />
+		
+		<function name="test_global_function" return="int">
+			<param type="const char*">param1</param>
+			<param type="int">param2</param>
+		</function>
+	</global>
+
+	<class name="Object">
+		<variable name="var1" type="float" op="get|set" />
+		
+		<function name="func1" return="Object*" type="static">
+			<param type="std::string">param1</param>
+		</function>
+		
+		<operator op="+" return="Object&">
+			<param type="const Object&">param1</param>
+		</operator>
+	</class>
+	
+	<class name="Data" extend="Object">
+		<function name="malloc" return="void">
+			<param type="size_t">size</param>
+		</function>
+	</class>
+	
+	<class name="LogSystem" type="static">
+		<function name="D" return="void" />
+	</class>
+
+</magical-binding>

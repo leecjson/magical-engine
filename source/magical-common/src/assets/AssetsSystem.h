@@ -21,32 +21,46 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LOG_SYSTEM_H__
-#define __LOG_SYSTEM_H__
+#ifndef __ASSETS_SYSTEM_H__
+#define __ASSETS_SYSTEM_H__
 
 #include "PlatformMacros.h"
-#include "Common.h"
 
-#ifndef MAG_DEBUG
-#define magicalLog( __msg )
-#define magicalLogD( __msg )
-#define magicalLogE( __msg )
-#define magicalLogLastError()
-#else
-#define magicalLog( __msg ) LogSystem::I( __msg )
-#define magicalLogD( __msg ) LogSystem::D( __msg )
-#define magicalLogE( __msg ) LogSystem::E( __msg )
-#define magicalLogLastError() LogSystem::E( magicalGetLastErrorInfo() )
-#endif
+#include <vector>
+#include <string>
+#include <unordered_map>
 
-class LogSystem
+<<<<<<< HEAD:source/magical-common/src/file/FileSystem.h
+class FileSystem
+=======
+#include "PlatformMacros.h"
+#include "Object.h"
+#include "Data.h"
+
+class AssetsSystem
+>>>>>>> origin/master:source/magical-common/src/assets/AssetsSystem.h
 {
 public:
 	static void init( void );
 	static void delc( void );
-	static void I( const char* msg );
-	static void D( const char* msg );
-	static void E( const char* msg );
+
+public:
+<<<<<<< HEAD:source/magical-common/src/file/FileSystem.h
+	static void addSearchPath( const std::string& path );
+	static void removeSearchPath( const std::string& path );
+	static bool isAbsolutePath( const std::string& path );
+	static bool isFileExist( const std::string& file );
+	static const std::string toAbsolutePath( const std::string& path );
+	static const std::vector<std::string>& getSearchPaths( void );
+	//static unsigned char* getFileData()
+=======
+	static void addSearchPath( const char* path );
+	static void removeSearchPath( const char* path );
+	static void clearSearchPath( void );
+	static bool isAssetsFileExist( const char* file_name );
+	static Data getAssetsFile( const char* file_name );
+>>>>>>> origin/master:source/magical-common/src/assets/AssetsSystem.h
+	
 };
 
-#endif  //__LOG_SYSTEM_H__
+#endif //__ASSETS_SYSTEM_H__

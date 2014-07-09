@@ -24,22 +24,25 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
+<<<<<<< HEAD
 #include <assert.h>
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+=======
+#include <cstdio>
+#include <string>
+>>>>>>> origin/master
 
 static bool s_last_error = false;
 static char s_last_error_info[kMaxErrLength] = {0};
 
-//struct timeval g_tv_ticking;
-
-//#ifdef MAG_DEBUG
-//bool g_is_observing = false;
-//int  g_observer_construct_count = 0;
-//int  g_observer_destruct_count = 0;
-//#endif
+#ifdef MAG_DEBUG
+bool g_is_observing = false;
+int  g_observer_construct_count = 0;
+int  g_observer_destruct_count = 0;
+#endif
 
 //MAGAPI void magicalLogFormatImpl( const char* format, ... )
 //{
@@ -79,6 +82,7 @@ MAGAPI const char* magicalGetLastErrorInfo( void )
 	else
 	{
 		return "none";
+<<<<<<< HEAD
 	}
 }
 
@@ -123,3 +127,7 @@ MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
 //	return result;
 //}
 
+=======
+	}
+}
+>>>>>>> origin/master

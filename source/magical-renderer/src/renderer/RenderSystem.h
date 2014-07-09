@@ -21,32 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LOG_SYSTEM_H__
-#define __LOG_SYSTEM_H__
+#ifndef __RENDER_SYSTEM_H__
+#define __RENDER_SYSTEM_H__
 
 #include "PlatformMacros.h"
-#include "Common.h"
 
-#ifndef MAG_DEBUG
-#define magicalLog( __msg )
-#define magicalLogD( __msg )
-#define magicalLogE( __msg )
-#define magicalLogLastError()
-#else
-#define magicalLog( __msg ) LogSystem::I( __msg )
-#define magicalLogD( __msg ) LogSystem::D( __msg )
-#define magicalLogE( __msg ) LogSystem::E( __msg )
-#define magicalLogLastError() LogSystem::E( magicalGetLastErrorInfo() )
-#endif
-
-class LogSystem
+class RenderSystem
 {
 public:
 	static void init( void );
 	static void delc( void );
-	static void I( const char* msg );
-	static void D( const char* msg );
-	static void E( const char* msg );
+	static void onRender( void );
+	static void onReshape( int w, int h );
 };
 
-#endif  //__LOG_SYSTEM_H__
+
+#endif //__RENDER_SYSTEM_H__

@@ -23,6 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "PlatformMacros.h"
 #include "Engine.h"
+<<<<<<< HEAD
 #include "GLFunction.h"
 #include "kazmath.h"
 #include "GL/matrix.h"
@@ -31,11 +32,17 @@ SOFTWARE.
 #include "Utils.h"
 
 #include "FileSystem.h"
+=======
+#include "Common.h"
+#include "Utils.h"
+#include "AssetsSystem.h"
+>>>>>>> origin/master
 #include "LuaSystem.h"
 
-//static timeval s_last_update_time;
+static int64_t s_last_update_time;
 static float s_delta_time;
 
+<<<<<<< HEAD
 //static void calcDeltaTime( void )
 //{
 //	struct timeval tv_now;
@@ -54,13 +61,20 @@ static void setGLDefault( void )
 	glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 }
+=======
+static void calcDeltaTime( void );
+>>>>>>> origin/master
 
 void Engine::init( void )
 {
 	s_delta_time = 0.0f;
+<<<<<<< HEAD
 	
 	//magicalGetTimeOfDay(&s_last_update_time, nullptr);
 	setGLDefault();
+=======
+	s_last_update_time = TimeUtils::currentMicrosecondsTime();
+>>>>>>> origin/master
 }
 
 void Engine::delc( void )
@@ -70,7 +84,7 @@ void Engine::delc( void )
 
 void Engine::initSystems( void )
 {
-	FileSystem::init();
+	AssetsSystem::init();
 	magicalReturnIfError();
 
 	LuaSystem::init();
@@ -82,7 +96,7 @@ void Engine::delcSystems( void )
 	LuaSystem::delc();
 	magicalReturnIfError();
 
-	FileSystem::delc();
+	AssetsSystem::delc();
 	magicalReturnIfError();
 }
 
@@ -103,6 +117,7 @@ void Engine::onReshape( int w, int h )
 
 void Engine::onLoop( void )
 {
+<<<<<<< HEAD
 	//calcDeltaTime();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -134,7 +149,26 @@ void Engine::onLoop( void )
 #endif
 }
 
+=======
+	calcDeltaTime();
+
+	RenderSystem::onRender();
+}
+
+void Engine::reshape( int w, int h )
+{
+	RenderSystem::onReshape( w, h );
+}
+
+>>>>>>> origin/master
 float Engine::getDeltaTime( void )
 {
 	return s_delta_time;
+}
+
+static void calcDeltaTime( void )
+{
+	int64_t now  = TimeUtils::currentMicrosecondsTime();
+	s_delta_time = MAX(0, (now - s_last_update_time) / 1000000.0f);
+	s_last_update_time = now;
 }

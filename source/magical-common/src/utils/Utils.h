@@ -24,22 +24,42 @@ SOFTWARE.
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
+#include <cstdio>
+#include <cstdlib>
+#include <cstdarg>
 #include <string>
 #include <memory>
 
-class Utils
+#include "PlatformMacros.h"
+#include "Common.h"
+
+class StringUtils
 {
 public:
 	template< int __size >
 	static inline std::string format( const char* format, ... )
 	{
-		char buf[__size];
+		char buf[ __size ];
 		va_list args;
-		va_start(args, format);
-		vsnprintf(buf, __size, format, args);
-		va_end(args);
-		return std::move(std::string(buf));
+		va_start( args, format );
+		vsnprintf( buf, __size, format, args );
+		va_end( args );
+		return std::move( std::string(buf) );
 	}
+};
+
+class TimeUtils
+{
+public:
+	static int64_t currentMicrosecondsTime( void );
+	static void beginTicking( void );
+	static float endTicking( void );
+};
+
+class FileUtils
+{
+public:
+	static bool isAbsolutePath( const char* path );
 };
 
 #endif //__UTILS_H__

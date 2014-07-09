@@ -25,11 +25,21 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
-	LuaState& L = LuaSystem::getLuaState();
-	L->executeScriptFile("main.lua");
-	L->executeGlobalFunction(kLuaOnCreate);
-	magicalLuaStateDump(L->getState());
-	L->clean();
+	magicalBeginObserveObject();
+	magicalBeginTicking();
+
+	Data file = AssetsSystem::getAssetsFile("main.lua");
+	magicalLogD( file->ptr() );
+
+	magicalEndTicking();
+	magicalEndObserveObject();
+
+	//LuaState& L = LuaSystem::getLuaState();
+	//L->executeScriptFile("main.lua");
+	////L->executeScriptCode("require 'main.lua'");
+	//L->executeGlobalFunction(kLuaOnCreate);
+	//magicalLuaStateDump(L->getState());
+	//L->clean();
 }
 
 int main(int argc, char* argv[])

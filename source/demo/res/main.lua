@@ -11,4 +11,3 @@ function onCreate() --> void
 	-- magicalLog("ok");
 
 end
-

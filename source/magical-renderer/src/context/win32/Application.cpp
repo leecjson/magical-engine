@@ -30,7 +30,7 @@ SOFTWARE.
 
 #include "glut/glut.h"
 
-#define MAG_WIN32_RETURN_IF_ERROR() \
+#define magicalWin32ReturnIfError() \
 if( magicalIsError() == true ) \
 { \
 	MessageBoxA(nullptr, magicalGetLastErrorInfo(), "Error", MB_OK); \
@@ -80,7 +80,7 @@ static void win32ShutdownGL( void )
 
 static void win32GlutReshape( int w, int h )
 { 
-	Engine::onReshape(w, h);
+	Engine::reshape(w, h);
 }
 
 static void win32GlutDisplay( void )
@@ -99,32 +99,32 @@ void Application::setOnFinishLaunching( FinishLaunchingEvent callback )
 void Application::run( void )
 {
 	win32SetupWindow();
-	MAG_WIN32_RETURN_IF_ERROR();
+	magicalWin32ReturnIfError();
 
 	win32SetupGL();
-	MAG_WIN32_RETURN_IF_ERROR();
+	magicalWin32ReturnIfError();
 
 	Engine::init();
-	MAG_WIN32_RETURN_IF_ERROR();
+	magicalWin32ReturnIfError();
 
 	Engine::initSystems();
-	MAG_WIN32_RETURN_IF_ERROR();
+	magicalWin32ReturnIfError();
 
 	s_on_finish_launching();
 
 	glutMainLoop();
 
 	Engine::delcSystems();
-	MAG_WIN32_RETURN_IF_ERROR();
+	magicalWin32ReturnIfError();
 
 	Engine::delc();
-	MAG_WIN32_RETURN_IF_ERROR();
+	magicalWin32ReturnIfError();
 
 	win32ShutdownGL();
-	MAG_WIN32_RETURN_IF_ERROR();
+	magicalWin32ReturnIfError();
 
 	win32ShutdownWindow();
-	MAG_WIN32_RETURN_IF_ERROR();
+	magicalWin32ReturnIfError();
 }
 
 

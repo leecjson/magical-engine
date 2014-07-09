@@ -21,32 +21,52 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LOG_SYSTEM_H__
-#define __LOG_SYSTEM_H__
+#ifndef __ARRAY_H__
+#define __ARRAY_H__
+
+#include <vector>
+#include <memory>
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "Object.h"
 
-#ifndef MAG_DEBUG
-#define magicalLog( __msg )
-#define magicalLogD( __msg )
-#define magicalLogE( __msg )
-#define magicalLogLastError()
-#else
-#define magicalLog( __msg ) LogSystem::I( __msg )
-#define magicalLogD( __msg ) LogSystem::D( __msg )
-#define magicalLogE( __msg ) LogSystem::E( __msg )
-#define magicalLogLastError() LogSystem::E( magicalGetLastErrorInfo() )
-#endif
+//template< __type >
+//class Array_t< __type >;
 
-class LogSystem
+//template< __type >
+//typedef std::shared_ptr< Array_t< __type > > Array;
+//template< __type >
+//typedef std::shared_ptr<const Array_t< __type > > const_Array;
+
+
+#define Array( __type ) std::shared_ptr< Array_t< __type > >
+
+template< class __type >
+class Array_t
 {
 public:
-	static void init( void );
-	static void delc( void );
-	static void I( const char* msg );
-	static void D( const char* msg );
-	static void E( const char* msg );
+	Array_t()
+	{
+		Array(Object) sds = Array(Object);
+		
+	};
+	virtual ~Array_t()
+	{
+	
+	};
+
+private:
+	//std::vector< __type > _data;
 };
 
-#endif  //__LOG_SYSTEM_H__
+//template<class T> struct Alloc { /* ... */ }; 
+//template<class T>  using Vec = std::vector<T, Alloc<T>>;
+
+
+
+//typedef std::shared_ptr< Array_t > Array;
+
+
+
+#endif //__ARRAY_H__

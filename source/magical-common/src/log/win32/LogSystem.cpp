@@ -23,6 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "PlatformMacros.h"
 #include "LogSystem.h"
+<<<<<<< HEAD
 #include "Common.h"
 
 #include <time.h>
@@ -32,6 +33,11 @@ SOFTWARE.
 #include <WinSock2.h>
 
 #ifdef MAG_DEBUG
+=======
+
+#include "Common.h"
+#include <windows.h>
+>>>>>>> origin/master
 
 static void win32Log( const char* channel, const char* msg )
 {
@@ -70,21 +76,36 @@ void LogSystem::delc( void )
 
 void LogSystem::I( const char* msg )
 {
+<<<<<<< HEAD
 #ifdef MAG_DEBUG
 	win32Log("Info ", msg);
 #endif
+=======
+	magicalAssert( msg, "should not nullptr" );
+	win32Log( "Info", msg );
+>>>>>>> origin/master
 }
 
 void LogSystem::D( const char* msg )
 {
+<<<<<<< HEAD
 #ifdef MAG_DEBUG
 	win32Log("Debug", msg);
 #endif
+=======
+	magicalAssert( msg, "should not nullptr" );
+	win32Log( "Debug", msg );
+>>>>>>> origin/master
 }
 
 void LogSystem::E( const char* msg )
 {
+<<<<<<< HEAD
 #ifdef MAG_DEBUG
 	win32Log("Error", msg);
 #endif
+=======
+	magicalAssert( msg, "should not nullptr" );
+	win32Log( "Error", msg );
+>>>>>>> origin/master
 }

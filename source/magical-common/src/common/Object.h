@@ -34,8 +34,10 @@ class Object_t;
 
 typedef std::shared_ptr<Object_t> Object;
 typedef std::shared_ptr<const Object_t> const_Object;
+<<<<<<< HEAD
 #define newObject() (std::move(Object(new Object_t())))
 #define newObject_LuaGC() (new Object(new Object_t()))
+=======
 
 class Object_t : public std::enable_shared_from_this<Object_t>
 {
@@ -44,6 +46,23 @@ public:
 	virtual ~Object_t( void );
 	std::string toString( void ) const;
 };
+
+static inline Object newObject( void )
+{
+	Object_t* obj = new Object_t();
+	magicalAssert( obj, "new Object_t();" );
+	return std::move( Object(obj) );
+}
+
+static inline Object* newObject_LuaGC( void )
+{
+	Object_t* obj = new Object_t();
+	magicalAssert( obj, "new Object_t();" );
+	Object* ret = new Object( obj );
+	magicalAssert( ret, "new Object( obj );" );
+	return ret;
+}
+>>>>>>> origin/master
 
 
 

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,13 +18,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -79,11 +79,12 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\assets\AssetsSystem.h" />
+    <ClInclude Include="src\common\Array.h" />
     <ClInclude Include="src\common\Common.h" />
     <ClInclude Include="src\common\Data.h" />
     <ClInclude Include="src\common\Object.h" />
     <ClInclude Include="src\engine\Engine.h" />
-    <ClInclude Include="src\file\FileSystem.h" />
     <ClInclude Include="src\include\magical-engine.h" />
     <ClInclude Include="src\kazmath\aabb.h" />
     <ClInclude Include="src\kazmath\GL\mat4stack.h" />
@@ -100,16 +101,16 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="src\kazmath\vec3.h" />
     <ClInclude Include="src\kazmath\vec4.h" />
     <ClInclude Include="src\log\LogSystem.h" />
-    <ClInclude Include="src\node\Node.h" />
     <ClInclude Include="src\PlatformMacros.h" />
     <ClInclude Include="src\utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\assets\win32\AssetsSystem.cpp" />
+    <ClCompile Include="src\common\Array.cpp" />
     <ClCompile Include="src\common\Common.cpp" />
     <ClCompile Include="src\common\Data.cpp" />
     <ClCompile Include="src\common\Object.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
-    <ClCompile Include="src\file\win32\FileSystem.cpp" />
     <ClCompile Include="src\kazmath\aabb.c" />
     <ClCompile Include="src\kazmath\GL\mat4stack.c" />
     <ClCompile Include="src\kazmath\GL\matrix.c" />
@@ -124,7 +125,7 @@ xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Com
     <ClCompile Include="src\kazmath\vec3.c" />
     <ClCompile Include="src\kazmath\vec4.c" />
     <ClCompile Include="src\log\win32\LogSystem.cpp" />
-    <ClCompile Include="src\node\Node.cpp" />
+    <ClCompile Include="src\utils\Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

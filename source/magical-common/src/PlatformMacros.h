@@ -40,9 +40,9 @@ MAG_MAC
 #define MAG_PLATFORM "win32"
 #endif
 
-#if defined( MAG_WIN32 ) && !defined( __cplusplus )
-#define inline __inline
-#endif
+//#if defined( MAG_WIN32 ) && !defined( __cplusplus )
+//#define inline __inline
+//#endif
 
 #if !defined( __cplusplus )
 #ifndef true

@@ -31,6 +31,7 @@ class Data_t;
 
 typedef std::shared_ptr<Data_t> Data;
 typedef std::shared_ptr<const Data_t> const_Data;
+<<<<<<< HEAD
 #define newObject() (std::move(Data(new Object_t())))
 #define newObject_LuaGC() (new Data(new Object_t()))
 
@@ -48,4 +49,42 @@ private:
 };
 
 
+=======
+
+class Data_t : public Object_t
+{
+public:
+	Data_t( void );
+	virtual ~Data_t( void );
+
+public:
+	void assign( char* data, const size_t size );
+	void malloc( const size_t size );
+	void realloc( const size_t size );
+	char* ptr( void ) const;
+	bool empty( void ) const;
+	size_t size( void ) const;
+
+private:
+	char* _data;
+	size_t _size;
+};
+
+static inline Data newData( void )
+{
+	Data_t* obj = new Data_t();
+	magicalAssert( obj, "new Data_t();" );
+	return std::move( Data(obj) );
+}
+
+static inline Data* newData_LuaGC( void )
+{
+	Data_t* obj = new Data_t();
+	magicalAssert( obj, "new Data_t();" );
+	Data* ret = new Data( obj );
+	magicalAssert( ret, "new Data( obj );" );
+	return ret;
+}
+
+>>>>>>> origin/master
 #endif //__DATA_H__
