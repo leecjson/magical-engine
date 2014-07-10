@@ -93,6 +93,11 @@ public:
 			other._reference = nullptr;
 		}
 	}
+	
+	Shared( std::nullptr_t nil )
+	{
+		_reference = nil;
+	}
 
 	Shared( const Initializer<T>& ir )
 	{
