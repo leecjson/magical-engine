@@ -25,21 +25,20 @@ SOFTWARE.
 #define __LUA_STATE_H__
 
 #include "PlatformMacros.h"
+#include "Common.h"
+#include "Reference.h"
 #include "LuaMacros.h"
-#include "Object.h"
 
-class LuaState_t;
-
-typedef std::shared_ptr<LuaState_t> LuaState;
-typedef std::shared_ptr<const LuaState_t> const_LuaState;
-#define newLuaState() (std::move(LuaState(new LuaState_t())))
-
-class LuaState_t : public Object_t
+class LuaState : public Reference
 {
 public:
-	LuaState_t( void );
-	virtual ~LuaState_t( void );
+	LuaState( void );
+	virtual ~LuaState( void );
 
+public:
+	static Shared<LuaState> createShared( void );
+
+public:
 	lua_State* getState( void ) const;
 	int executeScriptFile( const char* file ) const;
 	int executeScriptCode( const char* codes ) const;

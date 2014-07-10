@@ -35,14 +35,14 @@ Reference::~Reference( void )
 
 void Reference::retain( void )
 {
-	magicalAssert( _reference_count > 0, "Invalid _reference_count!" );
+	magicalAssert( _reference_count > 0, "Invalid _reference_count" );
 
 	++_reference_count;
 }
 
 void Reference::release( void )
 {
-	magicalAssert( _reference_count > 0, "Invalid _reference_count!" );
+	magicalAssert( _reference_count > 0, "Invalid _reference_count" );
 
 	--_reference_count;
 
@@ -52,7 +52,7 @@ void Reference::release( void )
 	}
 }
 
-void Reference::lazyrelease( void ) const
+int Reference::referenceCount( void ) const
 {
-	
+	return _reference_count;
 }

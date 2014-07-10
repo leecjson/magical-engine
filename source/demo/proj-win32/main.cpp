@@ -21,18 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "ReleasePool.h"
-#include <thread>
-#include <vector>
+#include "magical-engine.h"
 
-static ThreadLocal std::vector<Reference*> s_local_ref_pool;
-
-void ReleasePool::add( Reference* ref )
+void onFinishLaunching( void )
 {
-	s_local_ref_pool.push_back( ref );
+	Shared<Data> data = Data::createShared();
+
+	data = AssetsSystem::getAssetsFile( "haha" );
 }
 
-void ReleasePool::gc( void )
+int main(int argc, char* argv[])
 {
-
+	Application::delg(onFinishLaunching);
+	Application::run( );
+	return 0;
 }
+

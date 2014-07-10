@@ -28,9 +28,12 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Reference.h"
+
+template< class T >
+using Array = std::vector< T >;
  
 
+#if 0
 template< class T >
 class Array
 {
@@ -230,5 +233,6 @@ private:
 	std::vector<T> _data;
 };
 
+#endif
 
 #endif //__ARRAY_H__

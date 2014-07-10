@@ -126,6 +126,15 @@
     <ClCompile Include="..\src\tolua\tolua_to.c">
       <Filter>src\tolua</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\support\LuaMacros.cpp">
+      <Filter>src\support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\support\LuaState.cpp">
+      <Filter>src\support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\support\LuaSystem.cpp">
+      <Filter>src\support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\lua\lapi.h">
@@ -208,6 +217,15 @@
     </ClInclude>
     <ClInclude Include="..\src\tolua\tolua++.h">
       <Filter>src\tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\support\LuaMacros.h">
+      <Filter>src\support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\support\LuaState.h">
+      <Filter>src\support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\support\LuaSystem.h">
+      <Filter>src\support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

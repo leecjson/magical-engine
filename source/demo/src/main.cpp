@@ -25,7 +25,9 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
+	Shared<Data> data = Data::createShared();
 
+	data = AssetsSystem::getAssetsFile( "haha" );
 }
 
 int main(int argc, char* argv[])

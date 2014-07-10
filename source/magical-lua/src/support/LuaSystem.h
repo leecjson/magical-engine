@@ -25,6 +25,7 @@ SOFTWARE.
 #define __LUA_SYSTEM_H__
 
 #include "PlatformMacros.h"
+#include "Common.h"
 #include "LuaState.h"
 
 class LuaSystem
@@ -34,7 +35,7 @@ public:
 	static void delc( void );
 
 public:
-	static LuaState& getLuaState( void );
+	static Shared<LuaState>& getLuaState( void );
 };
 
 

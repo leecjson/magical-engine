@@ -28,20 +28,28 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "Shared.h"
 
 class Reference
 {
 public:
+	Reference( void );
 	virtual ~Reference( void );
 
+public:
 	void retain( void );
 	void release( void );
-	void lazyrelease( void ) const;
 
-private:
-	Reference( void );
+	int referenceCount( void ) const;
 
-private:
+protected:
+	template< class T >
+	Shared<T> sharedFromThis( void )
+	{
+		return Shared<T>( this );
+	}
+
+protected:
 	int _reference_count = 1;
 };
 

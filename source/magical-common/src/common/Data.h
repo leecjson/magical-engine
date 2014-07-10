@@ -25,46 +25,29 @@ SOFTWARE.
 #define __DATA_H__
 
 #include "PlatformMacros.h"
-#include "Object.h"
 #include "Common.h"
+#include "Reference.h"
 
-class Data_t;
-typedef std::shared_ptr<Data_t> Data;
-typedef std::shared_ptr<const Data_t> const_Data;
-
-class Data_t : public Object_t
+class Data : public Reference
 {
 public:
-	Data_t( void );
-	virtual ~Data_t( void );
+	Data( void );
+	virtual ~Data( void );
+
+public:
+	static Shared<Data> createShared( void );
 
 public:
 	void assign( char* data, const size_t size );
 	void malloc( const size_t size );
 	void realloc( const size_t size );
-	char* ptr( void ) const;
 	bool empty( void ) const;
 	size_t size( void ) const;
+	char* ptr( void ) const;
 
 private:
-	char* _data;
-	size_t _size;
+	char* _data = nullptr;
+	size_t _size = 0;
 };
-
-static inline Data newData( void )
-{
-	Data_t* obj = new Data_t();
-	magicalAssert( obj, "new Data_t();" );
-	return std::move( Data(obj) );
-}
-
-static inline Data* newData_LuaGC( void )
-{
-	Data_t* obj = new Data_t();
-	magicalAssert( obj, "new Data_t();" );
-	Data* ret = new Data( obj );
-	magicalAssert( ret, "new Data( obj );" );
-	return ret;
-}
 
 #endif //__DATA_H__

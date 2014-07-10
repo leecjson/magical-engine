@@ -22,14 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "LuaSystem.h"
-#include "LuaCommon.h"
-#include "lua.hpp"
 
-static LuaState s_lua_state;
+static Shared<LuaState> s_lua_state;
 
 void LuaSystem::init( void )
 {
-	s_lua_state = newLuaState();
+	s_lua_state = LuaState::createShared();
 }
 
 void LuaSystem::delc( void )
@@ -37,7 +35,7 @@ void LuaSystem::delc( void )
 	s_lua_state.reset();
 }
 
-LuaState& LuaSystem::getLuaState( void )
+Shared<LuaState>& LuaSystem::getLuaState( void )
 {
 	return s_lua_state;
 }

@@ -24,14 +24,8 @@ SOFTWARE.
 #include "LuaMacros.h"
 #include "tolua++.h"
 #include "tolua_ext.h"
-#include "Common.h"
 #include "LogSystem.h"
 #include "LuaState.h"
-#include "LuaSystem.h"
-
-const char* const kLuaOnCreate  = "onCreate";
-const char* const kLuaOnUpdate  = "onUpdate";
-const char* const kLuaOnDestroy = "onDestroy";
 
 #ifdef MAG_DEBUG
 

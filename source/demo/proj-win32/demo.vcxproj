@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{09456AF9-0572-4661-A132-632680DA4002}</ProjectGuid>

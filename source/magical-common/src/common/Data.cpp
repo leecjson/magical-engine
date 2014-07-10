@@ -22,52 +22,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Data.h"
-#include "Common.h"
 
-Data_t::Data_t( void )
-: _data(nullptr)
-, _size(0)
+Data::Data( void )
 {
 
 }
 
-Data_t::~Data_t( void )
+Data::~Data( void )
 {
-	if( _data )
-	{
-		magicalFree( _data );
-	}
+	magicalSafeFree( _data );
 }
 
-void Data_t::assign( char* data, const size_t size )
+Shared<Data> Data::createShared( void )
 {
-	magicalAssert( data && size > 0, "data should not nullptr and size should > 0" );
+	Data* ret = new Data();
+	magicalAssert( ret, "New Data() failed" );
+	return Shared<Data>( Initializer<Data>(ret) );
+}
 
-	if( _data )
-	{
-		magicalFree( _data );
-	}
+void Data::assign( char* data, const size_t size )
+{
+	magicalAssert( data && size > 0, "Data should not be nullptr and size should > 0" );
+
+	magicalSafeFree( _data );
 	_data = data;
 	_size = size;
 }
 
-void Data_t::malloc( const size_t size )
+void Data::malloc( const size_t size )
 {
-	magicalAssert( size > 0, "size should > 0" );
+	magicalAssert( size > 0, "Size should > 0" );
 
-	if( _data )
-	{
-		magicalFree( _data );
-	}
+	magicalSafeFree( _data );
 	_data = (char*) ::malloc( size );
 	magicalAssert( _data, "(char*) ::malloc( size );" );
 	_size = size;
 }
 
-void Data_t::realloc( const size_t size )
+void Data::realloc( const size_t size )
 {
-	magicalAssert( size > 0, "size should > 0" );
-	magicalAssert( _data, "_data should not nullptr" );
+	magicalAssert( size > 0, "Size should > 0" );
+	magicalAssert( _data, "_data should not be nullptr" );
 
 	if( size > _size )
 	{
@@ -80,17 +75,17 @@ void Data_t::realloc( const size_t size )
 	}
 }
 
-char* Data_t::ptr( void ) const
-{
-	return _data;
-}
-
-bool Data_t::empty( void ) const
+bool Data::empty( void ) const
 {
 	return _data == nullptr;
 }
 
-size_t Data_t::size( void ) const
+size_t Data::size( void ) const
 {
 	return _size;
+}
+
+char* Data::ptr( void ) const
+{
+	return _data;
 }

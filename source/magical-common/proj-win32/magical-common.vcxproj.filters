@@ -102,7 +102,7 @@
     <ClCompile Include="..\src\common\Reference.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\common\ReleasePool.cpp">
+    <ClCompile Include="..\src\common\Data.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,13 +176,19 @@
     <ClInclude Include="..\src\common\Reference.h">
       <Filter>src\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\common\ReleasePool.h">
-      <Filter>src\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\common\Array.h">
       <Filter>src\common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\Shared.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Data.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Map.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\List.h">
       <Filter>src\common</Filter>
     </ClInclude>
   </ItemGroup>

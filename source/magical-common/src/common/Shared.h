@@ -28,74 +28,206 @@ SOFTWARE.
 #include "Common.h"
 
 template< class T >
+class Shared;
+
+template< class T >
+class Initializer
+{
+public:
+	Initializer( void )
+	{
+		
+	}
+
+	Initializer( T* ref )
+	{
+		_reference = ref;
+	}
+
+private:
+	template< class T >
+	friend class Shared;
+	T* _reference = nullptr;
+};
+
+template< class T >
 class Shared
 {
 public:
 	Shared( void )
 	{
+
 	}
 
 	~Shared( void )
 	{
+		if( _reference )
+		{
+			_reference->release();
+		}
 	}
 
-	Shared( const T* ref )
+	Shared( T* ref )
 	{
+		if( ref )
+		{
+			_reference = ref;
+			_reference->retain();
+		}
 	}
 
 	Shared( const Shared& other )
 	{
+		if( other._reference )
+		{
+			_reference = other._reference;
+			_reference->retain();
+		}
 	}
 
 	Shared( Shared&& other )
 	{
+		if( other._reference )
+		{
+			_reference = other._reference;
+			other._reference = nullptr;
+		}
 	}
 
-	Shared( std::nullptr_t nil )
+	Shared( const Initializer<T>& ir )
 	{
+		if( ir._reference )
+		{
+			_reference = ir._reference;
+		}
+	}
+
+	Shared( Initializer<T>&& ir )
+	{
+		if( ir._reference )
+		{
+			_reference = ir._reference;
+		}
 	}
 
 public:
 	void reset( void )
 	{
+		if( _reference )
+		{
+			_reference->release();
+			_reference = nullptr;
+		}
+	}
+
+	void set( T* ref )
+	{
+		if( _reference )
+		{
+			_reference->release();
+			_reference = nullptr;
+		}
+
+		if( ref )
+		{
+			_reference = ref;
+			_reference->retain()
+		}
 	}
 
 	void set( const Shared& other )
 	{
+		if( _reference )
+		{
+			_reference->release();
+			_reference = nullptr;
+		}
+
+		if( other._reference )
+		{
+			_reference = other._reference;
+			_reference->retain();
+		}
 	}
 
 	void set( Shared&& other )
 	{
+		if( _reference )
+		{
+			_reference->release();
+			_reference = nullptr;
+		}
+
+		if( other._reference )
+		{
+			_reference = other._reference;
+			other._reference = nullptr;
+		}
+	}
+
+	void set( std::nullptr_t nil )
+	{
+		if( _reference )
+		{
+			_reference->release();
+			_reference = nil;
+		}
 	}
 
 	T* get( void ) const
 	{
+		return _reference;
 	}
 
 public:
-	Shared& operator=( const T* ref )
+	Shared& operator=( T* ref )
 	{
+		set( ref );
+		return *this;
 	}
 
 	Shared& operator=( const Shared& other )
 	{
+		set( other );
+		return *this;
 	}
 
 	Shared& operator=( Shared&& other )
 	{
+		set( std::forward<Shared>(other) );
+		return *this;
 	}
 
 	Shared& operator=( std::nullptr_t nil )
 	{
+		set( nil );
+		return *this;
+	}
+
+	T* operator->( void ) const
+	{
+		return _reference;
 	}
 
 public:
 	bool operator==( const Shared& other ) const
 	{
+		return _reference == other._reference;
 	}
 
 	bool operator!=( const Shared& other ) const
 	{
+		return _reference != other._reference;
+	}
+
+	bool operator==( std::nullptr_t nil ) const
+	{
+		return _reference == nil;
+	}
+
+	bool operator!=( std::nullptr_t nil ) const
+	{
+		return _reference != nil;
 	}
 
 private:

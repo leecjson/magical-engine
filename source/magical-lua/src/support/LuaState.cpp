@@ -22,24 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "LuaState.h"
-
 #include "lua.hpp"
+#include "tolua++.h"
 #include "tolua_ext.h"
-#include "Common.h"
-#include "AssetsSystem.h"
 
-#include "LuaCommon.h"
+//#include "LuaCommon.h"
 
-LuaState_t::LuaState_t( void )
+LuaState::LuaState( void )
 {
 	_L = luaL_newstate();
-	magicalAssert( _L, "_L = luaL_newstate()" );
+	magicalAssert( _L, "_L = luaL_newstate() failed" );
 	luaL_openlibs( _L );
 	luaopen_tolua_ext( _L );
-	luaopen_common( _L );
+	//luaopen_common( _L );
 }
 
-LuaState_t::~LuaState_t( void )
+LuaState::~LuaState( void )
 {
 	if( _L != nullptr ) 
 	{
@@ -47,12 +45,19 @@ LuaState_t::~LuaState_t( void )
 	}
 }
 
-lua_State* LuaState_t::getState( void ) const
+Shared<LuaState> LuaState::createShared( void )
+{
+	LuaState* ret = new LuaState();
+	magicalAssert( ret, "New LuaState() failed" );
+	return Shared<LuaState>( Initializer<LuaState>(ret) );
+}
+
+lua_State* LuaState::getState( void ) const
 {
 	return _L;
 }
 
-int LuaState_t::executeScriptFile( const char* file ) const
+int LuaState::executeScriptFile( const char* file ) const
 {
 //#ifdef MAG_WIN32
 //	std::string abs_path = AssetsSystem::toAbsolutePath( file );
@@ -68,7 +73,7 @@ int LuaState_t::executeScriptFile( const char* file ) const
 	return 0;
 }
 
-int LuaState_t::executeScriptCode( const char* codes ) const
+int LuaState::executeScriptCode( const char* codes ) const
 {
 	int ret = luaL_dostring( _L, codes );
 	if( ret != 0 )
@@ -80,7 +85,7 @@ int LuaState_t::executeScriptCode( const char* codes ) const
 	return 0;
 }
 
-int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc ) const
+int LuaState::executeGlobalFunction( const char* func_name, int retc, int argc ) const
 {
 	lua_getglobal( _L, func_name );
 	if( lua_isfunction(_L, -1) )
@@ -113,7 +118,7 @@ int LuaState_t::executeGlobalFunction( const char* func_name, int retc, int argc
 	return -1;
 }
 
-int LuaState_t::isGlobalFunctionExists( const char* func_name ) const
+int LuaState::isGlobalFunctionExists( const char* func_name ) const
 {
 	int ret = 0;
 	lua_getglobal( _L, func_name );
@@ -122,47 +127,47 @@ int LuaState_t::isGlobalFunctionExists( const char* func_name ) const
 	return ret;
 }
 
-void LuaState_t::pushNil( void ) const
+void LuaState::pushNil( void ) const
 {
 	lua_pushnil( _L );
 }
 
-void LuaState_t::pushInt( int num ) const
+void LuaState::pushInt( int num ) const
 {
 	lua_pushinteger( _L, num );
 }
 
-void LuaState_t::pushFloat( float num ) const
+void LuaState::pushFloat( float num ) const
 {
 	lua_pushnumber( _L, num );
 }
 
-void LuaState_t::pushBoolean( bool con ) const
+void LuaState::pushBoolean( bool con ) const
 {
 	lua_pushboolean( _L, con );
 }
 
-void LuaState_t::pushString( const char* str ) const
+void LuaState::pushString( const char* str ) const
 {
 	lua_pushstring( _L, str );
 }
 
-void LuaState_t::pushString( const char* str, int len ) const
+void LuaState::pushString( const char* str, int len ) const
 {
 	lua_pushlstring( _L, str, len );
 }
 
-void LuaState_t::pushUserData( void* obj, const char* type ) const
+void LuaState::pushUserData( void* obj, const char* type ) const
 {
 	tolua_pushusertype( _L, obj, type );
 }
 
-void LuaState_t::clean( void ) const
+void LuaState::clean( void ) const
 {
 	lua_settop( _L, 0 );
 }
 
-void LuaState_t::handleLuaError( void ) const
+void LuaState::handleLuaError( void ) const
 {
 	if( lua_type(_L, -1) == LUA_TSTRING )
 	{

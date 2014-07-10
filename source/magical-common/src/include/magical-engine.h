@@ -27,40 +27,58 @@ SOFTWARE.
 #include "PlatformMacros.h"
 
 /*
-magical common
+magical common - common
 */
 #include "Common.h"
-#include "Object.h"
+#include "Shared.h"
+#include "Reference.h"
 #include "Data.h"
 #include "Array.h"
 #include "Map.h"
 #include "List.h"
 
+/*
+magical common - engine
+*/
 #include "Engine.h"
+
+/*
+magical common - assets
+*/
 #include "AssetsSystem.h"
+
+/*
+magical common - log
+*/
 #include "LogSystem.h"
 
+/*
+magical common - utils
+*/
 #include "Utils.h"
 
-
-
+/*
+magical common - kazmath
+*/
 #include "GL/matrix.h"
 #include "GL/mat4stack.h"
 #include "kazmath.h"
-//#include "Geometry.h"
 
 /*
-magical renderer
+magical renderer - context
 */
 #include "Application.h"
-//#include "GLFunction.h"
 
 /*
-magical lua
+magical lua - lua
 */
-//#include "lua.hpp"
-//#include "LuaState.h"
-//#include "LuaMacros.h"
-//#include "LuaSystem.h"
+#include "lua.hpp"
+
+/*
+magical lua - support
+*/
+#include "LuaState.h"
+#include "LuaMacros.h"
+#include "LuaSystem.h"
 
 #endif //__MAGICAL_ENGINE_H__

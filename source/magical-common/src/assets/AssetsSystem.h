@@ -24,12 +24,10 @@ SOFTWARE.
 #ifndef __ASSETS_SYSTEM_H__
 #define __ASSETS_SYSTEM_H__
 
-#include <vector>
 #include <string>
-#include <unordered_map>
 
 #include "PlatformMacros.h"
-#include "Object.h"
+#include "Common.h"
 #include "Data.h"
 
 class AssetsSystem
@@ -43,7 +41,7 @@ public:
 	static void removeSearchPath( const char* path );
 	static void clearSearchPath( void );
 	static bool isAssetsFileExist( const char* file_name );
-	static Data getAssetsFile( const char* file_name );
+	static Shared<Data> getAssetsFile( const char* file_name );
 	
 };
 

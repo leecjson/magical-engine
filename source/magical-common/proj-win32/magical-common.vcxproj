@@ -13,8 +13,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp" />
     <ClCompile Include="..\src\common\Common.cpp" />
+    <ClCompile Include="..\src\common\Data.cpp" />
     <ClCompile Include="..\src\common\Reference.cpp" />
-    <ClCompile Include="..\src\common\ReleasePool.cpp" />
     <ClCompile Include="..\src\engine\Engine.cpp" />
     <ClCompile Include="..\src\kazmath\aabb.c" />
     <ClCompile Include="..\src\kazmath\GL\mat4stack.c" />
@@ -37,8 +37,10 @@
     <ClInclude Include="..\src\assets\AssetsSystem.h" />
     <ClInclude Include="..\src\common\Array.h" />
     <ClInclude Include="..\src\common\Common.h" />
+    <ClInclude Include="..\src\common\Data.h" />
+    <ClInclude Include="..\src\common\List.h" />
+    <ClInclude Include="..\src\common\Map.h" />
     <ClInclude Include="..\src\common\Reference.h" />
-    <ClInclude Include="..\src\common\ReleasePool.h" />
     <ClInclude Include="..\src\common\Shared.h" />
     <ClInclude Include="..\src\engine\Engine.h" />
     <ClInclude Include="..\src\include\magical-engine.h" />

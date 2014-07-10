@@ -28,7 +28,6 @@ SOFTWARE.
 
 #include "Common.h"
 #include "Engine.h"
-#include "LuaSystem.h"
 
 #define magicalWin32ReturnIfError() \
 if( magicalIsError() == true ) \

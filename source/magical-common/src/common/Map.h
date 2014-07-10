@@ -25,21 +25,12 @@ SOFTWARE.
 #define __MAP_H__
 
 #include <unordered_map>
-#include <memory>
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Object.h"
 
 template< class K, class T >
-using Map = std::shared_ptr< std::unordered_map<K, T> >;
+using Map = std::unordered_map< K, T >;
 
-template< class K, class T >
-static inline Map<K, T> newMap()
-{
-	std::unordered_map<K, T>* obj = new std::unordered_map<K, T>();
-	magicalAssert(obj, "new Map<K, T>();");
-	return std::move( Map<K, T>(obj) );
-}
 
 #endif //__MAP_H__

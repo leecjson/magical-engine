@@ -25,21 +25,17 @@ SOFTWARE.
 #define __NODE_H__
 
 #include "PlatformMacros.h"
-#include "Object.h"
+#include "Common.h"
+#include "Reference.h"
 
-class Node_t;
-
-typedef std::shared_ptr<Node_t> Node;
-typedef std::shared_ptr<const Node_t> const_Node;
-#define newNode() (std::move(Node(new Node_t())))
-#define newNode_LuaGC() (new Node(new Node_t()))
-
-class Node_t : public Object_t
+class Node : public Reference
 {
 public:
-	Node_t( void );
-	virtual ~Node_t( void );
-	std::string toString( void ) const;
+	Node( void );
+	virtual ~Node( void );
+
+public:
+	static Shared<Node> createShared( void );
 };
 
 

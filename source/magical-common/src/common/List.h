@@ -21,25 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __MAP_H__
-#define __MAP_H__
+#ifndef __LIST_H__
+#define __LIST_H__
 
 #include <list>
-#include <memory>
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Object.h"
 
 template< class T >
-using List = std::shared_ptr< std::list<T> >;
+using List = std::list< T >;
 
-template< class T >
-static inline List<T> newList()
-{
-	std::list<T>* obj = new std::list<T>();
-	magicalAssert(obj, "new List<T>();");
-	return std::move( List<T>(obj) );
-}
-
-#endif //__MAP_H__
+#endif //__LIST_H__

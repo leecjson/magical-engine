@@ -49,6 +49,18 @@ general macros
 #define kMaxErrLength  ( 1024 )
 #define kMaxPathLength ( 1024 )
 
+#define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
+
+#define magicalSafeFree( __var ) do{ if( __var ) ::free( __var ); } while(0)
+#define magicalSafeFreeNull( __var ) do{ if( __var ) ::free( __var ); __var == nullptr; } while(0)
+#define magicalSafeDelete( __var ) do{ if( __var ) delete __var; } while(0)
+#define magicalSafeDeleteNull( __var ) do{ if( __var ) delete __var; __var == nullptr; } while(0)
+#define magicalSafeDeleteArray( __var ) do{ if( __var ) delete[] __var; } while(0)
+#define magicalSafeDeleteArrayNull( __var ) do{ if( __var ) delete[] __var; __var = nullptr; } while(0)
+#define magicalSafeRetain( __var ) do{ if( __var ) __var->retain(); } while(0)
+#define magicalSafeRelease( __var ) do{ if( __var ) __var->release(); } while(0)
+#define magicalSafeReleaseNull( __var ) do{ if( __var ){ __var->release(); __var = nullptr; } } while(0)
+
 /*
 general
 */
@@ -57,26 +69,11 @@ MAGAPI void magicalIgnoreLastError( void );
 MAGAPI void magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
 
-#define magicalReturnIfError() if( magicalIsError() ) return
-
-#define magicalSafeFree( __var ) do{ if( __var ) ::free( __var ); } while(0)
-#define magicalSafeDelete( __var ) do{ if( __var ) delete __var; } while(0)
-#define magicalSafeDeleteArray( __var ) do{ if( __var ) delete[] __var; } while(0)
-
-#define magicalSafeRetain( __var ) do{ if( __var ) __var->retain(); } while(0)
-#define magicalSafeRelease( __var ) do{ if( __var ) __var->release(); } while(0)
-
-#define magicalSafeReleaseNull( __var ) ({ if( __var ){ __var->release(); __var = nullptr; } })
-
-//#define magicalFree( __var ) magicalAssert( __var, "free nullptr at " ##__FUNCTION__ ); ::free( __var )
-//#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr at " ##__FUNCTION__ ); delete __var
-//#define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr at " ##__FUNCTION__ ); delete[] __var
-
 /*
 assert function
 */
 #ifdef MAG_DEBUG
-#define magicalAssert( __con, __msg ) do {                    \
+#define magicalAssert( __con, __msg ) do{                     \
 	if( !(__con) ) {                                          \
 		magicalSetLastErrorInfo( __msg );                     \
 		magicalLogLastError();                                \

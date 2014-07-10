@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "LogSystem.h"
 
-#include "Common.h"
+#include <time.h>
 #include <windows.h>
 
 static void win32Log( const char* channel, const char* msg )
