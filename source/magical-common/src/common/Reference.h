@@ -25,7 +25,6 @@ SOFTWARE.
 #define __REFERENCE_H__
 
 #include <string>
-#include <memory>
 
 #include "PlatformMacros.h"
 #include "Common.h"

@@ -21,17 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
+#ifndef __RELEASE_POOL_H__
+#define __RELEASE_POOL_H__
 
-void onFinishLaunching( void )
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "Reference.h"
+
+class ReleasePool
 {
+public:
+	static void add( Reference* ref );
+	static void gc( void );
+};
 
-}
 
-int main(int argc, char* argv[])
-{
-	Application::setOnFinishLaunching(onFinishLaunching);
-	Application::run();
-	return 0;
-}
-
+#endif //__RELEASE_POOL_H__

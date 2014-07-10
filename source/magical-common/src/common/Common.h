@@ -47,7 +47,7 @@ general macros
 
 #define kMaxLogLength  ( 1024 * 50 )
 #define kMaxErrLength  ( 1024 )
-#define kMaxPathLength ( 512 )
+#define kMaxPathLength ( 1024 )
 
 /*
 general
@@ -58,9 +58,19 @@ MAGAPI void magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
 
 #define magicalReturnIfError() if( magicalIsError() ) return
-#define magicalFree( __var ) magicalAssert( __var, "free nullptr at " ##__FUNCTION__ ); ::free( __var )
-#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr at " ##__FUNCTION__ ); delete __var
-#define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr at " ##__FUNCTION__ ); delete[] __var
+
+#define magicalSafeFree( __var ) do{ if( __var ) ::free( __var ); } while(0)
+#define magicalSafeDelete( __var ) do{ if( __var ) delete __var; } while(0)
+#define magicalSafeDeleteArray( __var ) do{ if( __var ) delete[] __var; } while(0)
+
+#define magicalSafeRetain( __var ) do{ if( __var ) __var->retain(); } while(0)
+#define magicalSafeRelease( __var ) do{ if( __var ) __var->release(); } while(0)
+
+#define magicalSafeReleaseNull( __var ) ({ if( __var ){ __var->release(); __var = nullptr; } })
+
+//#define magicalFree( __var ) magicalAssert( __var, "free nullptr at " ##__FUNCTION__ ); ::free( __var )
+//#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr at " ##__FUNCTION__ ); delete __var
+//#define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr at " ##__FUNCTION__ ); delete[] __var
 
 /*
 assert function
@@ -70,7 +80,7 @@ assert function
 	if( !(__con) ) {                                          \
 		magicalSetLastErrorInfo( __msg );                     \
 		magicalLogLastError();                                \
-		assert(0);                                            \
+		assert( __con );                                      \
 	}                                                         \
 	} while(0)
 #else

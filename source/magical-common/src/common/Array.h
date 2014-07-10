@@ -25,69 +25,40 @@ SOFTWARE.
 #define __ARRAY_H__
 
 #include <vector>
-#include <memory>
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Object.h"
+#include "Reference.h"
+ 
 
 template< class T >
-using Array = std::shared_ptr< std::vector<T> >;
-
-template< class T >
-static inline Array<T> newArray()
-{
-	std::vector<T>* obj = new std::vector<T>();
-	magicalAssert(obj, "new Array<T>();");
-	return std::move( Array<T>(obj) );
-}
-
-#if 0
-template< class T >
-class Array_t;
-
-template< class T >
-using Array = std::shared_ptr< Array_t<T> >;
-
-template< class T >
-using const_Array = std::shared_ptr< const Array_t<T> >;
-
-template< class T >
-class Array_t : public Object_t
+class Array
 {
 public:
 	typedef typename std::vector<T>::iterator iterator;
 	typedef typename std::vector<T>::const_iterator const_iterator;
 	typedef typename std::vector<T>::reverse_iterator reverse_iterator;
 	typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
-
 	iterator begin( void ) { return _data.begin(); }
 	iterator end( void ) { return _data.end(); }
-
 	const_iterator begin( void ) const { return _data.begin(); }
 	const_iterator end( void ) const { return _data.end(); }
-
 	const_iterator cbegin( void ) const { return _data.cbegin(); }
 	const_iterator cend( void ) const { return _data.cend(); }
-
 	reverse_iterator rbegin( void ) { return _data.rbegin(); }
 	reverse_iterator rend( void ) { return _data.rend(); }
-
 	const_reverse_iterator rbegin( void ) const { return _data.rbegin(); }
 	const_reverse_iterator rend( void ) const { return _data.rend(); }
-
 	const_reverse_iterator crbegin( void ) const { return _data.crbegin(); }
 	const_reverse_iterator crend( void ) const { return _data.crend(); }
 
-	Array_t& collection( void )
-	{
-		return *this;
-	}
+public:
+	Array<T>(){};
 
 public:
-	void reserve( size_t n )
+	void reserve( size_t count )
 	{
-		_data.reserve( n );
+		_data.reserve( count );
 	}
 
 	void reverse( void )
@@ -258,16 +229,6 @@ public:
 private:
 	std::vector<T> _data;
 };
-
-template< class T >
-static inline Array<T> newArray()
-{
-	Array_t<T>* obj = new Array_t<T>();
-	magicalAssert(obj, "new Array_t<T>();");
-	return std::move( Array<T>(obj) );
-}
-
-#endif
 
 
 #endif //__ARRAY_H__

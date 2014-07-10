@@ -40,6 +40,12 @@ MAG_MAC
 #define MAG_PLATFORM "win32"
 #endif
 
+#ifdef _WIN32
+#define ThreadLocal __declspec( thread )
+#else
+#define ThreadLocal thread_local
+#endif
+
 //#if defined( MAG_WIN32 ) && !defined( __cplusplus )
 //#define inline __inline
 //#endif

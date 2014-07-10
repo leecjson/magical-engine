@@ -21,17 +21,86 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
+#ifndef __SHARED_H__
+#define __SHARED_H__
 
-void onFinishLaunching( void )
+#include "PlatformMacros.h"
+#include "Common.h"
+
+template< class T >
+class Shared
 {
+public:
+	Shared( void )
+	{
+	}
 
-}
+	~Shared( void )
+	{
+	}
 
-int main(int argc, char* argv[])
-{
-	Application::setOnFinishLaunching(onFinishLaunching);
-	Application::run();
-	return 0;
-}
+	Shared( const T* ref )
+	{
+	}
 
+	Shared( const Shared& other )
+	{
+	}
+
+	Shared( Shared&& other )
+	{
+	}
+
+	Shared( std::nullptr_t nil )
+	{
+	}
+
+public:
+	void reset( void )
+	{
+	}
+
+	void set( const Shared& other )
+	{
+	}
+
+	void set( Shared&& other )
+	{
+	}
+
+	T* get( void ) const
+	{
+	}
+
+public:
+	Shared& operator=( const T* ref )
+	{
+	}
+
+	Shared& operator=( const Shared& other )
+	{
+	}
+
+	Shared& operator=( Shared&& other )
+	{
+	}
+
+	Shared& operator=( std::nullptr_t nil )
+	{
+	}
+
+public:
+	bool operator==( const Shared& other ) const
+	{
+	}
+
+	bool operator!=( const Shared& other ) const
+	{
+	}
+
+private:
+	T* _reference = nullptr;
+};
+
+
+#endif //__SHARED_H__

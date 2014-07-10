@@ -30,19 +30,19 @@ Reference::Reference( void )
 
 Reference::~Reference( void )
 {
-
+	
 }
 
 void Reference::retain( void )
 {
-	magicalAssert( _reference_count > 0, "invalidate _reference_count" );
+	magicalAssert( _reference_count > 0, "Invalid _reference_count!" );
 
 	++_reference_count;
 }
 
 void Reference::release( void )
 {
-	magicalAssert( _reference_count > 0, "invalidate _reference_count" );
+	magicalAssert( _reference_count > 0, "Invalid _reference_count!" );
 
 	--_reference_count;
 

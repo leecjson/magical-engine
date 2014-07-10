@@ -21,17 +21,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
+#include "ReleasePool.h"
+#include <thread>
+#include <vector>
 
-void onFinishLaunching( void )
+static ThreadLocal std::vector<Reference*> s_local_ref_pool;
+
+void ReleasePool::add( Reference* ref )
+{
+	s_local_ref_pool.push_back( ref );
+}
+
+void ReleasePool::gc( void )
 {
 
 }
-
-int main(int argc, char* argv[])
-{
-	Application::setOnFinishLaunching(onFinishLaunching);
-	Application::run();
-	return 0;
-}
-

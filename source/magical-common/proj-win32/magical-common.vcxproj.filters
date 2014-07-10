@@ -102,6 +102,9 @@
     <ClCompile Include="..\src\common\Reference.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\ReleasePool.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\assets\AssetsSystem.h">
@@ -171,6 +174,15 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\Reference.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\ReleasePool.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Array.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Shared.h">
       <Filter>src\common</Filter>
     </ClInclude>
   </ItemGroup>
