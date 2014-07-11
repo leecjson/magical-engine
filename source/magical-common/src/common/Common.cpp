@@ -37,6 +37,8 @@ int g_observer_construct_count = 0;
 int g_observer_destruct_count = 0;
 #endif
 
+
+
 MAGAPI bool magicalIsError( void )
 {
 	return s_last_error;

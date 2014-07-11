@@ -1,6 +1,6 @@
-/*
+﻿/*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 07/06/14 13:49:43.
+** Generated automatically by tolua++-1.0.92 on 07/11/14 17:13:28.
 */
 
 #ifndef __cplusplus
@@ -13,24 +13,24 @@
 /* Exported function */
 TOLUA_API int  tolua_common_open (lua_State* tolua_S);
 
-#include "PlatformMacros.h"
+#include "LuaCommon.h"
 #include "tolua_ext.h"
 #include "magical-engine.h"
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
 
-static int tolua_collect_Object (lua_State* tolua_S)
+static int tolua_collect_Reference (lua_State* tolua_S)
 {
- Object* self = (Object*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
+ Reference* self = (Reference*) tolua_tousertype(tolua_S,1,0);
+	self->release();
 	return 0;
 }
 
 static int tolua_collect_Data (lua_State* tolua_S)
 {
  Data* self = (Data*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
+	self->release();
 	return 0;
 }
 #endif
@@ -40,11 +40,8 @@ static int tolua_collect_Data (lua_State* tolua_S)
 static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"AssetsSystem");
- tolua_usertype(tolua_S,"FileUtils");
- tolua_usertype(tolua_S,"Object");
- tolua_usertype(tolua_S,"TimeUtils");
  tolua_usertype(tolua_S,"Data");
- tolua_usertype(tolua_S,"LogSystem");
+ tolua_usertype(tolua_S,"Reference");
 }
 
 /* function: magicalIsError */
@@ -237,9 +234,9 @@ static int tolua_common_magicalEndTicking00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: magicalBeginObserveObject */
-#ifndef TOLUA_DISABLE_tolua_common_magicalBeginObserveObject00
-static int tolua_common_magicalBeginObserveObject00(lua_State* tolua_S)
+/* function: magicalBeginObserve */
+#ifndef TOLUA_DISABLE_tolua_common_magicalBeginObserve00
+static int tolua_common_magicalBeginObserve00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
@@ -251,21 +248,21 @@ static int tolua_common_magicalBeginObserveObject00(lua_State* tolua_S)
 #endif
  {
   {
-   magicalBeginObserveObject();
+   magicalBeginObserve();
   }
  }
  return 0;
 #ifdef MAG_DEBUG
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'magicalBeginObserveObject'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'magicalBeginObserve'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: magicalEndObserveObject */
-#ifndef TOLUA_DISABLE_tolua_common_magicalEndObserveObject00
-static int tolua_common_magicalEndObserveObject00(lua_State* tolua_S)
+/* function: magicalEndObserve */
+#ifndef TOLUA_DISABLE_tolua_common_magicalEndObserve00
+static int tolua_common_magicalEndObserve00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
@@ -277,70 +274,33 @@ static int tolua_common_magicalEndObserveObject00(lua_State* tolua_S)
 #endif
  {
   {
-   magicalEndObserveObject();
+   magicalEndObserve();
   }
  }
  return 0;
 #ifdef MAG_DEBUG
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'magicalEndObserveObject'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'magicalEndObserve'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: newObject */
-#ifndef TOLUA_DISABLE_tolua_common_newObject00
-static int tolua_common_newObject00(lua_State* tolua_S)
+/* method: delete of class  Reference */
+#ifndef TOLUA_DISABLE_tolua_common_Reference_delete00
+static int tolua_common_Reference_delete00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isnoobj(tolua_S,1,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   Object tolua_ret = (Object)  newObject();
-   {
-#ifdef __cplusplus
-    void* tolua_obj = Mtolua_new((Object)(tolua_ret));
-     tolua_pushusertype(tolua_S,tolua_obj,"Object");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#else
-    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Object));
-     tolua_pushusertype(tolua_S,tolua_obj,"Object");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#endif
-   }
-  }
- }
- return 1;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'newObject'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: delete of class  Object */
-#ifndef TOLUA_DISABLE_tolua_common_Object_delete00
-static int tolua_common_Object_delete00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Object",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Reference",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Object* self = (Object*)  tolua_tousertype(tolua_S,1,0);
+  Reference* self = (Reference*)  tolua_tousertype(tolua_S,1,0);
 #ifdef MAG_DEBUG
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
@@ -355,70 +315,95 @@ static int tolua_common_Object_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: get()->toString of class  Object */
-#ifndef TOLUA_DISABLE_tolua_common_Object_toString00
-static int tolua_common_Object_toString00(lua_State* tolua_S)
+/* method: retain of class  Reference */
+#ifndef TOLUA_DISABLE_tolua_common_Reference_retain00
+static int tolua_common_Reference_retain00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"const Object",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Reference",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const Object* self = (const Object*)  tolua_tousertype(tolua_S,1,0);
+  Reference* self = (Reference*)  tolua_tousertype(tolua_S,1,0);
 #ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get()->toString'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'retain'", NULL);
 #endif
   {
-   std::string tolua_ret = (std::string)  self->get()->toString();
-   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+   self->retain();
   }
  }
- return 1;
+ return 0;
 #ifdef MAG_DEBUG
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'toString'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'retain'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: newData */
-#ifndef TOLUA_DISABLE_tolua_common_newData00
-static int tolua_common_newData00(lua_State* tolua_S)
+/* method: release of class  Reference */
+#ifndef TOLUA_DISABLE_tolua_common_Reference_release00
+static int tolua_common_Reference_release00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isnoobj(tolua_S,1,&tolua_err)
+     !tolua_isusertype(tolua_S,1,"Reference",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  {
-   Data tolua_ret = (Data)  newData();
-   {
-#ifdef __cplusplus
-    void* tolua_obj = Mtolua_new((Data)(tolua_ret));
-     tolua_pushusertype(tolua_S,tolua_obj,"Data");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#else
-    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Data));
-     tolua_pushusertype(tolua_S,tolua_obj,"Data");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  Reference* self = (Reference*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAG_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'release'", NULL);
 #endif
-   }
+  {
+   self->release();
+  }
+ }
+ return 0;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'release'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: referenceCount of class  Reference */
+#ifndef TOLUA_DISABLE_tolua_common_Reference_referenceCount00
+static int tolua_common_Reference_referenceCount00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Reference",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Reference* self = (const Reference*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAG_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'referenceCount'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->referenceCount();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
  return 1;
 #ifdef MAG_DEBUG
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'newData'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'referenceCount'.",&tolua_err);
  return 0;
 #endif
 }
@@ -453,7 +438,38 @@ static int tolua_common_Data_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: get()->assign of class  Data */
+/* method: create of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_create00
+static int tolua_common_Data_create00(lua_State* tolua_S)
+{
+#ifdef MAG_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Data",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Data* tolua_ret = (Data*)  Data::create();
+    Shared<Data> auto_release = Initializer<Data>(tolua_ret);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Data");
+    tolua_ret->retain();
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifdef MAG_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: assign of class  Data */
 #ifndef TOLUA_DISABLE_tolua_common_Data_assign00
 static int tolua_common_Data_assign00(lua_State* tolua_S)
 {
@@ -473,10 +489,10 @@ static int tolua_common_Data_assign00(lua_State* tolua_S)
   char* data = ((char*)  tolua_tostring(tolua_S,2,0));
   unsigned const int size = ((unsigned const int)  tolua_tonumber(tolua_S,3,0));
 #ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get()->assign'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'assign'", NULL);
 #endif
   {
-   self->get()->assign(data,size);
+   self->assign(data,size);
   }
  }
  return 0;
@@ -488,7 +504,7 @@ static int tolua_common_Data_assign00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: get()->malloc of class  Data */
+/* method: malloc of class  Data */
 #ifndef TOLUA_DISABLE_tolua_common_Data_malloc00
 static int tolua_common_Data_malloc00(lua_State* tolua_S)
 {
@@ -506,10 +522,10 @@ static int tolua_common_Data_malloc00(lua_State* tolua_S)
   Data* self = (Data*)  tolua_tousertype(tolua_S,1,0);
   unsigned const int size = ((unsigned const int)  tolua_tonumber(tolua_S,2,0));
 #ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get()->malloc'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'malloc'", NULL);
 #endif
   {
-   self->get()->malloc(size);
+   self->malloc(size);
   }
  }
  return 0;
@@ -521,7 +537,7 @@ static int tolua_common_Data_malloc00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: get()->realloc of class  Data */
+/* method: realloc of class  Data */
 #ifndef TOLUA_DISABLE_tolua_common_Data_realloc00
 static int tolua_common_Data_realloc00(lua_State* tolua_S)
 {
@@ -539,10 +555,10 @@ static int tolua_common_Data_realloc00(lua_State* tolua_S)
   Data* self = (Data*)  tolua_tousertype(tolua_S,1,0);
   unsigned const int size = ((unsigned const int)  tolua_tonumber(tolua_S,2,0));
 #ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get()->realloc'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'realloc'", NULL);
 #endif
   {
-   self->get()->realloc(size);
+   self->realloc(size);
   }
  }
  return 0;
@@ -554,7 +570,7 @@ static int tolua_common_Data_realloc00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: get()->empty of class  Data */
+/* method: empty of class  Data */
 #ifndef TOLUA_DISABLE_tolua_common_Data_empty00
 static int tolua_common_Data_empty00(lua_State* tolua_S)
 {
@@ -570,10 +586,10 @@ static int tolua_common_Data_empty00(lua_State* tolua_S)
  {
   const Data* self = (const Data*)  tolua_tousertype(tolua_S,1,0);
 #ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get()->empty'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'empty'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->get()->empty();
+   bool tolua_ret = (bool)  self->empty();
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
@@ -586,7 +602,7 @@ static int tolua_common_Data_empty00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: get()->size of class  Data */
+/* method: size of class  Data */
 #ifndef TOLUA_DISABLE_tolua_common_Data_size00
 static int tolua_common_Data_size00(lua_State* tolua_S)
 {
@@ -602,10 +618,10 @@ static int tolua_common_Data_size00(lua_State* tolua_S)
  {
   const Data* self = (const Data*)  tolua_tousertype(tolua_S,1,0);
 #ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get()->size'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'size'", NULL);
 #endif
   {
-   unsigned int tolua_ret = ( unsigned int)  self->get()->size();
+   unsigned int tolua_ret = ( unsigned int)  self->size();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -613,38 +629,6 @@ static int tolua_common_Data_size00(lua_State* tolua_S)
 #ifdef MAG_DEBUG
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'size'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: get()->toString of class  Data */
-#ifndef TOLUA_DISABLE_tolua_common_Data_toString00
-static int tolua_common_Data_toString00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"const Data",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const Data* self = (const Data*)  tolua_tousertype(tolua_S,1,0);
-#ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get()->toString'", NULL);
-#endif
-  {
-   std::string tolua_ret = (std::string)  self->get()->toString();
-   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
-  }
- }
- return 1;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'toString'.",&tolua_err);
  return 0;
 #endif
 }
@@ -782,18 +766,10 @@ static int tolua_common_AssetsSystem_getAssetsFile00(lua_State* tolua_S)
  {
   const char* file_name = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   Data tolua_ret = (Data)  AssetsSystem::getAssetsFile(file_name);
-   {
-#ifdef __cplusplus
-    void* tolua_obj = Mtolua_new((Data)(tolua_ret));
-     tolua_pushusertype(tolua_S,tolua_obj,"Data");
+   Data* tolua_ret = (Data*)  AssetsSystem::getAssetsFile(file_name);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Data");
+    tolua_ret->retain();
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#else
-    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Data));
-     tolua_pushusertype(tolua_S,tolua_obj,"Data");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#endif
-   }
   }
  }
  return 1;
@@ -915,206 +891,6 @@ static int tolua_common_magicalLogLastError00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: I of class  LogSystem */
-#ifndef TOLUA_DISABLE_tolua_common_LogSystem_I00
-static int tolua_common_LogSystem_I00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"LogSystem",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const char* msg = ((const char*)  tolua_tostring(tolua_S,2,0));
-  {
-   LogSystem::I(msg);
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'I'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: D of class  LogSystem */
-#ifndef TOLUA_DISABLE_tolua_common_LogSystem_D00
-static int tolua_common_LogSystem_D00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"LogSystem",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const char* msg = ((const char*)  tolua_tostring(tolua_S,2,0));
-  {
-   LogSystem::D(msg);
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'D'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: E of class  LogSystem */
-#ifndef TOLUA_DISABLE_tolua_common_LogSystem_E00
-static int tolua_common_LogSystem_E00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"LogSystem",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const char* msg = ((const char*)  tolua_tostring(tolua_S,2,0));
-  {
-   LogSystem::E(msg);
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'E'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: currentMicrosecondsTime of class  TimeUtils */
-#ifndef TOLUA_DISABLE_tolua_common_TimeUtils_currentMicrosecondsTime00
-static int tolua_common_TimeUtils_currentMicrosecondsTime00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"TimeUtils",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   long long tolua_ret = (long long)  TimeUtils::currentMicrosecondsTime();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'currentMicrosecondsTime'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: beginTicking of class  TimeUtils */
-#ifndef TOLUA_DISABLE_tolua_common_TimeUtils_beginTicking00
-static int tolua_common_TimeUtils_beginTicking00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"TimeUtils",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   TimeUtils::beginTicking();
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'beginTicking'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: endTicking of class  TimeUtils */
-#ifndef TOLUA_DISABLE_tolua_common_TimeUtils_endTicking00
-static int tolua_common_TimeUtils_endTicking00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"TimeUtils",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   float tolua_ret = (float)  TimeUtils::endTicking();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'endTicking'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: isAbsolutePath of class  FileUtils */
-#ifndef TOLUA_DISABLE_tolua_common_FileUtils_isAbsolutePath00
-static int tolua_common_FileUtils_isAbsolutePath00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"FileUtils",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const char* path = ((const char*)  tolua_tostring(tolua_S,2,0));
-  {
-   bool tolua_ret = (bool)  FileUtils::isAbsolutePath(path);
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
-  }
- }
- return 1;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'isAbsolutePath'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* Open function */
 TOLUA_API int tolua_common_open (lua_State* tolua_S)
 {
@@ -1129,32 +905,32 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
   tolua_function(tolua_S,"magicalAssert",tolua_common_magicalAssert00);
   tolua_function(tolua_S,"magicalBeginTicking",tolua_common_magicalBeginTicking00);
   tolua_function(tolua_S,"magicalEndTicking",tolua_common_magicalEndTicking00);
-  tolua_function(tolua_S,"magicalBeginObserveObject",tolua_common_magicalBeginObserveObject00);
-  tolua_function(tolua_S,"magicalEndObserveObject",tolua_common_magicalEndObserveObject00);
-  tolua_function(tolua_S,"newObject",tolua_common_newObject00);
+  tolua_function(tolua_S,"magicalBeginObserve",tolua_common_magicalBeginObserve00);
+  tolua_function(tolua_S,"magicalEndObserve",tolua_common_magicalEndObserve00);
   #ifdef __cplusplus
-  tolua_cclass(tolua_S,"Object","Object","",tolua_collect_Object);
+  tolua_cclass(tolua_S,"Reference","Reference","",tolua_collect_Reference);
   #else
-  tolua_cclass(tolua_S,"Object","Object","",NULL);
+  tolua_cclass(tolua_S,"Reference","Reference","",NULL);
   #endif
-  tolua_beginmodule(tolua_S,"Object");
-   tolua_function(tolua_S,"delete",tolua_common_Object_delete00);
-   tolua_function(tolua_S,"toString",tolua_common_Object_toString00);
+  tolua_beginmodule(tolua_S,"Reference");
+   tolua_function(tolua_S,"delete",tolua_common_Reference_delete00);
+   tolua_function(tolua_S,"retain",tolua_common_Reference_retain00);
+   tolua_function(tolua_S,"release",tolua_common_Reference_release00);
+   tolua_function(tolua_S,"referenceCount",tolua_common_Reference_referenceCount00);
   tolua_endmodule(tolua_S);
-  tolua_function(tolua_S,"newData",tolua_common_newData00);
   #ifdef __cplusplus
-  tolua_cclass(tolua_S,"Data","Data","",tolua_collect_Data);
+  tolua_cclass(tolua_S,"Data","Data","Reference",tolua_collect_Data);
   #else
-  tolua_cclass(tolua_S,"Data","Data","",NULL);
+  tolua_cclass(tolua_S,"Data","Data","Reference",NULL);
   #endif
   tolua_beginmodule(tolua_S,"Data");
    tolua_function(tolua_S,"delete",tolua_common_Data_delete00);
+   tolua_function(tolua_S,"create",tolua_common_Data_create00);
    tolua_function(tolua_S,"assign",tolua_common_Data_assign00);
    tolua_function(tolua_S,"malloc",tolua_common_Data_malloc00);
    tolua_function(tolua_S,"realloc",tolua_common_Data_realloc00);
    tolua_function(tolua_S,"empty",tolua_common_Data_empty00);
    tolua_function(tolua_S,"size",tolua_common_Data_size00);
-   tolua_function(tolua_S,"toString",tolua_common_Data_toString00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"AssetsSystem","AssetsSystem","",NULL);
   tolua_beginmodule(tolua_S,"AssetsSystem");
@@ -1168,22 +944,6 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
   tolua_function(tolua_S,"magicalLogD",tolua_common_magicalLogD00);
   tolua_function(tolua_S,"magicalLogE",tolua_common_magicalLogE00);
   tolua_function(tolua_S,"magicalLogLastError",tolua_common_magicalLogLastError00);
-  tolua_cclass(tolua_S,"LogSystem","LogSystem","",NULL);
-  tolua_beginmodule(tolua_S,"LogSystem");
-   tolua_function(tolua_S,"I",tolua_common_LogSystem_I00);
-   tolua_function(tolua_S,"D",tolua_common_LogSystem_D00);
-   tolua_function(tolua_S,"E",tolua_common_LogSystem_E00);
-  tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"TimeUtils","TimeUtils","",NULL);
-  tolua_beginmodule(tolua_S,"TimeUtils");
-   tolua_function(tolua_S,"currentMicrosecondsTime",tolua_common_TimeUtils_currentMicrosecondsTime00);
-   tolua_function(tolua_S,"beginTicking",tolua_common_TimeUtils_beginTicking00);
-   tolua_function(tolua_S,"endTicking",tolua_common_TimeUtils_endTicking00);
-  tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"FileUtils","FileUtils","",NULL);
-  tolua_beginmodule(tolua_S,"FileUtils");
-   tolua_function(tolua_S,"isAbsolutePath",tolua_common_FileUtils_isAbsolutePath00);
-  tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;
 }

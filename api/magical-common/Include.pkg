@@ -1,0 +1,11 @@
+$#include "LuaCommon.h"
+$#include "tolua_ext.h"
+$#include "magical-engine.h"
+
+$pfile "toluapp-typedef.pkg"
+$pfile "magical-common/common/Common.pkg"
+$pfile "magical-common/common/Reference.pkg"
+$pfile "magical-common/common/Data.pkg"
+
+$pfile "magical-common/assets/AssetsSystem.pkg"
+$pfile "magical-common/log/LogSystem.pkg"

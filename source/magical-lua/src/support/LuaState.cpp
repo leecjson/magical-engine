@@ -26,15 +26,16 @@ SOFTWARE.
 #include "tolua++.h"
 #include "tolua_ext.h"
 
-//#include "LuaCommon.h"
+#include "AssetsSystem.h"
+#include "LuaCommon.h"
 
 LuaState::LuaState( void )
 {
 	_L = luaL_newstate();
-	magicalAssert( _L, "_L = luaL_newstate() failed" );
+	magicalAssert( _L, "luaL_newstate() failed" );
 	luaL_openlibs( _L );
 	luaopen_tolua_ext( _L );
-	//luaopen_common( _L );
+	luaopen_common( _L );
 }
 
 LuaState::~LuaState( void )
@@ -48,28 +49,33 @@ LuaState::~LuaState( void )
 Shared<LuaState> LuaState::createShared( void )
 {
 	LuaState* ret = new LuaState();
-	magicalAssert( ret, "New LuaState() failed" );
+	magicalAssert( ret, "new LuaState() failed" );
 	return Shared<LuaState>( Initializer<LuaState>(ret) );
 }
 
-lua_State* LuaState::getState( void ) const
+LuaState* LuaState::create( void )
+{
+	LuaState* ret = new LuaState();
+	magicalAssert( ret, "new LuaState() failed" );
+	return ret;
+}
+
+lua_State* LuaState::ptr( void ) const
 {
 	return _L;
 }
 
 int LuaState::executeScriptFile( const char* file ) const
 {
-//#ifdef MAG_WIN32
-//	std::string abs_path = AssetsSystem::toAbsolutePath( file );
-//	int ret = luaL_dofile( _L, abs_path.c_str() );
-//#endif
-//	if( ret != 0 )
-//	{
-//		handleLuaError();
-//		lua_pop(_L, 1);
-//		return ret;
-//	}
-//	return 0;
+#ifdef MAG_WIN32
+	int ret = luaL_dofile( _L, file );
+#endif
+	if( ret != 0 )
+	{
+		handleLuaError();
+		lua_pop(_L, 1);
+		return ret;
+	}
 	return 0;
 }
 
@@ -118,7 +124,7 @@ int LuaState::executeGlobalFunction( const char* func_name, int retc, int argc )
 	return -1;
 }
 
-int LuaState::isGlobalFunctionExists( const char* func_name ) const
+int LuaState::isGlobalFunctionExist( const char* func_name ) const
 {
 	int ret = 0;
 	lua_getglobal( _L, func_name );

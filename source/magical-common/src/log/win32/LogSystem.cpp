@@ -62,18 +62,18 @@ void LogSystem::delc( void )
 
 void LogSystem::I( const char* msg )
 {
-	magicalAssert( msg, "should not nullptr" );
+	magicalAssert( msg, "should not be nullptr" );
 	win32Log( "Info", msg );
 }
 
 void LogSystem::D( const char* msg )
 {
-	magicalAssert( msg, "should not nullptr" );
+	magicalAssert( msg, "should not be nullptr" );
 	win32Log( "Debug", msg );
 }
 
 void LogSystem::E( const char* msg )
 {
-	magicalAssert( msg, "should not nullptr" );
+	magicalAssert( msg, "should not be nullptr" );
 	win32Log( "Error", msg );
 }

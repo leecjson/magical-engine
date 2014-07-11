@@ -21,19 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
+#ifndef __APP_INTERFACE_H__
+#define __APP_INTERFACE_H__
 
-void onFinishLaunching( void )
-{
-	Shared<Data> data = Data::createShared();
+extern void onFinishLaunching( void );
 
-	data = AssetsSystem::getAssetsFile( "haha" );
-}
-
-int main(int argc, char* argv[])
-{
-	Application::setOnFinishLaunching(onFinishLaunching);
-	Application::run();
-	return 0;
-}
-
+#endif //__APP_INTERFACE_H__

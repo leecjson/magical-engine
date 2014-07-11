@@ -21,19 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "magical-engine.h"
-
-void onFinishLaunching( void )
-{
-	Shared<Data> data = Data::createShared();
-
-	data = AssetsSystem::getAssetsFile( "haha" );
-}
+#include "AppInterface.h"
+#include "Application.h"
 
 int main(int argc, char* argv[])
 {
-	Application::delg(onFinishLaunching);
-	Application::run( );
+	// Run
+	Application::run( onFinishLaunching );
+	// Exit
 	return 0;
 }
-

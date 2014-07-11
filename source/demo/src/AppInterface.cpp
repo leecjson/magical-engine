@@ -21,28 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __ASSETS_SYSTEM_H__
-#define __ASSETS_SYSTEM_H__
+#include "AppInterface.h"
+#include "magical-engine.h"
 
-#include <string>
-
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "Data.h"
-
-class AssetsSystem
+void onFinishLaunching( void )
 {
-public:
-	static void init( void );
-	static void delc( void );
-
-public:
-	static void addSearchPath( const char* path );
-	static void removeSearchPath( const char* path );
-	static void clearSearchPath( void );
-	static bool isAssetsFileExist( const char* file_name );
-	static Data* getAssetsFile( const char* file_name );
-	
-};
-
-#endif //__ASSETS_SYSTEM_H__
+	Shared<LuaState> L = LuaSystem::getLuaState();
+	L->executeScriptFile("main.lua");
+	L->executeGlobalFunction(kLuaOnCreate);
+	L->clean();
+}

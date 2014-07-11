@@ -1,0 +1,11 @@
+class Reference
+{
+public:
+	virtual ~Reference( void );
+
+public:
+	void retain( void );
+	void release( void );
+
+	int referenceCount( void ) const;
+};

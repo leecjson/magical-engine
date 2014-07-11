@@ -103,7 +103,7 @@ time function
 #endif
 
 /*
-object observer
+reference observer
 */
 #ifdef MAG_DEBUG
 extern bool g_is_observing;
@@ -114,19 +114,19 @@ extern int g_observer_destruct_count;
 #endif
 
 #ifdef MAG_DEBUG
-#define magicalBeginObserveObject() do {                                                           \
+#define magicalBeginObserve() do {                                                           \
 	if( g_is_observing ) break;                                                                    \
-	magicalLog( "Begin Observe Object : ------------------------------------------------" );       \
+	magicalLog( "Begin Observe : ------------------------------------------------" );       \
 	g_is_observing = true;                                                                         \
 	g_observer_construct_count = 0;                                                                \
 	g_observer_destruct_count  = 0;                                                                \
 	g_observer_move_construct_count = 0;                                                           \
 	g_observer_copy_construct_count = 0;                                                           \
 	} while(0)
-#define magicalEndObserveObject() do {                                                             \
+#define magicalEndObserve() do {                                                             \
 	if(! g_is_observing ) break;                                                                   \
 	char __tmbf[256];                                                                              \
-	sprintf( __tmbf, "Ended Observe Object : "                                                     \
+	sprintf( __tmbf, "Ended Observe : "                                                     \
 	"Construct = %d Move = %d Copy = %d Destruct = %d",                                            \
 	g_observer_construct_count,                                                                    \
 	g_observer_move_construct_count,                                                               \
@@ -135,25 +135,25 @@ extern int g_observer_destruct_count;
 	g_is_observing = false;                                                                        \
 	magicalLog( __tmbf );                                                                          \
 	} while(0)
-#define magicalObjectConstruct() do {                                                              \
+#define magicalRefConstruct() do {                                                              \
 	if( g_is_observing ) ++ g_observer_construct_count;                                            \
 	} while(0)
-#define magicalObjectMove() do {                                                                   \
+#define magicalRefMove() do {                                                                   \
 	if( g_is_observing ) ++ g_observer_move_construct_count;                                       \
 	} while(0)
-#define magicalObjectCopy() do {                                                                   \
+#define magicalRefCopy() do {                                                                   \
 	if( g_is_observing ) ++ g_observer_copy_construct_count;                                       \
 	} while(0)
-#define magicalObjectDestruct() do {                                                               \
+#define magicalRefDestruct() do {                                                               \
 	if( g_is_observing ) ++ g_observer_destruct_count;                                             \
 	} while(0)
 #else
-#define magicalBeginObserveObject()
-#define magicalEndObserveObject()
-#define magicalObjectConstruct()
-#define magicalObjectMove()
-#define magicalObjectCopy()
-#define magicalObjectDestruct()
+#define magicalBeginObserve()
+#define magicalEndObserve()
+#define magicalRefConstruct()
+#define magicalRefMove()
+#define magicalRefCopy()
+#define magicalRefDestruct()
 #endif
 
 #endif //__COMMON_H__

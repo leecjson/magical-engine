@@ -8,7 +8,7 @@
 -- magical type declaration list
 
 local magical_reg_objs = {
-	"Object",
+	"Reference",
 	"Data",
 };
 
@@ -75,10 +75,25 @@ function post_output_hook(package)
 	
 	local size = table.getn(magical_reg_objs);
 	for i=1,size do
-		replace([[Mtolua_new((]] .. magical_reg_objs[i] ..  [[)())]], [[new]] .. magical_reg_objs[i] .. [[_LuaGC()]]);
+		-- replace([[Mtolua_new((]] .. magical_reg_objs[i] ..  [[)())]], [[new]] .. magical_reg_objs[i] .. [[_LuaGC()]]);
 		-- replace(
 		-- [[const ]] .. magical_reg_objs[i] .. [[* self = (const ]] .. magical_reg_objs[i] .. [[*)  tolua_tousertype(tolua_S,1,0)]],
 		-- [[const ]] .. magical_reg_objs[i] .. [[_t* self = ((const ]] .. magical_reg_objs[i] .. [[*) tolua_tousertype(tolua_S,1,0))->get()]]);
+		
+		replace(
+		[[tolua_pushusertype(tolua_S,(void*)tolua_ret,"]] .. magical_reg_objs[i] .. [[");]],
+		[[tolua_pushusertype(tolua_S,(void*)tolua_ret,"]] .. magical_reg_objs[i] .. [[");]] .. "\n" .. [[    tolua_ret->retain();]] .. "\n" .. [[    tolua_register_gc(tolua_S,lua_gettop(tolua_S));]]);
+		
+		replace(magical_reg_objs[i] .. [[* tolua_ret = (]] .. magical_reg_objs[i] .. [[*)  ]] .. magical_reg_objs[i] .. [[::create();]],
+		magical_reg_objs[i] .. [[* tolua_ret = (]] .. magical_reg_objs[i] .. [[*)  ]] .. magical_reg_objs[i] .. [[::create();]] .. "\n    " .. [[Shared<]] 
+		.. magical_reg_objs[i] .. [[> auto_release = ]] .. [[Initializer<]] .. magical_reg_objs[i] .. [[>(tolua_ret);]])
+
+		replace(
+		magical_reg_objs[i] .. [[* self = (]] .. magical_reg_objs[i] .. [[*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);]],
+		magical_reg_objs[i] .. [[* self = (]] .. magical_reg_objs[i] .. [[*) tolua_tousertype(tolua_S,1,0);
+	self->release();]]
+		);
 	end
 	
     WRITE(result)
@@ -208,41 +223,41 @@ end
 
 -- called before starting output
 function pre_output_hook(package)
-	function find_func( pkg )
-		for i=1, #pkg  do
-			if( pkg[i]["name"] ~= nil 
-				and pkg[i]["lname"] ~= nil 
-				and pkg[i]["type"] ~= nil
-				and pkg[i]["original_name"] ~= nil ) then
+	-- function find_func( pkg )
+		-- for i=1, #pkg  do
+			-- if( pkg[i]["name"] ~= nil 
+				-- and pkg[i]["lname"] ~= nil 
+				-- and pkg[i]["type"] ~= nil
+				-- and pkg[i]["original_name"] ~= nil ) then
 				
-				for j=1, #magical_reg_objs do
-					if( pkg[i]["name"] == magical_reg_objs[j]
-						and pkg[i]["lname"] == magical_reg_objs[j]
-						and pkg[i]["type"] == magical_reg_objs[j]
-						and pkg[i]["original_name"] == magical_reg_objs[j]) then
+				-- for j=1, #magical_reg_objs do
+					-- if( pkg[i]["name"] == magical_reg_objs[j]
+						-- and pkg[i]["lname"] == magical_reg_objs[j]
+						-- and pkg[i]["type"] == magical_reg_objs[j]
+						-- and pkg[i]["original_name"] == magical_reg_objs[j]) then
 						
-						local cls = pkg[i];
-						for k=1, #cls do
-							if( cls[k]["kind"] ~= nil 
-								and cls[k]["kind"] == "func"
-								and cls[k]["mod"] ~= nil 
-								and cls[k]["mod"] ~= "static") then
+						-- local cls = pkg[i];
+						-- for k=1, #cls do
+							-- if( cls[k]["kind"] ~= nil 
+								-- and cls[k]["kind"] == "func"
+								-- and cls[k]["mod"] ~= nil 
+								-- and cls[k]["mod"] ~= "static") then
 								
-								if( cls[k]["name"] ~= "delete" and cls[k]["name"] ~= "new"
-									and cls[k]["lname"] ~= "delete" and cls[k]["lname"] ~= "new" ) then
-									cls[k]["name"] = "get()->" .. cls[k]["name"];
-								end
+								-- if( cls[k]["name"] ~= "delete" and cls[k]["name"] ~= "new"
+									-- and cls[k]["lname"] ~= "delete" and cls[k]["lname"] ~= "new" ) then
+									-- cls[k]["name"] = "get()->" .. cls[k]["name"];
+								-- end
 								
-							end
-						end
+							-- end
+						-- end
 						
-					end
-				end
+					-- end
+				-- end
 				
-			end
-		end
-	end
-	find_func( package );
+			-- end
+		-- end
+	-- end
+	-- find_func( package );
 	
 	-- echo_e(package,nil,nil);
 	-- package:print();

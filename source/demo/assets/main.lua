@@ -1,13 +1,19 @@
 
 function onCreate() --> void
 
-	-- local a = vec2(5,6);
-	-- local b = vec2(10, 10);
+	magicalBeginObserve();
+
+	local data = Data:create();
+	data:malloc(56);
 	
-	-- local c = a * 5.0;
+	magicalLog("ok");
 	
-	-- print( c.x .. "   " .. c.y  );
+	fff = data;
+	data = nil;
+	fff = nil;
 	
-	-- magicalLog("ok");
+	collectgarbage();
+	
+	magicalEndObserve();
 
 end

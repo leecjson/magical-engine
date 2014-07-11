@@ -36,8 +36,6 @@ if( magicalIsError() == true ) \
 	return; \
 }
 
-static FinishLaunchingEvent s_on_finish_launching = nullptr;
-
 static void win32SetupWindow( void );
 static void win32ShutdownWindow( void );
 static void win32SetupGL( void );
@@ -90,12 +88,7 @@ static void win32GlutDisplay( void )
 	glutPostRedisplay();
 }
 
-void Application::setOnFinishLaunching( FinishLaunchingEvent callback )
-{
-	s_on_finish_launching = callback;
-}
-
-void Application::run( void )
+void Application::run( std::function<void (void)> finish_launching )
 {
 	win32SetupWindow();
 	magicalWin32ReturnIfError();
@@ -109,7 +102,7 @@ void Application::run( void )
 	Engine::initSystems();
 	magicalWin32ReturnIfError();
 
-	s_on_finish_launching();
+	finish_launching();
 
 	glutMainLoop();
 

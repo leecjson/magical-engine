@@ -135,6 +135,9 @@
     <ClCompile Include="..\src\support\LuaSystem.cpp">
       <Filter>src\support</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\binding\LuaCommon.cpp">
+      <Filter>src\binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\lua\lapi.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="..\src\support\LuaSystem.h">
       <Filter>src\support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\binding\LuaCommon.h">
+      <Filter>src\binding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

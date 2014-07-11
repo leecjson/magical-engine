@@ -27,13 +27,10 @@ SOFTWARE.
 #include <functional>
 #include "PlatformMacros.h"
 
-typedef std::function<void (void)> FinishLaunchingEvent;
-
 class Application
 {
 public:
-	static void run( void );
-	static void setOnFinishLaunching( FinishLaunchingEvent callback );
+	static void run( std::function<void (void)> finish_launching );
 };
 
 #endif //__APPLICATION_H__

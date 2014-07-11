@@ -37,13 +37,14 @@ public:
 
 public:
 	static Shared<LuaState> createShared( void );
+	static LuaState* create( void );
 
 public:
-	lua_State* getState( void ) const;
+	lua_State* ptr( void ) const;
 	int executeScriptFile( const char* file ) const;
 	int executeScriptCode( const char* codes ) const;
 	int executeGlobalFunction( const char* func_name, int retc = 0, int argc = 0 ) const;
-	int isGlobalFunctionExists( const char* func_name ) const;
+	int isGlobalFunctionExist( const char* func_name ) const;
 
 	void pushNil( void ) const;
 	void pushInt( int num ) const;

@@ -36,6 +36,7 @@ public:
 
 public:
 	static Shared<Data> createShared( void );
+	static Data* create( void );
 
 public:
 	void assign( char* data, const size_t size );

@@ -50,7 +50,7 @@ float TimeUtils::endTicking( void )
 
 bool FileUtils::isAbsolutePath( const char* path )
 {
-	magicalAssert( path, "should not nullptr" );
+	magicalAssert( path, "should not be nullptr" );
 
 #ifdef MAG_WIN32
 	if( strlen( path ) > 2
