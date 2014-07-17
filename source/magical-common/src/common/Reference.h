@@ -21,22 +21,63 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LUA_SYSTEM_H__
-#define __LUA_SYSTEM_H__
+#ifndef __REFERENCE_H__
+#define __REFERENCE_H__
+
+#include <string>
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "LuaState.h"
+#include "Shared.h"
 
-class LuaSystem
+<<<<<<< HEAD:source/magical-common/src/common/Object.h
+class Object_t;
+
+typedef std::shared_ptr<Object_t> Object;
+typedef std::shared_ptr<const Object_t> const_Object;
+<<<<<<< HEAD
+#define newObject() (std::move(Object(new Object_t())))
+#define newObject_LuaGC() (new Object(new Object_t()))
+=======
+
+class Object_t : public std::enable_shared_from_this<Object_t>
+=======
+class Reference
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857:source/magical-common/src/common/Reference.h
 {
 public:
-	static void init( void );
-	static void delc( void );
+	Reference( void );
+	virtual ~Reference( void );
 
 public:
-	static LuaState* getLuaState( void );
+	void retain( void );
+	void release( void );
+
+<<<<<<< HEAD:source/magical-common/src/common/Object.h
+static inline Object* newObject_LuaGC( void )
+{
+	Object_t* obj = new Object_t();
+	magicalAssert( obj, "new Object_t();" );
+	Object* ret = new Object( obj );
+	magicalAssert( ret, "new Object( obj );" );
+	return ret;
+}
+>>>>>>> origin/master
+=======
+	int referenceCount( void ) const;
+
+protected:
+	template< class T >
+	Shared<T> sharedFromThis( void )
+	{
+		return Shared<T>( this );
+	}
+
+protected:
+	int _reference_count = 1;
 };
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857:source/magical-common/src/common/Reference.h
 
 
-#endif //__LUA_SYSTEM_H__
+
+#endif //__REFERENCE_H__

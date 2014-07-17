@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{e5aff365-2001-4fa3-b5d5-6ff028c3dc07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\assets">
+      <UniqueIdentifier>{9203bad3-aef1-4630-b881-7d12cf813781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\assets\win32">
+      <UniqueIdentifier>{170174ee-8456-41f8-a573-4d62249d9608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{720a7c0b-9516-4474-a607-17cc4d1fcb9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{27e452d2-b151-4761-b9b1-e013337c6b81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry">
+      <UniqueIdentifier>{55b2a4f4-1e33-4cb2-aaf0-99981a0435f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\include">
+      <UniqueIdentifier>{c07031e9-9daa-40fa-9325-06452a3308ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\kazmath">
+      <UniqueIdentifier>{569f941f-9123-4571-ba14-a43274696b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\kazmath\GL">
+      <UniqueIdentifier>{5ec3e4ec-0e1b-49c7-b9ae-358547ed10be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\log">
+      <UniqueIdentifier>{de6c0e5c-8438-4778-8835-8cc7916fd8e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\log\win32">
+      <UniqueIdentifier>{eb12aa98-c6d8-4934-b675-ba55f6b5d9e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\node">
+      <UniqueIdentifier>{447009d4-13d4-4717-97d6-22de220d9a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{b90d30df-6159-44d1-b857-979e37a19445}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp">
+      <Filter>src\assets\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\Common.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\Engine.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\GL\mat4stack.c">
+      <Filter>src\kazmath\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\GL\matrix.c">
+      <Filter>src\kazmath\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\aabb.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\mat3.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\mat4.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\plane.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\quaternion.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\ray2.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\ray3.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\utility.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\vec2.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\vec3.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kazmath\vec4.c">
+      <Filter>src\kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\log\win32\LogSystem.cpp">
+      <Filter>src\log\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils\Utils.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\node\Node.cpp">
+      <Filter>src\node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\Reference.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\Data.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\assets\AssetsSystem.h">
+      <Filter>src\assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Common.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\Engine.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\include\magical-engine.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\GL\mat4stack.h">
+      <Filter>src\kazmath\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\GL\matrix.h">
+      <Filter>src\kazmath\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\aabb.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\kazmath.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\mat3.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\mat4.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\plane.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\quaternion.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\ray2.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\ray3.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\utility.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\vec2.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\vec3.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kazmath\vec4.h">
+      <Filter>src\kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\log\LogSystem.h">
+      <Filter>src\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\Utils.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\node\Node.h">
+      <Filter>src\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PlatformMacros.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Reference.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Array.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Shared.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Data.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\Map.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\List.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

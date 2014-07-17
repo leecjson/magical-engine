@@ -24,17 +24,19 @@ SOFTWARE.
 #ifndef __ASSETS_SYSTEM_H__
 #define __ASSETS_SYSTEM_H__
 
+<<<<<<< HEAD
 #include "PlatformMacros.h"
 
 #include <vector>
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 #include <string>
-#include <unordered_map>
 
 <<<<<<< HEAD:source/magical-common/src/file/FileSystem.h
 class FileSystem
 =======
 #include "PlatformMacros.h"
-#include "Object.h"
+#include "Common.h"
 #include "Data.h"
 
 class AssetsSystem
@@ -58,8 +60,12 @@ public:
 	static void removeSearchPath( const char* path );
 	static void clearSearchPath( void );
 	static bool isAssetsFileExist( const char* file_name );
+<<<<<<< HEAD
 	static Data getAssetsFile( const char* file_name );
 >>>>>>> origin/master:source/magical-common/src/assets/AssetsSystem.h
+=======
+	static Data* getAssetsFile( const char* file_name );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	
 };
 

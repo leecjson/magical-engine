@@ -23,6 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "PlatformMacros.h"
 #include "LuaMacros.h"
+<<<<<<< HEAD
 #include "Common.h"
 #include "LogSystem.h"
 #include "LuaState.h"
@@ -33,6 +34,12 @@ SOFTWARE.
 const char* const kLuaOnCreate  = "onCreate";
 const char* const kLuaOnUpdate  = "onUpdate";
 const char* const kLuaOnDestroy = "onDestroy";
+=======
+#include "tolua++.h"
+#include "tolua_ext.h"
+#include "LogSystem.h"
+#include "LuaState.h"
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 
 MAGAPI_USER void magicalLuaStateDump( lua_State* L )
 {

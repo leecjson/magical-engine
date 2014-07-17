@@ -1,0 +1,24 @@
+/*
+general
+*/
+extern bool magicalIsError( void );
+extern void magicalIgnoreLastError( void );
+extern void magicalSetLastErrorInfo( const char* info );
+extern const char* magicalGetLastErrorInfo( void );
+
+/*
+assert function
+*/
+extern void magicalAssert( bool __con, const char* __msg );
+
+/*
+time function
+*/
+extern void magicalBeginTicking( void );
+extern void magicalEndTicking( void );
+
+/*
+reference observer
+*/
+extern void magicalBeginObserve( void );
+extern void magicalEndObserve( void );

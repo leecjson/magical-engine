@@ -25,11 +25,12 @@ SOFTWARE.
 #define __LUA_MACROS_H__
 
 #include "PlatformMacros.h"
+#include "Common.h"
 #include "lua.hpp"
 
-extern const char* const kLuaOnCreate;
-extern const char* const kLuaOnUpdate;
-extern const char* const kLuaOnDestroy;
+#define kLuaOnCreate  "onCreate"
+#define kLuaOnUpdate  "onUpdate";
+#define kLuaOnDestroy "onDestroy"
 
 #ifdef MAG_DEBUG
 #define magicalDebugLuaStateDump( __L ) magicalLuaStateDumpImpl( __L )

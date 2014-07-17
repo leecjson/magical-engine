@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_PropertySheetDisplayName>magical-engine-general</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)magical-common\src;$(SolutionDir)magical-common\src\include;$(SolutionDir)magical-common\src\engine;$(SolutionDir)magical-common\src\geometry;$(SolutionDir)magical-common\src\common;$(SolutionDir)magical-common\src\node;$(SolutionDir)magical-common\src\kazmath;$(SolutionDir)magical-common\src\assets;$(SolutionDir)magical-common\src\log;$(SolutionDir)magical-common\src\utils;$(SolutionDir)magical-renderer\src;$(SolutionDir)magical-renderer\src\context;$(SolutionDir)magical-renderer\src\context\win32;$(SolutionDir)magical-renderer\src\renderer;$(SolutionDir)magical-lua\src;$(SolutionDir)magical-lua\src\lua;$(SolutionDir)magical-lua\src\support;$(SolutionDir)magical-lua\src\binding;$(SolutionDir)magical-lua\src\tolua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4244;4800</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

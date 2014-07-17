@@ -1,0 +1,4 @@
+extern void magicalLog( const char* __msg );
+extern void magicalLogD( const char* __msg );
+extern void magicalLogE( const char* __msg );
+extern void magicalLogLastError( void );

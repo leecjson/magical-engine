@@ -21,22 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LUA_SYSTEM_H__
-#define __LUA_SYSTEM_H__
+#ifndef __APP_INTERFACE_H__
+#define __APP_INTERFACE_H__
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "LuaState.h"
+extern void onFinishLaunching( void );
 
-class LuaSystem
-{
-public:
-	static void init( void );
-	static void delc( void );
-
-public:
-	static LuaState* getLuaState( void );
-};
-
-
-#endif //__LUA_SYSTEM_H__
+#endif //__APP_INTERFACE_H__

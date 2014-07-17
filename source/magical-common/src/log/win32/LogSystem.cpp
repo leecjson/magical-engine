@@ -35,7 +35,7 @@ SOFTWARE.
 #ifdef MAG_DEBUG
 =======
 
-#include "Common.h"
+#include <time.h>
 #include <windows.h>
 >>>>>>> origin/master
 
@@ -77,11 +77,15 @@ void LogSystem::delc( void )
 void LogSystem::I( const char* msg )
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef MAG_DEBUG
 	win32Log("Info ", msg);
 #endif
 =======
 	magicalAssert( msg, "should not nullptr" );
+=======
+	magicalAssert( msg, "should not be nullptr" );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	win32Log( "Info", msg );
 >>>>>>> origin/master
 }
@@ -89,11 +93,15 @@ void LogSystem::I( const char* msg )
 void LogSystem::D( const char* msg )
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef MAG_DEBUG
 	win32Log("Debug", msg);
 #endif
 =======
 	magicalAssert( msg, "should not nullptr" );
+=======
+	magicalAssert( msg, "should not be nullptr" );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	win32Log( "Debug", msg );
 >>>>>>> origin/master
 }
@@ -101,11 +109,15 @@ void LogSystem::D( const char* msg )
 void LogSystem::E( const char* msg )
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef MAG_DEBUG
 	win32Log("Error", msg);
 #endif
 =======
 	magicalAssert( msg, "should not nullptr" );
+=======
+	magicalAssert( msg, "should not be nullptr" );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	win32Log( "Error", msg );
 >>>>>>> origin/master
 }

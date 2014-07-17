@@ -21,22 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LUA_SYSTEM_H__
-#define __LUA_SYSTEM_H__
+#include "AppInterface.h"
+#include "Application.h"
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "LuaState.h"
-
-class LuaSystem
+int main(int argc, char* argv[])
 {
-public:
-	static void init( void );
-	static void delc( void );
-
-public:
-	static LuaState* getLuaState( void );
-};
-
-
-#endif //__LUA_SYSTEM_H__
+	// Run
+	Application::run( onFinishLaunching );
+	// Exit
+	return 0;
+}

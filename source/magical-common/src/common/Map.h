@@ -21,22 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LUA_SYSTEM_H__
-#define __LUA_SYSTEM_H__
+#ifndef __MAP_H__
+#define __MAP_H__
+
+#include <unordered_map>
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "LuaState.h"
 
-class LuaSystem
-{
-public:
-	static void init( void );
-	static void delc( void );
-
-public:
-	static LuaState* getLuaState( void );
-};
+template< class K, class T >
+using Map = std::unordered_map< K, T >;
 
 
-#endif //__LUA_SYSTEM_H__
+#endif //__MAP_H__

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp" />
+    <ClCompile Include="..\src\common\Common.cpp" />
+    <ClCompile Include="..\src\common\Data.cpp" />
+    <ClCompile Include="..\src\common\Reference.cpp" />
+    <ClCompile Include="..\src\engine\Engine.cpp" />
+    <ClCompile Include="..\src\kazmath\aabb.c" />
+    <ClCompile Include="..\src\kazmath\GL\mat4stack.c" />
+    <ClCompile Include="..\src\kazmath\GL\matrix.c" />
+    <ClCompile Include="..\src\kazmath\mat3.c" />
+    <ClCompile Include="..\src\kazmath\mat4.c" />
+    <ClCompile Include="..\src\kazmath\plane.c" />
+    <ClCompile Include="..\src\kazmath\quaternion.c" />
+    <ClCompile Include="..\src\kazmath\ray2.c" />
+    <ClCompile Include="..\src\kazmath\ray3.c" />
+    <ClCompile Include="..\src\kazmath\utility.c" />
+    <ClCompile Include="..\src\kazmath\vec2.c" />
+    <ClCompile Include="..\src\kazmath\vec3.c" />
+    <ClCompile Include="..\src\kazmath\vec4.c" />
+    <ClCompile Include="..\src\log\win32\LogSystem.cpp" />
+    <ClCompile Include="..\src\node\Node.cpp" />
+    <ClCompile Include="..\src\utils\Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\assets\AssetsSystem.h" />
+    <ClInclude Include="..\src\common\Array.h" />
+    <ClInclude Include="..\src\common\Common.h" />
+    <ClInclude Include="..\src\common\Data.h" />
+    <ClInclude Include="..\src\common\List.h" />
+    <ClInclude Include="..\src\common\Map.h" />
+    <ClInclude Include="..\src\common\Reference.h" />
+    <ClInclude Include="..\src\common\Shared.h" />
+    <ClInclude Include="..\src\engine\Engine.h" />
+    <ClInclude Include="..\src\include\magical-engine.h" />
+    <ClInclude Include="..\src\kazmath\aabb.h" />
+    <ClInclude Include="..\src\kazmath\GL\mat4stack.h" />
+    <ClInclude Include="..\src\kazmath\GL\matrix.h" />
+    <ClInclude Include="..\src\kazmath\kazmath.h" />
+    <ClInclude Include="..\src\kazmath\mat3.h" />
+    <ClInclude Include="..\src\kazmath\mat4.h" />
+    <ClInclude Include="..\src\kazmath\plane.h" />
+    <ClInclude Include="..\src\kazmath\quaternion.h" />
+    <ClInclude Include="..\src\kazmath\ray2.h" />
+    <ClInclude Include="..\src\kazmath\ray3.h" />
+    <ClInclude Include="..\src\kazmath\utility.h" />
+    <ClInclude Include="..\src\kazmath\vec2.h" />
+    <ClInclude Include="..\src\kazmath\vec3.h" />
+    <ClInclude Include="..\src\kazmath\vec4.h" />
+    <ClInclude Include="..\src\log\LogSystem.h" />
+    <ClInclude Include="..\src\node\Node.h" />
+    <ClInclude Include="..\src\PlatformMacros.h" />
+    <ClInclude Include="..\src\utils\Utils.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{396D811B-7BF7-4C4F-85F2-71CC03D32A33}</ProjectGuid>
+    <RootNamespace>magicalcommon</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="magical-engine-general.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="magical-engine-general.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\win32-debug\</OutDir>
+    <TargetExt>.lib</TargetExt>
+    <IntDir>win32-debug\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>MAG_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-dependencies\glut\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

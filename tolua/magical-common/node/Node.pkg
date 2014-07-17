@@ -1,7 +1,0 @@
-class Node : public Object
-{
-public:
-	Node( void );
-	virtual ~Node( void );
-	std::string toString( void ) const;
-};

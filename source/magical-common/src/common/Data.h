@@ -25,6 +25,7 @@ SOFTWARE.
 #define __DATA_H__
 
 #include "PlatformMacros.h"
+<<<<<<< HEAD
 #include "Object.h"
 
 class Data_t;
@@ -52,24 +53,35 @@ private:
 =======
 
 class Data_t : public Object_t
+=======
+#include "Common.h"
+#include "Reference.h"
+
+class Data : public Reference
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 {
 public:
-	Data_t( void );
-	virtual ~Data_t( void );
+	Data( void );
+	virtual ~Data( void );
+
+public:
+	static Shared<Data> createShared( void );
+	static Data* create( void );
 
 public:
 	void assign( char* data, const size_t size );
 	void malloc( const size_t size );
 	void realloc( const size_t size );
-	char* ptr( void ) const;
 	bool empty( void ) const;
 	size_t size( void ) const;
+	char* ptr( void ) const;
 
 private:
-	char* _data;
-	size_t _size;
+	char* _data = nullptr;
+	size_t _size = 0;
 };
 
+<<<<<<< HEAD
 static inline Data newData( void )
 {
 	Data_t* obj = new Data_t();
@@ -87,4 +99,6 @@ static inline Data* newData_LuaGC( void )
 }
 
 >>>>>>> origin/master
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 #endif //__DATA_H__

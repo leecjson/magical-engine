@@ -24,14 +24,19 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Data.h"
 
+<<<<<<< HEAD
 Data_t::Data_t( void )
 : _data(nullptr)
+=======
+Data::Data( void )
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 {
 
 }
 
-Data_t::~Data_t( void )
+Data::~Data( void )
 {
+<<<<<<< HEAD
 	if( _data )
 	{
 <<<<<<< HEAD
@@ -47,35 +52,56 @@ void Data_t::malloc( const size_t t )
 
 void Data_t::assign( char* data, const size_t size )
 >>>>>>> origin/master
-{
-	magicalAssert( data && size > 0, "data should not nullptr and size should > 0" );
+=======
+	magicalSafeFree( _data );
+}
 
+Shared<Data> Data::createShared( void )
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
+{
+	Data* ret = new Data();
+	magicalAssert( ret, "new Data() failed" );
+	return Shared<Data>( Initializer<Data>(ret) );
+}
+
+<<<<<<< HEAD
 	if( _data )
 	{
 	}
 <<<<<<< HEAD
 =======
+=======
+Data* Data::create( void )
+{
+	Data* ret = new Data();
+	magicalAssert( ret, "new Data() failed" );
+	return ret;
+}
+
+void Data::assign( char* data, const size_t size )
+{
+	magicalAssert( data && size > 0, "data should not be nullptr and size should > 0" );
+
+	magicalSafeFree( _data );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	_data = data;
 	_size = size;
 }
 
-void Data_t::malloc( const size_t size )
+void Data::malloc( const size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
 
-	if( _data )
-	{
-		magicalFree( _data );
-	}
+	magicalSafeFree( _data );
 	_data = (char*) ::malloc( size );
 	magicalAssert( _data, "(char*) ::malloc( size );" );
 	_size = size;
 }
 
-void Data_t::realloc( const size_t size )
+void Data::realloc( const size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
-	magicalAssert( _data, "_data should not nullptr" );
+	magicalAssert( _data, "_data should not be nullptr" );
 
 	if( size > _size )
 	{
@@ -88,18 +114,22 @@ void Data_t::realloc( const size_t size )
 	}
 }
 
-char* Data_t::ptr( void ) const
-{
-	return _data;
-}
-
-bool Data_t::empty( void ) const
+bool Data::empty( void ) const
 {
 	return _data == nullptr;
 }
 
-size_t Data_t::size( void ) const
+size_t Data::size( void ) const
 {
 	return _size;
+}
+
+char* Data::ptr( void ) const
+{
+<<<<<<< HEAD
+	return _size;
 >>>>>>> origin/master
+=======
+	return _data;
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 }

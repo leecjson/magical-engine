@@ -24,6 +24,7 @@ SOFTWARE.
 #ifndef __LUA_STATE_H__
 #define __LUA_STATE_H__
 
+<<<<<<< HEAD
 #include "Object.h"
 #include "LuaMacros.h"
 
@@ -34,16 +35,29 @@ typedef std::shared_ptr<const LuaState_t> LuaState_const;
 #define newLuaState() (std::move(std::shared_ptr<LuaState_t>(new LuaState_t())))
 
 class LuaState_t : public Object_t
+=======
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "Reference.h"
+#include "LuaMacros.h"
+
+class LuaState : public Reference
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 {
 public:
-	LuaState_t( void );
-	virtual ~LuaState_t( void );
+	LuaState( void );
+	virtual ~LuaState( void );
 
-	lua_State* getState( void ) const;
+public:
+	static Shared<LuaState> createShared( void );
+	static LuaState* create( void );
+
+public:
+	lua_State* ptr( void ) const;
 	int executeScriptFile( const char* file ) const;
 	int executeScriptCode( const char* codes ) const;
 	int executeGlobalFunction( const char* func_name, int retc = 0, int argc = 0 ) const;
-	int isGlobalFunctionExists( const char* func_name ) const;
+	int isGlobalFunctionExist( const char* func_name ) const;
 
 	void pushNil( void ) const;
 	void pushInt( int num ) const;
@@ -58,7 +72,7 @@ private:
 	void handleLuaError( void ) const;
 
 private:
-	lua_State* _L;
+	lua_State* _L = nullptr;
 };
 
 

@@ -24,16 +24,19 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Node.h"
 
-Node_t::Node_t( void )
+Node::Node( void )
 {
+
 }
 
-Node_t::~Node_t( void )
+Node::~Node( void )
 {
+
 }
 
-std::string Node_t::toString( void ) const
+Shared<Node> Node::createShared( void )
 {
-	std::string info = "Node_t";
-	return std::move(info);
+	Node* ret = new Node();
+	magicalAssert( ret, "New Node() failed" );
+	return Shared<Node>( Initializer<Node>(ret) );
 }

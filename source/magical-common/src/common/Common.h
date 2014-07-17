@@ -60,8 +60,24 @@ general macros
 =======
 #define kMaxLogLength  ( 1024 * 50 )
 #define kMaxErrLength  ( 1024 )
+<<<<<<< HEAD
 #define kMaxPathLength ( 512 )
 >>>>>>> origin/master
+=======
+#define kMaxPathLength ( 1024 )
+
+#define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
+
+#define magicalSafeFree( __var ) do{ if( __var ) ::free( __var ); } while(0)
+#define magicalSafeFreeNull( __var ) do{ if( __var ) ::free( __var ); __var == nullptr; } while(0)
+#define magicalSafeDelete( __var ) do{ if( __var ) delete __var; } while(0)
+#define magicalSafeDeleteNull( __var ) do{ if( __var ) delete __var; __var == nullptr; } while(0)
+#define magicalSafeDeleteArray( __var ) do{ if( __var ) delete[] __var; } while(0)
+#define magicalSafeDeleteArrayNull( __var ) do{ if( __var ) delete[] __var; __var = nullptr; } while(0)
+#define magicalSafeRetain( __var ) do{ if( __var ) __var->retain(); } while(0)
+#define magicalSafeRelease( __var ) do{ if( __var ) __var->release(); } while(0)
+#define magicalSafeReleaseNull( __var ) do{ if( __var ){ __var->release(); __var = nullptr; } } while(0)
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 
 /*
 general error signal
@@ -71,6 +87,7 @@ MAGAPI void magicalIgnoreLastError( void );
 MAGAPI void magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
 
+<<<<<<< HEAD
 #define magicalReturnIfError() if( magicalIsError() ) return
 <<<<<<< HEAD
 #endif
@@ -86,15 +103,17 @@ MAGAPI const char* magicalGetLastErrorInfo( void );
 #define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr at " ##__FUNCTION__ ); delete[] __var
 >>>>>>> origin/master
 
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 /*
 assert function
 */
 #ifdef MAG_DEBUG
-#define magicalAssert( __con, __msg ) do {                    \
+#define magicalAssert( __con, __msg ) do{                     \
 	if( !(__con) ) {                                          \
 		magicalSetLastErrorInfo( "Assert " ##__msg );         \
 		magicalLogLastError();                                \
-		assert(0);                                            \
+		assert( __con );                                      \
 	}                                                         \
 	} while(0)
 #else
@@ -148,42 +167,57 @@ MAGAPI void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
 >>>>>>> origin/master
 
 /*
-object observer
+reference observer
 */
 #ifdef MAG_DEBUG
 extern bool g_is_observing;
-extern int  g_observer_construct_count;
-extern int  g_observer_destruct_count;
+extern int g_observer_move_construct_count;
+extern int g_observer_copy_construct_count;
+extern int g_observer_construct_count;
+extern int g_observer_destruct_count;
 #endif
 
 #ifdef MAG_DEBUG
-#define magicalBeginObserveObject() do {                                               \
-	if( g_is_observing ) break;                                                        \
-	magicalLog( "Begin Observe Object : ----------------------------" );               \
-	g_is_observing = true;                                                             \
-	g_observer_construct_count = 0;                                                    \
-	g_observer_destruct_count  = 0;                                                    \
+#define magicalBeginObserve() do {                                                           \
+	if( g_is_observing ) break;                                                                    \
+	magicalLog( "Begin Observe : ------------------------------------------------" );       \
+	g_is_observing = true;                                                                         \
+	g_observer_construct_count = 0;                                                                \
+	g_observer_destruct_count  = 0;                                                                \
+	g_observer_move_construct_count = 0;                                                           \
+	g_observer_copy_construct_count = 0;                                                           \
 	} while(0)
-#define magicalEndObserveObject() do {                                                 \
-	if(! g_is_observing ) break;                                                       \
-	char __tmbf[256];                                                                  \
-	sprintf( __tmbf, "Ended Observe Object : Construct = %d Destruct = %d",            \
-	g_observer_construct_count,                                                        \
-	g_observer_destruct_count );                                                       \
-	g_is_observing = false;                                                            \
-	magicalLog( __tmbf );                                                              \
+#define magicalEndObserve() do {                                                             \
+	if(! g_is_observing ) break;                                                                   \
+	char __tmbf[256];                                                                              \
+	sprintf( __tmbf, "Ended Observe : "                                                     \
+	"Construct = %d Move = %d Copy = %d Destruct = %d",                                            \
+	g_observer_construct_count,                                                                    \
+	g_observer_move_construct_count,                                                               \
+	g_observer_copy_construct_count,                                                               \
+	g_observer_destruct_count );                                                                   \
+	g_is_observing = false;                                                                        \
+	magicalLog( __tmbf );                                                                          \
 	} while(0)
-#define magicalObjectConstruct() do {                                                  \
-	if( g_is_observing ) ++ g_observer_construct_count;                                \
+#define magicalRefConstruct() do {                                                              \
+	if( g_is_observing ) ++ g_observer_construct_count;                                            \
 	} while(0)
-#define magicalObjectDestruct() do {                                                   \
-	if( g_is_observing ) ++ g_observer_destruct_count;                                 \
+#define magicalRefMove() do {                                                                   \
+	if( g_is_observing ) ++ g_observer_move_construct_count;                                       \
+	} while(0)
+#define magicalRefCopy() do {                                                                   \
+	if( g_is_observing ) ++ g_observer_copy_construct_count;                                       \
+	} while(0)
+#define magicalRefDestruct() do {                                                               \
+	if( g_is_observing ) ++ g_observer_destruct_count;                                             \
 	} while(0)
 #else
-#define magicalBeginObserveObject()
-#define magicalEndObserveObject()
-#define magicalObjectConstruct()
-#define magicalObjectDestruct()
+#define magicalBeginObserve()
+#define magicalEndObserve()
+#define magicalRefConstruct()
+#define magicalRefMove()
+#define magicalRefCopy()
+#define magicalRefDestruct()
 #endif
 
 #endif //__COMMON_H__

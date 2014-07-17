@@ -21,22 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LUA_SYSTEM_H__
-#define __LUA_SYSTEM_H__
+<<<<<<< HEAD:source/magical-common/src/common/Object.cpp
+#include "PlatformMacros.h"
+#include "Object.h"
+#include "Utils.h"
+=======
+#ifndef __LIST_H__
+#define __LIST_H__
+
+#include <list>
 
 #include "PlatformMacros.h"
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857:source/magical-common/src/common/List.h
 #include "Common.h"
-#include "LuaState.h"
 
-class LuaSystem
-{
-public:
-	static void init( void );
-	static void delc( void );
+template< class T >
+using List = std::list< T >;
 
-public:
-	static LuaState* getLuaState( void );
-};
-
-
-#endif //__LUA_SYSTEM_H__
+#endif //__LIST_H__

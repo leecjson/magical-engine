@@ -24,6 +24,7 @@ SOFTWARE.
 #ifndef __NODE_H__
 #define __NODE_H__
 
+<<<<<<< HEAD
 #include "Object.h"
 
 class Node_t;
@@ -34,11 +35,20 @@ typedef std::shared_ptr<const Node_t> Node_const;
 #define newNode_LuaGC() (new std::shared_ptr<Node_t>(new Node_t()))
 
 class Node_t : public Object_t
+=======
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "Reference.h"
+
+class Node : public Reference
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 {
 public:
-	Node_t( void );
-	virtual ~Node_t( void );
-	std::string toString( void ) const;
+	Node( void );
+	virtual ~Node( void );
+
+public:
+	static Shared<Node> createShared( void );
 };
 
 

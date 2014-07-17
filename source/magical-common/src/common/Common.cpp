@@ -40,10 +40,13 @@ static char s_last_error_info[kMaxErrLength] = {0};
 
 #ifdef MAG_DEBUG
 bool g_is_observing = false;
-int  g_observer_construct_count = 0;
-int  g_observer_destruct_count = 0;
+int g_observer_move_construct_count = 0;
+int g_observer_copy_construct_count = 0;
+int g_observer_construct_count = 0;
+int g_observer_destruct_count = 0;
 #endif
 
+<<<<<<< HEAD
 //MAGAPI void magicalLogFormatImpl( const char* format, ... )
 //{
 //	char buf[kMaxLogLength];
@@ -55,6 +58,8 @@ int  g_observer_destruct_count = 0;
 //
 //	magicalLogImpl(buf);
 //}
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 
 
 MAGAPI bool magicalIsError( void )

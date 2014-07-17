@@ -25,10 +25,13 @@ SOFTWARE.
 #include "Application.h"
 #include "Common.h"
 #include "Engine.h"
+<<<<<<< HEAD
 #include "LuaSystem.h"
 #include "GLFunction.h"
 
 #include "glut/glut.h"
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 
 #define magicalWin32ReturnIfError() \
 if( magicalIsError() == true ) \
@@ -36,8 +39,6 @@ if( magicalIsError() == true ) \
 	MessageBoxA(nullptr, magicalGetLastErrorInfo(), "Error", MB_OK); \
 	return; \
 }
-
-static FinishLaunchingEvent s_on_finish_launching = nullptr;
 
 static void win32SetupWindow( void );
 static void win32ShutdownWindow( void );
@@ -91,12 +92,7 @@ static void win32GlutDisplay( void )
 	glutPostRedisplay();
 }
 
-void Application::setOnFinishLaunching( FinishLaunchingEvent callback )
-{
-	s_on_finish_launching = callback;
-}
-
-void Application::run( void )
+void Application::run( std::function<void (void)> finish_launching )
 {
 	win32SetupWindow();
 	magicalWin32ReturnIfError();
@@ -110,7 +106,7 @@ void Application::run( void )
 	Engine::initSystems();
 	magicalWin32ReturnIfError();
 
-	s_on_finish_launching();
+	finish_launching();
 
 	glutMainLoop();
 

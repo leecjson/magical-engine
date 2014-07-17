@@ -21,22 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __LUA_SYSTEM_H__
-#define __LUA_SYSTEM_H__
+#include "Reference.h"
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "LuaState.h"
-
-class LuaSystem
+Reference::Reference( void ) 
 {
-public:
-	static void init( void );
-	static void delc( void );
+	magicalRefConstruct();
+}
 
-public:
-	static LuaState* getLuaState( void );
-};
+Reference::~Reference( void )
+{
+	magicalRefDestruct();
+}
 
+void Reference::retain( void )
+{
+	magicalAssert( _reference_count > 0, "invalid _reference_count" );
 
-#endif //__LUA_SYSTEM_H__
+	++_reference_count;
+}
+
+void Reference::release( void )
+{
+	magicalAssert( _reference_count > 0, "invalid _reference_count" );
+
+	--_reference_count;
+
+	if( _reference_count == 0 )
+	{
+		delete this;
+	}
+}
+
+int Reference::referenceCount( void ) const
+{
+	return _reference_count;
+}

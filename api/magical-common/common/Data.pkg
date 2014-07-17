@@ -1,0 +1,15 @@
+class Data : public Reference
+{
+public:
+	virtual ~Data( void );
+
+public:
+	static Data* create( void );
+
+public:
+	void assign( char* data, const size_t size );
+	void malloc( const size_t size );
+	void realloc( const size_t size );
+	bool empty( void ) const;
+	size_t size( void ) const;
+};
