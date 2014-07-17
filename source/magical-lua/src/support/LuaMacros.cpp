@@ -21,17 +21,29 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "PlatformMacros.h"
 #include "LuaMacros.h"
+<<<<<<< HEAD
+#include "Common.h"
+#include "LogSystem.h"
+#include "LuaState.h"
+#include "LuaSystem.h"
+#include "tolua++.h"
+#include "tolua_ext.h"
+
+const char* const kLuaOnCreate  = "onCreate";
+const char* const kLuaOnUpdate  = "onUpdate";
+const char* const kLuaOnDestroy = "onDestroy";
+=======
 #include "tolua++.h"
 #include "tolua_ext.h"
 #include "LogSystem.h"
 #include "LuaState.h"
-
-#ifdef MAG_DEBUG
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 
 MAGAPI_USER void magicalLuaStateDump( lua_State* L )
 {
-	char buf[ kMaxErrLength ];
+	char buf[kMaxErrLength];
 	int  i = 0;
 	int  top = lua_gettop(L);
 
@@ -58,5 +70,3 @@ MAGAPI_USER void magicalLuaStateDump( lua_State* L )
 		magicalLogD(buf);
 	}
 }
-
-#endif

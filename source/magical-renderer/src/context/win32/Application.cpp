@@ -21,13 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "PlatformMacros.h"
 #include "Application.h"
-
-#include "GLFunction.h"
-#include "glut/glut.h"
-
 #include "Common.h"
 #include "Engine.h"
+<<<<<<< HEAD
+#include "LuaSystem.h"
+#include "GLFunction.h"
+
+#include "glut/glut.h"
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 
 #define magicalWin32ReturnIfError() \
 if( magicalIsError() == true ) \
@@ -82,7 +86,7 @@ static void win32GlutReshape( int w, int h )
 
 static void win32GlutDisplay( void )
 {
-	Engine::mainLoop();
+	Engine::onLoop();
 
 	glutSwapBuffers();
 	glutPostRedisplay();

@@ -11,6 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD:source/magical-renderer/magical-renderer.vcxproj
+    <ClInclude Include="src\context\Application.h" />
+    <ClInclude Include="src\context\win32\glut\freeglut.h" />
+    <ClInclude Include="src\context\win32\glut\freeglut_ext.h" />
+    <ClInclude Include="src\context\win32\glut\freeglut_std.h" />
+    <ClInclude Include="src\context\win32\glut\glut.h" />
+    <ClInclude Include="src\context\win32\gl\glew.h" />
+    <ClInclude Include="src\context\win32\gl\glxew.h" />
+    <ClInclude Include="src\context\win32\gl\wglew.h" />
+    <ClInclude Include="src\renderer\GLFunction.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\context\Application.cpp" />
+    <ClCompile Include="src\renderer\GLFunction.c" />
+=======
     <ClInclude Include="..\src\context\Application.h" />
     <ClInclude Include="..\src\context\win32\glut\freeglut.h" />
     <ClInclude Include="..\src\context\win32\glut\freeglut_ext.h" />
@@ -24,6 +39,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\context\win32\Application.cpp" />
     <ClCompile Include="..\src\renderer\RenderSystem.cpp" />
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857:source/magical-renderer/proj-win32/magical-renderer.vcxproj
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}</ProjectGuid>

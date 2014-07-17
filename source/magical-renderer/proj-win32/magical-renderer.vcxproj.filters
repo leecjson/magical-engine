@@ -33,8 +33,16 @@
     <ClInclude Include="..\src\context\win32\glut\freeglut.h">
       <Filter>src\context\win32\glut</Filter>
     </ClInclude>
+<<<<<<< HEAD:source/magical-renderer/magical-renderer.vcxproj.filters
+    <ClInclude Include="src\renderer\GLFunction.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\win32\gl\glew.h">
+      <Filter>src\context\win32\gl</Filter>
+=======
     <ClInclude Include="..\src\context\win32\glut\freeglut_ext.h">
       <Filter>src\context\win32\glut</Filter>
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857:source/magical-renderer/proj-win32/magical-renderer.vcxproj.filters
     </ClInclude>
     <ClInclude Include="..\src\context\win32\glut\freeglut_std.h">
       <Filter>src\context\win32\glut</Filter>
@@ -45,6 +53,11 @@
     <ClInclude Include="..\src\context\Application.h">
       <Filter>src\context</Filter>
     </ClInclude>
+<<<<<<< HEAD:source/magical-renderer/magical-renderer.vcxproj.filters
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\renderer\GLFunction.c">
+=======
     <ClInclude Include="..\src\renderer\RenderSystem.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
@@ -54,7 +67,11 @@
       <Filter>src\context\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\src\renderer\RenderSystem.cpp">
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857:source/magical-renderer/proj-win32/magical-renderer.vcxproj.filters
       <Filter>src\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context\Application.cpp">
+      <Filter>src\context\win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

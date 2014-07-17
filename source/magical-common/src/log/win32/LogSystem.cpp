@@ -21,10 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "PlatformMacros.h"
 #include "LogSystem.h"
+<<<<<<< HEAD
+#include "Common.h"
+
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <Windows.h>
+#include <WinSock2.h>
+
+#ifdef MAG_DEBUG
+=======
 
 #include <time.h>
 #include <windows.h>
+>>>>>>> origin/master
 
 static void win32Log( const char* channel, const char* msg )
 {
@@ -49,6 +62,7 @@ static void win32Log( const char* channel, const char* msg )
 	printf("%s\n", buf);
 }
 
+#endif
 
 void LogSystem::init( void )
 {
@@ -62,18 +76,48 @@ void LogSystem::delc( void )
 
 void LogSystem::I( const char* msg )
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef MAG_DEBUG
+	win32Log("Info ", msg);
+#endif
+=======
+	magicalAssert( msg, "should not nullptr" );
+=======
 	magicalAssert( msg, "should not be nullptr" );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	win32Log( "Info", msg );
+>>>>>>> origin/master
 }
 
 void LogSystem::D( const char* msg )
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef MAG_DEBUG
+	win32Log("Debug", msg);
+#endif
+=======
+	magicalAssert( msg, "should not nullptr" );
+=======
 	magicalAssert( msg, "should not be nullptr" );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	win32Log( "Debug", msg );
+>>>>>>> origin/master
 }
 
 void LogSystem::E( const char* msg )
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef MAG_DEBUG
+	win32Log("Error", msg);
+#endif
+=======
+	magicalAssert( msg, "should not nullptr" );
+=======
 	magicalAssert( msg, "should not be nullptr" );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	win32Log( "Error", msg );
+>>>>>>> origin/master
 }

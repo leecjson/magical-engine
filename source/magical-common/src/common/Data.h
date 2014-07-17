@@ -25,10 +25,40 @@ SOFTWARE.
 #define __DATA_H__
 
 #include "PlatformMacros.h"
+<<<<<<< HEAD
+#include "Object.h"
+
+class Data_t;
+
+typedef std::shared_ptr<Data_t> Data;
+typedef std::shared_ptr<const Data_t> const_Data;
+<<<<<<< HEAD
+#define newObject() (std::move(Data(new Object_t())))
+#define newObject_LuaGC() (new Data(new Object_t()))
+
+class Data_t : public Object_t
+{
+public:
+	Data_t( void );
+	virtual ~Data_t( void );
+
+public:
+	void malloc( const size_t t );
+
+private:
+	char* _data;
+};
+
+
+=======
+
+class Data_t : public Object_t
+=======
 #include "Common.h"
 #include "Reference.h"
 
 class Data : public Reference
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 {
 public:
 	Data( void );
@@ -51,4 +81,24 @@ private:
 	size_t _size = 0;
 };
 
+<<<<<<< HEAD
+static inline Data newData( void )
+{
+	Data_t* obj = new Data_t();
+	magicalAssert( obj, "new Data_t();" );
+	return std::move( Data(obj) );
+}
+
+static inline Data* newData_LuaGC( void )
+{
+	Data_t* obj = new Data_t();
+	magicalAssert( obj, "new Data_t();" );
+	Data* ret = new Data( obj );
+	magicalAssert( ret, "new Data( obj );" );
+	return ret;
+}
+
+>>>>>>> origin/master
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 #endif //__DATA_H__

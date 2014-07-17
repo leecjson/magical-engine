@@ -21,25 +21,56 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "PlatformMacros.h"
 #include "Data.h"
 
+<<<<<<< HEAD
+Data_t::Data_t( void )
+: _data(nullptr)
+=======
 Data::Data( void )
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 {
 
 }
 
 Data::~Data( void )
 {
+<<<<<<< HEAD
+	if( _data )
+	{
+<<<<<<< HEAD
+		free( _data );
+	}
+}
+
+void Data_t::malloc( const size_t t )
+=======
+		magicalFree( _data );
+	}
+}
+
+void Data_t::assign( char* data, const size_t size )
+>>>>>>> origin/master
+=======
 	magicalSafeFree( _data );
 }
 
 Shared<Data> Data::createShared( void )
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 {
 	Data* ret = new Data();
 	magicalAssert( ret, "new Data() failed" );
 	return Shared<Data>( Initializer<Data>(ret) );
 }
 
+<<<<<<< HEAD
+	if( _data )
+	{
+	}
+<<<<<<< HEAD
+=======
+=======
 Data* Data::create( void )
 {
 	Data* ret = new Data();
@@ -52,6 +83,7 @@ void Data::assign( char* data, const size_t size )
 	magicalAssert( data && size > 0, "data should not be nullptr and size should > 0" );
 
 	magicalSafeFree( _data );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	_data = data;
 	_size = size;
 }
@@ -94,5 +126,10 @@ size_t Data::size( void ) const
 
 char* Data::ptr( void ) const
 {
+<<<<<<< HEAD
+	return _size;
+>>>>>>> origin/master
+=======
 	return _data;
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 }

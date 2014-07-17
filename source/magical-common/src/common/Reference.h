@@ -30,7 +30,20 @@ SOFTWARE.
 #include "Common.h"
 #include "Shared.h"
 
+<<<<<<< HEAD:source/magical-common/src/common/Object.h
+class Object_t;
+
+typedef std::shared_ptr<Object_t> Object;
+typedef std::shared_ptr<const Object_t> const_Object;
+<<<<<<< HEAD
+#define newObject() (std::move(Object(new Object_t())))
+#define newObject_LuaGC() (new Object(new Object_t()))
+=======
+
+class Object_t : public std::enable_shared_from_this<Object_t>
+=======
 class Reference
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857:source/magical-common/src/common/Reference.h
 {
 public:
 	Reference( void );
@@ -40,6 +53,17 @@ public:
 	void retain( void );
 	void release( void );
 
+<<<<<<< HEAD:source/magical-common/src/common/Object.h
+static inline Object* newObject_LuaGC( void )
+{
+	Object_t* obj = new Object_t();
+	magicalAssert( obj, "new Object_t();" );
+	Object* ret = new Object( obj );
+	magicalAssert( ret, "new Object( obj );" );
+	return ret;
+}
+>>>>>>> origin/master
+=======
 	int referenceCount( void ) const;
 
 protected:
@@ -52,6 +76,7 @@ protected:
 protected:
 	int _reference_count = 1;
 };
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857:source/magical-common/src/common/Reference.h
 
 
 

@@ -24,24 +24,48 @@ SOFTWARE.
 #ifndef __ASSETS_SYSTEM_H__
 #define __ASSETS_SYSTEM_H__
 
+<<<<<<< HEAD
+#include "PlatformMacros.h"
+
+#include <vector>
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 #include <string>
 
+<<<<<<< HEAD:source/magical-common/src/file/FileSystem.h
+class FileSystem
+=======
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Data.h"
 
 class AssetsSystem
+>>>>>>> origin/master:source/magical-common/src/assets/AssetsSystem.h
 {
 public:
 	static void init( void );
 	static void delc( void );
 
 public:
+<<<<<<< HEAD:source/magical-common/src/file/FileSystem.h
+	static void addSearchPath( const std::string& path );
+	static void removeSearchPath( const std::string& path );
+	static bool isAbsolutePath( const std::string& path );
+	static bool isFileExist( const std::string& file );
+	static const std::string toAbsolutePath( const std::string& path );
+	static const std::vector<std::string>& getSearchPaths( void );
+	//static unsigned char* getFileData()
+=======
 	static void addSearchPath( const char* path );
 	static void removeSearchPath( const char* path );
 	static void clearSearchPath( void );
 	static bool isAssetsFileExist( const char* file_name );
+<<<<<<< HEAD
+	static Data getAssetsFile( const char* file_name );
+>>>>>>> origin/master:source/magical-common/src/assets/AssetsSystem.h
+=======
 	static Data* getAssetsFile( const char* file_name );
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 	
 };
 

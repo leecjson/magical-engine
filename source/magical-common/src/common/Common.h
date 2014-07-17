@@ -24,6 +24,13 @@ SOFTWARE.
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+<<<<<<< HEAD
+#include "PlatformMacros.h"
+#include "LogSystem.h"
+
+#include <assert.h>
+
+=======
 #include <cassert>
 #include <cstdlib>
 #include <cstdio>
@@ -35,6 +42,7 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "LogSystem.h"
 
+>>>>>>> origin/master
 /*
 general macros
 */
@@ -45,8 +53,17 @@ general macros
 #define MAX(a, b) (((a) < (b)) ? (b) : (a))
 #endif
 
+<<<<<<< HEAD
+#define kMaxLogLength  (1024 * 50)
+#define kMaxErrLength  (1024)
+#define kMaxPathLength (512)
+=======
 #define kMaxLogLength  ( 1024 * 50 )
 #define kMaxErrLength  ( 1024 )
+<<<<<<< HEAD
+#define kMaxPathLength ( 512 )
+>>>>>>> origin/master
+=======
 #define kMaxPathLength ( 1024 )
 
 #define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
@@ -60,22 +77,41 @@ general macros
 #define magicalSafeRetain( __var ) do{ if( __var ) __var->retain(); } while(0)
 #define magicalSafeRelease( __var ) do{ if( __var ) __var->release(); } while(0)
 #define magicalSafeReleaseNull( __var ) do{ if( __var ){ __var->release(); __var = nullptr; } } while(0)
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 
 /*
-general
+general error signal
 */
 MAGAPI bool magicalIsError( void );
 MAGAPI void magicalIgnoreLastError( void );
 MAGAPI void magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
 
+<<<<<<< HEAD
+#define magicalReturnIfError() if( magicalIsError() ) return
+<<<<<<< HEAD
+#endif
+
+#ifndef MAG_MEMOEY_SAFE
+#define MAG_MEMOEY_SAFE
+#define magicalFree( __var ) magicalAssert( __var, "free nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); ::free( __exp );
+#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr " ##__FUNCTION__ ## ":" ##__LINE__ ); delete __exp;
+#endif
+=======
+#define magicalFree( __var ) magicalAssert( __var, "free nullptr at " ##__FUNCTION__ ); ::free( __var )
+#define magicalDelete( __var ) magicalAssert( __var, "delete nullptr at " ##__FUNCTION__ ); delete __var
+#define magicalDeleteArray( __var ) magicalAssert( __var, "delete[] nullptr at " ##__FUNCTION__ ); delete[] __var
+>>>>>>> origin/master
+
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 /*
 assert function
 */
 #ifdef MAG_DEBUG
 #define magicalAssert( __con, __msg ) do{                     \
 	if( !(__con) ) {                                          \
-		magicalSetLastErrorInfo( __msg );                     \
+		magicalSetLastErrorInfo( "Assert " ##__msg );         \
 		magicalLogLastError();                                \
 		assert( __con );                                      \
 	}                                                         \
@@ -87,6 +123,33 @@ assert function
 /*
 time function
 */
+<<<<<<< HEAD
+#ifdef MAG_WIN32
+#include <WinSock2.h>
+#endif
+#ifdef MAG_WIN32
+extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz );
+#endif
+MAGAPI void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz );
+
+//MAGAPI_USER void magicalBeginTicking( void );
+//MAGAPI_USER float magicalEndTicking( void );
+//
+//#ifndef MAG_DEBUG
+//#define magicalBeginTickingAndReport()
+//#define magicalEndTickingAndReport()
+//#else
+//#define magicalBeginTickingAndReport() do {                             \
+//	magicalReport("Begin Ticking : --------");                          \
+//	magicalBeginTicking();                                              \
+//	} while(0)                                                          
+//#define magicalEndTickingAndReport() do {                               \
+//	char __bf[ 256 ];                                                   \
+//	sprintf( __bf, "Ended Ticking : %.6f", magicalEndTicking() );       \
+//	magicalReport( __bf );                                              \
+//	} while(0)
+//#endif
+=======
 #ifndef MAG_DEBUG
 #define magicalBeginTicking()
 #define magicalEndTicking()
@@ -101,6 +164,7 @@ time function
 	magicalLog( __bf );                                                 \
 	} while(0)
 #endif
+>>>>>>> origin/master
 
 /*
 reference observer

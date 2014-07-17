@@ -21,13 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "PlatformMacros.h"
 #include "Common.h"
 
+<<<<<<< HEAD
+#include <assert.h>
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+=======
 #include <cstdio>
 #include <string>
+>>>>>>> origin/master
 
 static bool s_last_error = false;
-static char s_last_error_info[kMaxErrLength];
+static char s_last_error_info[kMaxErrLength] = {0};
 
 #ifdef MAG_DEBUG
 bool g_is_observing = false;
@@ -37,6 +46,20 @@ int g_observer_construct_count = 0;
 int g_observer_destruct_count = 0;
 #endif
 
+<<<<<<< HEAD
+//MAGAPI void magicalLogFormatImpl( const char* format, ... )
+//{
+//	char buf[kMaxLogLength];
+//
+//	va_list args;
+//	va_start(args, format);
+//	vsnprintf(buf, kMaxLogLength, format, args);
+//	va_end(args);
+//
+//	magicalLogImpl(buf);
+//}
+=======
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 
 
 MAGAPI bool magicalIsError( void )
@@ -51,7 +74,7 @@ MAGAPI void magicalIgnoreLastError( void )
 
 MAGAPI void magicalSetLastErrorInfo( const char* info )
 {
-	strcpy( s_last_error_info, info );
+	strcpy(s_last_error_info, info);
 	s_last_error = true;
 }
 
@@ -64,5 +87,52 @@ MAGAPI const char* magicalGetLastErrorInfo( void )
 	else
 	{
 		return "none";
+<<<<<<< HEAD
 	}
 }
+
+#ifdef MAG_WIN32
+
+extern "C" int gettimeofday( struct timeval* tv, struct timezone* tz )
+{
+	LARGE_INTEGER time, freq;
+	if( tv != NULL )
+    {
+        QueryPerformanceFrequency( &freq );
+        QueryPerformanceCounter( &time );
+        tv->tv_sec  = (long)( time.QuadPart / freq.QuadPart );
+        tv->tv_usec = (long)( time.QuadPart * 1000000.0 / freq.QuadPart - tv->tv_sec * 1000000.0 );
+    }
+	return 0;
+}
+
+#endif
+
+MAGAPI_USER void magicalGetTimeOfDay( struct timeval* tv, struct timezone* tz )
+{
+	if( gettimeofday(tv, tz) != 0 )
+	{
+		magicalSetLastErrorInfo("gettimeofday(tv, tz) return != 0");
+		magicalLogLastError();
+	}
+}
+
+//MAGAPI_USER void magicalBeginTicking( void )
+//{
+//	magicalGetTimeOfDay(&g_tv_ticking, NULL);
+//}
+//
+//MAGAPI_USER float magicalEndTicking( void )
+//{
+//	float  result;
+//	struct timeval tv_now;
+//	magicalGetTimeOfDay(&tv_now, NULL);
+//	result = (tv_now.tv_sec - g_tv_ticking.tv_sec) +  (tv_now.tv_usec - g_tv_ticking.tv_usec) / 1000000.0f;
+//	result = MAX(0.0f, result);
+//	return result;
+//}
+
+=======
+	}
+}
+>>>>>>> origin/master

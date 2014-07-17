@@ -24,12 +24,25 @@ SOFTWARE.
 #ifndef __LUA_STATE_H__
 #define __LUA_STATE_H__
 
+<<<<<<< HEAD
+#include "Object.h"
+#include "LuaMacros.h"
+
+class LuaState_t;
+
+typedef std::shared_ptr<LuaState_t> LuaState;
+typedef std::shared_ptr<const LuaState_t> LuaState_const;
+#define newLuaState() (std::move(std::shared_ptr<LuaState_t>(new LuaState_t())))
+
+class LuaState_t : public Object_t
+=======
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
 #include "LuaMacros.h"
 
 class LuaState : public Reference
+>>>>>>> ec1b54020335b76df015817be9eeaa46104a0857
 {
 public:
 	LuaState( void );
