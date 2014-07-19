@@ -33,18 +33,11 @@ Data::~Data( void )
 	magicalSafeFree( _data );
 }
 
-Shared<Data> Data::createShared( void )
+Shared<Data> Data::create( void )
 {
 	Data* ret = new Data();
 	magicalAssert( ret, "new Data() failed" );
 	return Shared<Data>( Initializer<Data>(ret) );
-}
-
-Data* Data::create( void )
-{
-	Data* ret = new Data();
-	magicalAssert( ret, "new Data() failed" );
-	return ret;
 }
 
 void Data::assign( char* data, const size_t size )

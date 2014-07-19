@@ -41,8 +41,7 @@ public:
 	static void removeSearchPath( const char* path );
 	static void clearSearchPath( void );
 	static bool isAssetsFileExist( const char* file_name );
-	static Data* getAssetsFile( const char* file_name );
-	
+	static Shared<Data> loadAssetsFile( const char* file_name );
 };
 
 #endif //__ASSETS_SYSTEM_H__

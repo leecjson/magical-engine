@@ -72,12 +72,12 @@ void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
-	RenderSystem::onRender();
+	RenderSystem::render();
 }
 
 void Engine::reshape( int w, int h )
 {
-	RenderSystem::onReshape( w, h );
+	RenderSystem::reshape( w, h );
 }
 
 float Engine::getDeltaTime( void )

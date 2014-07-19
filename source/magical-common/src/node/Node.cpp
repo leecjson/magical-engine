@@ -33,7 +33,7 @@ Node::~Node( void )
 
 }
 
-Shared<Node> Node::createShared( void )
+Shared<Node> Node::create( void )
 {
 	Node* ret = new Node();
 	magicalAssert( ret, "New Node() failed" );

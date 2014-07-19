@@ -22,19 +22,49 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "LuaState.h"
+#include "AssetsSystem.h"
+
 #include "lua.hpp"
 #include "tolua++.h"
 #include "tolua_ext.h"
-
-#include "AssetsSystem.h"
 #include "LuaCommon.h"
+
+// socket
+extern "C" {
+	#include "socket/luasocket.h"
+	#include "socket/mime.h"
+	//#include "socket/socket_scripts.h"
+}
 
 LuaState::LuaState( void )
 {
 	_L = luaL_newstate();
 	magicalAssert( _L, "luaL_newstate() failed" );
+
+	// std
 	luaL_openlibs( _L );
 	luaopen_tolua_ext( _L );
+
+	// socket
+	luaopen_socket_core( _L );
+	luaopen_mime_core( _L );
+	
+
+	// load extensions
+    //luaL_Reg* lib = luax_exts;
+    //lua_getglobal(_L, "package");
+    //lua_getfield(_L, -1, "preload");
+    //for (; lib->func; lib++)
+    //{
+    //    lua_pushcfunction(_L, lib->func);
+    //    lua_setfield(_L, -2, lib->name);
+    //}
+    //lua_pop(_L, 2);
+
+    // load extensions script
+    //luaopen_socket_scripts( _L );
+
+	// binding
 	luaopen_common( _L );
 }
 
@@ -46,18 +76,11 @@ LuaState::~LuaState( void )
 	}
 }
 
-Shared<LuaState> LuaState::createShared( void )
+Shared<LuaState> LuaState::create( void )
 {
 	LuaState* ret = new LuaState();
 	magicalAssert( ret, "new LuaState() failed" );
 	return Shared<LuaState>( Initializer<LuaState>(ret) );
-}
-
-LuaState* LuaState::create( void )
-{
-	LuaState* ret = new LuaState();
-	magicalAssert( ret, "new LuaState() failed" );
-	return ret;
 }
 
 lua_State* LuaState::ptr( void ) const

@@ -25,6 +25,7 @@ SOFTWARE.
 #define __ENGINE_H__
 
 #include "PlatformMacros.h"
+#include "Common.h"
 
 class Engine
 {
@@ -33,6 +34,8 @@ public:
 	static void delc( void );
 	static void initSystems( void );
 	static void delcSystems( void );
+
+public:
 	static void mainLoop( void );
 	static void reshape( int w, int h );
 

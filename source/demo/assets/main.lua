@@ -1,9 +1,8 @@
-
 function onCreate() --> void
 
 	magicalBeginObserve();
 
-	local data = Data:create();
+	local data = Data.create(Data);
 	data:malloc(56);
 	
 	magicalLog("ok");
@@ -13,7 +12,12 @@ function onCreate() --> void
 	fff = nil;
 	
 	collectgarbage();
-	
+
 	magicalEndObserve();
 
 end
+
+onCreate();
+
+
+

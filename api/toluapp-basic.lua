@@ -82,11 +82,16 @@ function post_output_hook(package)
 		
 		replace(
 		[[tolua_pushusertype(tolua_S,(void*)tolua_ret,"]] .. magical_reg_objs[i] .. [[");]],
-		[[tolua_pushusertype(tolua_S,(void*)tolua_ret,"]] .. magical_reg_objs[i] .. [[");]] .. "\n" .. [[    tolua_ret->retain();]] .. "\n" .. [[    tolua_register_gc(tolua_S,lua_gettop(tolua_S));]]);
+		[[tolua_ret->retain();]] .. "\n" .. [[    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"]] .. magical_reg_objs[i] .. [[");]] .. "\n" ..  [[    tolua_register_gc(tolua_S,lua_gettop(tolua_S));]]);
 		
-		replace(magical_reg_objs[i] .. [[* tolua_ret = (]] .. magical_reg_objs[i] .. [[*)  ]] .. magical_reg_objs[i] .. [[::create();]],
-		magical_reg_objs[i] .. [[* tolua_ret = (]] .. magical_reg_objs[i] .. [[*)  ]] .. magical_reg_objs[i] .. [[::create();]] .. "\n    " .. [[Shared<]] 
-		.. magical_reg_objs[i] .. [[> auto_release = ]] .. [[Initializer<]] .. magical_reg_objs[i] .. [[>(tolua_ret);]])
+		-- replace(magical_reg_objs[i] .. [[* tolua_ret = (]] .. magical_reg_objs[i] .. [[*)  ]] .. magical_reg_objs[i] .. [[::create();]],
+		-- magical_reg_objs[i] .. [[* tolua_ret = (]] .. magical_reg_objs[i] .. [[*)  ]] .. magical_reg_objs[i] .. [[::create();]] .. "\n    " .. [[Shared<]] 
+		-- .. magical_reg_objs[i] .. [[> auto_release = ]] .. [[Initializer<]] .. magical_reg_objs[i] .. [[>(tolua_ret);]])
+		
+		replace(
+		magical_reg_objs[i] .. [[* tolua_ret = (]] ..  magical_reg_objs[i] .. [[*)]],
+		[[Shared<]] .. magical_reg_objs[i] .. [[> tolua_ret = (Shared<]] .. magical_reg_objs[i] .. [[>)]]
+		);
 
 		replace(
 		magical_reg_objs[i] .. [[* self = (]] .. magical_reg_objs[i] .. [[*) tolua_tousertype(tolua_S,1,0);

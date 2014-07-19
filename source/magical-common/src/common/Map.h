@@ -32,5 +32,4 @@ SOFTWARE.
 template< class K, class T >
 using Map = std::unordered_map< K, T >;
 
-
 #endif //__MAP_H__

@@ -1,6 +1,6 @@
-﻿/*
+/*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 07/11/14 17:13:28.
+** Generated automatically by tolua++-1.0.92 on 07/13/14 18:20:11.
 */
 
 #ifndef __cplusplus
@@ -453,10 +453,9 @@ static int tolua_common_Data_create00(lua_State* tolua_S)
 #endif
  {
   {
-   Data* tolua_ret = (Data*)  Data::create();
-    Shared<Data> auto_release = Initializer<Data>(tolua_ret);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Data");
+   Shared<Data> tolua_ret = (Shared<Data>)  Data::create();
     tolua_ret->retain();
+    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Data");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -749,9 +748,9 @@ static int tolua_common_AssetsSystem_isAssetsFileExist00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getAssetsFile of class  AssetsSystem */
-#ifndef TOLUA_DISABLE_tolua_common_AssetsSystem_getAssetsFile00
-static int tolua_common_AssetsSystem_getAssetsFile00(lua_State* tolua_S)
+/* method: loadAssetsFile of class  AssetsSystem */
+#ifndef TOLUA_DISABLE_tolua_common_AssetsSystem_loadAssetsFile00
+static int tolua_common_AssetsSystem_loadAssetsFile00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
@@ -766,16 +765,16 @@ static int tolua_common_AssetsSystem_getAssetsFile00(lua_State* tolua_S)
  {
   const char* file_name = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   Data* tolua_ret = (Data*)  AssetsSystem::getAssetsFile(file_name);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Data");
+   Shared<Data> tolua_ret = (Shared<Data>)  AssetsSystem::loadAssetsFile(file_name);
     tolua_ret->retain();
+    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Data");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
  return 1;
 #ifdef MAG_DEBUG
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getAssetsFile'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'loadAssetsFile'.",&tolua_err);
  return 0;
 #endif
 }
@@ -938,7 +937,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"removeSearchPath",tolua_common_AssetsSystem_removeSearchPath00);
    tolua_function(tolua_S,"clearSearchPath",tolua_common_AssetsSystem_clearSearchPath00);
    tolua_function(tolua_S,"isAssetsFileExist",tolua_common_AssetsSystem_isAssetsFileExist00);
-   tolua_function(tolua_S,"getAssetsFile",tolua_common_AssetsSystem_getAssetsFile00);
+   tolua_function(tolua_S,"loadAssetsFile",tolua_common_AssetsSystem_loadAssetsFile00);
   tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"magicalLog",tolua_common_magicalLog00);
   tolua_function(tolua_S,"magicalLogD",tolua_common_magicalLogD00);

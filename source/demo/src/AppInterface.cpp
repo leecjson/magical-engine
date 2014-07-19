@@ -22,12 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "AppInterface.h"
-#include "magical-engine.h"
+//#include <unordered_set>
+//#include <vector>
 
 void onFinishLaunching( void )
 {
-	Shared<LuaState> L = LuaSystem::getLuaState();
+	Shared<LuaState>& L = LuaSystem::getLuaState();
 	L->executeScriptFile("main.lua");
-	L->executeGlobalFunction(kLuaOnCreate);
+	//L->executeGlobalFunction(kLuaOnCreate);
 	L->clean();
 }

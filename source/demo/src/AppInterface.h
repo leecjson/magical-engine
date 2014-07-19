@@ -24,6 +24,8 @@ SOFTWARE.
 #ifndef __APP_INTERFACE_H__
 #define __APP_INTERFACE_H__
 
+#include "magical-engine.h"
+
 extern void onFinishLaunching( void );
 
 #endif //__APP_INTERFACE_H__

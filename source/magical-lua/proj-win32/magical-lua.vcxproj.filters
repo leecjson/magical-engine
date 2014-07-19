@@ -16,6 +16,12 @@
     <Filter Include="src\tolua">
       <UniqueIdentifier>{900ce62d-74f6-4a61-be6c-6fc8a3c50338}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\extensions">
+      <UniqueIdentifier>{6aaed29e-4279-4da2-bc85-b5de5cb2b780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\extensions\socket">
+      <UniqueIdentifier>{a3527d04-706c-465a-9b7e-a3d5d2bdb260}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\lua\lapi.c">

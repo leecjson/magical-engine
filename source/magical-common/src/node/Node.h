@@ -35,7 +35,7 @@ public:
 	virtual ~Node( void );
 
 public:
-	static Shared<Node> createShared( void );
+	static Shared<Node> create( void );
 };
 
 

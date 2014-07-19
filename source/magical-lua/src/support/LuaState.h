@@ -36,8 +36,7 @@ public:
 	virtual ~LuaState( void );
 
 public:
-	static Shared<LuaState> createShared( void );
-	static LuaState* create( void );
+	static Shared<LuaState> create( void );
 
 public:
 	lua_State* ptr( void ) const;

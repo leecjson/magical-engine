@@ -35,7 +35,7 @@ public:
 	static void delc( void );
 
 public:
-	static LuaState* getLuaState( void );
+	static Shared<LuaState>& getLuaState( void );
 };
 
 

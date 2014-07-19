@@ -33,12 +33,12 @@ void RenderSystem::delc( void )
 
 }
 
-void RenderSystem::onRender( void )
+void RenderSystem::render( void )
 {
 
 }
 
-void RenderSystem::onReshape( int w, int h )
+void RenderSystem::reshape( int w, int h )
 {
 	
 }

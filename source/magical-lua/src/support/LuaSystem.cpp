@@ -27,7 +27,7 @@ static Shared<LuaState> s_lua_state;
 
 void LuaSystem::init( void )
 {
-	s_lua_state = LuaState::createShared();
+	s_lua_state = LuaState::create();
 }
 
 void LuaSystem::delc( void )
@@ -35,7 +35,7 @@ void LuaSystem::delc( void )
 	s_lua_state.reset();
 }
 
-LuaState* LuaSystem::getLuaState( void )
+Shared<LuaState>& LuaSystem::getLuaState( void )
 {
-	return s_lua_state.get();
+	return s_lua_state;
 }

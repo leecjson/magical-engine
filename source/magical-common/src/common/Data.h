@@ -35,8 +35,7 @@ public:
 	virtual ~Data( void );
 
 public:
-	static Shared<Data> createShared( void );
-	static Data* create( void );
+	static Shared<Data> create( void );
 
 public:
 	void assign( char* data, const size_t size );

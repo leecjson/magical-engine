@@ -121,7 +121,7 @@ bool AssetsSystem::isAssetsFileExist( const char* file_name )
 	return false;
 }
 
-Data* AssetsSystem::getAssetsFile( const char* file_name )
+Shared<Data> AssetsSystem::loadAssetsFile( const char* file_name )
 {
 	magicalAssert( file_name, "should not be nullptr" );
 
@@ -141,7 +141,7 @@ Data* AssetsSystem::getAssetsFile( const char* file_name )
 	size = (size_t) ftell( fp );
 	fseek( fp, 0, SEEK_SET );
 
-	Data* data = Data::create();
+	Shared<Data> data = Data::create();
 	data->malloc( size + 1 );
 
 	read_size = fread( data->ptr(), sizeof(char), size, fp );
