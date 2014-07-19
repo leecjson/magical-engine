@@ -28,7 +28,7 @@ SOFTWARE.
 #include "Common.h"
 #include "LuaState.h"
 
-class LuaSystem
+class Lua
 {
 public:
 	static void init( void );

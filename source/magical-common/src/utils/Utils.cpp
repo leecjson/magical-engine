@@ -42,8 +42,8 @@ void TimeUtils::beginTicking( void )
 float TimeUtils::endTicking( void )
 {
 	float result;
-	int64_t now  = TimeUtils::currentMicrosecondsTime();
-	result = MAX(0, (now - s_ticking) / 1000000.0f);
+	int64_t now = TimeUtils::currentMicrosecondsTime();
+	result = std::max<float>(0, (now - s_ticking) / 1000000.0f);
 	s_ticking = 0;
 	return result;
 }

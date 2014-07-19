@@ -27,14 +27,15 @@ SOFTWARE.
 #include "lua.hpp"
 #include "tolua++.h"
 #include "tolua_ext.h"
-#include "LuaCommon.h"
+
+#include "BindCommon.h"
 
 // socket
-extern "C" {
-	#include "socket/luasocket.h"
-	#include "socket/mime.h"
+//extern "C" {
+	//#include "socket/luasocket.h"
+	//#include "socket/mime.h"
 	//#include "socket/socket_scripts.h"
-}
+//}
 
 LuaState::LuaState( void )
 {
@@ -46,10 +47,9 @@ LuaState::LuaState( void )
 	luaopen_tolua_ext( _L );
 
 	// socket
-	luaopen_socket_core( _L );
-	luaopen_mime_core( _L );
+	//luaopen_socket_core( _L );
+	//luaopen_mime_core( _L );
 	
-
 	// load extensions
     //luaL_Reg* lib = luax_exts;
     //lua_getglobal(_L, "package");

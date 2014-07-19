@@ -1,6 +1,6 @@
 /*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 07/13/14 18:20:11.
+** Generated automatically by tolua++-1.0.92 on 07/19/14 12:29:45.
 */
 
 #ifndef __cplusplus
@@ -13,7 +13,7 @@
 /* Exported function */
 TOLUA_API int  tolua_common_open (lua_State* tolua_S);
 
-#include "LuaCommon.h"
+#include "BindCommon.h"
 #include "tolua_ext.h"
 #include "magical-engine.h"
 
@@ -39,7 +39,7 @@ static int tolua_collect_Data (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"AssetsSystem");
+ tolua_usertype(tolua_S,"Assets");
  tolua_usertype(tolua_S,"Data");
  tolua_usertype(tolua_S,"Reference");
 }
@@ -633,14 +633,14 @@ static int tolua_common_Data_size00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: addSearchPath of class  AssetsSystem */
-#ifndef TOLUA_DISABLE_tolua_common_AssetsSystem_addSearchPath00
-static int tolua_common_AssetsSystem_addSearchPath00(lua_State* tolua_S)
+/* method: addSearchPath of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_addSearchPath00
+static int tolua_common_Assets_addSearchPath00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"AssetsSystem",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -650,7 +650,7 @@ static int tolua_common_AssetsSystem_addSearchPath00(lua_State* tolua_S)
  {
   const char* path = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   AssetsSystem::addSearchPath(path);
+   Assets::addSearchPath(path);
   }
  }
  return 0;
@@ -662,14 +662,14 @@ static int tolua_common_AssetsSystem_addSearchPath00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: removeSearchPath of class  AssetsSystem */
-#ifndef TOLUA_DISABLE_tolua_common_AssetsSystem_removeSearchPath00
-static int tolua_common_AssetsSystem_removeSearchPath00(lua_State* tolua_S)
+/* method: removeSearchPath of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_removeSearchPath00
+static int tolua_common_Assets_removeSearchPath00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"AssetsSystem",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -679,7 +679,7 @@ static int tolua_common_AssetsSystem_removeSearchPath00(lua_State* tolua_S)
  {
   const char* path = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   AssetsSystem::removeSearchPath(path);
+   Assets::removeSearchPath(path);
   }
  }
  return 0;
@@ -691,14 +691,14 @@ static int tolua_common_AssetsSystem_removeSearchPath00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: clearSearchPath of class  AssetsSystem */
-#ifndef TOLUA_DISABLE_tolua_common_AssetsSystem_clearSearchPath00
-static int tolua_common_AssetsSystem_clearSearchPath00(lua_State* tolua_S)
+/* method: clearSearchPath of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_clearSearchPath00
+static int tolua_common_Assets_clearSearchPath00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"AssetsSystem",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -706,7 +706,7 @@ static int tolua_common_AssetsSystem_clearSearchPath00(lua_State* tolua_S)
 #endif
  {
   {
-   AssetsSystem::clearSearchPath();
+   Assets::clearSearchPath();
   }
  }
  return 0;
@@ -718,14 +718,14 @@ static int tolua_common_AssetsSystem_clearSearchPath00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: isAssetsFileExist of class  AssetsSystem */
-#ifndef TOLUA_DISABLE_tolua_common_AssetsSystem_isAssetsFileExist00
-static int tolua_common_AssetsSystem_isAssetsFileExist00(lua_State* tolua_S)
+/* method: isAssetsFileExist of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_isAssetsFileExist00
+static int tolua_common_Assets_isAssetsFileExist00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"AssetsSystem",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -735,7 +735,7 @@ static int tolua_common_AssetsSystem_isAssetsFileExist00(lua_State* tolua_S)
  {
   const char* file_name = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   bool tolua_ret = (bool)  AssetsSystem::isAssetsFileExist(file_name);
+   bool tolua_ret = (bool)  Assets::isAssetsFileExist(file_name);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
@@ -748,14 +748,14 @@ static int tolua_common_AssetsSystem_isAssetsFileExist00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: loadAssetsFile of class  AssetsSystem */
-#ifndef TOLUA_DISABLE_tolua_common_AssetsSystem_loadAssetsFile00
-static int tolua_common_AssetsSystem_loadAssetsFile00(lua_State* tolua_S)
+/* method: loadAssetsFile of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_loadAssetsFile00
+static int tolua_common_Assets_loadAssetsFile00(lua_State* tolua_S)
 {
 #ifdef MAG_DEBUG
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"AssetsSystem",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -765,7 +765,7 @@ static int tolua_common_AssetsSystem_loadAssetsFile00(lua_State* tolua_S)
  {
   const char* file_name = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   Shared<Data> tolua_ret = (Shared<Data>)  AssetsSystem::loadAssetsFile(file_name);
+   Shared<Data> tolua_ret = (Shared<Data>)  Assets::loadAssetsFile(file_name);
     tolua_ret->retain();
     tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Data");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
@@ -931,13 +931,13 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"empty",tolua_common_Data_empty00);
    tolua_function(tolua_S,"size",tolua_common_Data_size00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"AssetsSystem","AssetsSystem","",NULL);
-  tolua_beginmodule(tolua_S,"AssetsSystem");
-   tolua_function(tolua_S,"addSearchPath",tolua_common_AssetsSystem_addSearchPath00);
-   tolua_function(tolua_S,"removeSearchPath",tolua_common_AssetsSystem_removeSearchPath00);
-   tolua_function(tolua_S,"clearSearchPath",tolua_common_AssetsSystem_clearSearchPath00);
-   tolua_function(tolua_S,"isAssetsFileExist",tolua_common_AssetsSystem_isAssetsFileExist00);
-   tolua_function(tolua_S,"loadAssetsFile",tolua_common_AssetsSystem_loadAssetsFile00);
+  tolua_cclass(tolua_S,"Assets","Assets","",NULL);
+  tolua_beginmodule(tolua_S,"Assets");
+   tolua_function(tolua_S,"addSearchPath",tolua_common_Assets_addSearchPath00);
+   tolua_function(tolua_S,"removeSearchPath",tolua_common_Assets_removeSearchPath00);
+   tolua_function(tolua_S,"clearSearchPath",tolua_common_Assets_clearSearchPath00);
+   tolua_function(tolua_S,"isAssetsFileExist",tolua_common_Assets_isAssetsFileExist00);
+   tolua_function(tolua_S,"loadAssetsFile",tolua_common_Assets_loadAssetsFile00);
   tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"magicalLog",tolua_common_magicalLog00);
   tolua_function(tolua_S,"magicalLogD",tolua_common_magicalLogD00);

@@ -27,7 +27,7 @@ SOFTWARE.
 
 void onFinishLaunching( void )
 {
-	Shared<LuaState>& L = LuaSystem::getLuaState();
+	Shared<LuaState>& L = Lua::getLuaState();
 	L->executeScriptFile("main.lua");
 	//L->executeGlobalFunction(kLuaOnCreate);
 	L->clean();

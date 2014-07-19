@@ -50,29 +50,29 @@ static void win32Log( const char* channel, const char* msg )
 }
 
 
-void LogSystem::init( void )
+void Log::init( void )
 {
 	
 }
 
-void LogSystem::delc( void )
+void Log::delc( void )
 {
 	
 }
 
-void LogSystem::I( const char* msg )
+void Log::I( const char* msg )
 {
 	magicalAssert( msg, "should not be nullptr" );
 	win32Log( "Info", msg );
 }
 
-void LogSystem::D( const char* msg )
+void Log::D( const char* msg )
 {
 	magicalAssert( msg, "should not be nullptr" );
 	win32Log( "Debug", msg );
 }
 
-void LogSystem::E( const char* msg )
+void Log::E( const char* msg )
 {
 	magicalAssert( msg, "should not be nullptr" );
 	win32Log( "Error", msg );

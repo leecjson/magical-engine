@@ -39,7 +39,7 @@ static std::string win32GetAssetsDefaultSearchPath( void );
 static std::string win32GetAbsloutePath( const char* path );
 
 
-void AssetsSystem::init( void )
+void Assets::init( void )
 {
 	s_default_search_path = win32GetAssetsDefaultSearchPath();
 	if( s_default_search_path.empty() )
@@ -51,12 +51,12 @@ void AssetsSystem::init( void )
 	s_search_path_array.push_back( s_default_search_path );
 }
 
-void AssetsSystem::delc( void )
+void Assets::delc( void )
 {
 	
 }
 
-void AssetsSystem::addSearchPath( const char* path )
+void Assets::addSearchPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr" );
 
@@ -76,7 +76,7 @@ void AssetsSystem::addSearchPath( const char* path )
 	s_absolute_path_cache_map.clear();
 }
 
-void AssetsSystem::removeSearchPath( const char* path )
+void Assets::removeSearchPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr" );
 
@@ -89,13 +89,13 @@ void AssetsSystem::removeSearchPath( const char* path )
 	}
 }
 
-void AssetsSystem::clearSearchPath( void )
+void Assets::clearSearchPath( void )
 {
 	s_search_path_array.clear();
 	s_absolute_path_cache_map.clear();
 }
 
-bool AssetsSystem::isAssetsFileExist( const char* file_name )
+bool Assets::isAssetsFileExist( const char* file_name )
 {
 	magicalAssert( file_name, "should not be nullptr" );
 
@@ -121,7 +121,7 @@ bool AssetsSystem::isAssetsFileExist( const char* file_name )
 	return false;
 }
 
-Shared<Data> AssetsSystem::loadAssetsFile( const char* file_name )
+Shared<Data> Assets::loadAssetsFile( const char* file_name )
 {
 	magicalAssert( file_name, "should not be nullptr" );
 

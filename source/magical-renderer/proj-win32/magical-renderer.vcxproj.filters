@@ -45,7 +45,7 @@
     <ClInclude Include="..\src\context\Application.h">
       <Filter>src\context</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\renderer\RenderSystem.h">
+    <ClInclude Include="..\src\renderer\RendererSystem.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClCompile Include="..\src\context\win32\Application.cpp">
       <Filter>src\context\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\renderer\RenderSystem.cpp">
+    <ClCompile Include="..\src\renderer\RendererSystem.cpp">
       <Filter>src\renderer</Filter>
     </ClCompile>
   </ItemGroup>

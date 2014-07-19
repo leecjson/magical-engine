@@ -1,4 +1,4 @@
-class AssetsSystem
+class Assets
 {
 public:
 	static void addSearchPath( const char* path );

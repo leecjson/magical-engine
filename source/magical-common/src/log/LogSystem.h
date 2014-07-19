@@ -33,17 +33,19 @@ SOFTWARE.
 #define magicalLogE( __msg )
 #define magicalLogLastError()
 #else
-#define magicalLog( __msg ) LogSystem::I( __msg )
-#define magicalLogD( __msg ) LogSystem::D( __msg )
-#define magicalLogE( __msg ) LogSystem::E( __msg )
-#define magicalLogLastError() LogSystem::E( magicalGetLastErrorInfo() )
+#define magicalLog( __msg ) Log::I( __msg )
+#define magicalLogD( __msg ) Log::D( __msg )
+#define magicalLogE( __msg ) Log::E( __msg )
+#define magicalLogLastError() Log::E( magicalGetLastErrorInfo() )
 #endif
 
-class LogSystem
+class Log
 {
 public:
 	static void init( void );
 	static void delc( void );
+
+public:
 	static void I( const char* msg );
 	static void D( const char* msg );
 	static void E( const char* msg );

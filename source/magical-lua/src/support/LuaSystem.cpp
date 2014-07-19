@@ -25,17 +25,17 @@ SOFTWARE.
 
 static Shared<LuaState> s_lua_state;
 
-void LuaSystem::init( void )
+void Lua::init( void )
 {
 	s_lua_state = LuaState::create();
 }
 
-void LuaSystem::delc( void )
+void Lua::delc( void )
 {
 	s_lua_state.reset();
 }
 
-Shared<LuaState>& LuaSystem::getLuaState( void )
+Shared<LuaState>& Lua::getLuaState( void )
 {
 	return s_lua_state;
 }

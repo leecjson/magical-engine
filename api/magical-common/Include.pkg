@@ -1,4 +1,4 @@
-$#include "LuaCommon.h"
+$#include "BindCommon.h"
 $#include "tolua_ext.h"
 $#include "magical-engine.h"
 

@@ -26,7 +26,7 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 
-class RenderSystem
+class Renderer
 {
 public:
 	static void init( void );

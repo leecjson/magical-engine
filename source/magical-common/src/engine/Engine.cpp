@@ -26,7 +26,7 @@ SOFTWARE.
 #include "Utils.h"
 #include "AssetsSystem.h"
 #include "LuaSystem.h"
-#include "RenderSystem.h"
+#include "RendererSystem.h"
 
 static int64_t s_last_update_time;
 static float s_delta_time;
@@ -46,25 +46,25 @@ void Engine::delc( void )
 
 void Engine::initSystems( void )
 {
-	AssetsSystem::init();
+	Assets::init();
 	magicalReturnIfError();
 
-	LuaSystem::init();
+	Lua::init();
 	magicalReturnIfError();
 
-	RenderSystem::init();
+	Renderer::init();
 	magicalReturnIfError();
 }
 
 void Engine::delcSystems( void )
 {
-	RenderSystem::delc();
+	Renderer::delc();
 	magicalReturnIfError();
 
-	LuaSystem::delc();
+	Lua::delc();
 	magicalReturnIfError();
 
-	AssetsSystem::delc();
+	Assets::delc();
 	magicalReturnIfError();
 }
 
@@ -72,12 +72,12 @@ void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
-	RenderSystem::render();
+	Renderer::render();
 }
 
 void Engine::reshape( int w, int h )
 {
-	RenderSystem::reshape( w, h );
+	Renderer::reshape( w, h );
 }
 
 float Engine::getDeltaTime( void )
@@ -88,6 +88,6 @@ float Engine::getDeltaTime( void )
 static void calcDeltaTime( void )
 {
 	int64_t now  = TimeUtils::currentMicrosecondsTime();
-	s_delta_time = MAX(0, (now - s_last_update_time) / 1000000.0f);
+	s_delta_time = std::max<float>(0, (now - s_last_update_time) / 1000000.0f);
 	s_last_update_time = now;
 }

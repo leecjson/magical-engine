@@ -30,7 +30,7 @@ SOFTWARE.
 #include "Common.h"
 #include "Data.h"
 
-class AssetsSystem
+class Assets
 {
 public:
 	static void init( void );
