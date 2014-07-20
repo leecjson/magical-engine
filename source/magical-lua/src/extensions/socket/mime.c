@@ -83,7 +83,7 @@ static UC b64unbase[256];
 \*-------------------------------------------------------------------------*/
 MIME_API int luaopen_mime_core(lua_State *L)
 {
-    luaL_openlib(L, "mime_lib", func, 0);
+    luaL_openlib(L, "mime", func, 0);
     /* make version string available to scripts */
     lua_pushstring(L, "_VERSION");
     lua_pushstring(L, MIME_VERSION);

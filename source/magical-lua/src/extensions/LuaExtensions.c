@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
@@ -21,64 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __MAGICAL_ENGINE_H__
-#define __MAGICAL_ENGINE_H__
+#include "LuaExtensions.h"
 
-#include "PlatformMacros.h"
+#include "socket/luasocket.h"
+#include "socket/mime.h"
 
-/*
-magical common - common
-*/
-#include "Common.h"
-#include "Shared.h"
-#include "Reference.h"
-#include "Data.h"
-#include "Array.h"
-#include "Map.h"
-#include "List.h"
+static luaL_Reg lua_extensions[] = {
+    {"socket.core", luaopen_socket_core},
+    {"mime.core", luaopen_mime_core},
+    {NULL, NULL}
+};
 
-/*
-magical common - engine
-*/
-#include "Engine.h"
-
-/*
-magical common - assets
-*/
-#include "AssetsSystem.h"
-
-/*
-magical common - log
-*/
-#include "LogSystem.h"
-
-/*
-magical common - utils
-*/
-#include "Utils.h"
-
-/*
-magical common - kazmath
-*/
-//#include "GL/matrix.h"
-//#include "GL/mat4stack.h"
-//#include "kazmath.h"
-
-/*
-magical renderer - context
-*/
-#include "Application.h"
-
-/*
-magical lua - lua
-*/
-#include "lua.hpp"
-
-/*
-magical lua - support
-*/
-#include "LuaState.h"
-#include "LuaMacros.h"
-#include "LuaSystem.h"
-
-#endif //__MAGICAL_ENGINE_H__
+extern void luaopen_extensions( lua_State* L )
+{
+    luaL_Reg* lib = lua_extensions;
+    lua_getglobal(L, "package");
+    lua_getfield(L, -1, "preload");
+    for (; lib->func; lib++)
+    {
+        lua_pushcfunction(L, lib->func);
+        lua_setfield(L, -2, lib->name);
+    }
+    lua_pop(L, 2);
+}

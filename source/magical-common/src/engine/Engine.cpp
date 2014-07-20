@@ -73,6 +73,9 @@ void Engine::mainLoop( void )
 	calcDeltaTime();
 
 	Renderer::render();
+
+	Shared<LuaState>& L = Lua::getLuaState();
+	L->executeGlobalFunction("go");
 }
 
 void Engine::reshape( int w, int h )

@@ -144,6 +144,48 @@
     <ClCompile Include="..\src\binding\BindCommon.cpp">
       <Filter>src\binding</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\extensions\LuaExtensions.c">
+      <Filter>src\extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\select.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\tcp.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\timeout.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\udp.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\wsocket.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\auxiliar.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\buffer.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\except.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\inet.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\io.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\luasocket.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\mime.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\extensions\socket\options.c">
+      <Filter>src\extensions\socket</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\lua\lapi.h">
@@ -238,6 +280,51 @@
     </ClInclude>
     <ClInclude Include="..\src\binding\BindCommon.h">
       <Filter>src\binding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\LuaExtensions.h">
+      <Filter>src\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\options.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\select.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\socket.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\tcp.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\timeout.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\udp.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\wsocket.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\auxiliar.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\buffer.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\except.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\inet.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\io.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\luasocket.h">
+      <Filter>src\extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\extensions\socket\mime.h">
+      <Filter>src\extensions\socket</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

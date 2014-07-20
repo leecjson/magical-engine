@@ -70,6 +70,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\binding\BindCommon.cpp" />
+    <ClCompile Include="..\src\extensions\LuaExtensions.c" />
+    <ClCompile Include="..\src\extensions\socket\auxiliar.c" />
+    <ClCompile Include="..\src\extensions\socket\buffer.c" />
+    <ClCompile Include="..\src\extensions\socket\except.c" />
+    <ClCompile Include="..\src\extensions\socket\inet.c" />
+    <ClCompile Include="..\src\extensions\socket\io.c" />
+    <ClCompile Include="..\src\extensions\socket\luasocket.c" />
+    <ClCompile Include="..\src\extensions\socket\mime.c" />
+    <ClCompile Include="..\src\extensions\socket\options.c" />
+    <ClCompile Include="..\src\extensions\socket\select.c" />
+    <ClCompile Include="..\src\extensions\socket\tcp.c" />
+    <ClCompile Include="..\src\extensions\socket\timeout.c" />
+    <ClCompile Include="..\src\extensions\socket\udp.c" />
+    <ClCompile Include="..\src\extensions\socket\wsocket.c" />
     <ClCompile Include="..\src\lua\lapi.c" />
     <ClCompile Include="..\src\lua\lauxlib.c" />
     <ClCompile Include="..\src\lua\lbaselib.c" />
@@ -112,6 +126,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\binding\BindCommon.h" />
+    <ClInclude Include="..\src\extensions\LuaExtensions.h" />
+    <ClInclude Include="..\src\extensions\socket\auxiliar.h" />
+    <ClInclude Include="..\src\extensions\socket\buffer.h" />
+    <ClInclude Include="..\src\extensions\socket\except.h" />
+    <ClInclude Include="..\src\extensions\socket\inet.h" />
+    <ClInclude Include="..\src\extensions\socket\io.h" />
+    <ClInclude Include="..\src\extensions\socket\luasocket.h" />
+    <ClInclude Include="..\src\extensions\socket\mime.h" />
+    <ClInclude Include="..\src\extensions\socket\options.h" />
+    <ClInclude Include="..\src\extensions\socket\select.h" />
+    <ClInclude Include="..\src\extensions\socket\socket.h" />
+    <ClInclude Include="..\src\extensions\socket\tcp.h" />
+    <ClInclude Include="..\src\extensions\socket\timeout.h" />
+    <ClInclude Include="..\src\extensions\socket\udp.h" />
+    <ClInclude Include="..\src\extensions\socket\wsocket.h" />
     <ClInclude Include="..\src\lua\lapi.h" />
     <ClInclude Include="..\src\lua\lauxlib.h" />
     <ClInclude Include="..\src\lua\lcode.h" />

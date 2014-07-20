@@ -21,14 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "AppInterface.h"
-//#include <unordered_set>
-//#include <vector>
+#ifndef __LUA_EXTENSION_H__
+#define __LUA_EXTENSION_H__
 
-void onFinishLaunching( void )
-{
-	Shared<LuaState>& L = Lua::getLuaState();
-	L->executeScriptFile("main.lua");
-	//L->executeGlobalFunction(kLuaOnCreate);
-	L->clean();
+#include "PlatformMacros.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "lauxlib.h"
+
+extern void luaopen_extensions( lua_State* L );
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif //__LUA_EXTENSION_H__

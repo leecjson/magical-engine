@@ -40,6 +40,8 @@ public:
 
 public:
 	lua_State* ptr( void ) const;
+	void addModulePath( const char* path );
+
 	int executeScriptFile( const char* file ) const;
 	int executeScriptCode( const char* codes ) const;
 	int executeGlobalFunction( const char* func_name, int retc = 0, int argc = 0 ) const;
@@ -53,6 +55,8 @@ public:
 	void pushString( const char* str, int len ) const;
 	void pushUserData( void* obj, const char* type ) const;
 	void clean( void ) const;
+
+	
 
 private:
 	void handleLuaError( void ) const;

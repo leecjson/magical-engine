@@ -37,6 +37,7 @@ public:
 	static void delc( void );
 
 public:
+	static std::string getDefaultSearchPath( void );
 	static void addSearchPath( const char* path );
 	static void removeSearchPath( const char* path );
 	static void clearSearchPath( void );

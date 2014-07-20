@@ -21,11 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __APP_INTERFACE_H__
-#define __APP_INTERFACE_H__
+#ifndef __APP_MAIN_H__
+#define __APP_MAIN_H__
 
 #include "magical-engine.h"
 
-extern void onFinishLaunching( void );
+extern void onFinishLaunching( void )
+{
+	Shared<LuaState>& L = Lua::getLuaState();
+	L->executeScriptFile("main.lua");
+	//L->executeGlobalFunction(kLuaOnCreate);
+	L->clean();
+}
 
-#endif //__APP_INTERFACE_H__
+#endif //__APP_MAIN_H__

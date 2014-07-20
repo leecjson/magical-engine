@@ -11,11 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\AppInterface.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main-win32.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\AppInterface.h" />
+    <ClInclude Include="..\src\main.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{09456AF9-0572-4661-A132-632680DA4002}</ProjectGuid>

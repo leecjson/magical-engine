@@ -28,14 +28,9 @@ SOFTWARE.
 #include "tolua++.h"
 #include "tolua_ext.h"
 
-#include "BindCommon.h"
+#include "LuaExtensions.h"
 
-// socket
-//extern "C" {
-	//#include "socket/luasocket.h"
-	//#include "socket/mime.h"
-	//#include "socket/socket_scripts.h"
-//}
+#include "BindCommon.h"
 
 LuaState::LuaState( void )
 {
@@ -46,33 +41,23 @@ LuaState::LuaState( void )
 	luaL_openlibs( _L );
 	luaopen_tolua_ext( _L );
 
-	// socket
-	//luaopen_socket_core( _L );
-	//luaopen_mime_core( _L );
-	
-	// load extensions
-    //luaL_Reg* lib = luax_exts;
-    //lua_getglobal(_L, "package");
-    //lua_getfield(_L, -1, "preload");
-    //for (; lib->func; lib++)
-    //{
-    //    lua_pushcfunction(_L, lib->func);
-    //    lua_setfield(_L, -2, lib->name);
-    //}
-    //lua_pop(_L, 2);
-
-    // load extensions script
-    //luaopen_socket_scripts( _L );
-
+	// extensions
+	luaopen_extensions( _L );
 	// binding
 	luaopen_common( _L );
+
+#ifdef MAG_WIN32
+	std::string default_search_path = Assets::getDefaultSearchPath();
+	default_search_path += "standard/script";
+	addModulePath( default_search_path.c_str() );
+#endif
 }
 
 LuaState::~LuaState( void )
 {
 	if( _L != nullptr ) 
 	{
-		lua_close(_L);
+		lua_close( _L );
 	}
 }
 
@@ -86,6 +71,16 @@ Shared<LuaState> LuaState::create( void )
 lua_State* LuaState::ptr( void ) const
 {
 	return _L;
+}
+
+void LuaState::addModulePath( const char* path )
+{
+	lua_getglobal( _L, "package" );
+    lua_getfield( _L, -1, "path" );
+    const char* cur_path =  lua_tostring( _L, -1 );
+    lua_pushfstring( _L, "%s;%s/?.lua", cur_path, path );
+    lua_setfield( _L, -3, "path" );
+    lua_pop( _L, 2 );  
 }
 
 int LuaState::executeScriptFile( const char* file ) const

@@ -21,10 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "AppInterface.h"
+#include "main.h"
 #include "Application.h"
 
-int main(int argc, char* argv[])
+int main( int argc, char* argv[] )
 {
 	// Run
 	Application::run( onFinishLaunching );

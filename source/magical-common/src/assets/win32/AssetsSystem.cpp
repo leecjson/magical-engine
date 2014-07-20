@@ -38,7 +38,6 @@ static std::string win32GetPathWithUnixStyle( const char* path );
 static std::string win32GetAssetsDefaultSearchPath( void );
 static std::string win32GetAbsloutePath( const char* path );
 
-
 void Assets::init( void )
 {
 	s_default_search_path = win32GetAssetsDefaultSearchPath();
@@ -54,6 +53,11 @@ void Assets::init( void )
 void Assets::delc( void )
 {
 	
+}
+
+std::string Assets::getDefaultSearchPath( void )
+{
+	return s_default_search_path;
 }
 
 void Assets::addSearchPath( const char* path )

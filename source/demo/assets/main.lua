@@ -1,23 +1,32 @@
+--require("debugger")("127.0.0.1", 10000, "luaidekey")
+
 function onCreate() --> void
 
-	magicalBeginObserve();
+    magicalBeginObserve();
 
-	local data = Data.create(Data);
-	data:malloc(56);
-	
-	magicalLog("ok");
-	
-	fff = data;
-	data = nil;
-	fff = nil;
-	
-	collectgarbage();
+    local data = Data:create();
+    data:malloc(56);
 
-	magicalEndObserve();
+    local fff = data;
+    data = nil;
+    fff = nil;
+    collectgarbage();
 
+    magicalEndObserve();
 end
 
 onCreate();
+
+function go() --> void
+    local a = 5;
+    local b = a;
+end
+
+
+
+
+
+
 
 
 
