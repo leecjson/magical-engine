@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 A 4x4 matrix
 
         | 0   4   8  12 |
-mat = | 1   5   9  13 |
+mat =   | 1   5   9  13 |
         | 2   6  10  14 |
         | 3   7  11  15 |
 */
