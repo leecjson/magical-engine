@@ -1,6 +1,6 @@
 /*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 07/23/14 16:53:51.
+** Generated automatically by tolua++-1.0.92 on 07/24/14 13:11:24.
 */
 
 #ifndef __cplusplus
@@ -39,10 +39,9 @@ static int tolua_collect_Data (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"Reference");
  tolua_usertype(tolua_S,"Assets");
  tolua_usertype(tolua_S,"Data");
- tolua_usertype(tolua_S,"Vec2");
+ tolua_usertype(tolua_S,"Reference");
 }
 
 /* function: magicalIsError */
@@ -891,99 +890,6 @@ static int tolua_common_magicalLogLastError00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: x of class  Vec2 */
-#ifndef TOLUA_DISABLE_tolua_get_Vec2_x
-static int tolua_get_Vec2_x(lua_State* tolua_S)
-{
-  Vec2* self = (Vec2*)  tolua_tousertype(tolua_S,1,0);
-#ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->x);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: x of class  Vec2 */
-#ifndef TOLUA_DISABLE_tolua_set_Vec2_x
-static int tolua_set_Vec2_x(lua_State* tolua_S)
-{
-  Vec2* self = (Vec2*)  tolua_tousertype(tolua_S,1,0);
-#ifdef MAG_DEBUG
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->x = ((float)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: y of class  Vec2 */
-#ifndef TOLUA_DISABLE_tolua_get_Vec2_y
-static int tolua_get_Vec2_y(lua_State* tolua_S)
-{
-  Vec2* self = (Vec2*)  tolua_tousertype(tolua_S,1,0);
-#ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->y);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: y of class  Vec2 */
-#ifndef TOLUA_DISABLE_tolua_set_Vec2_y
-static int tolua_set_Vec2_y(lua_State* tolua_S)
-{
-  Vec2* self = (Vec2*)  tolua_tousertype(tolua_S,1,0);
-#ifdef MAG_DEBUG
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->y = ((float)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getV of class  Vec2 */
-#ifndef TOLUA_DISABLE_tolua_common_Vec2_getV00
-static int tolua_common_Vec2_getV00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Vec2",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"Vec2",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Vec2* self = (Vec2*)  tolua_tousertype(tolua_S,1,0);
-  Vec2* out_vec = ((Vec2*)  tolua_tousertype(tolua_S,2,0));
-#ifdef MAG_DEBUG
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getV'", NULL);
-#endif
-  {
-   self->getV(*out_vec);
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getV'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* Open function */
 TOLUA_API int tolua_common_open (lua_State* tolua_S)
 {
@@ -1037,12 +943,6 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
   tolua_function(tolua_S,"magicalLogD",tolua_common_magicalLogD00);
   tolua_function(tolua_S,"magicalLogE",tolua_common_magicalLogE00);
   tolua_function(tolua_S,"magicalLogLastError",tolua_common_magicalLogLastError00);
-  tolua_cclass(tolua_S,"Vec2","Vec2","",NULL);
-  tolua_beginmodule(tolua_S,"Vec2");
-   tolua_variable(tolua_S,"x",tolua_get_Vec2_x,tolua_set_Vec2_x);
-   tolua_variable(tolua_S,"y",tolua_get_Vec2_y,tolua_set_Vec2_y);
-   tolua_function(tolua_S,"getV",tolua_common_Vec2_getV00);
-  tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;
 }

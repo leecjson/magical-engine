@@ -23,23 +23,41 @@ SOFTWARE.
 *******************************************************************************/
 #include "Vec3.hpp"
 
-Vec3::Vec3( const Vec2& v )
+Vec3::Vec3( float rx, float ry, float rz )
+: x(rx)
+, y(ry)
+, z(rz)
 {
-	x = v.x;
-	y = v.y;
-	z = 0.0f;
+
 }
 
-Vec3::Vec3( float rx, float ry, float rz )
+Vec3::Vec3( const Vec3& rhs )
+: x(rhs.x)
+, y(rhs.y)
+, z(rhs.z)
 {
-	x = rx;
-	y = ry;
-	z = rz;
+
+}
+
+Vec3::Vec3( const float* rhs )
+: x(rhs[0])
+, y(rhs[1])
+, z(rhs[2])
+{
+
 }
 
 Vec3::Vec3( void )
+: x(0.0f)
+, y(0.0f)
+, z(0.0f)
 {
-	x = y = z = 0.0f;
+	
 }
 
-const Vec3 Vec3::ZERO = Vec3(0.0f, 0.0f, 0.0f);
+Vec3::~Vec3( void )
+{
+
+}
+
+const Vec3 Vec3::ZERO = Vec3( 0.0f, 0.0f, 0.0f );

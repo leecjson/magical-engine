@@ -138,17 +138,17 @@ inline Vec4& Vec4::operator/=( float rhs )
 	return *this;
 }
 
-inline bool Vec4::operator==( const Vec4& rhs )
+inline bool Vec4::operator==( const Vec4& rhs ) const
 {
-	return kmVec4AreEqual( this, &rhs ) != 0;
+	return x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w;
 }
 
-inline bool Vec4::operator!=( const Vec4& rhs )
+inline bool Vec4::operator!=( const Vec4& rhs ) const
 {
-	return kmVec4AreEqual( this, &rhs ) == 0;
+	return x != rhs.x || y != rhs.y || z != rhs.z || w != rhs.w;
 }
 
-inline bool Vec4::isZero( void )
+inline bool Vec4::isZero( void ) const
 {
 	return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
 }

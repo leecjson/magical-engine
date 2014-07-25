@@ -24,32 +24,32 @@ SOFTWARE.
 #ifndef __VEC4_HPP__
 #define __VEC4_HPP__
 
+#include "PlatformMacros.h"
 #include "Common.h"
 #include "kazmath/kazmath.h"
-#include "Vec3.hpp"
-#include "Mat4.hpp"
 
-struct Vec2;
-struct Vec3;
-struct Mat4;
-
-struct Vec4 : public kmVec4
+struct Vec4
 {
 public:
-	Vec4( const Vec2& v );
-	Vec4( const Vec3& v );
+	float x;
+	float y;
+	float z;
+	float w;
+
+public:
 	Vec4( float rx, float ry, float rz, float rw );
+	Vec4( const float* rhs );
+	Vec4( const Vec4& rhs );
 	Vec4( void );
 
-	inline Vec4 operator+( float rhs ) const;
-	inline Vec4 operator+( const Vec4& rhs ) const;
-	inline Vec4 operator-( float rhs ) const;
-	inline Vec4 operator-( const Vec4& rhs ) const;
-	inline Vec4 operator*( float rhs ) const;
-	inline Vec4 operator*( const Vec4& rhs ) const;
-	inline Vec4 operator/( float rhs ) const;
-	inline Vec4 operator/( const Vec4& rhs ) const;
-
+	inline Vec4  operator+( float rhs ) const;
+	inline Vec4  operator+( const Vec4& rhs ) const;
+	inline Vec4  operator-( float rhs ) const;
+	inline Vec4  operator-( const Vec4& rhs ) const;
+	inline Vec4  operator*( float rhs ) const;
+	inline Vec4  operator*( const Vec4& rhs ) const;
+	inline Vec4  operator/( float rhs ) const;
+	inline Vec4  operator/( const Vec4& rhs ) const;
 	inline Vec4& operator+=( const Vec4& rhs );
 	inline Vec4& operator+=( float rhs );
 	inline Vec4& operator-=( const Vec4& rhs );
@@ -58,11 +58,9 @@ public:
 	inline Vec4& operator*=( float rhs  );
 	inline Vec4& operator/=( const Vec4& rhs );
 	inline Vec4& operator/=( float rhs );
-
-	inline bool operator==( const Vec4& rhs );
-	inline bool operator!=( const Vec4& rhs );
-
-	inline bool isZero( void );
+	inline bool  operator==( const Vec4& rhs ) const;
+	inline bool  operator!=( const Vec4& rhs ) const;
+	inline bool  isZero( void ) const;
 
 public:
 	static inline Vec4 fill( float x, float y, float z, float w );

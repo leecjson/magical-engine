@@ -9,12 +9,3 @@ $pfile "magical-common/common/Data.pkg"
 
 $pfile "magical-common/assets/AssetsSystem.pkg"
 $pfile "magical-common/log/LogSystem.pkg"
-
-struct Vec2
-{
-public:
-	float x;
-	float y;
-	
-	void getV( Vec2& out_vec );
-};

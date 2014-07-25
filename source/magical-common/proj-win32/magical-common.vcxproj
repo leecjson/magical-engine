@@ -30,8 +30,8 @@
     <ClCompile Include="..\src\math\kazmath\vec2.c" />
     <ClCompile Include="..\src\math\kazmath\vec3.c" />
     <ClCompile Include="..\src\math\kazmath\vec4.c" />
-    <ClCompile Include="..\src\math\Mat3.cpp" />
     <ClCompile Include="..\src\math\Mat4.cpp" />
+    <ClCompile Include="..\src\math\Quaternion.cpp" />
     <ClCompile Include="..\src\math\Vec2.cpp" />
     <ClCompile Include="..\src\math\Vec3.cpp" />
     <ClCompile Include="..\src\math\Vec4.cpp" />
@@ -64,8 +64,8 @@
     <ClInclude Include="..\src\math\kazmath\vec2.h" />
     <ClInclude Include="..\src\math\kazmath\vec3.h" />
     <ClInclude Include="..\src\math\kazmath\vec4.h" />
-    <ClInclude Include="..\src\math\Mat3.hpp" />
     <ClInclude Include="..\src\math\Mat4.hpp" />
+    <ClInclude Include="..\src\math\Math3D.hpp" />
     <ClInclude Include="..\src\math\Quaternion.hpp" />
     <ClInclude Include="..\src\math\Vec2.hpp" />
     <ClInclude Include="..\src\math\Vec3.hpp" />
@@ -75,8 +75,8 @@
     <ClInclude Include="..\src\utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\math\Mat3.inl" />
     <None Include="..\src\math\Mat4.inl" />
+    <None Include="..\src\math\Quaternion.inl" />
     <None Include="..\src\math\Vec2.inl" />
     <None Include="..\src\math\Vec3.inl" />
     <None Include="..\src\math\Vec4.inl" />

@@ -64,6 +64,14 @@ inline Vec3 Vec3::operator/( const Vec3& rhs ) const
 	return Vec3( x / rhs.x, y / rhs.y, z / rhs.z );
 }
 
+inline Vec3& Vec3::operator=( const Vec3& rhs )
+{
+	x = rhs.x;
+	y = rhs.y;
+	z = rhs.z;
+	return *this;
+}
+
 inline Vec3& Vec3::operator+=( const Vec3& rhs )
 {
 	x += rhs.x;
@@ -130,135 +138,293 @@ inline Vec3& Vec3::operator/=( float rhs )
 	return *this;
 }
 
-inline bool Vec3::operator==( const Vec3& rhs )
+inline bool Vec3::operator==( const Vec3& rhs ) const
 {
-	return kmVec3AreEqual( this, &rhs ) != 0;
+	return x == rhs.x && y == rhs.y && z == rhs.z;
 }
 
-inline bool Vec3::operator!=( const Vec3& rhs )
+inline bool Vec3::operator!=( const Vec3& rhs ) const
 {
-	return kmVec3AreEqual( this, &rhs ) == 0;
+	return x != rhs.x || y != rhs.y || z != rhs.z;
 }
 
-inline bool Vec3::isZero( void )
+inline bool Vec3::isZero( void ) const
 {
 	return x == 0.0f && y == 0.0f && z == 0.0f;
 }
 
-inline Vec3 Vec3::fill( float x, float y, float z )
+inline void Vec3::fill( float rx, float ry, float rz )
 {
-	Vec3 result;
-	kmVec3Fill( &result, x, y, z );
-	return result;
+	x = rx;
+	y = ry;
+	z = rz;
 }
 
-inline float Vec3::length( const Vec3& v )
+inline void Vec3::fill( const Vec3& rhs )
 {
-	return kmVec3Length( &v );
+	x = rhs.x;
+	y = rhs.y;
+	z = rhs.z;
 }
 
-inline float Vec3::lengthSq( const Vec3& v )
+inline void Vec3::fill( const float* rhs )
 {
-	return kmVec3LengthSq( &v );
+	magicalAssert( rhs, "should not be nullptr" );
+
+	x = rhs[0];
+	y = rhs[1];
+	z = rhs[2];
 }
 
-inline Vec3 Vec3::lerp( const Vec3& v1, const Vec3& v2, const float t )
+inline void Vec3::fillZero( void )
 {
-	Vec3 result;
-	kmVec3Lerp( &result, &v1, &v2, t );
-	return result;
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
 }
 
-inline Vec3 Vec3::normalize( const Vec3& v )
+inline Vec3 Vec3::copy( void ) const
 {
-	Vec3 result;
-	kmVec3Normalize( &result, &v );
-	return result;
+	return Vec3( *this );
 }
 
-inline Vec3 Vec3::cross( const Vec3& v1, const Vec3& v2 )
+inline void Vec3::clamp( const Vec3& min, const Vec3& max )
 {
-	Vec3 result;
-	kmVec3Cross( &result, &v1, &v2 );
-	return result;
+	magicalAssert( !(min.x > max.x || min.y > max.y || min.z > max.z), "Invaild operate!" );
+
+	if( x < min.x )
+		x = min.x;
+	if( x > max.x )
+		x = max.x;
+
+	if( y < min.y )
+		y = min.y;
+	if( y > max.y )
+		y = max.y;
+
+	if( z < min.z )
+		z = min.z;
+	if( z > max.z )
+		z = max.z;
 }
 
-inline float Vec3::dot( const Vec3& v1, const Vec3& v2 )
+inline void Vec3::cross( const Vec3& v )
 {
-	return kmVec3Dot( &v1, &v2 );
+	float rx = ( y * v.z ) - ( z * v.y );
+	float ry = ( z * v.x ) - ( x * v.z );
+	float rz = ( x * v.y ) - ( y * v.x );
+
+	x = rx;
+	y = ry;
+	z = rz;
 }
 
-inline Vec3 Vec3::multiplyMat3( const Vec3& v, const Mat3& m )
+inline void Vec3::negate( void )
 {
-	Vec3 result;
-	kmVec3MultiplyMat3( &result, &v, &m );
-	return result;
+	x = -x;
+    y = -y;
+    z = -z;
 }
 
-inline Vec3 Vec3::multiplyMat4( const Vec3& v, const Mat4& m )
+inline void Vec3::normalize( void )
 {
-	Vec3 result;
-	kmVec3MultiplyMat4( &result, &v, &m );
-	return result;
+	float n = x * x + y * y + z * z;
+	// already normalized.
+	if( n == 1.0f )
+		return;
+
+	n = sqrt( n );
+	// too close to zero.
+	if( n < MATH_TOLERANCE )
+		return;
+
+	n = 1.0f / n;
+	x *= n;
+	y *= n;
+	z *= n;
 }
 
-inline Vec3 Vec3::transform( const Vec3& v, const Mat4& m )
+inline void Vec3::scale( float scalar )
 {
-	Vec3 result;
-	kmVec3Transform( &result, &v, &m );
-	return result;
+	x *= scalar;
+    y *= scalar;
+    z *= scalar;
 }
 
-inline Vec3 Vec3::transformNormal( const Vec3& v, const Mat4& m )
+inline float Vec3::angle( const Vec3& v ) const
 {
-	Vec3 result;
-	kmVec3TransformNormal( &result, &v, &m );
-	return result;
+	float dx = y * v.z - z * v.y;
+	float dy = z * v.x - x * v.z;
+	float dz = x * v.y - y * v.x;
+
+	return atan2f( sqrt(dx * dx + dy * dy + dz * dz) + MATH_FLOAT_SMALL, Mathv3::dot(*this, v) );
+}
+	
+inline float Vec3::dot( const Vec3& v ) const
+{
+	return x * v.x + y * v.y + z * v.z;
 }
 
-inline Vec3 Vec3::transformCoord( const Vec3& v, const Mat4& m )
+inline float Vec3::distance( const Vec3& v ) const
 {
-	Vec3 result;
-	kmVec3TransformCoord( &result, &v, &m );
-	return result;
+	float dx = v.x - x;
+	float dy = v.y - y;
+	float dz = v.z - z;
+
+	return sqrt( dx * dx + dy * dy + dz * dz );
 }
 
-inline Vec3 Vec3::scale( const Vec3& v, const float s )
+inline float Vec3::distanceSq( const Vec3& v ) const
 {
-	Vec3 result;
-	kmVec3Scale( &result, &v, s );
-	return result;
+	float dx = v.x - x;
+    float dy = v.y - y;
+    float dz = v.z - z;
+
+    return dx * dx + dy * dy + dz * dz;
 }
 
-inline Vec3 Vec3::inverseTransform( const Vec3& v, const Mat4& m )
+inline float Vec3::length( void ) const
 {
-	Vec3 result;
-	kmVec3InverseTransform( &result, &v, &m );
-	return result;
+	return sqrt( x * x + y * y + z * z );
 }
 
-inline Vec3 Vec3::inverseTransformNormal( const Vec3& v, const Mat4& m )
+inline float Vec3::lengthSq( void ) const
 {
-	Vec3 result;
-	kmVec3InverseTransformNormal( &result, &v, &m );
-	return result;
+	return ( x * x + y * y + z * z );
 }
 
-inline Vec3 Vec3::getHorizontalAngle( const Vec3& v )
+
+inline Vec3 Mathv3::add( const Vec3& v1, const Vec3& v2 )
 {
-	Vec3 result;
-	kmVec3GetHorizontalAngle( &result, &v );
-	return result;
+	return v1 + v2;
 }
 
-inline Vec3 Vec3::rotationToDirection( const Vec3& v, const Vec3& forwards )
+inline Vec3 Mathv3::add( const Vec3& v1, float rhs )
 {
-	Vec3 result;
-	kmVec3RotationToDirection( &result, &v, &forwards );
-	return result;
+	return v1 + rhs;
 }
 
-static inline Vec3 operator*( const float lhs, const Vec3& rhs )
+inline Vec3 Mathv3::sub( const Vec3& v1, const Vec3& v2 )
 {
-	return rhs * lhs;
+	return v1 - v2;
+}
+
+inline Vec3 Mathv3::sub( const Vec3& v1, float rhs )
+{
+	return v1 - rhs;
+}
+
+inline Vec3 Mathv3::mul( const Vec3& v1, const Vec3& v2 )
+{
+	return v1 * v2;
+}
+
+inline Vec3 Mathv3::mul( const Vec3& v1, float rhs )
+{
+	return v1 * rhs;
+}
+
+inline Vec3 Mathv3::div( const Vec3& v1, const Vec3& v2 )
+{
+	return v1 / v2;
+}
+
+inline Vec3 Mathv3::div( const Vec3& v1, float rhs )
+{
+	return v1 / rhs;
+}
+
+inline bool Mathv3::equals( const Vec3& v1, const Vec3& v2 )
+{
+	return v1 == v2;
+}
+
+inline Vec3 Mathv3::fill( float rx, float ry, float rz )
+{
+	return Vec3( rx, ry, rz );
+}
+
+inline Vec3 Mathv3::fill( const Vec3& rhs )
+{
+	return Vec3( rhs );
+}
+
+inline Vec3 Mathv3::fill( const float* rhs )
+{
+	return Vec3( rhs );
+}
+
+inline Vec3 Mathv3::fillZero( void )
+{
+	return Vec3( 0.0f, 0.0f, 0.0f );
+}
+
+inline Vec3 Mathv3::copy( const Vec3 rhs )
+{
+	return Vec3( rhs );
+}
+
+inline Vec3 Mathv3::clamp( const Vec3& v, const Vec3& min, const Vec3& max )
+{
+	Vec3 ret = v;
+	ret.clamp( min, max );
+	return ret;
+}
+
+inline Vec3 Mathv3::cross( const Vec3& v1, const Vec3& v2 )
+{
+	Vec3 ret = v1;
+	ret.cross( v2 );
+	return ret;
+}
+
+inline Vec3 Mathv3::negate( const Vec3& v )
+{
+	Vec3 ret = v;
+	ret.negate();
+	return ret;
+}
+
+inline Vec3 Mathv3::normalize( const Vec3& v )
+{
+	Vec3 ret = v;
+	ret.normalize();
+	return ret;
+}
+
+inline Vec3 Mathv3::scale( const Vec3& v, float scalar )
+{
+	Vec3 ret = v;
+	ret.scale( scalar );
+	return ret;
+}
+
+inline float Mathv3::angle( const Vec3& v1, const Vec3& v2 )
+{
+	return v1.angle( v2 );
+}
+
+inline float Mathv3::dot( const Vec3& v1, const Vec3& v2 )
+{
+	return v1.dot( v2 );
+}
+
+inline float Mathv3::distance( const Vec3& v1, const Vec3& v2 )
+{
+	return v1.distance( v2 );
+}
+
+inline float Mathv3::distanceSq( const Vec3& v1, const Vec3& v2 )
+{
+	return v1.distanceSq( v2 );
+}
+
+inline float Mathv3::length( const Vec3& v )
+{
+	return v.length();
+}
+
+inline float Mathv3::lengthSq( const Vec3& v )
+{
+	return v.length();
 }

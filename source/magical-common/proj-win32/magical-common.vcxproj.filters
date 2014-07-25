@@ -105,16 +105,16 @@
     <ClCompile Include="..\src\math\kazmath\GL\matrix.c">
       <Filter>src\math\kazmath\GL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\Mat3.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\math\Mat4.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\Vec2.cpp">
+    <ClCompile Include="..\src\math\Vec3.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\Vec3.cpp">
+    <ClCompile Include="..\src\math\Quaternion.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Vec2.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\math\Vec4.cpp">
@@ -206,19 +206,19 @@
     <ClInclude Include="..\src\math\kazmath\GL\matrix.h">
       <Filter>src\math\kazmath\GL</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\Mat3.hpp">
-      <Filter>src\math</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\Mat4.hpp">
       <Filter>src\math</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\Quaternion.hpp">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\Vec2.hpp">
+    <ClInclude Include="..\src\math\Vec3.hpp">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\Vec3.hpp">
+    <ClInclude Include="..\src\math\Math3D.hpp">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Vec2.hpp">
       <Filter>src\math</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\Vec4.hpp">
@@ -226,16 +226,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\math\Mat3.inl">
-      <Filter>src\math</Filter>
-    </None>
     <None Include="..\src\math\Mat4.inl">
       <Filter>src\math</Filter>
     </None>
-    <None Include="..\src\math\Vec2.inl">
+    <None Include="..\src\math\Vec3.inl">
       <Filter>src\math</Filter>
     </None>
-    <None Include="..\src\math\Vec3.inl">
+    <None Include="..\src\math\Quaternion.inl">
+      <Filter>src\math</Filter>
+    </None>
+    <None Include="..\src\math\Vec2.inl">
       <Filter>src\math</Filter>
     </None>
     <None Include="..\src\math\Vec4.inl">

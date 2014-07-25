@@ -24,210 +24,78 @@ SOFTWARE.
 #ifndef __QUATERNION_HPP__
 #define __QUATERNION_HPP__
 
+#include "PlatformMacros.h"
 #include "Common.h"
 #include "kazmath/kazmath.h"
 #include "Vec3.hpp"
-#include "Mat4.hpp"
 
-struct Quaternion : public kmQuaternion
+struct Vec3;
+class Mathv3;
+
+struct Quaternion
 {
 public:
-	Quaternion( void )
-	{
-		x = y = z = w = 0.0f;
-	}
-
-	inline bool operator==( const Quaternion& rhs )
-	{
-		return kmQuaternionAreEqual( this, &rhs ) != 0;
-	}
-
-	inline Quaternion operator*( const Quaternion& rhs )
-	{
-		Quaternion result;
-		kmQuaternionMultiply( &result, this, &rhs );
-		return result;
-	}
-
-	inline Quaternion operator+( const Quaternion& rhs )
-	{
-		Quaternion result;
-		kmQuaternionAdd( &result, this, &rhs );
-		return result;
-	}
-
-	inline Quaternion operator-( const Quaternion& rhs )
-	{
-		Quaternion result;
-		kmQuaternionSubtract( &result, this, &rhs );
-		return result;
-	}
+	float x;
+	float y;
+	float z;
+	float w;
 
 public:
-	static inline Quaternion fill( float x, float y, float z, float w )
-	{
-		Quaternion result;
-		kmQuaternionFill( &result, x, y, z, w );
-		return result;
-	}
+	Quaternion( float rx, float ry, float rz, float rw );
+	Quaternion( const Quaternion& rhs );
+	Quaternion( const float* rhs );
+	Quaternion( const Vec3& axis, float angle );
+	Quaternion( void );
 
-	static inline float dot( const Quaternion& q1, const Quaternion& q2 )
-	{
-		return kmQuaternionDot( &q1, &q2 );
-	}
+	inline Quaternion operator*( const Quaternion& rhs ) const;
+	inline Quaternion& operator=( const Quaternion& rhs );
+	inline Quaternion& operator*=( const Quaternion& rhs );
 
-	static inline Quaternion exp( const Quaternion& q )
-	{
-		Quaternion result;
-		kmQuaternionExp( &result, &q );
-		return result;
-	}
+	inline void fill( float rx, float ry, float rz, float rw );
+	inline void fill( const Quaternion& rhs );
+	inline void fill( const float* rhs );
+	inline void fillAxisAngle( const Vec3& axis, float angle );
+	inline void fillIdentity( void );
+	inline void fillZero( void );
 
-	static inline Quaternion identity( void )
-	{
-		Quaternion result;
-		kmQuaternionIdentity( &result );
-		return result;
-	}
+	inline bool isIdentity( void ) const;
+	inline bool isZero( void ) const;
+	inline void negate( void );
+	inline void inverse( void );
+	inline void normalize( void );
+	inline Vec3 axis( void ) const;
+	inline float angle( void ) const;
+	inline void lerp( const Quaternion& rhs, float t );
+	inline void slerp( const Quaternion& rhs, float t );
 
-	static inline Quaternion inverse( const Quaternion& q )
-	{
-		Quaternion result;
-		kmQuaternionInverse( &result, &q );
-		return result;
-	}
-
-	static inline bool isIdentity( const Quaternion& q )
-	{
-		return kmQuaternionIsIdentity( &q ) != 0;
-	}
-
-	static inline float length( const Quaternion& q )
-	{
-		return kmQuaternionLength( &q );
-	}
-
-	static inline float lengthSq( const Quaternion& q )
-	{
-		return kmQuaternionLengthSq( &q );
-	}
-
-	static inline Quaternion ln( const Quaternion& q )
-	{
-		Quaternion result;
-		kmQuaternionLn( &result, &q );
-		return result;
-	}
-
-	static inline Quaternion normalize( const Quaternion& q )
-	{
-		Quaternion result;
-		kmQuaternionNormalize( &result, &q );
-		return result;
-	}
-
-	static inline Quaternion rotationAxisAngle( const Vec3& v, float angle )
-	{
-		Quaternion result;
-		kmQuaternionRotationAxisAngle( &result, &v, angle );
-		return result;
-	}
-
-	static inline Quaternion rotationMatrix( const Mat3& m )
-	{
-		Quaternion result;
-		kmQuaternionRotationMatrix( &result, &m );
-		return result;
-	}
-
-	static inline Quaternion rotationPitchYawRoll( float pitch, float yaw, float roll )
-	{
-		Quaternion result;
-		kmQuaternionRotationPitchYawRoll( &result, pitch, yaw, roll );
-		return result;
-	}
-
-	static inline Quaternion slerp( const Quaternion& q1, const Quaternion& q2, float t )
-	{
-		Quaternion result;
-		kmQuaternionSlerp( &result, &q1, &q2, t );
-		return result;
-	}
-	
-	//static inline void toAxisAngle( const Quaternion& q, const Vec3& v, float  )
-
-	static inline Quaternion scale( const Quaternion& q, float s )
-	{
-		Quaternion result;
-		kmQuaternionScale( &result, &q, s );
-		return result;
-	}
-
-	static inline Quaternion assign( const Quaternion& q )
-	{
-		Quaternion result;
-		kmQuaternionAssign( &result, &q );
-		return result;
-	}
-
-	static inline Quaternion rotationBetweenVec3( const Vec3& v1, const Vec3& v2, const Vec3& fallback )
-	{
-		Quaternion result;
-		kmQuaternionRotationBetweenVec3( &result, &v1, &v2, &fallback );
-		return result;
-	}
-
-	static inline Vec3 getUpVec3( const Quaternion& q )
-	{
-		Vec3 result;
-		kmQuaternionGetUpVec3( &result, &q );
-		return result;
-	}
-
-	static inline Vec3 getRightVec3( const Quaternion& q )
-	{
-		Vec3 result;
-		kmQuaternionGetRightVec3( &result, &q );
-		return result;
-	}
-
-	static inline Vec3 getForwardVec3RH( const Quaternion& q )
-	{
-		Vec3 result;
-		kmQuaternionGetForwardVec3RH( &result, &q );
-		return result;
-	}
-
-	static inline Vec3 getForwardVec3LH( const Quaternion& q )
-	{
-		Vec3 result;
-		kmQuaternionGetForwardVec3LH( &result, &q );
-		return result;
-	}
-
-	static inline float getPitch( const Quaternion& q )
-	{
-		return kmQuaternionGetPitch( &q );
-	}
-
-	static inline float getYaw( const Quaternion& q )
-	{
-		return kmQuaternionGetYaw( &q );
-	}
-
-	static inline float getRoll( const Quaternion& q )
-	{
-		return kmQuaternionGetRoll( &q );
-	}
-
-	static inline Quaternion lookRotation( const Vec3& direction, const Vec3& up )
-	{
-		Quaternion result;
-		kmQuaternionLookRotation( &result, &direction, &up );
-		return result;
-	}
-
-
+public:
+	static const Quaternion IDENTITY;
+	static const Quaternion ZERO;
 };
+
+class Mathq4
+{
+public:
+	static inline Quaternion mul( const Quaternion& lhs, const Quaternion& rhs );
+
+	static inline Quaternion fill( float rx, float ry, float rz, float rw );
+	static inline Quaternion fill( const Quaternion& rhs );
+	static inline Quaternion fill( const float* rhs );
+	static inline Quaternion fillAxisAngle( const Vec3& axis, float angle );
+	static inline Quaternion fillIdentity( void );
+	static inline Quaternion fillZero( void );
+
+	static inline bool isIdentity( const Quaternion& lhs );
+	static inline bool isZero( const Quaternion& lhs );
+	static inline Quaternion negate( const Quaternion& lhs );
+	static inline Quaternion inverse( const Quaternion& lhs );
+	static inline Quaternion normalize( const Quaternion& lhs );
+	static inline Vec3 axis( const Quaternion& lhs );
+	static inline float angle( const Quaternion& lhs );
+	static inline Quaternion lerp( const Quaternion& lhs, const Quaternion& rhs, float t );
+	static inline Quaternion slerp( const Quaternion& lhs, const Quaternion& rhs, float t );
+};
+
+#include "Quaternion.inl"
 	
 #endif //__QUATERNION_HPP__
