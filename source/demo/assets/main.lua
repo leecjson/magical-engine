@@ -2,25 +2,17 @@
 
 function onCreate() --> void
 
-    magicalBeginObserve();
-
-    local data = Data:create();
-    data:malloc(56);
-
-    local fff = data;
-    data = nil;
-    fff = nil;
-    collectgarbage();
-
-    magicalEndObserve();
+	local mat = Mat4();
+	
+	mat[0] = 5;
+	
+	print( mat[0] );
+    
 end
 
-onCreate();
-
-function go() --> void
-    local a = 5;
-    local b = a;
+function go()
 end
+
 
 
 

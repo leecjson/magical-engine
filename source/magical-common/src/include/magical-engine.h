@@ -58,11 +58,20 @@ magical common - utils
 #include "Utils.h"
 
 /*
-magical common - kazmath
+magical common - math
 */
-//#include "GL/matrix.h"
-//#include "GL/mat4stack.h"
-//#include "kazmath.h"
+#include "Mat4.h"
+#include "Vec2.h"
+#include "Vec3.h"
+#include "Vec4.h"
+#include "Quaternion.h"
+
+/*
+magical common - transform
+*/
+#include "MatrixStack.h"
+
+
 
 /*
 magical renderer - context

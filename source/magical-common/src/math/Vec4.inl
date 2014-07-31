@@ -64,6 +64,14 @@ inline Vec4 Vec4::operator/( const Vec4& rhs ) const
 	return Vec4( x / rhs.x, y / rhs.y, z / rhs.z, w / rhs.w );
 }
 
+inline Vec4& Vec4::operator=( const Vec4& rhs )
+{
+	x = rhs.x;
+	y = rhs.y;
+	z = rhs.z;
+	w = rhs.w;
+}
+
 inline Vec4& Vec4::operator+=( const Vec4& rhs )
 {
 	x += rhs.x;
@@ -153,62 +161,257 @@ inline bool Vec4::isZero( void ) const
 	return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
 }
 
-inline Vec4 Vec4::fill( float x, float y, float z, float w )
+inline void Vec4::fill( float rx, float ry, float rz, float rw )
 {
-	return Vec4( x, y, z, w );
+	x = rx;
+	y = ry;
+	z = rz;
+	w = rw;
 }
 
-inline float Vec4::dot( const Vec4& v1, const Vec4& v2 )
+inline void Vec4::fill( const float* rhs )
 {
-	return kmVec4Dot( &v1, &v2 );
+	x = rhs[0];
+	y = rhs[1];
+	z = rhs[2];
+	w = rhs[3];
 }
 
-inline float Vec4::length( const Vec4& v )
+inline void Vec4::fill( const Vec4& rhs )
 {
-	return kmVec4Length( &v );
+	x = rhs.x;
+	y = rhs.y;
+	z = rhs.z;
+	w = rhs.w;
 }
 
-inline float Vec4::lengthSq( const Vec4& v )
+inline void Vec4::fillZero( void )
 {
-	return kmVec4LengthSq( &v );
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
+	w = 0.0f;
 }
 
-inline Vec4 Vec4::lerp( const Vec4& v1, const Vec4& v2, const float t )
+inline Vec4 Vec4::copy( void ) const
 {
-	Vec4 result;
-	kmVec4Lerp( &result, &v1, &v2, t );
-	return result;
+	return *this;
 }
 
-inline Vec4 Vec4::normalize( const Vec4& v )
+inline float Vec4::angle( const Vec4& rhs ) const
 {
-	Vec4 result;
-	kmVec4Normalize( &result, &v );
-	return result;
+	float dx = w * rhs.x - x * rhs.w - y * rhs.z + z * rhs.y;
+	float dy = w * rhs.y - y * rhs.w - z * rhs.x + x * rhs.z;
+	float dz = w * rhs.z - z * rhs.w - x * rhs.y + y * rhs.x;
+
+	return atan2f( sqrt( dx * dx + dy * dy + dz * dz ) + MATH_FLOAT_SMALL, dot( rhs ) );
 }
 
-inline Vec4 Vec4::scale( const Vec4& v, const float s )
+inline void Vec4::clamp( const Vec4& min, const Vec4& max )
 {
-	Vec4 result;
-	kmVec4Scale( &result, &v, s );
-	return result;
+	magicalAssert( !(min.x > max.x || min.y > max.y || min.z > max.z || min.w > max.w), "");
+
+	if( x < min.x )
+		x = min.x;
+	if( x > max.x )
+		x = max.x;
+
+	if( y < min.y )
+		y = min.y;
+	if( y > max.y )
+		y = max.y;
+
+	if( z < min.z )
+		z = min.z;
+	if( z > max.z )
+		z = max.z;
+
+	if( w < min.w )
+		w = min.w;
+	if( w > max.w )
+		w = max.w;
 }
 
-inline Vec4 Vec4::multiplyMat4( const Vec4& v, const Mat4& m )
+inline float Vec4::dot( const Vec4& v ) const
 {
-	Vec4 result;
-	kmVec4MultiplyMat4( &result, &v, &m );
-	return result;
+	return x * v.x + y * v.y + z * v.z + w * v.w;
 }
 
-const Vec4 Vec4::transform( const Vec4& v, const Mat4& m )
+inline float Vec4::distance( const Vec4& v ) const
 {
-	Vec4 result;
-	kmVec4Transform( &result, &v, &m );
-	return result;
+	float dx = v.x - x;
+	float dy = v.y - y;
+	float dz = v.z - z;
+	float dw = v.w - w;
+
+	return sqrt( dx * dx + dy * dy + dz * dz + dw * dw );
 }
 
-static inline Vec4 operator*( const float lhs, const Vec4& rhs )
+inline float Vec4::distanceSq( const Vec4& v ) const
 {
-	return rhs * lhs;
+	float dx = v.x - x;
+	float dy = v.y - y;
+	float dz = v.z - z;
+	float dw = v.w - w;
+
+	return ( dx * dx + dy * dy + dz * dz + dw * dw );
+}
+
+inline float Vec4::length( void ) const
+{
+	return sqrt( x * x + y * y + z * z + w * w );
+}
+
+inline float Vec4::lengthSq( void ) const
+{
+	return ( x * x + y * y + z * z + w * w );
+}
+
+inline void Vec4::negate( void )
+{
+	x = -x;
+    y = -y;
+    z = -z;
+    w = -w;
+}
+
+inline void Vec4::normalize( void )
+{
+	float n = x * x + y * y + z * z + w * w;
+	// Already normalized.
+	if( n == 1.0f )
+		return;
+
+	n = sqrt( n );
+	// Too close to zero.
+	if( n < MATH_TOLERANCE )
+		return;
+
+	n = 1.0f / n;
+	x *= n;
+	y *= n;
+	z *= n;
+	w *= n;
+}
+
+
+inline Vec4 Mathv4::add( const Vec4& lhs, float rhs )
+{
+	return lhs + rhs;
+}
+
+inline Vec4 Mathv4::add( const Vec4& lhs, const Vec4& rhs )
+{
+	return lhs + rhs;
+}
+
+inline Vec4 Mathv4::sub( const Vec4& lhs, float rhs )
+{
+	return lhs - rhs;
+}
+
+inline Vec4 Mathv4::sub( const Vec4& lhs, const Vec4& rhs )
+{
+	return lhs - rhs;
+}
+
+inline Vec4 Mathv4::mul( const Vec4& lhs, float rhs )
+{
+	return lhs * rhs;
+}
+
+inline Vec4 Mathv4::mul( const Vec4& lhs, const Vec4& rhs )
+{
+	return lhs * rhs;
+}
+
+inline Vec4 Mathv4::div( const Vec4& lhs, float rhs )
+{
+	return lhs / rhs;
+}
+
+inline Vec4 Mathv4::div( const Vec4& lhs, const Vec4& rhs )
+{
+	return lhs / rhs;
+}
+
+inline bool Mathv4::equals( const Vec4& v1, const Vec4& v2 )
+{
+	return v1 == v2;
+}
+
+inline Vec4 Mathv4::fill( float rx, float ry, float rz, float rw )
+{
+	return Vec4( rx, ry, rz, rw );
+}
+
+inline Vec4 Mathv4::fill( const float* rhs )
+{
+	return Vec4( rhs );
+}
+
+inline Vec4 Mathv4::fill( const Vec4& rhs )
+{
+	return Vec4( rhs );
+}
+
+inline Vec4 Mathv4::fillZero( void )
+{
+	return Vec4::ZERO;
+}
+
+inline Vec4 Mathv4::copy( const Vec4& v )
+{
+	return v;
+}
+
+inline Vec4 Mathv4::negate( const Vec4& v )
+{
+	Vec4 ret( v );
+	ret.negate();
+	return ret;
+}
+
+inline Vec4 Mathv4::normalize( const Vec4& v )
+{
+	Vec4 ret( v );
+	ret.normalize();
+	return ret;
+}
+
+inline Vec4 Mathv4::clamp( const Vec4& v, const Vec4& min, const Vec4& max )
+{
+	Vec4 ret( v );
+	ret.clamp( min, max );
+	return ret;
+}
+
+inline float Mathv4::angle( const Vec4& v, const Vec4& rhs )
+{
+	return v.angle( rhs );
+}
+
+inline float Mathv4::dot( const Vec4& v1, const Vec4& v2 )
+{
+	return v1.dot( v2 );
+}
+
+inline float Mathv4::distance( const Vec4& v1, const Vec4& v2 )
+{
+	return v1.distance( v2 );
+}
+
+inline float Mathv4::distanceSq( const Vec4& v1, const Vec4& v2 )
+{
+	return v1.distanceSq( v2 );
+}
+
+inline float Mathv4::length( const Vec4& v )
+{
+	return v.length();
+}
+
+inline float Mathv4::lengthSq( const Vec4& v )
+{
+	return v.lengthSq();
 }

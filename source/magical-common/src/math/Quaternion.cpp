@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Quaternion.hpp"
+#include "Quaternion.h"
 
 const Quaternion Quaternion::IDENTITY = Quaternion( 0.0f, 0.0f, 0.0f, 1.0f );
 const Quaternion Quaternion::ZERO = Quaternion( 0.0f, 0.0f, 0.0f, 0.0f );

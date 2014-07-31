@@ -26,7 +26,7 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "kazmath/kazmath.h"
+#include "Math3D.h"
 
 struct Vec4
 {
@@ -50,6 +50,7 @@ public:
 	inline Vec4  operator*( const Vec4& rhs ) const;
 	inline Vec4  operator/( float rhs ) const;
 	inline Vec4  operator/( const Vec4& rhs ) const;
+	inline Vec4& operator=( const Vec4& rhs );
 	inline Vec4& operator+=( const Vec4& rhs );
 	inline Vec4& operator+=( float rhs );
 	inline Vec4& operator-=( const Vec4& rhs );
@@ -63,15 +64,52 @@ public:
 	inline bool  isZero( void ) const;
 
 public:
-	static inline Vec4 fill( float x, float y, float z, float w );
+	inline void  fill( float rx, float ry, float rz, float rw );
+	inline void  fill( const float* rhs );
+	inline void  fill( const Vec4& rhs );
+	inline void  fillZero( void );
+	inline Vec4  copy( void ) const;
+	inline void  negate( void );
+	inline void  normalize( void );
+	inline void  clamp( const Vec4& min, const Vec4& max );
+	inline float angle( const Vec4& rhs ) const;
+	inline float dot( const Vec4& v ) const;
+	inline float distance( const Vec4& v ) const;
+	inline float distanceSq( const Vec4& v ) const;
+	inline float length( void ) const;
+	inline float lengthSq( void ) const;
+	
+public:
+	static const Vec4 ZERO;
+};
+
+class Mathv4
+{
+public:
+	static inline Vec4 add( const Vec4& lhs, float rhs );
+	static inline Vec4 add( const Vec4& lhs, const Vec4& rhs );
+	static inline Vec4 sub( const Vec4& lhs, float rhs );
+	static inline Vec4 sub( const Vec4& lhs, const Vec4& rhs );
+	static inline Vec4 mul( const Vec4& lhs, float rhs );
+	static inline Vec4 mul( const Vec4& lhs, const Vec4& rhs );
+	static inline Vec4 div( const Vec4& lhs, float rhs );
+	static inline Vec4 div( const Vec4& lhs, const Vec4& rhs );
+	static inline bool equals( const Vec4& v1, const Vec4& v2 );
+
+	static inline Vec4  fill( float rx, float ry, float rz, float rw );
+	static inline Vec4  fill( const float* rhs );
+	static inline Vec4  fill( const Vec4& rhs );
+	static inline Vec4  fillZero( void );
+	static inline Vec4  copy( const Vec4& v );
+	static inline Vec4  negate( const Vec4& v );
+	static inline Vec4  normalize( const Vec4& v );
+	static inline Vec4  clamp( const Vec4& v, const Vec4& min, const Vec4& max );
+	static inline float angle( const Vec4& v, const Vec4& rhs );
 	static inline float dot( const Vec4& v1, const Vec4& v2 );
+	static inline float distance( const Vec4& v1, const Vec4& v2 );
+	static inline float distanceSq( const Vec4& v1, const Vec4& v2 );
 	static inline float length( const Vec4& v );
 	static inline float lengthSq( const Vec4& v );
-	static inline Vec4 lerp( const Vec4& v1, const Vec4& v2, const float t );
-	static inline Vec4 normalize( const Vec4& v );
-	static inline Vec4 scale( const Vec4& v, const float s );
-	static inline Vec4 multiplyMat4( const Vec4& v, const Mat4& m );
-	static const Vec4 transform( const Vec4& v, const Mat4& m );
 };
 
 #include "Vec4.inl"

@@ -17,25 +17,13 @@
     <ClCompile Include="..\src\common\Reference.cpp" />
     <ClCompile Include="..\src\engine\Engine.cpp" />
     <ClCompile Include="..\src\log\win32\LogSystem.cpp" />
-    <ClCompile Include="..\src\math\kazmath\aabb.c" />
-    <ClCompile Include="..\src\math\kazmath\GL\mat4stack.c" />
-    <ClCompile Include="..\src\math\kazmath\GL\matrix.c" />
-    <ClCompile Include="..\src\math\kazmath\mat3.c" />
-    <ClCompile Include="..\src\math\kazmath\mat4.c" />
-    <ClCompile Include="..\src\math\kazmath\plane.c" />
-    <ClCompile Include="..\src\math\kazmath\quaternion.c" />
-    <ClCompile Include="..\src\math\kazmath\ray2.c" />
-    <ClCompile Include="..\src\math\kazmath\ray3.c" />
-    <ClCompile Include="..\src\math\kazmath\utility.c" />
-    <ClCompile Include="..\src\math\kazmath\vec2.c" />
-    <ClCompile Include="..\src\math\kazmath\vec3.c" />
-    <ClCompile Include="..\src\math\kazmath\vec4.c" />
     <ClCompile Include="..\src\math\Mat4.cpp" />
     <ClCompile Include="..\src\math\Quaternion.cpp" />
     <ClCompile Include="..\src\math\Vec2.cpp" />
     <ClCompile Include="..\src\math\Vec3.cpp" />
     <ClCompile Include="..\src\math\Vec4.cpp" />
     <ClCompile Include="..\src\node\Node.cpp" />
+    <ClCompile Include="..\src\transform\MatrixStack.cpp" />
     <ClCompile Include="..\src\utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -50,28 +38,15 @@
     <ClInclude Include="..\src\engine\Engine.h" />
     <ClInclude Include="..\src\include\magical-engine.h" />
     <ClInclude Include="..\src\log\LogSystem.h" />
-    <ClInclude Include="..\src\math\kazmath\aabb.h" />
-    <ClInclude Include="..\src\math\kazmath\GL\mat4stack.h" />
-    <ClInclude Include="..\src\math\kazmath\GL\matrix.h" />
-    <ClInclude Include="..\src\math\kazmath\kazmath.h" />
-    <ClInclude Include="..\src\math\kazmath\mat3.h" />
-    <ClInclude Include="..\src\math\kazmath\mat4.h" />
-    <ClInclude Include="..\src\math\kazmath\plane.h" />
-    <ClInclude Include="..\src\math\kazmath\quaternion.h" />
-    <ClInclude Include="..\src\math\kazmath\ray2.h" />
-    <ClInclude Include="..\src\math\kazmath\ray3.h" />
-    <ClInclude Include="..\src\math\kazmath\utility.h" />
-    <ClInclude Include="..\src\math\kazmath\vec2.h" />
-    <ClInclude Include="..\src\math\kazmath\vec3.h" />
-    <ClInclude Include="..\src\math\kazmath\vec4.h" />
-    <ClInclude Include="..\src\math\Mat4.hpp" />
-    <ClInclude Include="..\src\math\Math3D.hpp" />
-    <ClInclude Include="..\src\math\Quaternion.hpp" />
-    <ClInclude Include="..\src\math\Vec2.hpp" />
-    <ClInclude Include="..\src\math\Vec3.hpp" />
-    <ClInclude Include="..\src\math\Vec4.hpp" />
+    <ClInclude Include="..\src\math\Mat4.h" />
+    <ClInclude Include="..\src\math\Math3D.h" />
+    <ClInclude Include="..\src\math\Quaternion.h" />
+    <ClInclude Include="..\src\math\Vec2.h" />
+    <ClInclude Include="..\src\math\Vec3.h" />
+    <ClInclude Include="..\src\math\Vec4.h" />
     <ClInclude Include="..\src\node\Node.h" />
     <ClInclude Include="..\src\PlatformMacros.h" />
+    <ClInclude Include="..\src\transform\MatrixStack.h" />
     <ClInclude Include="..\src\utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>

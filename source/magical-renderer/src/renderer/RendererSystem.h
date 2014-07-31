@@ -21,10 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDER_SYSTEM_H__
-#define __RENDER_SYSTEM_H__
+#ifndef __RENDERER_SYSTEM_H__
+#define __RENDERER_SYSTEM_H__
 
 #include "PlatformMacros.h"
+#include "Common.h"
 
 class Renderer
 {
@@ -38,4 +39,4 @@ public:
 };
 
 
-#endif //__RENDER_SYSTEM_H__
+#endif //__RENDERER_SYSTEM_H__

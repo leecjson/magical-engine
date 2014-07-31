@@ -26,10 +26,10 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "kazmath/kazmath.h"
-#include "Quaternion.hpp"
-#include "Vec3.hpp"
-#include "Vec4.hpp"
+
+#include "Quaternion.h"
+#include "Vec3.h"
+#include "Vec4.h"
 
 struct Quaternion;
 struct Vec3;

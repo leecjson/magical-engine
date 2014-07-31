@@ -77,17 +77,15 @@ void LuaState::addModulePath( const char* path )
 {
 	lua_getglobal( _L, "package" );
     lua_getfield( _L, -1, "path" );
-    const char* cur_path =  lua_tostring( _L, -1 );
+    const char* cur_path = lua_tostring( _L, -1 );
     lua_pushfstring( _L, "%s;%s/?.lua", cur_path, path );
     lua_setfield( _L, -3, "path" );
-    lua_pop( _L, 2 );  
+    lua_pop( _L, 2 );
 }
 
 int LuaState::executeScriptFile( const char* file ) const
 {
-#ifdef MAG_WIN32
 	int ret = luaL_dofile( _L, file );
-#endif
 	if( ret != 0 )
 	{
 		handleLuaError();

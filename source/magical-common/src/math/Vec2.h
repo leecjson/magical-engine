@@ -26,9 +26,9 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "kazmath/kazmath.h"
+#include "Math3D.h"
 
-struct Vec2 : public kmVec2
+struct Vec2
 {
 public:
 	float x;

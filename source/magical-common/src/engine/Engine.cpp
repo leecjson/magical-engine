@@ -27,6 +27,7 @@ SOFTWARE.
 #include "AssetsSystem.h"
 #include "LuaSystem.h"
 #include "RendererSystem.h"
+#include "MatrixStack.h"
 
 static int64_t s_last_update_time;
 static float s_delta_time;
@@ -52,6 +53,9 @@ void Engine::initSystems( void )
 	Lua::init();
 	magicalReturnIfError();
 
+	MatrixStack::init();
+	magicalReturnIfError();
+
 	Renderer::init();
 	magicalReturnIfError();
 }
@@ -59,6 +63,9 @@ void Engine::initSystems( void )
 void Engine::delcSystems( void )
 {
 	Renderer::delc();
+	magicalReturnIfError();
+
+	MatrixStack::delc();
 	magicalReturnIfError();
 
 	Lua::delc();
@@ -74,8 +81,7 @@ void Engine::mainLoop( void )
 
 	Renderer::render();
 
-	Shared<LuaState>& L = Lua::getLuaState();
-	L->executeGlobalFunction("go");
+	Lua::state()->executeGlobalFunction("go");
 }
 
 void Engine::reshape( int w, int h )
@@ -90,7 +96,7 @@ float Engine::getDeltaTime( void )
 
 static void calcDeltaTime( void )
 {
-	int64_t now  = TimeUtils::currentMicrosecondsTime();
-	s_delta_time = std::max<float>(0, (now - s_last_update_time) / 1000000.0f);
+	int64_t now = TimeUtils::currentMicrosecondsTime();
+	s_delta_time = std::max<float>( 0, ( now - s_last_update_time ) / 1000000.0f );
 	s_last_update_time = now;
 }

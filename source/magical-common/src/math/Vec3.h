@@ -26,7 +26,7 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Math3D.hpp"
+#include "Math3D.h"
 
 struct Vec3
 {

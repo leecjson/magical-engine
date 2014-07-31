@@ -1,0 +1,23 @@
+enum MatrixStackMode
+{
+    kModelView,
+    kProjection,
+};
+
+class MatrixStack
+{
+public:
+	static void init( void );
+	static void delc( void );
+
+public:
+	static void use( MatrixStackMode mode );
+	static void reset( void );
+	static void resetAll( void );
+	static void push( void );
+	static void pop( void );
+	static void identity( void );
+	static void load( const Mat4& mat );
+	static void multiply( const Mat4& mat );
+	static const Mat4& get( void );
+};

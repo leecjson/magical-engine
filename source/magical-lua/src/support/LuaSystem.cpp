@@ -35,7 +35,7 @@ void Lua::delc( void )
 	s_lua_state.reset();
 }
 
-Shared<LuaState>& Lua::getLuaState( void )
+Shared<LuaState>& Lua::state( void )
 {
 	return s_lua_state;
 }

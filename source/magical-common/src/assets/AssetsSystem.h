@@ -37,10 +37,12 @@ public:
 	static void delc( void );
 
 public:
+	static std::string getAbsolutePath( const char* path );
 	static std::string getDefaultSearchPath( void );
 	static void addSearchPath( const char* path );
 	static void removeSearchPath( const char* path );
 	static void clearSearchPath( void );
+	static void clearCachedAbsPath( void );
 	static bool isAssetsFileExist( const char* file_name );
 	static Shared<Data> loadAssetsFile( const char* file_name );
 };

@@ -44,7 +44,7 @@ public:
 		va_start( args, format );
 		vsnprintf( buf, __size, format, args );
 		va_end( args );
-		return std::move( std::string(buf) );
+		return std::string( buf );
 	}
 };
 
@@ -60,6 +60,7 @@ class FileUtils
 {
 public:
 	static bool isAbsolutePath( const char* path );
+	static std::string toUnixStylePath( const char* path );
 };
 
 #endif //__UTILS_H__

@@ -34,16 +34,14 @@ static Map<std::string, std::string> s_absolute_path_cache_map;
 static Array<std::string> s_search_path_array;
 static std::string s_default_search_path;
 
-static std::string win32GetPathWithUnixStyle( const char* path );
 static std::string win32GetAssetsDefaultSearchPath( void );
-static std::string win32GetAbsloutePath( const char* path );
 
 void Assets::init( void )
 {
 	s_default_search_path = win32GetAssetsDefaultSearchPath();
 	if( s_default_search_path.empty() )
 	{
-		magicalSetLastErrorInfo("default_search_path is empty, win32GetAssetsDefaultSearchPath() error");
+		magicalSetLastErrorInfo("s_default_search_path is empty, win32GetAssetsDefaultSearchPath() error");
 		magicalLogLastError();
 		return;
 	}
@@ -55,6 +53,36 @@ void Assets::delc( void )
 	
 }
 
+std::string Assets::getAbsolutePath( const char* path )
+{
+	magicalAssert( path, "should not be nullptr" );
+
+	if( FileUtils::isAbsolutePath(path) )
+	{
+		return path;
+	}
+	std::string unix_path = FileUtils::toUnixStylePath( path );
+
+	auto cache_itr = s_absolute_path_cache_map.find( unix_path );
+	if( cache_itr != s_absolute_path_cache_map.end() )
+	{
+		return cache_itr->second;
+	}
+
+	std::string abs_path;
+	for( const auto& prefix : s_search_path_array )
+	{
+		abs_path = prefix + unix_path;
+		int ret = GetFileAttributesA( abs_path.c_str() );
+		if( ret != -1 )
+		{
+			s_absolute_path_cache_map.insert( std::make_pair(unix_path, abs_path) );
+			return abs_path;
+		}
+	}
+	return "";
+}
+
 std::string Assets::getDefaultSearchPath( void )
 {
 	return s_default_search_path;
@@ -64,8 +92,8 @@ void Assets::addSearchPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr" );
 
-	std::string unix_path = win32GetPathWithUnixStyle( path );
 	std::string prefix;
+	std::string unix_path = FileUtils::toUnixStylePath( path );
 	if( FileUtils::isAbsolutePath( unix_path.c_str() ) == false )
 	{
 		prefix = s_default_search_path;
@@ -84,7 +112,7 @@ void Assets::removeSearchPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr" );
 
-	std::string unix_path = win32GetPathWithUnixStyle( path );
+	std::string unix_path = FileUtils::toUnixStylePath( path );
 	auto path_itr = std::find( s_search_path_array.begin(), s_search_path_array.end(), unix_path );
 	if( path_itr != s_search_path_array.end() )
 	{
@@ -99,11 +127,16 @@ void Assets::clearSearchPath( void )
 	s_absolute_path_cache_map.clear();
 }
 
+void Assets::clearCachedAbsPath( void )
+{
+	s_absolute_path_cache_map.clear();
+}
+
 bool Assets::isAssetsFileExist( const char* file_name )
 {
 	magicalAssert( file_name, "should not be nullptr" );
 
-	std::string file_path = win32GetPathWithUnixStyle( file_name );
+	std::string file_path = FileUtils::toUnixStylePath( file_name );
 	if( FileUtils::isAbsolutePath( file_path.c_str() ) == false )
 	{
 		std::string abs_path;
@@ -129,7 +162,7 @@ Shared<Data> Assets::loadAssetsFile( const char* file_name )
 {
 	magicalAssert( file_name, "should not be nullptr" );
 
-	std::string abs_path = win32GetAbsloutePath( file_name );
+	std::string abs_path = getAbsolutePath( file_name );
 	magicalAssert( !abs_path.empty(), StringUtils::format<512>("get assets file data failed! file(%s) doesn't exist!", file_name).c_str() );
 
 	FILE* fp = fopen( abs_path.c_str(), "rb" );
@@ -151,62 +184,17 @@ Shared<Data> Assets::loadAssetsFile( const char* file_name )
 	read_size = fread( data->ptr(), sizeof(char), size, fp );
 	data->realloc( read_size + 1 );
 	data->ptr()[ read_size ] = 0;
-
 	fclose( fp );
-	
-	return std::move( data );
-}
 
-static std::string win32GetPathWithUnixStyle( const char* path )
-{
-    std::string ret = path;
-    int len = ret.length();
-    for( int i = 0; i < len; ++i )
-    {
-        if( ret[i] == '\\' )
-        {
-            ret[i] = '/';
-        }
-    }
-    return std::move( ret );
+	return data;
 }
 
 static std::string win32GetAssetsDefaultSearchPath( void )
 {
-	char buf[kMaxPathLength] = {0};
+	char buf[kMaxPathLength] = { 0 };
 	GetCurrentDirectoryA( sizeof(buf)-1, buf );
 
-	std::string ret = win32GetPathWithUnixStyle( buf );
+	std::string ret = FileUtils::toUnixStylePath( buf );
 	ret.append( "/" );
-	return std::move( ret );
-}
-
-std::string win32GetAbsloutePath( const char* path )
-{
-	magicalAssert( path, "should not be nullptr" );
-
-	if( FileUtils::isAbsolutePath(path) )
-	{
-		return path;
-	}
-	std::string unix_path = win32GetPathWithUnixStyle( path );
-
-	auto cache_itr = s_absolute_path_cache_map.find( unix_path );
-	if( cache_itr != s_absolute_path_cache_map.end() )
-	{
-		return cache_itr->second;
-	}
-
-	std::string abs_path;
-	for( const auto& prefix : s_search_path_array )
-	{
-		abs_path = prefix + unix_path;
-		int ret = GetFileAttributesA( abs_path.c_str() );
-		if( ret != -1 )
-		{
-			s_absolute_path_cache_map.insert( std::make_pair(unix_path, abs_path) );
-			return std::move( abs_path );
-		}
-	}
-	return "";
+	return ret;
 }

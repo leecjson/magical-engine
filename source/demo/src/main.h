@@ -28,10 +28,9 @@ SOFTWARE.
 
 extern void onFinishLaunching( void )
 {
-	Shared<LuaState>& L = Lua::getLuaState();
-	L->executeScriptFile("main.lua");
-	//L->executeGlobalFunction(kLuaOnCreate);
-	L->clean();
+	Lua::state()->executeScriptFile("main.lua");
+	Lua::state()->executeGlobalFunction(kLuaOnCreate);
+	Lua::state()->clean();
 }
 
 #endif //__APP_MAIN_H__

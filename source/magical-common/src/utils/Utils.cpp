@@ -43,7 +43,7 @@ float TimeUtils::endTicking( void )
 {
 	float result;
 	int64_t now = TimeUtils::currentMicrosecondsTime();
-	result = std::max<float>(0, (now - s_ticking) / 1000000.0f);
+	result = std::max<float>( 0, ( now - s_ticking ) / 1000000.0f );
 	s_ticking = 0;
 	return result;
 }
@@ -62,4 +62,20 @@ bool FileUtils::isAbsolutePath( const char* path )
 	}
 	return false;
 #endif
+}
+
+std::string FileUtils::toUnixStylePath( const char* path )
+{
+	magicalAssert( path, "should not be nullptr" );
+
+	std::string ret = path;
+    int len = ret.length();
+    for( int i = 0; i < len; ++i )
+    {
+        if( ret[i] == '\\' )
+        {
+            ret[i] = '/';
+        }
+    }
+    return ret;
 }
