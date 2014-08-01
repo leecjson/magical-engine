@@ -7,10 +7,6 @@ enum MatrixStackMode
 class MatrixStack
 {
 public:
-	static void init( void );
-	static void delc( void );
-
-public:
 	static void use( MatrixStackMode mode );
 	static void reset( void );
 	static void resetAll( void );

@@ -22,8 +22,8 @@
     <ClCompile Include="..\src\math\Vec2.cpp" />
     <ClCompile Include="..\src\math\Vec3.cpp" />
     <ClCompile Include="..\src\math\Vec4.cpp" />
-    <ClCompile Include="..\src\node\Node.cpp" />
-    <ClCompile Include="..\src\transform\MatrixStack.cpp" />
+    <ClCompile Include="..\src\transform\Transform.cpp" />
+    <ClCompile Include="..\src\utils\MatrixStack.cpp" />
     <ClCompile Include="..\src\utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -44,9 +44,9 @@
     <ClInclude Include="..\src\math\Vec2.h" />
     <ClInclude Include="..\src\math\Vec3.h" />
     <ClInclude Include="..\src\math\Vec4.h" />
-    <ClInclude Include="..\src\node\Node.h" />
     <ClInclude Include="..\src\PlatformMacros.h" />
-    <ClInclude Include="..\src\transform\MatrixStack.h" />
+    <ClInclude Include="..\src\transform\Transform.h" />
+    <ClInclude Include="..\src\utils\MatrixStack.h" />
     <ClInclude Include="..\src\utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>

@@ -34,7 +34,7 @@ void MatrixStack::init( void )
 	s_projection_stack.reserve(5);
 
 	resetAll();
-	use( kMatrixStackModelView );
+	use( kProjection );
 }
 
 void MatrixStack::delc( void )
@@ -48,10 +48,10 @@ void MatrixStack::use( MatrixStackMode mode )
 {
 	switch( mode )
 	{
-	case MatrixStackMode::kMatrixStackModelView:
+	case kModelView:
 		s_select_stack = &s_modelview_stack;
 		break;
-	case MatrixStackMode::kMatrixStackProjection:
+	case kProjection:
 		s_select_stack = &s_projection_stack;
 		break;
 	}
@@ -96,7 +96,7 @@ void MatrixStack::multiply( const Mat4& mat )
 	s_select_stack->back() *= mat;
 }
 
-const Mat4& MatrixStack::get( void )
+Mat4 MatrixStack::get( void )
 {
 	return s_select_stack->back();
 }

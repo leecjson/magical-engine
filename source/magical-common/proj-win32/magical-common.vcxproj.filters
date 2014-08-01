@@ -25,9 +25,6 @@
     <Filter Include="src\log\win32">
       <UniqueIdentifier>{eb12aa98-c6d8-4934-b675-ba55f6b5d9e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\node">
-      <UniqueIdentifier>{447009d4-13d4-4717-97d6-22de220d9a89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\utils">
       <UniqueIdentifier>{b90d30df-6159-44d1-b857-979e37a19445}</UniqueIdentifier>
     </Filter>
@@ -54,9 +51,6 @@
     <ClCompile Include="..\src\utils\Utils.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\node\Node.cpp">
-      <Filter>src\node</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\common\Reference.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
@@ -78,8 +72,11 @@
     <ClCompile Include="..\src\math\Mat4.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\transform\MatrixStack.cpp">
+    <ClCompile Include="..\src\transform\Transform.cpp">
       <Filter>src\transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils\MatrixStack.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="..\src\utils\Utils.h">
       <Filter>src\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\node\Node.h">
-      <Filter>src\node</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PlatformMacros.h">
       <Filter>src</Filter>
@@ -143,8 +137,11 @@
     <ClInclude Include="..\src\math\Mat4.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\transform\MatrixStack.h">
+    <ClInclude Include="..\src\transform\Transform.h">
       <Filter>src\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\MatrixStack.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

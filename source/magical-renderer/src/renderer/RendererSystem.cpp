@@ -36,8 +36,6 @@ void Renderer::delc( void )
 
 void Renderer::render( void )
 {
-	TransformStack::use(  )
-
 	MatrixStack::use( kProjection );
 	MatrixStack::push();
 

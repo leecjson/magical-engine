@@ -1,6 +1,6 @@
 /*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 07/29/14 11:15:23.
+** Generated automatically by tolua++-1.0.92 on 07/31/14 12:47:49.
 */
 
 #ifndef __cplusplus
@@ -12345,60 +12345,6 @@ static int tolua_common_Mathq4_slerp00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: init of class  MatrixStack */
-#ifndef TOLUA_DISABLE_tolua_common_MatrixStack_init00
-static int tolua_common_MatrixStack_init00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"MatrixStack",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   MatrixStack::init();
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: delc of class  MatrixStack */
-#ifndef TOLUA_DISABLE_tolua_common_MatrixStack_delc00
-static int tolua_common_MatrixStack_delc00(lua_State* tolua_S)
-{
-#ifdef MAG_DEBUG
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"MatrixStack",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   MatrixStack::delc();
-  }
- }
- return 0;
-#ifdef MAG_DEBUG
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'delc'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: use of class  MatrixStack */
 #ifndef TOLUA_DISABLE_tolua_common_MatrixStack_use00
 static int tolua_common_MatrixStack_use00(lua_State* tolua_S)
@@ -13093,8 +13039,6 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kProjection",kProjection);
   tolua_cclass(tolua_S,"MatrixStack","MatrixStack","",NULL);
   tolua_beginmodule(tolua_S,"MatrixStack");
-   tolua_function(tolua_S,"init",tolua_common_MatrixStack_init00);
-   tolua_function(tolua_S,"delc",tolua_common_MatrixStack_delc00);
    tolua_function(tolua_S,"use",tolua_common_MatrixStack_use00);
    tolua_function(tolua_S,"reset",tolua_common_MatrixStack_reset00);
    tolua_function(tolua_S,"resetAll",tolua_common_MatrixStack_resetAll00);

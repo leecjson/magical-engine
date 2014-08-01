@@ -11,6 +11,12 @@ function onCreate() --> void
 end
 
 function go()
+	
+	MatrixStack:use( kModelView );
+	MatrixStack:push();
+	
+	MatrixStack:pop();
+
 end
 
 

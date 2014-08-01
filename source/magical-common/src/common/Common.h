@@ -40,13 +40,6 @@ SOFTWARE.
 /*
 general macros
 */
-//#ifndef MIN
-//#define MIN(a, b) (((a) > (b)) ? (b) : (a))
-//#endif
-//#ifndef MAX
-//#define MAX(a, b) (((a) < (b)) ? (b) : (a))
-//#endif
-
 #define kMaxLogLength  ( 1024 * 50 )
 #define kMaxErrLength  ( 1024 )
 #define kMaxPathLength ( 1024 )

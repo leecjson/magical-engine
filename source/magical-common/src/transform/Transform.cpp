@@ -21,35 +21,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __MATRIX_STACK_H__
-#define __MATRIX_STACK_H__
+#include "Transform.h"
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "Mat4.h"
-
-enum StackMode
-{
-    kStackModelView,
-    kStackProjection,
-};
-
-class MatrixStack
-{
-public:
-	static void init( void );
-	static void delc( void );
-
-public:
-	static void use( MatrixStackMode mode );
-	static void reset( void );
-	static void resetAll( void );
-	static void push( void );
-	static void pop( void );
-	static void identity( void );
-	static void load( const Mat4& mat );
-	static void multiply( const Mat4& mat );
-	static const Mat4& get( void );
-};
-
-#endif //__MATRIX_STACK_H__
