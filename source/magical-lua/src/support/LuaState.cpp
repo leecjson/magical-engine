@@ -47,7 +47,7 @@ LuaState::LuaState( void )
 	luaopen_common( _L );
 
 #ifdef MAG_WIN32
-	std::string default_search_path = Assets::getDefaultSearchPath();
+	std::string default_search_path = Assets::getAssetsPath();
 	default_search_path += "standard/script";
 	addModulePath( default_search_path.c_str() );
 #endif

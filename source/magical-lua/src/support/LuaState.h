@@ -56,8 +56,6 @@ public:
 	void pushUserData( void* obj, const char* type ) const;
 	void clean( void ) const;
 
-	
-
 private:
 	void handleLuaError( void ) const;
 

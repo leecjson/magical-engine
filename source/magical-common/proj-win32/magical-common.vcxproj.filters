@@ -36,9 +36,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp">
-      <Filter>src\assets\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\common\Common.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
@@ -75,7 +72,10 @@
     <ClCompile Include="..\src\transform\Transform.cpp">
       <Filter>src\transform</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\utils\MatrixStack.cpp">
+    <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp">
+      <Filter>src\assets\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils\Pipeline.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,7 +140,7 @@
     <ClInclude Include="..\src\transform\Transform.h">
       <Filter>src\transform</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\utils\MatrixStack.h">
+    <ClInclude Include="..\src\utils\Pipeline.h">
       <Filter>src\utils</Filter>
     </ClInclude>
   </ItemGroup>

@@ -30,22 +30,12 @@ SOFTWARE.
 #include "Array.h"
 #include "Map.h"
 
-static Map<std::string, std::string> s_absolute_path_cache_map;
-static Array<std::string> s_search_path_array;
-static std::string s_default_search_path;
-
-static std::string win32GetAssetsDefaultSearchPath( void );
+static std::string s_assets_path;
 
 void Assets::init( void )
 {
-	s_default_search_path = win32GetAssetsDefaultSearchPath();
-	if( s_default_search_path.empty() )
-	{
-		magicalSetLastErrorInfo("s_default_search_path is empty, win32GetAssetsDefaultSearchPath() error");
-		magicalLogLastError();
-		return;
-	}
-	s_search_path_array.push_back( s_default_search_path );
+	resetAssetsPath();
+	magicalReturnIfError();
 }
 
 void Assets::delc( void )
@@ -53,83 +43,53 @@ void Assets::delc( void )
 	
 }
 
-std::string Assets::getAbsolutePath( const char* path )
+void Assets::resetAssetsPath( void )
 {
-	magicalAssert( path, "should not be nullptr" );
+	char buf[kMaxPathLength] = { 0 };
+	GetCurrentDirectoryA( sizeof(buf)-1, buf );
 
-	if( FileUtils::isAbsolutePath(path) )
+	if( strlen( buf ) == 0 )
 	{
-		return path;
-	}
-	std::string unix_path = FileUtils::toUnixStylePath( path );
-
-	auto cache_itr = s_absolute_path_cache_map.find( unix_path );
-	if( cache_itr != s_absolute_path_cache_map.end() )
-	{
-		return cache_itr->second;
+		magicalSetLastErrorInfo("GetCurrentDirectoryA buf is empty, Assets::resetAssetsPath() error!");
+		magicalLogLastError();
+		return;
 	}
 
-	std::string abs_path;
-	for( const auto& prefix : s_search_path_array )
-	{
-		abs_path = prefix + unix_path;
-		int ret = GetFileAttributesA( abs_path.c_str() );
-		if( ret != -1 )
-		{
-			s_absolute_path_cache_map.insert( std::make_pair(unix_path, abs_path) );
-			return abs_path;
-		}
-	}
-	return "";
+	s_assets_path = FileUtils::toUnixStylePath( buf );
+	s_assets_path.append( "/" );
 }
 
-std::string Assets::getDefaultSearchPath( void )
-{
-	return s_default_search_path;
-}
-
-void Assets::addSearchPath( const char* path )
-{
-	magicalAssert( path, "should not be nullptr" );
-
-	std::string prefix;
-	std::string unix_path = FileUtils::toUnixStylePath( path );
-	if( FileUtils::isAbsolutePath( unix_path.c_str() ) == false )
-	{
-		prefix = s_default_search_path;
-	}
-
-	std::string real_path = prefix + unix_path;
-	if( real_path.length() > 0 && real_path[real_path.length() - 1] != '/' )
-	{
-		real_path += "/";
-	}
-	s_search_path_array.push_back( real_path );
-	s_absolute_path_cache_map.clear();
-}
-
-void Assets::removeSearchPath( const char* path )
+void Assets::setAssetsPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr" );
 
 	std::string unix_path = FileUtils::toUnixStylePath( path );
-	auto path_itr = std::find( s_search_path_array.begin(), s_search_path_array.end(), unix_path );
-	if( path_itr != s_search_path_array.end() )
+	magicalAssert( FileUtils::isAbsolutePath( unix_path.c_str() ), "should be absolute path" );
+
+	if( unix_path.length() > 0 && unix_path[unix_path.length() - 1] != '/' )
 	{
-		s_search_path_array.erase( path_itr );
-		s_absolute_path_cache_map.clear();
+		unix_path += "/";
 	}
+	s_assets_path = unix_path;
 }
 
-void Assets::clearSearchPath( void )
+std::string Assets::getAssetsPath( void )
 {
-	s_search_path_array.clear();
-	s_absolute_path_cache_map.clear();
+	return s_assets_path;
 }
 
-void Assets::clearCachedAbsPath( void )
+std::string Assets::getAssetsAbsoluteFilename( const char* file_name )
 {
-	s_absolute_path_cache_map.clear();
+	magicalAssert( file_name, "should not be nullptr" );
+
+	if( FileUtils::isAbsolutePath( file_name ) )
+	{
+		return file_name;
+	}
+	std::string unix_path = FileUtils::toUnixStylePath( file_name );
+	std::string abs_path = s_assets_path + unix_path;
+	
+	return abs_path;
 }
 
 bool Assets::isAssetsFileExist( const char* file_name )
@@ -139,15 +99,11 @@ bool Assets::isAssetsFileExist( const char* file_name )
 	std::string file_path = FileUtils::toUnixStylePath( file_name );
 	if( FileUtils::isAbsolutePath( file_path.c_str() ) == false )
 	{
-		std::string abs_path;
-		for( const auto& prefix : s_search_path_array )
+		std::string abs_path = s_assets_path + file_path;
+		int ret = GetFileAttributesA( abs_path.c_str() );
+		if( ret != -1 )
 		{
-			abs_path = prefix + file_path;
-			int ret = GetFileAttributesA( abs_path.c_str() );
-			if( ret != -1 )
-			{
-				return true;
-			}
+			return true;
 		}
 	}
 	else
@@ -158,11 +114,11 @@ bool Assets::isAssetsFileExist( const char* file_name )
 	return false;
 }
 
-Shared<Data> Assets::loadAssetsFile( const char* file_name )
+Shared<Data> Assets::getAssetsFileData( const char* file_name )
 {
 	magicalAssert( file_name, "should not be nullptr" );
 
-	std::string abs_path = getAbsolutePath( file_name );
+	std::string abs_path = getAssetsAbsoluteFilename( file_name );
 	magicalAssert( !abs_path.empty(), StringUtils::format<512>("get assets file data failed! file(%s) doesn't exist!", file_name).c_str() );
 
 	FILE* fp = fopen( abs_path.c_str(), "rb" );
@@ -187,14 +143,4 @@ Shared<Data> Assets::loadAssetsFile( const char* file_name )
 	fclose( fp );
 
 	return data;
-}
-
-static std::string win32GetAssetsDefaultSearchPath( void )
-{
-	char buf[kMaxPathLength] = { 0 };
-	GetCurrentDirectoryA( sizeof(buf)-1, buf );
-
-	std::string ret = FileUtils::toUnixStylePath( buf );
-	ret.append( "/" );
-	return ret;
 }

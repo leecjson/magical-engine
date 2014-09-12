@@ -25,11 +25,15 @@ SOFTWARE.
 #define __MAP_H__
 
 #include <unordered_map>
+#include <map>
 
 #include "PlatformMacros.h"
 #include "Common.h"
 
 template< class K, class T >
-using Map = std::unordered_map< K, T >;
+using UnorderedMap = std::unordered_map< K, T >;
+
+template< class K, class T >
+using Map = std::map< K, T >;
 
 #endif //__MAP_H__

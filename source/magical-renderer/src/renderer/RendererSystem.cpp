@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "RendererSystem.h"
-#include "MatrixStack.h"
+#include "Pipeline.h"
 
 void Renderer::init( void )
 {
@@ -36,10 +36,12 @@ void Renderer::delc( void )
 
 void Renderer::render( void )
 {
-	MatrixStack::use( kProjection );
-	MatrixStack::push();
 
-	MatrixStack::pop();
+	
+	Pipeline::use( kProjection );
+	Pipeline::push();
+
+	Pipeline::pop();
 }
 
 void Renderer::reshape( int w, int h )

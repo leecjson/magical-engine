@@ -33,9 +33,9 @@ SOFTWARE.
 #define magicalLogE( __msg )
 #define magicalLogLastError()
 #else
-#define magicalLog( __msg ) Log::I( __msg )
-#define magicalLogD( __msg ) Log::D( __msg )
-#define magicalLogE( __msg ) Log::E( __msg )
+#define magicalLog( __msg )   Log::I( __msg )
+#define magicalLogD( __msg )  Log::D( __msg )
+#define magicalLogE( __msg )  Log::E( __msg )
 #define magicalLogLastError() Log::E( magicalGetLastErrorInfo() )
 #endif
 
@@ -46,8 +46,19 @@ public:
 	static void delc( void );
 
 public:
+	/* ------------------------------------------------------------------------- *\
+	 * 输出到普通信息频道的日志
+	\* ------------------------------------------------------------------------- */
 	static void I( const char* msg );
+
+	/* ------------------------------------------------------------------------- *\
+	 * 输出到调试信息频道的日志
+	\* ------------------------------------------------------------------------- */
 	static void D( const char* msg );
+
+	/* ------------------------------------------------------------------------- *\
+	 * 输出到错误信息频道的日志
+	\* ------------------------------------------------------------------------- */
 	static void E( const char* msg );
 };
 

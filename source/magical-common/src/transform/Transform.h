@@ -27,12 +27,18 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
+#include "Vec3.h"
 
-class Transform
+class Transform : public Reference
 {
 public:
 	Transform( void );
-	
+	virtual ~Transform( void );
+
+public:
+	Vec3 position;
+	Vec3 rotation;
+	Vec3 scale;
 };
 
 #endif //__TRANSFORM_H__

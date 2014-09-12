@@ -118,7 +118,7 @@ inline Mat4 Mat4::operator*( float scalar ) const
 	dst.mat[2]  = mat[2]  * scalar;
 	dst.mat[3]  = mat[3]  * scalar;
 	dst.mat[4]  = mat[4]  * scalar;
-	dst.mat[5]  = mat[5]  * scalar;
+	dst.mat[5]  = mat[5]  * scalar;	
 	dst.mat[6]  = mat[6]  * scalar;
 	dst.mat[7]  = mat[7]  * scalar;
 	dst.mat[8]  = mat[8]  * scalar;

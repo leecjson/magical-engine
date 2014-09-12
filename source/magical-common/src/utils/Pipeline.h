@@ -21,8 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __MATRIX_STACK_H__
-#define __MATRIX_STACK_H__
+#ifndef __MAT_PIPELINE_H__
+#define __MAT_PIPELINE_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
@@ -34,7 +34,7 @@ enum MatrixStackMode
     kProjection,
 };
 
-class MatrixStack
+class Pipeline
 {
 public:
 	static void init( void );
@@ -52,4 +52,4 @@ public:
 	static Mat4 get( void );
 };
 
-#endif //__MATRIX_STACK_H__
+#endif //__MAT_PIPELINE_H__
