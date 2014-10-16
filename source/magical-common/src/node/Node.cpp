@@ -57,27 +57,27 @@ const Mat4& Node::getMatrix() const
 		bool has_rotation = !_rotation.isIdentity();
 		bool has_scale = !_scale.isOne();
 		
-		if( has_translation || ( _dirty_info & kDirtyTranslation ) == kDirtyTranslation )
+		if( has_translation || _dirty_info & kDirtyTranslation )
 		{
 			_matrix.fillTranslation( _position );
-			if( has_rotation || ( _dirty_info & kDirtyRotation ) == kDirtyRotation )
+			if( has_rotation || _dirty_info & kDirtyRotation )
 			{
 				_matrix.rotate( _rotation );
 			}
-			if( has_scale || ( _dirty_info & kDirtyScale ) == kDirtyScale )
+			if( has_scale || _dirty_info & kDirtyScale )
 			{
 				_matrix.scale( _scale );
 			}
 		}
-		else if( has_rotation || ( _dirty_info & kDirtyRotation ) == kDirtyRotation )
+		else if( has_rotation || _dirty_info & kDirtyRotation )
 		{
 			_matrix.fillRotation( _rotation );
-			if( has_scale || ( _dirty_info & kDirtyScale ) == kDirtyScale )
+			if( has_scale || _dirty_info & kDirtyScale )
 			{
 				_matrix.scale( _scale );
 			}
 		}
-		else if( has_scale || ( _dirty_info & kDirtyScale ) == kDirtyScale )
+		else if( has_scale || _dirty_info & kDirtyScale )
 		{
 			_matrix.fillScale( _scale );
 		}
@@ -167,7 +167,7 @@ const Vec3& Node::getPosition( void ) const
 
 void Node::setPosition( const Vec3& translation )
 {
-	if( _position == translation )
+	if( translation == _position )
 		return;
 
 	_position.fill( translation );
@@ -309,68 +309,98 @@ const Quaternion& Node::getRotation( void ) const
 
 void Node::setRotation( float qx, float qy, float qz, float qw )
 {
+	if( MathQuaternion::equals( _rotation, qx, qy, qz, qw ) )
+		return;
+
 	_rotation.fill( qx, qy, qz, qw );
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::setRotation( const Quaternion& rotation )
 {
+	if( rotation == _rotation )
+		return;
+
 	_rotation.fill( rotation );
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::setRotation( const Vec3& axis, float angle )
 {
 	_rotation.fillAxisAngle( axis, angle );
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::setRotationX( float angle )
 {
-	_rotation = Quaternion( Vec3::RIGHT, angle );
+	Quaternion rot( Vec3::RIGHT, angle );
+	if( rot == _rotation )
+		return;
+
+	_rotation = rot;
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::setRotationY( float angle )
 {
-	_rotation = Quaternion( Vec3::UP, angle );
+	Quaternion rot( Vec3::UP, angle );
+	if( rot == _rotation )
+		return;
+
+	_rotation = rot;
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::setRotationZ( float angle )
 {
-	_rotation = Quaternion( Vec3::FORWARD, angle );
+	Quaternion rot( Vec3::FORWARD, angle );
+	if( rot == _rotation )
+		return;
+
+	_rotation = rot;
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::rotate( float qx, float qy, float qz, float qw )
 {
-	Quaternion q( qx, qy, qz, qw );
-	_rotation *= q;
+	Quaternion rot( qx, qy, qz, qw );
+	_rotation *= rot;
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::rotate( const Quaternion& rotation )
 {
 	_rotation *= rotation;
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::rotate( const Vec3& axis, float angle )
 {
-	Quaternion q( axis, angle );
-	_rotation *= q;
+	Quaternion rot( axis, angle );
+	_rotation *= rot;
 	_rotation.normalize();
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::rotateX( float angle )
 {
-	Quaternion q( Vec3::RIGHT, angle );
-	_rotation *= q;
+	Quaternion rot( Vec3::RIGHT, angle );
+	_rotation *= rot;
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::rotateY( float angle )
 {
-	Quaternion q( Vec3::UP, angle );
-	_rotation *= q;
+	Quaternion rot( Vec3::UP, angle );
+	_rotation *= rot;
+	setDirtyInfo( kDirtyRotation );
 }
 
 void Node::rotateZ( float angle )
 {
-	Quaternion q( Vec3::FORWARD, angle );
-	_rotation *= q;
+	Quaternion rot( Vec3::FORWARD, angle );
+	_rotation *= rot;
+	setDirtyInfo( kDirtyRotation );
 }
 
 const Vec3& Node::getScale() const
@@ -380,66 +410,116 @@ const Vec3& Node::getScale() const
 
 void Node::setScale( float scale )
 {
+	if( MathVec3::equals( _scale, scale, scale, scale ) )
+		return;
+
 	_scale.fill( scale, scale, scale );
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::setScale( float sx, float sy, float sz )
 {
+	if( MathVec3::equals( _scale, sx, sy, sz ) )
+		return;
+
 	_scale.fill( sx, sy, sz );
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::setScale( const Vec3& scale )
 {
+	if( scale == _scale )
+		return;
+
 	_scale.fill( scale );
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::setScaleX( float sx )
 {
+	if( magicalFloatEquals( _scale.x, sx ) )
+		return;
+
 	_scale.x = sx;
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::setScaleY( float sy )
 {
+	if( magicalFloatEquals( _scale.y, sy ) )
+		return;
+
 	_scale.y = sy;
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::setScaleZ( float sz )
 {
+	if( magicalFloatEquals( _scale.z, sz ) )
+		return;
+
 	_scale.z = sz;
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::scale( float scaler )
 {
+	if( magicalFloatEquals( scaler, 1.f ) )
+		return;
+
 	_scale.scale( scaler );
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::scale( float sx, float sy, float sz )
 {
+	if( magicalFloatEquals( sx, 1.f ) &&
+		magicalFloatEquals( sy, 1.f ) && 
+		magicalFloatEquals( sz, 1.f ) )
+		return;
+
 	_scale.x *= sx;
 	_scale.y *= sy;
 	_scale.z *= sz;
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::scale( const Vec3& scaler )
 {
+	if( scaler.isOne() )
+		return;
+
 	_scale.x *= scaler.x;
     _scale.y *= scaler.y;
     _scale.z *= scaler.z;
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::scaleX( float sx )
 {
+	if( magicalFloatEquals( sx, 1.f ) )
+		return;
+
 	_scale.x *= sx;
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::scaleY( float sy )
 {
+	if( magicalFloatEquals( sy, 1.f ) )
+		return;
+
 	_scale.y *= sy;
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::scaleZ( float sz )
 {
+	if( magicalFloatEquals( sz, 1.f ) )
+		return;
+
 	_scale.z *= sz;
+	setDirtyInfo( kDirtyScale );
 }
 
 void Node::resetTransform( void )
@@ -447,42 +527,19 @@ void Node::resetTransform( void )
 	_scale.fillOne();
 	_rotation.fillIdentity();
 	_position.fillZero();
+	setDirtyInfo( kDirtyScale );
 }
 
-
-void Node::lookAt( const Vec3& position, const Vec3& up, const Vec3& target )
+void Node::lookAt( const Vec3& target, const Vec3& up )
 {
-	/*Mat4 mat;
+	Mat4 mat;
+	mat.fillLookAt( _position, target, up );
+	
+	Quaternion rot = mat.getRotation();
+	if( rot == _rotation )
+		return;
 
-	Vec3 upv = up;
-	upv.normalize();
-
-	Vec3 zaxis = Mathv3::sub( position, target );
-	zaxis.normalize();
-
-	Vec3 xaxis = Mathv3::cross( upv, zaxis );
-	xaxis.normalize();
-
-	Vec3 yaxis = Mathv3::cross( zaxis, xaxis );
-	yaxis.normalize();
-
-	mat.mat[0] = xaxis.x;
-	mat.mat[1] = xaxis.y;
-	mat.mat[2] = xaxis.z;
-	mat.mat[3] = 0;
-
-	mat.mat[4] = yaxis.x;
-	mat.mat[5] = yaxis.y;
-	mat.mat[6] = yaxis.z;
-	mat.mat[7] = 0;
-
-	mat.mat[8] = zaxis.x;
-	mat.mat[9] = zaxis.y;
-	mat.mat[10] = zaxis.z;
-	mat.mat[11] = 0;
-
-	setRotation( matRotate );
-	setPosition( position );*/
+	setRotation( rot );
 }
 
 void Node::setDirtyInfo( char dirty_info )

@@ -347,6 +347,15 @@ inline bool MathQuaternion::equals( const Quaternion& lhs, const Quaternion& rhs
 	return lhs == rhs;
 }
 
+inline bool MathQuaternion::equals( const Quaternion& lhs, float x, float y, float z, float w )
+{
+	return 
+		magicalFloatEquals( lhs.x, x ) &&
+		magicalFloatEquals( lhs.y, y ) &&
+		magicalFloatEquals( lhs.z, z ) &&
+		magicalFloatEquals( lhs.w, w );
+}
+
 inline bool MathQuaternion::isIdentity( const Quaternion& lhs )
 {
 	return lhs.isIdentity();

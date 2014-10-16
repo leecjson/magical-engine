@@ -117,6 +117,11 @@ public:
     inline void transpose( void );
 	inline Vec3 transformVec3( const Vec3& vec ) const;
 	inline Vec4 transformVec4( const Vec4& vec ) const;
+	inline float determinant( void ) const;
+	inline bool decompose( Vec3* translation, Quaternion* rotation, Vec3* scale ) const;
+	inline Vec3 getTranslation( void ) const;
+	inline Quaternion getRotation( void ) const;
+	inline Vec3 getScale( void ) const;
 
 public:
 	static const Mat4 IDENTITY;
@@ -157,7 +162,6 @@ public:
 	static inline Mat4 fillRotationZ( float angle );
 	static inline Mat4 fillTranslation( const Vec3& translation );
 	static inline Mat4 fillTranslation( float x, float y, float z );
-
 	
 	static inline Vec3 getUpVector( const Mat4& m );
 	static inline Vec3 getDownVector( const Mat4& m );
@@ -180,6 +184,11 @@ public:
     static inline Mat4 transpose( const Mat4& m );
 	static inline Vec3 transformVec3( const Mat4& m, const Vec3& vec );
 	static inline Vec4 transformVec4( const Mat4& m, const Vec4& vec );
+	static inline float determinant( const Mat4& m );
+	static inline bool decompose( const Mat4& m, Vec3* translation, Quaternion* rotation, Vec3* scale );
+	static inline Vec3 getTranslation( const Mat4& m );
+	static inline Quaternion getRotation( const Mat4& m );
+	static inline Vec3 getScale( const Mat4& m );
 };
 
 #include "Mat4.inl"

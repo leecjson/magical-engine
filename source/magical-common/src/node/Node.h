@@ -95,7 +95,7 @@ public:
 	void scaleZ( float sz );
 
 	void resetTransform( void );
-	void lookAt( const Vec3& position, const Vec3& up, const Vec3& target );
+	void lookAt( const Vec3& target, const Vec3& up );
 
 private:
 	void setDirtyInfo( char dirty_info );

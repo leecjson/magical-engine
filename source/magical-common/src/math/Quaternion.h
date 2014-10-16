@@ -76,6 +76,7 @@ class MathQuaternion
 {
 public:
 	static inline Quaternion mul( const Quaternion& lhs, const Quaternion& rhs );
+	static inline bool equals( const Quaternion& lhs, float x, float y, float z, float w );
 	static inline bool equals( const Quaternion& lhs, const Quaternion& rhs );
 	static inline bool isIdentity( const Quaternion& lhs );
 	static inline bool isZero( const Quaternion& lhs );
