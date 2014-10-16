@@ -36,7 +36,6 @@ public:
 
 public:
 	Vec2( float rx, float ry );
-	Vec2( const float* rhs );
 	Vec2( const Vec2& rhs );
 	Vec2( void );
 
@@ -60,12 +59,13 @@ public:
 	inline bool  operator==( const Vec2& rhs ) const;
 	inline bool  operator!=( const Vec2& rhs ) const;
 	inline bool  isZero( void ) const;
+	inline bool  isOne( void ) const;
 
 	inline Vec2  copy( void ) const;
 	inline void  fill( float rx, float ry );
-	inline void  fill( const float* rhs );
 	inline void  fill( const Vec2& rhs );
 	inline void  fillZero( void );
+	inline void  fillOne( void );
 	inline void  clamp( const Vec2& min, const Vec2& max );
 	inline float distance( const Vec2& v ) const;
     inline float distanceSq( const Vec2& v ) const;
@@ -80,9 +80,10 @@ public:
 
 public:
 	static const Vec2 ZERO;
+	static const Vec2 ONE;
 };
 
-class Mathv2
+class MathVec2
 {
 public:
 	static inline Vec2 add( const Vec2& v1, const Vec2& v2 );
@@ -94,12 +95,14 @@ public:
 	static inline Vec2 div( const Vec2& v1, const Vec2& v2 );
 	static inline Vec2 div( const Vec2& v1, float rhs );
 	static inline bool equals( const Vec2& v1, const Vec2& v2 );
+	static inline bool isZero( const Vec2& v );
+	static inline bool isOne( const Vec2& v );
 
 	static inline Vec2  copy( const Vec2& rhs );
 	static inline Vec2  fill( float rx, float ry );
-	static inline Vec2  fill( const float* rhs );
 	static inline Vec2  fill( const Vec2& rhs );
 	static inline Vec2  fillZero( void );
+	static inline Vec2  fillOne( void );
 	static inline Vec2  clamp( const Vec2& lhs, const Vec2& min, const Vec2& max );
 	static inline float distance( const Vec2& lhs, const Vec2& v );
     static inline float distanceSq( const Vec2& lhs, const Vec2& v );

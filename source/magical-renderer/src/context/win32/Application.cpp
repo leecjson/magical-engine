@@ -32,7 +32,7 @@ SOFTWARE.
 #define magicalWin32ReturnIfError() \
 if( magicalIsError() == true ) \
 { \
-	MessageBoxA(nullptr, magicalGetLastErrorInfo(), "Error", MB_OK); \
+	MessageBoxA( nullptr, magicalGetLastErrorInfo(), "Error", MB_OK ); \
 	return; \
 }
 
@@ -47,13 +47,13 @@ static void win32SetupWindow( void )
 {
 	GLint argc = 0;
 
-	glutInit(&argc, nullptr);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(960, 640);
-	glutCreateWindow("Magical Engine");
+	glutInit( &argc, nullptr );
+	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
+	glutInitWindowSize( 960, 640 );
+	glutCreateWindow( "Magical Engine" );
 
-	glutReshapeFunc(win32GlutReshape);
-	glutDisplayFunc(win32GlutDisplay);
+	glutReshapeFunc( win32GlutReshape );
+	glutDisplayFunc( win32GlutDisplay );
 }
 
 static void win32ShutdownWindow( void )
@@ -66,7 +66,7 @@ static void win32SetupGL( void )
 	GLenum result = glewInit();
 	if( result != GLEW_OK )
 	{
-		magicalSetLastErrorInfo("init glew error");
+		magicalSetLastErrorInfo( "init glew error" );
 		magicalLogLastError();
 	}
 }

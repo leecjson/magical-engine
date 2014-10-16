@@ -36,7 +36,7 @@ MAGAPI_USER void magicalLuaStateDump( lua_State* L )
 	int  top = lua_gettop( L );
 
 	sprintf( buf, "Total [%d] in lua stack: ", top );
-	magicalLogD( buf );
+	Log::D( buf );
 
 	for( i = -1; i >= -top; i-- )
 	{
@@ -55,7 +55,7 @@ MAGAPI_USER void magicalLuaStateDump( lua_State* L )
 		default:
 			sprintf( buf, "[%02d] %s\n", i, lua_typename( L, t ) );
 		}
-		magicalLogD( buf );
+		Log::D( buf );
 	}
 }
 

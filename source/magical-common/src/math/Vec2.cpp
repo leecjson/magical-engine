@@ -23,32 +23,27 @@ SOFTWARE.
 *******************************************************************************/
 #include "Vec2.h"
 
-Vec2::Vec2( float rx, float ry )
-: x(rx)
-, y(ry)
-{
-	
-}
+const Vec2 Vec2::ZERO = Vec2( 0.0f, 0.0f );
+const Vec2 Vec2::ONE = Vec2( 1.0f, 1.0f );
 
-Vec2::Vec2( const float* rhs )
-: x(rhs[0])
-, y(rhs[1])
+Vec2::Vec2( float rx, float ry )
+: x( rx )
+, y( ry )
 {
 
 }
 
 Vec2::Vec2( const Vec2& rhs )
-: x(rhs.x)
-, y(rhs.y)
+: x( rhs.x )
+, y( rhs.y )
 {
 
 }
 
 Vec2::Vec2( void )
-: x(0.0f)
-, y(0.0f)
+: x( 0.0f )
+, y( 0.0f )
 {
-	
+
 }
 
-const Vec2 Vec2::ZERO = Vec2( 0.0f, 0.0f );

@@ -30,5 +30,12 @@ Transform::Transform( void )
 
 Transform::~Transform( void )
 {
+	
+}
 
+Shared<Transform> Transform::create( void )
+{
+	Transform* ret = new Transform();
+	magicalAssert( ret, "new Transform() failed" );
+	return Shared<Transform>( Initializer<Transform>( ret ) );
 }

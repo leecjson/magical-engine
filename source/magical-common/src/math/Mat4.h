@@ -27,6 +27,7 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
+#include "Math3D.h"
 #include "Quaternion.h"
 #include "Vec3.h"
 #include "Vec4.h"
@@ -35,19 +36,28 @@ struct Quaternion;
 struct Vec3;
 struct Vec4;
 
-class Mathq4;
-class Mathv3;
-class Mathv4;
+class MathVec3;
+class MathVec4;
 
-#define kMat4Size sizeof(float) * 16
-
+// 行优先4X4矩阵
 struct Mat4
 {
 public:
 	float mat[16];
 
 public:
-	Mat4( float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44 );
+	Mat4(
+		float m11, float m12, float m13, float m14,
+		float m21, float m22, float m23, float m24,
+		float m31, float m32, float m33, float m34,
+		float m41, float m42, float m43, float m44 );
+
+	inline void fill( 
+		float m11, float m12, float m13, float m14,
+		float m21, float m22, float m23, float m24,
+		float m31, float m32, float m33, float m34,
+		float m41, float m42, float m43, float m44 );
+
 	Mat4( const float* m );
 	Mat4( const Mat4& m );
 	Mat4( void );
@@ -66,9 +76,9 @@ public:
 	inline Mat4& operator-=( const Mat4& rhs );
 	inline Mat4& operator*=( float scalar );
 	inline Mat4& operator*=( const Mat4& rhs );
+	inline bool isIdentity( void ) const;
 
 	inline Mat4 copy( void );
-	inline void fill( float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44 );
 	inline void fill( const float* m );
 	inline void fill( const Mat4& m );
 	inline void fillIdentity( void );
@@ -85,8 +95,7 @@ public:
 	inline void fillRotationZ( float angle );
 	inline void fillTranslation( const Vec3& translation );
 	inline void fillTranslation( float x, float y, float z );
-
-	inline bool isIdentity( void ) const;
+	
 	inline Vec3 getUpVector( void ) const;
 	inline Vec3 getDownVector( void ) const;
 	inline Vec3 getLeftVector( void ) const;
@@ -114,18 +123,24 @@ public:
 	static const Mat4 ZERO;
 };
 
-class Mathm4
+class MathMat4
 {
 public:
+	static inline Mat4 fill(
+		float m11, float m12, float m13, float m14,
+		float m21, float m22, float m23, float m24,
+		float m31, float m32, float m33, float m34,
+		float m41, float m42, float m43, float m44 );
+
 	static inline Mat4 add( const Mat4& lhs, float scalar );
 	static inline Mat4 add( const Mat4& lhs, const Mat4& rhs );
 	static inline Mat4 sub( const Mat4& lhs, float scalar );
 	static inline Mat4 sub( const Mat4& lhs, const Mat4& rhs );
 	static inline Mat4 mul( const Mat4& lhs, float scalar );
 	static inline Mat4 mul( const Mat4& lhs, const Mat4& rhs );
+	static inline bool isIdentity( const Mat4& m );
 
 	static inline Mat4 copy( const Mat4& m );
-	static inline Mat4 fill( float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44 );
 	static inline Mat4 fill( const float* m );
 	static inline Mat4 fill( const Mat4& m );
 	static inline Mat4 fillIdentity( void );
@@ -143,7 +158,7 @@ public:
 	static inline Mat4 fillTranslation( const Vec3& translation );
 	static inline Mat4 fillTranslation( float x, float y, float z );
 
-	static inline bool isIdentity( const Mat4& m );
+	
 	static inline Vec3 getUpVector( const Mat4& m );
 	static inline Vec3 getDownVector( const Mat4& m );
 	static inline Vec3 getLeftVector( const Mat4& m );

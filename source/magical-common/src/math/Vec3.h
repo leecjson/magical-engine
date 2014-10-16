@@ -38,9 +38,7 @@ public:
 public:
 	Vec3( float rx, float ry, float rz );
 	Vec3( const Vec3& rhs );
-	Vec3( const float* rhs );
 	Vec3( void );
-	~Vec3( void );
 
 	inline Vec3  operator+( float rhs ) const;
 	inline Vec3  operator+( const Vec3& rhs ) const;
@@ -62,12 +60,13 @@ public:
 	inline bool  operator==( const Vec3& rhs ) const;
 	inline bool  operator!=( const Vec3& rhs ) const;
 	inline bool  isZero( void ) const;
+	inline bool  isOne( void ) const;
 
+	inline Vec3  copy( void ) const;
 	inline void  fill( float rx, float ry, float rz );
 	inline void  fill( const Vec3& rhs );
-	inline void  fill( const float* rhs );
 	inline void  fillZero( void );
-	inline Vec3  copy( void ) const;
+	inline void  fillOne( void );
 	inline void  clamp( const Vec3& min, const Vec3& max );
 	inline void  cross( const Vec3& v );
 	inline void  negate( void );
@@ -82,9 +81,16 @@ public:
 
 public:
 	static const Vec3 ZERO;
+	static const Vec3 ONE;
+	static const Vec3 UP;
+	static const Vec3 DOWN;
+	static const Vec3 RIGHT;
+	static const Vec3 LEFT;
+	static const Vec3 FORWARD;
+	static const Vec3 BACK;
 };
 
-class Mathv3
+class MathVec3
 {
 public:
 	static inline Vec3 add( const Vec3& v1, const Vec3& v2 );
@@ -95,12 +101,17 @@ public:
 	static inline Vec3 mul( const Vec3& v1, float rhs );
 	static inline Vec3 div( const Vec3& v1, const Vec3& v2 );
 	static inline Vec3 div( const Vec3& v1, float rhs );
+	static inline bool equals( const Vec3& v, float x, float y, float z );
 	static inline bool equals( const Vec3& v1, const Vec3& v2 );
+	static inline bool isZero( float x, float y, float z );
+	static inline bool isZero( const Vec3& v );
+	static inline bool isOne( float x, float y, float z );
+	static inline bool isOne( const Vec3& v );
 
 	static inline Vec3  fill( float rx, float ry, float rz );
 	static inline Vec3  fill( const Vec3& rhs );
-	static inline Vec3  fill( const float* rhs );
 	static inline Vec3  fillZero( void );
+	static inline Vec3  fillOne( void );
 	static inline Vec3  copy( const Vec3 rhs );
 	static inline Vec3  clamp( const Vec3& v, const Vec3& min, const Vec3& max );
 	static inline Vec3  cross( const Vec3& v1, const Vec3& v2 );

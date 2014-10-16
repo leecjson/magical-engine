@@ -28,6 +28,7 @@ SOFTWARE.
 #include "Common.h"
 #include "Reference.h"
 #include "Vec3.h"
+#include "Quaternion.h"
 
 class Transform : public Reference
 {
@@ -36,9 +37,12 @@ public:
 	virtual ~Transform( void );
 
 public:
-	Vec3 position;
-	Vec3 rotation;
-	Vec3 scale;
+	static Shared<Transform> create( void );
+
+private:
+	Vec3 _scale;
+	Quaternion _rotation;
+	Vec3 _position;
 };
 
 #endif //__TRANSFORM_H__

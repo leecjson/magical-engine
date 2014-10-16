@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Vec2 Vec2::operator+( float rhs ) const 
+inline Vec2 Vec2::operator+( float rhs ) const
 {
 	return Vec2( x + rhs, y + rhs );
 }
@@ -54,13 +54,13 @@ inline Vec2 Vec2::operator*( const Vec2& rhs ) const
 
 inline Vec2 Vec2::operator/( float rhs ) const
 {
-	magicalAssert( rhs, "division by 0.f" );
+	magicalAssert( !magicalFloatIsZero( rhs ), "division by 0.f" );
 	return Vec2( x / rhs, y / rhs );
 }
 
 inline Vec2 Vec2::operator/( const Vec2& rhs ) const
 {
-	magicalAssert( rhs.x && rhs.y, "division by 0.f" );
+	magicalAssert( !magicalFloatIsZero( rhs.x ) && !magicalFloatIsZero( rhs.y ), "division by 0.f" );
 	return Vec2( x / rhs.x, y / rhs.y );
 }
 
@@ -114,7 +114,7 @@ inline Vec2& Vec2::operator*=( float rhs )
 
 inline Vec2& Vec2::operator/=( const Vec2& rhs )
 {
-	magicalAssert( rhs.x && rhs.y, "division by 0.f" );
+	magicalAssert( !magicalFloatIsZero( rhs.x ) && !magicalFloatIsZero( rhs.y ), "division by 0.f" );
 	x /= rhs.x;
 	y /= rhs.y;
 	return *this;
@@ -122,7 +122,7 @@ inline Vec2& Vec2::operator/=( const Vec2& rhs )
 
 inline Vec2& Vec2::operator/=( float rhs )
 {
-	magicalAssert( rhs, "division by 0.f" );
+	magicalAssert( !magicalFloatIsZero( rhs ), "division by 0.f" );
 	x /= rhs;
 	y /= rhs;
 	return *this;
@@ -130,17 +130,22 @@ inline Vec2& Vec2::operator/=( float rhs )
 
 inline bool Vec2::operator==( const Vec2& rhs ) const
 {
-	return x == rhs.x && y == rhs.y;
+	return magicalFloatEquals( x, rhs.x ) && magicalFloatEquals( y, rhs.y );
 }
 
 inline bool Vec2::operator!=( const Vec2& rhs ) const
 {
-	return x != rhs.x || y != rhs.y;
+	return !( operator==( rhs ) );
 }
 
 inline bool Vec2::isZero( void ) const
 {
-	return x == 0.0f && y == 0.0f;
+	return magicalFloatIsZero( x ) && magicalFloatIsZero( y );
+}
+
+inline bool Vec2::isOne( void ) const
+{
+	return magicalFloatEquals( x, 1.0f ) && magicalFloatEquals( y, 1.0f );
 }
 
 inline Vec2 Vec2::copy( void ) const
@@ -154,12 +159,6 @@ inline void Vec2::fill( float rx, float ry )
 	y = ry;
 }
 
-inline void Vec2::fill( const float* rhs )
-{
-	x = rhs[0];
-	y = rhs[1];
-}
-
 inline void Vec2::fill( const Vec2& rhs )
 {
 	x = rhs.x;
@@ -170,6 +169,12 @@ inline void Vec2::fillZero( void )
 {
 	x = 0.0f;
 	y = 0.0f;
+}
+
+inline void Vec2::fillOne( void )
+{
+	x = 1.0f;
+	y = 1.0f;
 }
 
 inline void Vec2::clamp( const Vec2& min, const Vec2& max )
@@ -221,7 +226,7 @@ inline float Vec2::dot( const Vec2& v ) const
 
 inline float Vec2::angle( void ) const
 {
-	return atan2f(y, x);
+	return atan2f( y, x );
 }
 
 inline void Vec2::negate( void )
@@ -234,12 +239,12 @@ inline void Vec2::normalize( void )
 {
 	float n = x * x + y * y;
 	// Already normalized.
-	if( n == 1.0f )
+	if( magicalFloatEquals( n, 1.0f ) )
 		return;
 
 	n = sqrt( n );
 	// Too close to zero.
-	if( n < MATH_TOLERANCE )
+	if( n < FLT_EPSILON )
 		return;
 
 	n = 1.0f / n;
@@ -249,22 +254,22 @@ inline void Vec2::normalize( void )
 
 inline void Vec2::rotate( const Vec2& point, float angle )
 {
-	double sinAngle = sin( angle );
-	double cosAngle = cos( angle );
+	double sin_angle = sin( angle );
+	double cos_angle = cos( angle );
 
 	if( point.isZero() )
 	{
-		float tempX = x * cosAngle - y * sinAngle;
-		y = y * cosAngle + x * sinAngle;
-		x = tempX;
+		float temp_x = x * cos_angle - y * sin_angle;
+		y = y * cos_angle + x * sin_angle;
+		x = temp_x;
 	}
 	else
 	{
-		float tempX = x - point.x;
-		float tempY = y - point.y;
+		float temp_x = x - point.x;
+		float temp_y = y - point.y;
 
-		x = tempX * cosAngle - tempY * sinAngle + point.x;
-		y = tempY * cosAngle + tempX * sinAngle + point.y;
+		x = temp_x * cos_angle - temp_y * sin_angle + point.x;
+		y = temp_y * cos_angle + temp_x * sin_angle + point.y;
 	}
 }
 
@@ -275,135 +280,147 @@ inline void Vec2::middle( const Vec2& rhs )
 	y = ret.y;
 }
 
-inline Vec2 Mathv2::add( const Vec2& v1, const Vec2& v2 )
+
+
+inline Vec2 MathVec2::add( const Vec2& v1, const Vec2& v2 )
 {
 	return v1 + v2;
 }
 
-inline Vec2 Mathv2::add( const Vec2& v1, float rhs )
+inline Vec2 MathVec2::add( const Vec2& v1, float rhs )
 {
 	return v1 + rhs;
 }
 
-inline Vec2 Mathv2::sub( const Vec2& v1, const Vec2& v2 )
+inline Vec2 MathVec2::sub( const Vec2& v1, const Vec2& v2 )
 {
 	return v1 - v2;
 }
 
-inline Vec2 Mathv2::sub( const Vec2& v1, float rhs )
+inline Vec2 MathVec2::sub( const Vec2& v1, float rhs )
 {
 	return v1 - rhs;
 }
 
-inline Vec2 Mathv2::mul( const Vec2& v1, const Vec2& v2 )
+inline Vec2 MathVec2::mul( const Vec2& v1, const Vec2& v2 )
 {
 	return v1 * v2;
 }
 
-inline Vec2 Mathv2::mul( const Vec2& v1, float rhs )
+inline Vec2 MathVec2::mul( const Vec2& v1, float rhs )
 {
 	return v1 * rhs;
 }
 
-inline Vec2 Mathv2::div( const Vec2& v1, const Vec2& v2 )
+inline Vec2 MathVec2::div( const Vec2& v1, const Vec2& v2 )
 {
 	return v1 / v2;
 }
 
-inline Vec2 Mathv2::div( const Vec2& v1, float rhs )
+inline Vec2 MathVec2::div( const Vec2& v1, float rhs )
 {
 	return v1 / rhs;
 }
 
-inline bool Mathv2::equals( const Vec2& v1, const Vec2& v2 )
+inline bool MathVec2::equals( const Vec2& v1, const Vec2& v2 )
 {
 	return v1 == v2;
 }
 
-inline Vec2 Mathv2::copy( const Vec2& rhs )
+inline bool MathVec2::isZero( const Vec2& v )
+{
+	return v.isZero();
+}
+
+inline bool MathVec2::isOne( const Vec2& v )
+{
+	return v.isOne();
+}
+
+inline Vec2 MathVec2::copy( const Vec2& rhs )
 {
 	return Vec2( rhs );
 }
 
-inline Vec2 Mathv2::fill( float rx, float ry )
+inline Vec2 MathVec2::fill( float rx, float ry )
 {
 	return Vec2( rx, ry );
 }
 
-inline Vec2 Mathv2::fill( const float* rhs )
+inline Vec2 MathVec2::fill( const Vec2& rhs )
 {
 	return Vec2( rhs );
 }
 
-inline Vec2 Mathv2::fill( const Vec2& rhs )
-{
-	return Vec2( rhs );
-}
-
-inline Vec2 Mathv2::fillZero( void )
+inline Vec2 MathVec2::fillZero( void )
 {
 	return Vec2::ZERO;
 }
 
-inline Vec2 Mathv2::clamp( const Vec2& lhs, const Vec2& min, const Vec2& max )
+inline Vec2 MathVec2::fillOne( void )
+{
+	return Vec2::ONE;
+}
+
+inline Vec2 MathVec2::clamp( const Vec2& lhs, const Vec2& min, const Vec2& max )
 {
 	Vec2 ret( lhs );
 	ret.clamp( min, max );
 	return ret;
 }
 
-inline float Mathv2::distance( const Vec2& lhs, const Vec2& v )
+inline float MathVec2::distance( const Vec2& lhs, const Vec2& v )
 {
 	return lhs.distance( v );
 }
 
-inline float Mathv2::distanceSq( const Vec2& lhs, const Vec2& v )
+inline float MathVec2::distanceSq( const Vec2& lhs, const Vec2& v )
 {
 	return lhs.distanceSq( v );
 }
 
-inline float Mathv2::length( const Vec2& lhs )
+inline float MathVec2::length( const Vec2& lhs )
 {
 	return lhs.length();
 }
 
-inline float Mathv2::lengthSq( const Vec2& lhs )
+inline float MathVec2::lengthSq( const Vec2& lhs )
 {
 	return lhs.lengthSq();
 }
 
-inline float Mathv2::dot( const Vec2& lhs, const Vec2& v )
+inline float MathVec2::dot( const Vec2& lhs, const Vec2& v )
 {
 	return lhs.dot( v );
 }
 
-inline float Mathv2::angle( const Vec2& v )
+inline float MathVec2::angle( const Vec2& v )
 {
 	return v.angle();
 }
 
-inline Vec2 Mathv2::negate( const Vec2& v )
+inline Vec2 MathVec2::negate( const Vec2& v )
 {
 	Vec2 ret( v );
 	ret.negate();
 	return ret;
 }
 
-inline Vec2 Mathv2::normalize( const Vec2& v )
+inline Vec2 MathVec2::normalize( const Vec2& v )
 {
 	Vec2 ret( v );
 	ret.normalize();
 	return ret;
 }
 
-inline Vec2 Mathv2::rotate( const Vec2& lhs, const Vec2& point, float angle )
+inline Vec2 MathVec2::rotate( const Vec2& lhs, const Vec2& point, float angle )
 {
 	Vec2 ret( lhs );
 	ret.rotate( point, angle );
 	return ret;
 }
 
-inline Vec2 Mathv2::middle( const Vec2& lhs, const Vec2& rhs )
+inline Vec2 MathVec2::middle( const Vec2& lhs, const Vec2& rhs )
 {
 	Vec2 ret( lhs );
 	ret.middle( rhs );

@@ -24,39 +24,31 @@ SOFTWARE.
 #include "Vec4.h"
 
 const Vec4 Vec4::ZERO = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+const Vec4 Vec4::ONE = Vec4( 1.0f, 1.0f, 1.0f, 1.0f );
 
 Vec4::Vec4( float rx, float ry, float rz, float rw )
-: x(rx)
-, y(ry)
-, z(rz)
-, w(rw)
-{
-	
-}
-
-Vec4::Vec4( const float* rhs )
-: x(rhs[0])
-, y(rhs[1])
-, z(rhs[2])
-, w(rhs[3])
+: x( rx )
+, y( ry )
+, z( rz )
+, w( rw )
 {
 
 }
 
 Vec4::Vec4( const Vec4& rhs )
-: x(rhs.x)
-, y(rhs.y)
-, z(rhs.z)
-, w(rhs.w)
+: x( rhs.x )
+, y( rhs.y )
+, z( rhs.z )
+, w( rhs.w )
 {
 
 }
 
 Vec4::Vec4( void )
-: x(0.0f)
-, y(0.0f)
-, z(0.0f)
-, w(0.0f)
+: x( 0.0f )
+, y( 0.0f )
+, z( 0.0f )
+, w( 0.0f )
 {
-	
+
 }

@@ -37,7 +37,7 @@ inline Quaternion& Quaternion::operator=( const Quaternion& rhs )
 	x = rhs.x;
 	y = rhs.y;
 	z = rhs.z;
-	w = rhs.z;
+	w = rhs.w;
 
 	return *this;
 }
@@ -55,6 +55,38 @@ inline Quaternion& Quaternion::operator*=( const Quaternion& rhs )
 	w = rw;
 
 	return *this;
+}
+
+inline bool Quaternion::operator==( const Quaternion& rhs ) const
+{
+	return
+		magicalFloatEquals( x, rhs.x ) &&
+		magicalFloatEquals( y, rhs.y ) &&
+		magicalFloatEquals( z, rhs.z ) &&
+		magicalFloatEquals( w, rhs.w );
+}
+
+inline bool Quaternion::operator!=( const Quaternion& rhs ) const
+{
+	return !( operator==( rhs ) );
+}
+
+inline bool Quaternion::isIdentity( void ) const
+{
+	return 
+		magicalFloatIsZero( x ) &&
+		magicalFloatIsZero( y ) &&
+		magicalFloatIsZero( z ) &&
+		magicalFloatEquals( w, 1.0f );
+}
+
+inline bool Quaternion::isZero( void ) const
+{
+	return 
+		magicalFloatIsZero( x ) &&
+		magicalFloatIsZero( y ) &&
+		magicalFloatIsZero( z ) &&
+		magicalFloatIsZero( w );
 }
 
 inline void Quaternion::fill( float rx, float ry, float rz, float rw )
@@ -83,15 +115,15 @@ inline void Quaternion::fill( const float* rhs )
 
 inline void Quaternion::fillAxisAngle( const Vec3& axis, float angle )
 {
-	float halfAngle = angle * 0.5f;
-	float sinHalfAngle = sinf( halfAngle );
+	float half_angle = angle * 0.5f;
+	float sin_half_angle = sinf( half_angle );
 
 	Vec3 normal( axis );
 	normal.normalize();
-	x = normal.x * sinHalfAngle;
-	y = normal.y * sinHalfAngle;
-	z = normal.z * sinHalfAngle;
-	w = cosf( halfAngle );
+	x = normal.x * sin_half_angle;
+	y = normal.y * sin_half_angle;
+	z = normal.z * sin_half_angle;
+	w = cosf( half_angle );
 }
 
 inline void Quaternion::fillIdentity( void )
@@ -110,16 +142,6 @@ inline void Quaternion::fillZero( void )
 	w = 0.0f;
 }
 
-inline bool Quaternion::isIdentity( void ) const
-{
-	return x == 0.0f && y == 0.0f && z == 0.0f && w == 1.0f;
-}
-
-inline bool Quaternion::isZero( void ) const
-{
-	return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
-}
-
 inline void Quaternion::negate( void )
 {
 	x = -x;
@@ -130,7 +152,7 @@ inline void Quaternion::negate( void )
 inline void Quaternion::inverse( void )
 {
 	float n = x * x + y * y + z * z + w * w;
-	if( n == 1.0f )
+	if( magicalFloatEquals( n, 1.0f ) )
 	{
 		x = -x;
 		y = -y;
@@ -139,7 +161,7 @@ inline void Quaternion::inverse( void )
 	}
 
 	// Too close to zero.
-	if( n < MATH_EPSILON )
+	if( n < FLT_EPSILON )
 		return;
 
 	n = 1.0f / n;
@@ -154,12 +176,12 @@ inline void Quaternion::normalize( void )
 	float n = x * x + y * y + z * z + w * w;
 
 	// Already normalized.
-	if( n == 1.0f )
+	if( magicalFloatEquals( n, 1.0f ) )
 		return;
 
 	n = sqrt( n );
 	// Too close to zero.
-	if( n < MATH_EPSILON )
+	if( n < FLT_EPSILON )
 		return;
 
 	n = 1.0f / n;
@@ -169,24 +191,15 @@ inline void Quaternion::normalize( void )
 	w *= n;
 }
 
-inline Vec3 Quaternion::axis( void ) const
+inline float Quaternion::axisAngle( Vec3& axis ) const
 {
 	Quaternion q( x, y, z, w );
 	q.normalize();
 
-	Vec3 axis;
 	axis.x = q.x;
 	axis.y = q.y;
 	axis.z = q.z;
 	axis.normalize();
-
-	return axis;
-}
-
-inline float Quaternion::angle( void ) const
-{
-	Quaternion q( x, y, z, w );
-	q.normalize();
 
 	return ( 2.0f * acos( q.w ) );
 }
@@ -195,13 +208,13 @@ inline void Quaternion::lerp( const Quaternion& rhs, float t )
 {
 	magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
 
-	if( t == 0.0f )
+	if( magicalFloatIsZero( t ) )
 	{
 		return;
-	}
-	else if( t == 1.0f )
+	}	
+	else if( magicalFloatEquals( t, 1.0f ) )
 	{
-		memcpy( this, &rhs, sizeof(float)* 4 );
+		memcpy( this, &rhs, sizeof(float) * 4 );
 		return;
 	}
 
@@ -231,7 +244,7 @@ inline void Quaternion::slerp( const Quaternion& rhs, float t )
 	// errors in the input quaternions, it actually corrects for them.
 	magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
 
-	if( t == 0.0f )
+	if( magicalFloatIsZero( t, 0.0f ) )
 	{
 		x = q1x;
 		y = q1y;
@@ -239,7 +252,7 @@ inline void Quaternion::slerp( const Quaternion& rhs, float t )
 		w = q1w;
 		return;
 	}
-	else if( t == 1.0f )
+	else if( magicalFloatEquals( t, 1.0f ) )
 	{
 		x = q2x;
 		y = q2y;
@@ -248,7 +261,10 @@ inline void Quaternion::slerp( const Quaternion& rhs, float t )
 		return;
 	}
 
-	if( q1x == q2x && q1y == q2y && q1z == q2z && q1w == q2w )
+	if( magicalFloatEquals( q1x, q2x ) &&
+		magicalFloatEquals( q1y, q2y ) &&
+		magicalFloatEquals( q1z, q2z ) &&
+		magicalFloatEquals( q1w, q2w ) )
 	{
 		x = q1x;
 		y = q1y;
@@ -321,92 +337,85 @@ inline void Quaternion::slerp( const Quaternion& rhs, float t )
 	w = rz * f1;
 }
 
-
-
-inline Quaternion Mathq4::mul( const Quaternion& lhs, const Quaternion& rhs )
+inline Quaternion MathQuaternion::mul( const Quaternion& lhs, const Quaternion& rhs )
 {
 	return lhs * rhs;
 }
 
-inline Quaternion Mathq4::fill( float rx, float ry, float rz, float rw )
+inline bool MathQuaternion::equals( const Quaternion& lhs, const Quaternion& rhs )
 {
-	return Quaternion( rx, ry, rz, rw );
+	return lhs == rhs;
 }
 
-inline Quaternion Mathq4::fill( const Quaternion& rhs )
-{
-	return Quaternion( rhs );
-}
-
-inline Quaternion Mathq4::fill( const float* rhs )
-{
-	return Quaternion( rhs );
-}
-
-inline Quaternion Mathq4::fillAxisAngle( const Vec3& axis, float angle )
-{
-	return Quaternion( axis, angle );
-}
-
-inline Quaternion Mathq4::fillIdentity( void )
-{
-	return Quaternion::IDENTITY;
-}
-
-inline Quaternion Mathq4::fillZero( void )
-{
-	return Quaternion::ZERO;
-}
-
-inline bool Mathq4::isIdentity( const Quaternion& lhs )
+inline bool MathQuaternion::isIdentity( const Quaternion& lhs )
 {
 	return lhs.isIdentity();
 }
 
-inline bool Mathq4::isZero( const Quaternion& lhs )
+inline bool MathQuaternion::isZero( const Quaternion& lhs )
 {
 	return lhs.isZero();
 }
 
-inline Quaternion Mathq4::negate( const Quaternion& lhs )
+inline Quaternion MathQuaternion::fill( float rx, float ry, float rz, float rw )
+{
+	return Quaternion( rx, ry, rz, rw );
+}
+
+inline Quaternion MathQuaternion::fill( const Quaternion& rhs )
+{
+	return Quaternion( rhs );
+}
+
+inline Quaternion MathQuaternion::fillAxisAngle( const Vec3& axis, float angle )
+{
+	return Quaternion( axis, angle );
+}
+
+inline Quaternion MathQuaternion::fillIdentity( void )
+{
+	return Quaternion::IDENTITY;
+}
+
+inline Quaternion MathQuaternion::fillZero( void )
+{
+	return Quaternion::ZERO;
+}
+
+inline Quaternion MathQuaternion::negate( const Quaternion& lhs )
 {
 	Quaternion ret( lhs );
 	ret.negate();
 	return ret;
 }
 
-inline Quaternion Mathq4::inverse( const Quaternion& lhs )
+inline Quaternion MathQuaternion::inverse( const Quaternion& lhs )
 {
 	Quaternion ret( lhs );
 	ret.inverse();
 	return ret;
 }
 
-inline Quaternion Mathq4::normalize( const Quaternion& lhs )
+inline Quaternion MathQuaternion::normalize( const Quaternion& lhs )
 {
 	Quaternion ret( lhs );
 	ret.normalize();
 	return ret;
 }
 
-inline Vec3 Mathq4::axis( const Quaternion& lhs )
+inline float MathQuaternion::axisAngle( const Quaternion& lhs, Vec3& axis )
 {
-	return lhs.axis();
+	return lhs.axisAngle( axis );
 }
 
-inline float Mathq4::angle( const Quaternion& lhs )
-{
-	return lhs.angle();
-}
-
-inline Quaternion Mathq4::lerp( const Quaternion& lhs, const Quaternion& rhs, float t )
+inline Quaternion MathQuaternion::lerp( const Quaternion& lhs, const Quaternion& rhs, float t )
 {
 	Quaternion ret( lhs );
 	ret.lerp( rhs, t );
 	return ret;
 }
 
-inline Quaternion Mathq4::slerp( const Quaternion& lhs, const Quaternion& rhs, float t )
+inline Quaternion MathQuaternion::slerp( const Quaternion& lhs, const Quaternion& rhs, float t )
 {
 	Quaternion ret( lhs );
 	ret.slerp( rhs, t );

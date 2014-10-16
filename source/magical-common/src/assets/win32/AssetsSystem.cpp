@@ -24,7 +24,6 @@ SOFTWARE.
 #include "AssetsSystem.h"
 
 #include <windows.h>
-#include <cstring>
 
 #include "Utils.h"
 #include "Array.h"
@@ -40,17 +39,17 @@ void Assets::init( void )
 
 void Assets::delc( void )
 {
-	
+
 }
 
 void Assets::resetAssetsPath( void )
 {
-	char buf[kMaxPathLength] = { 0 };
-	GetCurrentDirectoryA( sizeof(buf)-1, buf );
+	char buf[ kMaxPathLength ] = { 0 };
+	GetCurrentDirectoryA( sizeof( buf ) - 1, buf );
 
 	if( strlen( buf ) == 0 )
 	{
-		magicalSetLastErrorInfo("GetCurrentDirectoryA buf is empty, Assets::resetAssetsPath() error!");
+		magicalSetLastErrorInfo( "GetCurrentDirectoryA buf is empty, Assets::resetAssetsPath() error!" );
 		magicalLogLastError();
 		return;
 	}
@@ -88,7 +87,7 @@ std::string Assets::getAssetsAbsoluteFilename( const char* file_name )
 	}
 	std::string unix_path = FileUtils::toUnixStylePath( file_name );
 	std::string abs_path = s_assets_path + unix_path;
-	
+
 	return abs_path;
 }
 
@@ -119,25 +118,25 @@ Shared<Data> Assets::getAssetsFileData( const char* file_name )
 	magicalAssert( file_name, "should not be nullptr" );
 
 	std::string abs_path = getAssetsAbsoluteFilename( file_name );
-	magicalAssert( !abs_path.empty(), StringUtils::format<512>("get assets file data failed! file(%s) doesn't exist!", file_name).c_str() );
+	magicalAssert( !abs_path.empty(), StringUtils::format<512>( "get assets file data failed! file(%s) doesn't exist!", file_name ).c_str() );
 
 	FILE* fp = fopen( abs_path.c_str(), "rb" );
 	if( fp == nullptr )
 	{
-		magicalSetLastErrorInfo( StringUtils::format<512>("get assets file data failed! file(%s)", file_name).c_str() );
+		magicalSetLastErrorInfo( StringUtils::format<512>( "get assets file data failed! file(%s)", file_name ).c_str() );
 		magicalLogLastError();
 		return nullptr;
 	}
 
 	size_t size, read_size = 0;
 	fseek( fp, 0, SEEK_END );
-	size = (size_t) ftell( fp );
+	size = (size_t)ftell( fp );
 	fseek( fp, 0, SEEK_SET );
 
 	Shared<Data> data = Data::create();
 	data->malloc( size + 1 );
 
-	read_size = fread( data->ptr(), sizeof(char), size, fp );
+	read_size = fread( data->ptr(), sizeof( char ), size, fp );
 	data->realloc( read_size + 1 );
 	data->ptr()[ read_size ] = 0;
 	fclose( fp );

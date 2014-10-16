@@ -31,7 +31,7 @@ SOFTWARE.
 #include "Common.h"
 
 template< class K, class T >
-using UnorderedMap = std::unordered_map< K, T >;
+using HashMap = std::unordered_map< K, T >;
 
 template< class K, class T >
 using Map = std::map< K, T >;

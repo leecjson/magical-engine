@@ -199,7 +199,7 @@ public:
 
 	Shared& operator=( Shared&& other )
 	{
-		set( std::forward<Shared>(other) );
+		set( std::forward<Shared>( other ) );
 		return *this;
 	}
 

@@ -22,12 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Engine.h"
-#include "Common.h"
 #include "Utils.h"
 #include "AssetsSystem.h"
 #include "LuaSystem.h"
 #include "RendererSystem.h"
-#include "MatrixStack.h"
 
 static int64_t s_last_update_time;
 static float s_delta_time;
@@ -42,7 +40,7 @@ void Engine::init( void )
 
 void Engine::delc( void )
 {
-
+	
 }
 
 void Engine::initSystems( void )
@@ -53,9 +51,6 @@ void Engine::initSystems( void )
 	Lua::init();
 	magicalReturnIfError();
 
-	MatrixStack::init();
-	magicalReturnIfError();
-
 	Renderer::init();
 	magicalReturnIfError();
 }
@@ -63,9 +58,6 @@ void Engine::initSystems( void )
 void Engine::delcSystems( void )
 {
 	Renderer::delc();
-	magicalReturnIfError();
-
-	MatrixStack::delc();
 	magicalReturnIfError();
 
 	Lua::delc();

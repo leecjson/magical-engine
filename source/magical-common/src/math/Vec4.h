@@ -38,7 +38,6 @@ public:
 
 public:
 	Vec4( float rx, float ry, float rz, float rw );
-	Vec4( const float* rhs );
 	Vec4( const Vec4& rhs );
 	Vec4( void );
 
@@ -62,6 +61,7 @@ public:
 	inline bool  operator==( const Vec4& rhs ) const;
 	inline bool  operator!=( const Vec4& rhs ) const;
 	inline bool  isZero( void ) const;
+	inline bool  isOne( void ) const;
 
 public:
 	inline void  fill( float rx, float ry, float rz, float rw );
@@ -81,9 +81,10 @@ public:
 	
 public:
 	static const Vec4 ZERO;
+	static const Vec4 ONE;
 };
 
-class Mathv4
+class MathVec4
 {
 public:
 	static inline Vec4 add( const Vec4& lhs, float rhs );
@@ -95,12 +96,14 @@ public:
 	static inline Vec4 div( const Vec4& lhs, float rhs );
 	static inline Vec4 div( const Vec4& lhs, const Vec4& rhs );
 	static inline bool equals( const Vec4& v1, const Vec4& v2 );
+	static inline bool isZero( const Vec4& v );
+	static inline bool isOne( const Vec4& v );
 
+	static inline Vec4  copy( const Vec4& v );
 	static inline Vec4  fill( float rx, float ry, float rz, float rw );
-	static inline Vec4  fill( const float* rhs );
 	static inline Vec4  fill( const Vec4& rhs );
 	static inline Vec4  fillZero( void );
-	static inline Vec4  copy( const Vec4& v );
+	static inline Vec4  fillOne( void );
 	static inline Vec4  negate( const Vec4& v );
 	static inline Vec4  normalize( const Vec4& v );
 	static inline Vec4  clamp( const Vec4& v, const Vec4& min, const Vec4& max );

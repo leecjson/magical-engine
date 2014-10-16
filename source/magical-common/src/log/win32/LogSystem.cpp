@@ -23,32 +23,9 @@ SOFTWARE.
 *******************************************************************************/
 #include "LogSystem.h"
 
-#include <time.h>
 #include <windows.h>
 
-static void win32Log( const char* channel, const char* msg )
-{
-	char buf[ kMaxLogLength ];
-	struct tm tm_now;
-	time_t now;
-
-	time( &now );
-	tm_now = *localtime( &now );
-
-	sprintf(buf, "[%s %02d/%02d %02d:%02d:%02d]: %s",
-		channel,
-		tm_now.tm_mon + 1,
-		tm_now.tm_mday,
-		tm_now.tm_hour,
-		tm_now.tm_min,
-		tm_now.tm_sec,
-		msg);
-
-	OutputDebugStringA( buf);
-    OutputDebugStringA("\n");
-	printf("%s\n", buf);
-}
-
+static void win32Log( const char* title, const char* msg );
 
 void Log::init( void )
 {
@@ -60,20 +37,37 @@ void Log::delc( void )
 	
 }
 
-void Log::I( const char* msg )
-{
-	magicalAssert( msg, "should not be nullptr" );
-	win32Log( "Info", msg );
-}
-
 void Log::D( const char* msg )
 {
 	magicalAssert( msg, "should not be nullptr" );
-	win32Log( "Debug", msg );
+	win32Log( kLogChannelDebugTitle, msg );
 }
 
 void Log::E( const char* msg )
 {
 	magicalAssert( msg, "should not be nullptr" );
-	win32Log( "Error", msg );
+	win32Log( kLogChannelErrorTitle, msg );
+}
+
+static void win32Log( const char* title, const char* msg )
+{
+	tm tm_now;
+	time_t now;
+	char buf[ kMaxLogLength ];
+
+	time( &now );
+	tm_now = *localtime( &now );
+
+	sprintf( buf, "[%s %02d/%02d %02d:%02d:%02d]: %s",
+		title,
+		tm_now.tm_mon + 1,
+		tm_now.tm_mday,
+		tm_now.tm_hour,
+		tm_now.tm_min,
+		tm_now.tm_sec,
+		msg );
+
+	OutputDebugStringA( buf );
+	OutputDebugStringA( "\n" );
+	printf( "%s\n", buf );
 }

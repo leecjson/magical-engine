@@ -34,6 +34,9 @@
     <Filter Include="src\transform">
       <UniqueIdentifier>{eec219bb-5849-4c65-be25-b6f5498eed97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\node">
+      <UniqueIdentifier>{abb1e10f-8c60-45a7-a899-7d7792338895}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\common\Common.cpp">
@@ -75,8 +78,8 @@
     <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp">
       <Filter>src\assets\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\utils\Pipeline.cpp">
-      <Filter>src\utils</Filter>
+    <ClCompile Include="..\src\node\Node.cpp">
+      <Filter>src\node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,8 +143,8 @@
     <ClInclude Include="..\src\transform\Transform.h">
       <Filter>src\transform</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\utils\Pipeline.h">
-      <Filter>src\utils</Filter>
+    <ClInclude Include="..\src\node\Node.h">
+      <Filter>src\node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

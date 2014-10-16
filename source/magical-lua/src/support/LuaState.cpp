@@ -110,12 +110,12 @@ int LuaState::executeScriptCode( const char* codes ) const
 int LuaState::executeGlobalFunction( const char* func_name, int retc, int argc ) const
 {
 	lua_getglobal( _L, func_name );
-	if( lua_isfunction(_L, -1) )
+	if( lua_isfunction( _L, -1 ) )
 	{
 		int ret = 0;
 		if( argc != 0 )
 		{
-			lua_insert( _L, -(argc + 1) );
+			lua_insert( _L, -( argc + 1 ) );
 			ret = lua_pcall( _L, argc, retc, 0 );
 		}
 		else

@@ -23,41 +23,37 @@ SOFTWARE.
 *******************************************************************************/
 #include "Vec3.h"
 
-Vec3::Vec3( float rx, float ry, float rz )
-: x(rx)
-, y(ry)
-, z(rz)
-{
+const Vec3 Vec3::ZERO = Vec3( 0.0f, 0.0f, 0.0f );
+const Vec3 Vec3::ONE = Vec3( 1.0f, 1.0f, 1.0f );
+const Vec3 Vec3::UP = Vec3( 0.0f, 1.0f, 0.0f );
+const Vec3 Vec3::DOWN = Vec3( 0.0f, -1.0f, 0.0f );
+const Vec3 Vec3::RIGHT = Vec3( 1.0f, 0.0f, 0.0f );
+const Vec3 Vec3::LEFT = Vec3( -1.0f, 0.0f, 0.0f );
+const Vec3 Vec3::FORWARD = Vec3( 0.0f, 0.0f, 1.0f );
+const Vec3 Vec3::BACK = Vec3( 0.0f, 0.0f, -1.0f );
 
+Vec3::Vec3( float rx, float ry, float rz )
+: x( rx )
+, y( ry )
+, z( rz )
+{
+	
 }
 
 Vec3::Vec3( const Vec3& rhs )
-: x(rhs.x)
-, y(rhs.y)
-, z(rhs.z)
-{
-
-}
-
-Vec3::Vec3( const float* rhs )
-: x(rhs[0])
-, y(rhs[1])
-, z(rhs[2])
+: x( rhs.x )
+, y( rhs.y )
+, z( rhs.z )
 {
 
 }
 
 Vec3::Vec3( void )
-: x(0.0f)
-, y(0.0f)
-, z(0.0f)
-{
-	
-}
-
-Vec3::~Vec3( void )
+: x( 0.0f )
+, y( 0.0f )
+, z( 0.0f )
 {
 
 }
 
-const Vec3 Vec3::ZERO = Vec3( 0.0f, 0.0f, 0.0f );
+

@@ -37,7 +37,7 @@ Shared<Data> Data::create( void )
 {
 	Data* ret = new Data();
 	magicalAssert( ret, "new Data() failed" );
-	return Shared<Data>( Initializer<Data>(ret) );
+	return Shared<Data>( Initializer<Data>( ret ) );
 }
 
 void Data::assign( char* data, const size_t size )
