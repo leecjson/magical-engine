@@ -80,8 +80,8 @@ public:
 	inline float lengthSq( void ) const;
 	
 public:
-	static const Vec4 ZERO;
-	static const Vec4 ONE;
+	static const Vec4 Zero;
+	static const Vec4 One;
 };
 
 class MathVec4

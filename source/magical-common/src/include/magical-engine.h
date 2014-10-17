@@ -60,6 +60,7 @@ magical common - utils
 /*
 magical common - math
 */
+#include "Math3D.h"
 #include "Mat4.h"
 #include "Vec2.h"
 #include "Vec3.h"
@@ -69,6 +70,12 @@ magical common - math
 /*
 magical common - transform
 */
+#include "Transform.h"
+
+/*
+magical common - node
+*/
+#include "Node.h"
 
 
 

@@ -115,6 +115,7 @@ public:
 	inline void translate( float x, float y, float z );
 	inline void translate( const Vec3& t );
     inline void transpose( void );
+	inline Vec3 transformPoint( const Vec3& point ) const;
 	inline Vec3 transformVec3( const Vec3& vec ) const;
 	inline Vec4 transformVec4( const Vec4& vec ) const;
 	inline float determinant( void ) const;
@@ -124,8 +125,8 @@ public:
 	inline Vec3 getScale( void ) const;
 
 public:
-	static const Mat4 IDENTITY;
-	static const Mat4 ZERO;
+	static const Mat4 Identity;
+	static const Mat4 Zero;
 };
 
 class MathMat4
@@ -182,6 +183,7 @@ public:
 	static inline Mat4 translate( const Mat4& m, float x, float y, float z );
 	static inline Mat4 translate( const Mat4& m, const Vec3& t );
     static inline Mat4 transpose( const Mat4& m );
+	static inline Vec3 transformPoint( const Mat4& m, const Vec3& point );
 	static inline Vec3 transformVec3( const Mat4& m, const Vec3& vec );
 	static inline Vec4 transformVec4( const Mat4& m, const Vec4& vec );
 	static inline float determinant( const Mat4& m );

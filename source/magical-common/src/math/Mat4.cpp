@@ -23,14 +23,14 @@ SOFTWARE.
 *******************************************************************************/
 #include "Mat4.h"
 
-const Mat4 Mat4::IDENTITY = Mat4(
+const Mat4 Mat4::Identity = Mat4(
 	1.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 1.0f, 0.0f, 0.0f,
 	0.0f, 0.0f, 1.0f, 0.0f,
 	0.0f, 0.0f, 0.0f, 1.0f
 );
 
-const Mat4 Mat4::ZERO = Mat4(
+const Mat4 Mat4::Zero = Mat4(
 	0.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 0.0f, 0.0f, 0.0f,
@@ -61,7 +61,7 @@ Mat4::Mat4( const Mat4& m )
 
 Mat4::Mat4( void )
 {
-	memcpy( this, &IDENTITY, kMat4Size );
+	memcpy( this, &Identity, kMat4Size );
 }
 
 Mat4::~Mat4( void )

@@ -23,14 +23,14 @@ SOFTWARE.
 *******************************************************************************/
 #include "Vec3.h"
 
-const Vec3 Vec3::ZERO = Vec3( 0.0f, 0.0f, 0.0f );
-const Vec3 Vec3::ONE = Vec3( 1.0f, 1.0f, 1.0f );
-const Vec3 Vec3::UP = Vec3( 0.0f, 1.0f, 0.0f );
-const Vec3 Vec3::DOWN = Vec3( 0.0f, -1.0f, 0.0f );
-const Vec3 Vec3::RIGHT = Vec3( 1.0f, 0.0f, 0.0f );
-const Vec3 Vec3::LEFT = Vec3( -1.0f, 0.0f, 0.0f );
-const Vec3 Vec3::FORWARD = Vec3( 0.0f, 0.0f, 1.0f );
-const Vec3 Vec3::BACK = Vec3( 0.0f, 0.0f, -1.0f );
+const Vec3 Vec3::Zero = Vec3( 0.0f, 0.0f, 0.0f );
+const Vec3 Vec3::One = Vec3( 1.0f, 1.0f, 1.0f );
+const Vec3 Vec3::Up = Vec3( 0.0f, 1.0f, 0.0f );
+const Vec3 Vec3::Down = Vec3( 0.0f, -1.0f, 0.0f );
+const Vec3 Vec3::Right = Vec3( 1.0f, 0.0f, 0.0f );
+const Vec3 Vec3::Left = Vec3( -1.0f, 0.0f, 0.0f );
+const Vec3 Vec3::Forward = Vec3( 0.0f, 0.0f, 1.0f );
+const Vec3 Vec3::Back = Vec3( 0.0f, 0.0f, -1.0f );
 
 Vec3::Vec3( float rx, float ry, float rz )
 : x( rx )

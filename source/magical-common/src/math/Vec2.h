@@ -79,8 +79,8 @@ public:
 	inline void  middle( const Vec2& rhs );
 
 public:
-	static const Vec2 ZERO;
-	static const Vec2 ONE;
+	static const Vec2 Zero;
+	static const Vec2 One;
 };
 
 class MathVec2

@@ -35,6 +35,7 @@ void Renderer::delc( void )
 
 void Renderer::render( void )
 {
+
 }
 
 void Renderer::reshape( int w, int h )

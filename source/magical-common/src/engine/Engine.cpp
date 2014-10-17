@@ -27,6 +27,8 @@ SOFTWARE.
 #include "LuaSystem.h"
 #include "RendererSystem.h"
 
+#include "Node.h"
+
 static int64_t s_last_update_time;
 static float s_delta_time;
 

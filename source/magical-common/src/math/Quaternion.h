@@ -68,8 +68,8 @@ public:
 	inline void slerp( const Quaternion& rhs, float t );
 
 public:
-	static const Quaternion IDENTITY;
-	static const Quaternion ZERO;
+	static const Quaternion Identity;
+	static const Quaternion Zero;
 };
 
 class MathQuaternion

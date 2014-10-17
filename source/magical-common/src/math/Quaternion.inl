@@ -244,7 +244,7 @@ inline void Quaternion::slerp( const Quaternion& rhs, float t )
 	// errors in the input quaternions, it actually corrects for them.
 	magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
 
-	if( magicalFloatIsZero( t, 0.0f ) )
+	if( magicalFloatIsZero( t ) )
 	{
 		x = q1x;
 		y = q1y;
@@ -383,12 +383,12 @@ inline Quaternion MathQuaternion::fillAxisAngle( const Vec3& axis, float angle )
 
 inline Quaternion MathQuaternion::fillIdentity( void )
 {
-	return Quaternion::IDENTITY;
+	return Quaternion::Identity;
 }
 
 inline Quaternion MathQuaternion::fillZero( void )
 {
-	return Quaternion::ZERO;
+	return Quaternion::Zero;
 }
 
 inline Quaternion MathQuaternion::negate( const Quaternion& lhs )

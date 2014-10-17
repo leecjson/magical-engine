@@ -275,7 +275,7 @@ inline float Vec3::angle( const Vec3& v ) const
 	float dy = z * v.x - x * v.z;
 	float dz = x * v.y - y * v.x;
 
-	return atan2f( sqrt( dx * dx + dy * dy + dz * dz ) + MATH_FLOAT_SMALL, MathVec3::dot( *this, v ) );
+	return atan2f( sqrt( dx * dx + dy * dy + dz * dz ) + FLT_MIN, MathVec3::dot( *this, v ) );
 }
 	
 inline float Vec3::dot( const Vec3& v ) const

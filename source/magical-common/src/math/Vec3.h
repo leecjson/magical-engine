@@ -80,14 +80,14 @@ public:
     inline float lengthSq( void ) const;
 
 public:
-	static const Vec3 ZERO;
-	static const Vec3 ONE;
-	static const Vec3 UP;
-	static const Vec3 DOWN;
-	static const Vec3 RIGHT;
-	static const Vec3 LEFT;
-	static const Vec3 FORWARD;
-	static const Vec3 BACK;
+	static const Vec3 Zero;
+	static const Vec3 One;
+	static const Vec3 Up;
+	static const Vec3 Down;
+	static const Vec3 Right;
+	static const Vec3 Left;
+	static const Vec3 Forward;
+	static const Vec3 Back;
 };
 
 class MathVec3

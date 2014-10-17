@@ -354,12 +354,12 @@ inline Vec2 MathVec2::fill( const Vec2& rhs )
 
 inline Vec2 MathVec2::fillZero( void )
 {
-	return Vec2::ZERO;
+	return Vec2::Zero;
 }
 
 inline Vec2 MathVec2::fillOne( void )
 {
-	return Vec2::ONE;
+	return Vec2::One;
 }
 
 inline Vec2 MathVec2::clamp( const Vec2& lhs, const Vec2& min, const Vec2& max )

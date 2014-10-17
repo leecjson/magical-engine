@@ -23,8 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "Quaternion.h"
 
-const Quaternion Quaternion::IDENTITY = Quaternion( 0.0f, 0.0f, 0.0f, 1.0f );
-const Quaternion Quaternion::ZERO = Quaternion( 0.0f, 0.0f, 0.0f, 0.0f );
+const Quaternion Quaternion::Identity = Quaternion( 0.0f, 0.0f, 0.0f, 1.0f );
+const Quaternion Quaternion::Zero = Quaternion( 0.0f, 0.0f, 0.0f, 0.0f );
 
 Quaternion::Quaternion( float rx, float ry, float rz, float rw )
 : x( rx )

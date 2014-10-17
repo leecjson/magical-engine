@@ -229,7 +229,7 @@ inline float Vec4::angle( const Vec4& rhs ) const
 	float dy = w * rhs.y - y * rhs.w - z * rhs.x + x * rhs.z;
 	float dz = w * rhs.z - z * rhs.w - x * rhs.y + y * rhs.x;
 
-	return atan2f( sqrt( dx * dx + dy * dy + dz * dz ) + MATH_FLOAT_SMALL, dot( rhs ) );
+	return atan2f( sqrt( dx * dx + dy * dy + dz * dz ) + FLT_MIN, dot( rhs ) );
 }
 
 inline void Vec4::clamp( const Vec4& min, const Vec4& max )
@@ -392,12 +392,12 @@ inline Vec4 MathVec4::fill( const Vec4& rhs )
 
 inline Vec4 MathVec4::fillZero( void )
 {
-	return Vec4::ZERO;
+	return Vec4::Zero;
 }
 
 inline Vec4 MathVec4::fillOne( void )
 {
-	return Vec4::ONE;
+	return Vec4::One;
 }
 
 inline Vec4 MathVec4::negate( const Vec4& v )

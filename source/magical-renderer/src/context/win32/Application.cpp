@@ -73,6 +73,7 @@ static void win32SetupGL( void )
 
 static void win32ShutdownGL( void )
 {
+
 }
 
 static void win32GlutReshape( int w, int h )

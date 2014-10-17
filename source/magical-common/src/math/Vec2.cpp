@@ -23,8 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "Vec2.h"
 
-const Vec2 Vec2::ZERO = Vec2( 0.0f, 0.0f );
-const Vec2 Vec2::ONE = Vec2( 1.0f, 1.0f );
+const Vec2 Vec2::Zero = Vec2( 0.0f, 0.0f );
+const Vec2 Vec2::One = Vec2( 1.0f, 1.0f );
 
 Vec2::Vec2( float rx, float ry )
 : x( rx )
