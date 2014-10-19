@@ -21,19 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "PlatformMacros.h"
+#include "Main.h"
+#include "magical-engine.h"
 
-#ifdef MAG_WIN32
-#include <gl/glew.h>
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-
-
-#ifdef __cplusplus
+void mainDelegate( void )
+{
+	Lua::state()->executeScriptFile( "main.lua" );
+	Lua::state()->executeGlobalFunction( kLuaOnCreate );
+	Lua::state()->clean();
 }
-#endif

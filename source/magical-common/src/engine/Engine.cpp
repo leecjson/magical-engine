@@ -26,13 +26,13 @@ SOFTWARE.
 #include "AssetsSystem.h"
 #include "LuaSystem.h"
 #include "RendererSystem.h"
-
+#include "Application.h"
 #include "Node.h"
+
+static void calcDeltaTime( void );
 
 static int64_t s_last_update_time;
 static float s_delta_time;
-
-static void calcDeltaTime( void );
 
 void Engine::init( void )
 {
@@ -45,42 +45,16 @@ void Engine::delc( void )
 	
 }
 
-void Engine::initSystems( void )
-{
-	Assets::init();
-	magicalReturnIfError();
-
-	Lua::init();
-	magicalReturnIfError();
-
-	Renderer::init();
-	magicalReturnIfError();
-}
-
-void Engine::delcSystems( void )
-{
-	Renderer::delc();
-	magicalReturnIfError();
-
-	Lua::delc();
-	magicalReturnIfError();
-
-	Assets::delc();
-	magicalReturnIfError();
-}
-
 void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
 	Renderer::render();
-
-	Lua::state()->executeGlobalFunction("go");
 }
 
-void Engine::reshape( int w, int h )
+void Engine::resize( int w, int h )
 {
-	Renderer::reshape( w, h );
+	Renderer::resize( w, h );
 }
 
 float Engine::getDeltaTime( void )

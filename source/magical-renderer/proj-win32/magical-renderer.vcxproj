@@ -12,18 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\context\Application.h" />
-    <ClInclude Include="..\src\context\win32\glut\freeglut.h" />
-    <ClInclude Include="..\src\context\win32\glut\freeglut_ext.h" />
-    <ClInclude Include="..\src\context\win32\glut\freeglut_std.h" />
-    <ClInclude Include="..\src\context\win32\glut\glut.h" />
-    <ClInclude Include="..\src\context\win32\gl\glew.h" />
-    <ClInclude Include="..\src\context\win32\gl\glxew.h" />
-    <ClInclude Include="..\src\context\win32\gl\wglew.h" />
+    <ClInclude Include="..\src\context\win32\glfw3\glfw3.h" />
+    <ClInclude Include="..\src\context\win32\glfw3\glfw3native.h" />
+    <ClInclude Include="..\src\include\gl\glew.h" />
+    <ClInclude Include="..\src\include\gl\glxew.h" />
+    <ClInclude Include="..\src\include\gl\wglew.h" />
     <ClInclude Include="..\src\renderer\RendererSystem.h" />
+    <ClInclude Include="..\src\shader\ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\context\win32\Application.cpp" />
-    <ClCompile Include="..\src\renderer\RendererSystem.cpp" />
+    <ClCompile Include="..\src\context\Application.cpp" />
+    <ClCompile Include="..\src\context\win32\ApplicationPlatform.cpp" />
+    <ClCompile Include="..\src\renderer\gl\RendererSystem.cpp" />
+    <ClCompile Include="..\src\shader\gl\ShaderProgram.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}</ProjectGuid>

@@ -41,6 +41,7 @@ c++ include
 */
 #include <string>
 #include <algorithm>
+#include <functional>
 
 #include "PlatformMacros.h"
 #include "LogSystem.h"
@@ -62,8 +63,10 @@ general macros
 #define magicalSafeRetain( __var ) do{ if( __var ) __var->retain(); } while(0)
 #define magicalSafeRelease( __var ) do{ if( __var ) __var->release(); } while(0)
 #define magicalSafeReleaseNull( __var ) do{ if( __var ){ __var->release(); __var = nullptr; } } while(0)
-#define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
 
+#define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
+#define magicalReturnVarIfError( __var ) do{ if( magicalIsError() ) return __var; } while(0)
+#define magicalShowLastError() do { if( magicalIsError() ) magicalDebugMessageBox( magicalGetLastErrorInfo(), "Error" ); } while(0)
 
 /*
 general
@@ -72,6 +75,17 @@ MAGAPI bool magicalIsError( void );
 MAGAPI void magicalIgnoreLastError( void );
 MAGAPI void magicalSetLastErrorInfo( const char* info );
 MAGAPI const char* magicalGetLastErrorInfo( void );
+
+/*
+message box
+*/
+#ifndef MAG_DEBUG
+#define magicalDebugMessageBox( __msg, __title )
+#else
+#ifdef MAG_WIN32
+MAGAPI void magicalDebugMessageBox( const char* __msg, const char* __title );
+#endif
+#endif
 
 /*
 assert function

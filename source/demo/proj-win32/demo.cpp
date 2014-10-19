@@ -21,13 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "main.h"
-#include "Application.h"
+#include "Main.h"
+#include "magical-engine.h"
 
 int main( int argc, char* argv[] )
 {
-	// Run
-	Application::run( onFinishLaunching );
-	// Exit
+	Application::init();
+	magicalReturnVarIfError( -1 );
+
+	Application::run( mainDelegate );
+	magicalReturnVarIfError( -1 );
+
+	Application::delc();
+	magicalReturnVarIfError( -1 );
+
 	return 0;
 }

@@ -107,8 +107,8 @@
     </Link>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(SolutionDir)magical-dependencies\glut\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(SolutionDir)magical-dependencies\glfw3\libs\win32\32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-dependencies\glew\libs\win32\32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

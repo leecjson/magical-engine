@@ -21,6 +21,73 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "PlatformMacros.h"
-#include "GLFunction.h"
+#include "Application.h"
+#include "Engine.h"
+#include "AssetsSystem.h"
+#include "LuaSystem.h"
+#include "RendererSystem.h"
+#include "LogSystem.h"
+
+void Application::init( void )
+{
+	Log::init();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Assets::init();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Lua::init();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	initWindow();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	initGL();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Engine::init();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Renderer::init();
+	magicalShowLastError();
+	magicalReturnIfError();
+}
+
+void Application::delc( void )
+{
+	Renderer::delc();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Engine::delc();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	delcGL();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	delcWindow();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Lua::delc();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Assets::delc();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Log::delc();
+	magicalShowLastError();
+	magicalReturnIfError();
+}
+
 

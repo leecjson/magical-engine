@@ -39,13 +39,17 @@ void Log::delc( void )
 
 void Log::D( const char* msg )
 {
-	magicalAssert( msg, "should not be nullptr" );
+	if( msg == nullptr )
+		return;
+
 	win32Log( kLogChannelDebugTitle, msg );
 }
 
 void Log::E( const char* msg )
 {
-	magicalAssert( msg, "should not be nullptr" );
+	if( msg == nullptr )
+		return;
+
 	win32Log( kLogChannelErrorTitle, msg );
 }
 

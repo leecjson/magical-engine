@@ -872,7 +872,7 @@ inline bool Mat4::decompose( Vec3* translation, Quaternion* rotation, Vec3* scal
     // Now calculate the rotation from the resulting matrix (axes).
     float trace = xaxis.x + yaxis.y + zaxis.z + 1.0f;
 
-	if( trace > FLT_EPSILON )
+	if( magicalFloatIsZero( trace ) == false )
 	{
 		float s = 0.5f / sqrt( trace );
 		rotation->w = 0.25f / s;

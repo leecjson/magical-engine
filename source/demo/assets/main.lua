@@ -8,7 +8,7 @@ end
 
 function go()
 	
-	print("gaga");
+	-- print("gaga");
 
 end
 

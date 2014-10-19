@@ -24,13 +24,32 @@ SOFTWARE.
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
-#include <functional>
 #include "PlatformMacros.h"
+#include "Common.h"
+
+typedef std::function<void( void )> MainDelegate;
 
 class Application
 {
 public:
-	static void run( std::function<void (void)> finish_launching );
+	static void init( void );
+	static void delc( void );
+	static void run( MainDelegate mainDelegate );
+
+public:
+	static void setInterval( double interval );
+	static double getInterval( void );
+	static void setResizable( bool resizable );
+	static bool isResizable( void );
+	static void setWindowTitle( const char* title );
+	static void swapBuffers( void );
+	static void exit( void );
+
+private:
+	static void initWindow( void );
+	static void delcWindow( void );
+	static void initGL( void );
+	static void delcGL( void );
 };
 
 #endif //__APPLICATION_H__

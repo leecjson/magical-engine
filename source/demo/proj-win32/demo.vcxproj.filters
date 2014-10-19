@@ -6,11 +6,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\main.h">
+    <ClCompile Include="demo.cpp" />
+    <ClCompile Include="..\src\Main.cpp">
       <Filter>src</Filter>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main-win32.cpp" />
+    <ClInclude Include="..\src\Main.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

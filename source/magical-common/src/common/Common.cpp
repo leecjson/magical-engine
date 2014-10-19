@@ -22,9 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Common.h"
-
-#include <cstdio>
-#include <string>
+/*
+platform include
+*/
+#ifdef MAG_WIN32
+#include <windows.h>
+#endif
 
 static bool s_last_error = false;
 static char s_last_error_info[kMaxErrLength];
@@ -66,3 +69,12 @@ MAGAPI const char* magicalGetLastErrorInfo( void )
 		return "none";
 	}
 }
+
+#ifdef MAG_DEBUG
+#ifdef MAG_WIN32
+MAGAPI void magicalDebugMessageBox( const char* __msg, const char* __title )
+{
+	MessageBoxA( nullptr, ( __msg ), ( __title ), MB_OK );
+}
+#endif
+#endif

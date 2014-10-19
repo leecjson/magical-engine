@@ -32,12 +32,10 @@ class Engine
 public:
 	static void init( void );
 	static void delc( void );
-	static void initSystems( void );
-	static void delcSystems( void );
 
 public:
 	static void mainLoop( void );
-	static void reshape( int w, int h );
+	static void resize( int w, int h );
 
 public:
 	static float getDeltaTime( void );

@@ -21,23 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDERER_SYSTEM_H__
-#define __RENDERER_SYSTEM_H__
+#ifndef __SHADER_PROGRAM_H__
+#define __SHADER_PROGRAM_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "Reference.h"
 
-class Renderer
+class ShaderProgram : public Reference
 {
 public:
-	static void init( void );
-	static void delc( void );
+	ShaderProgram( void );
+	virtual ~ShaderProgram( void );
+	static Shared<ShaderProgram> create( void );
 
 public:
-	static void render( void );
-	static void resize( int w, int h );
-	static void setDefaultRenderer( void );
+	void setVertexSource( const char* vertex_src );
+	void setFragmentSource( const char* fragment_src );
+	void build( void );
+	void link( void );
+	void cleanup( void );
+	uint32_t getId( void ) const;
+
+private:
+	std::string _vertex_src;
+	std::string _fragment_src;
+	unsigned int _program_id;
+	bool _has_built;
+	bool _has_linked;
 };
 
-
-#endif //__RENDERER_SYSTEM_H__
+#endif //__SHADER_PROGRAM_H__
