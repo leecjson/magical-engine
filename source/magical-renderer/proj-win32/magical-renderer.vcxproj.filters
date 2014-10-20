@@ -13,32 +13,32 @@
     <Filter Include="src\renderer">
       <UniqueIdentifier>{e2b20c48-99fa-4a5f-be05-b941c073cc29}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\context\win32\glfw3">
-      <UniqueIdentifier>{4a49cc8d-d88f-4600-b4f4-d0db7cec05f7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\renderer\gl">
       <UniqueIdentifier>{d8de52a1-367a-4d7b-92c2-fb5afbd1d6ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\shader">
-      <UniqueIdentifier>{aa43c3de-91a1-4ae8-b14c-594e857c5afe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\include">
-      <UniqueIdentifier>{63e92c16-fea8-4855-be78-4e3c7f56b7f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\include\gl">
-      <UniqueIdentifier>{8fae78d0-9222-4182-af2c-5b9b31d3db65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\include\d3dx">
-      <UniqueIdentifier>{c47778d3-0017-411d-a13b-c7e187f80de5}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\renderer\d3dx">
       <UniqueIdentifier>{a6e3a82f-eb20-49ca-b9da-d6e40603ef8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\shader\gl">
-      <UniqueIdentifier>{598a6a82-2d93-46d1-99d7-00b0f8bc1bca}</UniqueIdentifier>
+    <Filter Include="src\context\win32\gl">
+      <UniqueIdentifier>{bc34abc8-1562-4592-a985-6fb30bf0ad2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\shader\d3dx">
-      <UniqueIdentifier>{2890f3d8-6ad0-4fd7-bcb9-f12f4870dc83}</UniqueIdentifier>
+    <Filter Include="src\context\win32\gl\glfw3">
+      <UniqueIdentifier>{d3b014e6-88a1-4122-b3d0-aac9711bfb80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\context\win32\gl\glew">
+      <UniqueIdentifier>{e38424a7-f005-46b2-8645-d5b3ba7dbc7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\support">
+      <UniqueIdentifier>{9a0e7baf-af0b-46ff-b929-8cc32be371a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\support\d3dx">
+      <UniqueIdentifier>{c503f785-7aeb-4031-9b3f-8c5154da9993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\support\gl">
+      <UniqueIdentifier>{eada4a84-0d93-4898-ac06-b580e5c30024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\context\win32\d3dx">
+      <UniqueIdentifier>{7e999083-3f15-47a9-b9fc-2a966fb54597}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,37 +48,43 @@
     <ClInclude Include="..\src\renderer\RendererSystem.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\context\win32\glfw3\glfw3.h">
-      <Filter>src\context\win32\glfw3</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3.h">
+      <Filter>src\context\win32\gl\glfw3</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\context\win32\glfw3\glfw3native.h">
-      <Filter>src\context\win32\glfw3</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3native.h">
+      <Filter>src\context\win32\gl\glfw3</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\include\gl\glew.h">
-      <Filter>src\include\gl</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glew\glew.h">
+      <Filter>src\context\win32\gl\glew</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\include\gl\glxew.h">
-      <Filter>src\include\gl</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glew\glxew.h">
+      <Filter>src\context\win32\gl\glew</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\include\gl\wglew.h">
-      <Filter>src\include\gl</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glew\wglew.h">
+      <Filter>src\context\win32\gl\glew</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\shader\ShaderProgram.h">
-      <Filter>src\shader</Filter>
+    <ClInclude Include="..\src\support\ShaderProgram.h">
+      <Filter>src\support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\support\RendererMacros.h">
+      <Filter>src\support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\context\Application.cpp">
       <Filter>src\context</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\context\win32\ApplicationPlatform.cpp">
-      <Filter>src\context\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\renderer\gl\RendererSystem.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\shader\gl\ShaderProgram.cpp">
-      <Filter>src\shader\gl</Filter>
+    <ClCompile Include="..\src\context\win32\gl\ApplicationPlatform.cpp">
+      <Filter>src\context\win32\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\support\gl\ShaderProgram.cpp">
+      <Filter>src\support\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\support\RendererMacros.cpp">
+      <Filter>src\support</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

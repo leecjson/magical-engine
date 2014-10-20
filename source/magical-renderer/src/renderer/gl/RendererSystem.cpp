@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "RendererSystem.h"
 #include "Application.h"
-#include "gl/glew.h"
+#include "win32/gl/glew/glew.h"
 
 void Renderer::init( void )
 {

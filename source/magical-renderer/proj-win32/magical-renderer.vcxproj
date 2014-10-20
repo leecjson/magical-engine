@@ -12,19 +12,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\context\Application.h" />
-    <ClInclude Include="..\src\context\win32\glfw3\glfw3.h" />
-    <ClInclude Include="..\src\context\win32\glfw3\glfw3native.h" />
-    <ClInclude Include="..\src\include\gl\glew.h" />
-    <ClInclude Include="..\src\include\gl\glxew.h" />
-    <ClInclude Include="..\src\include\gl\wglew.h" />
+    <ClInclude Include="..\src\context\win32\gl\glew\glew.h" />
+    <ClInclude Include="..\src\context\win32\gl\glew\glxew.h" />
+    <ClInclude Include="..\src\context\win32\gl\glew\wglew.h" />
+    <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3.h" />
+    <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3native.h" />
     <ClInclude Include="..\src\renderer\RendererSystem.h" />
-    <ClInclude Include="..\src\shader\ShaderProgram.h" />
+    <ClInclude Include="..\src\support\RendererMacros.h" />
+    <ClInclude Include="..\src\support\ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\context\Application.cpp" />
-    <ClCompile Include="..\src\context\win32\ApplicationPlatform.cpp" />
+    <ClCompile Include="..\src\context\win32\gl\ApplicationPlatform.cpp" />
     <ClCompile Include="..\src\renderer\gl\RendererSystem.cpp" />
-    <ClCompile Include="..\src\shader\gl\ShaderProgram.cpp" />
+    <ClCompile Include="..\src\support\gl\ShaderProgram.cpp" />
+    <ClCompile Include="..\src\support\RendererMacros.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}</ProjectGuid>
@@ -66,7 +68,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
-      <PreprocessorDefinitions>MAG_DEBUG;FREEGLUT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MAG_DEBUG;MAG_USING_GL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

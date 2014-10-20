@@ -23,8 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "Application.h"
 #include <windows.h>
-#include "gl/glew.h"
-#include "win32/glfw3/glfw3.h"
+#include "win32/gl/glew/glew.h"
+#include "win32/gl/glfw3/glfw3.h"
 #include "Engine.h"
 
 static void win32ErrorCallBack( int err_id, const char* error_desc );
@@ -148,7 +148,7 @@ void Application::delcWindow( void )
 	glfwTerminate();
 }
 
-void Application::initGL( void )
+void Application::initRenderContext( void )
 {
 	char buf[1024] = { 0 };
 
@@ -189,7 +189,7 @@ void Application::initGL( void )
 	}
 }
 
-void Application::delcGL( void )
+void Application::delcRenderContext( void )
 {
 
 }

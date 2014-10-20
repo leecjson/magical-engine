@@ -21,73 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Application.h"
-#include "Engine.h"
-#include "AssetsSystem.h"
-#include "LuaSystem.h"
-#include "RendererSystem.h"
-#include "LogSystem.h"
+#include "RendererMacros.h"
 
-void Application::init( void )
+#ifdef MAG_USING_GL
+
+MAGAPI void magicalSetLastShaderInfoLog( GLuint shader )
 {
-	Log::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+	char* info_log;
+	GLint info_length;
+	glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &info_length );
 
-	Assets::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+	info_log = (char*) malloc( info_length );
+	glGetShaderInfoLog( shader, info_length, &info_length, info_log );
 
-	Lua::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+	if( info_log != NULL )
+		magicalSetLastErrorInfo( info_log );
 
-	initWindow();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	initRenderContext();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Engine::init();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Renderer::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+	free( info_log );
 }
 
-void Application::delc( void )
-{
-	Renderer::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Engine::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	delcRenderContext();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	delcWindow();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Lua::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Assets::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Log::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-}
-
-
+#endif

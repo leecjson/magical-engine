@@ -48,8 +48,8 @@ public:
 private:
 	static void initWindow( void );
 	static void delcWindow( void );
-	static void initGL( void );
-	static void delcGL( void );
+	static void initRenderContext( void );
+	static void delcRenderContext( void );
 };
 
 #endif //__APPLICATION_H__

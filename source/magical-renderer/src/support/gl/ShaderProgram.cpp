@@ -22,7 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "ShaderProgram.h"
-#include "gl/glew.h"
+#include "win32/gl/glew/glew.h"
+
+static GLvoid magicalPrintGLShaderInfoLog( const GLuint shader )
+{
+	char* info_log;
+	GLint info_length;
+	glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &info_length );
+
+	info_log = (char*) malloc( info_length );
+	glGetShaderInfoLog( shader, info_length, &info_length, info_log );
+
+	if( info_log != NULL )
+		Log::E( info_log );
+
+	free( info_log );
+}
+
+static GLvoid magicalPrintGLProgramInfoLog( const GLuint program )
+{
+	char* info_log;
+	GLint info_length;
+	glGetProgramiv( program, GL_INFO_LOG_LENGTH, &info_length );
+
+	info_log = (char*) malloc( info_length );
+	glGetProgramInfoLog( program, info_length, &info_length, info_log );
+
+	if( info_log != NULL )
+		Log::E( info_log );
+
+	free( info_log );
+}
 
 ShaderProgram::ShaderProgram( void )
 : _program_id( GL_ZERO )
@@ -77,10 +107,10 @@ void ShaderProgram::build( void )
 	}
 
 	GLchar* buffer[1];
-	GLuint  program = GL_ZERO;
-	GLint   err_signal = GL_FALSE;
-	GLuint  vertex_shader = GL_ZERO;
-	GLuint  fragment_shader = GL_ZERO;
+	GLuint program = GL_ZERO;
+	GLint err_signal = GL_FALSE;
+	GLuint vertex_shader = GL_ZERO;
+	GLuint fragment_shader = GL_ZERO;
 
 	//创建顶点与片段着色器对象
 	vertex_shader = glCreateShader( GL_VERTEX_SHADER );

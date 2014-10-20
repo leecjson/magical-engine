@@ -21,73 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Application.h"
-#include "Engine.h"
-#include "AssetsSystem.h"
-#include "LuaSystem.h"
-#include "RendererSystem.h"
-#include "LogSystem.h"
+#ifndef __RENDERER_MACROS_H__
+#define __RENDERER_MACROS_H__
 
-void Application::init( void )
-{
-	Log::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "Utils.h"
 
-	Assets::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+#ifdef MAG_USING_GL
 
-	Lua::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+#include "win32/gl/glew/glew.h"
 
-	initWindow();
-	magicalShowLastError();
-	magicalReturnIfError();
+#define magicalCheckGLError() \
+	do { \
+		if( GLenum __err_singnal = glGetError() ) \
+		{ \
+			magicalSetLastErrorInfo( \
+				StringUtils::format<512>( "[GL] Error 0x%04X %s %d\n", s_glerror_signal, __FUNCTION__, __LINE__ ) ) \
+			magicalLogLastError(); \
+		} \
+	} while( 0 )
 
-	initRenderContext();
-	magicalShowLastError();
-	magicalReturnIfError();
+#if MAG_DEBUG
+#define magicalDebugCheckGLError() magicalCheckGLError()
+#else
+#define magicalDebugCheckGLError() 
+#endif
 
-	Engine::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+MAGAPI void magicalSetLastShaderInfoLog( GLuint shader );
 
-	Renderer::init();
-	magicalShowLastError();
-	magicalReturnIfError();
-}
-
-void Application::delc( void )
-{
-	Renderer::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Engine::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	delcRenderContext();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	delcWindow();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Lua::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Assets::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-	Log::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
-}
+#endif
 
 
+#endif //__RENDERER_MACROS_H__
