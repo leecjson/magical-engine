@@ -29,8 +29,10 @@ platform include
 #include <windows.h>
 #endif
 
+char g_buffer[ kMaxBufferLength ];
+
 static bool s_last_error = false;
-static char s_last_error_info[kMaxErrLength];
+static char s_last_error_info[ kMaxBufferLength ];
 
 #ifdef MAG_DEBUG
 bool g_is_observing = false;
@@ -39,8 +41,6 @@ int g_observer_copy_construct_count = 0;
 int g_observer_construct_count = 0;
 int g_observer_destruct_count = 0;
 #endif
-
-
 
 MAGAPI bool magicalIsError( void )
 {
@@ -52,9 +52,20 @@ MAGAPI void magicalIgnoreLastError( void )
 	s_last_error = false;
 }
 
-MAGAPI void magicalSetLastErrorInfo( const char* info )
+MAGAPI void magicalSetLastErrorInfo( const char* info, const char* func, int line )
 {
-	strcpy( s_last_error_info, info );
+	if( info == nullptr )
+		return;
+
+	if( func )
+	{
+		sprintf( s_last_error_info, "%s %s:%d", info, func, line );
+	}
+	else
+	{
+		strcpy( s_last_error_info, info );
+	}
+
 	s_last_error = true;
 }
 

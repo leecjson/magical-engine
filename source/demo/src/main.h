@@ -24,6 +24,8 @@ SOFTWARE.
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
-extern void mainDelegate( void );
+#include "PlatformMacros.h"
+
+MAGAPI_USER void mainDelegate( void );
 
 #endif //__MAIN_H__

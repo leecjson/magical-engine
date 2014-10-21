@@ -150,13 +150,11 @@ void Application::delcWindow( void )
 
 void Application::initRenderContext( void )
 {
-	char buf[1024] = { 0 };
-
 	const GLubyte* gl_version = glGetString( GL_VERSION );
 	if( atof( (const char*) gl_version ) < 1.5 )
 	{
-		sprintf( buf, "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.", gl_version );
-		magicalSetLastErrorInfo( buf );
+		magicalFormat( "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.", gl_version );
+		magicalSetLastErrorInfoAt( magicalBuffer );
 		magicalLogLastError();
 		return;
 	}
@@ -164,8 +162,8 @@ void Application::initRenderContext( void )
 	GLenum result = glewInit();
 	if( result != GLEW_OK )
 	{
-		sprintf( buf, "%s %s", "Init glew error!", (char*)glewGetErrorString( result ) );
-		magicalSetLastErrorInfo( buf );
+		magicalFormat( "%s %s", "Init glew error.", (char*)glewGetErrorString( result ) );
+		magicalSetLastErrorInfoAt( magicalBuffer );
 		magicalLogLastError();
 		return;
 	}
@@ -196,7 +194,7 @@ void Application::delcRenderContext( void )
 
 static void win32ErrorCallBack( int err_id, const char* error_desc )
 {
-	magicalSetLastErrorInfo( error_desc );
+	magicalSetLastErrorInfoAt( error_desc );
 	magicalLogLastError();
 
 	magicalLog( "win32ErrorCallBack" );

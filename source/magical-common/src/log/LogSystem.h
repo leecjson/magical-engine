@@ -32,12 +32,13 @@ SOFTWARE.
 #define kLogChannelDebugTitle "Debug"
 #define kLogChannelErrorTitle "Error"
 
+#define magicalLogLastError() Log::E( magicalGetLastErrorInfo() )
+#define magicalInfoLog( __txt ) Log::D( __txt )
+
 #ifndef MAG_DEBUG
 #define magicalLog()
-#define magicalLogLastError()
 #else
-#define magicalLog( txt ) Log::D( txt )
-#define magicalLogLastError() Log::E( magicalGetLastErrorInfo() )
+#define magicalLog( __txt ) Log::D( __txt )
 #endif
 
 class Log

@@ -26,29 +26,37 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Utils.h"
 
 #ifdef MAG_USING_GL
 
+#ifdef MAG_WIN32
 #include "win32/gl/glew/glew.h"
+#endif
 
 #define magicalCheckGLError() \
 	do { \
 		if( GLenum __err_singnal = glGetError() ) \
 		{ \
-			magicalSetLastErrorInfo( \
-				StringUtils::format<512>( "[GL] Error 0x%04X %s %d\n", s_glerror_signal, __FUNCTION__, __LINE__ ) ) \
+			magicalFormat( "[GL] Error 0x%04X", __err_singnal ); \
+			magicalSetLastErrorInfoAt( magicalBuffer ); \
 			magicalLogLastError(); \
 		} \
 	} while( 0 )
 
-#if MAG_DEBUG
-#define magicalDebugCheckGLError() magicalCheckGLError()
-#else
+#ifndef MAG_DEBUG
 #define magicalDebugCheckGLError() 
+#else
+#define magicalDebugCheckGLError() magicalCheckGLError()
 #endif
 
-MAGAPI void magicalSetLastShaderInfoLog( GLuint shader );
+MAGAPI bool magicalGetShaderInfoLog( GLuint shader );
+MAGAPI bool magicalGetProgramInfoLog( GLuint program );
+
+#endif
+
+#ifdef MAG_USING_D3DX
+
+
 
 #endif
 

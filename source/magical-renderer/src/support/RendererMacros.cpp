@@ -25,7 +25,7 @@ SOFTWARE.
 
 #ifdef MAG_USING_GL
 
-MAGAPI void magicalSetLastShaderInfoLog( GLuint shader )
+MAGAPI bool magicalGetShaderInfoLog( GLuint shader )
 {
 	char* info_log;
 	GLint info_length;
@@ -34,10 +34,27 @@ MAGAPI void magicalSetLastShaderInfoLog( GLuint shader )
 	info_log = (char*) malloc( info_length );
 	glGetShaderInfoLog( shader, info_length, &info_length, info_log );
 
-	if( info_log != NULL )
-		magicalSetLastErrorInfo( info_log );
+	if( info_log == nullptr )
+		return false;
 
-	free( info_log );
+	magicalFormat( "%s", info_log );
+	return true;
+}
+
+MAGAPI bool magicalGetProgramInfoLog( GLuint program )
+{
+	char* info_log;
+	GLint info_length;
+	glGetProgramiv( program, GL_INFO_LOG_LENGTH, &info_length );
+
+	info_log = (char*) malloc( info_length );
+	glGetProgramInfoLog( program, info_length, &info_length, info_log );
+
+	if( info_log == nullptr )
+		return false;
+
+	magicalFormat( "%s", info_log );
+	return true;
 }
 
 #endif

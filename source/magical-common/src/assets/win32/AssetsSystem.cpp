@@ -44,26 +44,25 @@ void Assets::delc( void )
 
 void Assets::resetAssetsPath( void )
 {
-	char buf[ kMaxPathLength ] = { 0 };
-	GetCurrentDirectoryA( sizeof( buf ) - 1, buf );
+	GetCurrentDirectoryA( kMaxBufferLength, magicalBuffer );
 
-	if( strlen( buf ) == 0 )
+	if( strlen( magicalBuffer ) == 0 )
 	{
-		magicalSetLastErrorInfo( "GetCurrentDirectoryA buf is empty, Assets::resetAssetsPath() error!" );
+		magicalSetLastErrorInfoAt( "result of GetCurrentDirectoryA is empty." );
 		magicalLogLastError();
 		return;
 	}
 
-	s_assets_path = FileUtils::toUnixStylePath( buf );
+	s_assets_path = FileUtils::toUnixStylePath( magicalBuffer );
 	s_assets_path.append( "/" );
 }
 
 void Assets::setAssetsPath( const char* path )
 {
-	magicalAssert( path, "should not be nullptr" );
+	magicalAssert( path, "should not be nullptr." );
 
 	std::string unix_path = FileUtils::toUnixStylePath( path );
-	magicalAssert( FileUtils::isAbsolutePath( unix_path.c_str() ), "should be absolute path" );
+	magicalAssert( FileUtils::isAbsolutePath( unix_path.c_str() ), "should be absolute path." );
 
 	if( unix_path.length() > 0 && unix_path[unix_path.length() - 1] != '/' )
 	{
@@ -79,7 +78,7 @@ std::string Assets::getAssetsPath( void )
 
 std::string Assets::getAssetsAbsoluteFilename( const char* file_name )
 {
-	magicalAssert( file_name, "should not be nullptr" );
+	magicalAssert( file_name, "should not be nullptr." );
 
 	if( FileUtils::isAbsolutePath( file_name ) )
 	{
@@ -93,7 +92,7 @@ std::string Assets::getAssetsAbsoluteFilename( const char* file_name )
 
 bool Assets::isAssetsFileExist( const char* file_name )
 {
-	magicalAssert( file_name, "should not be nullptr" );
+	magicalAssert( file_name, "should not be nullptr." );
 
 	std::string file_path = FileUtils::toUnixStylePath( file_name );
 	if( FileUtils::isAbsolutePath( file_path.c_str() ) == false )
@@ -115,15 +114,15 @@ bool Assets::isAssetsFileExist( const char* file_name )
 
 Shared<Data> Assets::getAssetsFileData( const char* file_name )
 {
-	magicalAssert( file_name, "should not be nullptr" );
+	magicalAssert( file_name, "should not be nullptr." );
 
 	std::string abs_path = getAssetsAbsoluteFilename( file_name );
-	magicalAssert( !abs_path.empty(), StringUtils::format<512>( "get assets file data failed! file(%s) doesn't exist!", file_name ).c_str() );
+	magicalAssert( !abs_path.empty(), StringUtils::format<512>( "get assets file data failed! file(%s) doesn't exist.", file_name ).c_str() );
 
 	FILE* fp = fopen( abs_path.c_str(), "rb" );
 	if( fp == nullptr )
 	{
-		magicalSetLastErrorInfo( StringUtils::format<512>( "get assets file data failed! file(%s)", file_name ).c_str() );
+		magicalSetLastErrorInfoAt( StringUtils::format<512>( "get assets file data failed! file(%s).", file_name ).c_str() );
 		magicalLogLastError();
 		return nullptr;
 	}

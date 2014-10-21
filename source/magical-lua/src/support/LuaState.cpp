@@ -130,10 +130,8 @@ int LuaState::executeGlobalFunction( const char* func_name, int retc, int argc )
 	}
 	else
 	{
-		char buf[256];
-		sprintf( buf, "name '%s' does not represent a lua global function", func_name );
-
-		magicalSetLastErrorInfo( buf );
+		magicalFormat( "name '%s' does not represent a lua global function", func_name );
+		magicalSetLastErrorInfoAt( magicalBuffer );
 		magicalLogLastError();
 		lua_pop( _L, 1 );
 	}
@@ -194,7 +192,7 @@ void LuaState::handleLuaError( void ) const
 	if( lua_type(_L, -1) == LUA_TSTRING )
 	{
 		const char* info  = lua_tostring( _L, -1 );
-		magicalSetLastErrorInfo( info );
+		magicalSetLastErrorInfoAt( info );
 		magicalLogLastError();
 		lua_pop(_L, -1);
 	}

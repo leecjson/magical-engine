@@ -38,15 +38,16 @@ public:
 public:
 	void setVertexSource( const char* vertex_src );
 	void setFragmentSource( const char* fragment_src );
-	void build( void );
-	void link( void );
+	bool build( void );
+	bool link( void );
 	void cleanup( void );
 	uint32_t getId( void ) const;
+	bool isReady( void ) const;
 
 private:
 	std::string _vertex_src;
 	std::string _fragment_src;
-	unsigned int _program_id;
+	uint32_t _program_id;
 	bool _has_built;
 	bool _has_linked;
 };

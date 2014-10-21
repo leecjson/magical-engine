@@ -62,7 +62,7 @@ void Data::malloc( const size_t size )
 void Data::realloc( const size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
-	magicalAssert( _data, "_data should not be nullptr" );
+	magicalAssert( _data, "_data should not be nullptr." );
 
 	if( size > _size )
 	{

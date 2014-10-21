@@ -50,7 +50,7 @@ float TimeUtils::endTicking( void )
 
 bool FileUtils::isAbsolutePath( const char* path )
 {
-	magicalAssert( path, "should not be nullptr" );
+	magicalAssert( path, "should not be nullptr." );
 
 #ifdef MAG_WIN32
 	if( strlen( path ) > 2
@@ -66,7 +66,7 @@ bool FileUtils::isAbsolutePath( const char* path )
 
 std::string FileUtils::toUnixStylePath( const char* path )
 {
-	magicalAssert( path, "should not be nullptr" );
+	magicalAssert( path, "should not be nullptr." );
 
 	std::string ret = path;
     int len = ret.length();

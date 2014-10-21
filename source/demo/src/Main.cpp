@@ -24,7 +24,7 @@ SOFTWARE.
 #include "Main.h"
 #include "magical-engine.h"
 
-void mainDelegate( void )
+MAGAPI_USER void mainDelegate( void )
 {
 	Lua::state()->executeScriptFile( "main.lua" );
 	Lua::state()->executeGlobalFunction( kLuaOnCreate );

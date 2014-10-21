@@ -57,12 +57,11 @@ static void win32Log( const char* title, const char* msg )
 {
 	tm tm_now;
 	time_t now;
-	char buf[ kMaxLogLength ];
 
 	time( &now );
 	tm_now = *localtime( &now );
 
-	sprintf( buf, "[%s %02d/%02d %02d:%02d:%02d]: %s",
+	magicalFormat( "[%s %02d/%02d %02d:%02d:%02d]: %s",
 		title,
 		tm_now.tm_mon + 1,
 		tm_now.tm_mday,
@@ -71,7 +70,7 @@ static void win32Log( const char* title, const char* msg )
 		tm_now.tm_sec,
 		msg );
 
-	OutputDebugStringA( buf );
+	OutputDebugStringA( magicalBuffer );
 	OutputDebugStringA( "\n" );
-	printf( "%s\n", buf );
+	printf( "%s\n", magicalBuffer );
 }

@@ -22,37 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "ShaderProgram.h"
-#include "win32/gl/glew/glew.h"
-
-static GLvoid magicalPrintGLShaderInfoLog( const GLuint shader )
-{
-	char* info_log;
-	GLint info_length;
-	glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &info_length );
-
-	info_log = (char*) malloc( info_length );
-	glGetShaderInfoLog( shader, info_length, &info_length, info_log );
-
-	if( info_log != NULL )
-		Log::E( info_log );
-
-	free( info_log );
-}
-
-static GLvoid magicalPrintGLProgramInfoLog( const GLuint program )
-{
-	char* info_log;
-	GLint info_length;
-	glGetProgramiv( program, GL_INFO_LOG_LENGTH, &info_length );
-
-	info_log = (char*) malloc( info_length );
-	glGetProgramInfoLog( program, info_length, &info_length, info_log );
-
-	if( info_log != NULL )
-		Log::E( info_log );
-
-	free( info_log );
-}
+#include "RendererMacros.h"
 
 ShaderProgram::ShaderProgram( void )
 : _program_id( GL_ZERO )
@@ -91,6 +61,7 @@ void ShaderProgram::cleanup( void )
 		if( glIsProgram( _program_id ) )
 		{
 			glDeleteProgram( _program_id );
+			magicalCheckGLError();
 		}
 		_has_built = false;
 		_has_linked = false;
@@ -98,13 +69,9 @@ void ShaderProgram::cleanup( void )
 	}
 }
 
-void ShaderProgram::build( void )
+bool ShaderProgram::build( void )
 {
-	magicalAssert( !_vertex_src.empty() && !_fragment_src.empty(), "should not empty!" );
-	if( _has_built )
-	{
-		cleanup();
-	}
+	magicalAssert( !_vertex_src.empty() && !_fragment_src.empty(), "should not be empty!" );
 
 	GLchar* buffer[1];
 	GLuint program = GL_ZERO;
@@ -112,82 +79,147 @@ void ShaderProgram::build( void )
 	GLuint vertex_shader = GL_ZERO;
 	GLuint fragment_shader = GL_ZERO;
 
-	//创建顶点与片段着色器对象
+	if( _has_built )
+	{
+		cleanup();
+	}
+
 	vertex_shader = glCreateShader( GL_VERTEX_SHADER );
 	fragment_shader = glCreateShader( GL_FRAGMENT_SHADER );
 
-	//检测着色器程序创建是否成功
 	if( !( vertex_shader && fragment_shader ) )
 	{
 		magicalCheckGLError();
 		glDeleteShader( vertex_shader );
 		glDeleteShader( fragment_shader );
-		return GL_FALSE;
+		return false;
 	}
 
-	//传递着色器源代码
-	buffer[0] = (GLchar*) vertex_shader_src;
+	buffer[0] = (GLchar*) _vertex_src.c_str();
 	glShaderSource( vertex_shader, 1, (const GLchar**) buffer, NULL );
-	buffer[0] = (GLchar*) fragment_shader_src;
+	buffer[0] = (GLchar*) _fragment_src.c_str();
 	glShaderSource( fragment_shader, 1, (const GLchar**) buffer, NULL );
 
-	//编译顶点着色器对象
 	glCompileShader( vertex_shader );
-	//编译片段着色器对象
 	glCompileShader( fragment_shader );
 
-	//查询顶点着色器编译错误
 	glGetShaderiv( vertex_shader, GL_COMPILE_STATUS, &err_signal );
 	if( err_signal == GL_FALSE )
 	{
-		magicalPrintShaderInfoLog( vertex_shader );
+		if( magicalGetShaderInfoLog( vertex_shader ) )
+		{
+			magicalSetLastErrorInfoAt( magicalBuffer );
+			magicalLogLastError();
+		}
+		else
+		{
+			magicalCheckGLError();
+		}
+
 		glDeleteShader( vertex_shader );
 		glDeleteShader( fragment_shader );
-		return GL_FALSE;
+		return false;
 	}
 
-	//查询片段着色器编译错误
 	glGetShaderiv( fragment_shader, GL_COMPILE_STATUS, &err_signal );
 	if( err_signal == GL_FALSE )
 	{
-		magicalPrintShaderInfoLog( fragment_shader );
+		if( magicalGetShaderInfoLog( fragment_shader ) )
+		{
+			magicalSetLastErrorInfoAt( magicalBuffer );
+			magicalLogLastError();
+		}
+		else
+		{
+			magicalCheckGLError();
+		}
+
 		glDeleteShader( vertex_shader );
 		glDeleteShader( fragment_shader );
-		return GL_FALSE;
+		return false;
 	}
 
-	//创建着色程序
 	program = glCreateProgram();
 	if( program == GL_ZERO )
 	{
 		magicalCheckGLError();
 		glDeleteShader( vertex_shader );
 		glDeleteShader( fragment_shader );
-		return GL_FALSE;
+		return false;
 	}
 
-	//给着色程序添加着色器
 	glAttachShader( program, vertex_shader );
 	glAttachShader( program, fragment_shader );
-
-	//把着色器对象置为删除状态
 	glDeleteShader( vertex_shader );
 	glDeleteShader( fragment_shader );
 
+	magicalCheckGLError();
+	magicalReturnVarIfError( false );
 
+	_program_id = program;
 	_has_built = true;
+	return true;
 }
 
-void ShaderProgram::link( void )
+bool ShaderProgram::link( void )
 {
-	magicalAssert( _has_built == true, "build first!" );
-	magicalAssert( _has_linked == false, "already linked!" );
+	magicalAssert( _has_built, "build first!" );
+	magicalAssert( !_has_linked, "already linked!" );
 
+	GLint err_signal = GL_FALSE;
+
+	if( glIsProgram( _program_id ) == GL_FALSE )
+	{
+		magicalCheckGLError();
+		return false;
+	}
+
+	glLinkProgram( _program_id );
+	glGetProgramiv( _program_id, GL_LINK_STATUS, &err_signal );
+	if( err_signal == GL_FALSE )
+	{
+		if( magicalGetProgramInfoLog( _program_id ) )
+		{
+			magicalSetLastErrorInfoAt( magicalBuffer );
+			magicalLogLastError();
+		}
+		else
+		{
+			magicalCheckGLError();
+		}
+
+		glDeleteProgram( _program_id );
+		return false;
+	}
+
+	glValidateProgram( _program_id );
+	glGetProgramiv( _program_id, GL_VALIDATE_STATUS, &err_signal );
+	if( err_signal == GL_FALSE )
+	{
+		if( magicalGetProgramInfoLog( _program_id ) )
+		{
+			magicalSetLastErrorInfoAt( magicalBuffer );
+			magicalLogLastError();
+		}
+		else
+		{
+			magicalCheckGLError();
+		}
+
+		glDeleteProgram( _program_id );
+		return false;
+	}
 
 	_has_linked = true;
+	return true;
 }
 
 uint32_t ShaderProgram::getId( void ) const
 {
 	return _program_id;
+}
+
+bool ShaderProgram::isReady( void ) const
+{
+	return _has_built && _has_linked && _program_id;
 }
