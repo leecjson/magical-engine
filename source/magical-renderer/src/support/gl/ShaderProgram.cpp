@@ -214,11 +214,6 @@ bool ShaderProgram::link( void )
 	return true;
 }
 
-uint32_t ShaderProgram::getId( void ) const
-{
-	return _program_id;
-}
-
 bool ShaderProgram::isReady( void ) const
 {
 	return _has_built && _has_linked && _program_id;

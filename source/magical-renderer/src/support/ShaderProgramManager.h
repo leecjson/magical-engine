@@ -21,35 +21,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SHADER_PROGRAM_H__
-#define __SHADER_PROGRAM_H__
+#ifndef __SHADER_PROGRAM_MANAGER_H__
+#define __SHADER_PROGRAM_MANAGER_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Reference.h"
+#include "RendererMacros.h"
+#include "Mat4.h"
+#include "Vec2.h"
+#include "Vec3.h"
+#include "Vec4.h"
 
-class ShaderProgram : public Reference
+enum ShaderProgramIndex
 {
-public:
-	ShaderProgram( void );
-	virtual ~ShaderProgram( void );
-	static Shared<ShaderProgram> create( void );
-
-public:
-	void setVertexSource( const char* vertex_src );
-	void setFragmentSource( const char* fragment_src );
-	bool build( void );
-	bool link( void );
-	void cleanup( void );
-	inline uint32_t getId( void ) const { return _program_id; }
-	bool isReady( void ) const;
-
-private:
-	std::string _vertex_src;
-	std::string _fragment_src;
-	uint32_t _program_id;
-	bool _has_built;
-	bool _has_linked;
+	kShaderProgramColor = 0,
+	kShaderProgramCount, 
 };
 
-#endif //__SHADER_PROGRAM_H__
+class ShaderProgramManager
+{
+public:
+	static void init( void );
+	static void delc( void );
+	static void initPrograms( void );
+	static void delcPrograms( void );
+
+	static const Shared<ShaderProgram> getProgram( ShaderProgramIndex index );
+
+public:
+	static bool setUniformProgramColor( const Mat4& mvp_matrix, const Color4F& color );
+};
+
+#endif //__SHADER_PROGRAM_MANAGER_H__

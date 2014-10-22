@@ -23,8 +23,6 @@ SOFTWARE.
 *******************************************************************************/
 #include "RendererMacros.h"
 
-#ifdef MAG_USING_GL
-
 MAGAPI bool magicalGetShaderInfoLog( GLuint shader )
 {
 	char* info_log;
@@ -56,5 +54,3 @@ MAGAPI bool magicalGetProgramInfoLog( GLuint program )
 	magicalFormat( "%s", info_log );
 	return true;
 }
-
-#endif

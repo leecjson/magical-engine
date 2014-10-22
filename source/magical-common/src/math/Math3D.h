@@ -25,10 +25,10 @@ SOFTWARE.
 #define __MATH_3D_H__
 
 #include <cmath>
+#include <cfloat>
 
 #define magicalFloatEquals( a, b ) ( std::fabs( ( a ) - ( b ) ) < FLT_EPSILON )
 #define magicalFloatIsZero( a ) ( std::fabs( a ) < FLT_EPSILON )
-
 #define magicalDegToRad( x ) ( ( x ) * 0.0174532925f )
 #define magicalRadToDeg( x ) ( ( x ) * 57.29577951f )
 

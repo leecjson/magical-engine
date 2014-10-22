@@ -20,13 +20,15 @@
     <ClInclude Include="..\src\renderer\RendererSystem.h" />
     <ClInclude Include="..\src\support\RendererMacros.h" />
     <ClInclude Include="..\src\support\ShaderProgram.h" />
+    <ClInclude Include="..\src\support\ShaderProgramManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\context\Application.cpp" />
     <ClCompile Include="..\src\context\win32\gl\ApplicationPlatform.cpp" />
     <ClCompile Include="..\src\renderer\gl\RendererSystem.cpp" />
+    <ClCompile Include="..\src\support\gl\RendererMacros.cpp" />
     <ClCompile Include="..\src\support\gl\ShaderProgram.cpp" />
-    <ClCompile Include="..\src\support\RendererMacros.cpp" />
+    <ClCompile Include="..\src\support\gl\ShaderProgramManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D1A8614A-F88D-43A0-9BFE-EF6034F925C4}</ProjectGuid>

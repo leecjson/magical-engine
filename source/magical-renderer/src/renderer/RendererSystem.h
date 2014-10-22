@@ -27,12 +27,6 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
-enum ShaderProgramIndex
-{
-	kShaderProgramColor = 0,
-	kShaderProgramCount,
-};
-
 class Renderer
 {
 public:
@@ -45,10 +39,7 @@ public:
 	static void setDefault( void );
 
 public:
-	static void initPrograms( void );
-	static void delcPrograms( void );
-	static void useProgram( ShaderProgramIndex idx );
-	static void useCustomProgram( uint32_t program_id );
+	static void useProgram( uint32_t program_id );
 };
 
 

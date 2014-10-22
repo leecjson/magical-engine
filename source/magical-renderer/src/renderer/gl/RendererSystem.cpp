@@ -24,21 +24,20 @@ SOFTWARE.
 #include "RendererSystem.h"
 #include "Application.h"
 #include "RendererMacros.h"
-#include "ShaderProgram.h"
-#include "AssetsSystem.h"
+#include "ShaderProgramManager.h"
 
 void Renderer::init( void )
 {
 	setDefault();
 	magicalReturnIfError();
 
-	initPrograms();
+	ShaderProgramManager::init();
 	magicalReturnIfError();
 }
 
 void Renderer::delc( void )
 {
-	delcPrograms();
+	ShaderProgramManager::delc();
 	magicalReturnIfError();
 }
 
@@ -56,6 +55,8 @@ void Renderer::render( void )
 void Renderer::resize( int w, int h )
 {
 	glViewport( 0, 0, w, h );
+
+	magicalCheckGLError();
 }
 
 void Renderer::setDefault( void )
@@ -68,57 +69,7 @@ void Renderer::setDefault( void )
 	magicalCheckGLError();
 }
 
-static ShaderProgram* s_programs[ kShaderProgramCount ] = { nullptr };
-static GLuint s_programs_id[ kShaderProgramCount ] = { 0 };
-
-void Renderer::initPrograms( void )
-{
-	ShaderProgram* program = nullptr;
-	std::string vertex_src;
-	std::string fragment_src;
-
-	for( size_t i = kShaderProgramColor; i < kShaderProgramCount; ++i )
-	{
-		program = new ShaderProgram();
-		switch( (ShaderProgramIndex) i )
-		{
-		case kShaderProgramColor:
-			{
-				vertex_src = Assets::getAssetsFileData( "standard/shaders/test_vertex.glsl" )->ptr();
-				fragment_src = Assets::getAssetsFileData( "standard/shaders/test_fragment.glsl" )->ptr();
-			}
-			break;
-		default:
-			break;
-		}
-
-		program->setVertexSource( vertex_src.c_str() );
-		program->setFragmentSource( fragment_src.c_str() );
-		if( !program->build() || !program->link() || !program->isReady() )
-		{
-			return;
-		}
-
-		s_programs_id[ i ] = program->getId();
-		s_programs[ i ] = program;
-	}
-}
-
-void Renderer::delcPrograms( void )
-{
-	for( size_t i = kShaderProgramColor; i < kShaderProgramCount; ++i )
-	{
-		magicalSafeReleaseNull( s_programs[ i ] );
-		s_programs_id[ i ] = 0;
-	}
-}
-
-void Renderer::useProgram( ShaderProgramIndex idx )
-{
-	glUseProgram( s_programs_id[ idx ] );
-}
-
-void Renderer::useCustomProgram( uint32_t program_id )
+void Renderer::useProgram( uint32_t program_id )
 {
 	glUseProgram( program_id );
 }

@@ -185,13 +185,22 @@ extern int g_observer_destruct_count;
 #define magicalRefDestruct()
 #endif
 
-struct Color
+struct Color4F
 {
 public:
 	float r;
 	float g;
 	float b;
 	float a;
+};
+
+struct Color4B
+{
+public:
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+	uint8_t a;
 };
 
 //Color kColorRed = { 1.0f, 0.0f, 0.0f, 1.0f };                   // 红
