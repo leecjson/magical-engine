@@ -40,16 +40,20 @@ public:
 	void setFragmentSource( const char* fragment_src );
 	bool build( void );
 	bool link( void );
-	void cleanup( void );
+	void shutdown( void );
 	inline uint32_t getId( void ) const { return _program_id; }
 	bool isReady( void ) const;
 
-private:
+public:
+	void bindAttribLocation( uint32_t index, const char* name ) const;
+	int getUniformLocation( const char* name ) const;
+
+protected:
 	std::string _vertex_src;
 	std::string _fragment_src;
-	uint32_t _program_id;
-	bool _has_built;
-	bool _has_linked;
+	uint32_t _program_id = 0;
+	bool _is_built = false;
+	bool _is_linked = false;
 };
 
 #endif //__SHADER_PROGRAM_H__

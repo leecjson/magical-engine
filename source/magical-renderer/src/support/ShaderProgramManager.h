@@ -27,16 +27,21 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "RendererMacros.h"
+#include "ShaderProgram.h"
 #include "Mat4.h"
 #include "Vec2.h"
 #include "Vec3.h"
 #include "Vec4.h"
 
+//class ShaderProgramColor;
+
 enum ShaderProgramIndex
 {
-	kShaderProgramColor = 0,
-	kShaderProgramCount, 
+	kShaderProgram_Color = 0,
+	kShaderProgram_Count,
 };
+
+
 
 class ShaderProgramManager
 {
@@ -47,9 +52,24 @@ public:
 	static void delcPrograms( void );
 
 	static const Shared<ShaderProgram> getProgram( ShaderProgramIndex index );
-
-public:
-	static bool setUniformProgramColor( const Mat4& mvp_matrix, const Color4F& color );
 };
+
+//class ShaderProgramColor : public ShaderProgram
+//{
+//public:
+//	ShaderProgramColor( void );
+//	virtual ~ShaderProgramColor( void );
+//
+//public:
+//	bool bindAttribLocation( void ) const;
+//	bool bindUniformLocation( void );
+//	bool setUniform( const GLfloat* mvp_matrix, const GLfloat* color );
+//
+//private:
+//	int _uniform_mvp_matrix_location;
+//	int _uniform_color_location;
+//};
+
+
 
 #endif //__SHADER_PROGRAM_MANAGER_H__

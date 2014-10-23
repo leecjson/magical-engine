@@ -25,16 +25,13 @@ SOFTWARE.
 #include "RendererMacros.h"
 
 ShaderProgram::ShaderProgram( void )
-: _program_id( GL_ZERO )
-, _has_built( false )
-, _has_linked( false )
 {
 
 }
 
 ShaderProgram::~ShaderProgram( void )
 {
-	cleanup();
+	shutdown();
 }
 
 Shared<ShaderProgram> ShaderProgram::create( void )
@@ -54,7 +51,7 @@ void ShaderProgram::setFragmentSource( const char* fragment_src )
 	_fragment_src = fragment_src;
 }
 
-void ShaderProgram::cleanup( void )
+void ShaderProgram::shutdown( void )
 {
 	if( _program_id != GL_ZERO )
 	{
@@ -63,8 +60,8 @@ void ShaderProgram::cleanup( void )
 			glDeleteProgram( _program_id );
 			magicalCheckGLError();
 		}
-		_has_built = false;
-		_has_linked = false;
+		_is_built = false;
+		_is_linked = false;
 		_program_id = GL_ZERO;
 	}
 }
@@ -79,9 +76,9 @@ bool ShaderProgram::build( void )
 	GLuint vertex_shader = GL_ZERO;
 	GLuint fragment_shader = GL_ZERO;
 
-	if( _has_built )
+	if( _is_built )
 	{
-		cleanup();
+		shutdown();
 	}
 
 	vertex_shader = glCreateShader( GL_VERTEX_SHADER );
@@ -157,14 +154,14 @@ bool ShaderProgram::build( void )
 	magicalReturnVarIfError( false );
 
 	_program_id = program;
-	_has_built = true;
+	_is_built = true;
 	return true;
 }
 
 bool ShaderProgram::link( void )
 {
-	magicalAssert( _has_built, "build first!" );
-	magicalAssert( !_has_linked, "already linked!" );
+	magicalAssert( _is_built, "build first!" );
+	magicalAssert( !_is_linked, "already linked!" );
 
 	GLint err_signal = GL_FALSE;
 
@@ -210,11 +207,24 @@ bool ShaderProgram::link( void )
 		return false;
 	}
 
-	_has_linked = true;
+	_is_linked = true;
 	return true;
 }
 
 bool ShaderProgram::isReady( void ) const
 {
-	return _has_built && _has_linked && _program_id;
+	return _is_built && _is_linked && _program_id;
+}
+
+void ShaderProgram::bindAttribLocation( uint32_t index, const char* name ) const
+{
+	glBindAttribLocation( _program_id, index, name );
+	magicalDebugCheckGLError();
+}
+
+int ShaderProgram::getUniformLocation( const char* name ) const
+{
+	int location = glGetUniformLocation( _program_id, name );
+	magicalDebugCheckGLError();
+	return location;
 }
