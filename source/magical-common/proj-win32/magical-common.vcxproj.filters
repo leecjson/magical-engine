@@ -34,8 +34,8 @@
     <Filter Include="src\transform">
       <UniqueIdentifier>{eec219bb-5849-4c65-be25-b6f5498eed97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\node">
-      <UniqueIdentifier>{abb1e10f-8c60-45a7-a899-7d7792338895}</UniqueIdentifier>
+    <Filter Include="src\scene">
+      <UniqueIdentifier>{c1d07dfd-b9eb-4420-9ceb-ff1ee9f61ee7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,8 +78,14 @@
     <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp">
       <Filter>src\assets\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\node\Node.cpp">
-      <Filter>src\node</Filter>
+    <ClCompile Include="..\src\scene\Scene.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\transform\Node.cpp">
+      <Filter>src\transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\transform\Camera.cpp">
+      <Filter>src\transform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,8 +149,14 @@
     <ClInclude Include="..\src\transform\Transform.h">
       <Filter>src\transform</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\node\Node.h">
-      <Filter>src\node</Filter>
+    <ClInclude Include="..\src\scene\Scene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\transform\Node.h">
+      <Filter>src\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\transform\Camera.h">
+      <Filter>src\transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

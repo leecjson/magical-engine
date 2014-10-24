@@ -22,7 +22,9 @@
     <ClCompile Include="..\src\math\Vec2.cpp" />
     <ClCompile Include="..\src\math\Vec3.cpp" />
     <ClCompile Include="..\src\math\Vec4.cpp" />
-    <ClCompile Include="..\src\node\Node.cpp" />
+    <ClCompile Include="..\src\scene\Scene.cpp" />
+    <ClCompile Include="..\src\transform\Camera.cpp" />
+    <ClCompile Include="..\src\transform\Node.cpp" />
     <ClCompile Include="..\src\transform\Transform.cpp" />
     <ClCompile Include="..\src\utils\Utils.cpp" />
   </ItemGroup>
@@ -44,8 +46,10 @@
     <ClInclude Include="..\src\math\Vec2.h" />
     <ClInclude Include="..\src\math\Vec3.h" />
     <ClInclude Include="..\src\math\Vec4.h" />
-    <ClInclude Include="..\src\node\Node.h" />
     <ClInclude Include="..\src\PlatformMacros.h" />
+    <ClInclude Include="..\src\scene\Scene.h" />
+    <ClInclude Include="..\src\transform\Camera.h" />
+    <ClInclude Include="..\src\transform\Node.h" />
     <ClInclude Include="..\src\transform\Transform.h" />
     <ClInclude Include="..\src\utils\Utils.h" />
   </ItemGroup>
