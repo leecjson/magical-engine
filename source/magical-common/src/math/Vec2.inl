@@ -181,13 +181,11 @@ inline void Vec2::clamp( const Vec2& min, const Vec2& max )
 {
 	magicalAssert( !( min.x > max.x || min.y > max.y ), "Invaild operate!" );
 
-	// Clamp the x value.
 	if( x < min.x )
 		x = min.x;
 	if( x > max.x )
 		x = max.x;
 
-	// Clamp the y value.
 	if( y < min.y )
 		y = min.y;
 	if( y > max.y )
@@ -229,6 +227,11 @@ inline float Vec2::angle( void ) const
 	return atan2f( y, x );
 }
 
+inline float Vec2::angleBetween( const Vec2& v ) const
+{
+
+}
+
 inline void Vec2::negate( void )
 {
 	x = -x;
@@ -238,13 +241,11 @@ inline void Vec2::negate( void )
 inline void Vec2::normalize( void )
 {
 	float n = x * x + y * y;
-	// Already normalized.
 	if( magicalFloatEquals( n, 1.0f ) )
 		return;
 
 	n = sqrt( n );
-	// Too close to zero.
-	if( n < FLT_EPSILON )
+	if( magicalFloatIsZero( n ) )
 		return;
 
 	n = 1.0f / n;

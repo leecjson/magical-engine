@@ -73,6 +73,7 @@ public:
 	inline float lengthSq( void ) const;
 	inline float dot( const Vec2& v ) const;
 	inline float angle( void ) const;
+	inline float angleBetween( const Vec2& v ) const;
 	inline void  negate( void );
 	inline void  normalize( void );
 	inline void  rotate( const Vec2& point, float angle );
