@@ -22,112 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Vec2 Vec2::operator+( float rhs ) const
-{
-	return Vec2( x + rhs, y + rhs );
-}
-
-inline Vec2 Vec2::operator+( const Vec2& rhs ) const
-{
-	return Vec2( x + rhs.x, y + rhs.y );
-}
-
-inline Vec2 Vec2::operator-( float rhs ) const
-{
-	return Vec2( x - rhs, y - rhs );
-}
-
-inline Vec2 Vec2::operator-( const Vec2& rhs ) const
-{
-	return Vec2( x - rhs.x, y - rhs.y );
-}
-
-inline Vec2 Vec2::operator*( float rhs ) const
-{
-	return Vec2( x * rhs, y * rhs );
-}
-
-inline Vec2 Vec2::operator*( const Vec2& rhs ) const
-{
-	return Vec2( x * rhs.x, y * rhs.y );
-}
-
-inline Vec2 Vec2::operator/( float rhs ) const
-{
-	magicalAssert( !magicalFloatIsZero( rhs ), "division by 0.f" );
-	return Vec2( x / rhs, y / rhs );
-}
-
-inline Vec2 Vec2::operator/( const Vec2& rhs ) const
-{
-	magicalAssert( !magicalFloatIsZero( rhs.x ) && !magicalFloatIsZero( rhs.y ), "division by 0.f" );
-	return Vec2( x / rhs.x, y / rhs.y );
-}
-
-inline Vec2& Vec2::operator=( const Vec2& rhs )
-{
-	x = rhs.x;
-	y = rhs.y;
-}
-
-inline Vec2& Vec2::operator+=( const Vec2& rhs )
-{
-	x += rhs.x;
-	y += rhs.y;
-	return *this;
-}
-
-inline Vec2& Vec2::operator+=( float rhs )
-{
-	x += rhs;
-	y += rhs;
-	return *this;
-}
-
-inline Vec2& Vec2::operator-=( const Vec2& rhs )
-{
-	x -= rhs.x;
-	y -= rhs.y;
-	return *this;
-}
-
-inline Vec2& Vec2::operator-=( float rhs )
-{
-	x -= rhs;
-	y -= rhs;
-	return *this;
-}
-
-inline Vec2& Vec2::operator*=( const Vec2& rhs )
-{
-	x *= rhs.x;
-	y *= rhs.y;
-	return *this;
-}
-
-inline Vec2& Vec2::operator*=( float rhs )
-{
-	x *= rhs;
-	y *= rhs;
-	return *this;
-}
-
-inline Vec2& Vec2::operator/=( const Vec2& rhs )
-{
-	magicalAssert( !magicalFloatIsZero( rhs.x ) && !magicalFloatIsZero( rhs.y ), "division by 0.f" );
-	x /= rhs.x;
-	y /= rhs.y;
-	return *this;
-}
-
-inline Vec2& Vec2::operator/=( float rhs )
-{
-	magicalAssert( !magicalFloatIsZero( rhs ), "division by 0.f" );
-	x /= rhs;
-	y /= rhs;
-	return *this;
-}
-
 inline bool Vec2::operator==( const Vec2& rhs ) const
 {
 	return magicalFloatEquals( x, rhs.x ) && magicalFloatEquals( y, rhs.y );
@@ -136,6 +30,11 @@ inline bool Vec2::operator==( const Vec2& rhs ) const
 inline bool Vec2::operator!=( const Vec2& rhs ) const
 {
 	return !( operator==( rhs ) );
+}
+
+inline bool Vec2::isEquals( const Vec2& v ) const
+{
+	return magicalFloatEquals( x, v.x ) && magicalFloatEquals( y, v.y );
 }
 
 inline bool Vec2::isZero( void ) const
@@ -148,21 +47,226 @@ inline bool Vec2::isOne( void ) const
 	return magicalFloatEquals( x, 1.0f ) && magicalFloatEquals( y, 1.0f );
 }
 
+inline bool Vec2::isNormalize( void ) const
+{
+	float n = x * x + y * y;
+	return magicalFloatEquals( n, 1.0f );
+}
+
+inline Vec2 Vec2::operator+( float a ) const
+{
+	return Vec2( x + a, y + a );
+}
+
+inline Vec2 Vec2::operator-( float a ) const
+{
+	return Vec2( x - a, y - a );
+}
+
+inline Vec2 Vec2::operator*( float a ) const
+{
+	return Vec2( x * a, y * a );
+}
+
+inline Vec2 Vec2::operator/( float a ) const
+{
+	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	return Vec2( x / a, y / a );
+}
+
+inline Vec2 Vec2::operator+( const Vec2& v ) const
+{
+	return Vec2( x + v.x, y + v.y );
+}
+
+inline Vec2 Vec2::operator-( const Vec2& v ) const
+{
+	return Vec2( x - v.x, y - v.y );
+}
+
+inline Vec2 Vec2::operator*( const Vec2& v ) const
+{
+	return Vec2( x * v.x, y * v.y );
+}
+
+inline Vec2 Vec2::operator/( const Vec2& v ) const
+{
+	magicalAssert( !magicalFloatIsZero( v.x ) && !magicalFloatIsZero( v.y ), "division by 0.f" );
+	return Vec2( x / v.x, y / v.y );
+}
+
+inline Vec2& Vec2::operator+=( float a )
+{
+	x += a;
+	y += a;
+	return *this;
+}
+
+inline Vec2& Vec2::operator-=( float a )
+{
+	x -= a;
+	y -= a;
+	return *this;
+}
+
+inline Vec2& Vec2::operator*=( float a )
+{
+	x *= a;
+	y *= a;
+	return *this;
+}
+
+inline Vec2& Vec2::operator/=( float a )
+{
+	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	x /= a;
+	y /= a;
+	return *this;
+}
+
+inline Vec2& Vec2::operator+=( const Vec2& v )
+{
+	x += v.x;
+	y += v.y;
+	return *this;
+}
+
+inline Vec2& Vec2::operator-=( const Vec2& v )
+{
+	x -= v.x;
+	y -= v.y;
+	return *this;
+}
+
+inline Vec2& Vec2::operator*=( const Vec2& v )
+{
+	x *= v.x;
+	y *= v.y;
+	return *this;
+}
+
+inline Vec2& Vec2::operator/=( const Vec2& v )
+{
+	magicalAssert( !magicalFloatIsZero( v.x ) && !magicalFloatIsZero( v.y ), "division by 0.f" );
+	x /= v.x;
+	y /= v.y;
+	return *this;
+}
+
+inline Vec2& Vec2::operator=( const Vec2& v )
+{
+	x = v.x;
+	y = v.y;
+	return *this;
+}
+
+inline Vec2 Vec2::add( float a ) const
+{
+	return Vec2( x + a, y + a );
+}
+
+inline Vec2 Vec2::sub( float a ) const
+{
+	return Vec2( x - a, y - a );
+}
+
+inline Vec2 Vec2::mul( float a ) const
+{
+	return Vec2( x * a, y * a );
+}
+
+inline Vec2 Vec2::div( float a ) const
+{
+	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	return Vec2( x / a, y / a );
+}
+
+inline Vec2 Vec2::add( const Vec2& v ) const
+{
+	return Vec2( x + v.x, y + v.y );
+}
+
+inline Vec2 Vec2::sub( const Vec2& v ) const
+{
+	return Vec2( x - v.x, y - v.y );
+}
+
+inline Vec2 Vec2::mul( const Vec2& v ) const
+{
+	return Vec2( x * v.x, y * v.y );
+}
+
+inline Vec2 Vec2::div( const Vec2& v ) const
+{
+	magicalAssert( !magicalFloatIsZero( v.x ) && !magicalFloatIsZero( v.y ), "division by 0.f" );
+	return Vec2( x / v.x, y / v.y );
+}
+
+inline void Vec2::fillAdd( float a )
+{
+	x += a;
+	y += a;
+}
+
+inline void Vec2::fillSub( float a )
+{
+	x -= a;
+	y -= a;
+}
+
+inline void Vec2::fillMul( float a )
+{
+	x *= a;
+	y *= a;
+}
+
+inline void Vec2::fillDiv( float a )
+{
+	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	x /= a;
+	y /= a;
+}
+
+inline void Vec2::fillAdd( const Vec2& v )
+{
+	x += v.x;
+	y += v.y;
+}
+
+inline void Vec2::fillSub( const Vec2& v )
+{
+	x -= v.x;
+	y -= v.y;
+}
+
+inline void Vec2::fillMul( const Vec2& v )
+{
+	x *= v.x;
+	y *= v.y;
+}
+
+inline void Vec2::fillDiv( const Vec2& v )
+{
+	magicalAssert( !magicalFloatIsZero( v.x ) && !magicalFloatIsZero( v.y ), "division by 0.f" );
+	x /= v.x;
+	y /= v.y;
+}
+
 inline Vec2 Vec2::copy( void ) const
 {
 	return Vec2( *this );
 }
 
-inline void Vec2::fill( float rx, float ry )
+inline void Vec2::fill( float x, float y )
 {
-	x = rx;
-	y = ry;
+	this->x = x;
+	this->y = y;
 }
 
-inline void Vec2::fill( const Vec2& rhs )
+inline void Vec2::fill( const Vec2& v )
 {
-	x = rhs.x;
-	y = rhs.y;
+	x = v.x;
+	y = v.y;
 }
 
 inline void Vec2::fillZero( void )
@@ -204,6 +308,7 @@ inline float Vec2::distanceSq( const Vec2& v ) const
 {
 	float dx = v.x - x;
 	float dy = v.y - y;
+
 	return dx * dx + dy * dy;
 }
 
@@ -274,130 +379,46 @@ inline void Vec2::rotate( const Vec2& point, float angle )
 	}
 }
 
-inline void Vec2::middle( const Vec2& rhs )
+inline Vec2 MathVec2::clamp( const Vec2& v1, const Vec2& min, const Vec2& max )
 {
-	Vec2 ret = Vec2( ( x + rhs.x ) / 2.0f, ( y + rhs.y ) / 2.0f );
-	x = ret.x;
-	y = ret.y;
-}
-
-
-
-inline Vec2 MathVec2::add( const Vec2& v1, const Vec2& v2 )
-{
-	return v1 + v2;
-}
-
-inline Vec2 MathVec2::add( const Vec2& v1, float rhs )
-{
-	return v1 + rhs;
-}
-
-inline Vec2 MathVec2::sub( const Vec2& v1, const Vec2& v2 )
-{
-	return v1 - v2;
-}
-
-inline Vec2 MathVec2::sub( const Vec2& v1, float rhs )
-{
-	return v1 - rhs;
-}
-
-inline Vec2 MathVec2::mul( const Vec2& v1, const Vec2& v2 )
-{
-	return v1 * v2;
-}
-
-inline Vec2 MathVec2::mul( const Vec2& v1, float rhs )
-{
-	return v1 * rhs;
-}
-
-inline Vec2 MathVec2::div( const Vec2& v1, const Vec2& v2 )
-{
-	return v1 / v2;
-}
-
-inline Vec2 MathVec2::div( const Vec2& v1, float rhs )
-{
-	return v1 / rhs;
-}
-
-inline bool MathVec2::equals( const Vec2& v1, const Vec2& v2 )
-{
-	return v1 == v2;
-}
-
-inline bool MathVec2::isZero( const Vec2& v )
-{
-	return v.isZero();
-}
-
-inline bool MathVec2::isOne( const Vec2& v )
-{
-	return v.isOne();
-}
-
-inline Vec2 MathVec2::copy( const Vec2& rhs )
-{
-	return Vec2( rhs );
-}
-
-inline Vec2 MathVec2::fill( float rx, float ry )
-{
-	return Vec2( rx, ry );
-}
-
-inline Vec2 MathVec2::fill( const Vec2& rhs )
-{
-	return Vec2( rhs );
-}
-
-inline Vec2 MathVec2::fillZero( void )
-{
-	return Vec2::Zero;
-}
-
-inline Vec2 MathVec2::fillOne( void )
-{
-	return Vec2::One;
-}
-
-inline Vec2 MathVec2::clamp( const Vec2& lhs, const Vec2& min, const Vec2& max )
-{
-	Vec2 ret( lhs );
+	Vec2 ret( v1 );
 	ret.clamp( min, max );
 	return ret;
 }
 
-inline float MathVec2::distance( const Vec2& lhs, const Vec2& v )
+inline float MathVec2::distance( const Vec2& v1, const Vec2& v2 )
 {
-	return lhs.distance( v );
+	return v1.distance( v2 );
 }
 
-inline float MathVec2::distanceSq( const Vec2& lhs, const Vec2& v )
+inline float MathVec2::distanceSq( const Vec2& v1, const Vec2& v2 )
 {
-	return lhs.distanceSq( v );
+	return v1.distanceSq( v2 );
 }
 
-inline float MathVec2::length( const Vec2& lhs )
+inline float MathVec2::length( const Vec2& v )
 {
-	return lhs.length();
+	return v.length();
 }
 
-inline float MathVec2::lengthSq( const Vec2& lhs )
+inline float MathVec2::lengthSq( const Vec2& v )
 {
-	return lhs.lengthSq();
+	return v.lengthSq();
 }
 
-inline float MathVec2::dot( const Vec2& lhs, const Vec2& v )
+inline float MathVec2::dot( const Vec2& v1, const Vec2& v2 )
 {
-	return lhs.dot( v );
+	return v1.dot( v2 );
 }
 
 inline float MathVec2::angle( const Vec2& v )
 {
 	return v.angle();
+}
+
+inline float angleBetween( const Vec2& v1, const Vec2& v2 )
+{
+	return v1.angleBetween( v2 );
 }
 
 inline Vec2 MathVec2::negate( const Vec2& v )
@@ -414,16 +435,9 @@ inline Vec2 MathVec2::normalize( const Vec2& v )
 	return ret;
 }
 
-inline Vec2 MathVec2::rotate( const Vec2& lhs, const Vec2& point, float angle )
+inline Vec2 MathVec2::rotate( const Vec2& v, const Vec2& point, float angle )
 {
-	Vec2 ret( lhs );
+	Vec2 ret( v );
 	ret.rotate( point, angle );
-	return ret;
-}
-
-inline Vec2 MathVec2::middle( const Vec2& lhs, const Vec2& rhs )
-{
-	Vec2 ret( lhs );
-	ret.middle( rhs );
 	return ret;
 }

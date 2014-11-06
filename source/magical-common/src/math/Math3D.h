@@ -24,14 +24,28 @@ SOFTWARE.
 #ifndef __MATH_3D_H__
 #define __MATH_3D_H__
 
+#ifdef MAGICAL_ENGINE
+#include "PlatformMacros.h"
+#include "Common.h"
+#endif
+
 #include <cmath>
 #include <cfloat>
+#include <cassert>
+
+#ifndef MAGICAL_ENGINE
+#define magicalAssert( __con, __msg ) do{                     \
+	if( !(__con) ) {                                          \
+		assert( __con );                                      \
+	}                                                         \
+	} while(0)
+#endif
 
 #define magicalFloatEquals( a, b ) ( std::fabs( ( a ) - ( b ) ) < FLT_EPSILON )
 #define magicalFloatIsZero( a ) ( std::fabs( a ) < FLT_EPSILON )
 #define magicalDegToRad( x ) ( ( x ) * 0.0174532925f )
 #define magicalRadToDeg( x ) ( ( x ) * 57.29577951f )
 
-#define kMat4Size sizeof(float) * 16
+#define kMat4Size sizeof( float ) * 16
 
 #endif //__MATH_3D_H__
