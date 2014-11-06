@@ -24,48 +24,76 @@ SOFTWARE.
 #ifndef __VEC2_HPP__
 #define __VEC2_HPP__
 
-#include "PlatformMacros.h"
-#include "Common.h"
 #include "Math3D.h"
 
 struct Vec2
 {
 public:
+	static const Vec2 Zero;
+	static const Vec2 One;
+	static const Vec2 Right;
+	static const Vec2 Left;
+	static const Vec2 Up;
+	static const Vec2 Bottom;
+
+public:
 	float x;
 	float y;
 
-public:
-	Vec2( float rx, float ry );
-	Vec2( const Vec2& rhs );
+	Vec2( float x, float y );
+	Vec2( const Vec2& v );
 	Vec2( void );
 
-	inline Vec2  operator+( float rhs ) const;
-	inline Vec2  operator+( const Vec2& rhs ) const;
-	inline Vec2  operator-( float rhs ) const;
-	inline Vec2  operator-( const Vec2& rhs ) const;
-	inline Vec2  operator*( float rhs ) const;
-	inline Vec2  operator*( const Vec2& rhs ) const;
-	inline Vec2  operator/( float rhs ) const;
-	inline Vec2  operator/( const Vec2& rhs ) const;
-	inline Vec2& operator=( const Vec2& rhs );
-	inline Vec2& operator+=( const Vec2& rhs );
-	inline Vec2& operator+=( float rhs );
-	inline Vec2& operator-=( const Vec2& rhs );
-	inline Vec2& operator-=( float rhs );
-	inline Vec2& operator*=( const Vec2& rhs );
-	inline Vec2& operator*=( float rhs );
-	inline Vec2& operator/=( const Vec2& rhs );
-	inline Vec2& operator/=( float rhs );
-	inline bool  operator==( const Vec2& rhs ) const;
-	inline bool  operator!=( const Vec2& rhs ) const;
-	inline bool  isZero( void ) const;
-	inline bool  isOne( void ) const;
+public:
+	inline bool operator==( const Vec2& v ) const;
+	inline bool operator!=( const Vec2& v ) const;
+	inline bool isEquals( const Vec2& v ) const;
+	inline bool isZero( void ) const;
+	inline bool isOne( void ) const;
+	inline bool isNormalize( void ) const;
 
-	inline Vec2  copy( void ) const;
-	inline void  fill( float rx, float ry );
-	inline void  fill( const Vec2& rhs );
-	inline void  fillZero( void );
-	inline void  fillOne( void );
+public:
+	inline Vec2 operator+( float a ) const;
+	inline Vec2 operator-( float a ) const;
+	inline Vec2 operator*( float a ) const;
+	inline Vec2 operator/( float a ) const;
+	inline Vec2 operator+( const Vec2& v ) const;
+	inline Vec2 operator-( const Vec2& v ) const;
+	inline Vec2 operator*( const Vec2& v ) const;
+	inline Vec2 operator/( const Vec2& v ) const;
+	inline Vec2& operator+=( float a );
+	inline Vec2& operator-=( float a );
+	inline Vec2& operator*=( float a );
+	inline Vec2& operator/=( float a );
+	inline Vec2& operator+=( const Vec2& v );
+	inline Vec2& operator-=( const Vec2& v );
+	inline Vec2& operator*=( const Vec2& v );
+	inline Vec2& operator/=( const Vec2& v );
+	inline Vec2& operator=( const Vec2& v );
+	
+	inline Vec2 add( float a ) const;
+	inline Vec2 sub( float a ) const;
+	inline Vec2 mul( float a ) const;
+	inline Vec2 div( float a ) const;
+	inline Vec2 add( const Vec2& v ) const;
+	inline Vec2 sub( const Vec2& v ) const;
+	inline Vec2 mul( const Vec2& v ) const;
+	inline Vec2 div( const Vec2& v ) const;
+	inline void fillAdd( float a );
+	inline void fillSub( float a );
+	inline void fillMul( float a );
+	inline void fillDiv( float a );
+	inline void fillAdd( const Vec2& v );
+	inline void fillSub( const Vec2& v );
+	inline void fillMul( const Vec2& v );
+	inline void fillDiv( const Vec2& v );
+	inline Vec2 copy( void ) const;
+	inline void fill( float x, float y );
+	inline void fill( const Vec2& v );
+	inline void fillZero( void );
+	inline void fillOne( void );
+
+public:
 	inline void  clamp( const Vec2& min, const Vec2& max );
 	inline float distance( const Vec2& v ) const;
     inline float distanceSq( const Vec2& v ) const;
@@ -73,47 +101,26 @@ public:
 	inline float lengthSq( void ) const;
 	inline float dot( const Vec2& v ) const;
 	inline float angle( void ) const;
+	inline float angleBetween( const Vec2& v ) const;
 	inline void  negate( void );
 	inline void  normalize( void );
 	inline void  rotate( const Vec2& point, float angle );
-	inline void  middle( const Vec2& rhs );
-
-public:
-	static const Vec2 Zero;
-	static const Vec2 One;
 };
 
 class MathVec2
 {
 public:
-	static inline Vec2 add( const Vec2& v1, const Vec2& v2 );
-	static inline Vec2 add( const Vec2& v1, float rhs );
-	static inline Vec2 sub( const Vec2& v1, const Vec2& v2 );
-	static inline Vec2 sub( const Vec2& v1, float rhs );
-	static inline Vec2 mul( const Vec2& v1, const Vec2& v2 );
-	static inline Vec2 mul( const Vec2& v1, float rhs );
-	static inline Vec2 div( const Vec2& v1, const Vec2& v2 );
-	static inline Vec2 div( const Vec2& v1, float rhs );
-	static inline bool equals( const Vec2& v1, const Vec2& v2 );
-	static inline bool isZero( const Vec2& v );
-	static inline bool isOne( const Vec2& v );
-
-	static inline Vec2  copy( const Vec2& rhs );
-	static inline Vec2  fill( float rx, float ry );
-	static inline Vec2  fill( const Vec2& rhs );
-	static inline Vec2  fillZero( void );
-	static inline Vec2  fillOne( void );
-	static inline Vec2  clamp( const Vec2& lhs, const Vec2& min, const Vec2& max );
-	static inline float distance( const Vec2& lhs, const Vec2& v );
-    static inline float distanceSq( const Vec2& lhs, const Vec2& v );
-	static inline float length( const Vec2& lhs );
-	static inline float lengthSq( const Vec2& lhs );
-	static inline float dot( const Vec2& lhs, const Vec2& v );
+	static inline Vec2  clamp( const Vec2& v1, const Vec2& min, const Vec2& max );
+	static inline float distance( const Vec2& v1, const Vec2& v2 );
+    static inline float distanceSq( const Vec2& v1, const Vec2& v2 );
+	static inline float length( const Vec2& v );
+	static inline float lengthSq( const Vec2& v );
+	static inline float dot( const Vec2& v1, const Vec2& v2 );
 	static inline float angle( const Vec2& v );
+	static inline float angleBetween( const Vec2& v1, const Vec2& v2 );
 	static inline Vec2  negate( const Vec2& v );
 	static inline Vec2  normalize( const Vec2& v );
-	static inline Vec2  rotate( const Vec2& lhs, const Vec2& point, float angle );
-	static inline Vec2  middle( const Vec2& lhs, const Vec2& rhs );
+	static inline Vec2  rotate( const Vec2& v, const Vec2& point, float angle );
 };
 
 #include "Vec2.inl"

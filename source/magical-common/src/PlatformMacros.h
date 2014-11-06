@@ -25,10 +25,6 @@ SOFTWARE.
 #define __PLATFORM_MACROS_H__
 
 /*
-MAG_DEBUG
-*/
-
-/*
 MAG_WIN32
 MAG_ANDROID
 MAG_IOS
@@ -39,16 +35,6 @@ MAG_MAC
 #define MAG_WIN32
 #define MAG_PLATFORM "Win32"
 #endif
-
-//#ifdef _WIN32
-//#define ThreadLocal __declspec( thread )
-//#else
-//#define ThreadLocal thread_local
-//#endif
-
-//#if defined( MAG_WIN32 ) && !defined( __cplusplus )
-//#define inline __inline
-//#endif
 
 #if !defined( __cplusplus )
 #ifndef true

@@ -25,17 +25,21 @@ SOFTWARE.
 
 const Vec2 Vec2::Zero = Vec2( 0.0f, 0.0f );
 const Vec2 Vec2::One = Vec2( 1.0f, 1.0f );
+const Vec2 Vec2::Right = Vec2( 1.0f, 0.0f );
+const Vec2 Vec2::Left = Vec2( -1.0f, 0.0f );
+const Vec2 Vec2::Up = Vec2( 0.0f, 1.0f );
+const Vec2 Vec2::Bottom = Vec2( 0.0f, -1.0f );
 
-Vec2::Vec2( float rx, float ry )
-: x( rx )
-, y( ry )
+Vec2::Vec2( float x, float y )
+: x( x )
+, y( y )
 {
 
 }
 
-Vec2::Vec2( const Vec2& rhs )
-: x( rhs.x )
-, y( rhs.y )
+Vec2::Vec2( const Vec2& v )
+: x( v.x )
+, y( v.y )
 {
 
 }
