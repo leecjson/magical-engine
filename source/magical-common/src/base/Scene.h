@@ -21,5 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#ifndef __SCENE_H__
+#define __SCENE_H__
+
 #include "PlatformMacros.h"
-#include "vec.hpp"
+#include "Common.h"
+#include "Reference.h"
+#include "Node.h"
+
+class Scene : public Node
+{
+public:
+	Scene( void );
+	virtual ~Scene( void );
+	
+public:
+	static Shared<Scene> create( void );
+
+
+}; 
+
+
+
+#endif //__SCENE_H__

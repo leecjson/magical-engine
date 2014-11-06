@@ -56,7 +56,7 @@ Mat4::Mat4( const float* m )
 
 Mat4::Mat4( const Mat4& m )
 {
-	memcpy( this->mat, m.mat, kMat4Size );
+	memcpy( this, &m, kMat4Size );
 }
 
 Mat4::Mat4( void )

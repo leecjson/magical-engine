@@ -297,7 +297,7 @@ inline Mat4& Mat4::operator*=( const Mat4& rhs )
 
 inline bool Mat4::isIdentity( void ) const
 {
-	return memcmp( &Identity, this, kMat4Size ) == 0;
+	return memcmp( Identity.mat, this->mat, kMat4Size ) == 0;
 }
 
 inline Mat4 Mat4::copy( void )
@@ -330,17 +330,12 @@ inline void Mat4::fill( const Mat4& m )
 
 inline void Mat4::fillZero( void )
 {
-	memset( mat, 0, kMat4Size );
+	memset( this->mat, 0, kMat4Size );
 }
 
 inline void Mat4::fillIdentity( void )
 {
-	memset( mat, 0, kMat4Size );
-
-	this->mat[0]  = 1.0f;
-	this->mat[5]  = 1.0f;
-	this->mat[10] = 1.0f;
-	this->mat[15] = 1.0f;
+	memcpy( this, &Identity, kMat4Size );
 }
 
 inline void Mat4::fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up )
@@ -391,7 +386,7 @@ inline void Mat4::fillPerspective( float fov, float aspect, float znear, float z
 		!magicalFloatIsZero( aspect ), "should not be 0.0f" );
 	cotangent = cos( r ) / s;
 
-	memcpy( this, &Identity, kMat4Size );
+	fillIdentity();
 	mat[0]  = cotangent / aspect;
 	mat[5]  = cotangent;
 	mat[10] = -( zfar + znear ) / delta_z;
@@ -406,7 +401,7 @@ inline void Mat4::fillOrthographic( float left, float right, float bottom, float
 	float ty = -( ( top + bottom ) / ( top - bottom ) );
 	float tz = -( ( far + near ) / ( far - near ) );
 
-	memcpy( this, &Identity, kMat4Size );
+	fillIdentity();
 	mat[0]  = 2 / ( right - left );
 	mat[5]  = 2 / ( top - bottom );
 	mat[10] = -2 / ( far - near );
@@ -417,7 +412,7 @@ inline void Mat4::fillOrthographic( float left, float right, float bottom, float
 
 inline void Mat4::fillScale( const Vec3& scale )
 {
-    memcpy( this, &Identity, kMat4Size );
+    fillIdentity();
 
     mat[0]  = scale.x;
     mat[5]  = scale.y;
@@ -426,7 +421,7 @@ inline void Mat4::fillScale( const Vec3& scale )
 
 inline void Mat4::fillScale( float x, float y, float z )
 {
-	memcpy( this, &Identity, kMat4Size );
+	fillIdentity();
 
     mat[0]  = x;
     mat[5]  = y;
@@ -529,7 +524,7 @@ inline void Mat4::fillRotation( const Vec3& axis, float angle )
 
 inline void Mat4::fillRotationX( float angle )
 {
-	memcpy( this, &Identity, kMat4Size );
+	fillIdentity();
 
 	float c = cos( angle );
 	float s = sin( angle );
@@ -542,7 +537,7 @@ inline void Mat4::fillRotationX( float angle )
 
 inline void Mat4::fillRotationY( float angle )
 {
-	memcpy( this, &Identity, kMat4Size );
+	fillIdentity();
 
 	float c = cos( angle );
 	float s = sin( angle );
@@ -555,7 +550,7 @@ inline void Mat4::fillRotationY( float angle )
 
 inline void Mat4::fillRotationZ( float angle )
 {
-	memcpy( this, &Identity, kMat4Size );
+	fillIdentity();
 
     float c = cos(angle);
     float s = sin(angle);
@@ -568,7 +563,7 @@ inline void Mat4::fillRotationZ( float angle )
 
 inline void Mat4::fillTranslation( const Vec3& translation )
 {
-	memcpy( this, &Identity, kMat4Size );
+	fillIdentity();
 
     mat[12] = translation.x;
     mat[13] = translation.y;
@@ -577,7 +572,7 @@ inline void Mat4::fillTranslation( const Vec3& translation )
 
 inline void Mat4::fillTranslation( float x, float y, float z )
 {
-	memcpy( this, &Identity, kMat4Size );
+	fillIdentity();
 
     mat[12] = x;
     mat[13] = y;
@@ -760,7 +755,7 @@ inline void Mat4::transpose( void )
 		mat[2], mat[6], mat[10], mat[14],
 		mat[3], mat[7], mat[11], mat[15]
 	};
-	memcpy( this, t, kMat4Size );
+	memcpy( this->mat, t, kMat4Size );
 }
 
 inline Vec3 Mat4::transformPoint( const Vec3& point ) const

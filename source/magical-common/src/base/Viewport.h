@@ -21,23 +21,40 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __VEC_HPP__
-#define __VEC_HPP__
+#ifndef __VIEWPORT_H__
+#define __VIEWPORT_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "kazmath.h"
+#include "Reference.h"
 
-struct Vector
+class Viewport : public Reference
 {
 public:
-	float x;
-	float y;
-	float z;
-	float w;
+	Viewport( void );
+	virtual ~Viewport( void );
+
+public:
+	static Shared<Viewport> create( void );
+	
+public:
+	void set( int x, int y, int width, int height );
+	void setX( int x );
+	void setY( int y );
+	void setWidth( int width );
+	void setHeight( int height );
+	int getX( void ) const;
+	int getY( void ) const;
+	int getWidth( void ) const;
+	int getHeight( void ) const;
+
+private:
+	int _x = 0;
+	int _y = 0;
+	int _width = 0;
+	int _height = 0;
 };
 
 
 
-
-#endif //__VEC_HPP__
+#endif //__VIEWPORT_H__

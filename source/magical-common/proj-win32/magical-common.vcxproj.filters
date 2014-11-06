@@ -34,8 +34,8 @@
     <Filter Include="src\transform">
       <UniqueIdentifier>{eec219bb-5849-4c65-be25-b6f5498eed97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\scene">
-      <UniqueIdentifier>{c1d07dfd-b9eb-4420-9ceb-ff1ee9f61ee7}</UniqueIdentifier>
+    <Filter Include="src\base">
+      <UniqueIdentifier>{0cf438ad-173b-4786-a68f-01937d8cdc60}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,14 +78,17 @@
     <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp">
       <Filter>src\assets\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\scene\Scene.cpp">
-      <Filter>src\scene</Filter>
+    <ClCompile Include="..\src\base\Camera.cpp">
+      <Filter>src\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\transform\Node.cpp">
-      <Filter>src\transform</Filter>
+    <ClCompile Include="..\src\base\Node.cpp">
+      <Filter>src\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\transform\Camera.cpp">
-      <Filter>src\transform</Filter>
+    <ClCompile Include="..\src\base\Scene.cpp">
+      <Filter>src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\base\Viewport.cpp">
+      <Filter>src\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,14 +152,17 @@
     <ClInclude Include="..\src\transform\Transform.h">
       <Filter>src\transform</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\scene\Scene.h">
-      <Filter>src\scene</Filter>
+    <ClInclude Include="..\src\base\Camera.h">
+      <Filter>src\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\transform\Node.h">
-      <Filter>src\transform</Filter>
+    <ClInclude Include="..\src\base\Node.h">
+      <Filter>src\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\transform\Camera.h">
-      <Filter>src\transform</Filter>
+    <ClInclude Include="..\src\base\Scene.h">
+      <Filter>src\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\base\Viewport.h">
+      <Filter>src\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

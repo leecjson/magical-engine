@@ -12,6 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp" />
+    <ClCompile Include="..\src\base\Camera.cpp" />
+    <ClCompile Include="..\src\base\Node.cpp" />
+    <ClCompile Include="..\src\base\Scene.cpp" />
+    <ClCompile Include="..\src\base\Viewport.cpp" />
     <ClCompile Include="..\src\common\Common.cpp" />
     <ClCompile Include="..\src\common\Data.cpp" />
     <ClCompile Include="..\src\common\Reference.cpp" />
@@ -22,14 +26,15 @@
     <ClCompile Include="..\src\math\Vec2.cpp" />
     <ClCompile Include="..\src\math\Vec3.cpp" />
     <ClCompile Include="..\src\math\Vec4.cpp" />
-    <ClCompile Include="..\src\scene\Scene.cpp" />
-    <ClCompile Include="..\src\transform\Camera.cpp" />
-    <ClCompile Include="..\src\transform\Node.cpp" />
     <ClCompile Include="..\src\transform\Transform.cpp" />
     <ClCompile Include="..\src\utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\assets\AssetsSystem.h" />
+    <ClInclude Include="..\src\base\Camera.h" />
+    <ClInclude Include="..\src\base\Node.h" />
+    <ClInclude Include="..\src\base\Scene.h" />
+    <ClInclude Include="..\src\base\Viewport.h" />
     <ClInclude Include="..\src\common\Array.h" />
     <ClInclude Include="..\src\common\Common.h" />
     <ClInclude Include="..\src\common\Data.h" />
@@ -47,9 +52,6 @@
     <ClInclude Include="..\src\math\Vec3.h" />
     <ClInclude Include="..\src\math\Vec4.h" />
     <ClInclude Include="..\src\PlatformMacros.h" />
-    <ClInclude Include="..\src\scene\Scene.h" />
-    <ClInclude Include="..\src\transform\Camera.h" />
-    <ClInclude Include="..\src\transform\Node.h" />
     <ClInclude Include="..\src\transform\Transform.h" />
     <ClInclude Include="..\src\utils\Utils.h" />
   </ItemGroup>

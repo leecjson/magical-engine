@@ -21,23 +21,69 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __VEC_HPP__
-#define __VEC_HPP__
+#include "Viewport.h"
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "kazmath.h"
-
-struct Vector
+Viewport::Viewport( void )
 {
-public:
-	float x;
-	float y;
-	float z;
-	float w;
-};
 
+}
 
+Viewport::~Viewport( void )
+{
 
+}
 
-#endif //__VEC_HPP__
+Shared<Viewport> Viewport::create( void )
+{
+	Viewport* ret = new Viewport();
+	magicalAssert( ret, "New Viewport() failed" );
+	return Shared<Viewport>( Initializer<Viewport>( ret ) );
+}
+
+void Viewport::set( int x, int y, int width, int height )
+{
+	this->_x = x;
+	this->_y = y;
+	this->_width = width;
+	this->_height = height;
+}
+
+void Viewport::setX( int x )
+{
+	_x = x;
+}
+
+void Viewport::setY( int y )
+{
+	_y = y;
+}
+
+void Viewport::setWidth( int width )
+{
+	_width = width;
+}
+
+void Viewport::setHeight( int height )
+{
+	_height = height;
+}
+
+int Viewport::getX( void ) const
+{
+	return _x;
+}
+
+int Viewport::getY( void ) const
+{
+	return _y;
+}
+
+int Viewport::getWidth( void ) const
+{
+	return _width;
+}
+
+int Viewport::getHeight( void ) const
+{
+	return _height;
+}
