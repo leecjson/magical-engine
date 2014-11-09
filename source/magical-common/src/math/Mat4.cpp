@@ -38,30 +38,30 @@ const Mat4 Mat4::Zero = Mat4(
 );
 
 Mat4::Mat4(
-	float m11, float m12, float m13, float m14,
-	float m21, float m22, float m23, float m24,
-	float m31, float m32, float m33, float m34,
-	float m41, float m42, float m43, float m44 )
+	float rm11, float rm12, float rm13, float rm14,
+	float rm21, float rm22, float rm23, float rm24,
+	float rm31, float rm32, float rm33, float rm34,
+	float rm41, float rm42, float rm43, float rm44 )
 {
-	mat[0]  = m11; mat[1]  = m12; mat[2]  = m13; mat[3]  = m14;
-	mat[4]  = m21; mat[5]  = m22; mat[6]  = m23; mat[7]  = m24;
-	mat[8]  = m31; mat[9]  = m32; mat[10] = m33; mat[11] = m34;
-	mat[12] = m41; mat[13] = m42; mat[14] = m43; mat[15] = m44;
+	m11 = rm11; m12 = rm12; m13 = rm13; m14 = rm14;
+	m21 = rm21; m22 = rm22; m23 = rm23; m24 = rm24;
+	m31 = rm31; m32 = rm32; m33 = rm33; m34 = rm34;
+	m41 = rm41; m42 = rm42; m43 = rm43; m44 = rm44;
 }
 
 Mat4::Mat4( const float* m )
 {
-	memcpy( this->mat, m, kMat4Size );
+	memcpy( this->m, m, kMatrix4x4Size );
 }
 
-Mat4::Mat4( const Mat4& m )
+Mat4::Mat4( const Mat4& mat )
 {
-	memcpy( this, &m, kMat4Size );
+	memcpy( m, mat.m, kMatrix4x4Size );
 }
 
 Mat4::Mat4( void )
 {
-	memcpy( this, &Identity, kMat4Size );
+	memcpy( m, Identity.m, kMatrix4x4Size );
 }
 
 Mat4::~Mat4( void )

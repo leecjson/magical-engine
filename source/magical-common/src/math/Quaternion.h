@@ -24,8 +24,7 @@ SOFTWARE.
 #ifndef __QUATERNION_HPP__
 #define __QUATERNION_HPP__
 
-#include "PlatformMacros.h"
-#include "Common.h"
+#include "Math3D.h"
 #include "Vec3.h"
 
 struct Vec3;
@@ -34,59 +33,51 @@ class MathVec3;
 struct Quaternion
 {
 public:
+	static const Quaternion Identity;
+	static const Quaternion Zero;
+
+public:
 	float x;
 	float y;
 	float z;
 	float w;
 
-public:
-	Quaternion( float rx, float ry, float rz, float rw );
-	Quaternion( const Quaternion& rhs );
+	Quaternion( float x, float y, float z, float w );
+	Quaternion( const Quaternion& r );
 	Quaternion( const Vec3& axis, float angle );
 	Quaternion( void );
 
-	inline Quaternion operator*( const Quaternion& rhs ) const;
-	inline Quaternion& operator=( const Quaternion& rhs );
-	inline Quaternion& operator*=( const Quaternion& rhs );
 	inline bool operator==( const Quaternion& rhs ) const;
 	inline bool operator!=( const Quaternion& rhs ) const;
 	inline bool isIdentity( void ) const;
 	inline bool isZero( void ) const;
+	inline bool isNormalize( void ) const;
 
-	inline void fill( float rx, float ry, float rz, float rw );
-	inline void fill( const Quaternion& rhs );
-	inline void fill( const float* rhs );
+	inline Quaternion operator*( const Quaternion& r ) const;
+	inline Quaternion& operator*=( const Quaternion& r );
+	inline Quaternion& operator=( const Quaternion& r );
+	
+	inline Quaternion mul( const Quaternion& r ) const;
+	inline void fillmul( const Quaternion& r );
+	inline Quaternion copy( void ) const;
+	inline void fill( float x, float y, float z, float w );
+	inline void fill( const Quaternion& r );
 	inline void fillAxisAngle( const Vec3& axis, float angle );
 	inline void fillIdentity( void );
 	inline void fillZero( void );
 	
+public:
 	inline void negate( void );
 	inline void inverse( void );
 	inline void normalize( void );
 	inline float axisAngle( Vec3& axis ) const;
 	inline void lerp( const Quaternion& rhs, float t );
 	inline void slerp( const Quaternion& rhs, float t );
-
-public:
-	static const Quaternion Identity;
-	static const Quaternion Zero;
 };
 
 class MathQuaternion
 {
 public:
-	static inline Quaternion mul( const Quaternion& lhs, const Quaternion& rhs );
-	static inline bool equals( const Quaternion& lhs, float x, float y, float z, float w );
-	static inline bool equals( const Quaternion& lhs, const Quaternion& rhs );
-	static inline bool isIdentity( const Quaternion& lhs );
-	static inline bool isZero( const Quaternion& lhs );
-
-	static inline Quaternion fill( float rx, float ry, float rz, float rw );
-	static inline Quaternion fill( const Quaternion& rhs );
-	static inline Quaternion fillAxisAngle( const Vec3& axis, float angle );
-	static inline Quaternion fillIdentity( void );
-	static inline Quaternion fillZero( void );
-
 	static inline Quaternion negate( const Quaternion& lhs );
 	static inline Quaternion inverse( const Quaternion& lhs );
 	static inline Quaternion normalize( const Quaternion& lhs );

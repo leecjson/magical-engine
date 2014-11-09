@@ -26,20 +26,20 @@ SOFTWARE.
 const Quaternion Quaternion::Identity = Quaternion( 0.0f, 0.0f, 0.0f, 1.0f );
 const Quaternion Quaternion::Zero = Quaternion( 0.0f, 0.0f, 0.0f, 0.0f );
 
-Quaternion::Quaternion( float rx, float ry, float rz, float rw )
-: x( rx )
-, y( ry )
-, z( rz )
-, w( rw )
+Quaternion::Quaternion( float x, float y, float z, float w )
+: x( x )
+, y( y )
+, z( z )
+, w( w )
 {
 
 }
 
-Quaternion::Quaternion( const Quaternion& rhs )
-: x( rhs.x )
-, y( rhs.y )
-, z( rhs.z )
-, w( rhs.w )
+Quaternion::Quaternion( const Quaternion& r )
+: x( r.x )
+, y( r.y )
+, z( r.z )
+, w( r.w )
 {
 
 }

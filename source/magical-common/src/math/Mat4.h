@@ -24,9 +24,6 @@ SOFTWARE.
 #ifndef __MAT4_HPP__
 #define __MAT4_HPP__
 
-#include "PlatformMacros.h"
-#include "Common.h"
-
 #include "Math3D.h"
 #include "Quaternion.h"
 #include "Vec3.h"
@@ -35,162 +32,160 @@ SOFTWARE.
 struct Quaternion;
 struct Vec3;
 struct Vec4;
-
+class MathQuaternion;
 class MathVec3;
 class MathVec4;
 
-// 行优先4X4矩阵
 struct Mat4
 {
 public:
-	float mat[16];
+	static const Mat4 Identity;
+	static const Mat4 Zero;
 
 public:
-	Mat4(
-		float m11, float m12, float m13, float m14,
-		float m21, float m22, float m23, float m24,
-		float m31, float m32, float m33, float m34,
-		float m41, float m42, float m43, float m44 );
-
-	inline void fill( 
-		float m11, float m12, float m13, float m14,
-		float m21, float m22, float m23, float m24,
-		float m31, float m32, float m33, float m34,
-		float m41, float m42, float m43, float m44 );
+	float m[16];
 
 	Mat4( const float* m );
-	Mat4( const Mat4& m );
+	Mat4( const Mat4& mat );
 	Mat4( void );
+	Mat4( float rm11, float rm12, float rm13, float rm14,
+          float rm21, float rm22, float rm23, float rm24,
+          float rm31, float rm32, float rm33, float rm34,
+          float rm41, float rm42, float rm43, float rm44 );
+	inline void fill(
+          float rm11, float rm12, float rm13, float rm14,
+          float rm21, float rm22, float rm23, float rm24,
+          float rm31, float rm32, float rm33, float rm34,
+          float rm41, float rm42, float rm43, float rm44 );
 	~Mat4( void );
 
-	inline Mat4 operator+( float scalar ) const;
-	inline Mat4 operator+( const Mat4& rhs ) const;
-	inline Mat4 operator-( float scalar ) const;
-	inline Mat4 operator-( const Mat4& rhs ) const;
-	inline Mat4 operator*( float scalar ) const;
-	inline Mat4 operator*( const Mat4& rhs ) const;
-	inline Mat4& operator=( const Mat4& rhs );
-	inline Mat4& operator+=( float scalar );
-	inline Mat4& operator+=( const Mat4& rhs );
-	inline Mat4& operator-=( float scalar );
-	inline Mat4& operator-=( const Mat4& rhs );
-	inline Mat4& operator*=( float scalar );
-	inline Mat4& operator*=( const Mat4& rhs );
+public:
+	inline bool operator==( const Mat4& mat ) const;
+	inline bool operator!=( const Mat4& mat ) const;
 	inline bool isIdentity( void ) const;
+	inline bool isEquals( const Mat4& mat ) const;
 
-	inline Mat4 copy( void );
+	inline Mat4 operator+( float a ) const;
+	inline Mat4 operator+( const Mat4& mat ) const;
+	inline Mat4 operator-( float a ) const;
+	inline Mat4 operator-( const Mat4& mat ) const;
+	inline Mat4 operator*( float a ) const;
+	inline Mat4 operator*( const Mat4& mat ) const;
+	inline Mat4& operator+=( float a );
+	inline Mat4& operator+=( const Mat4& mat );
+	inline Mat4& operator-=( float a );
+	inline Mat4& operator-=( const Mat4& mat );
+	inline Mat4& operator*=( float a );
+	inline Mat4& operator*=( const Mat4& mat );
+	inline Mat4& operator=( const Mat4& mat );
+
+	inline Mat4 add( float a ) const;
+	inline Mat4 add( const Mat4& mat ) const;
+	inline Mat4 sub( float a ) const;
+	inline Mat4 sub( const Mat4& mat ) const;
+	inline Mat4 mul( float a ) const;
+	inline Mat4 mul( const Mat4& mat ) const;
+	inline void addfill( float a );
+	inline void addfill( const Mat4& mat );
+	inline void subfill( float a );
+	inline void subfill( const Mat4& mat );
+	inline void mulfill( float a );
+	inline void mulfill( const Mat4& mat );
 	inline void fill( const float* m );
-	inline void fill( const Mat4& m );
-	inline void fillIdentity( void );
+	inline void fill( const Mat4& mat );
 	inline void fillZero( void );
-	inline void fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up );
-	inline void fillPerspective( float fov, float aspect, float znear, float zfar );
-	inline void fillOrthographic( float left, float right, float bottom, float top, float near, float far );
-	inline void fillScale( const Vec3& scale );
-	inline void fillScale( float x, float y, float z );
-	inline void fillRotation( const Quaternion& q );
-	inline void fillRotation( const Vec3& axis, float angle );
+	inline void fillIdentity( void );
+	inline void fillTranslation( float x, float y, float z );
+	inline void fillTranslation( const Vec3& t );
 	inline void fillRotationX( float angle );
 	inline void fillRotationY( float angle );
 	inline void fillRotationZ( float angle );
-	inline void fillTranslation( const Vec3& translation );
-	inline void fillTranslation( float x, float y, float z );
+	inline void fillRotation( const Quaternion& r );
+	inline void fillRotation( const Vec3& axis, float angle );
+	inline void fillScale( float x, float y, float z );
+	inline void fillScale( const Vec3& s );
+	inline void fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up );
+	inline void fillPerspective( float fov, float aspect, float znear, float zfar );
+	inline void fillOrthographic( float left, float right, float bottom, float top, float near, float far );
 	
+public:
+	inline float determinant( void ) const;
+
+public:
+	inline void transpose( void );
+	inline void negate( void );
+	inline void translate( float x, float y, float z );
+	inline void translate( const Vec3& t );
+	inline void rotateX( float angle );
+	inline void rotateY( float angle );
+	inline void rotateZ( float angle );
+	inline void rotate( const Quaternion& r );
+	inline void rotate( const Vec3& axis, float angle );
+	inline void scale( float s );
+	inline void scale( float x, float y, float z );
+	inline void scale( const Vec3& s );
+
+	inline Mat4 getTranspose( void ) const;
+	inline Mat4 getNegate( void ) const;
+	inline bool getInverse( Mat4& out ) const;
+	inline Mat4 getTranslate( float x, float y, float z ) const;
+	inline Mat4 getTranslate( const Vec3& t ) const;
+	inline Mat4 getRotateX( float angle ) const;
+	inline Mat4 getRotateY( float angle ) const;
+	inline Mat4 getRotateZ( float angle ) const;
+	inline Mat4 getRotate( const Quaternion& r ) const;
+	inline Mat4 getRotate( const Vec3& axis, float angle ) const;
+	inline Mat4 getScale( float s ) const;
+	inline Mat4 getScale( float x, float y, float z ) const;
+	inline Mat4 getScale( const Vec3& s ) const;
+
 	inline Vec3 getUpVector( void ) const;
 	inline Vec3 getDownVector( void ) const;
 	inline Vec3 getLeftVector( void ) const;
 	inline Vec3 getRightVector( void ) const;
 	inline Vec3 getForwardVector( void ) const;
 	inline Vec3 getBackVector( void ) const;
-	inline void inverse( void );
-	inline void negate( void );
-	inline void rotate( const Quaternion& q );
-	inline void rotate( const Vec3& axis, float angle );
-	inline void rotateX( float angle );
-	inline void rotateY( float angle );
-	inline void rotateZ( float angle );
-	inline void scale( float scale );
-	inline void scale( float x, float y, float z );
-	inline void scale( const Vec3& scale );
-	inline void translate( float x, float y, float z );
-	inline void translate( const Vec3& t );
-    inline void transpose( void );
 	inline Vec3 transformPoint( const Vec3& point ) const;
-	inline Vec3 transformVec3( const Vec3& vec ) const;
-	inline Vec4 transformVec4( const Vec4& vec ) const;
-	inline float determinant( void ) const;
+	inline Vec3 transformVec3( const Vec3& v ) const;
+	inline Vec4 transformVec4( const Vec4& v ) const;
+
 	inline bool decompose( Vec3* translation, Quaternion* rotation, Vec3* scale ) const;
 	inline Vec3 getTranslation( void ) const;
 	inline Quaternion getRotation( void ) const;
 	inline Vec3 getScale( void ) const;
-
-public:
-	static const Mat4 Identity;
-	static const Mat4 Zero;
 };
 
 class MathMat4
 {
 public:
-	static inline Mat4 fill(
-		float m11, float m12, float m13, float m14,
-		float m21, float m22, float m23, float m24,
-		float m31, float m32, float m33, float m34,
-		float m41, float m42, float m43, float m44 );
-
-	static inline Mat4 add( const Mat4& lhs, float scalar );
-	static inline Mat4 add( const Mat4& lhs, const Mat4& rhs );
-	static inline Mat4 sub( const Mat4& lhs, float scalar );
-	static inline Mat4 sub( const Mat4& lhs, const Mat4& rhs );
-	static inline Mat4 mul( const Mat4& lhs, float scalar );
-	static inline Mat4 mul( const Mat4& lhs, const Mat4& rhs );
-	static inline bool isIdentity( const Mat4& m );
-
-	static inline Mat4 copy( const Mat4& m );
-	static inline Mat4 fill( const float* m );
-	static inline Mat4 fill( const Mat4& m );
-	static inline Mat4 fillIdentity( void );
-	static inline Mat4 fillZero( void );
-	static inline Mat4 fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up );
-	static inline Mat4 fillPerspective( float fov, float aspect, float znear, float zfar );
-	static inline Mat4 fillOrthographic( float left, float right, float bottom, float top, float near, float far );
-	static inline Mat4 fillScale( const Vec3& scale );
-	static inline Mat4 fillScale( float x, float y, float z );
-	static inline Mat4 fillRotation( const Quaternion& q );
-	static inline Mat4 fillRotation( const Vec3& axis, float angle );
-	static inline Mat4 fillRotationX( float angle );
-	static inline Mat4 fillRotationY( float angle );
-	static inline Mat4 fillRotationZ( float angle );
-	static inline Mat4 fillTranslation( const Vec3& translation );
-	static inline Mat4 fillTranslation( float x, float y, float z );
-	
-	static inline Vec3 getUpVector( const Mat4& m );
-	static inline Vec3 getDownVector( const Mat4& m );
-	static inline Vec3 getLeftVector( const Mat4& m );
-	static inline Vec3 getRightVector( const Mat4& m );
-	static inline Vec3 getForwardVector( const Mat4& m );
-	static inline Vec3 getBackVector( const Mat4& m );
-	static inline Mat4 inverse( const Mat4& m );
-	static inline Mat4 negate( const Mat4& m );
-	static inline Mat4 rotate( const Mat4& m, const Quaternion& q );
-	static inline Mat4 rotate( const Mat4& m, const Vec3& axis, float angle );
-	static inline Mat4 rotateX( const Mat4& m, float angle );
-	static inline Mat4 rotateY( const Mat4& m, float angle );
-	static inline Mat4 rotateZ( const Mat4& m, float angle );
-	static inline Mat4 scale( const Mat4& m, float scale );
-	static inline Mat4 scale( const Mat4& m, float x, float y, float z );
-	static inline Mat4 scale( const Mat4& m, const Vec3& scale );
-	static inline Mat4 translate( const Mat4& m, float x, float y, float z );
-	static inline Mat4 translate( const Mat4& m, const Vec3& t );
-    static inline Mat4 transpose( const Mat4& m );
-	static inline Vec3 transformPoint( const Mat4& m, const Vec3& point );
-	static inline Vec3 transformVec3( const Mat4& m, const Vec3& vec );
-	static inline Vec4 transformVec4( const Mat4& m, const Vec4& vec );
-	static inline float determinant( const Mat4& m );
-	static inline bool decompose( const Mat4& m, Vec3* translation, Quaternion* rotation, Vec3* scale );
-	static inline Vec3 getTranslation( const Mat4& m );
-	static inline Quaternion getRotation( const Mat4& m );
-	static inline Vec3 getScale( const Mat4& m );
+	static inline void add( Mat4& out, const Mat4& mat, float a );
+	static inline void add( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
+	static inline void sub( Mat4& out, const Mat4& mat, float a );
+	static inline void sub( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
+	static inline void mul( Mat4& out, const Mat4& mat, float a );
+	static inline void mul( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
+	static inline void transpose( Mat4& out, const Mat4& mat );
+	static inline void negate( Mat4& out, const Mat4& mat );
+	static inline bool getInverse( Mat4& out, const Mat4& mat );
+	static inline void translate( Mat4& out, const Mat4& mat, float x, float y, float z );
+	static inline void translate( Mat4& out, const Mat4& mat, const Vec3& t );
+	static inline void rotateX( Mat4& out, const Mat4& mat, float angle );
+	static inline void rotateY( Mat4& out, const Mat4& mat, float angle );
+	static inline void rotateZ( Mat4& out, const Mat4& mat, float angle );
+	static inline void rotate( Mat4& out, const Mat4& mat, const Quaternion& r );
+	static inline void rotate( Mat4& out, const Mat4& mat, const Vec3& axis, float angle );
+	static inline void scale( Mat4& out, const Mat4& mat, float s );
+	static inline void scale( Mat4& out, const Mat4& mat, float x, float y, float z );
+	static inline void scale( Mat4& out, const Mat4& mat, const Vec3& s );
+	static inline void getUpVector( Vec3& out, const Mat4& mat );
+	static inline void getDownVector( Vec3& out, const Mat4& mat );
+	static inline void getLeftVector( Vec3& out, const Mat4& mat );
+	static inline void getRightVector( Vec3& out, const Mat4& mat );
+	static inline void getForwardVector( Vec3& out, const Mat4& mat );
+	static inline void getBackVector( Vec3& out, const Mat4& mat );
+	static inline void transformPoint( Vec3& out, const Mat4& mat, const Vec3& point );
+	static inline void transformVec3( Vec3& out, const Mat4& mat, const Vec3& v );
+	static inline void transformVec4( Vec4& out, const Mat4& mat, const Vec4& v );
 };
 
 #include "Mat4.inl"

@@ -22,447 +22,450 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Mat4 Mat4::operator+( float scalar ) const
+inline void Mat4::fill(
+	float rm11, float rm12, float rm13, float rm14,
+	float rm21, float rm22, float rm23, float rm24,
+	float rm31, float rm32, float rm33, float rm34,
+	float rm41, float rm42, float rm43, float rm44 )
 {
-	Mat4 dst;
-	dst.mat[0]  = mat[0]  + scalar;
-	dst.mat[1]  = mat[1]  + scalar;
-	dst.mat[2]  = mat[2]  + scalar;
-	dst.mat[3]  = mat[3]  + scalar;
-	dst.mat[4]  = mat[4]  + scalar;
-	dst.mat[5]  = mat[5]  + scalar;
-	dst.mat[6]  = mat[6]  + scalar;
-	dst.mat[7]  = mat[7]  + scalar;
-	dst.mat[8]  = mat[8]  + scalar;
-	dst.mat[9]  = mat[9]  + scalar;
-	dst.mat[10] = mat[10] + scalar;
-	dst.mat[11] = mat[11] + scalar;
-	dst.mat[12] = mat[12] + scalar;
-	dst.mat[13] = mat[13] + scalar;
-	dst.mat[14] = mat[14] + scalar;
-	dst.mat[15] = mat[15] + scalar;
-	return dst;
+	m11 = rm11; m12 = rm12; m13 = rm13; m14 = rm14;
+	m21 = rm21; m22 = rm22; m23 = rm23; m24 = rm24;
+	m31 = rm31; m32 = rm32; m33 = rm33; m34 = rm34;
+	m41 = rm41; m42 = rm42; m43 = rm43; m44 = rm44;
 }
 
-inline Mat4 Mat4::operator+( const Mat4& rhs ) const
+inline bool Mat4::operator==( const Mat4& mat ) const
 {
-	Mat4 dst;
-	dst.mat[0]  = mat[0]  + rhs.mat[0];
-	dst.mat[1]  = mat[1]  + rhs.mat[1];
-	dst.mat[2]  = mat[2]  + rhs.mat[2];
-	dst.mat[3]  = mat[3]  + rhs.mat[3];
-	dst.mat[4]  = mat[4]  + rhs.mat[4];
-	dst.mat[5]  = mat[5]  + rhs.mat[5];
-	dst.mat[6]  = mat[6]  + rhs.mat[6];
-	dst.mat[7]  = mat[7]  + rhs.mat[7];
-	dst.mat[8]  = mat[8]  + rhs.mat[8];
-	dst.mat[9]  = mat[9]  + rhs.mat[9];
-	dst.mat[10] = mat[10] + rhs.mat[10];
-	dst.mat[11] = mat[11] + rhs.mat[11];
-	dst.mat[12] = mat[12] + rhs.mat[12];
-	dst.mat[13] = mat[13] + rhs.mat[13];
-	dst.mat[14] = mat[14] + rhs.mat[14];
-	dst.mat[15] = mat[15] + rhs.mat[15];
-	return dst;
+	return memcmp( mat.m, m, kMatrix4x4Size ) == 0;
 }
 
-inline Mat4 Mat4::operator-( float scalar ) const
+inline bool Mat4::operator!=( const Mat4& mat ) const
 {
-	Mat4 dst;
-	dst.mat[0]  = mat[0]  - scalar;
-	dst.mat[1]  = mat[1]  - scalar;
-	dst.mat[2]  = mat[2]  - scalar;
-	dst.mat[3]  = mat[3]  - scalar;
-	dst.mat[4]  = mat[4]  - scalar;
-	dst.mat[5]  = mat[5]  - scalar;
-	dst.mat[6]  = mat[6]  - scalar;
-	dst.mat[7]  = mat[7]  - scalar;
-	dst.mat[8]  = mat[8]  - scalar;
-	dst.mat[9]  = mat[9]  - scalar;
-	dst.mat[10] = mat[10] - scalar;
-	dst.mat[11] = mat[11] - scalar;
-	dst.mat[12] = mat[12] - scalar;
-	dst.mat[13] = mat[13] - scalar;
-	dst.mat[14] = mat[14] - scalar;
-	dst.mat[15] = mat[15] - scalar;
-	return dst;
-}
-
-inline Mat4 Mat4::operator-( const Mat4& rhs ) const
-{
-	Mat4 dst;
-	dst.mat[0]  = mat[0]  - rhs.mat[0];
-	dst.mat[1]  = mat[1]  - rhs.mat[1];
-	dst.mat[2]  = mat[2]  - rhs.mat[2];
-	dst.mat[3]  = mat[3]  - rhs.mat[3];
-	dst.mat[4]  = mat[4]  - rhs.mat[4];
-	dst.mat[5]  = mat[5]  - rhs.mat[5];
-	dst.mat[6]  = mat[6]  - rhs.mat[6];
-	dst.mat[7]  = mat[7]  - rhs.mat[7];
-	dst.mat[8]  = mat[8]  - rhs.mat[8];
-	dst.mat[9]  = mat[9]  - rhs.mat[9];
-	dst.mat[10] = mat[10] - rhs.mat[10];
-	dst.mat[11] = mat[11] - rhs.mat[11];
-	dst.mat[12] = mat[12] - rhs.mat[12];
-	dst.mat[13] = mat[13] - rhs.mat[13];
-	dst.mat[14] = mat[14] - rhs.mat[14];
-	dst.mat[15] = mat[15] - rhs.mat[15];
-	return dst;
-}
-
-inline Mat4 Mat4::operator*( float scalar ) const
-{
-	Mat4 dst;
-	dst.mat[0]  = mat[0]  * scalar;
-	dst.mat[1]  = mat[1]  * scalar;
-	dst.mat[2]  = mat[2]  * scalar;
-	dst.mat[3]  = mat[3]  * scalar;
-	dst.mat[4]  = mat[4]  * scalar;
-	dst.mat[5]  = mat[5]  * scalar;	
-	dst.mat[6]  = mat[6]  * scalar;
-	dst.mat[7]  = mat[7]  * scalar;
-	dst.mat[8]  = mat[8]  * scalar;
-	dst.mat[9]  = mat[9]  * scalar;
-	dst.mat[10] = mat[10] * scalar;
-	dst.mat[11] = mat[11] * scalar;
-	dst.mat[12] = mat[12] * scalar;
-	dst.mat[13] = mat[13] * scalar;
-	dst.mat[14] = mat[14] * scalar;
-	dst.mat[15] = mat[15] * scalar;
-	return dst;
-}
-
-inline Mat4 Mat4::operator*( const Mat4& rhs ) const
-{
-	Mat4 dst;
-	dst.mat[0]  = mat[0] * rhs.mat[0]  + mat[4] * rhs.mat[1]  + mat[8]  * rhs.mat[2]  + mat[12] * rhs.mat[3];
-	dst.mat[1]  = mat[1] * rhs.mat[0]  + mat[5] * rhs.mat[1]  + mat[9]  * rhs.mat[2]  + mat[13] * rhs.mat[3];
-	dst.mat[2]  = mat[2] * rhs.mat[0]  + mat[6] * rhs.mat[1]  + mat[10] * rhs.mat[2]  + mat[14] * rhs.mat[3];
-	dst.mat[3]  = mat[3] * rhs.mat[0]  + mat[7] * rhs.mat[1]  + mat[11] * rhs.mat[2]  + mat[15] * rhs.mat[3];
-
-	dst.mat[4]  = mat[0] * rhs.mat[4]  + mat[4] * rhs.mat[5]  + mat[8]  * rhs.mat[6]  + mat[12] * rhs.mat[7];
-	dst.mat[5]  = mat[1] * rhs.mat[4]  + mat[5] * rhs.mat[5]  + mat[9]  * rhs.mat[6]  + mat[13] * rhs.mat[7];
-	dst.mat[6]  = mat[2] * rhs.mat[4]  + mat[6] * rhs.mat[5]  + mat[10] * rhs.mat[6]  + mat[14] * rhs.mat[7];
-	dst.mat[7]  = mat[3] * rhs.mat[4]  + mat[7] * rhs.mat[5]  + mat[11] * rhs.mat[6]  + mat[15] * rhs.mat[7];
-	 
-	dst.mat[8]  = mat[0] * rhs.mat[8]  + mat[4] * rhs.mat[9]  + mat[8]  * rhs.mat[10] + mat[12] * rhs.mat[11];
-	dst.mat[9]  = mat[1] * rhs.mat[8]  + mat[5] * rhs.mat[9]  + mat[9]  * rhs.mat[10] + mat[13] * rhs.mat[11];
-	dst.mat[10] = mat[2] * rhs.mat[8]  + mat[6] * rhs.mat[9]  + mat[10] * rhs.mat[10] + mat[14] * rhs.mat[11];
-	dst.mat[11] = mat[3] * rhs.mat[8]  + mat[7] * rhs.mat[9]  + mat[11] * rhs.mat[10] + mat[15] * rhs.mat[11];
-
-	dst.mat[12] = mat[0] * rhs.mat[12] + mat[4] * rhs.mat[13] + mat[8]  * rhs.mat[14] + mat[12] * rhs.mat[15];
-	dst.mat[13] = mat[1] * rhs.mat[12] + mat[5] * rhs.mat[13] + mat[9]  * rhs.mat[14] + mat[13] * rhs.mat[15];
-	dst.mat[14] = mat[2] * rhs.mat[12] + mat[6] * rhs.mat[13] + mat[10] * rhs.mat[14] + mat[14] * rhs.mat[15];
-	dst.mat[15] = mat[3] * rhs.mat[12] + mat[7] * rhs.mat[13] + mat[11] * rhs.mat[14] + mat[15] * rhs.mat[15];
-	return dst;
-}
-
-inline Mat4& Mat4::operator=( const Mat4& rhs )
-{
-	memcpy( this, &rhs, kMat4Size );
-	return *this;
-}
-
-inline Mat4& Mat4::operator+=( float scalar )
-{
-	mat[0]  = mat[0]  + scalar;
-	mat[1]  = mat[1]  + scalar;
-	mat[2]  = mat[2]  + scalar;
-	mat[3]  = mat[3]  + scalar;
-	mat[4]  = mat[4]  + scalar;
-	mat[5]  = mat[5]  + scalar;
-	mat[6]  = mat[6]  + scalar;
-	mat[7]  = mat[7]  + scalar;
-	mat[8]  = mat[8]  + scalar;
-	mat[9]  = mat[9]  + scalar;
-	mat[10] = mat[10] + scalar;
-	mat[11] = mat[11] + scalar;
-	mat[12] = mat[12] + scalar;
-	mat[13] = mat[13] + scalar;
-	mat[14] = mat[14] + scalar;
-	mat[15] = mat[15] + scalar;
-	return *this;
-}
-
-inline Mat4& Mat4::operator+=( const Mat4& rhs )
-{
-	mat[0]  = mat[0]  + rhs.mat[0];
-	mat[1]  = mat[1]  + rhs.mat[1];
-	mat[2]  = mat[2]  + rhs.mat[2];
-	mat[3]  = mat[3]  + rhs.mat[3];
-	mat[4]  = mat[4]  + rhs.mat[4];
-	mat[5]  = mat[5]  + rhs.mat[5];
-	mat[6]  = mat[6]  + rhs.mat[6];
-	mat[7]  = mat[7]  + rhs.mat[7];
-	mat[8]  = mat[8]  + rhs.mat[8];
-	mat[9]  = mat[9]  + rhs.mat[9];
-	mat[10] = mat[10] + rhs.mat[10];
-	mat[11] = mat[11] + rhs.mat[11];
-	mat[12] = mat[12] + rhs.mat[12];
-	mat[13] = mat[13] + rhs.mat[13];
-	mat[14] = mat[14] + rhs.mat[14];
-	mat[15] = mat[15] + rhs.mat[15];
-	return *this;
-}
-
-inline Mat4& Mat4::operator-=( float scalar )
-{
-	mat[0]  = mat[0]  - scalar;
-	mat[1]  = mat[1]  - scalar;
-	mat[2]  = mat[2]  - scalar;
-	mat[3]  = mat[3]  - scalar;
-	mat[4]  = mat[4]  - scalar;
-	mat[5]  = mat[5]  - scalar;
-	mat[6]  = mat[6]  - scalar;
-	mat[7]  = mat[7]  - scalar;
-	mat[8]  = mat[8]  - scalar;
-	mat[9]  = mat[9]  - scalar;
-	mat[10] = mat[10] - scalar;
-	mat[11] = mat[11] - scalar;
-	mat[12] = mat[12] - scalar;
-	mat[13] = mat[13] - scalar;
-	mat[14] = mat[14] - scalar;
-	mat[15] = mat[15] - scalar;
-	return *this;
-}
-
-inline Mat4& Mat4::operator-=( const Mat4& rhs )
-{
-	mat[0]  = mat[0]  - rhs.mat[0];
-	mat[1]  = mat[1]  - rhs.mat[1];
-	mat[2]  = mat[2]  - rhs.mat[2];
-	mat[3]  = mat[3]  - rhs.mat[3];
-	mat[4]  = mat[4]  - rhs.mat[4];
-	mat[5]  = mat[5]  - rhs.mat[5];
-	mat[6]  = mat[6]  - rhs.mat[6];
-	mat[7]  = mat[7]  - rhs.mat[7];
-	mat[8]  = mat[8]  - rhs.mat[8];
-	mat[9]  = mat[9]  - rhs.mat[9];
-	mat[10] = mat[10] - rhs.mat[10];
-	mat[11] = mat[11] - rhs.mat[11];
-	mat[12] = mat[12] - rhs.mat[12];
-	mat[13] = mat[13] - rhs.mat[13];
-	mat[14] = mat[14] - rhs.mat[14];
-	mat[15] = mat[15] - rhs.mat[15];
-	return *this;
-}
-
-inline Mat4& Mat4::operator*=( float scalar )
-{
-	mat[0]  = mat[0]  * scalar;
-	mat[1]  = mat[1]  * scalar;
-	mat[2]  = mat[2]  * scalar;
-	mat[3]  = mat[3]  * scalar;
-	mat[4]  = mat[4]  * scalar;
-	mat[5]  = mat[5]  * scalar;
-	mat[6]  = mat[6]  * scalar;
-	mat[7]  = mat[7]  * scalar;
-	mat[8]  = mat[8]  * scalar;
-	mat[9]  = mat[9]  * scalar;
-	mat[10] = mat[10] * scalar;
-	mat[11] = mat[11] * scalar;
-	mat[12] = mat[12] * scalar;
-	mat[13] = mat[13] * scalar;
-	mat[14] = mat[14] * scalar;
-	mat[15] = mat[15] * scalar;
-	return *this;
-}
-
-inline Mat4& Mat4::operator*=( const Mat4& rhs )
-{
-	Mat4 dst;
-	dst.mat[0]  = mat[0] * rhs.mat[0]  + mat[4] * rhs.mat[1]  + mat[8]  * rhs.mat[2]  + mat[12] * rhs.mat[3];
-	dst.mat[1]  = mat[1] * rhs.mat[0]  + mat[5] * rhs.mat[1]  + mat[9]  * rhs.mat[2]  + mat[13] * rhs.mat[3];
-	dst.mat[2]  = mat[2] * rhs.mat[0]  + mat[6] * rhs.mat[1]  + mat[10] * rhs.mat[2]  + mat[14] * rhs.mat[3];
-	dst.mat[3]  = mat[3] * rhs.mat[0]  + mat[7] * rhs.mat[1]  + mat[11] * rhs.mat[2]  + mat[15] * rhs.mat[3];
-
-	dst.mat[4]  = mat[0] * rhs.mat[4]  + mat[4] * rhs.mat[5]  + mat[8]  * rhs.mat[6]  + mat[12] * rhs.mat[7];
-	dst.mat[5]  = mat[1] * rhs.mat[4]  + mat[5] * rhs.mat[5]  + mat[9]  * rhs.mat[6]  + mat[13] * rhs.mat[7];
-	dst.mat[6]  = mat[2] * rhs.mat[4]  + mat[6] * rhs.mat[5]  + mat[10] * rhs.mat[6]  + mat[14] * rhs.mat[7];
-	dst.mat[7]  = mat[3] * rhs.mat[4]  + mat[7] * rhs.mat[5]  + mat[11] * rhs.mat[6]  + mat[15] * rhs.mat[7];
-
-	dst.mat[8]  = mat[0] * rhs.mat[8]  + mat[4] * rhs.mat[9]  + mat[8]  * rhs.mat[10] + mat[12] * rhs.mat[11];
-	dst.mat[9]  = mat[1] * rhs.mat[8]  + mat[5] * rhs.mat[9]  + mat[9]  * rhs.mat[10] + mat[13] * rhs.mat[11];
-	dst.mat[10] = mat[2] * rhs.mat[8]  + mat[6] * rhs.mat[9]  + mat[10] * rhs.mat[10] + mat[14] * rhs.mat[11];
-	dst.mat[11] = mat[3] * rhs.mat[8]  + mat[7] * rhs.mat[9]  + mat[11] * rhs.mat[10] + mat[15] * rhs.mat[11];
-
-	dst.mat[12] = mat[0] * rhs.mat[12] + mat[4] * rhs.mat[13] + mat[8]  * rhs.mat[14] + mat[12] * rhs.mat[15];
-	dst.mat[13] = mat[1] * rhs.mat[12] + mat[5] * rhs.mat[13] + mat[9]  * rhs.mat[14] + mat[13] * rhs.mat[15];
-	dst.mat[14] = mat[2] * rhs.mat[12] + mat[6] * rhs.mat[13] + mat[10] * rhs.mat[14] + mat[14] * rhs.mat[15];
-	dst.mat[15] = mat[3] * rhs.mat[12] + mat[7] * rhs.mat[13] + mat[11] * rhs.mat[14] + mat[15] * rhs.mat[15];
-
-	memcpy( this, &dst, kMat4Size );
-	return *this;
+	return !( operator==( mat ) );
 }
 
 inline bool Mat4::isIdentity( void ) const
 {
-	return memcmp( Identity.mat, this->mat, kMat4Size ) == 0;
+	return memcmp( Identity.m, m, kMatrix4x4Size ) == 0;
 }
 
-inline Mat4 Mat4::copy( void )
+inline bool Mat4::isEquals( const Mat4& mat ) const
 {
-	return Mat4( *this );
+	return memcmp( mat.m, m, kMatrix4x4Size ) == 0;
 }
 
-inline void Mat4::fill(
-	float m11, float m12, float m13, float m14,
-	float m21, float m22, float m23, float m24,
-	float m31, float m32, float m33, float m34,
-	float m41, float m42, float m43, float m44 )
+inline Mat4 Mat4::operator+( float a ) const
 {
-	mat[0]  = m11; mat[1]  = m12; mat[2]  = m13; mat[3]  = m14;
-	mat[4]  = m21; mat[5]  = m22; mat[6]  = m23; mat[7]  = m24;
-	mat[8]  = m31; mat[9]  = m32; mat[10] = m33; mat[11] = m34;
-	mat[12] = m41; mat[13] = m42; mat[14] = m43; mat[15] = m44;
+	return Mat4(
+		m11 + a, m12 + a, m13 + a, m14 + a,
+		m21 + a, m22 + a, m23 + a, m24 + a,
+		m31 + a, m32 + a, m33 + a, m34 + a,
+		m41 + a, m42 + a, m43 + a, m44 + a
+	);
+}
+
+inline Mat4 Mat4::operator+( const Mat4& mat ) const
+{
+	return Mat4(
+		m11 + mat.m11, m12 + mat.m12, m13 + mat.m13, m14 + mat.m14,
+		m21 + mat.m21, m22 + mat.m22, m23 + mat.m23, m24 + mat.m24,
+		m31 + mat.m31, m32 + mat.m32, m33 + mat.m33, m34 + mat.m34,
+		m41 + mat.m41, m42 + mat.m42, m43 + mat.m43, m44 + mat.m44
+	);
+}
+
+inline Mat4 Mat4::operator-( float a ) const
+{
+	return Mat4(
+		m11 - a, m12 - a, m13 - a, m14 - a,
+		m21 - a, m22 - a, m23 - a, m24 - a,
+		m31 - a, m32 - a, m33 - a, m34 - a,
+		m41 - a, m42 - a, m43 - a, m44 - a
+	);
+}
+
+inline Mat4 Mat4::operator-( const Mat4& mat ) const
+{
+	return Mat4(
+		m11 - mat.m11, m12 - mat.m12, m13 - mat.m13, m14 - mat.m14,
+		m21 - mat.m21, m22 - mat.m22, m23 - mat.m23, m24 - mat.m24,
+		m31 - mat.m31, m32 - mat.m32, m33 - mat.m33, m34 - mat.m34,
+		m41 - mat.m41, m42 - mat.m42, m43 - mat.m43, m44 - mat.m44
+	);
+}
+
+inline Mat4 Mat4::operator*( float a ) const
+{
+	return Mat4(
+		m11 * a, m12 * a, m13 * a, m14 * a,
+		m21 * a, m22 * a, m23 * a, m24 * a,
+		m31 * a, m32 * a, m33 * a, m34 * a,
+		m41 * a, m42 * a, m43 * a, m44 * a
+	);
+}
+
+inline Mat4 Mat4::operator*( const Mat4& mat ) const
+{
+	/*
+                                mat-> m11 , m12 , m13 , m14
+                                      m21 , m22 , m23 , m24
+                                      m31 , m32 , m33 , m34
+                                      m41 , m42 , m43 , m44 
+       this-> m11 , m12 , m13 , m14   d11 , d12 , d13 , d14
+              m21 , m22 , m23 , m24   d21 , d22 , d23 , d24
+              m31 , m32 , m33 , m34   d31 , d32 , d33 , d34
+              m41 , m42 , m43 , m44   d41 , d42 , d43 , d44
+	*/
+	Mat4 dst;
+	dst.m11 = m11 * mat.m11 + m12 * mat.m21 + m13 * mat.m31 + m14 * mat.m41;
+	dst.m12 = m11 * mat.m12 + m12 * mat.m22 + m13 * mat.m32 + m14 * mat.m42;
+	dst.m13 = m11 * mat.m13 + m12 * mat.m23 + m13 * mat.m33 + m14 * mat.m43;
+	dst.m14 = m11 * mat.m14 + m12 * mat.m24 + m13 * mat.m34 + m14 * mat.m44;
+	dst.m21 = m21 * mat.m11 + m22 * mat.m21 + m23 * mat.m31 + m24 * mat.m41;
+	dst.m22 = m21 * mat.m12 + m22 * mat.m22 + m23 * mat.m32 + m24 * mat.m42;
+	dst.m23 = m21 * mat.m13 + m22 * mat.m23 + m23 * mat.m33 + m24 * mat.m43;
+	dst.m24 = m21 * mat.m14 + m22 * mat.m24 + m23 * mat.m34 + m24 * mat.m44;
+	dst.m31 = m31 * mat.m11 + m32 * mat.m21 + m33 * mat.m31 + m34 * mat.m41;
+	dst.m32 = m31 * mat.m12 + m32 * mat.m22 + m33 * mat.m32 + m34 * mat.m42;
+	dst.m33 = m31 * mat.m13 + m32 * mat.m23 + m33 * mat.m33 + m34 * mat.m43;
+	dst.m34 = m31 * mat.m14 + m32 * mat.m24 + m33 * mat.m34 + m34 * mat.m44;
+	dst.m41 = m41 * mat.m11 + m42 * mat.m21 + m43 * mat.m31 + m44 * mat.m41;
+	dst.m42 = m41 * mat.m12 + m42 * mat.m22 + m43 * mat.m32 + m44 * mat.m42;
+	dst.m43 = m41 * mat.m13 + m42 * mat.m23 + m43 * mat.m33 + m44 * mat.m43;
+	dst.m44 = m41 * mat.m14 + m42 * mat.m24 + m43 * mat.m34 + m44 * mat.m44;
+	return dst;
+}
+
+inline Mat4& Mat4::operator+=( float a )
+{
+	m11 += a; m12 += a; m13 += a; m14 += a;
+	m21 += a; m22 += a; m23 += a; m24 += a;
+	m31 += a; m32 += a; m33 += a; m34 += a;
+	m41 += a; m42 += a; m43 += a; m44 += a;
+	return *this;
+}
+
+inline Mat4& Mat4::operator+=( const Mat4& mat )
+{
+	m11 += mat.m11; m12 += mat.m12; m13 += mat.m13; m14 += mat.m14;
+	m21 += mat.m21; m22 += mat.m22; m23 += mat.m23; m24 += mat.m24;
+	m31 += mat.m31; m32 += mat.m32; m33 += mat.m33; m34 += mat.m34;
+	m41 += mat.m41; m42 += mat.m42; m43 += mat.m43; m44 += mat.m44;
+	return *this;
+}
+
+inline Mat4& Mat4::operator-=( float a )
+{
+	m11 -= a; m12 -= a; m13 -= a; m14 -= a;
+	m21 -= a; m22 -= a; m23 -= a; m24 -= a;
+	m31 -= a; m32 -= a; m33 -= a; m34 -= a;
+	m41 -= a; m42 -= a; m43 -= a; m44 -= a;
+	return *this;
+}
+
+inline Mat4& Mat4::operator-=( const Mat4& mat )
+{
+	m11 -= mat.m11; m12 -= mat.m12; m13 -= mat.m13; m14 -= mat.m14;
+	m21 -= mat.m21; m22 -= mat.m22; m23 -= mat.m23; m24 -= mat.m24;
+	m31 -= mat.m31; m32 -= mat.m32; m33 -= mat.m33; m34 -= mat.m34;
+	m41 -= mat.m41; m42 -= mat.m42; m43 -= mat.m43; m44 -= mat.m44;
+	return *this;
+}
+
+inline Mat4& Mat4::operator*=( float a )
+{
+	m11 *= a; m12 *= a; m13 *= a; m14 *= a;
+	m21 *= a; m22 *= a; m23 *= a; m24 *= a;
+	m31 *= a; m32 *= a; m33 *= a; m34 *= a;
+	m41 *= a; m42 *= a; m43 *= a; m44 *= a;
+	return *this;
+}
+
+inline Mat4& Mat4::operator*=( const Mat4& mat )
+{
+	Mat4 dst;
+	dst.m11 = m11 * mat.m11 + m12 * mat.m21 + m13 * mat.m31 + m14 * mat.m41;
+	dst.m12 = m11 * mat.m12 + m12 * mat.m22 + m13 * mat.m32 + m14 * mat.m42;
+	dst.m13 = m11 * mat.m13 + m12 * mat.m23 + m13 * mat.m33 + m14 * mat.m43;
+	dst.m14 = m11 * mat.m14 + m12 * mat.m24 + m13 * mat.m34 + m14 * mat.m44;
+	dst.m21 = m21 * mat.m11 + m22 * mat.m21 + m23 * mat.m31 + m24 * mat.m41;
+	dst.m22 = m21 * mat.m12 + m22 * mat.m22 + m23 * mat.m32 + m24 * mat.m42;
+	dst.m23 = m21 * mat.m13 + m22 * mat.m23 + m23 * mat.m33 + m24 * mat.m43;
+	dst.m24 = m21 * mat.m14 + m22 * mat.m24 + m23 * mat.m34 + m24 * mat.m44;
+	dst.m31 = m31 * mat.m11 + m32 * mat.m21 + m33 * mat.m31 + m34 * mat.m41;
+	dst.m32 = m31 * mat.m12 + m32 * mat.m22 + m33 * mat.m32 + m34 * mat.m42;
+	dst.m33 = m31 * mat.m13 + m32 * mat.m23 + m33 * mat.m33 + m34 * mat.m43;
+	dst.m34 = m31 * mat.m14 + m32 * mat.m24 + m33 * mat.m34 + m34 * mat.m44;
+	dst.m41 = m41 * mat.m11 + m42 * mat.m21 + m43 * mat.m31 + m44 * mat.m41;
+	dst.m42 = m41 * mat.m12 + m42 * mat.m22 + m43 * mat.m32 + m44 * mat.m42;
+	dst.m43 = m41 * mat.m13 + m42 * mat.m23 + m43 * mat.m33 + m44 * mat.m43;
+	dst.m44 = m41 * mat.m14 + m42 * mat.m24 + m43 * mat.m34 + m44 * mat.m44;
+
+	memcpy( m, dst.m, kMatrix4x4Size );
+	return *this;
+}
+
+inline Mat4& Mat4::operator=( const Mat4& mat )
+{
+	memcpy( m, mat.m, kMatrix4x4Size );
+	return *this;
+}
+
+inline Mat4 Mat4::add( float a ) const
+{
+	return Mat4(
+		m11 + a, m12 + a, m13 + a, m14 + a,
+		m21 + a, m22 + a, m23 + a, m24 + a,
+		m31 + a, m32 + a, m33 + a, m34 + a,
+		m41 + a, m42 + a, m43 + a, m44 + a
+	);
+}
+
+inline Mat4 Mat4::add( const Mat4& mat ) const
+{
+	return Mat4(
+		m11 + mat.m11, m12 + mat.m12, m13 + mat.m13, m14 + mat.m14,
+		m21 + mat.m21, m22 + mat.m22, m23 + mat.m23, m24 + mat.m24,
+		m31 + mat.m31, m32 + mat.m32, m33 + mat.m33, m34 + mat.m34,
+		m41 + mat.m41, m42 + mat.m42, m43 + mat.m43, m44 + mat.m44
+	);
+}
+
+inline Mat4 Mat4::sub( float a ) const
+{
+	return Mat4(
+		m11 - a, m12 - a, m13 - a, m14 - a,
+		m21 - a, m22 - a, m23 - a, m24 - a,
+		m31 - a, m32 - a, m33 - a, m34 - a,
+		m41 - a, m42 - a, m43 - a, m44 - a
+	);
+}
+
+inline Mat4 Mat4::sub( const Mat4& mat ) const
+{
+	return Mat4(
+		m11 - mat.m11, m12 - mat.m12, m13 - mat.m13, m14 - mat.m14,
+		m21 - mat.m21, m22 - mat.m22, m23 - mat.m23, m24 - mat.m24,
+		m31 - mat.m31, m32 - mat.m32, m33 - mat.m33, m34 - mat.m34,
+		m41 - mat.m41, m42 - mat.m42, m43 - mat.m43, m44 - mat.m44
+	);
+}
+
+inline Mat4 Mat4::mul( float a ) const
+{
+	return Mat4(
+		m11 * a, m12 * a, m13 * a, m14 * a,
+		m21 * a, m22 * a, m23 * a, m24 * a,
+		m31 * a, m32 * a, m33 * a, m34 * a,
+		m41 * a, m42 * a, m43 * a, m44 * a
+	);
+}
+
+inline Mat4 Mat4::mul( const Mat4& mat ) const
+{
+	/*
+                                mat-> m11 , m12 , m13 , m14
+                                      m21 , m22 , m23 , m24
+                                      m31 , m32 , m33 , m34
+                                      m41 , m42 , m43 , m44 
+       this-> m11 , m12 , m13 , m14   d11 , d12 , d13 , d14
+              m21 , m22 , m23 , m24   d21 , d22 , d23 , d24
+              m31 , m32 , m33 , m34   d31 , d32 , d33 , d34
+              m41 , m42 , m43 , m44   d41 , d42 , d43 , d44
+	*/
+	Mat4 dst;
+	dst.m11 = m11 * mat.m11 + m12 * mat.m21 + m13 * mat.m31 + m14 * mat.m41;
+	dst.m12 = m11 * mat.m12 + m12 * mat.m22 + m13 * mat.m32 + m14 * mat.m42;
+	dst.m13 = m11 * mat.m13 + m12 * mat.m23 + m13 * mat.m33 + m14 * mat.m43;
+	dst.m14 = m11 * mat.m14 + m12 * mat.m24 + m13 * mat.m34 + m14 * mat.m44;
+	dst.m21 = m21 * mat.m11 + m22 * mat.m21 + m23 * mat.m31 + m24 * mat.m41;
+	dst.m22 = m21 * mat.m12 + m22 * mat.m22 + m23 * mat.m32 + m24 * mat.m42;
+	dst.m23 = m21 * mat.m13 + m22 * mat.m23 + m23 * mat.m33 + m24 * mat.m43;
+	dst.m24 = m21 * mat.m14 + m22 * mat.m24 + m23 * mat.m34 + m24 * mat.m44;
+	dst.m31 = m31 * mat.m11 + m32 * mat.m21 + m33 * mat.m31 + m34 * mat.m41;
+	dst.m32 = m31 * mat.m12 + m32 * mat.m22 + m33 * mat.m32 + m34 * mat.m42;
+	dst.m33 = m31 * mat.m13 + m32 * mat.m23 + m33 * mat.m33 + m34 * mat.m43;
+	dst.m34 = m31 * mat.m14 + m32 * mat.m24 + m33 * mat.m34 + m34 * mat.m44;
+	dst.m41 = m41 * mat.m11 + m42 * mat.m21 + m43 * mat.m31 + m44 * mat.m41;
+	dst.m42 = m41 * mat.m12 + m42 * mat.m22 + m43 * mat.m32 + m44 * mat.m42;
+	dst.m43 = m41 * mat.m13 + m42 * mat.m23 + m43 * mat.m33 + m44 * mat.m43;
+	dst.m44 = m41 * mat.m14 + m42 * mat.m24 + m43 * mat.m34 + m44 * mat.m44;
+	return dst;
+}
+
+inline void Mat4::addfill( float a )
+{
+	m11 += a; m12 += a; m13 += a; m14 += a;
+	m21 += a; m22 += a; m23 += a; m24 += a;
+	m31 += a; m32 += a; m33 += a; m34 += a;
+	m41 += a; m42 += a; m43 += a; m44 += a;
+}
+
+inline void Mat4::addfill( const Mat4& mat )
+{
+	m11 += mat.m11; m12 += mat.m12; m13 += mat.m13; m14 += mat.m14;
+	m21 += mat.m21; m22 += mat.m22; m23 += mat.m23; m24 += mat.m24;
+	m31 += mat.m31; m32 += mat.m32; m33 += mat.m33; m34 += mat.m34;
+	m41 += mat.m41; m42 += mat.m42; m43 += mat.m43; m44 += mat.m44;
+}
+
+inline void Mat4::subfill( float a )
+{
+	m11 -= a; m12 -= a; m13 -= a; m14 -= a;
+	m21 -= a; m22 -= a; m23 -= a; m24 -= a;
+	m31 -= a; m32 -= a; m33 -= a; m34 -= a;
+	m41 -= a; m42 -= a; m43 -= a; m44 -= a;
+}
+
+inline void Mat4::subfill( const Mat4& mat )
+{
+	m11 -= mat.m11; m12 -= mat.m12; m13 -= mat.m13; m14 -= mat.m14;
+	m21 -= mat.m21; m22 -= mat.m22; m23 -= mat.m23; m24 -= mat.m24;
+	m31 -= mat.m31; m32 -= mat.m32; m33 -= mat.m33; m34 -= mat.m34;
+	m41 -= mat.m41; m42 -= mat.m42; m43 -= mat.m43; m44 -= mat.m44;
+}
+
+inline void Mat4::mulfill( float a )
+{
+	m11 *= a; m12 *= a; m13 *= a; m14 *= a;
+	m21 *= a; m22 *= a; m23 *= a; m24 *= a;
+	m31 *= a; m32 *= a; m33 *= a; m34 *= a;
+	m41 *= a; m42 *= a; m43 *= a; m44 *= a;
+}
+
+inline void Mat4::mulfill( const Mat4& mat )
+{
+	Mat4 dst;
+	dst.m11 = m11 * mat.m11 + m12 * mat.m21 + m13 * mat.m31 + m14 * mat.m41;
+	dst.m12 = m11 * mat.m12 + m12 * mat.m22 + m13 * mat.m32 + m14 * mat.m42;
+	dst.m13 = m11 * mat.m13 + m12 * mat.m23 + m13 * mat.m33 + m14 * mat.m43;
+	dst.m14 = m11 * mat.m14 + m12 * mat.m24 + m13 * mat.m34 + m14 * mat.m44;
+	dst.m21 = m21 * mat.m11 + m22 * mat.m21 + m23 * mat.m31 + m24 * mat.m41;
+	dst.m22 = m21 * mat.m12 + m22 * mat.m22 + m23 * mat.m32 + m24 * mat.m42;
+	dst.m23 = m21 * mat.m13 + m22 * mat.m23 + m23 * mat.m33 + m24 * mat.m43;
+	dst.m24 = m21 * mat.m14 + m22 * mat.m24 + m23 * mat.m34 + m24 * mat.m44;
+	dst.m31 = m31 * mat.m11 + m32 * mat.m21 + m33 * mat.m31 + m34 * mat.m41;
+	dst.m32 = m31 * mat.m12 + m32 * mat.m22 + m33 * mat.m32 + m34 * mat.m42;
+	dst.m33 = m31 * mat.m13 + m32 * mat.m23 + m33 * mat.m33 + m34 * mat.m43;
+	dst.m34 = m31 * mat.m14 + m32 * mat.m24 + m33 * mat.m34 + m34 * mat.m44;
+	dst.m41 = m41 * mat.m11 + m42 * mat.m21 + m43 * mat.m31 + m44 * mat.m41;
+	dst.m42 = m41 * mat.m12 + m42 * mat.m22 + m43 * mat.m32 + m44 * mat.m42;
+	dst.m43 = m41 * mat.m13 + m42 * mat.m23 + m43 * mat.m33 + m44 * mat.m43;
+	dst.m44 = m41 * mat.m14 + m42 * mat.m24 + m43 * mat.m34 + m44 * mat.m44;
+
+	memcpy( m, dst.m, kMatrix4x4Size );
 }
 
 inline void Mat4::fill( const float* m )
 {
 	magicalAssert( m, "should not be nullptr" );
-	memcpy( this->mat, m, kMat4Size );
+	memcpy( this->m, m, kMatrix4x4Size );
 }
 
-inline void Mat4::fill( const Mat4& m )
+inline void Mat4::fill( const Mat4& mat )
 {
-	memcpy( this, &m, kMat4Size );
+	memcpy( m, mat.m, kMatrix4x4Size );
 }
 
 inline void Mat4::fillZero( void )
 {
-	memset( this->mat, 0, kMat4Size );
+	memset( m, 0, kMatrix4x4Size );
 }
 
 inline void Mat4::fillIdentity( void )
 {
-	memcpy( this, &Identity, kMat4Size );
+	memcpy( m, Identity.m, kMatrix4x4Size );
 }
 
-inline void Mat4::fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up )
-{
-	Vec3 up_v = up;
-	up_v.normalize();
-
-	Vec3 zaxis = MathVec3::sub( eye, target );
-	zaxis.normalize();
-
-	Vec3 xaxis = MathVec3::cross( up_v, zaxis );
-	xaxis.normalize();
-
-	Vec3 yaxis = MathVec3::cross( zaxis, xaxis );
-	yaxis.normalize();
-
-	mat[0] = xaxis.x;
-	mat[1] = yaxis.x;
-	mat[2] = zaxis.x;
-	mat[3] = 0.0f;
-
-	mat[4] = xaxis.y;
-	mat[5] = yaxis.y;
-	mat[6] = zaxis.y;
-	mat[7] = 0.0f;
-
-	mat[8] = xaxis.z;
-	mat[9] = yaxis.z;
-	mat[10] = zaxis.z;
-	mat[11] = 0.0f;
-
-	mat[12] = - MathVec3::dot( xaxis, eye );
-	mat[13] = - MathVec3::dot( yaxis, eye );
-	mat[14] = - MathVec3::dot( zaxis, eye );
-	mat[15] = 1.0f;
-}
-
-inline void Mat4::fillPerspective( float fov, float aspect, float znear, float zfar )
-{
-	float r = magicalDegToRad( fov / 2 );
-	float delta_z = zfar - znear;
-	float s = sin( r );
-	float cotangent = 0;
-
-	magicalAssert( 
-		!magicalFloatIsZero( delta_z ) &&
-		!magicalFloatIsZero( s ) &&
-		!magicalFloatIsZero( aspect ), "should not be 0.0f" );
-	cotangent = cos( r ) / s;
-
-	fillIdentity();
-	mat[0]  = cotangent / aspect;
-	mat[5]  = cotangent;
-	mat[10] = -( zfar + znear ) / delta_z;
-	mat[11] = -1;
-	mat[14] = -2 * znear * zfar / delta_z;
-	mat[15] = 0;
-}
-
-inline void Mat4::fillOrthographic( float left, float right, float bottom, float top, float near, float far )
-{
-	float tx = -( ( right + left ) / ( right - left ) );
-	float ty = -( ( top + bottom ) / ( top - bottom ) );
-	float tz = -( ( far + near ) / ( far - near ) );
-
-	fillIdentity();
-	mat[0]  = 2 / ( right - left );
-	mat[5]  = 2 / ( top - bottom );
-	mat[10] = -2 / ( far - near );
-	mat[12] = tx;
-	mat[13] = ty;
-	mat[14] = tz;
-}
-
-inline void Mat4::fillScale( const Vec3& scale )
-{
-    fillIdentity();
-
-    mat[0]  = scale.x;
-    mat[5]  = scale.y;
-    mat[10] = scale.z;
-}
-
-inline void Mat4::fillScale( float x, float y, float z )
+inline void Mat4::fillTranslation( float x, float y, float z )
 {
 	fillIdentity();
 
-    mat[0]  = x;
-    mat[5]  = y;
-    mat[10] = z;
+    m41 = x;
+    m42 = y;
+    m43 = z;
 }
 
-inline void Mat4::fillRotation( const Quaternion& q )
+inline void Mat4::fillTranslation( const Vec3& t )
 {
-	float x2 = q.x + q.x;
-    float y2 = q.y + q.y;
-    float z2 = q.z + q.z;
+	fillIdentity();
 
-    float xx2 = q.x * x2;
-    float yy2 = q.y * y2;
-    float zz2 = q.z * z2;
-    float xy2 = q.x * y2;
-    float xz2 = q.x * z2;
-    float yz2 = q.y * z2;
-    float wx2 = q.w * x2;
-    float wy2 = q.w * y2;
-    float wz2 = q.w * z2;
+	m41 = t.x;
+	m42 = t.y;
+	m43 = t.z;
+}
 
-    mat[0] = 1.0f - yy2 - zz2;
-    mat[1] = xy2 + wz2;
-    mat[2] = xz2 - wy2;
-    mat[3] = 0.0f;
+inline void Mat4::fillRotationX( float rad )
+{
+	fillIdentity();
 
-    mat[4] = xy2 - wz2;
-    mat[5] = 1.0f - xx2 - zz2;
-    mat[6] = yz2 + wx2;
-    mat[7] = 0.0f;
+	float c = cos( rad );
+	float s = sin( rad );
 
-    mat[8] = xz2 + wy2;
-    mat[9] = yz2 - wx2;
-    mat[10] = 1.0f - xx2 - yy2;
-    mat[11] = 0.0f;
+	m22 = c;
+	m23 = s;
+	m32 = -s;
+	m33 = c;
+}
 
-    mat[12] = 0.0f;
-    mat[13] = 0.0f;
-    mat[14] = 0.0f;
-    mat[15] = 1.0f;
+inline void Mat4::fillRotationY( float rad )
+{
+	fillIdentity();
+
+	float c = cos( rad );
+	float s = sin( rad );
+
+	m11 = c;
+	m13 = -s;
+	m31 = s;
+	m33 = c;
+}
+
+inline void Mat4::fillRotationZ( float rad )
+{
+	fillIdentity();
+
+	float c = cos( rad );
+	float s = sin( rad );
+
+	m11 = c;
+	m12 = s;
+	m21 = -s;
+	m22 = c;
+}
+
+inline void Mat4::fillRotation( const Quaternion& r )
+{
+	float x2 = r.x + r.x;
+    float y2 = r.y + r.y;
+    float z2 = r.z + r.z;
+
+    float xx2 = r.x * x2;
+    float yy2 = r.y * y2;
+    float zz2 = r.z * z2;
+    float xy2 = r.x * y2;
+    float xz2 = r.x * z2;
+    float yz2 = r.y * z2;
+    float wx2 = r.w * x2;
+    float wy2 = r.w * y2;
+    float wz2 = r.w * z2;
+
+    m11 = 1.0f - yy2 - zz2;
+    m12 = xy2 + wz2;
+    m13 = xz2 - wy2;
+    m14 = 0.0f;
+    m21 = xy2 - wz2;
+    m22 = 1.0f - xx2 - zz2;
+    m23 = yz2 + wx2;
+    m24 = 0.0f;
+    m31 = xz2 + wy2;
+    m32 = yz2 - wx2;
+    m33 = 1.0f - xx2 - yy2;
+    m34 = 0.0f;
+    m41 = 0.0f;
+    m42 = 0.0f;
+    m43 = 0.0f;
+    m44 = 1.0f;
 }
 
 inline void Mat4::fillRotation( const Vec3& axis, float angle )
@@ -471,14 +474,11 @@ inline void Mat4::fillRotation( const Vec3& axis, float angle )
 	float y = axis.y;
 	float z = axis.z;
 
-	// Make sure the input axis is normalized.
 	float n = x * x + y * y + z * z;
 	if( magicalFloatEquals( n, 1.0f ) == false )
 	{
-		// Not normalized.
 		n = sqrt( n );
-		// Prevent divide too close to zero.
-		if( n > FLT_EPSILON )
+		if( magicalFloatIsZero( n ) == false )
 		{
 			n = 1.0f / n;
 			x *= n;
@@ -501,261 +501,371 @@ inline void Mat4::fillRotation( const Vec3& axis, float angle )
 	float sy = s * y;
 	float sz = s * z;
 
-	mat[0] = c + tx*x;
-	mat[1] = txy + sz;
-	mat[2] = txz - sy;
-	mat[3] = 0.0f;
-
-	mat[4] = txy - sz;
-	mat[5] = c + ty*y;
-	mat[6] = tyz + sx;
-	mat[7] = 0.0f;
-
-	mat[8] = txz + sy;
-	mat[9] = tyz - sx;
-	mat[10] = c + tz*z;
-	mat[11] = 0.0f;
-
-	mat[12] = 0.0f;
-	mat[13] = 0.0f;
-	mat[14] = 0.0f;
-	mat[15] = 1.0f;
+	m11 = c + tx*x;
+	m12 = txy + sz;
+	m13 = txz - sy;
+	m14 = 0.0f;
+	m21 = txy - sz;
+	m22 = c + ty*y;
+	m23 = tyz + sx;
+	m24 = 0.0f;
+	m31 = txz + sy;
+	m32 = tyz - sx;
+	m33 = c + tz*z;
+	m34 = 0.0f;
+	m41 = 0.0f;
+	m42 = 0.0f;
+	m43 = 0.0f;
+	m44 = 1.0f;
 }
 
-inline void Mat4::fillRotationX( float angle )
+inline void Mat4::fillScale( float x, float y, float z )
 {
 	fillIdentity();
 
-	float c = cos( angle );
-	float s = sin( angle );
-
-	mat[5] = c;
-	mat[6] = s;
-	mat[9] = -s;
-	mat[10] = c;
+    m11 = x;
+    m22 = y;
+    m33 = z;
 }
 
-inline void Mat4::fillRotationY( float angle )
+inline void Mat4::fillScale( const Vec3& s )
 {
+    fillIdentity();
+
+	m11 = s.x;
+	m22 = s.y;
+    m33 = s.z;
+}
+
+inline void Mat4::fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up )
+{
+	Vec3 up_v = up;
+	up_v.normalize();
+
+	Vec3 zaxis = eye - target;
+	zaxis.normalize();
+
+	Vec3 xaxis =  up_v.getCross( zaxis );
+	xaxis.normalize();
+
+	Vec3 yaxis =  zaxis.getCross( xaxis );
+	yaxis.normalize();
+
+	m11 = xaxis.x;
+	m12 = yaxis.x;
+	m13 = zaxis.x;
+	m14 = 0.0f;
+	m21 = xaxis.y;
+	m22 = yaxis.y;
+	m23 = zaxis.y;
+	m24 = 0.0f;
+	m31 = xaxis.z;
+	m32 = yaxis.z;
+	m33 = zaxis.z;
+	m34 = 0.0f;
+	m41 = - xaxis.dot( eye );
+	m42 = - yaxis.dot( eye );
+	m43 = - zaxis.dot( eye );
+	m44 = 1.0f;
+}
+
+inline void Mat4::fillPerspective( float fov, float aspect, float znear, float zfar )
+{
+	float r = magicalDegToRad( fov / 2 );
+	float delta_z = zfar - znear;
+	float s = sin( r );
+	float cotangent = 0;
+
+	magicalAssert( 
+		!magicalFloatIsZero( delta_z ) &&
+		!magicalFloatIsZero( s ) &&
+		!magicalFloatIsZero( aspect ), "should not be 0.0f" );
+	cotangent = cos( r ) / s;
+
 	fillIdentity();
-
-	float c = cos( angle );
-	float s = sin( angle );
-
-	mat[0] = c;
-	mat[2] = -s;
-	mat[8] = s;
-	mat[10] = c;
+	m[0]  = cotangent / aspect;
+	m[5]  = cotangent;
+	m[10] = -( zfar + znear ) / delta_z;
+	m[11] = -1;
+	m[14] = -2 * znear * zfar / delta_z;
+	m[15] = 0;
 }
 
-inline void Mat4::fillRotationZ( float angle )
+inline void Mat4::fillOrthographic( float left, float right, float bottom, float top, float near, float far )
 {
+	float tx = -( ( right + left ) / ( right - left ) );
+	float ty = -( ( top + bottom ) / ( top - bottom ) );
+	float tz = -( ( far + near ) / ( far - near ) );
+
 	fillIdentity();
-
-    float c = cos(angle);
-    float s = sin(angle);
-
-    mat[0] = c;
-    mat[1] = s;
-    mat[4] = -s;
-    mat[5] = c;
+	m[0]  = 2 / ( right - left );
+	m[5]  = 2 / ( top - bottom );
+	m[10] = -2 / ( far - near );
+	m[12] = tx;
+	m[13] = ty;
+	m[14] = tz;
 }
 
-inline void Mat4::fillTranslation( const Vec3& translation )
+inline float Mat4::determinant( void ) const
 {
-	fillIdentity();
-
-    mat[12] = translation.x;
-    mat[13] = translation.y;
-    mat[14] = translation.z;
+	return 
+		( m11 * m22 - m12 * m21 ) *
+		( m33 * m44 - m34 * m43 ) -
+		( m11 * m23 - m13 * m21 ) *
+		( m32 * m44 - m34 * m42 ) +
+		( m11 * m24 - m14 * m21 ) *
+		( m32 * m43 - m33 * m42 ) +
+		( m12 * m23 - m13 * m22 ) *
+		( m31 * m44 - m34 * m41 ) -
+		( m12 * m24 - m14 * m22 ) *
+		( m31 * m43 - m33 * m41 ) +
+		( m13 * m24 - m14 * m23 ) *
+		( m31 * m42 - m32 * m41 );
 }
 
-inline void Mat4::fillTranslation( float x, float y, float z )
+inline void Mat4::transpose( void )
 {
-	fillIdentity();
-
-    mat[12] = x;
-    mat[13] = y;
-    mat[14] = z;
-}
-
-
-inline Vec3 Mat4::getUpVector( void ) const
-{
-	return Vec3( mat[4], mat[5], mat[6] );
-}
-
-inline Vec3 Mat4::getDownVector( void ) const
-{
-	return Vec3( -mat[4], -mat[5], -mat[6] );
-}
-
-inline Vec3 Mat4::getLeftVector( void ) const
-{
-	return Vec3( -mat[0], -mat[1], -mat[2] );
-}
-
-inline Vec3 Mat4::getRightVector( void ) const
-{
-	return Vec3( mat[0], mat[1], mat[2] );
-}
-
-inline Vec3 Mat4::getForwardVector( void ) const
-{
-	return Vec3( -mat[8], -mat[9], -mat[10] );
-}
-
-inline Vec3 Mat4::getBackVector( void ) const
-{
-	return Vec3( mat[8], mat[9], mat[10] );
-}
-
-inline void Mat4::inverse( void )
-{
-	float a0 = mat[0] * mat[5] - mat[1] * mat[4];
-	float a1 = mat[0] * mat[6] - mat[2] * mat[4];
-	float a2 = mat[0] * mat[7] - mat[3] * mat[4];
-	float a3 = mat[1] * mat[6] - mat[2] * mat[5];
-	float a4 = mat[1] * mat[7] - mat[3] * mat[5];
-	float a5 = mat[2] * mat[7] - mat[3] * mat[6];
-	float b0 = mat[8] * mat[13] - mat[9] * mat[12];
-	float b1 = mat[8] * mat[14] - mat[10] * mat[12];
-	float b2 = mat[8] * mat[15] - mat[11] * mat[12];
-	float b3 = mat[9] * mat[14] - mat[10] * mat[13];
-	float b4 = mat[9] * mat[15] - mat[11] * mat[13];
-	float b5 = mat[10] * mat[15] - mat[11] * mat[14];
-
-	// Calculate the determinant.
-	float det = a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0;
-
-	// Close to zero, can't invert.
-	if( magicalFloatIsZero( det ) )
-		return;
-
-	// Support the case where m == dst.
-	Mat4 inverse;
-	inverse.mat[0] = mat[5] * b5 - mat[6] * b4 + mat[7] * b3;
-	inverse.mat[1] = -mat[1] * b5 + mat[2] * b4 - mat[3] * b3;
-	inverse.mat[2] = mat[13] * a5 - mat[14] * a4 + mat[15] * a3;
-	inverse.mat[3] = -mat[9] * a5 + mat[10] * a4 - mat[11] * a3;
-
-	inverse.mat[4] = -mat[4] * b5 + mat[6] * b2 - mat[7] * b1;
-	inverse.mat[5] = mat[0] * b5 - mat[2] * b2 + mat[3] * b1;
-	inverse.mat[6] = -mat[12] * a5 + mat[14] * a2 - mat[15] * a1;
-	inverse.mat[7] = mat[8] * a5 - mat[10] * a2 + mat[11] * a1;
-
-	inverse.mat[8] = mat[4] * b4 - mat[5] * b2 + mat[7] * b0;
-	inverse.mat[9] = -mat[0] * b4 + mat[1] * b2 - mat[3] * b0;
-	inverse.mat[10] = mat[12] * a4 - mat[13] * a2 + mat[15] * a0;
-	inverse.mat[11] = -mat[8] * a4 + mat[9] * a2 - mat[11] * a0;
-
-	inverse.mat[12] = -mat[4] * b3 + mat[5] * b1 - mat[6] * b0;
-	inverse.mat[13] = mat[0] * b3 - mat[1] * b1 + mat[2] * b0;
-	inverse.mat[14] = -mat[12] * a3 + mat[13] * a1 - mat[14] * a0;
-	inverse.mat[15] = mat[8] * a3 - mat[9] * a1 + mat[10] * a0;
-
-	*this = inverse * ( 1.0f / det );
+	float t[16] = {
+		m11, m21, m31, m41,
+		m12, m22, m32, m42,
+		m13, m23, m33, m43,
+		m14, m24, m34, m44
+	};
+	memcpy( m, t, kMatrix4x4Size );
 }
 
 inline void Mat4::negate( void )
 {
-	mat[0]  = -mat[0];
-	mat[1]  = -mat[1];
-	mat[2]  = -mat[2];
-	mat[3]  = -mat[3];
-	mat[4]  = -mat[4];
-	mat[5]  = -mat[5];
-	mat[6]  = -mat[6];
-	mat[7]  = -mat[7];
-	mat[8]  = -mat[8];
-	mat[9]  = -mat[9];
-	mat[10] = -mat[10];
-	mat[11] = -mat[11];
-	mat[12] = -mat[12];
-	mat[13] = -mat[13];
-	mat[14] = -mat[14];
-	mat[15] = -mat[15];
-}
-
-inline void Mat4::rotate( const Quaternion& q )
-{
-	Mat4 dst;
-	dst.fillRotation( q );
-	*this *= dst;
-}
-
-inline void Mat4::rotate( const Vec3& axis, float angle )
-{
-	Mat4 dst;
-	dst.fillRotation( axis, angle );
-	*this *= dst;
-}
-
-inline void Mat4::rotateX( float angle )
-{
-	Mat4 dst;
-	dst.fillRotationX( angle );
-	*this *= dst;
-}
-
-inline void Mat4::rotateY( float angle )
-{
-	Mat4 dst;
-	dst.fillRotationY( angle );
-	*this *= dst;
-}
-
-inline void Mat4::rotateZ( float angle )
-{
-	Mat4 dst;
-	dst.fillRotationZ( angle );
-	*this *= dst;
-}
-
-inline void Mat4::scale( float scale )
-{
-	Mat4 dst;
-	dst.fillScale( scale, scale, scale );
-	*this *= dst;
-}
-
-inline void Mat4::scale( float x, float y, float z )
-{
-	Mat4 dst;
-	dst.fillScale( x, y, z );
-	*this *= dst;
-}
-
-inline void Mat4::scale( const Vec3& scale )
-{
-	Mat4 dst;
-	dst.fillScale( scale );
-	*this *= dst;
+	m11 = -m11; m12 = -m12; m13 = -m13; m14 = -m14;
+	m21 = -m21; m22 = -m22; m23 = -m23; m24 = -m24;
+	m31 = -m31; m32 = -m32; m33 = -m33; m34 = -m34;
+	m41 = -m41; m42 = -m42; m43 = -m43; m44 = -m44;
 }
 
 inline void Mat4::translate( float x, float y, float z )
 {
 	Mat4 dst;
 	dst.fillTranslation( x, y, z );
-	*this *= dst;
+	mulfill( dst );
 }
 
 inline void Mat4::translate( const Vec3& t )
 {
 	Mat4 dst;
 	dst.fillTranslation( t );
-	*this *= dst;
+	mulfill( dst );
 }
 
-inline void Mat4::transpose( void )
+inline void Mat4::rotateX( float angle )
 {
-	float t[16] = {
-		mat[0], mat[4], mat[8], mat[12],
-		mat[1], mat[5], mat[9], mat[13],
-		mat[2], mat[6], mat[10], mat[14],
-		mat[3], mat[7], mat[11], mat[15]
-	};
-	memcpy( this->mat, t, kMat4Size );
+	Mat4 dst;
+	dst.fillRotationX( angle );
+	mulfill( dst );
+}
+
+inline void Mat4::rotateY( float angle )
+{
+	Mat4 dst;
+	dst.fillRotationY( angle );
+	mulfill( dst );
+}
+
+inline void Mat4::rotateZ( float angle )
+{
+	Mat4 dst;
+	dst.fillRotationZ( angle );
+	mulfill( dst );
+}
+
+inline void Mat4::rotate( const Quaternion& r )
+{
+	Mat4 dst;
+	dst.fillRotation( r );
+	mulfill( dst );
+}
+
+inline void Mat4::rotate( const Vec3& axis, float angle )
+{
+	Mat4 dst;
+	dst.fillRotation( axis, angle );
+	mulfill( dst );
+}
+
+inline void Mat4::scale( float s )
+{
+	Mat4 dst;
+	dst.fillScale( s, s, s );
+	mulfill( dst );
+}
+
+inline void Mat4::scale( float x, float y, float z )
+{
+	Mat4 dst;
+	dst.fillScale( x, y, z );
+	mulfill( dst );
+}
+
+inline void Mat4::scale( const Vec3& s )
+{
+	Mat4 dst;
+	dst.fillScale( s );
+	mulfill( dst );
+}
+
+inline Mat4 Mat4::getTranspose( void ) const
+{
+	Mat4 dst( *this );
+	dst.transpose();
+	return dst;
+}
+
+inline Mat4 Mat4::getNegate( void ) const
+{
+	Mat4 dst( *this );
+	dst.negate();
+	return dst;
+}
+
+inline bool Mat4::getInverse( Mat4& out ) const
+{
+	float a0 = m11 * m22 - m12 * m21;
+    float a1 = m11 * m23 - m13 * m21;
+    float a2 = m11 * m24 - m14 * m21;
+    float a3 = m12 * m23 - m13 * m22;
+    float a4 = m12 * m24 - m14 * m22;
+    float a5 = m13 * m24 - m14 * m23;
+    float b0 = m31 * m42 - m32 * m41;
+    float b1 = m31 * m43 - m33 * m41;
+    float b2 = m31 * m44 - m34 * m41;
+    float b3 = m32 * m43 - m33 * m42;
+    float b4 = m32 * m44 - m34 * m42;
+    float b5 = m33 * m44 - m34 * m43;
+	float det = a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0;
+
+	if( magicalFloatIsZero( det ) )
+		return false;
+
+	Mat4 adj;
+	adj.m11 =   m22 * b5 - m23 * b4 + m24 * b3;
+	adj.m12 = - m12 * b5 + m13 * b4 - m14 * b3;
+	adj.m13 =   m42 * a5 - m43 * a4 + m44 * a3;
+	adj.m14 = - m32 * a5 + m33 * a4 - m34 * a3;
+	adj.m21 = - m21 * b5 + m23 * b2 - m24 * b1;
+	adj.m22 =   m11 * b5 - m13 * b2 + m14 * b1;
+	adj.m23 = - m41 * a5 + m43 * a2 - m44 * a1;
+	adj.m24 =   m31 * a5 - m33 * a2 + m34 * a1;
+	adj.m31 =   m21 * b4 - m22 * b2 + m24 * b0;
+	adj.m32 = - m11 * b4 + m12 * b2 - m14 * b0;
+	adj.m33 =   m41 * a4 - m42 * a2 + m44 * a0;
+	adj.m34 = - m31 * a4 + m32 * a2 - m34 * a0;
+	adj.m41 = - m21 * b3 + m22 * b1 - m23 * b0;
+	adj.m42 =   m11 * b3 - m12 * b1 + m13 * b0;
+	adj.m43 = - m41 * a3 + m42 * a1 - m43 * a0;
+	adj.m44 =   m31 * a3 - m32 * a1 + m33 * a0;
+
+	adj.mulfill( 1.0f / det );
+	out = adj;
+	return true;
+}
+
+inline Mat4 Mat4::getTranslate( float x, float y, float z ) const
+{
+	Mat4 dst( *this );
+	dst.translate( x, y, z );
+	return dst;
+}
+
+inline Mat4 Mat4::getTranslate( const Vec3& t ) const
+{
+	Mat4 dst( *this );
+	dst.translate( t );
+	return dst;
+}
+
+inline Mat4 Mat4::getRotateX( float angle ) const
+{
+	Mat4 dst( *this );
+	dst.rotateX( angle );
+	return dst;
+}
+
+inline Mat4 Mat4::getRotateY( float angle ) const
+{
+	Mat4 dst( *this );
+	dst.rotateY( angle );
+	return dst;
+}
+
+inline Mat4 Mat4::getRotateZ( float angle ) const
+{
+	Mat4 dst( *this );
+	dst.rotateZ( angle );
+	return dst;
+}
+
+inline Mat4 Mat4::getRotate( const Quaternion& r ) const
+{
+	Mat4 dst( *this );
+	dst.rotate( r );
+	return dst;
+}
+
+inline Mat4 Mat4::getRotate( const Vec3& axis, float angle ) const
+{
+	Mat4 dst( *this );
+	dst.rotate( axis, angle );
+	return dst;
+}
+
+inline Mat4 Mat4::getScale( float s ) const
+{
+	Mat4 dst( *this );
+	dst.scale( s );
+	return dst;
+}
+
+inline Mat4 Mat4::getScale( float x, float y, float z ) const
+{
+	Mat4 dst( *this );
+	dst.scale( x, y, z );
+	return dst;
+}
+
+inline Mat4 Mat4::getScale( const Vec3& s ) const
+{
+	Mat4 dst( *this );
+	dst.scale( s );
+	return dst;
+}
+
+inline Vec3 Mat4::getUpVector( void ) const
+{
+	return Vec3( m21, m22, m23 );
+}
+
+inline Vec3 Mat4::getDownVector( void ) const
+{
+	return Vec3( -m21, -m22, -m23 );
+}
+
+inline Vec3 Mat4::getLeftVector( void ) const
+{
+	return Vec3( -m11, -m12, -m13 );
+}
+
+inline Vec3 Mat4::getRightVector( void ) const
+{
+	return Vec3( m11, m12, m13 );
+}
+
+inline Vec3 Mat4::getForwardVector( void ) const
+{
+	return Vec3( -m31, -m32, -m33 );
+}
+
+inline Vec3 Mat4::getBackVector( void ) const
+{
+	return Vec3( m31, m32, m33 );
 }
 
 inline Vec3 Mat4::transformPoint( const Vec3& point ) const
@@ -763,41 +873,35 @@ inline Vec3 Mat4::transformPoint( const Vec3& point ) const
 	return transformVec3( point );
 }
 
-inline Vec3 Mat4::transformVec3( const Vec3& vec ) const
+inline Vec3 Mat4::transformVec3( const Vec3& v ) const
 {
-    float x = vec.x * mat[0] + vec.y * mat[4] + vec.z * mat[8]  + mat[12];
-    float y = vec.x * mat[1] + vec.y * mat[5] + vec.z * mat[9]  + mat[13];
-    float z = vec.x * mat[2] + vec.y * mat[6] + vec.z * mat[10] + mat[14];
-
-	return Vec3( x, y, z );
+	/*
+                      this-> m11 , m12 , m13 , m14
+                             m21 , m22 , m23 , m24
+                             m31 , m32 , m33 , m34
+                             m41 , m42 , m43 , m44 
+          v-> x , y , z , 1  dx  , dy  , dz 
+	*/
+	return Vec3(
+		v.x * m11 + v.y * m21 + v.z * m31 + m41,
+		v.x * m12 + v.y * m22 + v.z * m32 + m42,
+		v.x * m13 + v.y * m23 + v.z * m33 + m43 );
 }
 
-inline Vec4 Mat4::transformVec4( const Vec4& vec ) const
+inline Vec4 Mat4::transformVec4( const Vec4& v ) const
 {
-	float x = vec.x * mat[0] + vec.y * mat[4] + vec.z * mat[8]  + vec.w * mat[12];
-    float y = vec.x * mat[1] + vec.y * mat[5] + vec.z * mat[9]  + vec.w * mat[13];
-    float z = vec.x * mat[2] + vec.y * mat[6] + vec.z * mat[10] + vec.w * mat[14];
-    float w = vec.x * mat[3] + vec.y * mat[7] + vec.z * mat[11] + vec.w * mat[15];
-	
-	return Vec4( x, y, z, w );
-}
-
-inline float Mat4::determinant( void ) const
-{
-	float a0 = mat[0] * mat[5] - mat[1] * mat[4];
-	float a1 = mat[0] * mat[6] - mat[2] * mat[4];
-	float a2 = mat[0] * mat[7] - mat[3] * mat[4];
-	float a3 = mat[1] * mat[6] - mat[2] * mat[5];
-	float a4 = mat[1] * mat[7] - mat[3] * mat[5];
-	float a5 = mat[2] * mat[7] - mat[3] * mat[6];
-	float b0 = mat[8] * mat[13] - mat[9] * mat[12];
-	float b1 = mat[8] * mat[14] - mat[10] * mat[12];
-	float b2 = mat[8] * mat[15] - mat[11] * mat[12];
-	float b3 = mat[9] * mat[14] - mat[10] * mat[13];
-	float b4 = mat[9] * mat[15] - mat[11] * mat[13];
-	float b5 = mat[10] * mat[15] - mat[11] * mat[14];
-
-	return ( a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0 );
+	/*
+                      this-> m11 , m12 , m13 , m14
+                             m21 , m22 , m23 , m24
+                             m31 , m32 , m33 , m34
+                             m41 , m42 , m43 , m44 
+          v-> x , y , z , w  dx  , dy  , dz  , dw
+	*/
+	return Vec4(
+		v.x * m11 + v.y * m21 + v.z * m31 + v.w * m41,
+		v.x * m12 + v.y * m22 + v.z * m32 + v.w * m42,
+		v.x * m13 + v.y * m23 + v.z * m33 + v.w * m43,
+		v.x * m14 + v.y * m24 + v.z * m34 + v.w * m44 );
 }
 
 inline bool Mat4::decompose( Vec3* translation, Quaternion* rotation, Vec3* scale ) const
@@ -805,9 +909,9 @@ inline bool Mat4::decompose( Vec3* translation, Quaternion* rotation, Vec3* scal
 	if( translation )
 	{
 		// Extract the translation.
-		translation->x = mat[12];
-		translation->y = mat[13];
-		translation->z = mat[14];
+		translation->x = m[12];
+		translation->y = m[13];
+		translation->z = m[14];
 	}
 
 	// Nothing left to do.
@@ -816,9 +920,9 @@ inline bool Mat4::decompose( Vec3* translation, Quaternion* rotation, Vec3* scal
 
     // Extract the scale.
     // This is simply the length of each axis (row/column) in the matrix.
-	Vec3 xaxis( mat[0], mat[1], mat[2] );
-	Vec3 yaxis( mat[4], mat[5], mat[6] );
-	Vec3 zaxis( mat[8], mat[9], mat[10] );
+	Vec3 xaxis( m[0], m[1], m[2] );
+	Vec3 yaxis( m[4], m[5], m[6] );
+	Vec3 zaxis( m[8], m[9], m[10] );
 
 	float scale_x = xaxis.length();
 	float scale_y = yaxis.length();
@@ -927,323 +1031,274 @@ inline Vec3 Mat4::getScale( void ) const
 	return scale;
 }
 
-inline Mat4 MathMat4::add( const Mat4& lhs, float scalar )
+inline void MathMat4::add( Mat4& out, const Mat4& mat, float a )
 {
-	return lhs + scalar;
+	out.m11 = mat.m11 + a;
+	out.m12 = mat.m12 + a;
+	out.m13 = mat.m13 + a;
+	out.m14 = mat.m14 + a;
+	out.m21 = mat.m21 + a;
+	out.m22 = mat.m22 + a;
+	out.m23 = mat.m23 + a;
+	out.m24 = mat.m24 + a;
+	out.m31 = mat.m31 + a;
+	out.m32 = mat.m32 + a;
+	out.m33 = mat.m33 + a;
+	out.m34 = mat.m34 + a;
+	out.m41 = mat.m41 + a;
+	out.m42 = mat.m42 + a;
+	out.m43 = mat.m43 + a;
+	out.m44 = mat.m44 + a;
 }
 
-inline Mat4 MathMat4::add( const Mat4& lhs, const Mat4& rhs )
+inline void MathMat4::add( Mat4& out, const Mat4& mat1, const Mat4& mat2 )
 {
-	return lhs + rhs;
+	out.m11 = mat1.m11 + mat2.m11;
+	out.m12 = mat1.m12 + mat2.m12;
+	out.m13 = mat1.m13 + mat2.m13;
+	out.m14 = mat1.m14 + mat2.m14;
+	out.m21 = mat1.m21 + mat2.m21;
+	out.m22 = mat1.m22 + mat2.m22;
+	out.m23 = mat1.m23 + mat2.m23;
+	out.m24 = mat1.m24 + mat2.m24;
+	out.m31 = mat1.m31 + mat2.m31;
+	out.m32 = mat1.m32 + mat2.m32;
+	out.m33 = mat1.m33 + mat2.m33;
+	out.m34 = mat1.m34 + mat2.m34;
+	out.m41 = mat1.m41 + mat2.m41;
+	out.m42 = mat1.m42 + mat2.m42;
+	out.m43 = mat1.m43 + mat2.m43;
+	out.m44 = mat1.m44 + mat2.m44;
 }
 
-inline Mat4 MathMat4::sub( const Mat4& lhs, float scalar )
+inline void MathMat4::sub( Mat4& out, const Mat4& mat, float a )
 {
-	return lhs - scalar;
+	out.m11 = mat.m11 - a;
+	out.m12 = mat.m12 - a;
+	out.m13 = mat.m13 - a;
+	out.m14 = mat.m14 - a;
+	out.m21 = mat.m21 - a;
+	out.m22 = mat.m22 - a;
+	out.m23 = mat.m23 - a;
+	out.m24 = mat.m24 - a;
+	out.m31 = mat.m31 - a;
+	out.m32 = mat.m32 - a;
+	out.m33 = mat.m33 - a;
+	out.m34 = mat.m34 - a;
+	out.m41 = mat.m41 - a;
+	out.m42 = mat.m42 - a;
+	out.m43 = mat.m43 - a;
+	out.m44 = mat.m44 - a;
 }
 
-inline Mat4 MathMat4::sub( const Mat4& lhs, const Mat4& rhs )
+inline void MathMat4::sub( Mat4& out, const Mat4& mat1, const Mat4& mat2 )
 {
-	return lhs - rhs;
+	out.m11 = mat1.m11 - mat2.m11;
+	out.m12 = mat1.m12 - mat2.m12;
+	out.m13 = mat1.m13 - mat2.m13;
+	out.m14 = mat1.m14 - mat2.m14;
+	out.m21 = mat1.m21 - mat2.m21;
+	out.m22 = mat1.m22 - mat2.m22;
+	out.m23 = mat1.m23 - mat2.m23;
+	out.m24 = mat1.m24 - mat2.m24;
+	out.m31 = mat1.m31 - mat2.m31;
+	out.m32 = mat1.m32 - mat2.m32;
+	out.m33 = mat1.m33 - mat2.m33;
+	out.m34 = mat1.m34 - mat2.m34;
+	out.m41 = mat1.m41 - mat2.m41;
+	out.m42 = mat1.m42 - mat2.m42;
+	out.m43 = mat1.m43 - mat2.m43;
+	out.m44 = mat1.m44 - mat2.m44;
 }
 
-inline Mat4 MathMat4::mul( const Mat4& lhs, float scalar )
+inline void MathMat4::mul( Mat4& out, const Mat4& mat, float a )
 {
-	return lhs * scalar;
+	out.m11 = mat.m11 * a;
+	out.m12 = mat.m12 * a;
+	out.m13 = mat.m13 * a;
+	out.m14 = mat.m14 * a;
+	out.m21 = mat.m21 * a;
+	out.m22 = mat.m22 * a;
+	out.m23 = mat.m23 * a;
+	out.m24 = mat.m24 * a;
+	out.m31 = mat.m31 * a;
+	out.m32 = mat.m32 * a;
+	out.m33 = mat.m33 * a;
+	out.m34 = mat.m34 * a;
+	out.m41 = mat.m41 * a;
+	out.m42 = mat.m42 * a;
+	out.m43 = mat.m43 * a;
+	out.m44 = mat.m44 * a;
 }
 
-inline Mat4 MathMat4::mul( const Mat4& lhs, const Mat4& rhs )
+inline void MathMat4::mul( Mat4& out, const Mat4& mat1, const Mat4& mat2 )
 {
-	return lhs * rhs;
+	/*
+                               mat2-> m11 , m12 , m13 , m14
+                                      m21 , m22 , m23 , m24
+                                      m31 , m32 , m33 , m34
+                                      m41 , m42 , m43 , m44 
+       mat1-> m11 , m12 , m13 , m14   d11 , d12 , d13 , d14
+              m21 , m22 , m23 , m24   d21 , d22 , d23 , d24
+              m31 , m32 , m33 , m34   d31 , d32 , d33 , d34
+              m41 , m42 , m43 , m44   d41 , d42 , d43 , d44
+	*/
+	Mat4 dst;
+	dst.m11 = mat1.m11 * mat2.m11 + mat1.m12 * mat2.m21 + mat1.m13 * mat2.m31 + mat1.m14 * mat2.m41;
+	dst.m12 = mat1.m11 * mat2.m12 + mat1.m12 * mat2.m22 + mat1.m13 * mat2.m32 + mat1.m14 * mat2.m42;
+	dst.m13 = mat1.m11 * mat2.m13 + mat1.m12 * mat2.m23 + mat1.m13 * mat2.m33 + mat1.m14 * mat2.m43;
+	dst.m14 = mat1.m11 * mat2.m14 + mat1.m12 * mat2.m24 + mat1.m13 * mat2.m34 + mat1.m14 * mat2.m44;
+	dst.m21 = mat1.m21 * mat2.m11 + mat1.m22 * mat2.m21 + mat1.m23 * mat2.m31 + mat1.m24 * mat2.m41;
+	dst.m22 = mat1.m21 * mat2.m12 + mat1.m22 * mat2.m22 + mat1.m23 * mat2.m32 + mat1.m24 * mat2.m42;
+	dst.m23 = mat1.m21 * mat2.m13 + mat1.m22 * mat2.m23 + mat1.m23 * mat2.m33 + mat1.m24 * mat2.m43;
+	dst.m24 = mat1.m21 * mat2.m14 + mat1.m22 * mat2.m24 + mat1.m23 * mat2.m34 + mat1.m24 * mat2.m44;
+	dst.m31 = mat1.m31 * mat2.m11 + mat1.m32 * mat2.m21 + mat1.m33 * mat2.m31 + mat1.m34 * mat2.m41;
+	dst.m32 = mat1.m31 * mat2.m12 + mat1.m32 * mat2.m22 + mat1.m33 * mat2.m32 + mat1.m34 * mat2.m42;
+	dst.m33 = mat1.m31 * mat2.m13 + mat1.m32 * mat2.m23 + mat1.m33 * mat2.m33 + mat1.m34 * mat2.m43;
+	dst.m34 = mat1.m31 * mat2.m14 + mat1.m32 * mat2.m24 + mat1.m33 * mat2.m34 + mat1.m34 * mat2.m44;
+	dst.m41 = mat1.m41 * mat2.m11 + mat1.m42 * mat2.m21 + mat1.m43 * mat2.m31 + mat1.m44 * mat2.m41;
+	dst.m42 = mat1.m41 * mat2.m12 + mat1.m42 * mat2.m22 + mat1.m43 * mat2.m32 + mat1.m44 * mat2.m42;
+	dst.m43 = mat1.m41 * mat2.m13 + mat1.m42 * mat2.m23 + mat1.m43 * mat2.m33 + mat1.m44 * mat2.m43;
+	dst.m44 = mat1.m41 * mat2.m14 + mat1.m42 * mat2.m24 + mat1.m43 * mat2.m34 + mat1.m44 * mat2.m44;
+
+	memcpy( out.m, dst.m, kMatrix4x4Size );
 }
 
-inline bool MathMat4::isIdentity( const Mat4& m )
+inline void MathMat4::transpose( Mat4& out, const Mat4& mat )
 {
-	return m.isIdentity();
+	float t[16] = {
+		mat.m11, mat.m21, mat.m31, mat.m41,
+		mat.m12, mat.m22, mat.m32, mat.m42,
+		mat.m13, mat.m23, mat.m33, mat.m43,
+		mat.m14, mat.m24, mat.m34, mat.m44
+	};
+	memcpy( out.m, t, kMatrix4x4Size );
 }
 
-inline Mat4 MathMat4::copy( const Mat4& m )
+inline void MathMat4::negate( Mat4& out, const Mat4& mat )
 {
-	return Mat4( m );
+	out.m11 = -mat.m11; out.m12 = -mat.m12; out.m13 = -mat.m13; out.m14 = -mat.m14;
+	out.m21 = -mat.m21; out.m22 = -mat.m22; out.m23 = -mat.m23; out.m24 = -mat.m24;
+	out.m31 = -mat.m31; out.m32 = -mat.m32; out.m33 = -mat.m33; out.m34 = -mat.m34;
+	out.m41 = -mat.m41; out.m42 = -mat.m42; out.m43 = -mat.m43; out.m44 = -mat.m44;
 }
 
-inline Mat4 MathMat4::fill(
-	float m11, float m12, float m13, float m14,
-	float m21, float m22, float m23, float m24,
-	float m31, float m32, float m33, float m34,
-	float m41, float m42, float m43, float m44 )
+inline bool MathMat4::getInverse( Mat4& out, const Mat4& mat )
 {
-	return Mat4(
-		m11, m12, m13, m14,
-		m21, m22, m23, m24,
-		m31, m32, m33, m34,
-		m41, m42, m43, m44
-		);
+	return mat.getInverse( out );
 }
 
-inline Mat4 MathMat4::fill( const float* m )
+inline void MathMat4::translate( Mat4& out, const Mat4& mat, float x, float y, float z )
 {
-	return Mat4( m );
+	Mat4 dst;
+	dst.fillTranslation( x, y, z );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fill( const Mat4& m )
+inline void MathMat4::translate( Mat4& out, const Mat4& mat, const Vec3& t )
 {
-	return Mat4( m );
+	Mat4 dst;
+	dst.fillTranslation( t );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillIdentity( void )
+inline void MathMat4::rotateX( Mat4& out, const Mat4& mat, float angle )
 {
-	return Mat4();
+	Mat4 dst;
+	dst.fillRotationX( angle );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillZero( void )
+inline void MathMat4::rotateY( Mat4& out, const Mat4& mat, float angle )
 {
-	Mat4 ret;
-	ret.fillZero();
-	return ret;
+	Mat4 dst;
+	dst.fillRotationY( angle );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up )
+inline void MathMat4::rotateZ( Mat4& out, const Mat4& mat, float angle )
 {
-	Mat4 ret;
-	ret.fillLookAt( eye, target, up );
-	return ret;
+	Mat4 dst;
+	dst.fillRotationZ( angle );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillPerspective( float fov, float aspect, float znear, float zfar )
+inline void MathMat4::rotate( Mat4& out, const Mat4& mat, const Quaternion& r )
 {
-	Mat4 ret;
-	ret.fillPerspective( fov, aspect, znear, zfar );
-	return ret;
+	Mat4 dst;
+	dst.fillRotation( r );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillOrthographic( float left, float right, float bottom, float top, float near, float far )
+inline void MathMat4::rotate( Mat4& out, const Mat4& mat, const Vec3& axis, float angle )
 {
-	Mat4 ret;
-	ret.fillOrthographic( left, right, bottom, top, near, far );
-	return ret;
+	Mat4 dst;
+	dst.fillRotation( axis, angle );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillScale( const Vec3& scale )
+inline void MathMat4::scale( Mat4& out, const Mat4& mat, float s )
 {
-	Mat4 ret;
-	ret.fillScale( scale );
-	return ret;
+	Mat4 dst;
+	dst.fillScale( s, s, s );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillScale( float x, float y, float z )
+inline void MathMat4::scale( Mat4& out, const Mat4& mat, float x, float y, float z )
 {
-	Mat4 ret;
-	ret.fillScale( x, y, z );
-	return ret;
+	Mat4 dst;
+	dst.fillScale( x, y, z );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillRotation( const Quaternion& q )
+inline void MathMat4::scale( Mat4& out, const Mat4& mat, const Vec3& s )
 {
-	Mat4 ret;
-	ret.fillRotation( q );
-	return ret;
+	Mat4 dst;
+	dst.fillScale( s );
+	mul( out, mat, dst );
 }
 
-inline Mat4 MathMat4::fillRotation( const Vec3& axis, float angle )
+inline void MathMat4::getUpVector( Vec3& out, const Mat4& mat )
 {
-	Mat4 ret;
-	ret.fillRotation( axis, angle );
-	return ret;
+	out = mat.getUpVector();
 }
 
-inline Mat4 MathMat4::fillRotationX( float angle )
+inline void MathMat4::getDownVector( Vec3& out, const Mat4& mat )
 {
-	Mat4 ret;
-	ret.fillRotationX( angle );
-	return ret;
+	out = mat.getDownVector();
 }
 
-inline Mat4 MathMat4::fillRotationY( float angle )
+inline void MathMat4::getLeftVector( Vec3& out, const Mat4& mat )
 {
-	Mat4 ret;
-	ret.fillRotationY( angle );
-	return ret;
+	out = mat.getLeftVector();
 }
 
-inline Mat4 MathMat4::fillRotationZ( float angle )
+inline void MathMat4::getRightVector( Vec3& out, const Mat4& mat )
 {
-	Mat4 ret;
-	ret.fillRotationZ( angle );
-	return ret;
+	out = mat.getRightVector();
 }
 
-inline Mat4 MathMat4::fillTranslation( const Vec3& translation )
+inline void MathMat4::getForwardVector( Vec3& out, const Mat4& mat )
 {
-	Mat4 ret;
-	ret.fillTranslation( translation );
-	return ret;
+	out = mat.getForwardVector();
 }
 
-inline Mat4 MathMat4::fillTranslation( float x, float y, float z )
+inline void MathMat4::getBackVector( Vec3& out, const Mat4& mat )
 {
-	Mat4 ret;
-	ret.fillTranslation( x, y, z );
-	return ret;
+	out = mat.getBackVector();
 }
 
-inline Vec3 MathMat4::getUpVector( const Mat4& m )
+inline void MathMat4::transformPoint( Vec3& out, const Mat4& mat, const Vec3& point )
 {
-	return m.getUpVector();
+	out = mat.transformPoint( point );
 }
 
-inline Vec3 MathMat4::getDownVector( const Mat4& m )
+inline void MathMat4::transformVec3( Vec3& out, const Mat4& mat, const Vec3& v )
 {
-	return m.getDownVector();
+	out = mat.transformVec3( v );
 }
 
-inline Vec3 MathMat4::getLeftVector( const Mat4& m )
+inline void MathMat4::transformVec4( Vec4& out, const Mat4& mat, const Vec4& v )
 {
-	return m.getLeftVector();
-}
-
-inline Vec3 MathMat4::getRightVector( const Mat4& m )
-{
-	return m.getRightVector();
-}
-
-inline Vec3 MathMat4::getForwardVector( const Mat4& m )
-{
-	return m.getForwardVector();
-}
-
-inline Vec3 MathMat4::getBackVector( const Mat4& m )
-{
-	return m.getBackVector();
-}
-
-inline Mat4 MathMat4::inverse( const Mat4& m )
-{
-	Mat4 ret( m );
-	ret.inverse();
-	return ret;
-}
-
-inline Mat4 MathMat4::negate( const Mat4& m )
-{
-	Mat4 ret( m );
-	ret.negate();
-	return ret;
-}
-
-inline Mat4 MathMat4::rotate( const Mat4& m, const Quaternion& q )
-{
-	Mat4 ret( m );
-	ret.rotate( q );
-	return ret;
-}
-
-inline Mat4 MathMat4::rotate( const Mat4& m, const Vec3& axis, float angle )
-{
-	Mat4 ret( m );
-	ret.rotate( axis, angle );
-	return ret;
-}
-
-inline Mat4 MathMat4::rotateX( const Mat4& m, float angle )
-{
-	Mat4 ret( m );
-	ret.rotateX( angle );
-	return ret;
-}
-
-inline Mat4 MathMat4::rotateY( const Mat4& m, float angle )
-{
-	Mat4 ret( m );
-	ret.rotateY( angle );
-	return ret;
-}
-
-inline Mat4 MathMat4::rotateZ( const Mat4& m, float angle )
-{
-	Mat4 ret( m );
-	ret.rotateZ( angle );
-	return ret;
-}
-
-inline Mat4 MathMat4::scale( const Mat4& m, float scale )
-{
-	Mat4 ret( m );
-	ret.scale( scale );
-	return ret;
-}
-
-inline Mat4 MathMat4::scale( const Mat4& m, float x, float y, float z )
-{
-	Mat4 ret( m );
-	ret.scale( x, y, z );
-	return ret;
-}
-
-inline Mat4 MathMat4::scale( const Mat4& m, const Vec3& scale )
-{
-	Mat4 ret( m );
-	ret.scale( scale );
-	return ret;
-}
-
-inline Mat4 MathMat4::translate( const Mat4& m, float x, float y, float z )
-{
-	Mat4 ret( m );
-	ret.translate( x, y, z );
-	return ret;
-}
-
-inline Mat4 MathMat4::translate( const Mat4& m, const Vec3& t )
-{
-	Mat4 ret( m );
-	ret.translate( t );
-	return ret;
-}
-
-inline Mat4 MathMat4::transpose( const Mat4& m )
-{
-	Mat4 ret( m );
-	ret.transpose();
-	return ret;
-}
-
-inline Vec3 MathMat4::transformPoint( const Mat4& m, const Vec3& point )
-{
-	return m.transformPoint( point );
-}
-
-inline Vec3 MathMat4::transformVec3( const Mat4& m, const Vec3& vec )
-{
-	return m.transformVec3( vec );
-}
-
-inline Vec4 MathMat4::transformVec4( const Mat4& m, const Vec4& vec )
-{
-	return m.transformVec4( vec );
-}
-
-inline float MathMat4::determinant( const Mat4& m )
-{
-	return m.determinant();
-}
-
-inline bool MathMat4::decompose( const Mat4& m, Vec3* translation, Quaternion* rotation, Vec3* scale )
-{
-	return m.decompose( translation, rotation, scale );
-}
-
-inline Vec3 MathMat4::getTranslation( const Mat4& m )
-{
-	return m.getTranslation();
-}
-
-inline Quaternion MathMat4::getRotation( const Mat4& m )
-{
-	return m.getRotation();
-}
-
-inline Vec3 MathMat4::getScale( const Mat4& m )
-{
-	return m.getScale();
+	out = mat.transformVec4( v );
 }

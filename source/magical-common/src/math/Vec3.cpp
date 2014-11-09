@@ -32,18 +32,18 @@ const Vec3 Vec3::Left = Vec3( -1.0f, 0.0f, 0.0f );
 const Vec3 Vec3::Forward = Vec3( 0.0f, 0.0f, 1.0f );
 const Vec3 Vec3::Back = Vec3( 0.0f, 0.0f, -1.0f );
 
-Vec3::Vec3( float rx, float ry, float rz )
-: x( rx )
-, y( ry )
-, z( rz )
+Vec3::Vec3( float x, float y, float z )
+: x( x )
+, y( y )
+, z( z )
 {
 	
 }
 
-Vec3::Vec3( const Vec3& rhs )
-: x( rhs.x )
-, y( rhs.y )
-, z( rhs.z )
+Vec3::Vec3( const Vec3& v )
+: x( v.x )
+, y( v.y )
+, z( v.z )
 {
 
 }

@@ -25,21 +25,27 @@ SOFTWARE.
 
 const Vec4 Vec4::Zero = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 const Vec4 Vec4::One = Vec4( 1.0f, 1.0f, 1.0f, 1.0f );
+const Vec4 Vec4::Up = Vec4( 0.0f, 1.0f, 0.0f, 0.0f );
+const Vec4 Vec4::Down = Vec4( 0.0f, -1.0f, 0.0f, 0.0f );
+const Vec4 Vec4::Right = Vec4( 1.0f, 0.0f, 0.0f, 0.0f );
+const Vec4 Vec4::Left = Vec4( -1.0f, 0.0f, 0.0f, 0.0f );
+const Vec4 Vec4::Forward = Vec4( 0.0f, 0.0f, 1.0f, 0.0f );
+const Vec4 Vec4::Back = Vec4( 0.0f, 0.0f, -1.0f, 0.0f );
 
-Vec4::Vec4( float rx, float ry, float rz, float rw )
-: x( rx )
-, y( ry )
-, z( rz )
-, w( rw )
+Vec4::Vec4( float x, float y, float z, float w )
+: x( x )
+, y( y )
+, z( z )
+, w( w )
 {
 
 }
 
-Vec4::Vec4( const Vec4& rhs )
-: x( rhs.x )
-, y( rhs.y )
-, z( rhs.z )
-, w( rhs.w )
+Vec4::Vec4( const Vec4& v )
+: x( v.x )
+, y( v.y )
+, z( v.z )
+, w( v.w )
 {
 
 }
