@@ -27,9 +27,9 @@ SOFTWARE.
 #include "LogSystem.h"
 #include "LuaState.h"
 
-#ifdef MAG_DEBUG
+#ifdef MAGICAL_DEBUG
 
-MAGAPI_USER void magicalLuaStateDump( lua_State* L )
+MAGICALAPI_USER void magicalLuaStateDump( lua_State* L )
 {
 	int  i = 0;
 	int  top = lua_gettop( L );

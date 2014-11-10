@@ -32,8 +32,8 @@ SOFTWARE.
 #define kLuaOnUpdate  "onUpdate";
 #define kLuaOnDestroy "onDestroy"
 
-#ifdef MAG_DEBUG
-MAGAPI_USER void magicalLuaStateDump( lua_State* L );
+#ifdef MAGICAL_DEBUG
+MAGICALAPI_USER void magicalLuaStateDump( lua_State* L );
 #else
 #define magicalLuaStateDump( __L )
 #endif

@@ -25,9 +25,9 @@ SOFTWARE.
 inline bool Vec3::operator==( const Vec3& v ) const
 {
 	return 
-		magicalFloatEquals( x, v.x ) &&
-		magicalFloatEquals( y, v.y ) &&
-		magicalFloatEquals( z, v.z );
+		magicalFltEqual( x, v.x ) &&
+		magicalFltEqual( y, v.y ) &&
+		magicalFltEqual( z, v.z );
 }
 
 inline bool Vec3::operator!=( const Vec3& v ) const
@@ -38,31 +38,31 @@ inline bool Vec3::operator!=( const Vec3& v ) const
 inline bool Vec3::isEquals( const Vec3& v ) const
 {
 	return 
-		magicalFloatEquals( x, v.x ) &&
-		magicalFloatEquals( y, v.y ) &&
-		magicalFloatEquals( z, v.z );
+		magicalFltEqual( x, v.x ) &&
+		magicalFltEqual( y, v.y ) &&
+		magicalFltEqual( z, v.z );
 }
 
 inline bool Vec3::isZero( void ) const
 {
 	return 
-		magicalFloatIsZero( x ) &&
-		magicalFloatIsZero( y ) &&
-		magicalFloatIsZero( z );
+		magicalFltIsZero( x ) &&
+		magicalFltIsZero( y ) &&
+		magicalFltIsZero( z );
 }
 
 inline bool Vec3::isOne( void ) const
 {
 	return 
-		magicalFloatEquals( x, 1.0f ) &&
-		magicalFloatEquals( y, 1.0f ) &&
-		magicalFloatEquals( z, 1.0f );
+		magicalFltEqual( x, 1.0f ) &&
+		magicalFltEqual( y, 1.0f ) &&
+		magicalFltEqual( z, 1.0f );
 }
 
 inline bool Vec3::isNormalize( void ) const
 {
 	float n = x * x + y * y + z * z;
-	return magicalFloatEquals( n, 1.0f );
+	return magicalFltEqual( n, 1.0f );
 }
 
 inline Vec3 Vec3::operator+( float a ) const
@@ -97,16 +97,16 @@ inline Vec3 Vec3::operator*( const Vec3& v ) const
 
 inline Vec3 Vec3::operator/( float a ) const
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	return Vec3( x / a, y / a, z / a );
 }
 
 inline Vec3 Vec3::operator/( const Vec3& v ) const
 {
 	magicalAssert( 
-		!magicalFloatIsZero( v.x ) &&
-		!magicalFloatIsZero( v.y ) && 
-		!magicalFloatIsZero( v.z ), "division by 0.f" );
+		!magicalFltIsZero( v.x ) &&
+		!magicalFltIsZero( v.y ) && 
+		!magicalFltIsZero( v.z ), "division by 0.f" );
 	return Vec3( x / v.x, y / v.y, z / v.z );
 }
 
@@ -160,7 +160,7 @@ inline Vec3& Vec3::operator*=( const Vec3& v )
 
 inline Vec3& Vec3::operator/=( float a )
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	x /= a;
 	y /= a;
 	z /= a;
@@ -170,9 +170,9 @@ inline Vec3& Vec3::operator/=( float a )
 inline Vec3& Vec3::operator/=( const Vec3& v )
 {
 	magicalAssert( 
-		!magicalFloatIsZero( v.x ) &&
-		!magicalFloatIsZero( v.y ) && 
-		!magicalFloatIsZero( v.z ), "division by 0.f" );
+		!magicalFltIsZero( v.x ) &&
+		!magicalFltIsZero( v.y ) && 
+		!magicalFltIsZero( v.z ), "division by 0.f" );
 	x /= v.x;
 	y /= v.y;
 	z /= v.z;
@@ -219,16 +219,16 @@ inline Vec3 Vec3::mul( const Vec3& v ) const
 
 inline Vec3 Vec3::div( float a ) const
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	return Vec3( x / a, y / a, z / a );
 }
 
 inline Vec3 Vec3::div( const Vec3& v ) const
 {
 	magicalAssert( 
-		!magicalFloatIsZero( v.x ) &&
-		!magicalFloatIsZero( v.y ) && 
-		!magicalFloatIsZero( v.z ), "division by 0.f" );
+		!magicalFltIsZero( v.x ) &&
+		!magicalFltIsZero( v.y ) && 
+		!magicalFltIsZero( v.z ), "division by 0.f" );
 	return Vec3( x / v.x, y / v.y, z / v.z );
 }
 
@@ -276,7 +276,7 @@ inline void Vec3::mulfill( const Vec3& v )
 
 inline void Vec3::divfill( float a )
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	x /= a;
 	y /= a;
 	z /= a;
@@ -285,9 +285,9 @@ inline void Vec3::divfill( float a )
 inline void Vec3::divfill( const Vec3& v )
 {
 	magicalAssert( 
-		!magicalFloatIsZero( v.x ) &&
-		!magicalFloatIsZero( v.y ) && 
-		!magicalFloatIsZero( v.z ), "division by 0.f" );
+		!magicalFltIsZero( v.x ) &&
+		!magicalFltIsZero( v.y ) && 
+		!magicalFltIsZero( v.z ), "division by 0.f" );
 	x /= v.x;
 	y /= v.y;
 	z /= v.z;
@@ -404,11 +404,11 @@ inline void Vec3::negate( void )
 inline void Vec3::normalize( void )
 {
 	float n = x * x + y * y + z * z;
-	if( magicalFloatEquals( n, 1.0f ) )
+	if( magicalFltEqual( n, 1.0f ) )
 		return;
 
 	n = sqrt( n );
-	if( magicalFloatIsZero( n ) )
+	if( magicalFltIsZero( n ) )
 		return;
 
 	n = 1.0f / n;

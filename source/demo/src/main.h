@@ -26,6 +26,6 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 
-MAGAPI_USER void mainDelegate( void );
+MAGICALAPI_USER void mainDelegate( void );
 
 #endif //__MAIN_H__

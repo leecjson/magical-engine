@@ -68,17 +68,17 @@ extern char g_buffer[];
 /*
 error
 */
-MAGAPI bool magicalIsError( void );
-MAGAPI void magicalIgnoreLastError( void );
-MAGAPI void magicalSetLastErrorInfo( const char* info, const char* func = nullptr, int line = 0 );
+MAGICALAPI bool magicalIsError( void );
+MAGICALAPI void magicalIgnoreLastError( void );
+MAGICALAPI void magicalSetLastErrorInfo( const char* info, const char* func = nullptr, int line = 0 );
 #define magicalSetLastErrorInfoAt( __info ) magicalSetLastErrorInfo( __info, __FUNCTION__, __LINE__ )
-MAGAPI const char* magicalGetLastErrorInfo( void );
+MAGICALAPI const char* magicalGetLastErrorInfo( void );
 
 #define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
 #define magicalReturnVarIfError( __var ) do{ if( magicalIsError() ) return __var; } while(0)
 #define magicalShowLastError() do { if( magicalIsError() ) magicalMessageBox( magicalGetLastErrorInfo(), "Error" ); } while(0)
 
-//#ifndef MAG_DEBUG
+//#ifndef MAGICAL_DEBUG
 //#define magicalDebugReturnIfError()
 //#define magicalDebugReturnVarIfError( __var );
 //#define magicalDebugShowLastError()
@@ -91,9 +91,9 @@ MAGAPI const char* magicalGetLastErrorInfo( void );
 /*
 message box
 */
-MAGAPI void magicalMessageBox( const char* msg, const char* title );
+MAGICALAPI void magicalMessageBox( const char* msg, const char* title );
 
-#ifndef MAG_DEBUG
+#ifndef MAGICAL_DEBUG
 #define magicalDebugMessageBox( __msg, __title )
 #else
 #define magicalDebugMessageBox( __msg, __title ) magicalMessageBox( __msg, __title )
@@ -102,7 +102,7 @@ MAGAPI void magicalMessageBox( const char* msg, const char* title );
 /*
 assert function
 */
-#ifdef MAG_DEBUG
+#ifdef MAGICAL_DEBUG
 #define magicalAssert( __con, __msg ) do{                     \
 	if( !(__con) ) {                                          \
 		magicalSetLastErrorInfoAt( __msg );                   \
@@ -117,7 +117,7 @@ assert function
 /*
 time function
 */
-#ifndef MAG_DEBUG
+#ifndef MAGICAL_DEBUG
 #define magicalBeginTicking()
 #define magicalEndTicking()
 #else
@@ -134,7 +134,7 @@ time function
 /*
 reference observer
 */
-#ifdef MAG_DEBUG
+#ifdef MAGICAL_DEBUG
 extern bool g_is_observing;
 extern int g_observer_move_construct_count;
 extern int g_observer_copy_construct_count;
@@ -142,7 +142,7 @@ extern int g_observer_construct_count;
 extern int g_observer_destruct_count;
 #endif
 
-#ifdef MAG_DEBUG
+#ifdef MAGICAL_DEBUG
 #define magicalBeginObserve() do {                                                                 \
 	if( g_is_observing ) break;                                                                    \
 	Log::D( "Begin Observe : ------------------------------------------------" );                  \

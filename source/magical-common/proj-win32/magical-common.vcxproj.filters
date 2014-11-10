@@ -90,6 +90,18 @@
     <ClCompile Include="..\src\base\Viewport.cpp">
       <Filter>src\base</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\AABB3.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Ray2.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Ray3.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Plane.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\assets\AssetsSystem.h">
@@ -164,6 +176,18 @@
     <ClInclude Include="..\src\base\Viewport.h">
       <Filter>src\base</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\math\AABB3.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Ray2.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Ray3.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Plane.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\math\Quaternion.inl">
@@ -179,6 +203,18 @@
       <Filter>src\math</Filter>
     </None>
     <None Include="..\src\math\Mat4.inl">
+      <Filter>src\math</Filter>
+    </None>
+    <None Include="..\src\math\AABB3.inl">
+      <Filter>src\math</Filter>
+    </None>
+    <None Include="..\src\math\Ray2.inl">
+      <Filter>src\math</Filter>
+    </None>
+    <None Include="..\src\math\Ray3.inl">
+      <Filter>src\math</Filter>
+    </None>
+    <None Include="..\src\math\Plane.inl">
       <Filter>src\math</Filter>
     </None>
   </ItemGroup>

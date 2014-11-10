@@ -133,7 +133,7 @@ const Shared<ShaderProgram> ShaderProgramManager::getProgram( ShaderProgramIndex
 //}
 
 
-//MAGAPI GLvoid magicalSetShaderColorUniform(const GLfloat* mvp_matrix, const GLfloat* color)
+//MAGICALAPI GLvoid magicalSetShaderColorUniform(const GLfloat* mvp_matrix, const GLfloat* color)
 //{
 //	GLuint program = magicalGetShaderProgram(kShaderColor);
 //

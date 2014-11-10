@@ -25,7 +25,7 @@ SOFTWARE.
 /*
 platform include
 */
-#ifdef MAG_WIN32
+#ifdef MAGICAL_WIN32
 #include <windows.h>
 #endif
 
@@ -34,7 +34,7 @@ char g_buffer[ kMaxBufferLength ];
 static bool s_last_error = false;
 static char s_last_error_info[ kMaxBufferLength ];
 
-#ifdef MAG_DEBUG
+#ifdef MAGICAL_DEBUG
 bool g_is_observing = false;
 int g_observer_move_construct_count = 0;
 int g_observer_copy_construct_count = 0;
@@ -42,17 +42,17 @@ int g_observer_construct_count = 0;
 int g_observer_destruct_count = 0;
 #endif
 
-MAGAPI bool magicalIsError( void )
+MAGICALAPI bool magicalIsError( void )
 {
 	return s_last_error;
 }
 
-MAGAPI void magicalIgnoreLastError( void )
+MAGICALAPI void magicalIgnoreLastError( void )
 {
 	s_last_error = false;
 }
 
-MAGAPI void magicalSetLastErrorInfo( const char* info, const char* func, int line )
+MAGICALAPI void magicalSetLastErrorInfo( const char* info, const char* func, int line )
 {
 	if( info == nullptr )
 		return;
@@ -69,7 +69,7 @@ MAGAPI void magicalSetLastErrorInfo( const char* info, const char* func, int lin
 	s_last_error = true;
 }
 
-MAGAPI const char* magicalGetLastErrorInfo( void )
+MAGICALAPI const char* magicalGetLastErrorInfo( void )
 {
 	if( strlen(s_last_error_info) > 0 )
 	{
@@ -81,9 +81,9 @@ MAGAPI const char* magicalGetLastErrorInfo( void )
 	}
 }
 
-#ifdef MAG_DEBUG
-#ifdef MAG_WIN32
-MAGAPI void magicalDebugMessageBox( const char* __msg, const char* __title )
+#ifdef MAGICAL_DEBUG
+#ifdef MAGICAL_WIN32
+MAGICALAPI void magicalDebugMessageBox( const char* __msg, const char* __title )
 {
 	MessageBoxA( nullptr, ( __msg ), ( __title ), MB_OK );
 }

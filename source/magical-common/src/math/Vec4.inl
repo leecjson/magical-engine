@@ -25,10 +25,10 @@ SOFTWARE.
 inline bool Vec4::operator==( const Vec4& v ) const
 {
 	return 
-		magicalFloatEquals( x, v.x ) &&
-		magicalFloatEquals( y, v.y ) &&
-		magicalFloatEquals( z, v.z ) &&
-		magicalFloatEquals( w, v.w );
+		magicalFltEqual( x, v.x ) &&
+		magicalFltEqual( y, v.y ) &&
+		magicalFltEqual( z, v.z ) &&
+		magicalFltEqual( w, v.w );
 }
 
 inline bool Vec4::operator!=( const Vec4& v ) const
@@ -39,34 +39,34 @@ inline bool Vec4::operator!=( const Vec4& v ) const
 inline bool Vec4::isEquals( const Vec4& v ) const
 {
 	return 
-		magicalFloatEquals( x, v.x ) &&
-		magicalFloatEquals( y, v.y ) &&
-		magicalFloatEquals( z, v.z ) &&
-		magicalFloatEquals( w, v.w );
+		magicalFltEqual( x, v.x ) &&
+		magicalFltEqual( y, v.y ) &&
+		magicalFltEqual( z, v.z ) &&
+		magicalFltEqual( w, v.w );
 }
 
 inline bool Vec4::isZero( void ) const
 {
 	return 
-		magicalFloatIsZero( x ) &&
-		magicalFloatIsZero( y ) &&
-		magicalFloatIsZero( z ) &&
-		magicalFloatIsZero( w );
+		magicalFltIsZero( x ) &&
+		magicalFltIsZero( y ) &&
+		magicalFltIsZero( z ) &&
+		magicalFltIsZero( w );
 }
 
 inline bool Vec4::isOne( void ) const
 {
 	return 
-		magicalFloatEquals( x, 1.0f ) &&
-		magicalFloatEquals( y, 1.0f ) &&
-		magicalFloatEquals( z, 1.0f ) &&
-		magicalFloatEquals( w, 1.0f );
+		magicalFltEqual( x, 1.0f ) &&
+		magicalFltEqual( y, 1.0f ) &&
+		magicalFltEqual( z, 1.0f ) &&
+		magicalFltEqual( w, 1.0f );
 }
 
 inline bool Vec4::isNormalize( void ) const
 {
 	float n = x * x + y * y + z * z + w * w;
-	return magicalFloatEquals( n, 1.0f );
+	return magicalFltEqual( n, 1.0f );
 }
 
 inline Vec4 Vec4::operator+( float a ) const
@@ -101,17 +101,17 @@ inline Vec4 Vec4::operator*( const Vec4& v ) const
 
 inline Vec4 Vec4::operator/( float a ) const
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	return Vec4( x / a, y / a, z / a, w / a );
 }
 
 inline Vec4 Vec4::operator/( const Vec4& v ) const
 {
 	magicalAssert( 
-		!magicalFloatIsZero( v.x ) &&
-		!magicalFloatIsZero( v.y ) &&
-		!magicalFloatIsZero( v.z ) &&
-		!magicalFloatIsZero( v.w ), "division by 0.f" );
+		!magicalFltIsZero( v.x ) &&
+		!magicalFltIsZero( v.y ) &&
+		!magicalFltIsZero( v.z ) &&
+		!magicalFltIsZero( v.w ), "division by 0.f" );
 	return Vec4( x / v.x, y / v.y, z / v.z, w / v.w );
 }
 
@@ -171,7 +171,7 @@ inline Vec4& Vec4::operator*=( const Vec4& v )
 
 inline Vec4& Vec4::operator/=( float a )
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	x /= a;
 	y /= a;
 	z /= a;
@@ -182,10 +182,10 @@ inline Vec4& Vec4::operator/=( float a )
 inline Vec4& Vec4::operator/=( const Vec4& v )
 {
 	magicalAssert( 
-		!magicalFloatIsZero( v.x ) &&
-		!magicalFloatIsZero( v.y ) &&
-		!magicalFloatIsZero( v.z ) &&
-		!magicalFloatIsZero( v.w ), "division by 0.f" );
+		!magicalFltIsZero( v.x ) &&
+		!magicalFltIsZero( v.y ) &&
+		!magicalFltIsZero( v.z ) &&
+		!magicalFltIsZero( v.w ), "division by 0.f" );
 	x /= v.x;
 	y /= v.y;
 	z /= v.z;
@@ -233,17 +233,17 @@ inline Vec4 Vec4::mul( const Vec4& v ) const
 
 inline Vec4 Vec4::div( float a ) const
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	return Vec4( x / a, y / a, z / a, w / a );
 }
 
 inline Vec4 Vec4::div( const Vec4& v ) const
 {
 	magicalAssert( 
-		!magicalFloatIsZero( v.x ) &&
-		!magicalFloatIsZero( v.y ) &&
-		!magicalFloatIsZero( v.z ) &&
-		!magicalFloatIsZero( v.w ), "division by 0.f" );
+		!magicalFltIsZero( v.x ) &&
+		!magicalFltIsZero( v.y ) &&
+		!magicalFltIsZero( v.z ) &&
+		!magicalFltIsZero( v.w ), "division by 0.f" );
 	return Vec4( x / v.x, y / v.y, z / v.z, w / v.w );
 }
 
@@ -297,7 +297,7 @@ inline void Vec4::mulfill( const Vec4& v )
 
 inline void Vec4::divfill( float a )
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	x /= a;
 	y /= a;
 	z /= a;
@@ -307,10 +307,10 @@ inline void Vec4::divfill( float a )
 inline void Vec4::divfill( const Vec4& v )
 {
 	magicalAssert( 
-		!magicalFloatIsZero( v.x ) &&
-		!magicalFloatIsZero( v.y ) &&
-		!magicalFloatIsZero( v.z ) &&
-		!magicalFloatIsZero( v.w ), "division by 0.f" );
+		!magicalFltIsZero( v.x ) &&
+		!magicalFltIsZero( v.y ) &&
+		!magicalFltIsZero( v.z ) &&
+		!magicalFltIsZero( v.w ), "division by 0.f" );
 	x /= v.x;
 	y /= v.y;
 	z /= v.z;
@@ -429,11 +429,11 @@ inline void Vec4::negate( void )
 inline void Vec4::normalize( void )
 {
 	float n = x * x + y * y + z * z + w * w;
-	if( magicalFloatEquals( n, 1.0f ) )
+	if( magicalFltEqual( n, 1.0f ) )
 		return;
 
 	n = sqrt( n );
-	if( magicalFloatIsZero( n ) )
+	if( magicalFltIsZero( n ) )
 		return;
 
 	n = 1.0f / n;

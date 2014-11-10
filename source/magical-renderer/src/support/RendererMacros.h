@@ -27,9 +27,9 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
-#ifdef MAG_USING_GL
+#ifdef MAGICAL_USING_GL
 
-#ifdef MAG_WIN32
+#ifdef MAGICAL_WIN32
 #include "win32/gl/glew/glew.h"
 #endif
 
@@ -43,18 +43,18 @@ SOFTWARE.
 		} \
 	} while( 0 )
 
-#ifndef MAG_DEBUG
+#ifndef MAGICAL_DEBUG
 #define magicalDebugCheckGLError() 
 #else
 #define magicalDebugCheckGLError() magicalCheckGLError()
 #endif
 
-MAGAPI bool magicalGetShaderInfoLog( GLuint shader );
-MAGAPI bool magicalGetProgramInfoLog( GLuint program );
+MAGICALAPI bool magicalGetShaderInfoLog( GLuint shader );
+MAGICALAPI bool magicalGetProgramInfoLog( GLuint program );
 
 #endif
 
-#ifdef MAG_USING_D3DX
+#ifdef MAGICAL_USING_D3DX
 
 
 

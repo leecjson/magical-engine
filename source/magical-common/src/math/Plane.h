@@ -21,61 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Utils.h"
-#include <chrono>
+#ifndef __PLANE_H__
+#define __PLANE_H__
 
-static int64_t s_ticking;
+#include "Math3D.h"
 
-
-int64_t TimeUtils::currentMicrosecondsTime( void )
+struct Plane
 {
-	std::chrono::system_clock::duration scd = std::chrono::system_clock::now().time_since_epoch();
-	std::chrono::microseconds::rep now = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();
-	return now;
-}
+public:
+	float a;
+	float b;
+	float c;
+	float d;
+};
 
-void TimeUtils::beginTicking( void )
-{
-	s_ticking = TimeUtils::currentMicrosecondsTime();
-}
+#include "Plane.inl"
 
-float TimeUtils::endTicking( void )
-{
-	float result;
-	int64_t now = TimeUtils::currentMicrosecondsTime();
-	result = std::max<float>( 0, ( now - s_ticking ) / 1000000.0f );
-	s_ticking = 0;
-	return result;
-}
-
-bool FileUtils::isAbsolutePath( const char* path )
-{
-	magicalAssert( path, "should not be nullptr." );
-
-#ifdef MAGICAL_WIN32
-	if( strlen( path ) > 2
-		&& ((path[0] >= 'a' && path[0] <= 'z') 
-		|| ( path[0] >= 'A' && path[0] <= 'Z'))
-		&& ( path[1] == ':') )
-	{
-		return true;
-	}
-	return false;
-#endif
-}
-
-std::string FileUtils::toUnixStylePath( const char* path )
-{
-	magicalAssert( path, "should not be nullptr." );
-
-	std::string ret = path;
-    int len = ret.length();
-    for( int i = 0; i < len; ++i )
-    {
-        if( ret[i] == '\\' )
-        {
-            ret[i] = '/';
-        }
-    }
-    return ret;
-}
+#endif //__PLANE_H__

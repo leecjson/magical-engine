@@ -25,15 +25,15 @@ SOFTWARE.
 #define __PLATFORM_MACROS_H__
 
 /*
-MAG_WIN32
+MAGICAL_WIN32
 MAG_ANDROID
 MAG_IOS
 MAG_LINUX
 MAG_MAC
 */
 #ifdef _WIN32
-#define MAG_WIN32
-#define MAG_PLATFORM "Win32"
+#define MAGICAL_WIN32
+#define MAGICAL_PLATFORM "Win32"
 #endif
 
 #if !defined( __cplusplus )
@@ -45,11 +45,11 @@ MAG_MAC
 #endif
 #endif
 
-#if !defined( MAGAPI )
-#define MAGAPI extern
+#if !defined( MAGICALAPI )
+#define MAGICALAPI extern
 #endif
-#if !defined( MAGAPI_USER )
-#define MAGAPI_USER extern
+#if !defined( MAGICALAPI_USER )
+#define MAGICALAPI_USER extern
 #endif
 
 #endif //__PLATFORM_MACROS_H__

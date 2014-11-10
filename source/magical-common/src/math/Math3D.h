@@ -41,11 +41,10 @@ SOFTWARE.
 	} while(0)
 #endif
 
-#define magicalFloatEquals( a, b ) ( std::fabs( ( a ) - ( b ) ) < FLT_EPSILON )
-#define magicalFloatIsZero( a ) ( std::fabs( a ) < FLT_EPSILON )
-#define magicalDegToRad( x ) ( ( x ) * 0.0174532925f )
-#define magicalRadToDeg( x ) ( ( x ) * 57.29577951f )
-
+#define magicalFltEqual( a, b ) ( std::fabs( ( a ) - ( b ) ) < FLT_EPSILON )
+#define magicalFltIsZero( a ) ( std::fabs( a ) < FLT_EPSILON )
+#define magicalDegToRad( c ) ( ( c ) * 0.0174532925f )
+#define magicalRadToDeg( c ) ( ( c ) * 57.29577951f )
 #define kMatrix4x4Size sizeof( float ) * 0xF
 
 #define m11 m[0x0]

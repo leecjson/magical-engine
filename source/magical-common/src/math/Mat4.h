@@ -79,18 +79,18 @@ public:
 	inline Mat4& operator*=( const Mat4& mat );
 	inline Mat4& operator=( const Mat4& mat );
 
-	inline Mat4 add( float a ) const;
-	inline Mat4 add( const Mat4& mat ) const;
-	inline Mat4 sub( float a ) const;
-	inline Mat4 sub( const Mat4& mat ) const;
-	inline Mat4 mul( float a ) const;
-	inline Mat4 mul( const Mat4& mat ) const;
-	inline void addfill( float a );
-	inline void addfill( const Mat4& mat );
-	inline void subfill( float a );
-	inline void subfill( const Mat4& mat );
-	inline void mulfill( float a );
-	inline void mulfill( const Mat4& mat );
+	Mat4 add( float a ) const;
+	Mat4 add( const Mat4& mat ) const;
+	Mat4 sub( float a ) const;
+	Mat4 sub( const Mat4& mat ) const;
+	Mat4 mul( float a ) const;
+	Mat4 mul( const Mat4& mat ) const;
+	void addfill( float a );
+	void addfill( const Mat4& mat );
+	void subfill( float a );
+	void subfill( const Mat4& mat );
+	void mulfill( float a );
+	void mulfill( const Mat4& mat );
 	inline void fill( const float* m );
 	inline void fill( const Mat4& mat );
 	inline void fillZero( void );
@@ -100,20 +100,20 @@ public:
 	inline void fillRotationX( float angle );
 	inline void fillRotationY( float angle );
 	inline void fillRotationZ( float angle );
-	inline void fillRotation( const Quaternion& r );
-	inline void fillRotation( const Vec3& axis, float angle );
+	void fillRotation( const Quaternion& r );
+	void fillRotation( const Vec3& axis, float angle );
 	inline void fillScale( float x, float y, float z );
 	inline void fillScale( const Vec3& s );
-	inline void fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up );
-	inline void fillPerspective( float fov, float aspect, float znear, float zfar );
-	inline void fillOrthographic( float left, float right, float bottom, float top, float near, float far );
+	void fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up );
+	void fillPerspective( float fov, float aspect, float znear, float zfar );
+	void fillOrthographic( float left, float right, float bottom, float top, float near, float far );
 	
 public:
-	inline float determinant( void ) const;
+	float determinant( void ) const;
 
 public:
-	inline void transpose( void );
-	inline void negate( void );
+	void transpose( void );
+	void negate( void );
 	inline void translate( float x, float y, float z );
 	inline void translate( const Vec3& t );
 	inline void rotateX( float angle );
@@ -146,10 +146,10 @@ public:
 	inline Vec3 getForwardVector( void ) const;
 	inline Vec3 getBackVector( void ) const;
 	inline Vec3 transformPoint( const Vec3& point ) const;
-	inline Vec3 transformVec3( const Vec3& v ) const;
-	inline Vec4 transformVec4( const Vec4& v ) const;
+	Vec3 transformVec3( const Vec3& v ) const;
+	Vec4 transformVec4( const Vec4& v ) const;
 
-	inline bool decompose( Vec3* translation, Quaternion* rotation, Vec3* scale ) const;
+	bool decompose( Vec3* translation, Quaternion* rotation, Vec3* scale ) const;
 	inline Vec3 getTranslation( void ) const;
 	inline Quaternion getRotation( void ) const;
 	inline Vec3 getScale( void ) const;
@@ -158,14 +158,14 @@ public:
 class MathMat4
 {
 public:
-	static inline void add( Mat4& out, const Mat4& mat, float a );
-	static inline void add( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
-	static inline void sub( Mat4& out, const Mat4& mat, float a );
-	static inline void sub( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
-	static inline void mul( Mat4& out, const Mat4& mat, float a );
-	static inline void mul( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
-	static inline void transpose( Mat4& out, const Mat4& mat );
-	static inline void negate( Mat4& out, const Mat4& mat );
+	static void add( Mat4& out, const Mat4& mat, float a );
+	static void add( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
+	static void sub( Mat4& out, const Mat4& mat, float a );
+	static void sub( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
+	static void mul( Mat4& out, const Mat4& mat, float a );
+	static void mul( Mat4& out, const Mat4& mat1, const Mat4& mat2 );
+	static void transpose( Mat4& out, const Mat4& mat );
+	static void negate( Mat4& out, const Mat4& mat );
 	static inline bool getInverse( Mat4& out, const Mat4& mat );
 	static inline void translate( Mat4& out, const Mat4& mat, float x, float y, float z );
 	static inline void translate( Mat4& out, const Mat4& mat, const Vec3& t );

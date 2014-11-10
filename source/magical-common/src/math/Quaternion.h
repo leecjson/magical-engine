@@ -71,8 +71,8 @@ public:
 	inline void inverse( void );
 	inline void normalize( void );
 	inline float axisAngle( Vec3& axis ) const;
-	inline void lerp( const Quaternion& rhs, float t );
-	inline void slerp( const Quaternion& rhs, float t );
+	void lerp( const Quaternion& rhs, float t );
+	void slerp( const Quaternion& rhs, float t );
 };
 
 class MathQuaternion

@@ -35,7 +35,7 @@ SOFTWARE.
 #define magicalLogLastError() Log::E( magicalGetLastErrorInfo() )
 #define magicalInfoLog( __txt ) Log::D( __txt )
 
-#ifndef MAG_DEBUG
+#ifndef MAGICAL_DEBUG
 #define magicalLog()
 #else
 #define magicalLog( __txt ) Log::D( __txt )

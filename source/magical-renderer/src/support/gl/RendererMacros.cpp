@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "RendererMacros.h"
 
-MAGAPI bool magicalGetShaderInfoLog( GLuint shader )
+MAGICALAPI bool magicalGetShaderInfoLog( GLuint shader )
 {
 	char* info_log;
 	GLint info_length;
@@ -39,7 +39,7 @@ MAGAPI bool magicalGetShaderInfoLog( GLuint shader )
 	return true;
 }
 
-MAGAPI bool magicalGetProgramInfoLog( GLuint program )
+MAGICALAPI bool magicalGetProgramInfoLog( GLuint program )
 {
 	char* info_log;
 	GLint info_length;

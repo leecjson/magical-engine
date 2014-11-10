@@ -24,7 +24,7 @@ SOFTWARE.
 
 inline bool Vec2::operator==( const Vec2& v ) const
 {
-	return magicalFloatEquals( x, v.x ) && magicalFloatEquals( y, v.y );
+	return magicalFltEqual( x, v.x ) && magicalFltEqual( y, v.y );
 }
 
 inline bool Vec2::operator!=( const Vec2& v ) const
@@ -34,23 +34,23 @@ inline bool Vec2::operator!=( const Vec2& v ) const
 
 inline bool Vec2::isEquals( const Vec2& v ) const
 {
-	return magicalFloatEquals( x, v.x ) && magicalFloatEquals( y, v.y );
+	return magicalFltEqual( x, v.x ) && magicalFltEqual( y, v.y );
 }
 
 inline bool Vec2::isZero( void ) const
 {
-	return magicalFloatIsZero( x ) && magicalFloatIsZero( y );
+	return magicalFltIsZero( x ) && magicalFltIsZero( y );
 }
 
 inline bool Vec2::isOne( void ) const
 {
-	return magicalFloatEquals( x, 1.0f ) && magicalFloatEquals( y, 1.0f );
+	return magicalFltEqual( x, 1.0f ) && magicalFltEqual( y, 1.0f );
 }
 
 inline bool Vec2::isNormalize( void ) const
 {
 	float n = x * x + y * y;
-	return magicalFloatEquals( n, 1.0f );
+	return magicalFltEqual( n, 1.0f );
 }
 
 inline Vec2 Vec2::operator+( float a ) const
@@ -85,13 +85,13 @@ inline Vec2 Vec2::operator*( const Vec2& v ) const
 
 inline Vec2 Vec2::operator/( float a ) const
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	return Vec2( x / a, y / a );
 }
 
 inline Vec2 Vec2::operator/( const Vec2& v ) const
 {
-	magicalAssert( !magicalFloatIsZero( v.x ) && !magicalFloatIsZero( v.y ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( v.x ) && !magicalFltIsZero( v.y ), "division by 0.f" );
 	return Vec2( x / v.x, y / v.y );
 }
 
@@ -139,7 +139,7 @@ inline Vec2& Vec2::operator*=( const Vec2& v )
 
 inline Vec2& Vec2::operator/=( float a )
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	x /= a;
 	y /= a;
 	return *this;
@@ -147,7 +147,7 @@ inline Vec2& Vec2::operator/=( float a )
 
 inline Vec2& Vec2::operator/=( const Vec2& v )
 {
-	magicalAssert( !magicalFloatIsZero( v.x ) && !magicalFloatIsZero( v.y ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( v.x ) && !magicalFltIsZero( v.y ), "division by 0.f" );
 	x /= v.x;
 	y /= v.y;
 	return *this;
@@ -192,13 +192,13 @@ inline Vec2 Vec2::mul( const Vec2& v ) const
 
 inline Vec2 Vec2::div( float a ) const
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	return Vec2( x / a, y / a );
 }
 
 inline Vec2 Vec2::div( const Vec2& v ) const
 {
-	magicalAssert( !magicalFloatIsZero( v.x ) && !magicalFloatIsZero( v.y ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( v.x ) && !magicalFltIsZero( v.y ), "division by 0.f" );
 	return Vec2( x / v.x, y / v.y );
 }
 
@@ -240,14 +240,14 @@ inline void Vec2::mulfill( const Vec2& v )
 
 inline void Vec2::divfill( float a )
 {
-	magicalAssert( !magicalFloatIsZero( a ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
 	x /= a;
 	y /= a;
 }
 
 inline void Vec2::divfill( const Vec2& v )
 {
-	magicalAssert( !magicalFloatIsZero( v.x ) && !magicalFloatIsZero( v.y ), "division by 0.f" );
+	magicalAssert( !magicalFltIsZero( v.x ) && !magicalFltIsZero( v.y ), "division by 0.f" );
 	x /= v.x;
 	y /= v.y;
 }
@@ -342,11 +342,11 @@ inline void Vec2::negate( void )
 inline void Vec2::normalize( void )
 {
 	float n = x * x + y * y;
-	if( magicalFloatEquals( n, 1.0f ) )
+	if( magicalFltEqual( n, 1.0f ) )
 		return;
 
 	n = sqrt( n );
-	if( magicalFloatIsZero( n ) )
+	if( magicalFltIsZero( n ) )
 		return;
 
 	n = 1.0f / n;
