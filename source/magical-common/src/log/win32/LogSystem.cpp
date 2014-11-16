@@ -55,13 +55,14 @@ void Log::E( const char* msg )
 
 static void win32Log( const char* title, const char* msg )
 {
+	static char buff[ kMaxBufferLength ];
+
 	tm tm_now;
 	time_t now;
-
 	time( &now );
 	tm_now = *localtime( &now );
 
-	magicalFormat( "[%s %02d/%02d %02d:%02d:%02d]: %s",
+	std::sprintf( buff, "[%s %02d/%02d %02d:%02d:%02d]: %s",
 		title,
 		tm_now.tm_mon + 1,
 		tm_now.tm_mday,
@@ -70,7 +71,7 @@ static void win32Log( const char* title, const char* msg )
 		tm_now.tm_sec,
 		msg );
 
-	OutputDebugStringA( magicalBuffer );
+	OutputDebugStringA( buff );
 	OutputDebugStringA( "\n" );
-	printf( "%s\n", magicalBuffer );
+	printf( "%s\n", buff );
 }

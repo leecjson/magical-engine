@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __MAT4_HPP__
 #define __MAT4_HPP__
 
-#include "Math3D.h"
+#include "MathMacros.h"
 #include "Quaternion.h"
 #include "Vec3.h"
 #include "Vec4.h"

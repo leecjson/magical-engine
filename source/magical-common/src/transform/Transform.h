@@ -27,10 +27,10 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "Vec2.h"
-#include "Vec3.h"
-#include "Quaternion.h"
-#include "Mat4.h"
+#include "cpp/Vec2.h"
+#include "cpp/Vec3.h"
+#include "cpp/Quaternion.h"
+#include "cpp/Mat4.h"
 
 class Transform : public Reference
 {

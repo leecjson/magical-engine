@@ -21,15 +21,17 @@
     <ClCompile Include="..\src\common\Reference.cpp" />
     <ClCompile Include="..\src\engine\Engine.cpp" />
     <ClCompile Include="..\src\log\win32\LogSystem.cpp" />
-    <ClCompile Include="..\src\math\AABB3.cpp" />
-    <ClCompile Include="..\src\math\Mat4.cpp" />
-    <ClCompile Include="..\src\math\Plane.cpp" />
-    <ClCompile Include="..\src\math\Quaternion.cpp" />
-    <ClCompile Include="..\src\math\Ray2.cpp" />
-    <ClCompile Include="..\src\math\Ray3.cpp" />
-    <ClCompile Include="..\src\math\Vec2.cpp" />
-    <ClCompile Include="..\src\math\Vec3.cpp" />
-    <ClCompile Include="..\src\math\Vec4.cpp" />
+    <ClCompile Include="..\src\math\cpp\AABB3.cpp" />
+    <ClCompile Include="..\src\math\cpp\Mat4.cpp" />
+    <ClCompile Include="..\src\math\cpp\Plane3.cpp" />
+    <ClCompile Include="..\src\math\cpp\Quaternion.cpp" />
+    <ClCompile Include="..\src\math\cpp\Ray2.cpp" />
+    <ClCompile Include="..\src\math\cpp\Ray3.cpp" />
+    <ClCompile Include="..\src\math\cpp\Vec2.cpp" />
+    <ClCompile Include="..\src\math\cpp\Vec3.cpp" />
+    <ClCompile Include="..\src\math\cpp\Vec4.cpp" />
+    <ClCompile Include="..\src\math\c\cVec2.c" />
+    <ClCompile Include="..\src\math\c\cVec3.c" />
     <ClCompile Include="..\src\transform\Transform.cpp" />
     <ClCompile Include="..\src\utils\Utils.cpp" />
   </ItemGroup>
@@ -40,6 +42,7 @@
     <ClInclude Include="..\src\base\Scene.h" />
     <ClInclude Include="..\src\base\Viewport.h" />
     <ClInclude Include="..\src\common\Array.h" />
+    <ClInclude Include="..\src\common\CachedPool.h" />
     <ClInclude Include="..\src\common\Common.h" />
     <ClInclude Include="..\src\common\Data.h" />
     <ClInclude Include="..\src\common\List.h" />
@@ -49,30 +52,32 @@
     <ClInclude Include="..\src\engine\Engine.h" />
     <ClInclude Include="..\src\include\magical-engine.h" />
     <ClInclude Include="..\src\log\LogSystem.h" />
-    <ClInclude Include="..\src\math\AABB3.h" />
-    <ClInclude Include="..\src\math\Mat4.h" />
-    <ClInclude Include="..\src\math\Math3D.h" />
-    <ClInclude Include="..\src\math\Plane.h" />
-    <ClInclude Include="..\src\math\Quaternion.h" />
-    <ClInclude Include="..\src\math\Ray2.h" />
-    <ClInclude Include="..\src\math\Ray3.h" />
-    <ClInclude Include="..\src\math\Vec2.h" />
-    <ClInclude Include="..\src\math\Vec3.h" />
-    <ClInclude Include="..\src\math\Vec4.h" />
+    <ClInclude Include="..\src\math\cpp\AABB3.h" />
+    <ClInclude Include="..\src\math\cpp\Mat4.h" />
+    <ClInclude Include="..\src\math\cpp\Plane3.h" />
+    <ClInclude Include="..\src\math\cpp\Quaternion.h" />
+    <ClInclude Include="..\src\math\cpp\Ray2.h" />
+    <ClInclude Include="..\src\math\cpp\Ray3.h" />
+    <ClInclude Include="..\src\math\cpp\Vec2.h" />
+    <ClInclude Include="..\src\math\cpp\Vec3.h" />
+    <ClInclude Include="..\src\math\cpp\Vec4.h" />
+    <ClInclude Include="..\src\math\c\cVec2.h" />
+    <ClInclude Include="..\src\math\c\cVec3.h" />
+    <ClInclude Include="..\src\math\MathMacros.h" />
     <ClInclude Include="..\src\PlatformMacros.h" />
     <ClInclude Include="..\src\transform\Transform.h" />
     <ClInclude Include="..\src\utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\math\AABB3.inl" />
-    <None Include="..\src\math\Mat4.inl" />
-    <None Include="..\src\math\Plane.inl" />
-    <None Include="..\src\math\Quaternion.inl" />
-    <None Include="..\src\math\Ray2.inl" />
-    <None Include="..\src\math\Ray3.inl" />
-    <None Include="..\src\math\Vec2.inl" />
-    <None Include="..\src\math\Vec3.inl" />
-    <None Include="..\src\math\Vec4.inl" />
+    <None Include="..\src\math\cpp\AABB3.inl" />
+    <None Include="..\src\math\cpp\Mat4.inl" />
+    <None Include="..\src\math\cpp\Plane3.inl" />
+    <None Include="..\src\math\cpp\Quaternion.inl" />
+    <None Include="..\src\math\cpp\Ray2.inl" />
+    <None Include="..\src\math\cpp\Ray3.inl" />
+    <None Include="..\src\math\cpp\Vec2.inl" />
+    <None Include="..\src\math\cpp\Vec3.inl" />
+    <None Include="..\src\math\cpp\Vec4.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{396D811B-7BF7-4C4F-85F2-71CC03D32A33}</ProjectGuid>

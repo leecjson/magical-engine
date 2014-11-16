@@ -37,6 +37,12 @@
     <Filter Include="src\base">
       <UniqueIdentifier>{0cf438ad-173b-4786-a68f-01937d8cdc60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\math\c">
+      <UniqueIdentifier>{b4ba26d6-6894-41dc-b41a-3a3986761bcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\cpp">
+      <UniqueIdentifier>{ce201100-0c1f-42c6-bc17-8033b5eed354}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\common\Common.cpp">
@@ -57,21 +63,6 @@
     <ClCompile Include="..\src\common\Data.cpp">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\Quaternion.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Vec2.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Vec3.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Vec4.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Mat4.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\transform\Transform.cpp">
       <Filter>src\transform</Filter>
     </ClCompile>
@@ -90,17 +81,38 @@
     <ClCompile Include="..\src\base\Viewport.cpp">
       <Filter>src\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\AABB3.cpp">
-      <Filter>src\math</Filter>
+    <ClCompile Include="..\src\math\cpp\AABB3.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\Ray2.cpp">
-      <Filter>src\math</Filter>
+    <ClCompile Include="..\src\math\cpp\Mat4.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\Ray3.cpp">
-      <Filter>src\math</Filter>
+    <ClCompile Include="..\src\math\cpp\Plane3.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\Plane.cpp">
-      <Filter>src\math</Filter>
+    <ClCompile Include="..\src\math\cpp\Quaternion.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Ray2.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Ray3.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Vec2.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Vec3.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Vec4.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cVec2.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cVec3.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,24 +155,6 @@
     <ClInclude Include="..\src\common\List.h">
       <Filter>src\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\Math3D.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Quaternion.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Vec2.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Vec3.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Vec4.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Mat4.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\transform\Transform.h">
       <Filter>src\transform</Filter>
     </ClInclude>
@@ -176,46 +170,73 @@
     <ClInclude Include="..\src\base\Viewport.h">
       <Filter>src\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\AABB3.h">
+    <ClInclude Include="..\src\math\MathMacros.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\Ray2.h">
-      <Filter>src\math</Filter>
+    <ClInclude Include="..\src\math\cpp\AABB3.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\Ray3.h">
-      <Filter>src\math</Filter>
+    <ClInclude Include="..\src\math\cpp\Mat4.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\Plane.h">
-      <Filter>src\math</Filter>
+    <ClInclude Include="..\src\math\cpp\Plane3.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Quaternion.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Ray2.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Ray3.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Vec2.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Vec3.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Vec4.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\CachedPool.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cVec2.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cVec3.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\math\Quaternion.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\AABB3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\math\Vec2.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\Mat4.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\math\Vec3.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\Plane3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\math\Vec4.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\Quaternion.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\math\Mat4.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\Ray2.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\math\AABB3.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\Ray3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\math\Ray2.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\Vec2.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\math\Ray3.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\Vec3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\math\Plane.inl">
-      <Filter>src\math</Filter>
+    <None Include="..\src\math\cpp\Vec4.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
   </ItemGroup>
 </Project>

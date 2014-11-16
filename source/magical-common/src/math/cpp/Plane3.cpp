@@ -21,19 +21,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RAY3_H__
-#define __RAY3_H__
-
-#include "Math3D.h"
-#include "Vec3.h"
-
-struct Ray3
-{
-public:
-	Vec3 o;
-	Vec3 d;
-};
-
-#include "Ray3.inl"
-
-#endif //__RAY3_H__
+#include "Plane3.h"

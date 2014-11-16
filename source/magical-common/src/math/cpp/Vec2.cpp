@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Vec2.h"
+#include <exception>
 
 const Vec2 Vec2::Zero = Vec2( 0.0f, 0.0f );
 const Vec2 Vec2::One = Vec2( 1.0f, 1.0f );
@@ -29,6 +30,20 @@ const Vec2 Vec2::Right = Vec2( 1.0f, 0.0f );
 const Vec2 Vec2::Left = Vec2( -1.0f, 0.0f );
 const Vec2 Vec2::Up = Vec2( 0.0f, 1.0f );
 const Vec2 Vec2::Down = Vec2( 0.0f, -1.0f );
+
+Vec2 Vec2::placeholder_1 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::placeholder_2 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::placeholder_3 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_1 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_2 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_3 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_4 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_5 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_6 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_7 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_8 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::temp_9 = Vec2( 0.0f, 0.0f );
 
 Vec2::Vec2( float x, float y )
 : x( x )
@@ -41,13 +56,47 @@ Vec2::Vec2( const Vec2& v )
 : x( v.x )
 , y( v.y )
 {
-
+	
 }
 
 Vec2::Vec2( void )
 : x( 0.0f )
 , y( 0.0f )
 {
+	
+}
 
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachedPool.h"
+static CachedPool<Vec2> s_vec2_cached_pool( 1024, 1024 );
+#endif
+
+void* Vec2::operator new( size_t s )
+{
+	if( s != sizeof( Vec2 ) )
+		return ::operator new( s );
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	return s_vec2_cached_pool.take();
+#else
+	void* ptr = malloc( s );
+
+	if( ptr == nullptr )
+		throw std::bad_alloc();
+	
+	return ptr;
+#endif
+}
+
+void Vec2::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_vec2_cached_pool.add( ptr );
+#else
+	free( ptr );
+#endif
 }
 

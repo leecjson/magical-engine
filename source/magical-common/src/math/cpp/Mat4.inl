@@ -36,7 +36,7 @@ inline void Mat4::fill(
 
 inline bool Mat4::operator==( const Mat4& mat ) const
 {
-	return memcmp( mat.m, m, kMatrix4x4Size ) == 0;
+	return memcmp( mat.m, m, MAGICAL_MAT4_SIZE ) == 0;
 }
 
 inline bool Mat4::operator!=( const Mat4& mat ) const
@@ -46,12 +46,12 @@ inline bool Mat4::operator!=( const Mat4& mat ) const
 
 inline bool Mat4::isIdentity( void ) const
 {
-	return memcmp( Identity.m, m, kMatrix4x4Size ) == 0;
+	return memcmp( Identity.m, m, MAGICAL_MAT4_SIZE ) == 0;
 }
 
 inline bool Mat4::isEquals( const Mat4& mat ) const
 {
-	return memcmp( mat.m, m, kMatrix4x4Size ) == 0;
+	return memcmp( mat.m, m, MAGICAL_MAT4_SIZE ) == 0;
 }
 
 inline Mat4 Mat4::operator+( float a ) const
@@ -122,29 +122,29 @@ inline Mat4& Mat4::operator*=( const Mat4& mat )
 
 inline Mat4& Mat4::operator=( const Mat4& mat )
 {
-	memcpy( m, mat.m, kMatrix4x4Size );
+	memcpy( m, mat.m, MAGICAL_MAT4_SIZE );
 	return *this;
 }
 
 inline void Mat4::fill( const float* m )
 {
 	magicalAssert( m, "should not be nullptr" );
-	memcpy( this->m, m, kMatrix4x4Size );
+	memcpy( this->m, m, MAGICAL_MAT4_SIZE );
 }
 
 inline void Mat4::fill( const Mat4& mat )
 {
-	memcpy( m, mat.m, kMatrix4x4Size );
+	memcpy( m, mat.m, MAGICAL_MAT4_SIZE );
 }
 
 inline void Mat4::fillZero( void )
 {
-	memset( m, 0, kMatrix4x4Size );
+	memset( m, 0, MAGICAL_MAT4_SIZE );
 }
 
 inline void Mat4::fillIdentity( void )
 {
-	memcpy( m, Identity.m, kMatrix4x4Size );
+	memcpy( m, Identity.m, MAGICAL_MAT4_SIZE );
 }
 
 inline void Mat4::fillTranslation( float x, float y, float z )
@@ -169,8 +169,8 @@ inline void Mat4::fillRotationX( float rad )
 {
 	fillIdentity();
 
-	float c = cos( rad );
-	float s = sin( rad );
+	float c = magicalCosf( rad );
+	float s = magicalSinf( rad );
 
 	m22 = c;
 	m23 = s;
@@ -182,8 +182,8 @@ inline void Mat4::fillRotationY( float rad )
 {
 	fillIdentity();
 
-	float c = cos( rad );
-	float s = sin( rad );
+	float c = magicalCosf( rad );
+	float s = magicalSinf( rad );
 
 	m11 = c;
 	m13 = -s;
@@ -195,8 +195,8 @@ inline void Mat4::fillRotationZ( float rad )
 {
 	fillIdentity();
 
-	float c = cos( rad );
-	float s = sin( rad );
+	float c = magicalCosf( rad );
+	float s = magicalSinf( rad );
 
 	m11 = c;
 	m12 = s;

@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __QUATERNION_HPP__
 #define __QUATERNION_HPP__
 
-#include "Math3D.h"
+#include "MathMacros.h"
 #include "Vec3.h"
 
 struct Vec3;

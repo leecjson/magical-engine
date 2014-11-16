@@ -21,10 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __VEC3_HPP__
-#define __VEC3_HPP__
-
-#include "Math3D.h"
+#ifndef __VEC3_H__
+#define __VEC3_H__
 
 struct Vec3
 {
@@ -37,6 +35,20 @@ public:
 	static const Vec3 Left;
 	static const Vec3 Forward;
 	static const Vec3 Back;
+
+	static Vec3 placeholder1;
+	static Vec3 placeholder2;
+	static Vec3 placeholder3;
+	static Vec3 temp;
+	static Vec3 temp1;
+	static Vec3 temp2;
+	static Vec3 temp3;
+	static Vec3 temp4;
+	static Vec3 temp5;
+	static Vec3 temp6;
+	static Vec3 temp7;
+	static Vec3 temp8;
+	static Vec3 temp9;
 
 public:
 	float x;
@@ -104,15 +116,18 @@ public:
 	inline float angleBetween( const Vec3& v ) const;
 
 public:
-	inline void cross( const Vec3& v );
-	inline void clamp( const Vec3& min, const Vec3& max );
-	inline void negate( void );
-	inline void normalize( void );
-
-	inline Vec3 getCross( const Vec3& v ) const;
-	inline Vec3 getClamp( const Vec3& min, const Vec3& max ) const;
-	inline Vec3 getNegate( void ) const;
-	inline Vec3 getNormalize( void ) const;
+	inline Vec3 cross( const Vec3& v ) const;
+	inline void fillCross( const Vec3& v );
+	inline Vec3 clamp( const Vec3& min, const Vec3& max ) const;
+	inline void fillClamp( const Vec3& min, const Vec3& max );
+	inline Vec3 negate( void ) const;
+	inline void fillNegate( void );
+	inline Vec3 normalize( void ) const;
+	inline void fillNormalize( void );
+	inline Vec3 scale( float s ) const;
+	inline void fillScale( float s );
+	inline Vec3 midPointBetween( const Vec3& point ) const;
+	inline void project( Vec3& h, Vec3& v, const Vec3& n ) const;
 };
 
 class MathVec3
@@ -126,12 +141,16 @@ public:
 	static inline void mul( Vec3& out, const Vec3& v1, const Vec3& v2 );
 	static inline void div( Vec3& out, const Vec3& v, float a );
 	static inline void div( Vec3& out, const Vec3& v1, const Vec3& v2 );
+
 	static inline void cross( Vec3& out, const Vec3& v1, const Vec3& v2 );
 	static inline void clamp( Vec3& out, const Vec3& v, const Vec3& min, const Vec3& max );
 	static inline void negate( Vec3& out, const Vec3& v );
 	static inline void normalize( Vec3& out, const Vec3& v );
+	static inline void scale( Vec3& out, const Vec3& v, float s );
+	static inline void midPointBetween( Vec3& out, const Vec3& v1, const Vec3& v2 );
 };
 
+#include "../c/cVec3.h"
 #include "Vec3.inl"
 
-#endif //__VEC3_HPP__
+#endif //__VEC3_H__

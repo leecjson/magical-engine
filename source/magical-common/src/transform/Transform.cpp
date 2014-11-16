@@ -176,8 +176,8 @@ void Transform::setPosition( const Vec3& translation )
 
 void Transform::setPosition( float x, float y, float z )
 {
-	if( MathVec3::equals( _local_position, x, y, z ) )
-		return;
+	//if( MathVec3::equals( _local_position, x, y, z ) )
+	//	return;
 
 	_local_position.fill( x, y, z );
 	transformChanged( kLocalTranslationChanged );
@@ -212,8 +212,8 @@ void Transform::setPositionZ( float z )
 
 void Transform::translate( float x, float y, float z )
 {
-	if( MathVec3::isZero( x, y, z ) )
-		return;
+	//if( MathVec3::isZero( x, y, z ) )
+	//	return;
 
 	_local_position.x += x;
 	_local_position.y += y;
@@ -267,7 +267,7 @@ void Transform::translateRight( float amount )
 
 	Vec3 right = _local_to_world_matrix.getRightVector();
 	right.normalize();
-	right.scale( amount );
+	//right.scale( amount );
 
 	translate( right );
 }
@@ -282,7 +282,7 @@ void Transform::translateUp( float amount )
 
 	Vec3 up = _local_to_world_matrix.getUpVector();
 	up.normalize();
-	up.scale( amount );
+	//up.scale( amount );
 
 	translate( up );
 }
@@ -297,7 +297,7 @@ void Transform::translateForward( float amount )
 
 	Vec3 forward = _local_to_world_matrix.getForwardVector();
 	forward.normalize();
-	forward.scale( amount );
+	//forward.scale( amount );
 
 	translate( forward );
 }
@@ -309,8 +309,8 @@ const Quaternion& Transform::getRotation( void ) const
 
 void Transform::setRotation( float qx, float qy, float qz, float qw )
 {
-	if( MathQuaternion::equals( _local_rotation, qx, qy, qz, qw ) )
-		return;
+	//if( MathQuaternion::equals( _local_rotation, qx, qy, qz, qw ) )
+	//	return;
 
 	_local_rotation.fill( qx, qy, qz, qw );
 	transformChanged( kLocalRotationChanged );
@@ -410,8 +410,8 @@ const Vec3& Transform::getScale() const
 
 void Transform::setScale( float scale )
 {
-	if( MathVec3::equals( _local_scale, scale, scale, scale ) )
-		return;
+	//if( MathVec3::equals( _local_scale, scale, scale, scale ) )
+	//	return;
 
 	_local_scale.fill( scale, scale, scale );
 	transformChanged( kLocalScaleChanged );
@@ -419,8 +419,8 @@ void Transform::setScale( float scale )
 
 void Transform::setScale( float x, float y, float z )
 {
-	if( MathVec3::equals( _local_scale, x, y, z ) )
-		return;
+	//if( MathVec3::equals( _local_scale, x, y, z ) )
+	//	return;
 
 	_local_scale.fill( x, y, z );
 	transformChanged( kLocalScaleChanged );
@@ -467,7 +467,7 @@ void Transform::scale( float scaler )
 	if( magicalFltEqual( scaler, 1.f ) )
 		return;
 
-	_local_scale.scale( scaler );
+	//_local_scale.scale( scaler );
 	transformChanged( kLocalScaleChanged );
 }
 

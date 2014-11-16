@@ -21,19 +21,53 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RAY2_H__
-#define __RAY2_H__
+#include "Vec3.h"
 
-#include "Math3D.h"
-#include "Vec2.h"
+const Vec3 Vec3::Zero = Vec3( 0.0f, 0.0f, 0.0f );
+const Vec3 Vec3::One = Vec3( 1.0f, 1.0f, 1.0f );
+const Vec3 Vec3::Up = Vec3( 0.0f, 1.0f, 0.0f );
+const Vec3 Vec3::Down = Vec3( 0.0f, -1.0f, 0.0f );
+const Vec3 Vec3::Right = Vec3( 1.0f, 0.0f, 0.0f );
+const Vec3 Vec3::Left = Vec3( -1.0f, 0.0f, 0.0f );
+const Vec3 Vec3::Forward = Vec3( 0.0f, 0.0f, 1.0f );
+const Vec3 Vec3::Back = Vec3( 0.0f, 0.0f, -1.0f );
 
-struct Ray2
+Vec3 Vec3::placeholder_1 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::placeholder_2 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::placeholder_3 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_1 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_2 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_3 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_4 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_5 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_6 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_7 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_8 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::temp_9 = Vec3( 0.0f, 0.0f, 0.0f );
+
+Vec3::Vec3( float x, float y, float z )
+: x( x )
+, y( y )
+, z( z )
 {
-public:
-	Vec2 o;
-	Vec2 d;
-};
+	
+}
 
-#include "Ray2.inl"
+Vec3::Vec3( const Vec3& v )
+: x( v.x )
+, y( v.y )
+, z( v.z )
+{
 
-#endif //__RAY2_H__
+}
+
+Vec3::Vec3( void )
+: x( 0.0f )
+, y( 0.0f )
+, z( 0.0f )
+{
+
+}
+
+

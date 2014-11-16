@@ -21,39 +21,53 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Vec3.h"
+#include "Vec4.h"
 
-const Vec3 Vec3::Zero = Vec3( 0.0f, 0.0f, 0.0f );
-const Vec3 Vec3::One = Vec3( 1.0f, 1.0f, 1.0f );
-const Vec3 Vec3::Up = Vec3( 0.0f, 1.0f, 0.0f );
-const Vec3 Vec3::Down = Vec3( 0.0f, -1.0f, 0.0f );
-const Vec3 Vec3::Right = Vec3( 1.0f, 0.0f, 0.0f );
-const Vec3 Vec3::Left = Vec3( -1.0f, 0.0f, 0.0f );
-const Vec3 Vec3::Forward = Vec3( 0.0f, 0.0f, 1.0f );
-const Vec3 Vec3::Back = Vec3( 0.0f, 0.0f, -1.0f );
+const Vec4 Vec4::Zero = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+const Vec4 Vec4::One = Vec4( 1.0f, 1.0f, 1.0f, 1.0f );
+const Vec4 Vec4::Up = Vec4( 0.0f, 1.0f, 0.0f, 0.0f );
+const Vec4 Vec4::Down = Vec4( 0.0f, -1.0f, 0.0f, 0.0f );
+const Vec4 Vec4::Right = Vec4( 1.0f, 0.0f, 0.0f, 0.0f );
+const Vec4 Vec4::Left = Vec4( -1.0f, 0.0f, 0.0f, 0.0f );
+const Vec4 Vec4::Forward = Vec4( 0.0f, 0.0f, 1.0f, 0.0f );
+const Vec4 Vec4::Back = Vec4( 0.0f, 0.0f, -1.0f, 0.0f );
+const Vec4 Vec4::Space1 = Vec4( 0.0f, 0.0f, 0.0f, 1.0f );
 
-Vec3::Vec3( float x, float y, float z )
+Vec4 Vec4::placeholder_1 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::placeholder_2 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::placeholder_3 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_2 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_3 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_4 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_5 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_6 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_7 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_8 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_9 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+
+Vec4::Vec4( float x, float y, float z, float w )
 : x( x )
 , y( y )
 , z( z )
+, w( w )
 {
-	
+
 }
 
-Vec3::Vec3( const Vec3& v )
+Vec4::Vec4( const Vec4& v )
 : x( v.x )
 , y( v.y )
 , z( v.z )
+, w( v.w )
 {
 
 }
 
-Vec3::Vec3( void )
+Vec4::Vec4( void )
 : x( 0.0f )
 , y( 0.0f )
 , z( 0.0f )
+, w( 0.0f )
 {
 
 }
-
-

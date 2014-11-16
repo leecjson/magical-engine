@@ -28,10 +28,6 @@ SOFTWARE.
 #include "Common.h"
 #include "Reference.h"
 #include "Transform.h"
-#include "Vec2.h"
-#include "Vec3.h"
-#include "Quaternion.h"
-#include "Mat4.h"
 
 
 class Node : public Transform

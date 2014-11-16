@@ -34,16 +34,33 @@ static void calcDeltaTime( void );
 static int64_t s_last_update_time;
 static float s_delta_time;
 
+#include "cpp/Vec2.h"
+#include "cpp/Vec3.h"
+#include "cpp/Vec4.h"
+
+#include <vector>
+
 void Engine::init( void )
 {
+	magicalBeginTicking();
+
+	for( int i = 0; i < 10000; ++i )
+	{
+		Vec2* v = new Vec2();
+		delete v;
+	}
+
+	magicalEndTicking();
+
 	s_delta_time = 0.0f;
 	s_last_update_time = TimeUtils::currentMicrosecondsTime();
 }
 
 void Engine::delc( void )
 {
-	
+
 }
+
 
 void Engine::mainLoop( void )
 {

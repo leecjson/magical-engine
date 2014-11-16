@@ -42,6 +42,7 @@ c++ include
 #include <string>
 #include <algorithm>
 #include <functional>
+#include <exception>
 
 #include "PlatformMacros.h"
 #include "LogSystem.h"
@@ -104,10 +105,10 @@ assert function
 */
 #ifdef MAGICAL_DEBUG
 #define magicalAssert( __con, __msg ) do{                     \
-	if( !(__con) ) {                                          \
+	if( !( __con ) ) {                                        \
 		magicalSetLastErrorInfoAt( __msg );                   \
 		magicalLogLastError();                                \
-		assert( __con );                                      \
+		assert( ( __con ) && __msg );                         \
 	}                                                         \
 	} while(0)
 #else

@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __VEC4_HPP__
 #define __VEC4_HPP__
 
-#include "Math3D.h"
+#include "MathMacros.h"
 
 struct Vec4
 {
@@ -37,6 +37,20 @@ public:
 	static const Vec4 Left;
 	static const Vec4 Forward;
 	static const Vec4 Back;
+	static const Vec4 Space1;
+
+	static Vec4 placeholder_1;
+	static Vec4 placeholder_2;
+	static Vec4 placeholder_3;
+	static Vec4 temp_1;
+	static Vec4 temp_2;
+	static Vec4 temp_3;
+	static Vec4 temp_4;
+	static Vec4 temp_5;
+	static Vec4 temp_6;
+	static Vec4 temp_7;
+	static Vec4 temp_8;
+	static Vec4 temp_9;
 
 public:
 	float x;
@@ -104,13 +118,16 @@ public:
 	inline float angleBetween( const Vec4& v ) const;
 
 public:
-	inline void clamp( const Vec4& min, const Vec4& max );
-	inline void negate( void );
-	inline void normalize( void );
-
-	inline Vec4 getClamp( const Vec4& min, const Vec4& max ) const;
-	inline Vec4 getNegate( void ) const;
-	inline Vec4 getNormalize( void ) const;
+	inline Vec4 clamp( const Vec4& min, const Vec4& max ) const;
+	inline void fillClamp( const Vec4& min, const Vec4& max );
+	inline Vec4 negate( void ) const;
+	inline void fillNegate( void );
+	inline Vec4 normalize( void ) const;
+	inline void fillNormalize( void );
+	inline Vec4 scale( float s ) const;
+	inline void fillScale( float s );
+	inline Vec4 midPointBetween( const Vec4& point ) const;
+	inline void project( Vec4& h, Vec4& v, const Vec4& n ) const;
 };
 
 class MathVec4
@@ -124,9 +141,12 @@ public:
 	static inline void mul( Vec4& out, const Vec4& v1, const Vec4& v2 );
 	static inline void div( Vec4& out, const Vec4& v, float a );
 	static inline void div( Vec4& out, const Vec4& v1, const Vec4& v2 );
+
 	static inline void clamp( Vec4& out, const Vec4& v, const Vec4& min, const Vec4& max );
 	static inline void negate( Vec4& out, const Vec4& v );
 	static inline void normalize( Vec4& out, const Vec4& v );
+	static inline void scale( Vec4& out, const Vec4& v, float s );
+	static inline void midPointBetween( Vec4& out, const Vec4& v1, const Vec4& v2 );
 };
 
 #include "Vec4.inl"

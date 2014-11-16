@@ -65,8 +65,7 @@ inline bool Vec4::isOne( void ) const
 
 inline bool Vec4::isNormalize( void ) const
 {
-	float n = x * x + y * y + z * z + w * w;
-	return magicalFltEqual( n, 1.0f );
+	return magicalFltEqual( x * x + y * y + z * z + w * w, 1.0f );
 }
 
 inline Vec4 Vec4::operator+( float a ) const
@@ -386,39 +385,42 @@ inline float Vec4::lengthSq( void ) const
 
 inline float Vec4::angleBetween( const Vec4& v ) const
 {
-	float dx = w * v.x - x * v.w - y * v.z + z * v.y;
-	float dy = w * v.y - y * v.w - z * v.x + x * v.z;
-	float dz = w * v.z - z * v.w - x * v.y + y * v.x;
-
-	return atan2f( sqrt( dx * dx + dy * dy + dz * dz ) + FLT_MIN, dot( v ) );
+	magicalAssert( !isZero() && !v.isZero(), "invaild operate!" );
+	return magicalAcosf( dot( v ) / ( length() * v.length() ) );
 }
 
-inline void Vec4::clamp( const Vec4& min, const Vec4& max )
+inline Vec4 Vec4::clamp( const Vec4& min, const Vec4& max ) const
 {
-	magicalAssert( !( min.x > max.x || min.y > max.y || min.z > max.z || min.w > max.w ), "" );
-
-	if( x < min.x )
-		x = min.x;
-	if( x > max.x )
-		x = max.x;
-
-	if( y < min.y )
-		y = min.y;
-	if( y > max.y )
-		y = max.y;
-
-	if( z < min.z )
-		z = min.z;
-	if( z > max.z )
-		z = max.z;
-
-	if( w < min.w )
-		w = min.w;
-	if( w > max.w )
-		w = max.w;
+	Vec4 ret( *this );
+	ret.fillClamp( min, max );
+	return ret;
 }
 
-inline void Vec4::negate( void )
+inline void Vec4::fillClamp( const Vec4& min, const Vec4& max )
+{
+	magicalAssert( min.x <= max.x && min.y <= max.y && min.z <= max.z && min.w <= max.w, "invaild operate!" );
+
+	if( x < min.x ) x = min.x;
+	if( x > max.x ) x = max.x;
+
+	if( y < min.y ) y = min.y;
+	if( y > max.y ) y = max.y;
+
+	if( z < min.z ) z = min.z;
+	if( z > max.z ) z = max.z;
+
+	if( w < min.w ) w = min.w;
+	if( w > max.w ) w = max.w;
+}
+
+inline Vec4 Vec4::negate( void ) const
+{
+	Vec4 ret( *this );
+	ret.fillNegate();
+	return ret;
+}
+
+inline void Vec4::fillNegate( void )
 {
 	x = -x;
     y = -y;
@@ -426,7 +428,14 @@ inline void Vec4::negate( void )
     w = -w;
 }
 
-inline void Vec4::normalize( void )
+inline Vec4 Vec4::normalize( void ) const
+{
+	Vec4 ret( *this );
+	ret.fillNormalize();
+	return ret;
+}
+
+inline void Vec4::fillNormalize( void )
 {
 	float n = x * x + y * y + z * z + w * w;
 	if( magicalFltEqual( n, 1.0f ) )
@@ -443,25 +452,35 @@ inline void Vec4::normalize( void )
 	w *= n;
 }
 
-inline Vec4 Vec4::getClamp( const Vec4& min, const Vec4& max ) const
+inline Vec4 Vec4::scale( float s ) const
 {
 	Vec4 ret( *this );
-	ret.clamp( min, max );
+	ret.fillScale( s );
 	return ret;
 }
 
-inline Vec4 Vec4::getNegate( void ) const
+inline void Vec4::fillScale( float s )
 {
-	Vec4 ret( *this );
-	ret.negate();
-	return ret;
+	x *= s;
+	y *= s;
+	z *= s;
+	w *= s;
 }
 
-inline Vec4 Vec4::getNormalize( void ) const
+inline Vec4 Vec4::midPointBetween( const Vec4& point ) const
 {
-	Vec4 ret( *this );
-	ret.normalize();
-	return ret;
+	return Vec4( ( x + point.x ) * 0.5f, ( y + point.y ) * 0.5f, ( z + point.z ) * 0.5f, ( w + point.w ) * 0.5f );
+}
+
+inline void Vec4::project( Vec4& h, Vec4& v, const Vec4& n ) const
+{
+	magicalAssert( !n.isZero(), "invaild operate!" );
+
+	h = n * ( dot( n ) / n.lengthSq() );
+	v.x = x - h.x;
+	v.y = y - h.y;
+	v.z = z - h.z;
+	v.w = w - h.w;
 }
 
 inline void MathVec4::add( Vec4& out, const Vec4& v, float a )
@@ -506,15 +525,25 @@ inline void MathVec4::div( Vec4& out, const Vec4& v1, const Vec4& v2 )
 
 inline void MathVec4::clamp( Vec4& out, const Vec4& v, const Vec4& min, const Vec4& max )
 {
-	out = v.getClamp( min, max );
+	out = v.clamp( min, max );
 }
 
 inline void MathVec4::negate( Vec4& out, const Vec4& v )
 {
-	out = v.getNegate();
+	out = v.negate();
 }
 
 inline void MathVec4::normalize( Vec4& out, const Vec4& v )
 {
-	out = v.getNormalize();
+	out = v.normalize();
+}
+
+inline void MathVec4::scale( Vec4& out, const Vec4& v, float s )
+{
+	out = v.scale( s );
+}
+
+inline void MathVec4::midPointBetween( Vec4& out, const Vec4& v1, const Vec4& v2  )
+{
+	out = v1.midPointBetween( v2 );
 }

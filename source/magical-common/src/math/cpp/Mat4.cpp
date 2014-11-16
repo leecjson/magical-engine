@@ -51,17 +51,17 @@ Mat4::Mat4(
 
 Mat4::Mat4( const float* m )
 {
-	memcpy( this->m, m, kMatrix4x4Size );
+	memcpy( this->m, m, MAGICAL_MAT4_SIZE );
 }
 
 Mat4::Mat4( const Mat4& mat )
 {
-	memcpy( m, mat.m, kMatrix4x4Size );
+	memcpy( m, mat.m, MAGICAL_MAT4_SIZE );
 }
 
 Mat4::Mat4( void )
 {
-	memcpy( m, Identity.m, kMatrix4x4Size );
+	memcpy( m, Identity.m, MAGICAL_MAT4_SIZE );
 }
 
 Mat4::~Mat4( void )
@@ -221,7 +221,7 @@ void Mat4::mulfill( const Mat4& mat )
 	dst.m43 = m41 * mat.m13 + m42 * mat.m23 + m43 * mat.m33 + m44 * mat.m43;
 	dst.m44 = m41 * mat.m14 + m42 * mat.m24 + m43 * mat.m34 + m44 * mat.m44;
 
-	memcpy( m, dst.m, kMatrix4x4Size );
+	memcpy( m, dst.m, MAGICAL_MAT4_SIZE );
 }
 
 void Mat4::fillRotation( const Quaternion& r )
@@ -317,10 +317,10 @@ void Mat4::fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up )
 	Vec3 zaxis = eye - target;
 	zaxis.normalize();
 
-	Vec3 xaxis =  up_v.getCross( zaxis );
+	Vec3 xaxis = up_v.cross( zaxis );
 	xaxis.normalize();
 
-	Vec3 yaxis =  zaxis.getCross( xaxis );
+	Vec3 yaxis = zaxis.cross( xaxis );
 	yaxis.normalize();
 
 	m11 = xaxis.x;
@@ -403,7 +403,7 @@ void Mat4::transpose( void )
 		m13, m23, m33, m43,
 		m14, m24, m34, m44
 	};
-	memcpy( m, t, kMatrix4x4Size );
+	memcpy( m, t, MAGICAL_MAT4_SIZE );
 }
 
 void Mat4::negate( void )
@@ -724,7 +724,7 @@ void MathMat4::mul( Mat4& out, const Mat4& mat1, const Mat4& mat2 )
 	dst.m43 = mat1.m41 * mat2.m13 + mat1.m42 * mat2.m23 + mat1.m43 * mat2.m33 + mat1.m44 * mat2.m43;
 	dst.m44 = mat1.m41 * mat2.m14 + mat1.m42 * mat2.m24 + mat1.m43 * mat2.m34 + mat1.m44 * mat2.m44;
 
-	memcpy( out.m, dst.m, kMatrix4x4Size );
+	memcpy( out.m, dst.m, MAGICAL_MAT4_SIZE );
 }
 
 void MathMat4::transpose( Mat4& out, const Mat4& mat )
@@ -735,7 +735,7 @@ void MathMat4::transpose( Mat4& out, const Mat4& mat )
 		mat.m13, mat.m23, mat.m33, mat.m43,
 		mat.m14, mat.m24, mat.m34, mat.m44
 	};
-	memcpy( out.m, t, kMatrix4x4Size );
+	memcpy( out.m, t, MAGICAL_MAT4_SIZE );
 }
 
 void MathMat4::negate( Mat4& out, const Mat4& mat )

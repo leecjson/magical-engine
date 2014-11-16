@@ -21,10 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __VEC2_HPP__
-#define __VEC2_HPP__
-
-#include "Math3D.h"
+#ifndef __VEC2_H__
+#define __VEC2_H__
 
 struct Vec2
 {
@@ -36,6 +34,20 @@ public:
 	static const Vec2 Up;
 	static const Vec2 Down;
 
+	static Vec2 placeholder_1;
+	static Vec2 placeholder_2;
+	static Vec2 placeholder_3;
+	static Vec2 temp;
+	static Vec2 temp_1;
+	static Vec2 temp_2;
+	static Vec2 temp_3;
+	static Vec2 temp_4;
+	static Vec2 temp_5;
+	static Vec2 temp_6;
+	static Vec2 temp_7;
+	static Vec2 temp_8;
+	static Vec2 temp_9;
+
 public:
 	float x;
 	float y;
@@ -44,7 +56,9 @@ public:
 	Vec2( const Vec2& v );
 	Vec2( void );
 
-public:
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
+
 	inline bool operator==( const Vec2& v ) const;
 	inline bool operator!=( const Vec2& v ) const;
 	inline bool isEquals( const Vec2& v ) const;
@@ -52,7 +66,6 @@ public:
 	inline bool isOne( void ) const;
 	inline bool isNormalize( void ) const;
 
-public:
 	inline Vec2 operator+( float a ) const;
 	inline Vec2 operator+( const Vec2& v ) const;
 	inline Vec2 operator-( float a ) const;
@@ -70,7 +83,7 @@ public:
 	inline Vec2& operator/=( float a );
 	inline Vec2& operator/=( const Vec2& v );
 	inline Vec2& operator=( const Vec2& v );
-	
+
 	inline Vec2 add( float a ) const;
 	inline Vec2 add( const Vec2& v ) const;
 	inline Vec2 sub( float a ) const;
@@ -92,25 +105,25 @@ public:
 	inline void fillZero( void );
 	inline void fillOne( void );
 
-public:
 	inline float dot( const Vec2& v ) const;
 	inline float distanceBetween( const Vec2& v ) const;
-    inline float distanceBetweenSq( const Vec2& v ) const;
+	inline float distanceBetweenSq( const Vec2& v ) const;
 	inline float length( void ) const;
 	inline float lengthSq( void ) const;
-	inline float angle( void ) const;
 	inline float angleBetween( const Vec2& v ) const;
-	
-public:
-	inline void clamp( const Vec2& min, const Vec2& max );
-	inline void negate( void );
-	inline void normalize( void );
-	inline void rotate( const Vec2& point, float angle );
 
-	inline Vec2 getClamp( const Vec2& min, const Vec2& max ) const;
-	inline Vec2 getNegate( void ) const;
-	inline Vec2 getNormalize( void ) const;
-	inline Vec2 getRotate( const Vec2& point, float angle ) const;
+	inline Vec2 clamp( const Vec2& min, const Vec2& max ) const;
+	inline void fillClamp( const Vec2& min, const Vec2& max );
+	inline Vec2 negate( void ) const;
+	inline void fillNegate( void );
+	inline Vec2 normalize( void ) const;
+	inline void fillNormalize( void );
+	inline Vec2 rotate( const Vec2& point, float angle ) const;
+	inline void fillRotate( const Vec2& point, float angle );
+	inline Vec2 scale( float s ) const;
+	inline void fillScale( float s );
+	inline Vec2 midPointBetween( const Vec2& point ) const;
+	inline void project( Vec2& h, Vec2& v, const Vec2& n ) const;
 };
 
 class MathVec2
@@ -124,12 +137,16 @@ public:
 	static inline void mul( Vec2& out, const Vec2& v1, const Vec2& v2 );
 	static inline void div( Vec2& out, const Vec2& v, float a );
 	static inline void div( Vec2& out, const Vec2& v1, const Vec2& v2 );
+
 	static inline void clamp( Vec2& out, const Vec2& v, const Vec2& min, const Vec2& max );
 	static inline void negate( Vec2& out, const Vec2& v );
 	static inline void normalize( Vec2& out, const Vec2& v );
 	static inline void rotate( Vec2& out, const Vec2& v, const Vec2& point, float angle );
+	static inline void scale( Vec2& out, const Vec2& v, float s );
+	static inline void midPointBetween( Vec2& out, const Vec2& v1, const Vec2& v2 );
 };
 
+#include "../c/cVec2.h"
 #include "Vec2.inl"
 
-#endif //__VEC2_HPP__
+#endif //__VEC2_H__

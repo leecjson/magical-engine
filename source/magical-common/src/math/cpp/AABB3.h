@@ -21,20 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __PLANE_H__
-#define __PLANE_H__
+#ifndef __AABB3_H__
+#define __AABB3_H__
 
-#include "Math3D.h"
+#include "MathMacros.h"
+#include "Vec3.h"
 
-struct Plane
+struct AABB3
 {
 public:
-	float a;
-	float b;
-	float c;
-	float d;
+	Vec3 min;
+	Vec3 max;
 };
 
-#include "Plane.inl"
+#include "AABB3.inl"
 
-#endif //__PLANE_H__
+#endif //__AABB3_H__

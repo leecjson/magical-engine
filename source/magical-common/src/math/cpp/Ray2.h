@@ -21,4 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Plane.h"
+#ifndef __RAY2_H__
+#define __RAY2_H__
+
+#include "MathMacros.h"
+#include "Vec2.h"
+
+struct Ray2
+{
+public:
+	Vec2 o;
+	Vec2 d;
+};
+
+#include "Ray2.inl"
+
+#endif //__RAY2_H__

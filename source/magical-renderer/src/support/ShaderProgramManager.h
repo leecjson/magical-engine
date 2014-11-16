@@ -28,10 +28,6 @@ SOFTWARE.
 #include "Common.h"
 #include "RendererMacros.h"
 #include "ShaderProgram.h"
-#include "Mat4.h"
-#include "Vec2.h"
-#include "Vec3.h"
-#include "Vec4.h"
 
 //class ShaderProgramColor;
 
