@@ -24,51 +24,35 @@ SOFTWARE.
 
 inline bool Vec4::operator==( const Vec4& v ) const
 {
-	return 
-		magicalFltEqual( x, v.x ) &&
-		magicalFltEqual( y, v.y ) &&
-		magicalFltEqual( z, v.z ) &&
-		magicalFltEqual( w, v.w );
+	return magicalVec4Equals( TOFLOAT( this ), TOFLOAT( &v ) );
 }
 
 inline bool Vec4::operator!=( const Vec4& v ) const
 {
-	return !( operator==( v ) );
+	return !magicalVec4Equals( TOFLOAT( this ), TOFLOAT( &v ) );
 }
 
 inline bool Vec4::isEquals( const Vec4& v ) const
 {
-	return 
-		magicalFltEqual( x, v.x ) &&
-		magicalFltEqual( y, v.y ) &&
-		magicalFltEqual( z, v.z ) &&
-		magicalFltEqual( w, v.w );
+	return magicalVec4Equals( TOFLOAT( this ), TOFLOAT( &v ) );
 }
 
 inline bool Vec4::isZero( void ) const
 {
-	return 
-		magicalFltIsZero( x ) &&
-		magicalFltIsZero( y ) &&
-		magicalFltIsZero( z ) &&
-		magicalFltIsZero( w );
+	return magicalVec4IsZero( TOFLOAT( this ) );
 }
 
 inline bool Vec4::isOne( void ) const
 {
-	return 
-		magicalFltEqual( x, 1.0f ) &&
-		magicalFltEqual( y, 1.0f ) &&
-		magicalFltEqual( z, 1.0f ) &&
-		magicalFltEqual( w, 1.0f );
+	return magicalVec4IsOne( TOFLOAT( this ) );
 }
 
 inline bool Vec4::isNormalize( void ) const
 {
-	return magicalFltEqual( x * x + y * y + z * z + w * w, 1.0f );
+	return magicalVec4IsNormalize( TOFLOAT( this ) );
 }
 
-inline Vec4 Vec4::operator+( float a ) const
+inline Vec4 Vec4::operator+( const float a ) const
 {
 	return Vec4( x + a, y + a, z + a, w + a );
 }
@@ -78,7 +62,7 @@ inline Vec4 Vec4::operator+( const Vec4& v ) const
 	return Vec4( x + v.x, y + v.y, z + v.z, w + v.w );
 }
 
-inline Vec4 Vec4::operator-( float a ) const
+inline Vec4 Vec4::operator-( const float a ) const
 {
 	return Vec4( x - a, y - a, z - a, w - a );
 }
@@ -88,7 +72,7 @@ inline Vec4 Vec4::operator-( const Vec4& v ) const
 	return Vec4( x - v.x, y - v.y, z - v.z, w - v.w );
 }
 
-inline Vec4 Vec4::operator*( float a ) const
+inline Vec4 Vec4::operator*( const float a ) const
 {
 	return Vec4( x * a, y * a, z * a, w * a );
 }
@@ -98,23 +82,21 @@ inline Vec4 Vec4::operator*( const Vec4& v ) const
 	return Vec4( x * v.x, y * v.y, z * v.z, w * v.w );
 }
 
-inline Vec4 Vec4::operator/( float a ) const
+inline Vec4 Vec4::operator/( const float a ) const
 {
-	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+
 	return Vec4( x / a, y / a, z / a, w / a );
 }
 
 inline Vec4 Vec4::operator/( const Vec4& v ) const
 {
-	magicalAssert( 
-		!magicalFltIsZero( v.x ) &&
-		!magicalFltIsZero( v.y ) &&
-		!magicalFltIsZero( v.z ) &&
-		!magicalFltIsZero( v.w ), "division by 0.f" );
+	magicalMathAssert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+
 	return Vec4( x / v.x, y / v.y, z / v.z, w / v.w );
 }
 
-inline Vec4& Vec4::operator+=( float a )
+inline Vec4& Vec4::operator+=( const float a )
 {
 	x += a;
 	y += a;
@@ -132,7 +114,7 @@ inline Vec4& Vec4::operator+=( const Vec4& v )
 	return *this;
 }
 
-inline Vec4& Vec4::operator-=( float a )
+inline Vec4& Vec4::operator-=( const float a )
 {
 	x -= a;
 	y -= a;
@@ -150,7 +132,7 @@ inline Vec4& Vec4::operator-=( const Vec4& v )
 	return *this;
 }
 
-inline Vec4& Vec4::operator*=( float a )
+inline Vec4& Vec4::operator*=( const float a )
 {
 	x *= a;
 	y *= a;
@@ -168,9 +150,10 @@ inline Vec4& Vec4::operator*=( const Vec4& v )
 	return *this;
 }
 
-inline Vec4& Vec4::operator/=( float a )
+inline Vec4& Vec4::operator/=( const float a )
 {
-	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+
 	x /= a;
 	y /= a;
 	z /= a;
@@ -180,11 +163,8 @@ inline Vec4& Vec4::operator/=( float a )
 
 inline Vec4& Vec4::operator/=( const Vec4& v )
 {
-	magicalAssert( 
-		!magicalFltIsZero( v.x ) &&
-		!magicalFltIsZero( v.y ) &&
-		!magicalFltIsZero( v.z ) &&
-		!magicalFltIsZero( v.w ), "division by 0.f" );
+	magicalMathAssert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+
 	x /= v.x;
 	y /= v.y;
 	z /= v.z;
@@ -200,7 +180,7 @@ inline Vec4& Vec4::operator=( const Vec4& v )
 	w = v.w;
 }
 
-inline Vec4 Vec4::add( float a ) const
+inline Vec4 Vec4::add( const float a ) const
 {
 	return Vec4( x + a, y + a, z + a, w + a );
 }
@@ -210,7 +190,7 @@ inline Vec4 Vec4::add( const Vec4& v ) const
 	return Vec4( x + v.x, y + v.y, z + v.z, w + v.w );
 }
 
-inline Vec4 Vec4::sub( float a ) const
+inline Vec4 Vec4::sub( const float a ) const
 {
 	return Vec4( x - a, y - a, z - a, w - a );
 }
@@ -220,7 +200,7 @@ inline Vec4 Vec4::sub( const Vec4& v ) const
 	return Vec4( x - v.x, y - v.y, z - v.z, w - v.w );
 }
 
-inline Vec4 Vec4::mul( float a ) const
+inline Vec4 Vec4::mul( const float a ) const
 {
 	return Vec4( x * a, y * a, z * a, w * a );
 }
@@ -230,23 +210,21 @@ inline Vec4 Vec4::mul( const Vec4& v ) const
 	return Vec4( x * v.x, y * v.y, z * v.z, w * v.w );
 }
 
-inline Vec4 Vec4::div( float a ) const
+inline Vec4 Vec4::div( const float a ) const
 {
-	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+
 	return Vec4( x / a, y / a, z / a, w / a );
 }
 
 inline Vec4 Vec4::div( const Vec4& v ) const
 {
-	magicalAssert( 
-		!magicalFltIsZero( v.x ) &&
-		!magicalFltIsZero( v.y ) &&
-		!magicalFltIsZero( v.z ) &&
-		!magicalFltIsZero( v.w ), "division by 0.f" );
+	magicalMathAssert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+
 	return Vec4( x / v.x, y / v.y, z / v.z, w / v.w );
 }
 
-inline void Vec4::addfill( float a )
+inline void Vec4::addfill( const float a )
 {
 	x += a;
 	y += a;
@@ -262,7 +240,7 @@ inline void Vec4::addfill( const Vec4& v )
 	w += v.w;
 }
 
-inline void Vec4::subfill( float a )
+inline void Vec4::subfill( const float a )
 {
 	x -= a;
 	y -= a;
@@ -278,7 +256,7 @@ inline void Vec4::subfill( const Vec4& v )
 	w -= v.w;
 }
 
-inline void Vec4::mulfill( float a )
+inline void Vec4::mulfill( const float a )
 {
 	x *= a;
 	y *= a;
@@ -294,9 +272,10 @@ inline void Vec4::mulfill( const Vec4& v )
 	w *= v.w;
 }
 
-inline void Vec4::divfill( float a )
+inline void Vec4::divfill( const float a )
 {
-	magicalAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+
 	x /= a;
 	y /= a;
 	z /= a;
@@ -305,18 +284,15 @@ inline void Vec4::divfill( float a )
 
 inline void Vec4::divfill( const Vec4& v )
 {
-	magicalAssert( 
-		!magicalFltIsZero( v.x ) &&
-		!magicalFltIsZero( v.y ) &&
-		!magicalFltIsZero( v.z ) &&
-		!magicalFltIsZero( v.w ), "division by 0.f" );
+	magicalMathAssert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+
 	x /= v.x;
 	y /= v.y;
 	z /= v.z;
 	w /= v.w;
 }
 
-inline void Vec4::fill( float x, float y, float z, float w )
+inline void Vec4::fill( const float x, const float y, const float z, const float w )
 {
 	this->x = x;
 	this->y = y;
@@ -350,200 +326,155 @@ inline void Vec4::fillOne( void )
 
 inline float Vec4::dot( const Vec4& v ) const
 {
-	return x * v.x + y * v.y + z * v.z + w * v.w;
+	return magicalVec4Dot( TOFLOAT( this ), TOFLOAT( &v ) );
 }
 
-inline float Vec4::distance( const Vec4& v ) const
+inline float Vec4::distanceBetween( const Vec4& v ) const
 {
-	float dx = v.x - x;
-	float dy = v.y - y;
-	float dz = v.z - z;
-	float dw = v.w - w;
-
-	return sqrt( dx * dx + dy * dy + dz * dz + dw * dw );
+	return magicalVec4DistanceBetween( TOFLOAT( this ), TOFLOAT( &v ) );
 }
 
-inline float Vec4::distanceSq( const Vec4& v ) const
+inline float Vec4::distanceBetweenSq( const Vec4& v ) const
 {
-	float dx = v.x - x;
-	float dy = v.y - y;
-	float dz = v.z - z;
-	float dw = v.w - w;
-
-	return dx * dx + dy * dy + dz * dz + dw * dw;
+	return magicalVec4DistanceBetweenSq( TOFLOAT( this ), TOFLOAT( &v ) );
 }
 
 inline float Vec4::length( void ) const
 {
-	return sqrt( x * x + y * y + z * z + w * w );
+	return magicalVec4Length( TOFLOAT( this ) );
 }
 
 inline float Vec4::lengthSq( void ) const
 {
-	return x * x + y * y + z * z + w * w;
+	return magicalVec4LengthSq( TOFLOAT( this ) );
 }
 
 inline float Vec4::angleBetween( const Vec4& v ) const
 {
-	magicalAssert( !isZero() && !v.isZero(), "invaild operate!" );
-	return magicalAcosf( dot( v ) / ( length() * v.length() ) );
+	return magicalVec4AngleBetween( TOFLOAT( this ), TOFLOAT( &v ) );
 }
 
 inline Vec4 Vec4::clamp( const Vec4& min, const Vec4& max ) const
 {
-	Vec4 ret( *this );
-	ret.fillClamp( min, max );
+	Vec4 ret;
+	magicalVec4Clamp( TOFLOAT( &ret ), TOFLOAT( this ), TOFLOAT( &min ), TOFLOAT( &max ) );
 	return ret;
 }
 
 inline void Vec4::fillClamp( const Vec4& min, const Vec4& max )
 {
-	magicalAssert( min.x <= max.x && min.y <= max.y && min.z <= max.z && min.w <= max.w, "invaild operate!" );
-
-	if( x < min.x ) x = min.x;
-	if( x > max.x ) x = max.x;
-
-	if( y < min.y ) y = min.y;
-	if( y > max.y ) y = max.y;
-
-	if( z < min.z ) z = min.z;
-	if( z > max.z ) z = max.z;
-
-	if( w < min.w ) w = min.w;
-	if( w > max.w ) w = max.w;
+	magicalVec4Clamp( TOFLOAT( this ), TOFLOAT( this ), TOFLOAT( &min ), TOFLOAT( &max ) );
 }
 
 inline Vec4 Vec4::negate( void ) const
 {
-	Vec4 ret( *this );
-	ret.fillNegate();
+	Vec4 ret;
+	magicalVec4Negate( TOFLOAT( &ret ), TOFLOAT( this ) );
 	return ret;
 }
 
 inline void Vec4::fillNegate( void )
 {
-	x = -x;
-    y = -y;
-    z = -z;
-    w = -w;
+	magicalVec4Negate( TOFLOAT( this ), TOFLOAT( this ) );
 }
 
 inline Vec4 Vec4::normalize( void ) const
 {
-	Vec4 ret( *this );
-	ret.fillNormalize();
+	Vec4 ret;
+	magicalVec4Normalize( TOFLOAT( &ret ), TOFLOAT( this ) );
 	return ret;
 }
 
 inline void Vec4::fillNormalize( void )
 {
-	float n = x * x + y * y + z * z + w * w;
-	if( magicalFltEqual( n, 1.0f ) )
-		return;
-
-	n = sqrt( n );
-	if( magicalFltIsZero( n ) )
-		return;
-
-	n = 1.0f / n;
-	x *= n;
-	y *= n;
-	z *= n;
-	w *= n;
+	magicalVec4Normalize( TOFLOAT( this ), TOFLOAT( this ) );
 }
 
-inline Vec4 Vec4::scale( float s ) const
+inline Vec4 Vec4::scale( const float s ) const
 {
-	Vec4 ret( *this );
-	ret.fillScale( s );
+	Vec4 ret;
+	magicalVec4Scale( TOFLOAT( &ret ), TOFLOAT( this ), s );
 	return ret;
 }
 
-inline void Vec4::fillScale( float s )
+inline void Vec4::fillScale( const float s )
 {
-	x *= s;
-	y *= s;
-	z *= s;
-	w *= s;
+	magicalVec4Scale( TOFLOAT( this ), TOFLOAT( this ), s );
 }
 
 inline Vec4 Vec4::midPointBetween( const Vec4& point ) const
 {
-	return Vec4( ( x + point.x ) * 0.5f, ( y + point.y ) * 0.5f, ( z + point.z ) * 0.5f, ( w + point.w ) * 0.5f );
+	Vec4 ret;
+	magicalVec4MidPointBetween( TOFLOAT( &ret ), TOFLOAT( this ), TOFLOAT( &point ) );
+	return ret;
 }
 
 inline void Vec4::project( Vec4& h, Vec4& v, const Vec4& n ) const
 {
-	magicalAssert( !n.isZero(), "invaild operate!" );
-
-	h = n * ( dot( n ) / n.lengthSq() );
-	v.x = x - h.x;
-	v.y = y - h.y;
-	v.z = z - h.z;
-	v.w = w - h.w;
+	magicalVec4Project( TOFLOAT( &h ), TOFLOAT( &v ), TOFLOAT( this ), TOFLOAT( &n ) );
 }
 
-inline void MathVec4::add( Vec4& out, const Vec4& v, float a )
+inline void MathVec4::add( Vec4& out, const Vec4& v, const float a )
 {
-	out = v + a;
+	magicalVec4AddScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
 
 inline void MathVec4::add( Vec4& out, const Vec4& v1, const Vec4& v2 )
 {
-	out = v1 + v2;
+	magicalVec4Add( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec4::sub( Vec4& out, const Vec4& v, float a )
+inline void MathVec4::sub( Vec4& out, const Vec4& v, const float a )
 {
-	out = v - a;
+	magicalVec4SubScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
 
 inline void MathVec4::sub( Vec4& out, const Vec4& v1, const Vec4& v2 )
 {
-	out = v1 - v2;
+	magicalVec4Sub( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec4::mul( Vec4& out, const Vec4& v, float a )
+inline void MathVec4::mul( Vec4& out, const Vec4& v, const float a )
 {
-	out = v * a;
+	magicalVec4MulScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
 
 inline void MathVec4::mul( Vec4& out, const Vec4& v1, const Vec4& v2 )
 {
-	out = v1 * v2;
+	magicalVec4Mul( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec4::div( Vec4& out, const Vec4& v, float a )
+inline void MathVec4::div( Vec4& out, const Vec4& v, const float a )
 {
-	out = v / a;
+	magicalVec4DivScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
 
 inline void MathVec4::div( Vec4& out, const Vec4& v1, const Vec4& v2 )
 {
-	out = v1 / v2;
+	magicalVec4Div( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
 inline void MathVec4::clamp( Vec4& out, const Vec4& v, const Vec4& min, const Vec4& max )
 {
-	out = v.clamp( min, max );
+	magicalVec4Clamp( TOFLOAT( &out ), TOFLOAT( &v ), TOFLOAT( &min ), TOFLOAT( &max ) );
 }
 
 inline void MathVec4::negate( Vec4& out, const Vec4& v )
 {
-	out = v.negate();
+	magicalVec4Negate( TOFLOAT( &out ), TOFLOAT( &v ) );
 }
 
 inline void MathVec4::normalize( Vec4& out, const Vec4& v )
 {
-	out = v.normalize();
+	magicalVec4Normalize( TOFLOAT( &out ), TOFLOAT( &v ) );
 }
 
-inline void MathVec4::scale( Vec4& out, const Vec4& v, float s )
+inline void MathVec4::scale( Vec4& out, const Vec4& v, const float s )
 {
-	out = v.scale( s );
+	magicalVec4Scale( TOFLOAT( &out ), TOFLOAT( &v ), s );
 }
 
 inline void MathVec4::midPointBetween( Vec4& out, const Vec4& v1, const Vec4& v2  )
 {
-	out = v1.midPointBetween( v2 );
+	magicalVec4MidPointBetween( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }

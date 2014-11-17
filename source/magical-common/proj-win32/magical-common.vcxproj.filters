@@ -114,6 +114,15 @@
     <ClCompile Include="..\src\math\c\cVec3.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\c\cVec4.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cMat4.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cQuaternion.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\assets\AssetsSystem.h">
@@ -207,6 +216,18 @@
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cVec3.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cVec4.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cMat4.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cQuaternion.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cMacros.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
   </ItemGroup>

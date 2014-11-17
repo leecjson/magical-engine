@@ -45,7 +45,7 @@ Vec2 Vec2::temp_7 = Vec2( 0.0f, 0.0f );
 Vec2 Vec2::temp_8 = Vec2( 0.0f, 0.0f );
 Vec2 Vec2::temp_9 = Vec2( 0.0f, 0.0f );
 
-Vec2::Vec2( float x, float y )
+Vec2::Vec2( const float x, const float y )
 : x( x )
 , y( y )
 {

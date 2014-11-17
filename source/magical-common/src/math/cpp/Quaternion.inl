@@ -224,7 +224,7 @@ inline float Quaternion::axisAngle( Vec3& axis ) const
 
 inline void Quaternion::lerp( const Quaternion& rhs, float t )
 {
-	magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
+	//magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
 
 	if( magicalFltIsZero( t ) )
 	{

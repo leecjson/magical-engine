@@ -52,7 +52,7 @@ inline bool Vec2::isNormalize( void ) const
 	return magicalVec2IsNormalize( TOFLOAT( this ) );
 }
 
-inline Vec2 Vec2::operator+( float a ) const
+inline Vec2 Vec2::operator+( const float a ) const
 {
 	return Vec2( x + a, y + a );
 }
@@ -62,7 +62,7 @@ inline Vec2 Vec2::operator+( const Vec2& v ) const
 	return Vec2( x + v.x, y + v.y );
 }
 
-inline Vec2 Vec2::operator-( float a ) const
+inline Vec2 Vec2::operator-( const float a ) const
 {
 	return Vec2( x - a, y - a );
 }
@@ -72,7 +72,7 @@ inline Vec2 Vec2::operator-( const Vec2& v ) const
 	return Vec2( x - v.x, y - v.y );
 }
 
-inline Vec2 Vec2::operator*( float a ) const
+inline Vec2 Vec2::operator*( const float a ) const
 {
 	return Vec2( x * a, y * a );
 }
@@ -82,7 +82,7 @@ inline Vec2 Vec2::operator*( const Vec2& v ) const
 	return Vec2( x * v.x, y * v.y );
 }
 
-inline Vec2 Vec2::operator/( float a ) const
+inline Vec2 Vec2::operator/( const float a ) const
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -96,7 +96,7 @@ inline Vec2 Vec2::operator/( const Vec2& v ) const
 	return Vec2( x / v.x, y / v.y );
 }
 
-inline Vec2& Vec2::operator+=( float a )
+inline Vec2& Vec2::operator+=( const float a )
 {
 	x += a;
 	y += a;
@@ -110,7 +110,7 @@ inline Vec2& Vec2::operator+=( const Vec2& v )
 	return *this;
 }
 
-inline Vec2& Vec2::operator-=( float a )
+inline Vec2& Vec2::operator-=( const float a )
 {
 	x -= a;
 	y -= a;
@@ -124,7 +124,7 @@ inline Vec2& Vec2::operator-=( const Vec2& v )
 	return *this;
 }
 
-inline Vec2& Vec2::operator*=( float a )
+inline Vec2& Vec2::operator*=( const float a )
 {
 	x *= a;
 	y *= a;
@@ -138,7 +138,7 @@ inline Vec2& Vec2::operator*=( const Vec2& v )
 	return *this;
 }
 
-inline Vec2& Vec2::operator/=( float a )
+inline Vec2& Vec2::operator/=( const float a )
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -163,7 +163,7 @@ inline Vec2& Vec2::operator=( const Vec2& v )
 	return *this;
 }
 
-inline Vec2 Vec2::add( float a ) const
+inline Vec2 Vec2::add( const float a ) const
 {
 	return Vec2( x + a, y + a );
 }
@@ -173,7 +173,7 @@ inline Vec2 Vec2::add( const Vec2& v ) const
 	return Vec2( x + v.x, y + v.y );
 }
 
-inline Vec2 Vec2::sub( float a ) const
+inline Vec2 Vec2::sub( const float a ) const
 {
 	return Vec2( x - a, y - a );
 }
@@ -183,7 +183,7 @@ inline Vec2 Vec2::sub( const Vec2& v ) const
 	return Vec2( x - v.x, y - v.y );
 }
 
-inline Vec2 Vec2::mul( float a ) const
+inline Vec2 Vec2::mul( const float a ) const
 {
 	return Vec2( x * a, y * a );
 }
@@ -193,7 +193,7 @@ inline Vec2 Vec2::mul( const Vec2& v ) const
 	return Vec2( x * v.x, y * v.y );
 }
 
-inline Vec2 Vec2::div( float a ) const
+inline Vec2 Vec2::div( const float a ) const
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -207,7 +207,7 @@ inline Vec2 Vec2::div( const Vec2& v ) const
 	return Vec2( x / v.x, y / v.y );
 }
 
-inline void Vec2::addfill( float a )
+inline void Vec2::addfill( const float a )
 {
 	x += a;
 	y += a;
@@ -219,7 +219,7 @@ inline void Vec2::addfill( const Vec2& v )
 	y += v.y;
 }
 
-inline void Vec2::subfill( float a )
+inline void Vec2::subfill( const float a )
 {
 	x -= a;
 	y -= a;
@@ -231,7 +231,7 @@ inline void Vec2::subfill( const Vec2& v )
 	y -= v.y;
 }
 
-inline void Vec2::mulfill( float a )
+inline void Vec2::mulfill( const float a )
 {
 	x *= a;
 	y *= a;
@@ -243,7 +243,7 @@ inline void Vec2::mulfill( const Vec2& v )
 	y *= v.y;
 }
 
-inline void Vec2::divfill( float a )
+inline void Vec2::divfill( const float a )
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -259,7 +259,7 @@ inline void Vec2::divfill( const Vec2& v )
 	y /= v.y;
 }
 
-inline void Vec2::fill( float x, float y )
+inline void Vec2::fill( const float x, const float y )
 {
 	this->x = x;
 	this->y = y;
@@ -349,26 +349,26 @@ inline void Vec2::fillNormalize( void )
 	magicalVec2Normalize( TOFLOAT( this ), TOFLOAT( this ) );
 }
 
-inline Vec2 Vec2::rotate( const Vec2& point, float angle ) const
+inline Vec2 Vec2::rotate( const Vec2& point, const float angle ) const
 {
 	Vec2 ret;
 	magicalVec2Rotate( TOFLOAT( &ret ), TOFLOAT( this ), TOFLOAT( &point ), angle );
 	return ret;
 }
 
-inline void Vec2::fillRotate( const Vec2& point, float angle )
+inline void Vec2::fillRotate( const Vec2& point, const float angle )
 {
 	magicalVec2Rotate( TOFLOAT( this ), TOFLOAT( this ), TOFLOAT( &point ), angle );
 }
 
-inline Vec2 Vec2::scale( float s ) const
+inline Vec2 Vec2::scale( const float s ) const
 {
 	Vec2 ret;
 	magicalVec2Scale( TOFLOAT( &ret ), TOFLOAT( this ), s );
 	return ret;
 }
 
-inline void Vec2::fillScale( float s )
+inline void Vec2::fillScale( const float s )
 {
 	magicalVec2Scale( TOFLOAT( this ), TOFLOAT( this ), s );
 }
@@ -385,7 +385,7 @@ inline void Vec2::project( Vec2& h, Vec2& v, const Vec2& n ) const
 	magicalVec2Project( TOFLOAT( &h ), TOFLOAT( &v ), TOFLOAT( this ), TOFLOAT( &n ) );
 }
 
-inline void MathVec2::add( Vec2& out, const Vec2& v, float a )
+inline void MathVec2::add( Vec2& out, const Vec2& v, const float a )
 {
 	magicalVec2AddScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
@@ -395,7 +395,7 @@ inline void MathVec2::add( Vec2& out, const Vec2& v1, const Vec2& v2 )
 	magicalVec2Add( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec2::sub( Vec2& out, const Vec2& v, float a )
+inline void MathVec2::sub( Vec2& out, const Vec2& v, const float a )
 {
 	magicalVec2SubScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
@@ -405,7 +405,7 @@ inline void MathVec2::sub( Vec2& out, const Vec2& v1, const Vec2& v2 )
 	magicalVec2Sub( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec2::mul( Vec2& out, const Vec2& v, float a )
+inline void MathVec2::mul( Vec2& out, const Vec2& v, const float a )
 {
 	magicalVec2MulScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
@@ -415,7 +415,7 @@ inline void MathVec2::mul( Vec2& out, const Vec2& v1, const Vec2& v2 )
 	magicalVec2Mul( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec2::div( Vec2& out, const Vec2& v, float a )
+inline void MathVec2::div( Vec2& out, const Vec2& v, const float a )
 {
 	magicalVec2DivScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
@@ -440,12 +440,12 @@ inline void MathVec2::normalize( Vec2& out, const Vec2& v )
 	magicalVec2Normalize( TOFLOAT( &out ), TOFLOAT( &v ) );
 }
 
-inline void MathVec2::rotate( Vec2& out, const Vec2& v, const Vec2& point, float angle )
+inline void MathVec2::rotate( Vec2& out, const Vec2& v, const Vec2& point, const float angle )
 {
 	magicalVec2Rotate( TOFLOAT( &out ), TOFLOAT( &v ), TOFLOAT( &point ), angle );
 }
 
-inline void MathVec2::scale( Vec2& out, const Vec2& v, float s )
+inline void MathVec2::scale( Vec2& out, const Vec2& v, const float s )
 {
 	magicalVec2Scale( TOFLOAT( &out ), TOFLOAT( &v ), s );
 }

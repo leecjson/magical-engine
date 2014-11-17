@@ -27,8 +27,8 @@ SOFTWARE.
 #include <math.h>
 #include <float.h>
 #include <stdlib.h>
-#include <memory.h>
 #include <assert.h>
+#include <memory.h>
 
 #ifndef MAGICAL_ENGINE
 #define MAGICAL_MATH_CACHED_POOL_ENABLE 0
@@ -52,16 +52,7 @@ SOFTWARE.
 #endif
 #endif
 
-#ifndef magicalAssert
-#define magicalAssert( __con, __msg ) do{                     \
-	if( !(__con) ) {                                          \
-		assert( __con );                                      \
-	}                                                         \
-	} while(0)
-#endif
-
 typedef unsigned char cBoolean;
-
 #define TOFLOAT( __a ) ( (float*)( __a ) )
 
 /*

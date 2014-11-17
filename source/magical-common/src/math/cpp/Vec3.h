@@ -36,30 +36,32 @@ public:
 	static const Vec3 Forward;
 	static const Vec3 Back;
 
-	static Vec3 placeholder1;
-	static Vec3 placeholder2;
-	static Vec3 placeholder3;
+	static Vec3 placeholder_1;
+	static Vec3 placeholder_2;
+	static Vec3 placeholder_3;
 	static Vec3 temp;
-	static Vec3 temp1;
-	static Vec3 temp2;
-	static Vec3 temp3;
-	static Vec3 temp4;
-	static Vec3 temp5;
-	static Vec3 temp6;
-	static Vec3 temp7;
-	static Vec3 temp8;
-	static Vec3 temp9;
+	static Vec3 temp_1;
+	static Vec3 temp_2;
+	static Vec3 temp_3;
+	static Vec3 temp_4;
+	static Vec3 temp_5;
+	static Vec3 temp_6;
+	static Vec3 temp_7;
+	static Vec3 temp_8;
+	static Vec3 temp_9;
 
 public:
 	float x;
 	float y;
 	float z;
 
-	Vec3( float x, float y, float z );
+	Vec3( const float x, const float y, const float z );
 	Vec3( const Vec3& v );
 	Vec3( void );
 
-public:
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
+
 	inline bool operator==( const Vec3& v ) const;
 	inline bool operator!=( const Vec3& v ) const;
 	inline bool isEquals( const Vec3& v ) const;
@@ -67,47 +69,45 @@ public:
 	inline bool isOne( void ) const;
 	inline bool isNormalize( void ) const;
 
-public:
-	inline Vec3 operator+( float a ) const;
+	inline Vec3 operator+( const float a ) const;
 	inline Vec3 operator+( const Vec3& v ) const;
-	inline Vec3 operator-( float a ) const;
+	inline Vec3 operator-( const float a ) const;
 	inline Vec3 operator-( const Vec3& v ) const;
-	inline Vec3 operator*( float a ) const;
+	inline Vec3 operator*( const float a ) const;
 	inline Vec3 operator*( const Vec3& v ) const;
-	inline Vec3 operator/( float a ) const;
+	inline Vec3 operator/( const float a ) const;
 	inline Vec3 operator/( const Vec3& v ) const;
-	inline Vec3& operator+=( float a );
+	inline Vec3& operator+=( const float a );
 	inline Vec3& operator+=( const Vec3& v );
-	inline Vec3& operator-=( float a );
+	inline Vec3& operator-=( const float a );
 	inline Vec3& operator-=( const Vec3& v );
-	inline Vec3& operator*=( float a );
+	inline Vec3& operator*=( const float a );
 	inline Vec3& operator*=( const Vec3& v );
-	inline Vec3& operator/=( float a );
+	inline Vec3& operator/=( const float a );
 	inline Vec3& operator/=( const Vec3& v );
 	inline Vec3& operator=( const Vec3& v );
 
-	inline Vec3 add( float a ) const;
+	inline Vec3 add( const float a ) const;
 	inline Vec3 add( const Vec3& v ) const;
-	inline Vec3 sub( float a ) const;
+	inline Vec3 sub( const float a ) const;
 	inline Vec3 sub( const Vec3& v ) const;
-	inline Vec3 mul( float a ) const;
+	inline Vec3 mul( const float a ) const;
 	inline Vec3 mul( const Vec3& v ) const;
-	inline Vec3 div( float a ) const;
+	inline Vec3 div( const float a ) const;
 	inline Vec3 div( const Vec3& v ) const;
-	inline void addfill( float a );
+	inline void addfill( const float a );
 	inline void addfill( const Vec3& v );
-	inline void subfill( float a );
+	inline void subfill( const float a );
 	inline void subfill( const Vec3& v );
-	inline void mulfill( float a );
+	inline void mulfill( const float a );
 	inline void mulfill( const Vec3& v );
-	inline void divfill( float a );
+	inline void divfill( const float a );
 	inline void divfill( const Vec3& v );
-	inline void fill( float x, float y, float z );
+	inline void fill( const float x, const float y, const float z );
 	inline void fill( const Vec3& v );
 	inline void fillZero( void );
 	inline void fillOne( void );
 	
-public:
 	inline float dot( const Vec3& v ) const;
 	inline float distanceBetween( const Vec3& v ) const;
 	inline float distanceBetweenSq( const Vec3& v ) const;
@@ -115,7 +115,6 @@ public:
     inline float lengthSq( void ) const;
 	inline float angleBetween( const Vec3& v ) const;
 
-public:
 	inline Vec3 cross( const Vec3& v ) const;
 	inline void fillCross( const Vec3& v );
 	inline Vec3 clamp( const Vec3& min, const Vec3& max ) const;
@@ -124,8 +123,8 @@ public:
 	inline void fillNegate( void );
 	inline Vec3 normalize( void ) const;
 	inline void fillNormalize( void );
-	inline Vec3 scale( float s ) const;
-	inline void fillScale( float s );
+	inline Vec3 scale( const float s ) const;
+	inline void fillScale( const float s );
 	inline Vec3 midPointBetween( const Vec3& point ) const;
 	inline void project( Vec3& h, Vec3& v, const Vec3& n ) const;
 };
@@ -133,20 +132,20 @@ public:
 class MathVec3
 {
 public:
-	static inline void add( Vec3& out, const Vec3& v, float a );
+	static inline void add( Vec3& out, const Vec3& v, const float a );
 	static inline void add( Vec3& out, const Vec3& v1, const Vec3& v2 );
-	static inline void sub( Vec3& out, const Vec3& v, float a );
+	static inline void sub( Vec3& out, const Vec3& v, const float a );
 	static inline void sub( Vec3& out, const Vec3& v1, const Vec3& v2 );
-	static inline void mul( Vec3& out, const Vec3& v, float a );
+	static inline void mul( Vec3& out, const Vec3& v, const float a );
 	static inline void mul( Vec3& out, const Vec3& v1, const Vec3& v2 );
-	static inline void div( Vec3& out, const Vec3& v, float a );
+	static inline void div( Vec3& out, const Vec3& v, const float a );
 	static inline void div( Vec3& out, const Vec3& v1, const Vec3& v2 );
 
 	static inline void cross( Vec3& out, const Vec3& v1, const Vec3& v2 );
 	static inline void clamp( Vec3& out, const Vec3& v, const Vec3& min, const Vec3& max );
 	static inline void negate( Vec3& out, const Vec3& v );
 	static inline void normalize( Vec3& out, const Vec3& v );
-	static inline void scale( Vec3& out, const Vec3& v, float s );
+	static inline void scale( Vec3& out, const Vec3& v, const float s );
 	static inline void midPointBetween( Vec3& out, const Vec3& v1, const Vec3& v2 );
 };
 

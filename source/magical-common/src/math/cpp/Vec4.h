@@ -21,10 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __VEC4_HPP__
-#define __VEC4_HPP__
-
-#include "MathMacros.h"
+#ifndef __VEC4_H__
+#define __VEC4_H__
 
 struct Vec4
 {
@@ -42,6 +40,7 @@ public:
 	static Vec4 placeholder_1;
 	static Vec4 placeholder_2;
 	static Vec4 placeholder_3;
+	static Vec4 temp;
 	static Vec4 temp_1;
 	static Vec4 temp_2;
 	static Vec4 temp_3;
@@ -58,11 +57,13 @@ public:
 	float z;
 	float w;
 
-	Vec4( float x, float y, float z, float w );
+	Vec4( const float x, const float y, const float z, const float w );
 	Vec4( const Vec4& v );
 	Vec4( void );
 
-public:
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
+
 	inline bool operator==( const Vec4& v ) const;
 	inline bool operator!=( const Vec4& v ) const;
 	inline bool isEquals( const Vec4& v ) const;
@@ -70,62 +71,60 @@ public:
 	inline bool isOne( void ) const;
 	inline bool isNormalize( void ) const;
 
-	inline Vec4 operator+( float a ) const;
+	inline Vec4 operator+( const float a ) const;
 	inline Vec4 operator+( const Vec4& v ) const;
-	inline Vec4 operator-( float a ) const;
+	inline Vec4 operator-( const float a ) const;
 	inline Vec4 operator-( const Vec4& v ) const;
-	inline Vec4 operator*( float a ) const;
+	inline Vec4 operator*( const float a ) const;
 	inline Vec4 operator*( const Vec4& v ) const;
-	inline Vec4 operator/( float a ) const;
+	inline Vec4 operator/( const float a ) const;
 	inline Vec4 operator/( const Vec4& v ) const;
-	inline Vec4& operator+=( float a );
+	inline Vec4& operator+=( const float a );
 	inline Vec4& operator+=( const Vec4& v );
-	inline Vec4& operator-=( float a );
+	inline Vec4& operator-=( const float a );
 	inline Vec4& operator-=( const Vec4& v );
-	inline Vec4& operator*=( float a  );
+	inline Vec4& operator*=( const float a  );
 	inline Vec4& operator*=( const Vec4& v );
-	inline Vec4& operator/=( float a );
+	inline Vec4& operator/=( const float a );
 	inline Vec4& operator/=( const Vec4& v );
 	inline Vec4& operator=( const Vec4& v );
 
-	inline Vec4 add( float a ) const;
+	inline Vec4 add( const float a ) const;
 	inline Vec4 add( const Vec4& v ) const;
-	inline Vec4 sub( float a ) const;
+	inline Vec4 sub( const float a ) const;
 	inline Vec4 sub( const Vec4& v ) const;
-	inline Vec4 mul( float a ) const;
+	inline Vec4 mul( const float a ) const;
 	inline Vec4 mul( const Vec4& v ) const;
-	inline Vec4 div( float a ) const;
+	inline Vec4 div( const float a ) const;
 	inline Vec4 div( const Vec4& v ) const;
-	inline void addfill( float a );
+	inline void addfill( const float a );
 	inline void addfill( const Vec4& v );
-	inline void subfill( float a );
+	inline void subfill( const float a );
 	inline void subfill( const Vec4& v );
-	inline void mulfill( float a );
+	inline void mulfill( const float a );
 	inline void mulfill( const Vec4& v );
-	inline void divfill( float a );
+	inline void divfill( const float a );
 	inline void divfill( const Vec4& v );
-	inline void fill( float x, float y, float z, float w );
+	inline void fill( const float x, const float y, const float z, const float w );
 	inline void fill( const Vec4& v );
 	inline void fillZero( void );
 	inline void fillOne( void );
 	
-public:
 	inline float dot( const Vec4& v ) const;
-	inline float distance( const Vec4& v ) const;
-	inline float distanceSq( const Vec4& v ) const;
+	inline float distanceBetween( const Vec4& v ) const;
+	inline float distanceBetweenSq( const Vec4& v ) const;
 	inline float length( void ) const;
 	inline float lengthSq( void ) const;
 	inline float angleBetween( const Vec4& v ) const;
 
-public:
 	inline Vec4 clamp( const Vec4& min, const Vec4& max ) const;
 	inline void fillClamp( const Vec4& min, const Vec4& max );
 	inline Vec4 negate( void ) const;
 	inline void fillNegate( void );
 	inline Vec4 normalize( void ) const;
 	inline void fillNormalize( void );
-	inline Vec4 scale( float s ) const;
-	inline void fillScale( float s );
+	inline Vec4 scale( const float s ) const;
+	inline void fillScale( const float s );
 	inline Vec4 midPointBetween( const Vec4& point ) const;
 	inline void project( Vec4& h, Vec4& v, const Vec4& n ) const;
 };
@@ -133,22 +132,23 @@ public:
 class MathVec4
 {
 public:
-	static inline void add( Vec4& out, const Vec4& v, float a );
+	static inline void add( Vec4& out, const Vec4& v, const float a );
 	static inline void add( Vec4& out, const Vec4& v1, const Vec4& v2 );
-	static inline void sub( Vec4& out, const Vec4& v, float a );
+	static inline void sub( Vec4& out, const Vec4& v, const float a );
 	static inline void sub( Vec4& out, const Vec4& v1, const Vec4& v2 );
-	static inline void mul( Vec4& out, const Vec4& v, float a );
+	static inline void mul( Vec4& out, const Vec4& v, const float a );
 	static inline void mul( Vec4& out, const Vec4& v1, const Vec4& v2 );
-	static inline void div( Vec4& out, const Vec4& v, float a );
+	static inline void div( Vec4& out, const Vec4& v, const float a );
 	static inline void div( Vec4& out, const Vec4& v1, const Vec4& v2 );
 
 	static inline void clamp( Vec4& out, const Vec4& v, const Vec4& min, const Vec4& max );
 	static inline void negate( Vec4& out, const Vec4& v );
 	static inline void normalize( Vec4& out, const Vec4& v );
-	static inline void scale( Vec4& out, const Vec4& v, float s );
+	static inline void scale( Vec4& out, const Vec4& v, const float s );
 	static inline void midPointBetween( Vec4& out, const Vec4& v1, const Vec4& v2 );
 };
 
+#include "../c/cVec4.h"
 #include "Vec4.inl"
 	
-#endif //__VEC4_HPP__
+#endif //__VEC4_H__

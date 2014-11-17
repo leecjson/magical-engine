@@ -21,127 +21,142 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cVec3.h"
+#include "cVec4.h"
 #include "cMacros.h"
 
-cBoolean magicalVec3Equals( const cVec3 v1, const cVec3 v2 )
+cBoolean magicalVec4Equals( const cVec4 v1, const cVec4 v2 )
 {
 	return
 		magicalFltEqual( v1 _x, v2 _x ) &&
 		magicalFltEqual( v1 _y, v2 _y ) &&
-		magicalFltEqual( v1 _z, v2 _z );
+		magicalFltEqual( v1 _z, v2 _z ) &&
+		magicalFltEqual( v1 _w, v2 _w );
 }
 
-cBoolean magicalVec3IsZero( const cVec3 v )
+cBoolean magicalVec4IsZero( const cVec4 v )
 {
 	return
 		magicalFltIsZero( v _x ) &&
 		magicalFltIsZero( v _y ) &&
-		magicalFltIsZero( v _z );
+		magicalFltIsZero( v _z ) &&
+		magicalFltIsZero( v _w );
 }
 
-cBoolean magicalVec3IsOne( const cVec3 v )
+cBoolean magicalVec4IsOne( const cVec4 v )
 {
 	return
 		magicalFltEqual( v _x, 1.0f ) &&
 		magicalFltEqual( v _y, 1.0f ) &&
-		magicalFltEqual( v _z, 1.0f );
+		magicalFltEqual( v _z, 1.0f ) &&
+		magicalFltEqual( v _w, 1.0f );
 }
 
-cBoolean magicalVec3IsNormalize( const cVec3 v )
+cBoolean magicalVec4IsNormalize( const cVec4 v )
 {
-	return magicalFltEqual( v _x * v _x + v _y * v _y + v _z * v _z, 1.0f );
+	return magicalFltEqual( v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w, 1.0f );
 }
 
-void magicalVec3FillScalars( cVec3 out, const float x, const float y, const float z )
+void magicalVec4FillScalars( cVec4 out, const float x, const float y, const float z, const float w )
 {
 	out _x = x;
 	out _y = y;
 	out _z = z;
+	out _w = w;
 }
 
-void magicalVec3Fill( cVec3 out, const cVec3 v )
+void magicalVec4Fill( cVec4 out, const cVec4 v )
 {
 	out _x = v _x;
 	out _y = v _y;
 	out _z = v _z;
+	out _w = v _w;
 }
 
-void magicalVec3FillZero( cVec3 out )
+void magicalVec4FillZero( cVec4 out )
 {
 	out _x = 0.0f;
 	out _y = 0.0f;
 	out _z = 0.0f;
+	out _w = 0.0f;
 }
 
-void magicalVec3FillOne( cVec3 out )
+void magicalVec4FillOne( cVec4 out )
 {
 	out _x = 1.0f;
 	out _y = 1.0f;
 	out _z = 1.0f;
+	out _w = 1.0f;
 }
 
-void magicalVec3AddScalar( cVec3 out, const cVec3 v, const float a )
+void magicalVec4AddScalar( cVec4 out, const cVec4 v, const float a )
 {
 	out _x = v _x + a;
 	out _y = v _y + a;
 	out _z = v _z + a;
+	out _w = v _w + a;
 }
 
-void magicalVec3Add( cVec3 out, const cVec3 v1, const cVec3 v2 )
+void magicalVec4Add( cVec4 out, const cVec4 v1, const cVec4 v2 )
 {
 	out _x = v1 _x + v2 _x;
 	out _y = v1 _y + v2 _y;
 	out _z = v1 _z + v2 _z;
+	out _w = v1 _w + v2 _w;
 }
 
-void magicalVec3SubScalar( cVec3 out, const cVec3 v, const float a )
+void magicalVec4SubScalar( cVec4 out, const cVec4 v, const float a )
 {
 	out _x = v _x - a;
 	out _y = v _y - a;
 	out _z = v _z - a;
+	out _w = v _w - a;
 }
 
-void magicalVec3Sub( cVec3 out, const cVec3 v1, const cVec3 v2 )
+void magicalVec4Sub( cVec4 out, const cVec4 v1, const cVec4 v2 )
 {
 	out _x = v1 _x - v2 _x;
 	out _y = v1 _y - v2 _y;
 	out _z = v1 _z - v2 _z;
+	out _w = v1 _w - v2 _w;
 }
 
-void magicalVec3MulScalar( cVec3 out, const cVec3 v, const float a )
+void magicalVec4MulScalar( cVec4 out, const cVec4 v, const float a )
 {
 	out _x = v _x * a;
 	out _y = v _y * a;
 	out _z = v _z * a;
+	out _w = v _w * a;
 }
 
-void magicalVec3Mul( cVec3 out, const cVec3 v1, const cVec3 v2 )
+void magicalVec4Mul( cVec4 out, const cVec4 v1, const cVec4 v2 )
 {
 	out _x = v1 _x * v2 _x;
 	out _y = v1 _y * v2 _y;
 	out _z = v1 _z * v2 _z;
+	out _w = v1 _w * v2 _w;
 }
 
-void magicalVec3DivScalar( cVec3 out, const cVec3 v, const float a )
+void magicalVec4DivScalar( cVec4 out, const cVec4 v, const float a )
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
 	out _x = v _x / a;
 	out _y = v _y / a;
 	out _z = v _z / a;
+	out _w = v _w / a;
 }
 
-void magicalVec3Div( cVec3 out, const cVec3 v1, const cVec3 v2 )
+void magicalVec4Div( cVec4 out, const cVec4 v1, const cVec4 v2 )
 {
-	magicalMathAssert( !magicalVec3IsZero( v2 ), "division by 0.f" );
+	magicalMathAssert( !magicalVec4IsZero( v2 ), "division by 0.f" );
 
 	out _x = v1 _x / v2 _x;
 	out _y = v1 _y / v2 _y;
 	out _z = v1 _z / v2 _z;
+	out _w = v1 _w / v2 _w;
 }
 
-float magicalVec3Dot( const cVec3 v1, const cVec3 v2 )
+float magicalVec4Dot( const cVec4 v1, const cVec4 v2 )
 {
 	/* 
 	 * 返回两个向量的点乘运算
@@ -157,10 +172,10 @@ float magicalVec3Dot( const cVec3 v1, const cVec3 v2 )
 	 *      < 0 两向量反向即将相反
 	 */
 	
-	return v1 _x * v2 _x + v1 _y * v2 _y + v1 _z * v2 _z;
+	return v1 _x * v2 _x + v1 _y * v2 _y + v1 _z * v2 _z + v1 _w * v2 _w;
 }
 
-float magicalVec3DistanceBetween( const cVec3 v1, const cVec3 v2 )
+float magicalVec4DistanceBetween( const cVec4 v1, const cVec4 v2 )
 {
 	/* 
 	 * 返回两个点之间的距离(a到b的向量d的长度)
@@ -175,11 +190,12 @@ float magicalVec3DistanceBetween( const cVec3 v1, const cVec3 v2 )
 	float dx = v2 _x - v1 _x;
 	float dy = v2 _y - v1 _y;
 	float dz = v2 _z - v1 _z;
+	float dw = v2 _w - v1 _w;
 
-	return sqrt( dx * dx + dy * dy + dz * dz );
+	return sqrt( dx * dx + dy * dy + dz * dz + dw * dw );
 }
 
-float magicalVec3DistanceBetweenSq( const cVec3 v1, const cVec3 v2 )
+float magicalVec4DistanceBetweenSq( const cVec4 v1, const cVec4 v2 )
 {
 	/* 
 	 * 返回两个点之间距离的平方
@@ -191,11 +207,12 @@ float magicalVec3DistanceBetweenSq( const cVec3 v1, const cVec3 v2 )
 	float dx = v2 _x - v1 _x;
 	float dy = v2 _y - v1 _y;
 	float dz = v2 _z - v1 _z;
+	float dw = v2 _w - v1 _w;
 
-	return dx * dx + dy * dy + dz * dz;
+	return dx * dx + dy * dy + dz * dz + dw * dw;
 }
 
-float magicalVec3Length( const cVec3 v )
+float magicalVec4Length( const cVec4 v )
 {
 	/* 
 	 * 返回这个向量的长度(大小、模)
@@ -206,10 +223,10 @@ float magicalVec3Length( const cVec3 v )
 	 *      = 1 标准化(单位)向量
 	 */
 
-	return sqrt( v _x * v _x + v _y * v _y + v _z * v _z );
+	return sqrt( v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w );
 }
 
-float magicalVec3LengthSq( const cVec3 v )
+float magicalVec4LengthSq( const cVec4 v )
 {
 	/* 
 	 * 返回这个向量长度(大小、模)的平方
@@ -219,10 +236,10 @@ float magicalVec3LengthSq( const cVec3 v )
 	 *      = 1 标准化(单位)向量
 	 */
 
-	return v _x * v _x + v _y * v _y + v _z * v _z;
+	return v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w;
 }
 
-float magicalVec3AngleBetween( const cVec3 v1, const cVec3 v2 )
+float magicalVec4AngleBetween( const cVec4 v1, const cVec4 v2 )
 {
 	/* 
 	 * 返回两个向量之间的夹角(弧度单位)
@@ -235,53 +252,23 @@ float magicalVec3AngleBetween( const cVec3 v1, const cVec3 v2 )
 	 *      = 0 两向量方向一致
 	 */
 
-	magicalMathAssert( !magicalVec3IsZero( v1 ) && !magicalVec3IsZero( v2 ), "invaild operate!" );
+	magicalMathAssert( !magicalVec4IsZero( v1 ) && !magicalVec4IsZero( v2 ), "invaild operate!" );
 
-	return magicalAcosf( magicalVec3Dot( v1, v2 ) / ( magicalVec3Length( v1 ) * magicalVec3Length( v2 ) ) );
+	return magicalAcosf( magicalVec4Dot( v1, v2 ) / ( magicalVec4Length( v1 ) * magicalVec4Length( v2 ) ) );
 }
 
-void magicalVec3Cross( cVec3 out, const cVec3 v1, const cVec3 v2 )
-{
-	/* 
-	 * 计算向量v1与向量v2的叉乘结果
-	 * 叉乘得到的向量垂直于原来的两个向量
-	 * 叉乘的结果也等于以向量v1和向量v2为两边的平行四边形面积
-	 * 叉乘公式：
-	 * [x1]   [x2]   [y1z2 - z1y2]
-	 * [y1] X [y2] = [z1x2 - x1z2]
-	 * [z2]   [z2]   [x1y2 - y1x2]
-	 *
-	 * 叉乘结果向量的长度等于向量的大小与向量夹角sin值的积
-	 * 叉乘夹角公式：length(a.cross(b)) = length(a) * length(b) * sin(angle)
-	 *
-	 * 叉乘的结果(非零)与向量v1或v2进行点乘运算，其结果为0(垂直)
-	 *
-	 * 在左手坐标系中，如果向量v1头部连接向量v2尾部呈顺时针，则叉乘结果指向观察者
-	 *
-	 * 结果范围：任意
-	 *      = {0, 0} 如果向量v1与向量v2平行或任意一个为零向量，则结果为零向量
-	 */
-
-	float rx = v1 _y * v2 _z - v1 _z * v2 _y;
-	float ry = v1 _z * v2 _x - v1 _x * v2 _z;
-	float rz = v1 _x * v2 _y - v1 _y * v2 _x;
-
-	out _x = rx;
-	out _y = ry;
-	out _z = rz;
-}
-
-void magicalVec3Clamp( cVec3 out, const cVec3 v, const cVec3 min, const cVec3 max )
+void magicalVec4Clamp( cVec4 out, const cVec4 v, const cVec4 min, const cVec4 max )
 {
 	/* 
 	 * 使点参照min与max的位置进行收缩
 	 */
 
-	magicalMathAssert( min _x <= max _x && min _y <= max _y && min _z <= max _z, "invaild operate!" );
+	magicalMathAssert( min _x <= max _x && min _y <= max _y && min _z <= max _z && min _w <= max _w, "invaild operate!" );
 
 	out _x = v _x;
 	out _y = v _y;
 	out _z = v _z;
+	out _w = v _w;
 
 	if( out _x < min _x ) out _x = min _x;
 	if( out _x > max _x ) out _x = max _x;
@@ -289,9 +276,11 @@ void magicalVec3Clamp( cVec3 out, const cVec3 v, const cVec3 min, const cVec3 ma
 	if( out _y > max _y ) out _y = max _y;
 	if( out _z < min _z ) out _z = min _z;
 	if( out _z > max _z ) out _z = max _z;
+	if( out _w < min _w ) out _w = min _w;
+	if( out _w > max _w ) out _w = max _w;
 }
 
-void magicalVec3Negate( cVec3 out, const cVec3 v )
+void magicalVec4Negate( cVec4 out, const cVec4 v )
 {
 	/* 
 	 * 计算向量倒数形式
@@ -300,9 +289,10 @@ void magicalVec3Negate( cVec3 out, const cVec3 v )
 	out _x = -v _x;
 	out _y = -v _y;
 	out _z = -v _z;
+	out _w = -v _w;
 }
 
-void magicalVec3Normalize( cVec3 out, const cVec3 v )
+void magicalVec4Normalize( cVec4 out, const cVec4 v )
 {
 	/* 
 	 * 计算标准化向量
@@ -314,8 +304,9 @@ void magicalVec3Normalize( cVec3 out, const cVec3 v )
 	out _x = v _x;
 	out _y = v _y;
 	out _z = v _z;
+	out _w = v _w;
 
-	float n = v _x * v _x + v _y * v _y + v _z * v _z;
+	float n = v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w;
 	if( magicalFltEqual( n, 1.0f ) )
 		return;
 
@@ -327,9 +318,10 @@ void magicalVec3Normalize( cVec3 out, const cVec3 v )
 	out _x *= n;
 	out _y *= n;
 	out _z *= n;
+	out _w *= n;
 }
 
-void magicalVec3Scale( cVec3 out, const cVec3 v, const float s )
+void magicalVec4Scale( cVec4 out, const cVec4 v, const float s )
 {
 	/* 
 	 * 计算与缩放因子的乘积
@@ -338,9 +330,10 @@ void magicalVec3Scale( cVec3 out, const cVec3 v, const float s )
 	out _x = v _x * s;
 	out _y = v _y * s;
 	out _z = v _z * s;
+	out _w = v _w * s;
 }
 
-void magicalVec3MidPointBetween( cVec3 out, const cVec3 v1, const cVec3 v2 )
+void magicalVec4MidPointBetween( cVec4 out, const cVec4 v1, const cVec4 v2 )
 {
 	/* 
 	 * 返回由两个点组成的线段的中点
@@ -352,9 +345,10 @@ void magicalVec3MidPointBetween( cVec3 out, const cVec3 v1, const cVec3 v2 )
 	out _x = ( v1 _x + v2 _x ) * 0.5f;
 	out _y = ( v1 _y + v2 _y ) * 0.5f;
 	out _z = ( v1 _z + v2 _z ) * 0.5f;
+	out _w = ( v1 _w + v2 _w ) * 0.5f;
 }
 
-void magicalVec3Project( cVec3 out_h, cVec3 out_v, const cVec3 p, const cVec3 n )
+void magicalVec4Project( cVec4 out_h, cVec4 out_v, const cVec4 p, const cVec4 n )
 {
 	/* 
 	 * 计算向量p到向量n的投影，结果由向量h(平行于n)和向量v(垂直于n)返回
@@ -370,27 +364,30 @@ void magicalVec3Project( cVec3 out_h, cVec3 out_v, const cVec3 p, const cVec3 n 
 	 */
 
 	float d;
-	cVec3 normalize;
+	cVec4 normalize;
 
-	magicalMathAssert( !magicalVec3IsZero( n ), "invaild operate!" );
+	magicalMathAssert( !magicalVec4IsZero( n ), "invaild operate!" );
 	
-	magicalVec3Normalize( normalize, n );
-	d = magicalVec3Dot( p, normalize );
+	magicalVec4Normalize( normalize, n );
+	d = magicalVec4Dot( p, normalize );
 
 	out_h _x = normalize _x * d;
 	out_h _y = normalize _y * d;
 	out_h _z = normalize _z * d;
+	out_h _w = normalize _w * d;
 
-	if( magicalVec3Equals( out_h, p ) )
+	if( magicalVec4Equals( out_h, p ) )
 	{
 		out_v _x = 0.0f;
 		out_v _y = 0.0f;
 		out_v _z = 0.0f;
+		out_v _w = 0.0f;
 	}
 	else
 	{
 		out_v _x = p _x - out_h _x;
 		out_v _y = p _y - out_h _y;
 		out_v _z = p _z - out_h _z;
+		out_v _w = p _w - out_h _w;
 	}
 }

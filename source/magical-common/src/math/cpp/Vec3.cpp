@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Vec3.h"
+#include <exception>
 
 const Vec3 Vec3::Zero = Vec3( 0.0f, 0.0f, 0.0f );
 const Vec3 Vec3::One = Vec3( 1.0f, 1.0f, 1.0f );
@@ -46,7 +47,7 @@ Vec3 Vec3::temp_7 = Vec3( 0.0f, 0.0f, 0.0f );
 Vec3 Vec3::temp_8 = Vec3( 0.0f, 0.0f, 0.0f );
 Vec3 Vec3::temp_9 = Vec3( 0.0f, 0.0f, 0.0f );
 
-Vec3::Vec3( float x, float y, float z )
+Vec3::Vec3( const float x, const float y, const float z )
 : x( x )
 , y( y )
 , z( z )
@@ -71,3 +72,36 @@ Vec3::Vec3( void )
 }
 
 
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachedPool.h"
+static CachedPool<Vec3> s_vec3_cached_pool( 1024, 1024 );
+#endif
+
+void* Vec3::operator new( size_t s )
+{
+	if( s != sizeof( Vec3 ) )
+		return ::operator new( s );
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	return s_vec3_cached_pool.take();
+#else
+	void* ptr = malloc( s );
+
+	if( ptr == nullptr )
+		throw std::bad_alloc();
+	
+	return ptr;
+#endif
+}
+
+void Vec3::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_vec3_cached_pool.add( ptr );
+#else
+	free( ptr );
+#endif
+}

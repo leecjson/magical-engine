@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Vec4.h"
+#include <exception>
 
 const Vec4 Vec4::Zero = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 const Vec4 Vec4::One = Vec4( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -36,6 +37,8 @@ const Vec4 Vec4::Space1 = Vec4( 0.0f, 0.0f, 0.0f, 1.0f );
 Vec4 Vec4::placeholder_1 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::placeholder_2 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::placeholder_3 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::temp_1 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::temp_2 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::temp_3 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::temp_4 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -45,7 +48,7 @@ Vec4 Vec4::temp_7 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::temp_8 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::temp_9 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 
-Vec4::Vec4( float x, float y, float z, float w )
+Vec4::Vec4( const float x, const float y, const float z, const float w )
 : x( x )
 , y( y )
 , z( z )
@@ -70,4 +73,38 @@ Vec4::Vec4( void )
 , w( 0.0f )
 {
 
+}
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachedPool.h"
+static CachedPool<Vec4> s_vec4_cached_pool( 1024, 1024 );
+#endif
+
+void* Vec4::operator new( size_t s )
+{
+	if( s != sizeof( Vec4 ) )
+		return ::operator new( s );
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	return s_vec4_cached_pool.take();
+#else
+	void* ptr = malloc( s );
+
+	if( ptr == nullptr )
+		throw std::bad_alloc();
+	
+	return ptr;
+#endif
+}
+
+void Vec4::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_vec4_cached_pool.add( ptr );
+#else
+	free( ptr );
+#endif
 }

@@ -22,9 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cVec2.h"
-
-#define _x [0x0]
-#define _y [0x1]
+#include "cMacros.h"
 
 cBoolean magicalVec2Equals( const cVec2 v1, const cVec2 v2 )
 {
@@ -46,13 +44,13 @@ cBoolean magicalVec2IsNormalize( const cVec2 v )
 	return magicalFltEqual( v _x * v _x + v _y * v _y, 1.0f );
 }
 
-void magicalVec2Fill( cVec2 out, float x, float y )
+void magicalVec2FillScalars( cVec2 out, const float x, const float y )
 {
 	out _x = x;
 	out _y = y;
 }
 
-void magicalVec2FillBy( cVec2 out, const cVec2 v )
+void magicalVec2Fill( cVec2 out, const cVec2 v )
 {
 	out _x = v _x;
 	out _y = v _y;
@@ -70,7 +68,7 @@ void magicalVec2FillOne( cVec2 out )
 	out _y = 1.0f;
 }
 
-void magicalVec2AddScalar( cVec2 out, const cVec2 v, float a )
+void magicalVec2AddScalar( cVec2 out, const cVec2 v, const float a )
 {
 	out _x = v _x + a;
 	out _y = v _y + a;
@@ -82,7 +80,7 @@ void magicalVec2Add( cVec2 out, const cVec2 v1, const cVec2 v2 )
 	out _y = v1 _y + v2 _y;
 }
 
-void magicalVec2SubScalar( cVec2 out, const cVec2 v, float a )
+void magicalVec2SubScalar( cVec2 out, const cVec2 v, const float a )
 {
 	out _x = v _x - a;
 	out _y = v _y - a;
@@ -94,7 +92,7 @@ void magicalVec2Sub( cVec2 out, const cVec2 v1, const cVec2 v2 )
 	out _y = v1 _y - v2 _y;
 }
 
-void magicalVec2MulScalar( cVec2 out, const cVec2 v, float a )
+void magicalVec2MulScalar( cVec2 out, const cVec2 v, const float a )
 {
 	out _x = v _x * a;
 	out _y = v _y * a;
@@ -106,7 +104,7 @@ void magicalVec2Mul( cVec2 out, const cVec2 v1, const cVec2 v2 )
 	out _y = v1 _y * v2 _y;
 }
 
-void magicalVec2DivScalar( cVec2 out, const cVec2 v, float a )
+void magicalVec2DivScalar( cVec2 out, const cVec2 v, const float a )
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -271,7 +269,7 @@ void magicalVec2Normalize( cVec2 out, const cVec2 v )
 	out _y *= n;
 }
 
-void magicalVec2Rotate( cVec2 out, const cVec2 v, const cVec2 point, float angle )
+void magicalVec2Rotate( cVec2 out, const cVec2 v, const cVec2 point, const float angle )
 {
 	/* 
 	 * 计算以point为中心点旋转angle(弧度)之后的向量
@@ -298,7 +296,7 @@ void magicalVec2Rotate( cVec2 out, const cVec2 v, const cVec2 point, float angle
 	}
 }
 
-void magicalVec2Scale( cVec2 out, const cVec2 v, float s )
+void magicalVec2Scale( cVec2 out, const cVec2 v, const float s )
 {
 	/* 
 	 * 计算与缩放因子的乘积
@@ -347,7 +345,7 @@ void magicalVec2Project( cVec2 out_h, cVec2 out_v, const cVec2 p, const cVec2 n 
 	out_h _x = normalize _x * d;
 	out_h _y = normalize _y * d;
 
-	if( magicalVec2Equal( out_h, p ) )
+	if( magicalVec2Equals( out_h, p ) )
 	{
 		out_v _x = 0.0f;
 		out_v _y = 0.0f;

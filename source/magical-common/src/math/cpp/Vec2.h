@@ -52,7 +52,7 @@ public:
 	float x;
 	float y;
 
-	Vec2( float x, float y );
+	Vec2( const float x, const float y );
 	Vec2( const Vec2& v );
 	Vec2( void );
 
@@ -66,41 +66,41 @@ public:
 	inline bool isOne( void ) const;
 	inline bool isNormalize( void ) const;
 
-	inline Vec2 operator+( float a ) const;
+	inline Vec2 operator+( const float a ) const;
 	inline Vec2 operator+( const Vec2& v ) const;
-	inline Vec2 operator-( float a ) const;
+	inline Vec2 operator-( const float a ) const;
 	inline Vec2 operator-( const Vec2& v ) const;
-	inline Vec2 operator*( float a ) const;
+	inline Vec2 operator*( const float a ) const;
 	inline Vec2 operator*( const Vec2& v ) const;
-	inline Vec2 operator/( float a ) const;
+	inline Vec2 operator/( const float a ) const;
 	inline Vec2 operator/( const Vec2& v ) const;
-	inline Vec2& operator+=( float a );
+	inline Vec2& operator+=( const float a );
 	inline Vec2& operator+=( const Vec2& v );
-	inline Vec2& operator-=( float a );
+	inline Vec2& operator-=( const float a );
 	inline Vec2& operator-=( const Vec2& v );
-	inline Vec2& operator*=( float a );
+	inline Vec2& operator*=( const float a );
 	inline Vec2& operator*=( const Vec2& v );
-	inline Vec2& operator/=( float a );
+	inline Vec2& operator/=( const float a );
 	inline Vec2& operator/=( const Vec2& v );
 	inline Vec2& operator=( const Vec2& v );
 
-	inline Vec2 add( float a ) const;
+	inline Vec2 add( const float a ) const;
 	inline Vec2 add( const Vec2& v ) const;
-	inline Vec2 sub( float a ) const;
+	inline Vec2 sub( const float a ) const;
 	inline Vec2 sub( const Vec2& v ) const;
-	inline Vec2 mul( float a ) const;
+	inline Vec2 mul( const float a ) const;
 	inline Vec2 mul( const Vec2& v ) const;
-	inline Vec2 div( float a ) const;
+	inline Vec2 div( const float a ) const;
 	inline Vec2 div( const Vec2& v ) const;
-	inline void addfill( float a );
+	inline void addfill( const float a );
 	inline void addfill( const Vec2& v );
-	inline void subfill( float a );
+	inline void subfill( const float a );
 	inline void subfill( const Vec2& v );
-	inline void mulfill( float a );
+	inline void mulfill( const float a );
 	inline void mulfill( const Vec2& v );
-	inline void divfill( float a );
+	inline void divfill( const float a );
 	inline void divfill( const Vec2& v );
-	inline void fill( float x, float y );
+	inline void fill( const float x, const float y );
 	inline void fill( const Vec2& v );
 	inline void fillZero( void );
 	inline void fillOne( void );
@@ -118,10 +118,10 @@ public:
 	inline void fillNegate( void );
 	inline Vec2 normalize( void ) const;
 	inline void fillNormalize( void );
-	inline Vec2 rotate( const Vec2& point, float angle ) const;
-	inline void fillRotate( const Vec2& point, float angle );
-	inline Vec2 scale( float s ) const;
-	inline void fillScale( float s );
+	inline Vec2 rotate( const Vec2& point, const float angle ) const;
+	inline void fillRotate( const Vec2& point, const float angle );
+	inline Vec2 scale( const float s ) const;
+	inline void fillScale( const float s );
 	inline Vec2 midPointBetween( const Vec2& point ) const;
 	inline void project( Vec2& h, Vec2& v, const Vec2& n ) const;
 };
@@ -129,20 +129,20 @@ public:
 class MathVec2
 {
 public:
-	static inline void add( Vec2& out, const Vec2& v, float a );
+	static inline void add( Vec2& out, const Vec2& v, const float a );
 	static inline void add( Vec2& out, const Vec2& v1, const Vec2& v2 );
-	static inline void sub( Vec2& out, const Vec2& v, float a );
+	static inline void sub( Vec2& out, const Vec2& v, const float a );
 	static inline void sub( Vec2& out, const Vec2& v1, const Vec2& v2 );
-	static inline void mul( Vec2& out, const Vec2& v, float a );
+	static inline void mul( Vec2& out, const Vec2& v, const float a );
 	static inline void mul( Vec2& out, const Vec2& v1, const Vec2& v2 );
-	static inline void div( Vec2& out, const Vec2& v, float a );
+	static inline void div( Vec2& out, const Vec2& v, const float a );
 	static inline void div( Vec2& out, const Vec2& v1, const Vec2& v2 );
 
 	static inline void clamp( Vec2& out, const Vec2& v, const Vec2& min, const Vec2& max );
 	static inline void negate( Vec2& out, const Vec2& v );
 	static inline void normalize( Vec2& out, const Vec2& v );
-	static inline void rotate( Vec2& out, const Vec2& v, const Vec2& point, float angle );
-	static inline void scale( Vec2& out, const Vec2& v, float s );
+	static inline void rotate( Vec2& out, const Vec2& v, const Vec2& point, const float angle );
+	static inline void scale( Vec2& out, const Vec2& v, const float s );
 	static inline void midPointBetween( Vec2& out, const Vec2& v1, const Vec2& v2 );
 };
 

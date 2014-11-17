@@ -30,8 +30,11 @@
     <ClCompile Include="..\src\math\cpp\Vec2.cpp" />
     <ClCompile Include="..\src\math\cpp\Vec3.cpp" />
     <ClCompile Include="..\src\math\cpp\Vec4.cpp" />
+    <ClCompile Include="..\src\math\c\cMat4.c" />
+    <ClCompile Include="..\src\math\c\cQuaternion.c" />
     <ClCompile Include="..\src\math\c\cVec2.c" />
     <ClCompile Include="..\src\math\c\cVec3.c" />
+    <ClCompile Include="..\src\math\c\cVec4.c" />
     <ClCompile Include="..\src\transform\Transform.cpp" />
     <ClCompile Include="..\src\utils\Utils.cpp" />
   </ItemGroup>
@@ -61,8 +64,12 @@
     <ClInclude Include="..\src\math\cpp\Vec2.h" />
     <ClInclude Include="..\src\math\cpp\Vec3.h" />
     <ClInclude Include="..\src\math\cpp\Vec4.h" />
+    <ClInclude Include="..\src\math\c\cMacros.h" />
+    <ClInclude Include="..\src\math\c\cMat4.h" />
+    <ClInclude Include="..\src\math\c\cQuaternion.h" />
     <ClInclude Include="..\src\math\c\cVec2.h" />
     <ClInclude Include="..\src\math\c\cVec3.h" />
+    <ClInclude Include="..\src\math\c\cVec4.h" />
     <ClInclude Include="..\src\math\MathMacros.h" />
     <ClInclude Include="..\src\PlatformMacros.h" />
     <ClInclude Include="..\src\transform\Transform.h" />

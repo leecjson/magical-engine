@@ -37,18 +37,18 @@ MAGICALAPI_MATH cBoolean magicalVec3IsZero( const cVec3 v );
 MAGICALAPI_MATH cBoolean magicalVec3IsOne( const cVec3 v );
 MAGICALAPI_MATH cBoolean magicalVec3IsNormalize( const cVec3 v );
 
-MAGICALAPI_MATH void magicalVec3Fill( cVec3 out, float x, float y, float z );
-MAGICALAPI_MATH void magicalVec3FillBy( cVec3 out, const cVec3 v );
+MAGICALAPI_MATH void magicalVec3FillScalars( cVec3 out, const float x, const float y, const float z );
+MAGICALAPI_MATH void magicalVec3Fill( cVec3 out, const cVec3 v );
 MAGICALAPI_MATH void magicalVec3FillZero( cVec3 out );
 MAGICALAPI_MATH void magicalVec3FillOne( cVec3 out );
 
-MAGICALAPI_MATH void magicalVec3AddScalar( cVec3 out, const cVec3 v, float a );
+MAGICALAPI_MATH void magicalVec3AddScalar( cVec3 out, const cVec3 v, const float a );
 MAGICALAPI_MATH void magicalVec3Add( cVec3 out, const cVec3 v1, const cVec3 v2 );
-MAGICALAPI_MATH void magicalVec3SubScalar( cVec3 out, const cVec3 v, float a );
+MAGICALAPI_MATH void magicalVec3SubScalar( cVec3 out, const cVec3 v, const float a );
 MAGICALAPI_MATH void magicalVec3Sub( cVec3 out, const cVec3 v1, const cVec3 v2 );
-MAGICALAPI_MATH void magicalVec3MulScalar( cVec3 out, const cVec3 v, float a );
+MAGICALAPI_MATH void magicalVec3MulScalar( cVec3 out, const cVec3 v, const float a );
 MAGICALAPI_MATH void magicalVec3Mul( cVec3 out, const cVec3 v1, const cVec3 v2 );
-MAGICALAPI_MATH void magicalVec3DivScalar( cVec3 out, const cVec3 v, float a );
+MAGICALAPI_MATH void magicalVec3DivScalar( cVec3 out, const cVec3 v, const float a );
 MAGICALAPI_MATH void magicalVec3Div( cVec3 out, const cVec3 v1, const cVec3 v2 );
 
 MAGICALAPI_MATH float magicalVec3Dot( const cVec3 v1, const cVec3 v2 );
@@ -62,7 +62,7 @@ MAGICALAPI_MATH void magicalVec3Cross( cVec3 out, const cVec3 v1, const cVec3 v2
 MAGICALAPI_MATH void magicalVec3Clamp( cVec3 out, const cVec3 v, const cVec3 min, const cVec3 max );
 MAGICALAPI_MATH void magicalVec3Negate( cVec3 out, const cVec3 v );
 MAGICALAPI_MATH void magicalVec3Normalize( cVec3 out, const cVec3 v );
-MAGICALAPI_MATH void magicalVec3Scale( cVec3 out, const cVec3 v, float s );
+MAGICALAPI_MATH void magicalVec3Scale( cVec3 out, const cVec3 v, const float s );
 MAGICALAPI_MATH void magicalVec3MidPointBetween( cVec3 out, const cVec3 v1, const cVec3 v2 );
 MAGICALAPI_MATH void magicalVec3Project( cVec3 out_h, cVec3 out_v, const cVec3 p, const cVec3 n );
 

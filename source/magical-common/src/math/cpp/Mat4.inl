@@ -23,357 +23,272 @@ SOFTWARE.
 *******************************************************************************/
 
 inline void Mat4::fill(
-	float rm11, float rm12, float rm13, float rm14,
-	float rm21, float rm22, float rm23, float rm24,
-	float rm31, float rm32, float rm33, float rm34,
-	float rm41, float rm42, float rm43, float rm44 )
+	const float rm11, const float rm12, const float rm13, const float rm14,
+    const float rm21, const float rm22, const float rm23, const float rm24,
+    const float rm31, const float rm32, const float rm33, const float rm34,
+    const float rm41, const float rm42, const float rm43, const float rm44 )
 {
-	m11 = rm11; m12 = rm12; m13 = rm13; m14 = rm14;
-	m21 = rm21; m22 = rm22; m23 = rm23; m24 = rm24;
-	m31 = rm31; m32 = rm32; m33 = rm33; m34 = rm34;
-	m41 = rm41; m42 = rm42; m43 = rm43; m44 = rm44;
+	magicalMat4FillScalars( 
+		m,
+		rm11, rm12, rm13, rm14,
+		rm21, rm22, rm23, rm24,
+		rm31, rm32, rm33, rm34,
+		rm41, rm42, rm43, rm44 
+	);
 }
 
 inline bool Mat4::operator==( const Mat4& mat ) const
 {
-	return memcmp( mat.m, m, MAGICAL_MAT4_SIZE ) == 0;
+	return magicalMat4Equals( m, mat.m );
 }
 
 inline bool Mat4::operator!=( const Mat4& mat ) const
 {
-	return !( operator==( mat ) );
+	return !magicalMat4Equals( m, mat.m );
 }
 
 inline bool Mat4::isIdentity( void ) const
 {
-	return memcmp( Identity.m, m, MAGICAL_MAT4_SIZE ) == 0;
+	return magicalMat4IsIdentity( m );
 }
 
 inline bool Mat4::isEquals( const Mat4& mat ) const
 {
-	return memcmp( mat.m, m, MAGICAL_MAT4_SIZE ) == 0;
+	return magicalMat4Equals( m, mat.m );
 }
 
-inline Mat4 Mat4::operator+( float a ) const
+inline Mat4 Mat4::operator*( const float a ) const
 {
-	return add( a );
-}
-
-inline Mat4 Mat4::operator+( const Mat4& mat ) const
-{
-	return add( mat );
-}
-
-inline Mat4 Mat4::operator-( float a ) const
-{
-	return sub( a );
-}
-
-inline Mat4 Mat4::operator-( const Mat4& mat ) const
-{
-	return sub( mat );
-}
-
-inline Mat4 Mat4::operator*( float a ) const
-{
-	return mul( a );
+	Mat4 ret;
+	magicalMat4MulScalar( ret.m, m, a );
+	return ret;
 }
 
 inline Mat4 Mat4::operator*( const Mat4& mat ) const
 {
-	return mul( mat );
+	Mat4 ret;
+	magicalMat4Mul( ret.m, m, mat.m );
+	return ret;
 }
 
-inline Mat4& Mat4::operator+=( float a )
+inline Mat4& Mat4::operator*=( const float a )
 {
-	addfill( a );
-	return *this;
-}
-
-inline Mat4& Mat4::operator+=( const Mat4& mat )
-{
-	addfill( mat );
-	return *this;
-}
-
-inline Mat4& Mat4::operator-=( float a )
-{
-	subfill( a );
-	return *this;
-}
-
-inline Mat4& Mat4::operator-=( const Mat4& mat )
-{
-	subfill( mat );
-	return *this;
-}
-
-inline Mat4& Mat4::operator*=( float a )
-{
-	mulfill( a );
+	magicalMat4MulScalar( m, m, a );
 	return *this;
 }
 
 inline Mat4& Mat4::operator*=( const Mat4& mat )
 {
-	mulfill( mat );
+	magicalMat4Mul( m, m, mat.m );
 	return *this;
 }
 
 inline Mat4& Mat4::operator=( const Mat4& mat )
 {
-	memcpy( m, mat.m, MAGICAL_MAT4_SIZE );
+	magicalMat4Fill( m, mat.m );
 	return *this;
 }
 
-inline void Mat4::fill( const float* m )
+inline Mat4 Mat4::mul( const float a ) const
 {
-	magicalAssert( m, "should not be nullptr" );
-	memcpy( this->m, m, MAGICAL_MAT4_SIZE );
+	Mat4 ret;
+	magicalMat4MulScalar( ret.m, m, a );
+	return ret;
+}
+
+inline Mat4 Mat4::mul( const Mat4& mat ) const
+{
+	Mat4 ret;
+	magicalMat4Mul( ret.m, m, mat.m );
+	return ret;
+}
+
+inline void Mat4::mulfill( const float a )
+{
+	magicalMat4MulScalar( m, m, a );
+}
+
+inline void Mat4::mulfill( const Mat4& mat )
+{
+	magicalMat4Mul( m, m, mat.m );
+}
+
+inline Vec3 Mat4::transformVec3( const Vec3& v ) const
+{
+	Vec3 ret;
+	magicalMat4TransformVec3( TOFLOAT( &ret ), m, TOFLOAT( &v ) );
+	return ret;
+}
+
+inline Vec4 Mat4::transformVec4( const Vec4& v ) const
+{
+	Vec4 ret;
+	magicalMat4TransformVec4( TOFLOAT( &ret ), m, TOFLOAT( &v ) );
+	return ret;
+}
+
+inline void Mat4::fill( const float* mat )
+{
+	magicalMat4FillVector( m, mat );
 }
 
 inline void Mat4::fill( const Mat4& mat )
 {
-	memcpy( m, mat.m, MAGICAL_MAT4_SIZE );
-}
-
-inline void Mat4::fillZero( void )
-{
-	memset( m, 0, MAGICAL_MAT4_SIZE );
+	magicalMat4Fill( m, mat.m );
 }
 
 inline void Mat4::fillIdentity( void )
 {
-	memcpy( m, Identity.m, MAGICAL_MAT4_SIZE );
+	magicalMat4FillIdentity( m );
 }
 
-inline void Mat4::fillTranslation( float x, float y, float z )
+inline void Mat4::fillTranslation( const float x, const float y, const float z )
 {
-	fillIdentity();
-
-    m41 = x;
-    m42 = y;
-    m43 = z;
+	magicalMat4FillTranslation( m, x, y, z );
 }
 
 inline void Mat4::fillTranslation( const Vec3& t )
 {
-	fillIdentity();
-
-	m41 = t.x;
-	m42 = t.y;
-	m43 = t.z;
+	magicalMat4FillTranslationVector( m, TOFLOAT( &t ) );
 }
 
-inline void Mat4::fillRotationX( float rad )
+inline void Mat4::fillScaling( const float x, const float y, const float z )
 {
-	fillIdentity();
-
-	float c = magicalCosf( rad );
-	float s = magicalSinf( rad );
-
-	m22 = c;
-	m23 = s;
-	m32 = -s;
-	m33 = c;
+	magicalMat4FillScaling( m, x, y, z );
 }
 
-inline void Mat4::fillRotationY( float rad )
+inline void Mat4::fillScaling( const Vec3& s )
 {
-	fillIdentity();
-
-	float c = magicalCosf( rad );
-	float s = magicalSinf( rad );
-
-	m11 = c;
-	m13 = -s;
-	m31 = s;
-	m33 = c;
+    magicalMat4FillScalingVector( m, TOFLOAT( &s ) );
 }
 
-inline void Mat4::fillRotationZ( float rad )
+inline void Mat4::fillRotationX( const float angle )
 {
-	fillIdentity();
-
-	float c = magicalCosf( rad );
-	float s = magicalSinf( rad );
-
-	m11 = c;
-	m12 = s;
-	m21 = -s;
-	m22 = c;
+	magicalMat4FillRotationX( m, angle );
 }
 
-inline void Mat4::fillScale( float x, float y, float z )
+inline void Mat4::fillRotationY( const float angle )
 {
-	fillIdentity();
-
-    m11 = x;
-    m22 = y;
-    m33 = z;
+	magicalMat4FillRotationY( m, angle );
 }
 
-inline void Mat4::fillScale( const Vec3& s )
+inline void Mat4::fillRotationZ( const float angle )
 {
-    fillIdentity();
-
-	m11 = s.x;
-	m22 = s.y;
-    m33 = s.z;
+	magicalMat4FillRotationZ( m, angle );
 }
 
-inline void Mat4::translate( float x, float y, float z )
+inline void Mat4::fillRotationPitchYawRoll( const float pitch, const float yaw, const float roll )
 {
-	Mat4 dst;
-	dst.fillTranslation( x, y, z );
-	mulfill( dst );
+	magicalMat4FillRotationPitchYawRoll( m, pitch, yaw, roll );
+}
+
+inline void Mat4::fillRotationQuaternion( const Quaternion& r )
+{
+	magicalMat4FillRotationQuaternion( m, TOFLOAT( &r ) );
+}
+
+inline void Mat4::fillRotationAxisAngle( const Vec3& axis, const float angle )
+{
+	magicalMat4FillRotationAxisAngle( m, TOFLOAT( &axis ), angle );
+}
+
+inline void Mat4::fillLookAt( const Vec3& eye, const Vec3& target, const Vec3& up )
+{
+	magicalMat4FillLookAt( m, TOFLOAT( &eye ), TOFLOAT( &target ), TOFLOAT( &up ) );
+}
+
+inline void Mat4::fillPerspective( const float fov, const float aspect, const float znear, const float zfar )
+{
+	magicalMat4FillPerspective( m, fov, aspect, znear, zfar );
+}
+
+inline void Mat4::fillOrthographic( const float left, const float right, const float bottom, const float top, const float near, const float far )
+{
+	magicalMat4FillOrthographic( m, left, right, bottom, top, near, far );
+}
+
+inline void Mat4::translate( const float x, const float y, const float z )
+{
+	magicalMat4Translate( m, m, x, y, z );
 }
 
 inline void Mat4::translate( const Vec3& t )
 {
-	Mat4 dst;
-	dst.fillTranslation( t );
-	mulfill( dst );
+	magicalMat4TranslateVector( m, m, TOFLOAT( &t ) );
 }
 
-inline void Mat4::rotateX( float angle )
+inline void Mat4::scale( const float x, const float y, const float z )
 {
-	Mat4 dst;
-	dst.fillRotationX( angle );
-	mulfill( dst );
-}
-
-inline void Mat4::rotateY( float angle )
-{
-	Mat4 dst;
-	dst.fillRotationY( angle );
-	mulfill( dst );
-}
-
-inline void Mat4::rotateZ( float angle )
-{
-	Mat4 dst;
-	dst.fillRotationZ( angle );
-	mulfill( dst );
-}
-
-inline void Mat4::rotate( const Quaternion& r )
-{
-	Mat4 dst;
-	dst.fillRotation( r );
-	mulfill( dst );
-}
-
-inline void Mat4::rotate( const Vec3& axis, float angle )
-{
-	Mat4 dst;
-	dst.fillRotation( axis, angle );
-	mulfill( dst );
-}
-
-inline void Mat4::scale( float s )
-{
-	Mat4 dst;
-	dst.fillScale( s, s, s );
-	mulfill( dst );
-}
-
-inline void Mat4::scale( float x, float y, float z )
-{
-	Mat4 dst;
-	dst.fillScale( x, y, z );
-	mulfill( dst );
+	magicalMat4Scale( m, m, x, y, z );
 }
 
 inline void Mat4::scale( const Vec3& s )
 {
+	magicalMat4ScaleVector( m, m, TOFLOAT( &s ) );
+}
+
+inline void Mat4::rotateX( const float angle )
+{
+	magicalMat4RotateX( m, m, angle );
+}
+
+inline void Mat4::rotateY( const float angle )
+{
+	magicalMat4RotateY( m, m, angle );
+}
+
+inline void Mat4::rotateZ( const float angle )
+{
+	magicalMat4RotateZ( m, m, angle );
+}
+
+inline void Mat4::rotatePitchYawRoll( const float pitch, const float yaw, const float roll )
+{
+	magicalMat4RotatePitchYawRoll( m, m, pitch, yaw, roll );
+}
+
+inline void Mat4::rotateQuaternion( const Quaternion& r )
+{
+	magicalMat4RotateQuaternion( m, m, TOFLOAT( &r ) );
+}
+
+inline void Mat4::rotateAxisAngle( const Vec3& axis, const float angle )
+{
+	magicalMat4RotateAxisAngle( m, m, TOFLOAT( &axis ), angle );
+}
+
+inline float Mat4::determinant( void ) const
+{
+	return magicalMat4Determinant( m );
+}
+
+inline bool Mat4::inverse( Mat4& out ) const
+{
+	return magicalMat4Inverse( out.m, m );
+}
+
+inline Mat4 Mat4::transpose( void ) const
+{
 	Mat4 dst;
-	dst.fillScale( s );
-	mulfill( dst );
-}
-
-inline Mat4 Mat4::getTranspose( void ) const
-{
-	Mat4 dst( *this );
-	dst.transpose();
+	magicalMat4Transpose( dst.m, m );
 	return dst;
 }
 
-inline Mat4 Mat4::getNegate( void ) const
+inline void Mat4::fillTranspose( void )
 {
-	Mat4 dst( *this );
-	dst.negate();
+	magicalMat4Transpose( m, m );
+}
+
+inline Mat4 Mat4::negate( void ) const
+{
+	Mat4 dst;
+	magicalMat4Negate( dst.m, m );
 	return dst;
 }
 
-inline Mat4 Mat4::getTranslate( float x, float y, float z ) const
+inline void Mat4::fillNegate( void )
 {
-	Mat4 dst( *this );
-	dst.translate( x, y, z );
-	return dst;
-}
-
-inline Mat4 Mat4::getTranslate( const Vec3& t ) const
-{
-	Mat4 dst( *this );
-	dst.translate( t );
-	return dst;
-}
-
-inline Mat4 Mat4::getRotateX( float angle ) const
-{
-	Mat4 dst( *this );
-	dst.rotateX( angle );
-	return dst;
-}
-
-inline Mat4 Mat4::getRotateY( float angle ) const
-{
-	Mat4 dst( *this );
-	dst.rotateY( angle );
-	return dst;
-}
-
-inline Mat4 Mat4::getRotateZ( float angle ) const
-{
-	Mat4 dst( *this );
-	dst.rotateZ( angle );
-	return dst;
-}
-
-inline Mat4 Mat4::getRotate( const Quaternion& r ) const
-{
-	Mat4 dst( *this );
-	dst.rotate( r );
-	return dst;
-}
-
-inline Mat4 Mat4::getRotate( const Vec3& axis, float angle ) const
-{
-	Mat4 dst( *this );
-	dst.rotate( axis, angle );
-	return dst;
-}
-
-inline Mat4 Mat4::getScale( float s ) const
-{
-	Mat4 dst( *this );
-	dst.scale( s );
-	return dst;
-}
-
-inline Mat4 Mat4::getScale( float x, float y, float z ) const
-{
-	Mat4 dst( *this );
-	dst.scale( x, y, z );
-	return dst;
-}
-
-inline Mat4 Mat4::getScale( const Vec3& s ) const
-{
-	Mat4 dst( *this );
-	dst.scale( s );
-	return dst;
+	magicalMat4Negate( m, m );
 }
 
 inline Vec3 Mat4::getUpVector( void ) const
@@ -406,148 +321,138 @@ inline Vec3 Mat4::getBackVector( void ) const
 	return Vec3( m31, m32, m33 );
 }
 
-inline Vec3 Mat4::transformPoint( const Vec3& point ) const
+//inline Vec3 Mat4::getTranslation( void ) const
+//{
+//	Vec3 translation;
+//	decompose( &translation, nullptr, nullptr );
+//	return translation;
+//}
+//
+//inline Quaternion Mat4::getRotation( void ) const
+//{
+//	Quaternion rotation;
+//	decompose( nullptr, &rotation, nullptr );
+//	return rotation;
+//}
+//
+//inline Vec3 Mat4::getScale( void ) const
+//{
+//	Vec3 scale;
+//	decompose( nullptr, nullptr, &scale );
+//	return scale;
+//}
+
+inline void MathMat4::mul( Mat4& out, const Mat4& mat, const float a )
 {
-	return transformVec3( point );
+	magicalMat4MulScalar( out.m, mat.m, a );
 }
 
-inline Vec3 Mat4::getTranslation( void ) const
+inline void MathMat4::mul( Mat4& out, const Mat4& mat1, const Mat4& mat2 )
 {
-	Vec3 translation;
-	decompose( &translation, nullptr, nullptr );
-	return translation;
-}
-
-inline Quaternion Mat4::getRotation( void ) const
-{
-	Quaternion rotation;
-	decompose( nullptr, &rotation, nullptr );
-	return rotation;
-}
-
-inline Vec3 Mat4::getScale( void ) const
-{
-	Vec3 scale;
-	decompose( nullptr, nullptr, &scale );
-	return scale;
-}
-
-inline bool MathMat4::getInverse( Mat4& out, const Mat4& mat )
-{
-	return mat.getInverse( out );
-}
-
-inline void MathMat4::translate( Mat4& out, const Mat4& mat, float x, float y, float z )
-{
-	Mat4 dst;
-	dst.fillTranslation( x, y, z );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::translate( Mat4& out, const Mat4& mat, const Vec3& t )
-{
-	Mat4 dst;
-	dst.fillTranslation( t );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::rotateX( Mat4& out, const Mat4& mat, float angle )
-{
-	Mat4 dst;
-	dst.fillRotationX( angle );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::rotateY( Mat4& out, const Mat4& mat, float angle )
-{
-	Mat4 dst;
-	dst.fillRotationY( angle );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::rotateZ( Mat4& out, const Mat4& mat, float angle )
-{
-	Mat4 dst;
-	dst.fillRotationZ( angle );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::rotate( Mat4& out, const Mat4& mat, const Quaternion& r )
-{
-	Mat4 dst;
-	dst.fillRotation( r );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::rotate( Mat4& out, const Mat4& mat, const Vec3& axis, float angle )
-{
-	Mat4 dst;
-	dst.fillRotation( axis, angle );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::scale( Mat4& out, const Mat4& mat, float s )
-{
-	Mat4 dst;
-	dst.fillScale( s, s, s );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::scale( Mat4& out, const Mat4& mat, float x, float y, float z )
-{
-	Mat4 dst;
-	dst.fillScale( x, y, z );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::scale( Mat4& out, const Mat4& mat, const Vec3& s )
-{
-	Mat4 dst;
-	dst.fillScale( s );
-	mul( out, mat, dst );
-}
-
-inline void MathMat4::getUpVector( Vec3& out, const Mat4& mat )
-{
-	out = mat.getUpVector();
-}
-
-inline void MathMat4::getDownVector( Vec3& out, const Mat4& mat )
-{
-	out = mat.getDownVector();
-}
-
-inline void MathMat4::getLeftVector( Vec3& out, const Mat4& mat )
-{
-	out = mat.getLeftVector();
-}
-
-inline void MathMat4::getRightVector( Vec3& out, const Mat4& mat )
-{
-	out = mat.getRightVector();
-}
-
-inline void MathMat4::getForwardVector( Vec3& out, const Mat4& mat )
-{
-	out = mat.getForwardVector();
-}
-
-inline void MathMat4::getBackVector( Vec3& out, const Mat4& mat )
-{
-	out = mat.getBackVector();
-}
-
-inline void MathMat4::transformPoint( Vec3& out, const Mat4& mat, const Vec3& point )
-{
-	out = mat.transformPoint( point );
+	magicalMat4Mul( out.m, mat1.m, mat2.m );
 }
 
 inline void MathMat4::transformVec3( Vec3& out, const Mat4& mat, const Vec3& v )
 {
-	out = mat.transformVec3( v );
+	magicalMat4TransformVec3( TOFLOAT( &out ), mat.m, TOFLOAT( &v ) );
 }
 
 inline void MathMat4::transformVec4( Vec4& out, const Mat4& mat, const Vec4& v )
 {
-	out = mat.transformVec4( v );
+	magicalMat4TransformVec4( TOFLOAT( &out ), mat.m, TOFLOAT( &v ) );
+}
+
+inline void MathMat4::transpose( Mat4& out, const Mat4& mat )
+{
+	magicalMat4Transpose( out.m, mat.m );
+}
+
+inline void MathMat4::negate( Mat4& out, const Mat4& mat )
+{
+	magicalMat4Negate( out.m, mat.m );
+}
+
+inline bool MathMat4::inverse( Mat4& out, const Mat4& mat )
+{
+	return magicalMat4Inverse( out.m, mat.m );
+}
+
+inline void MathMat4::translate( Mat4& out, const Mat4& mat, const float x, const float y, const float z )
+{
+	magicalMat4Translate( out.m, mat.m, x, y, z );
+}
+
+inline void MathMat4::translate( Mat4& out, const Mat4& mat, const Vec3& t )
+{
+	magicalMat4TranslateVector( out.m, mat.m, TOFLOAT( &t ) );
+}
+
+inline void MathMat4::scale( Mat4& out, const Mat4& mat, const float x, const float y, const float z )
+{
+	magicalMat4Scale( out.m, mat.m, x, y, z );
+}
+
+inline void MathMat4::scale( Mat4& out, const Mat4& mat, const Vec3& s )
+{
+	magicalMat4ScaleVector( out.m, mat.m, TOFLOAT( &s ) );
+}
+
+inline void MathMat4::rotateX( Mat4& out, const Mat4& mat, const float angle )
+{
+	magicalMat4RotateX( out.m, mat.m, angle );
+}
+
+inline void MathMat4::rotateY( Mat4& out, const Mat4& mat, const float angle )
+{
+	magicalMat4RotateY( out.m, mat.m, angle );
+}
+
+inline void MathMat4::rotateZ( Mat4& out, const Mat4& mat, const float angle )
+{
+	magicalMat4RotateZ( out.m, mat.m, angle );
+}
+
+inline void MathMat4::rotatePitchYawRoll( Mat4& out, const Mat4& mat, const float pitch, const float yaw, const float roll )
+{
+	magicalMat4RotatePitchYawRoll( out.m, mat.m, pitch, yaw, roll );
+}
+
+inline void MathMat4::rotateQuaternion( Mat4& out, const Mat4& mat, const Quaternion& r )
+{
+	magicalMat4RotateQuaternion( out.m, mat.m, TOFLOAT( &r ) );
+}
+
+inline void MathMat4::rotateAxisAngle( Mat4& out, const Mat4& mat, const Vec3& axis, const float angle )
+{
+	magicalMat4RotateAxisAngle( out.m, mat.m, TOFLOAT( &axis ), angle );
+}
+
+inline void MathMat4::getUpVector( Vec3& out, const Mat4& mat )
+{
+	magicalMat4GetUpVector( TOFLOAT( &out ), mat.m );
+}
+
+inline void MathMat4::getDownVector( Vec3& out, const Mat4& mat )
+{
+	magicalMat4GetDownVector( TOFLOAT( &out ), mat.m );
+}
+
+inline void MathMat4::getLeftVector( Vec3& out, const Mat4& mat )
+{
+	magicalMat4GetLeftVector( TOFLOAT( &out ), mat.m );
+}
+
+inline void MathMat4::getRightVector( Vec3& out, const Mat4& mat )
+{
+	magicalMat4GetRightVector( TOFLOAT( &out ), mat.m );
+}
+
+inline void MathMat4::getForwardVector( Vec3& out, const Mat4& mat )
+{
+	magicalMat4GetForwardVector( TOFLOAT( &out ), mat.m );
+}
+
+inline void MathMat4::getBackVector( Vec3& out, const Mat4& mat )
+{
+	magicalMat4GetBackVector( TOFLOAT( &out ), mat.m );
 }

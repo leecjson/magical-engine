@@ -52,7 +52,7 @@ inline bool Vec3::isNormalize( void ) const
 	return magicalVec3IsNormalize( TOFLOAT( this ) );
 }
 
-inline Vec3 Vec3::operator+( float a ) const
+inline Vec3 Vec3::operator+( const float a ) const
 {
 	return Vec3( x + a, y + a, z + a );
 }
@@ -62,7 +62,7 @@ inline Vec3 Vec3::operator+( const Vec3& v ) const
 	return Vec3( x + v.x, y + v.y, z + v.z );
 }
 
-inline Vec3 Vec3::operator-( float a ) const
+inline Vec3 Vec3::operator-( const float a ) const
 {
 	return Vec3( x - a, y - a, z - a );
 }
@@ -72,7 +72,7 @@ inline Vec3 Vec3::operator-( const Vec3& v ) const
 	return Vec3( x - v.x, y - v.y, z - v.z );
 }
 
-inline Vec3 Vec3::operator*( float a ) const
+inline Vec3 Vec3::operator*( const float a ) const
 {
 	return Vec3( x * a, y * a, z * a );
 }
@@ -82,7 +82,7 @@ inline Vec3 Vec3::operator*( const Vec3& v ) const
 	return Vec3( x * v.x, y * v.y, z * v.z );
 }
 
-inline Vec3 Vec3::operator/( float a ) const
+inline Vec3 Vec3::operator/( const float a ) const
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -96,7 +96,7 @@ inline Vec3 Vec3::operator/( const Vec3& v ) const
 	return Vec3( x / v.x, y / v.y, z / v.z );
 }
 
-inline Vec3& Vec3::operator+=( float a )
+inline Vec3& Vec3::operator+=( const float a )
 {
 	x += a;
 	y += a;
@@ -112,7 +112,7 @@ inline Vec3& Vec3::operator+=( const Vec3& v )
 	return *this;
 }
 
-inline Vec3& Vec3::operator-=( float a )
+inline Vec3& Vec3::operator-=( const float a )
 {
 	x -= a;
 	y -= a;
@@ -128,7 +128,7 @@ inline Vec3& Vec3::operator-=( const Vec3& v )
 	return *this;
 }
 
-inline Vec3& Vec3::operator*=( float a )
+inline Vec3& Vec3::operator*=( const float a )
 {
 	x *= a;
 	y *= a;
@@ -144,7 +144,7 @@ inline Vec3& Vec3::operator*=( const Vec3& v )
 	return *this;
 }
 
-inline Vec3& Vec3::operator/=( float a )
+inline Vec3& Vec3::operator/=( const float a )
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -172,7 +172,7 @@ inline Vec3& Vec3::operator=( const Vec3& v )
 	return *this;
 }
 
-inline Vec3 Vec3::add( float a ) const
+inline Vec3 Vec3::add( const float a ) const
 {
 	return Vec3( x + a, y + a, z + a );
 }
@@ -182,7 +182,7 @@ inline Vec3 Vec3::add( const Vec3& v ) const
 	return Vec3( x + v.x, y + v.y, z + v.z );
 }
 
-inline Vec3 Vec3::sub( float a ) const
+inline Vec3 Vec3::sub( const float a ) const
 {
 	return Vec3( x - a, y - a, z - a );
 }
@@ -192,7 +192,7 @@ inline Vec3 Vec3::sub( const Vec3& v ) const
 	return Vec3( x - v.x, y - v.y, z - v.z );
 }
 
-inline Vec3 Vec3::mul( float a ) const
+inline Vec3 Vec3::mul( const float a ) const
 {
 	return Vec3( x * a, y * a, z * a );
 }
@@ -202,7 +202,7 @@ inline Vec3 Vec3::mul( const Vec3& v ) const
 	return Vec3( x * v.x, y * v.y, z * v.z );
 }
 
-inline Vec3 Vec3::div( float a ) const
+inline Vec3 Vec3::div( const float a ) const
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -216,7 +216,7 @@ inline Vec3 Vec3::div( const Vec3& v ) const
 	return Vec3( x / v.x, y / v.y, z / v.z );
 }
 
-inline void Vec3::addfill( float a )
+inline void Vec3::addfill( const float a )
 {
 	x += a;
 	y += a;
@@ -230,7 +230,7 @@ inline void Vec3::addfill( const Vec3& v )
 	z += v.z;
 }
 
-inline void Vec3::subfill( float a )
+inline void Vec3::subfill( const float a )
 {
 	x -= a;
 	y -= a;
@@ -244,7 +244,7 @@ inline void Vec3::subfill( const Vec3& v )
 	z -= v.z;
 }
 
-inline void Vec3::mulfill( float a )
+inline void Vec3::mulfill( const float a )
 {
 	x *= a;
 	y *= a;
@@ -258,7 +258,7 @@ inline void Vec3::mulfill( const Vec3& v )
 	z *= v.z;
 }
 
-inline void Vec3::divfill( float a )
+inline void Vec3::divfill( const float a )
 {
 	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
 
@@ -276,7 +276,7 @@ inline void Vec3::divfill( const Vec3& v )
 	z /= v.z;
 }
 
-inline void Vec3::fill( float x, float y, float z )
+inline void Vec3::fill( const float x, const float y, const float z )
 {
 	this->x = x;
 	this->y = y;
@@ -382,14 +382,14 @@ inline void Vec3::fillNormalize( void )
 	magicalVec3Normalize( TOFLOAT( this ), TOFLOAT( this ) );
 }
 
-inline Vec3 Vec3::scale( float s ) const
+inline Vec3 Vec3::scale( const float s ) const
 {
 	Vec3 ret;
 	magicalVec3Scale( TOFLOAT( &ret ), TOFLOAT( this ), s );
 	return ret;
 }
 
-inline void Vec3::fillScale( float s )
+inline void Vec3::fillScale( const float s )
 {
 	magicalVec3Scale( TOFLOAT( this ), TOFLOAT( this ), s );
 }
@@ -406,7 +406,7 @@ inline void Vec3::project( Vec3& h, Vec3& v, const Vec3& n ) const
 	magicalVec3Project( TOFLOAT( &h ), TOFLOAT( &v ), TOFLOAT( this ), TOFLOAT( &n ) );
 }
 
-inline void MathVec3::add( Vec3& out, const Vec3& v, float a )
+inline void MathVec3::add( Vec3& out, const Vec3& v, const float a )
 {
 	magicalVec3AddScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
@@ -416,7 +416,7 @@ inline void MathVec3::add( Vec3& out, const Vec3& v1, const Vec3& v2 )
 	magicalVec3Add( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec3::sub( Vec3& out, const Vec3& v, float a )
+inline void MathVec3::sub( Vec3& out, const Vec3& v, const float a )
 {
 	magicalVec3SubScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
@@ -426,7 +426,7 @@ inline void MathVec3::sub( Vec3& out, const Vec3& v1, const Vec3& v2 )
 	magicalVec3Sub( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec3::mul( Vec3& out, const Vec3& v, float a )
+inline void MathVec3::mul( Vec3& out, const Vec3& v, const float a )
 {
 	magicalVec3MulScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
@@ -436,7 +436,7 @@ inline void MathVec3::mul( Vec3& out, const Vec3& v1, const Vec3& v2 )
 	magicalVec3Mul( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
 }
 
-inline void MathVec3::div( Vec3& out, const Vec3& v, float a )
+inline void MathVec3::div( Vec3& out, const Vec3& v, const float a )
 {
 	magicalVec3DivScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
 }
@@ -466,7 +466,7 @@ inline void MathVec3::normalize( Vec3& out, const Vec3& v )
 	magicalVec3Normalize( TOFLOAT( &out ), TOFLOAT( &v ) );
 }
 
-inline void MathVec3::scale( Vec3& out, const Vec3& v, float s )
+inline void MathVec3::scale( Vec3& out, const Vec3& v, const float s )
 {
 	magicalVec3Scale( TOFLOAT( &out ), TOFLOAT( &v ), s );
 }
