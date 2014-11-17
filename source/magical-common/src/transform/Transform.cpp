@@ -62,7 +62,8 @@ const Mat4& Transform::getLocalToWorldMatrix() const
 			_local_to_world_matrix.fillTranslation( _local_position );
 			if( has_rotation || _local_has_changed & kLocalRotationChanged )
 			{
-				_local_to_world_matrix.rotate( _local_rotation );
+
+				_local_to_world_matrix.rotateQuaternion( _local_rotation );
 			}
 			if( has_scale || _local_has_changed & kLocalScaleChanged )
 			{
@@ -71,7 +72,7 @@ const Mat4& Transform::getLocalToWorldMatrix() const
 		}
 		else if( has_rotation || _local_has_changed & kLocalRotationChanged )
 		{
-			_local_to_world_matrix.fillRotation( _local_rotation );
+			_local_to_world_matrix.fillRotationQuaternion( _local_rotation );
 			if( has_scale || _local_has_changed & kLocalScaleChanged )
 			{
 				_local_to_world_matrix.scale( _local_scale );
@@ -79,7 +80,7 @@ const Mat4& Transform::getLocalToWorldMatrix() const
 		}
 		else if( has_scale || _local_has_changed & kLocalScaleChanged )
 		{
-			_local_to_world_matrix.fillScale( _local_scale );
+			_local_to_world_matrix.fillScaling( _local_scale );
 		}
 
 		_local_has_changed = kLocalNotChanged;
@@ -527,7 +528,7 @@ Vec3 Transform::transformPoint( const Vec3& point ) const
 	if( _local_has_changed != kLocalNotChanged )
 		getLocalToWorldMatrix();
 	
-	return _local_to_world_matrix.transformPoint( point );
+	return _local_to_world_matrix.transformVec3( point );
 }
 
 Vec3 Transform::transformPoint( float x, float y, float z ) const
@@ -550,14 +551,14 @@ Vec3 Transform::transformVector( float x, float y, float z ) const
 
 void Transform::lookAt( const Vec3& target, const Vec3& up )
 {
-	Mat4 mat;
-	mat.fillLookAt( _local_position, target, up );
+	//Mat4 mat;
+	//mat.fillLookAt( _local_position, target, up );
 	
-	Quaternion rot = mat.getRotation();
-	if( rot == _local_rotation )
-		return;
+	//Quaternion rot = mat.getRotation();
+	//if( rot == _local_rotation )
+	//	return;
 
-	setRotation( rot );
+	//setRotation( rot );
 }
 
 void Transform::resetTransform( void )

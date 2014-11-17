@@ -74,7 +74,7 @@ void Quaternion::slerp( const Quaternion& rhs, float t )
 	// It contains no division operations, no trig, no inverse trig
 	// and no sqrt. Not only does this code tolerate small constraint
 	// errors in the input quaternions, it actually corrects for them.
-	magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
+	//magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
 
 	if( magicalFltIsZero( t ) )
 	{
