@@ -24,6 +24,8 @@ SOFTWARE.
 #ifndef __VEC4_H__
 #define __VEC4_H__
 
+struct Mat4;
+
 struct Vec4
 {
 public:
@@ -37,19 +39,8 @@ public:
 	static const Vec4 Back;
 	static const Vec4 Space1;
 
-	static Vec4 placeholder_1;
-	static Vec4 placeholder_2;
-	static Vec4 placeholder_3;
+	static Vec4 placeholder;
 	static Vec4 temp;
-	static Vec4 temp_1;
-	static Vec4 temp_2;
-	static Vec4 temp_3;
-	static Vec4 temp_4;
-	static Vec4 temp_5;
-	static Vec4 temp_6;
-	static Vec4 temp_7;
-	static Vec4 temp_8;
-	static Vec4 temp_9;
 
 public:
 	float x;
@@ -75,6 +66,7 @@ public:
 	inline Vec4 operator+( const Vec4& v ) const;
 	inline Vec4 operator-( const float a ) const;
 	inline Vec4 operator-( const Vec4& v ) const;
+	inline Vec4 operator*( const Mat4& m ) const;
 	inline Vec4 operator*( const float a ) const;
 	inline Vec4 operator*( const Vec4& v ) const;
 	inline Vec4 operator/( const float a ) const;
@@ -83,7 +75,8 @@ public:
 	inline Vec4& operator+=( const Vec4& v );
 	inline Vec4& operator-=( const float a );
 	inline Vec4& operator-=( const Vec4& v );
-	inline Vec4& operator*=( const float a  );
+	inline Vec4& operator*=( const Mat4& m );
+	inline Vec4& operator*=( const float a );
 	inline Vec4& operator*=( const Vec4& v );
 	inline Vec4& operator/=( const float a );
 	inline Vec4& operator/=( const Vec4& v );
@@ -93,6 +86,7 @@ public:
 	inline Vec4 add( const Vec4& v ) const;
 	inline Vec4 sub( const float a ) const;
 	inline Vec4 sub( const Vec4& v ) const;
+	inline Vec4 mul( const Mat4& m ) const;
 	inline Vec4 mul( const float a ) const;
 	inline Vec4 mul( const Vec4& v ) const;
 	inline Vec4 div( const float a ) const;
@@ -101,10 +95,12 @@ public:
 	inline void addfill( const Vec4& v );
 	inline void subfill( const float a );
 	inline void subfill( const Vec4& v );
+	inline void mulfill( const Mat4& m );
 	inline void mulfill( const float a );
 	inline void mulfill( const Vec4& v );
 	inline void divfill( const float a );
 	inline void divfill( const Vec4& v );
+
 	inline void fill( const float x, const float y, const float z, const float w );
 	inline void fill( const Vec4& v );
 	inline void fillZero( void );
@@ -136,6 +132,7 @@ public:
 	static inline void add( Vec4& out, const Vec4& v1, const Vec4& v2 );
 	static inline void sub( Vec4& out, const Vec4& v, const float a );
 	static inline void sub( Vec4& out, const Vec4& v1, const Vec4& v2 );
+	static inline void mul( Vec4& out, const Vec4& v, const Mat4& m );
 	static inline void mul( Vec4& out, const Vec4& v, const float a );
 	static inline void mul( Vec4& out, const Vec4& v1, const Vec4& v2 );
 	static inline void div( Vec4& out, const Vec4& v, const float a );
@@ -149,6 +146,7 @@ public:
 };
 
 #include "../c/cVec4.h"
+#include "../c/cMat4.h"
 #include "Vec4.inl"
 	
 #endif //__VEC4_H__

@@ -321,6 +321,18 @@ inline Vec3 Mat4::getBackVector( void ) const
 	return Vec3( m31, m32, m33 );
 }
 
+inline void Mat4::setTranslation( const float x, const float y, const float z )
+{
+	magicalMat4SetTranslation( m, x, y, z );
+}
+
+inline Vec3 Mat4::getTranslation( void ) const
+{
+	Vec3 ret;
+	magicalMat4GetTranslation( TOFLOAT( &ret ), m );
+	return ret;
+}
+
 //inline Vec3 Mat4::getTranslation( void ) const
 //{
 //	Vec3 translation;
@@ -455,4 +467,9 @@ inline void MathMat4::getForwardVector( Vec3& out, const Mat4& mat )
 inline void MathMat4::getBackVector( Vec3& out, const Mat4& mat )
 {
 	magicalMat4GetBackVector( TOFLOAT( &out ), mat.m );
+}
+
+inline void MathMat4::getTranslation( Vec3& out, const Mat4& mat )
+{
+	magicalMat4GetTranslation( TOFLOAT( &out ), mat.m );
 }

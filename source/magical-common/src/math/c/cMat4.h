@@ -51,8 +51,9 @@ MAGICALAPI_MATH cBoolean magicalMat4IsIdentity( const cMat4 m );
 
 MAGICALAPI_MATH void magicalMat4MulScalar( cMat4 out, const cMat4 m, const float a );
 MAGICALAPI_MATH void magicalMat4Mul( cMat4 out, const cMat4 m1, const cMat4 m2 );
-MAGICALAPI_MATH void magicalMat4TransformVec3( cVec3 out, const cMat4 m, const cVec3 v );
-MAGICALAPI_MATH void magicalMat4TransformVec4( cVec4 out, const cMat4 m, const cVec4 v );
+MAGICALAPI_MATH void magicalMat4Mul3x3AndTranslation( cMat4 out, const cMat4 m1, const cMat4 m2 );
+MAGICALAPI_MATH void magicalVec3MulMat4( cVec3 out, const cVec3 v, const cMat4 m );
+MAGICALAPI_MATH void magicalVec4MulMat4( cVec4 out, const cVec4 v, const cMat4 m );
 
 MAGICALAPI_MATH void magicalMat4FillTranslation( cMat4 out, const float x, const float y, const float z );
 MAGICALAPI_MATH void magicalMat4FillTranslationVector( cMat4 out, const cVec3 t );
@@ -91,6 +92,9 @@ MAGICALAPI_MATH void magicalMat4GetLeftVector( cVec3 out, const cMat4 m );
 MAGICALAPI_MATH void magicalMat4GetRightVector( cVec3 out, const cMat4 m );
 MAGICALAPI_MATH void magicalMat4GetForwardVector( cVec3 out, const cMat4 m );
 MAGICALAPI_MATH void magicalMat4GetBackVector( cVec3 out, const cMat4 m );
+
+MAGICALAPI_MATH void magicalMat4SetTranslation( cMat4 out, const float x, const float y, const float z );
+MAGICALAPI_MATH void magicalMat4GetTranslation( cVec3 out, const cMat4 m );
 
 
 #ifdef __cplusplus

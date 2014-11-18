@@ -176,7 +176,7 @@ float magicalVec3DistanceBetween( const cVec3 v1, const cVec3 v2 )
 	float dy = v2 _y - v1 _y;
 	float dz = v2 _z - v1 _z;
 
-	return sqrt( dx * dx + dy * dy + dz * dz );
+	return sqrtf( dx * dx + dy * dy + dz * dz );
 }
 
 float magicalVec3DistanceBetweenSq( const cVec3 v1, const cVec3 v2 )
@@ -206,7 +206,7 @@ float magicalVec3Length( const cVec3 v )
 	 *      = 1 标准化(单位)向量
 	 */
 
-	return sqrt( v _x * v _x + v _y * v _y + v _z * v _z );
+	return sqrtf( v _x * v _x + v _y * v _y + v _z * v _z );
 }
 
 float magicalVec3LengthSq( const cVec3 v )
@@ -319,7 +319,7 @@ void magicalVec3Normalize( cVec3 out, const cVec3 v )
 	if( magicalFltEqual( n, 1.0f ) )
 		return;
 
-	n = sqrt( n );
+	n = sqrtf( n );
 	if( magicalFltIsZero( n ) )
 		return;
 

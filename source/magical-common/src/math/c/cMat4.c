@@ -46,27 +46,27 @@ void magicalMat4FillScalars( cMat4 out,
 
 void magicalMat4FillVector( cMat4 out, const float* m )
 {
-	memcpy( out, m, MAGICAL_MAT4_SIZE );
+	memcpy( out, m, sizeof( cMat4 ) );
 }
 
 void magicalMat4Fill( cMat4 out, const cMat4 m )
 {
-	memcpy( out, m, MAGICAL_MAT4_SIZE );
+	memcpy( out, m, sizeof( cMat4 ) );
 }
 
 void magicalMat4FillIdentity( cMat4 out )
 {
-	memcpy( out, IDENTITY, MAGICAL_MAT4_SIZE );
+	memcpy( out, IDENTITY, sizeof( cMat4 ) );
 }
 
 cBoolean magicalMat4Equals( const cMat4 m1, const cMat4 m2 )
 {
-	return memcmp( m1, m2, MAGICAL_MAT4_SIZE ) == 0;
+	return memcmp( m1, m2, sizeof( cMat4 ) ) == 0;
 }
 
 cBoolean magicalMat4IsIdentity( const cMat4 m )
 {
-	return memcmp( m, IDENTITY, MAGICAL_MAT4_SIZE ) == 0;
+	return memcmp( m, IDENTITY, sizeof( cMat4 ) ) == 0;
 }
 
 void magicalMat4MulScalar( cMat4 out, const cMat4 m, const float a )
@@ -130,10 +130,48 @@ void magicalMat4Mul( cMat4 out, const cMat4 m1, const cMat4 m2 )
 	dst _m43 = m1 _m41 * m2 _m13 + m1 _m42 * m2 _m23 + m1 _m43 * m2 _m33 + m1 _m44 * m2 _m43;
 	dst _m44 = m1 _m41 * m2 _m14 + m1 _m42 * m2 _m24 + m1 _m43 * m2 _m34 + m1 _m44 * m2 _m44;
 
-	memcpy( out, dst, MAGICAL_MAT4_SIZE );
+	memcpy( out, dst, sizeof( cMat4 ) );
 }
 
-void magicalMat4TransformVec3( cVec3 out, const cMat4 m, const cVec3 v )
+void magicalMat4Mul3x3AndTranslation( cMat4 out, const cMat4 m1, const cMat4 m2 )
+{
+	/*
+	 * 4x4 行优先齐次矩阵相乘 m1 左乘 m2
+	 * 只计算左上角3x3矩阵与平移
+	 *
+	 *                       m2-> [ m11  m12  m13  0 ]
+	 *                            [ m21  m22  m23  0 ]
+	 *                            [ m31  m32  m33  0 ]
+	 *                            [ m41  m42  m43  1 ]
+	 * m1-> [ m11  m12  m13  0 ]  [ d11  d12  d13  0 ]
+	 *      [ m21  m22  m23  0 ]  [ d21  d22  d23  0 ]
+	 *      [ m31  m32  m33  0 ]  [ d31  d32  d33  0 ]
+	 *      [ m41  m42  m43  1 ]  [ d41  d42  d43  1 ]
+	 */
+
+	cMat4 dst;
+
+	dst _m11 = m1 _m11 * m2 _m11 + m1 _m12 * m2 _m21 + m1 _m13 * m2 _m31;
+	dst _m12 = m1 _m11 * m2 _m12 + m1 _m12 * m2 _m22 + m1 _m13 * m2 _m32;
+	dst _m13 = m1 _m11 * m2 _m13 + m1 _m12 * m2 _m23 + m1 _m13 * m2 _m33;
+	dst _m14 = 0.0f;
+	dst _m21 = m1 _m21 * m2 _m11 + m1 _m22 * m2 _m21 + m1 _m23 * m2 _m31;
+	dst _m22 = m1 _m21 * m2 _m12 + m1 _m22 * m2 _m22 + m1 _m23 * m2 _m32;
+	dst _m23 = m1 _m21 * m2 _m13 + m1 _m22 * m2 _m23 + m1 _m23 * m2 _m33;
+	dst _m24 = 0.0f;
+	dst _m31 = m1 _m31 * m2 _m11 + m1 _m32 * m2 _m21 + m1 _m33 * m2 _m31;
+	dst _m32 = m1 _m31 * m2 _m12 + m1 _m32 * m2 _m22 + m1 _m33 * m2 _m32;
+	dst _m33 = m1 _m31 * m2 _m13 + m1 _m32 * m2 _m23 + m1 _m33 * m2 _m33;
+	dst _m34 = 0.0f;
+	dst _m41 = m1 _m41 * m2 _m11 + m1 _m42 * m2 _m21 + m1 _m43 * m2 _m31 + m2 _m41;
+	dst _m42 = m1 _m41 * m2 _m12 + m1 _m42 * m2 _m22 + m1 _m43 * m2 _m32 + m2 _m42;
+	dst _m43 = m1 _m41 * m2 _m13 + m1 _m42 * m2 _m23 + m1 _m43 * m2 _m33 + m2 _m43;
+	dst _m44 = 1.0f;
+
+	memcpy( out, dst, sizeof( cMat4 ) );
+}
+
+void magicalVec3MulMat4( cVec3 out, const cVec3 v, const cMat4 m )
 {
 	/*
 	 * 行向量左乘4x4齐次矩阵
@@ -156,7 +194,7 @@ void magicalMat4TransformVec3( cVec3 out, const cMat4 m, const cVec3 v )
 	out _z = dst _z;
 }
 
-void magicalMat4TransformVec4( cVec4 out, const cMat4 m, const cVec4 v )
+void magicalVec4MulMat4( cVec4 out, const cVec4 v, const cMat4 m )
 {
 	/*
 	 * 行向量左乘4x4齐次矩阵
@@ -192,7 +230,7 @@ void magicalMat4FillTranslation( cMat4 out, const float x, const float y, const 
 	 * [ x   y   z   1 ]
 	 */
 
-	memset( out, 0, MAGICAL_MAT4_SIZE );
+	memset( out, 0, sizeof( cMat4 ) );
 
 	out _m11 = 1.0f;
 	out _m22 = 1.0f;
@@ -215,7 +253,7 @@ void magicalMat4FillTranslationVector( cMat4 out, const cVec3 t )
 	 * [ x   y   z   1 ]
 	 */
 
-	memset( out, 0, MAGICAL_MAT4_SIZE );
+	memset( out, 0, sizeof( cMat4 ) );
 
 	out _m11 = 1.0f;
 	out _m22 = 1.0f;
@@ -238,7 +276,7 @@ void magicalMat4FillScaling( cMat4 out, const float x, const float y, const floa
 	 * [ 0   0   0   1 ]
 	 */
 
-	memset( out, 0, MAGICAL_MAT4_SIZE );
+	memset( out, 0, sizeof( cMat4 ) );
 
 	out _m11 = x;
 	out _m22 = y;
@@ -257,7 +295,7 @@ void magicalMat4FillScalingVector( cMat4 out, const cVec3 s )
 	 * [ 0   0   0   1 ]
 	 */
 
-	memset( out, 0, MAGICAL_MAT4_SIZE );
+	memset( out, 0, sizeof( cMat4 ) );
 
 	out _m11 = s _x;
 	out _m22 = s _y;
@@ -310,10 +348,10 @@ void magicalMat4FillRotationZ( cMat4 out, const float angle )
 	/*
 	 * 填充为绕Z轴旋转矩阵
 	 *
-	 * [  cos(a)  sin(a)  0    0 ]
-	 * [ -sin(a)  cos(a)  0    0 ]
-	 * [    0       0     1    0 ]
-	 * [    0       0     0    1 ]
+	 * [  cos(a)  sin(a)  0     0 ]
+	 * [ -sin(a)  cos(a)  0     0 ]
+	 * [    0       0     1     0 ]
+	 * [    0       0     0     1 ]
 	 */
 
 	float c = magicalCosf( angle );
@@ -327,7 +365,7 @@ void magicalMat4FillRotationZ( cMat4 out, const float angle )
 
 void magicalMat4FillRotationPitchYawRoll( cMat4 out, const float pitch, const float yaw, const float roll )
 {
-	float cr = magicalCosf( pitch );
+	/*float cr = magicalCosf( pitch );
 	float sr = magicalSinf( pitch );
 	float cp = magicalCosf( yaw );
 	float sp = magicalSinf( yaw );
@@ -354,12 +392,12 @@ void magicalMat4FillRotationPitchYawRoll( cMat4 out, const float pitch, const fl
 	out _m14 = 0.0f;
 	out _m24 = 0.0f;
 	out _m34 = 0.0f;
-	out _m44 = 1.0f;
+	out _m44 = 1.0f;*/
 }
 
 void magicalMat4FillRotationQuaternion( cMat4 out, const cQuaternion r )
 {
-	out _m11 = 1.0f - 2.0f * ( r _y * r _y + r _z * r _z );
+	/*out _m11 = 1.0f - 2.0f * ( r _y * r _y + r _z * r _z );
 	out _m12 = 2.0f * ( r _x * r _y + r _z * r _w );
 	out _m13 = 2.0f * ( r _x * r _z - r _y * r _w );
 	out _m14 = 0.0f;
@@ -377,7 +415,7 @@ void magicalMat4FillRotationQuaternion( cMat4 out, const cQuaternion r )
 	out _m41 = 0.0f;
 	out _m42 = 0.0f;
 	out _m43 = 0.0f;
-	out _m44 = 1.0f;
+	out _m44 = 1.0f;*/
 }
 
 void magicalMat4FillRotationAxisAngle( cMat4 out, const cVec3 axis, const float angle )
@@ -457,59 +495,114 @@ void magicalMat4RotateAxisAngle( cMat4 out, const cMat4 m, const cVec3 axis, con
 
 void magicalMat4FillLookAt( cMat4 out, const cVec3 eye, const cVec3 target, const cVec3 up )
 {
-//	Vec3 up_v = up;
-//	up_v.normalize();
-//
-//	Vec3 zaxis = eye - target;
-//	zaxis.normalize();
-//
-//	Vec3 xaxis = up_v.cross( zaxis );
-//	xaxis.normalize();
-//
-//	Vec3 yaxis = zaxis.cross( xaxis );
-//	yaxis.normalize();
-//
-//	m11 = xaxis.x;
-//	m12 = yaxis.x;
-//	m13 = zaxis.x;
-//	m14 = 0.0f;
-//	m21 = xaxis.y;
-//	m22 = yaxis.y;
-//	m23 = zaxis.y;
-//	m24 = 0.0f;
-//	m31 = xaxis.z;
-//	m32 = yaxis.z;
-//	m33 = zaxis.z;
-//	m34 = 0.0f;
-//	m41 = - xaxis.dot( eye );
-//	m42 = - yaxis.dot( eye );
-//	m43 = - zaxis.dot( eye );
-//	m44 = 1.0f;
-
+	/*
+	 * 填充为从eye点到target的观察矩阵
+	 */
 
 	cVec3 up_v;
-	cVec3 z_axis;
 	cVec3 x_axis;
 	cVec3 y_axis;
+	cVec3 z_axis;
 
 	magicalVec3Fill( up_v, up );
 	magicalVec3Normalize( up_v, up_v );
+
 	magicalVec3Sub( z_axis, eye, target );
 	magicalVec3Normalize( z_axis, z_axis );
+
 	magicalVec3Cross( x_axis, up_v, z_axis );
 	magicalVec3Normalize( x_axis, x_axis );
+
 	magicalVec3Cross( y_axis, z_axis, x_axis );
 	magicalVec3Normalize( y_axis, y_axis );
+
+	out _m11 = x_axis _x;
+	out _m12 = y_axis _x;
+	out _m13 = z_axis _x;
+	out _m14 = 0.0f;
+	out _m21 = x_axis _y;
+	out _m22 = y_axis _y;
+	out _m23 = z_axis _y;
+	out _m24 = 0.0f;
+	out _m31 = x_axis _z;
+	out _m32 = y_axis _z;
+	out _m33 = z_axis _z;
+	out _m34 = 0.0f;
+	out _m41 = - magicalVec3Dot( x_axis, eye );
+	out _m42 = - magicalVec3Dot( y_axis, eye );
+	out _m43 = - magicalVec3Dot( z_axis, eye );
+	out _m44 = 1.0f;
 }
 
 void magicalMat4FillPerspective( cMat4 out, const float fov, const float aspect, const float znear, const float zfar )
 {
+	/*
+	 * 填充为透视投影矩阵
+	 *
+	 * [ zoom.x   0       0       0   ]
+	 * [   0    zoom.y    0       0   ]
+	 * [   0      0  (f+n)/(f-n)  1   ]
+	 * [   0      0  (2nf)/(n-f)  0   ]
+	 */
 
+	float zoom_x;
+	float zoom_y;
+	float factor;
+
+	factor = magicalTanf( magicalDegToRad( fov ) * 0.5f );
+	magicalMathAssert( !magicalFltIsZero( factor ) && !magicalFltIsZero( aspect ), "division by 0.f" );
+
+	zoom_y = 1.0f / factor;
+	zoom_x = zoom_y / aspect;
+	magicalMathAssert( !magicalFltIsZero( zfar - znear ), "division by 0.f" );
+
+	out _m11 = zoom_x;
+	out _m12 = 0.0f;
+	out _m13 = 0.0f;
+	out _m14 = 0.0f;
+	out _m21 = 0.0f;
+	out _m22 = zoom_y;
+	out _m23 = 0.0f;
+	out _m24 = 0.0f;
+	out _m31 = 0.0f;
+	out _m32 = 0.0f;
+	out _m33 = ( zfar + znear ) / ( zfar - znear );
+	out _m34 = 1.0f;
+	out _m41 = 0.0f;
+	out _m42 = 0.0f;
+	out _m43 = ( 2.0f * znear * zfar ) / ( znear - zfar );
+	out _m44 = 0.0f;
 }
 
 void magicalMat4FillOrthographic( cMat4 out, const float left, const float right, const float bottom, const float top, const float near, const float far )
 {
+	/*
+	 * 填充为正交投影矩阵
+	 *
+	 * [    2/(r-l)         0           0        0   ]
+	 * [       0         2/(t-b)        0        0   ]
+	 * [       0            0        -2/(f-n)    0   ]
+	 * [ -(r+l)/(r-l) -(t+b)/(t-b) -(f+n)/(f-n)  1   ]
+	 */
 
+	magicalMathAssert( !magicalFltIsZero( right - left ) && !magicalFltIsZero( top - bottom ) && !magicalFltIsZero( far - near ), "division by 0.f" );
+
+	out _m11 = 2.0f / ( right - left );
+	out _m12 = 0.0f;
+	out _m13 = 0.0f;
+	out _m14 = 0.0f;
+	out _m21 = 0.0f;
+	out _m22 = 2.0f / ( top - bottom );
+	out _m23 = 0.0f;
+	out _m24 = 0.0f;
+	out _m31 = 0.0f;
+	out _m32 = 0.0f;
+	out _m33 = - 2.0f / ( far - near );
+	out _m34 = 0.0f;
+	out _m41 = - ( right + left ) / ( right - left );
+	out _m42 = - ( top + bottom ) / ( top - bottom );
+	out _m43 = - ( far + near ) / ( far - near );
+	out _m44 = 1.0f;
 }
 
 float magicalMat4Determinant( const cMat4 m )
@@ -518,20 +611,19 @@ float magicalMat4Determinant( const cMat4 m )
 	 * 求矩阵行列式，结果为0代表奇异矩阵，不可逆
 	 */
 
-	float a0 = m _m11 * m _m22 - m _m12 * m _m21;
-    float a1 = m _m11 * m _m23 - m _m13 * m _m21;
-    float a2 = m _m11 * m _m24 - m _m14 * m _m21;
-    float a3 = m _m12 * m _m23 - m _m13 * m _m22;
-    float a4 = m _m12 * m _m24 - m _m14 * m _m22;
-    float a5 = m _m13 * m _m24 - m _m14 * m _m23;
-    float b0 = m _m31 * m _m42 - m _m32 * m _m41;
-    float b1 = m _m31 * m _m43 - m _m33 * m _m41;
-    float b2 = m _m31 * m _m44 - m _m34 * m _m41;
-    float b3 = m _m32 * m _m43 - m _m33 * m _m42;
-    float b4 = m _m32 * m _m44 - m _m34 * m _m42;
-    float b5 = m _m33 * m _m44 - m _m34 * m _m43;
-
-	return a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0;
+	return
+		( m _m11 * m _m22 - m _m12 * m _m21 ) *
+		( m _m33 * m _m44 - m _m34 * m _m43 ) -
+		( m _m11 * m _m23 - m _m13 * m _m21 ) *
+		( m _m32 * m _m44 - m _m34 * m _m42 ) +
+		( m _m11 * m _m24 - m _m14 * m _m21 ) *
+		( m _m32 * m _m43 - m _m33 * m _m42 ) +
+		( m _m12 * m _m23 - m _m13 * m _m22 ) *
+		( m _m31 * m _m44 - m _m34 * m _m41 ) -
+		( m _m12 * m _m24 - m _m14 * m _m22 ) *
+		( m _m31 * m _m43 - m _m33 * m _m41 ) +
+		( m _m13 * m _m24 - m _m14 * m _m23 ) *
+		( m _m31 * m _m42 - m _m32 * m _m41 );
 }
 
 cBoolean magicalMat4Inverse( cMat4 out, const cMat4 m )
@@ -594,7 +686,7 @@ void magicalMat4Transpose( cMat4 out, const cMat4 m )
 		m _m13, m _m23, m _m33, m _m43,
 		m _m14, m _m24, m _m34, m _m44
 	};
-	memcpy( out, t, MAGICAL_MAT4_SIZE );
+	memcpy( out, t, sizeof( cMat4 ) );
 }
 
 void magicalMat4Negate( cMat4 out, const cMat4 m )
@@ -609,44 +701,67 @@ void magicalMat4Negate( cMat4 out, const cMat4 m )
 	out _m41 = -m _m41; out _m42 = -m _m42; out _m43 = -m _m43; out _m44 = -m _m44;
 }
 
-MAGICALAPI_MATH void magicalMat4GetUpVector( cVec3 out, const cMat4 m )
+void magicalMat4GetUpVector( cVec3 out, const cMat4 m )
 {
 	out _x = m _m21;
 	out _y = m _m22;
 	out _z = m _m23;
 }
 
-MAGICALAPI_MATH void magicalMat4GetDownVector( cVec3 out, const cMat4 m )
+void magicalMat4GetDownVector( cVec3 out, const cMat4 m )
 {
 	out _x = - m _m21;
 	out _y = - m _m22;
 	out _z = - m _m23;
 }
 
-MAGICALAPI_MATH void magicalMat4GetLeftVector( cVec3 out, const cMat4 m )
+void magicalMat4GetLeftVector( cVec3 out, const cMat4 m )
 {
 	out _x = - m _m11;
 	out _y = - m _m12;
 	out _z = - m _m13;
 }
 
-MAGICALAPI_MATH void magicalMat4GetRightVector( cVec3 out, const cMat4 m )
+void magicalMat4GetRightVector( cVec3 out, const cMat4 m )
 {
 	out _x = m _m11;
 	out _y = m _m12;
 	out _z = m _m13;
 }
 
-MAGICALAPI_MATH void magicalMat4GetForwardVector( cVec3 out, const cMat4 m )
+void magicalMat4GetForwardVector( cVec3 out, const cMat4 m )
 {
 	out _x = - m _m31;
 	out _y = - m _m32;
 	out _z = - m _m33;
 }
 
-MAGICALAPI_MATH void magicalMat4GetBackVector( cVec3 out, const cMat4 m )
+void magicalMat4GetBackVector( cVec3 out, const cMat4 m )
 {
 	out _x = m _m31;
 	out _y = m _m32;
 	out _z = m _m33;
+}
+
+void magicalMat4SetTranslation( cMat4 out, const float x, const float y, const float z )
+{
+	/*
+	 * 设置矩阵的位移量
+	 *
+	 * [ k   k   k   k ]
+	 * [ k   k   k   k ]
+	 * [ k   k   k   k ]
+	 * [ x   y   z   k ]
+	 */
+
+	out _m41 = x;
+	out _m42 = y;
+	out _m43 = z;
+}
+
+void magicalMat4GetTranslation( cVec3 out, const cMat4 m )
+{
+	out _x = m _m12;
+	out _y = m _m13;
+	out _z = m _m14;
 }

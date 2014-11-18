@@ -26,12 +26,34 @@ SOFTWARE.
 
 #include "../MathMacros.h"
 
+#include "cVec3.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef float cQuaternion[4];
 
+MAGICALAPI_MATH cBoolean magicalQuaternionEquals( const cQuaternion q1, const cQuaternion q2 );
+MAGICALAPI_MATH cBoolean magicalQuaternionIsZero( const cQuaternion q );
+MAGICALAPI_MATH cBoolean magicalQuaternionIsIdentity( const cQuaternion q );
+MAGICALAPI_MATH cBoolean magicalQuaternionIsNormalize( const cQuaternion q );
+
+MAGICALAPI_MATH void magicalQuaternionFillScalars( cQuaternion out, const float x, const float y, const float z, const float w );
+MAGICALAPI_MATH void magicalQuaternionFill( cQuaternion out, const cQuaternion q );
+MAGICALAPI_MATH void magicalQuaternionFillZero( cQuaternion out );
+MAGICALAPI_MATH void magicalQuaternionFillIdentity( cQuaternion out );
+MAGICALAPI_MATH void magicalQuaternionFillAxisAngle( cQuaternion out, const cVec3 axis, const float angle );
+
+MAGICALAPI_MATH void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );
+
+MAGICALAPI_MATH float magicalQuaternionLength( const cQuaternion q );
+MAGICALAPI_MATH float magicalQuaternionLengthSq( const cQuaternion q );
+
+MAGICALAPI_MATH void magicalQuaternionNormalize( cQuaternion out, const cQuaternion q );
+MAGICALAPI_MATH void magicalQuaternionConjugate( cQuaternion out, const cQuaternion q );
+MAGICALAPI_MATH void magicalQuaternionNegate( cQuaternion out, const cQuaternion q );
+MAGICALAPI_MATH cBoolean magicalQuaternionInverse( cQuaternion out, const cQuaternion q );
 
 #ifdef __cplusplus
 }

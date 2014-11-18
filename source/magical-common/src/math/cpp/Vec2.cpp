@@ -31,19 +31,8 @@ const Vec2 Vec2::Left = Vec2( -1.0f, 0.0f );
 const Vec2 Vec2::Up = Vec2( 0.0f, 1.0f );
 const Vec2 Vec2::Down = Vec2( 0.0f, -1.0f );
 
-Vec2 Vec2::placeholder_1 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::placeholder_2 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::placeholder_3 = Vec2( 0.0f, 0.0f );
+Vec2 Vec2::placeholder = Vec2( 0.0f, 0.0f );
 Vec2 Vec2::temp = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_1 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_2 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_3 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_4 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_5 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_6 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_7 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_8 = Vec2( 0.0f, 0.0f );
-Vec2 Vec2::temp_9 = Vec2( 0.0f, 0.0f );
 
 Vec2::Vec2( const float x, const float y )
 : x( x )
@@ -68,7 +57,7 @@ Vec2::Vec2( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Vec2> s_vec2_cached_pool( 1024, 1024 );
+static CachedPool<Vec2> s_vec2_cached_pool( 128, 128 );
 #endif
 
 void* Vec2::operator new( size_t s )

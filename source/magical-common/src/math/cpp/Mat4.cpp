@@ -75,7 +75,7 @@ Mat4::~Mat4( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Mat4> s_mat4_cached_pool( 128, 128 );
+static CachedPool<Mat4> s_mat4_cached_pool( 32, 32 );
 #endif
 
 void* Mat4::operator new( size_t s )

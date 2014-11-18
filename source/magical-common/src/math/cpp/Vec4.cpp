@@ -34,19 +34,8 @@ const Vec4 Vec4::Forward = Vec4( 0.0f, 0.0f, 1.0f, 0.0f );
 const Vec4 Vec4::Back = Vec4( 0.0f, 0.0f, -1.0f, 0.0f );
 const Vec4 Vec4::Space1 = Vec4( 0.0f, 0.0f, 0.0f, 1.0f );
 
-Vec4 Vec4::placeholder_1 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::placeholder_2 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::placeholder_3 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+Vec4 Vec4::placeholder = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::temp = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_1 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_2 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_3 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_4 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_5 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_6 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_7 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_8 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-Vec4 Vec4::temp_9 = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 
 Vec4::Vec4( const float x, const float y, const float z, const float w )
 : x( x )
@@ -77,7 +66,7 @@ Vec4::Vec4( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Vec4> s_vec4_cached_pool( 1024, 1024 );
+static CachedPool<Vec4> s_vec4_cached_pool( 32, 32 );
 #endif
 
 void* Vec4::operator new( size_t s )

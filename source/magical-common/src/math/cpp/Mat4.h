@@ -117,6 +117,10 @@ public:
 	inline Vec3 getForwardVector( void ) const;
 	inline Vec3 getBackVector( void ) const;
 
+	inline void setTranslation( const float x, const float y, const float z );
+	inline Vec3 getTranslation( void ) const;
+
+
 	/*bool decompose( Vec3* translation, Quaternion* rotation, Vec3* scale ) const;
 	inline Vec3 getTranslation( void ) const;
 	inline Quaternion getRotation( void ) const;
@@ -152,6 +156,7 @@ public:
 	static inline void getRightVector( Vec3& out, const Mat4& mat );
 	static inline void getForwardVector( Vec3& out, const Mat4& mat );
 	static inline void getBackVector( Vec3& out, const Mat4& mat );
+	static inline void getTranslation( Vec3& out, const Mat4& mat );
 };
 
 #include "../c/cMat4.h"

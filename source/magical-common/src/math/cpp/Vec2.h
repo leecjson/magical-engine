@@ -34,19 +34,8 @@ public:
 	static const Vec2 Up;
 	static const Vec2 Down;
 
-	static Vec2 placeholder_1;
-	static Vec2 placeholder_2;
-	static Vec2 placeholder_3;
+	static Vec2 placeholder;
 	static Vec2 temp;
-	static Vec2 temp_1;
-	static Vec2 temp_2;
-	static Vec2 temp_3;
-	static Vec2 temp_4;
-	static Vec2 temp_5;
-	static Vec2 temp_6;
-	static Vec2 temp_7;
-	static Vec2 temp_8;
-	static Vec2 temp_9;
 
 public:
 	float x;

@@ -33,19 +33,8 @@ const Vec3 Vec3::Left = Vec3( -1.0f, 0.0f, 0.0f );
 const Vec3 Vec3::Forward = Vec3( 0.0f, 0.0f, 1.0f );
 const Vec3 Vec3::Back = Vec3( 0.0f, 0.0f, -1.0f );
 
-Vec3 Vec3::placeholder_1 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::placeholder_2 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::placeholder_3 = Vec3( 0.0f, 0.0f, 0.0f );
+Vec3 Vec3::placeholder = Vec3( 0.0f, 0.0f, 0.0f );
 Vec3 Vec3::temp = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_1 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_2 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_3 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_4 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_5 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_6 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_7 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_8 = Vec3( 0.0f, 0.0f, 0.0f );
-Vec3 Vec3::temp_9 = Vec3( 0.0f, 0.0f, 0.0f );
 
 Vec3::Vec3( const float x, const float y, const float z )
 : x( x )
@@ -71,10 +60,9 @@ Vec3::Vec3( void )
 
 }
 
-
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Vec3> s_vec3_cached_pool( 1024, 1024 );
+static CachedPool<Vec3> s_vec3_cached_pool( 128, 128 );
 #endif
 
 void* Vec3::operator new( size_t s )

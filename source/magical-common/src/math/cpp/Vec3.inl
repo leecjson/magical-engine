@@ -72,6 +72,13 @@ inline Vec3 Vec3::operator-( const Vec3& v ) const
 	return Vec3( x - v.x, y - v.y, z - v.z );
 }
 
+inline Vec3 Vec3::operator*( const Mat4& m ) const
+{
+	Vec3 ret;
+	magicalVec3MulMat4( TOFLOAT( &ret ), TOFLOAT( this ), m.m );
+	return ret;
+}
+
 inline Vec3 Vec3::operator*( const float a ) const
 {
 	return Vec3( x * a, y * a, z * a );
@@ -125,6 +132,12 @@ inline Vec3& Vec3::operator-=( const Vec3& v )
 	x -= v.x;
 	y -= v.y;
 	z -= v.z;
+	return *this;
+}
+
+inline Vec3& Vec3::operator*=( const Mat4& m )
+{
+	magicalVec3MulMat4( TOFLOAT( this ), TOFLOAT( this ), m.m );
 	return *this;
 }
 
@@ -192,6 +205,13 @@ inline Vec3 Vec3::sub( const Vec3& v ) const
 	return Vec3( x - v.x, y - v.y, z - v.z );
 }
 
+inline Vec3 Vec3::mul( const Mat4& m ) const
+{
+	Vec3 ret;
+	magicalVec3MulMat4( TOFLOAT( &ret ), TOFLOAT( this ), m.m );
+	return ret;
+}
+
 inline Vec3 Vec3::mul( const float a ) const
 {
 	return Vec3( x * a, y * a, z * a );
@@ -242,6 +262,11 @@ inline void Vec3::subfill( const Vec3& v )
 	x -= v.x;
 	y -= v.y;
 	z -= v.z;
+}
+
+inline void Vec3::mulfill( const Mat4& m )
+{
+	magicalVec3MulMat4( TOFLOAT( this ), TOFLOAT( this ), m.m );
 }
 
 inline void Vec3::mulfill( const float a )
@@ -424,6 +449,11 @@ inline void MathVec3::sub( Vec3& out, const Vec3& v, const float a )
 inline void MathVec3::sub( Vec3& out, const Vec3& v1, const Vec3& v2 )
 {
 	magicalVec3Sub( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
+}
+
+inline void MathVec3::mul( Vec3& out, const Vec3& v, const Mat4& m )
+{
+	magicalVec3MulMat4( TOFLOAT( &out ), TOFLOAT( &v ), m.m );
 }
 
 inline void MathVec3::mul( Vec3& out, const Vec3& v, const float a )

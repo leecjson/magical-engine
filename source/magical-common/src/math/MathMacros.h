@@ -103,6 +103,7 @@ typedef unsigned char cBoolean;
 
 #define magicalCosf( __x ) cosf( ( __x ) )
 #define magicalSinf( __x ) sinf( ( __x ) )
+#define magicalTanf( __x ) tanf( ( __x ) )
 
 __inline void magicalSinfCosf( float* s, float* c, float theta )
 {
