@@ -53,6 +53,9 @@ SOFTWARE.
 #endif
 
 typedef unsigned char cBoolean;
+#define cTrue 1
+#define cFalse 0
+
 #define TOFLOAT( __a ) ( (float*)( __a ) )
 
 /*
@@ -92,8 +95,8 @@ typedef unsigned char cBoolean;
 /*
  function macros
  */
-#define magicalMax( __x, __y ) ( ( __x ) > ( __y ) ? ( __x ) : ( __y ) )
-#define magicalMin( __x, __y ) ( ( __x ) < ( __y ) ? ( __x ) : ( __y ) )
+#define magicalMax( __x, __y ) ( ( ( __x ) > ( __y ) ) ? ( __x ) : ( __y ) )
+#define magicalMin( __x, __y ) ( ( ( __x ) < ( __y ) ) ? ( __x ) : ( __y ) )
 
 #define magicalFltEqual( __x, __y ) ( fabsf( ( __x ) - ( __y ) ) < MAGICAL_FLT_EPSILON )
 #define magicalFltIsZero( __x ) ( fabsf( __x ) < MAGICAL_FLT_EPSILON )

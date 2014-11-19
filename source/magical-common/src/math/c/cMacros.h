@@ -28,6 +28,14 @@ SOFTWARE.
 #define _y [0x1]
 #define _z [0x2]
 #define _w [0x3]
+#define _d [0x3]
+
+#define _min_x [0x0]
+#define _min_y [0x1]
+#define _min_z [0x2]
+#define _max_x [0x3]
+#define _max_y [0x4]
+#define _max_z [0x5]
 
 #define _m11 [0x0]
 #define _m12 [0x1]

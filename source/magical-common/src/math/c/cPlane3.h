@@ -21,67 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Engine.h"
-#include "Utils.h"
-#include "AssetsSystem.h"
-#include "LuaSystem.h"
-#include "RendererSystem.h"
-#include "Application.h"
-#include "Node.h"
+#ifndef __C_PLANE3_H__
+#define __C_PLANE3_H__
 
-static void calcDeltaTime( void );
+#include "../MathMacros.h"
 
-static int64_t s_last_update_time;
-static float s_delta_time;
+#include "cVec3.h"
 
-#include "cpp/Vec2.h"
-#include "cpp/Vec3.h"
-#include "cpp/Vec4.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#include <vector>
+typedef enum cPointClassification {
+	MAGICAL_POINT_IN_FRONT_OF_PLANE = -1,
+	cPointInFrontOfPlane = -1,
+	cPointOnPlane = 0,
+	cPointBehindPlane = 1,
+} cPointClassification;
 
-void Engine::init( void )
-{
-	magicalBeginTicking();
+typedef float cPlane3[4];
 
-	for( int i = 0; i < 10000; ++i )
-	{
-		Vec2* v = new Vec2();
-		delete v;
-	}
+MAGICALAPI_MATH void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const float z, const float d );
+MAGICALAPI_MATH void magicalPlane3Fill( cPlane3 out, const cPlane3 p );
+MAGICALAPI_MATH void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVec3 n, const float d );
+MAGICALAPI_MATH void magicalPlane3FillPointAndNormal( cPlane3 out, const cVec3 p, const cVec3 n );
+MAGICALAPI_MATH void magicalPlane3FillPoints( cPlane3 out, const cVec3 a, const cVec3 b, const cVec3 c );
 
-	magicalEndTicking();
+MAGICALAPI_MATH void magicalPlane3SetNormal( cPlane3 out, const cVec3 n );
+MAGICALAPI_MATH void magicalPlane3GetNormal( cVec3 out, const cPlane3 p );
 
-	s_delta_time = 0.0f;
-	s_last_update_time = TimeUtils::currentMicrosecondsTime();
+MAGICALAPI_MATH cPointClassification magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 v );
+
+#ifdef __cplusplus
 }
+#endif
 
-void Engine::delc( void )
-{
-	
-}
-
-
-void Engine::mainLoop( void )
-{
-	calcDeltaTime();
-
-	Renderer::render();
-}
-
-void Engine::resize( int w, int h )
-{
-	Renderer::resize( w, h );
-}
-
-float Engine::getDeltaTime( void )
-{
-	return s_delta_time;
-}
-
-static void calcDeltaTime( void )
-{
-	int64_t now = TimeUtils::currentMicrosecondsTime();
-	s_delta_time = std::max<float>( 0, ( now - s_last_update_time ) / 1000000.0f );
-	s_last_update_time = now;
-}
+#endif //__C_PLANE3_H__

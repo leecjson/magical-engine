@@ -123,6 +123,15 @@
     <ClCompile Include="..\src\math\c\cQuaternion.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\c\cAABB3.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cPlane3.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cRay3.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\assets\AssetsSystem.h">
@@ -228,6 +237,15 @@
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cMacros.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cAABB3.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cPlane3.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cRay3.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
   </ItemGroup>
