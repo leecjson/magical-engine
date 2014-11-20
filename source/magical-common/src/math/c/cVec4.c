@@ -64,14 +64,6 @@ void magicalVec4FillScalars( cVec4 out, const float x, const float y, const floa
 	out _w = w;
 }
 
-void magicalVec4Fill( cVec4 out, const cVec4 v )
-{
-	out _x = v _x;
-	out _y = v _y;
-	out _z = v _z;
-	out _w = v _w;
-}
-
 void magicalVec4FillZero( cVec4 out )
 {
 	out _x = 0.0f;
@@ -86,6 +78,30 @@ void magicalVec4FillOne( cVec4 out )
 	out _y = 1.0f;
 	out _z = 1.0f;
 	out _w = 1.0f;
+}
+
+void magicalVec4Fill( cVec4 out, const cVec4 v )
+{
+	out _x = v _x;
+	out _y = v _y;
+	out _z = v _z;
+	out _w = v _w;
+}
+
+void magicalVec4FromVec2( cVec4 out, const cVec2 v )
+{
+	out _x = v _x;
+	out _y = v _y;
+	out _z = 0.0f;
+	out _w = 0.0f;
+}
+
+void magicalVec4FromVec3( cVec4 out, const cVec3 v )
+{
+	out _x = v _x;
+	out _y = v _y;
+	out _z = v _z;
+	out _w = 0.0f;
 }
 
 void magicalVec4AddScalar( cVec4 out, const cVec4 v, const float a )

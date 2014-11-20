@@ -32,6 +32,16 @@ static const float IDENTITY[] =
 	0.0f, 0.0f, 0.0f, 1.0f
 };
 
+cBoolean magicalMat4Equals( const cMat4 m1, const cMat4 m2 )
+{
+	return memcmp( m1, m2, sizeof( cMat4 ) ) == 0;
+}
+
+cBoolean magicalMat4IsIdentity( const cMat4 m )
+{
+	return memcmp( m, IDENTITY, sizeof( cMat4 ) ) == 0;
+}
+
 void magicalMat4FillScalars( cMat4 out,
 	const float rm11, const float rm12, const float rm13, const float rm14,
 	const float rm21, const float rm22, const float rm23, const float rm24,
@@ -49,24 +59,14 @@ void magicalMat4FillVector( cMat4 out, const float* m )
 	memcpy( out, m, sizeof( cMat4 ) );
 }
 
-void magicalMat4Fill( cMat4 out, const cMat4 m )
-{
-	memcpy( out, m, sizeof( cMat4 ) );
-}
-
 void magicalMat4FillIdentity( cMat4 out )
 {
 	memcpy( out, IDENTITY, sizeof( cMat4 ) );
 }
 
-cBoolean magicalMat4Equals( const cMat4 m1, const cMat4 m2 )
+void magicalMat4Fill( cMat4 out, const cMat4 m )
 {
-	return memcmp( m1, m2, sizeof( cMat4 ) ) == 0;
-}
-
-cBoolean magicalMat4IsIdentity( const cMat4 m )
-{
-	return memcmp( m, IDENTITY, sizeof( cMat4 ) ) == 0;
+	memcpy( out, m, sizeof( cMat4 ) );
 }
 
 void magicalMat4MulScalar( cMat4 out, const cMat4 m, const float a )
@@ -363,7 +363,7 @@ void magicalMat4FillRotationZ( cMat4 out, const float angle )
 	out _m41 = 0.0f; out _m42 = 0.0f; out _m43 = 0.0f; out _m44 = 1.0f;
 }
 
-void magicalMat4FillRotationPitchYawRoll( cMat4 out, const float pitch, const float yaw, const float roll )
+void magicalMat4FillRotationYawPitchRoll( cMat4 out, const float yaw, const float pitch, const float roll )
 {
 	/*float cr = magicalCosf( pitch );
 	float sr = magicalSinf( pitch );
@@ -421,76 +421,6 @@ void magicalMat4FillRotationQuaternion( cMat4 out, const cQuaternion r )
 void magicalMat4FillRotationAxisAngle( cMat4 out, const cVec3 axis, const float angle )
 {
 
-}
-
-void magicalMat4Translate( cMat4 out, const cMat4 m, const float x, const float y, const float z )
-{
-	cMat4 dst;
-	magicalMat4FillTranslation( dst, x, y, z );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4TranslateVector( cMat4 out, const cMat4 m, const cVec3 t )
-{
-	cMat4 dst;
-	magicalMat4FillTranslationVector( dst, t );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4Scale( cMat4 out, const cMat4 m, const float x, const float y, const float z )
-{
-	cMat4 dst;
-	magicalMat4FillScaling( dst, x, y, z );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4ScaleVector( cMat4 out, const cMat4 m, const cVec3 s )
-{
-	cMat4 dst;
-	magicalMat4FillScalingVector( dst, s );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4RotateX( cMat4 out, const cMat4 m, const float angle )
-{
-	cMat4 dst;
-	magicalMat4FillRotationX( dst, angle );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4RotateY( cMat4 out, const cMat4 m, const float angle )
-{
-	cMat4 dst;
-	magicalMat4FillRotationY( dst, angle );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4RotateZ( cMat4 out, const cMat4 m, const float angle )
-{
-	cMat4 dst;
-	magicalMat4FillRotationZ( dst, angle );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4RotatePitchYawRoll( cMat4 out, const cMat4 m, const float pitch, const float yaw, const float roll )
-{
-	cMat4 dst;
-	magicalMat4FillRotationPitchYawRoll( dst, pitch, yaw, roll );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4RotateQuaternion( cMat4 out, const cMat4 m, const cQuaternion r )
-{
-	cMat4 dst;
-	magicalMat4FillRotationQuaternion( dst, r );
-	magicalMat4Mul( out, m, dst );
-}
-
-void magicalMat4RotateAxisAngle( cMat4 out, const cMat4 m, const cVec3 axis, const float angle )
-{
-	cMat4 dst;
-	magicalMat4FillRotationAxisAngle( dst, axis, angle );
-	magicalMat4Mul( out, m, dst );
 }
 
 void magicalMat4FillLookAt( cMat4 out, const cVec3 eye, const cVec3 target, const cVec3 up )
@@ -603,6 +533,76 @@ void magicalMat4FillOrthographic( cMat4 out, const float left, const float right
 	out _m42 = - ( top + bottom ) / ( top - bottom );
 	out _m43 = - ( far + near ) / ( far - near );
 	out _m44 = 1.0f;
+}
+
+void magicalMat4Translate( cMat4 out, const cMat4 m, const float x, const float y, const float z )
+{
+	cMat4 dst;
+	magicalMat4FillTranslation( dst, x, y, z );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4TranslateVector( cMat4 out, const cMat4 m, const cVec3 t )
+{
+	cMat4 dst;
+	magicalMat4FillTranslationVector( dst, t );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4Scale( cMat4 out, const cMat4 m, const float x, const float y, const float z )
+{
+	cMat4 dst;
+	magicalMat4FillScaling( dst, x, y, z );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4ScaleVector( cMat4 out, const cMat4 m, const cVec3 s )
+{
+	cMat4 dst;
+	magicalMat4FillScalingVector( dst, s );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4RotateX( cMat4 out, const cMat4 m, const float angle )
+{
+	cMat4 dst;
+	magicalMat4FillRotationX( dst, angle );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4RotateY( cMat4 out, const cMat4 m, const float angle )
+{
+	cMat4 dst;
+	magicalMat4FillRotationY( dst, angle );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4RotateZ( cMat4 out, const cMat4 m, const float angle )
+{
+	cMat4 dst;
+	magicalMat4FillRotationZ( dst, angle );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4RotateYawPitchRoll( cMat4 out, const cMat4 m, const float yaw, const float pitch, const float roll )
+{
+	cMat4 dst;
+	magicalMat4FillRotationYawPitchRoll( dst, pitch, yaw, roll );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4RotateQuaternion( cMat4 out, const cMat4 m, const cQuaternion r )
+{
+	cMat4 dst;
+	magicalMat4FillRotationQuaternion( dst, r );
+	magicalMat4Mul( out, m, dst );
+}
+
+void magicalMat4RotateAxisAngle( cMat4 out, const cMat4 m, const cVec3 axis, const float angle )
+{
+	cMat4 dst;
+	magicalMat4FillRotationAxisAngle( dst, axis, angle );
+	magicalMat4Mul( out, m, dst );
 }
 
 float magicalMat4Determinant( const cMat4 m )

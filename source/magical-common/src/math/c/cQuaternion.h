@@ -26,13 +26,14 @@ SOFTWARE.
 
 #include "../MathMacros.h"
 
+typedef float cQuaternion[4];
+
 #include "cVec3.h"
+#include "cEulerAngles.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-typedef float cQuaternion[4];
 
 MAGICALAPI_MATH cBoolean magicalQuaternionEquals( const cQuaternion q1, const cQuaternion q2 );
 MAGICALAPI_MATH cBoolean magicalQuaternionIsZero( const cQuaternion q );
@@ -40,14 +41,18 @@ MAGICALAPI_MATH cBoolean magicalQuaternionIsIdentity( const cQuaternion q );
 MAGICALAPI_MATH cBoolean magicalQuaternionIsNormalize( const cQuaternion q );
 
 MAGICALAPI_MATH void magicalQuaternionFillScalars( cQuaternion out, const float x, const float y, const float z, const float w );
-MAGICALAPI_MATH void magicalQuaternionFill( cQuaternion out, const cQuaternion q );
 MAGICALAPI_MATH void magicalQuaternionFillZero( cQuaternion out );
 MAGICALAPI_MATH void magicalQuaternionFillIdentity( cQuaternion out );
-MAGICALAPI_MATH void magicalQuaternionFillAxisAngle( cQuaternion out, const cVec3 axis, const float angle );
+MAGICALAPI_MATH void magicalQuaternionFill( cQuaternion out, const cQuaternion q );
+
+MAGICALAPI_MATH void magicalQuaternionFromAxisAngle( cQuaternion out, const cVec3 axis, const float angle );
+MAGICALAPI_MATH void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea );
+MAGICALAPI_MATH void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q );
 
 MAGICALAPI_MATH void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );
 
-MAGICALAPI_MATH float magicalQuaternionDot( cQuaternion out, const cQuaternion q1, const const cQuaternion q2 );
+MAGICALAPI_MATH float magicalQuaternionDot( const cQuaternion q1, const cQuaternion q2 );
 MAGICALAPI_MATH float magicalQuaternionLength( const cQuaternion q );
 MAGICALAPI_MATH float magicalQuaternionLengthSq( const cQuaternion q );
 
@@ -55,6 +60,8 @@ MAGICALAPI_MATH void magicalQuaternionNormalize( cQuaternion out, const cQuatern
 MAGICALAPI_MATH void magicalQuaternionConjugate( cQuaternion out, const cQuaternion q );
 MAGICALAPI_MATH void magicalQuaternionNegate( cQuaternion out, const cQuaternion q );
 MAGICALAPI_MATH cBoolean magicalQuaternionInverse( cQuaternion out, const cQuaternion q );
+
+MAGICALAPI_MATH void magicalQuaternionSlerp( cQuaternion out, const cQuaternion q1, const cQuaternion q2, const float t );
 
 #ifdef __cplusplus
 }

@@ -26,11 +26,14 @@ SOFTWARE.
 
 #include "../MathMacros.h"
 
+typedef float cVec4[4];
+
+#include "cVec2.h"
+#include "cVec3.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-typedef float cVec4[4];
 
 MAGICALAPI_MATH cBoolean magicalVec4Equals( const cVec4 v1, const cVec4 v2 );
 MAGICALAPI_MATH cBoolean magicalVec4IsZero( const cVec4 v );
@@ -38,9 +41,12 @@ MAGICALAPI_MATH cBoolean magicalVec4IsOne( const cVec4 v );
 MAGICALAPI_MATH cBoolean magicalVec4IsNormalize( const cVec4 v );
 
 MAGICALAPI_MATH void magicalVec4FillScalars( cVec4 out, const float x, const float y, const float z, const float w );
-MAGICALAPI_MATH void magicalVec4Fill( cVec4 out, const cVec4 v );
 MAGICALAPI_MATH void magicalVec4FillZero( cVec4 out );
 MAGICALAPI_MATH void magicalVec4FillOne( cVec4 out );
+MAGICALAPI_MATH void magicalVec4Fill( cVec4 out, const cVec4 v );
+
+MAGICALAPI_MATH void magicalVec4FromVec2( cVec4 out, const cVec2 v );
+MAGICALAPI_MATH void magicalVec4FromVec3( cVec4 out, const cVec3 v );
 
 MAGICALAPI_MATH void magicalVec4AddScalar( cVec4 out, const cVec4 v, const float a );
 MAGICALAPI_MATH void magicalVec4Add( cVec4 out, const cVec4 v1, const cVec4 v2 );

@@ -133,7 +133,7 @@ __inline float magicalAcosf( const float c )
 	return acosf( c );
 }
 
-__inline float magicalWrapPi( float c )
+__inline float magicalCorrectToPI( float c )
 {
 	c += MAGICAL_FLT_PI;
 	c -= floorf( c * MAGICAL_FLT_1_OVER_2PI ) * MAGICAL_FLT_2PI;

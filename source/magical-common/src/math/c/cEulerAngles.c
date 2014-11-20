@@ -26,33 +26,94 @@ SOFTWARE.
 
 void magicalEulerAnglesFillYawPitchRoll( cEulerAngles out, const float yaw, const float pitch, const float roll )
 {
-	out _yaw = magicalDegToRad( yaw );
-	out _pitch = magicalDegToRad( pitch );
-	out _roll = magicalDegToRad( roll );
-}
-
-void magicalEulerAnglesFillScalers( cEulerAngles out, const float x, const float y, const float z )
-{
-	out _yaw = magicalDegToRad( y );
-	out _pitch = magicalDegToRad( x );
-	out _roll = magicalDegToRad( z );
+	out _yaw   = yaw;
+	out _pitch = pitch;
+	out _roll  = roll;
 }
 
 void magicalEulerAnglesFill( cEulerAngles out, const cEulerAngles ea )
 {
-	out _yaw = ea _yaw;
+	out _yaw   = ea _yaw;
 	out _pitch = ea _pitch;
-	out _roll = ea _roll;
+	out _roll  = ea _roll;
 }
 
 void magicalEulerAnglesFillIdentity( cEulerAngles out )
 {
-	out _yaw = 0.0f;
+	out _yaw   = 0.0f;
 	out _pitch = 0.0f;
-	out _roll = 0.0f;
+	out _roll  = 0.0f;
 }
 
-void magicalEulerAnglesCorrect( cEulerAngles out, const cEulerAngles ea )
+void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea )
 {
-	
+	float yaw   = ea _yaw;
+	float pitch = ea _pitch;
+	float roll  = ea _roll;
+
+	pitch = magicalCorrectToPI( pitch );
+	if( pitch < -MAGICAL_FLT_PI_OVER_2 )
+	{
+		pitch = -MAGICAL_FLT_PI - pitch;
+		yaw  += MAGICAL_FLT_PI;
+		roll += MAGICAL_FLT_PI;
+	}
+	else if( pitch > MAGICAL_FLT_PI_OVER_2 )
+	{
+		pitch = MAGICAL_FLT_PI - pitch;
+		yaw  += MAGICAL_FLT_PI;
+		roll += MAGICAL_FLT_PI;
+	}
+
+	if( fabsf( pitch ) > ( MAGICAL_FLT_PI_OVER_2 - 1e-4f ) )
+	{
+		yaw += roll;
+		roll = 0.0f;
+	}
+	else
+	{
+		roll = magicalCorrectToPI( roll );
+	}
+
+	yaw = magicalCorrectToPI( yaw );
+
+	out _yaw   = yaw;
+	out _pitch = pitch;
+	out _roll  = roll;
+}
+
+void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q )
+{
+	float sp = -2.0f * ( q _y * q _z + q _w * q _x );
+
+	if( fabsf( sp ) > 0.9999f )
+	{
+		out _pitch = MAGICAL_FLT_PI_OVER_2 * sp;
+		out _yaw   = atan2f( -q _x * q _z - q _w * q _y, 0.5f - q _y * q _y - q _z * q _z );
+		out _roll  = 0.0f;
+	}
+	else
+	{
+		out _pitch = asinf( sp );
+		out _yaw   = atan2f( q _x * q _z - q _w * q _y, 0.5f - q _x * q _x - q _y * q _y );
+		out _roll  = atan2f( q _x * q _y - q _w * q _z, 0.5f - q _x * q _x - q _z * q _z );
+	}
+}
+
+void magicalEulerAnglesFromRotationMat4( cEulerAngles out, const cMat4 m )
+{
+	float sp = -m _m23;
+
+	if( fabsf( sp ) > 9.99999f )
+	{
+		out _pitch = MAGICAL_FLT_PI_OVER_2 * sp;
+		out _yaw   = atan2f( -m _m31, m _m11 );
+		out _roll  = 0.0f;
+	}
+	else
+	{
+		out _pitch = asinf( sp );
+		out _yaw   = atan2f( m _m13, m _m33 );
+		out _roll  = atan2f( m _m21, m _m22 );
+	}
 }

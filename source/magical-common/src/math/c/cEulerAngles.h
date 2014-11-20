@@ -26,20 +26,23 @@ SOFTWARE.
 
 #include "../MathMacros.h"
 
+typedef float cEulerAngles[3];
+
 #include "cQuaternion.h"
+#include "cMat4.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef float cEulerAngles[3];
-
 MAGICALAPI_MATH void magicalEulerAnglesFillYawPitchRoll( cEulerAngles out, const float yaw, const float pitch, const float roll );
-MAGICALAPI_MATH void magicalEulerAnglesFillScalers( cEulerAngles out, const float x, const float y, const float z );
-MAGICALAPI_MATH void magicalEulerAnglesFill( cEulerAngles out, const cEulerAngles ea );
 MAGICALAPI_MATH void magicalEulerAnglesFillIdentity( cEulerAngles out );
+MAGICALAPI_MATH void magicalEulerAnglesFill( cEulerAngles out, const cEulerAngles ea );
 
-MAGICALAPI_MATH void magicalEulerAnglesCorrect( cEulerAngles out, const cEulerAngles ea );
+MAGICALAPI_MATH void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q );
+MAGICALAPI_MATH void magicalEulerAnglesFromRotationMat4( cEulerAngles out, const cMat4 m );
+
+MAGICALAPI_MATH void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea );
 
 #ifdef __cplusplus
 }
