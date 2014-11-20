@@ -132,6 +132,9 @@
     <ClCompile Include="..\src\math\c\cRay3.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\c\cEulerAngles.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\assets\AssetsSystem.h">
@@ -246,6 +249,9 @@
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cRay3.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cEulerAngles.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
   </ItemGroup>

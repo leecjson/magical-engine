@@ -63,14 +63,23 @@ typedef unsigned char cBoolean;
  */
 #define MAGICAL_DBL_PI 3.14159265358979323846
 #define MAGICAL_DBL_2PI 6.28318530717958647692
-#define MAGICAL_DBL_HALF_PI 1.57079632679489661923
+#define MAGICAL_DBL_PI_OVER_2 1.57079632679489661923
+#define MAGICAL_DBL_PI_OVER_180 0.01745329251994329576
+#define MAGICAL_DBL_1_OVER_PI 0.31830988618379067153
+#define MAGICAL_DBL_1_OVER_2PI 0.15915494309189533576
+#define MAGICAL_DBL_180_OVER_PI 57.2957795130823208768
 
 #define MAGICAL_FLT_PI 3.14159265358979323846f
 #define MAGICAL_FLT_2PI 6.28318530717958647692f
-#define MAGICAL_FLT_HALF_PI 1.57079632679489661923f
+#define MAGICAL_FLT_PI_OVER_2 1.57079632679489661923f
+#define MAGICAL_FLT_PI_OVER_180 0.01745329251994329576f
+#define MAGICAL_FLT_1_OVER_PI 0.31830988618379067153f
+#define MAGICAL_FLT_1_OVER_2PI 0.15915494309189533576f
+#define MAGICAL_FLT_180_OVER_PI 57.2957795130823208768f
+
 #define MAGICAL_FLT_EPSILON 0.000001f
 
-#define MAGICAL_MAT4_SIZE sizeof(float) * 0xF
+#define MAGICAL_MAT4_SIZE sizeof( float ) * 0xF
 
 /*
  matrix4x4 macros
@@ -101,20 +110,20 @@ typedef unsigned char cBoolean;
 #define magicalFltEqual( __x, __y ) ( fabsf( ( __x ) - ( __y ) ) < MAGICAL_FLT_EPSILON )
 #define magicalFltIsZero( __x ) ( fabsf( __x ) < MAGICAL_FLT_EPSILON )
 
-#define magicalDegToRad( __x ) ( ( __x ) * 0.0174532925f )
-#define magicalRadToDeg( __x ) ( ( __x ) * 57.29577951f )
+#define magicalDegToRad( __x ) ( ( __x ) * MAGICAL_FLT_PI_OVER_180 )
+#define magicalRadToDeg( __x ) ( ( __x ) * MAGICAL_FLT_180_OVER_PI )
 
 #define magicalCosf( __x ) cosf( ( __x ) )
 #define magicalSinf( __x ) sinf( ( __x ) )
 #define magicalTanf( __x ) tanf( ( __x ) )
 
-__inline void magicalSinfCosf( float* s, float* c, float theta )
+__inline void magicalSinfCosf( float* s, float* c, const float theta )
 {
 	*s = magicalSinf( theta );
 	*c = magicalCosf( theta );
 }
 
-__inline float magicalAcosf( float c )
+__inline float magicalAcosf( const float c )
 {
 	if( c <= -1.0f ) 
 		return MAGICAL_FLT_PI;
@@ -122,6 +131,14 @@ __inline float magicalAcosf( float c )
 		return 0.0f;
 
 	return acosf( c );
+}
+
+__inline float magicalWrapPi( float c )
+{
+	c += MAGICAL_FLT_PI;
+	c -= floorf( c * MAGICAL_FLT_1_OVER_2PI ) * MAGICAL_FLT_2PI;
+	c -= MAGICAL_FLT_PI;
+	return c;
 }
 
 

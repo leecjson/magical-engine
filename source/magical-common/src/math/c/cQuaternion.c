@@ -126,16 +126,29 @@ void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuatern
 	 * (q1 * q2 * q3)^-1 = (q3^-1) * (q2^-1) * (q1^-1)
 	 *
 	 */
-
+#if 1
+	// 变换顺序由右到左
+	float w = q1 _w * q2 _w - q1 _x * q2 _x - q1 _y * q2 _y - q1 _z * q2 _z;
 	float x = q1 _w * q2 _x + q1 _x * q2 _w + q1 _y * q2 _z - q1 _z * q2 _y;
 	float y = q1 _w * q2 _y - q1 _x * q2 _z + q1 _y * q2 _w + q1 _z * q2 _x;
 	float z = q1 _w * q2 _z + q1 _x * q2 _y - q1 _y * q2 _x + q1 _z * q2 _w;
+#else
+	// 变换顺序由左到右
 	float w = q1 _w * q2 _w - q1 _x * q2 _x - q1 _y * q2 _y - q1 _z * q2 _z;
+	float x = q1 _w * q2 _x + q1 _x * q2 _w + q1 _y * q2 _z - q1 _z * q2 _y;
+	float y = q1 _w * q2 _y + q1 _y * q2 _w + q1 _z * q2 _x - q1 _x * q2 _z;
+	float z = q1 _w * q2 _z + q1 _z * q2 _w + q1 _x * q2 _y - q1 _y * q2 _x;
+#endif
 
 	out _x = x;
 	out _y = y;
 	out _z = z;
 	out _w = w;
+}
+
+float magicalQuaternionDot( cQuaternion out, const cQuaternion q1, const const cQuaternion q2 )
+{
+	return q1 _w * q2 _w + q1 _x * q2 _x + q1 _y * q2 _y + q1 _z * q2 _z;
 }
 
 float magicalQuaternionLength( const cQuaternion q )
@@ -213,17 +226,23 @@ cBoolean magicalQuaternionInverse( cQuaternion out, const cQuaternion q )
 		out _x = - q _x;
 		out _y = - q _y;
 		out _z = - q _z;
-		return 1;
+		return cTrue;
 	}
 
 	n = sqrt( n );
 	if( magicalFltIsZero( n ) )
-		return 0;
-
+	{
+		out _w = 0.0f;
+		out _x = 0.0f;
+		out _y = 0.0f;
+		out _z = 0.0f;
+		return cFalse;
+	}
+		
 	n = 1.0f / n;
 	out _w = q _w * n;
 	out _x = -q _x * n;
 	out _y = -q _y * n;
 	out _z = -q _z * n;
-	return 1;
+	return cTrue;
 }

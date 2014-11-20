@@ -31,6 +31,7 @@
     <ClCompile Include="..\src\math\cpp\Vec3.cpp" />
     <ClCompile Include="..\src\math\cpp\Vec4.cpp" />
     <ClCompile Include="..\src\math\c\cAABB3.c" />
+    <ClCompile Include="..\src\math\c\cEulerAngles.c" />
     <ClCompile Include="..\src\math\c\cMat4.c" />
     <ClCompile Include="..\src\math\c\cPlane3.c" />
     <ClCompile Include="..\src\math\c\cQuaternion.c" />
@@ -68,6 +69,7 @@
     <ClInclude Include="..\src\math\cpp\Vec3.h" />
     <ClInclude Include="..\src\math\cpp\Vec4.h" />
     <ClInclude Include="..\src\math\c\cAABB3.h" />
+    <ClInclude Include="..\src\math\c\cEulerAngles.h" />
     <ClInclude Include="..\src\math\c\cMacros.h" />
     <ClInclude Include="..\src\math\c\cMat4.h" />
     <ClInclude Include="..\src\math\c\cPlane3.h" />

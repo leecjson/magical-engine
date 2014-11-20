@@ -21,41 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_MACROS_H__
-#define __C_MACROS_H__
+#include "cEulerAngles.h"
+#include "cMacros.h"
 
-#define _x [0x0]
-#define _y [0x1]
-#define _z [0x2]
-#define _w [0x3]
-#define _d [0x3]
+void magicalEulerAnglesFillYawPitchRoll( cEulerAngles out, const float yaw, const float pitch, const float roll )
+{
+	out _yaw = magicalDegToRad( yaw );
+	out _pitch = magicalDegToRad( pitch );
+	out _roll = magicalDegToRad( roll );
+}
 
-#define _min_x [0x0]
-#define _min_y [0x1]
-#define _min_z [0x2]
-#define _max_x [0x3]
-#define _max_y [0x4]
-#define _max_z [0x5]
+void magicalEulerAnglesFillScalers( cEulerAngles out, const float x, const float y, const float z )
+{
+	out _yaw = magicalDegToRad( y );
+	out _pitch = magicalDegToRad( x );
+	out _roll = magicalDegToRad( z );
+}
 
-#define _m11 [0x0]
-#define _m12 [0x1]
-#define _m13 [0x2]
-#define _m14 [0x3]
-#define _m21 [0x4]
-#define _m22 [0x5]
-#define _m23 [0x6]
-#define _m24 [0x7]
-#define _m31 [0x8]
-#define _m32 [0x9]
-#define _m33 [0xA]
-#define _m34 [0xB]
-#define _m41 [0xC]
-#define _m42 [0xD]
-#define _m43 [0xE]
-#define _m44 [0xF]
+void magicalEulerAnglesFill( cEulerAngles out, const cEulerAngles ea )
+{
+	out _yaw = ea _yaw;
+	out _pitch = ea _pitch;
+	out _roll = ea _roll;
+}
 
-#define _pitch [0x0]
-#define _yaw   [0x1]
-#define _roll  [0x2]
+void magicalEulerAnglesFillIdentity( cEulerAngles out )
+{
+	out _yaw = 0.0f;
+	out _pitch = 0.0f;
+	out _roll = 0.0f;
+}
 
-#endif //__C_MACROS_H__
+void magicalEulerAnglesCorrect( cEulerAngles out, const cEulerAngles ea )
+{
+	
+}

@@ -47,6 +47,7 @@ MAGICALAPI_MATH void magicalQuaternionFillAxisAngle( cQuaternion out, const cVec
 
 MAGICALAPI_MATH void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );
 
+MAGICALAPI_MATH float magicalQuaternionDot( cQuaternion out, const cQuaternion q1, const const cQuaternion q2 );
 MAGICALAPI_MATH float magicalQuaternionLength( const cQuaternion q );
 MAGICALAPI_MATH float magicalQuaternionLengthSq( const cQuaternion q );
 
