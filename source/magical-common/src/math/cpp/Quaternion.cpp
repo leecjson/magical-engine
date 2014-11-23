@@ -76,7 +76,7 @@ void Quaternion::slerp( const Quaternion& rhs, float t )
 	// errors in the input quaternions, it actually corrects for them.
 	//magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
 
-	if( magicalFltIsZero( t ) )
+	if( magicalAlmostZero( t ) )
 	{
 		x = q1x;
 		y = q1y;
@@ -84,7 +84,7 @@ void Quaternion::slerp( const Quaternion& rhs, float t )
 		w = q1w;
 		return;
 	}
-	else if( magicalFltEqual( t, 1.0f ) )
+	else if( magicalAlmostEqual( t, 1.0f ) )
 	{
 		x = q2x;
 		y = q2y;
@@ -93,10 +93,10 @@ void Quaternion::slerp( const Quaternion& rhs, float t )
 		return;
 	}
 
-	if( magicalFltEqual( q1x, q2x ) &&
-		magicalFltEqual( q1y, q2y ) &&
-		magicalFltEqual( q1z, q2z ) &&
-		magicalFltEqual( q1w, q2w ) )
+	if( magicalAlmostEqual( q1x, q2x ) &&
+		magicalAlmostEqual( q1y, q2y ) &&
+		magicalAlmostEqual( q1z, q2z ) &&
+		magicalAlmostEqual( q1w, q2w ) )
 	{
 		x = q1x;
 		y = q1y;

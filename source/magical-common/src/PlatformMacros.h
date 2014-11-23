@@ -36,20 +36,19 @@ MAG_MAC
 #define MAGICAL_PLATFORM "Win32"
 #endif
 
-#if !defined( __cplusplus )
-#ifndef true
-#define true 1
-#endif
-#ifndef false
-#define false 0
-#endif
-#endif
-
 #if !defined( MAGICALAPI )
 #define MAGICALAPI extern
 #endif
 #if !defined( MAGICALAPI_USER )
 #define MAGICALAPI_USER extern
+#endif
+
+typedef unsigned char cBool;
+#ifndef cTrue
+#define cTrue 1
+#endif
+#ifndef cFalse
+#define cFalse 0
 #endif
 
 #endif //__PLATFORM_MACROS_H__

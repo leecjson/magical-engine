@@ -22,38 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cQuaternion.h"
-#include "cMacros.h"
 
-cBoolean magicalQuaternionEquals( const cQuaternion q1, const cQuaternion q2 )
+cBool magicalQuaternionEquals( const cQuaternion q1, const cQuaternion q2 )
 {
 	return
-		magicalFltEqual( q1 _x, q2 _x ) &&
-		magicalFltEqual( q1 _y, q2 _y ) &&
-		magicalFltEqual( q1 _z, q2 _z ) &&
-		magicalFltEqual( q1 _w, q2 _w );
+		magicalAlmostEqual( q1 _x, q2 _x ) &&
+		magicalAlmostEqual( q1 _y, q2 _y ) &&
+		magicalAlmostEqual( q1 _z, q2 _z ) &&
+		magicalAlmostEqual( q1 _w, q2 _w );
 }
 
-cBoolean magicalQuaternionIsZero( const cQuaternion q )
+cBool magicalQuaternionIsZero( const cQuaternion q )
 {
 	return
-		magicalFltIsZero( q _x ) &&
-		magicalFltIsZero( q _y ) &&
-		magicalFltIsZero( q _z ) &&
-		magicalFltIsZero( q _w );
+		magicalAlmostZero( q _x ) &&
+		magicalAlmostZero( q _y ) &&
+		magicalAlmostZero( q _z ) &&
+		magicalAlmostZero( q _w );
 }
 
-cBoolean magicalQuaternionIsIdentity( const cQuaternion q )
+cBool magicalQuaternionIsIdentity( const cQuaternion q )
 {
 	return
-		magicalFltIsZero( q _x ) &&
-		magicalFltIsZero( q _y ) &&
-		magicalFltIsZero( q _z ) &&
-		magicalFltEqual( q _w, 1.0f );
+		magicalAlmostZero( q _x ) &&
+		magicalAlmostZero( q _y ) &&
+		magicalAlmostZero( q _z ) &&
+		magicalAlmostEqual( q _w, 1.0f );
 }
 
-cBoolean magicalQuaternionIsNormalize( const cQuaternion q )
+cBool magicalQuaternionIsNormalize( const cQuaternion q )
 {
-	return magicalFltEqual( q _x * q _x + q _y * q _y + q _z * q _z + q _w * q _w, 1.0f );
+	return magicalAlmostEqual( q _x * q _x + q _y * q _y + q _z * q _z + q _w * q _w, 1.0f );
 }
 
 void magicalQuaternionFillScalars( cQuaternion out, const float x, const float y, const float z, const float w )
@@ -88,30 +87,40 @@ void magicalQuaternionFill( cQuaternion out, const cQuaternion q )
 	out _w = q _w;
 }
 
-void magicalQuaternionFromAxisAngle( cQuaternion out, const cVec3 axis, const float angle )
+/*-----------------------------------------------------------------------------*\
+ * 将轴一角对旋转转换为四元数 done
+ *
+ * 轴一角对转换四元数公式：
+ * [ cos(a/2) ( sin(a/2)*n.x sin(a/2)*n.y sin(a/2)*n.z ) ]
+ *
+ * out 结果
+ * axis 旋转轴
+ * angle 绕旋转轴所旋转的弧度
+ *-----------------------------------------------------------------------------*/
+void magicalQuaternionFillFromAxisAngle( cQuaternion out, const cVec3 axis, const float angle )
 {
-	/*
-	 * 填充四元数为轴一角对旋转方式
-	 *
-	 * [ cos(a/2) (sin(a/2)*n.x  sin(a/2)*n.y  sin(a/2)*n.z) ]
-	 */
-
 	cVec3 n;
 	float half;
 	float s;
 
 	half = angle / 2.0f;
-	s = magicalSinf( half );
+	s = sinf( half );
 
 	magicalVec3Normalize( n, axis );
 
-	out _w = magicalCosf( half );
+	out _w = cosf( half );
     out _x = n _x * s;
     out _y = n _y * s;
     out _z = n _z * s;
 }
 
-void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea )
+/*-----------------------------------------------------------------------------*\
+ * 将一组欧拉角旋转转换为四元数 done
+ *
+ * out 结果
+ * ea 转换所需要的欧拉角 参考欧拉角定义
+ *-----------------------------------------------------------------------------*/
+void magicalQuaternionFillFromEulerAngles( cQuaternion out, const cEulerAngles ea )
 {
 	cEulerAngles ea_dst;
 	float sp, sr, sy;
@@ -120,9 +129,9 @@ void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea )
 	magicalEulerAnglesFill( ea_dst, ea );
 	magicalEulerAnglesCorrects( ea_dst, ea_dst );
 
-	magicalSinfCosf( &sp, &cp, ea _pitch * 0.5f );
-	magicalSinfCosf( &sr, &cr, ea _roll * 0.5f );
-	magicalSinfCosf( &sy, &cy, ea _yaw * 0.5f );
+	magicalSinCos( &sp, &cp, ea_dst _pitch * 0.5f );
+	magicalSinCos( &sr, &cr, ea_dst _roll * 0.5f );
+	magicalSinCos( &sy, &cy, ea_dst _yaw * 0.5f );
 
 	out _w =   cy * cp * cr + sy * sp * sr;
 	out _x = - cy * sp * cr - sy * cp * sr;
@@ -130,7 +139,13 @@ void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea )
 	out _z =   sy * sp * cr - cy * cp * sr;
 }
 
-void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll )
+/*-----------------------------------------------------------------------------*\
+ * 将欧拉角yaw pitch roll旋转转换为四元数 done
+ *
+ * out 结果
+ * yaw pitch roll 参考欧拉角的定义
+ *-----------------------------------------------------------------------------*/
+void magicalQuaternionFillFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll )
 {
 	cEulerAngles ea_dst;
 	float sp, sr, sy;
@@ -139,9 +154,9 @@ void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, c
 	magicalEulerAnglesFillYawPitchRoll( ea_dst, yaw, pitch, roll );
 	magicalEulerAnglesCorrects( ea_dst, ea_dst );
 
-	magicalSinfCosf( &sp, &cp, ea_dst _pitch * 0.5f );
-	magicalSinfCosf( &sr, &cr, ea_dst _roll * 0.5f );
-	magicalSinfCosf( &sy, &cy, ea_dst _yaw * 0.5f );
+	magicalSinCos( &sp, &cp, ea_dst _pitch * 0.5f );
+	magicalSinCos( &sr, &cr, ea_dst _roll * 0.5f );
+	magicalSinCos( &sy, &cy, ea_dst _yaw * 0.5f );
 
 	out _w =   cy * cp * cr + sy * sp * sr;
 	out _x = - cy * sp * cr - sy * cp * sr;
@@ -149,15 +164,22 @@ void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, c
 	out _z =   sy * sp * cr - cy * cp * sr;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 将四元数转换为轴一角对旋转 done
+ * 
+ * out 旋转轴
+ * q 源四元数
+ * return 绕旋转轴的所旋转的角度
+ *-----------------------------------------------------------------------------*/
 float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q )
 {
 	float angle;
-	float scale;
+	float length;
 
-	angle = magicalAcosf( q _w );
-	scale = sqrtf( q _x * q _x + q _y * q _y + q _z * q _z );
+	angle = magicalSafeAcos( q _w );
+	length = sqrtf( q _x * q _x + q _y * q _y + q _z * q _z );
 
-	if( magicalFltIsZero( scale ) || magicalFltEqual( scale, MAGICAL_FLT_2PI ) )
+	if( magicalAlmostZero( length ) )
 	{
 		out _x = 0.0f;
 		out _y = 0.0f;
@@ -167,29 +189,32 @@ float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q )
 	else
 	{
 		angle = angle * 2.0f;
-		out _x = q _x / scale;
-		out _y = q _y / scale;
-		out _z = q _z / scale;
-		magicalVec3Normalize( out, out );
+		out _x = q _x / length;
+		out _y = q _y / length;
+		out _z = q _z / length;
 		return angle;
 	}
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 四元数乘法 q1左乘q2 done
+ *
+ * 四元数乘积的模等于模的乘积
+ *
+ * 满足结合律 但不满足交换律
+ * (q1 * q2) * q3 = q1 * (q2 * q3)
+ *  q1 * q2 != q2 * q1
+ *
+ * 四元数乘积的逆等于各个四元数的逆以相反的顺序相乘
+ * (q1 * q2)^-1 = (q2^-1) * (q1^-1)
+ * (q1 * q2 * q3)^-1 = (q3^-1) * (q2^-1) * (q1^-1)
+ *
+ * out 结果
+ * q1 第一个四元数
+ * q2 第二个四元数
+ *-----------------------------------------------------------------------------*/
 void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuaternion q2 )
 {
-	/*
-	 * 四元数乘法 q1 左乘 q2
-	 *
-	 * 四元数乘积的模等于模的乘积
-	 * 满足结合律 但不满足交换律
-	 * (q1 * q2) * q3 = q1 * (q2 * q3)
-	 * q1 * q2 != q2 * q1
-	 *
-	 * 四元数乘积的逆等于各个四元数的逆以相反的顺序相乘
-	 * (q1 * q2)^-1 = (q2^-1) * (q1^-1)
-	 * (q1 * q2 * q3)^-1 = (q3^-1) * (q2^-1) * (q1^-1)
-	 *
-	 */
 #if 0
 	// 变换顺序由右到左
 	float w = q1 _w * q2 _w - q1 _x * q2 _x - q1 _y * q2 _y - q1 _z * q2 _z;
@@ -210,38 +235,83 @@ void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuatern
 	out _w = w;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 四元数乘以3D向量
+ *-----------------------------------------------------------------------------*/
+void magicalQuaternionMulVec3( cVec3 out, const cQuaternion q1, const cVec3 v )
+{
+#if 0
+	// 变换顺序由右到左
+	//float w = q1 _w * 0.0f - q1 _x * v _x - q1 _y * v _y - q1 _z * v _z;
+	float x = q1 _w * v _x + q1 _x * 0.0f + q1 _y * v _z - q1 _z * v _y;
+	float y = q1 _w * v _y - q1 _x * v _z + q1 _y * 0.0f + q1 _z * v _x;
+	float z = q1 _w * v _z + q1 _x * v _y - q1 _y * v _x + q1 _z * 0.0f;
+#else
+	// 变换顺序由左到右
+	//float w = q1 _w * 0.0f - q1 _x * v _x - q1 _y * v _y - q1 _z * v _z;
+	float x = q1 _w * v _x + q1 _x * 0.0f + q1 _y * v _z - q1 _z * v _y;
+	float y = q1 _w * v _y + q1 _y * 0.0f + q1 _z * v _x - q1 _x * v _z;
+	float z = q1 _w * v _z + q1 _z * 0.0f + q1 _x * v _y - q1 _y * v _x;
+#endif
+
+	out _x = x;
+	out _y = y;
+	out _z = z;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 计算两个四元数的点乘结果 done
+ * 
+ * q1 第一个四元数
+ * q2 第二个四元数
+ * return 点乘结果
+ *-----------------------------------------------------------------------------*/
 float magicalQuaternionDot( const cQuaternion q1, const cQuaternion q2 )
 {
 	return q1 _w * q2 _w + q1 _x * q2 _x + q1 _y * q2 _y + q1 _z * q2 _z;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算四元数的模 done
+ * 
+ * q 目标四元数
+ * return 四元数的模
+ *-----------------------------------------------------------------------------*/
 float magicalQuaternionLength( const cQuaternion q )
 {
 	return sqrtf( q _x * q _x + q _y * q _y + q _z * q _z + q _w * q _w );
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算四元数模的平方 done
+ * 
+ * q 目标四元数
+ * return 四元数模的平方
+ *-----------------------------------------------------------------------------*/
 float magicalQuaternionLengthSq( const cQuaternion q )
 {
 	return q _x * q _x + q _y * q _y + q _z * q _z + q _w * q _w;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算四元数的标准化 done
+ * 
+ * out q的标准化四元数
+ * q 目标四元数
+ *-----------------------------------------------------------------------------*/
 void magicalQuaternionNormalize( cQuaternion out, const cQuaternion q )
 {
-	/*
-	 * 标准化四元数
-	 */
-
 	out _x = q _x;
 	out _y = q _y;
 	out _z = q _z;
 	out _w = q _w;
 
 	float n = q _x * q _x + q _y * q _y + q _z * q _z + q _w * q _w;
-	if( magicalFltEqual( n, 1.0f ) )
+	if( magicalAlmostEqual( n, 1.0f ) )
 		return;
 
 	n = sqrt( n );
-	if( magicalFltIsZero( n ) )
+	if( magicalAlmostZero( n ) )
 		return;
 
 	n = 1.0f / n;
@@ -251,45 +321,52 @@ void magicalQuaternionNormalize( cQuaternion out, const cQuaternion q )
 	out _w *= n;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算四元数共轭 done
+ * 
+ * out q的共轭
+ * q 目标四元数
+ *-----------------------------------------------------------------------------*/
 void magicalQuaternionConjugate( cQuaternion out, const cQuaternion q )
 {
-	/*
-	 * 计算四元数共轭
-	 */
-
 	out _w = q _w;
 	out _x = - q _x;
 	out _y = - q _y;
 	out _z = - q _z;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算四元数的倒数 done
+ * 
+ * out q的倒数
+ * q 目标四元数
+ *-----------------------------------------------------------------------------*/
 void magicalQuaternionNegate( cQuaternion out, const cQuaternion q )
 {
-	/*
-	 * 计算四元数的倒数
-	 */
-
 	out _w = - q _w;
 	out _x = - q _x;
 	out _y = - q _y;
 	out _z = - q _z;
 }
 
-cBoolean magicalQuaternionInverse( cQuaternion out, const cQuaternion q )
+/*-----------------------------------------------------------------------------*\
+ * 计算四元数的逆 done
+ * 
+ * q^-1 = q^* / length(q)
+ *
+ * out q的逆
+ * q 目标四元数
+ * return 是否成功
+ *-----------------------------------------------------------------------------*/
+cBool magicalQuaternionInverse( cQuaternion out, const cQuaternion q )
 {
-	/*
-	 * 计算四元数的逆
-	 *
-	 * q^-1 = q^* / length(q)
-	 */
-
 	out _w = q _w;
 	out _x = q _x;
 	out _y = q _y;
 	out _z = q _z;
 
 	float n = q _x * q _x + q _y * q _y + q _z * q _z + q _w * q _w;
-	if( magicalFltEqual( n, 1.0f ) )
+	if( magicalAlmostEqual( n, 1.0f ) )
 	{
 		out _w = q _w;
 		out _x = - q _x;
@@ -299,7 +376,7 @@ cBoolean magicalQuaternionInverse( cQuaternion out, const cQuaternion q )
 	}
 
 	n = sqrt( n );
-	if( magicalFltIsZero( n ) )
+	if( magicalAlmostZero( n ) )
 		return cFalse;
 		
 	n = 1.0f / n;
@@ -310,6 +387,9 @@ cBoolean magicalQuaternionInverse( cQuaternion out, const cQuaternion q )
 	return cTrue;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 四元数差值
+ *-----------------------------------------------------------------------------*/
 void magicalQuaternionSlerp( cQuaternion out, const cQuaternion q1, const cQuaternion q2, const float t )
 {
 	float cos_omega;
@@ -322,7 +402,7 @@ void magicalQuaternionSlerp( cQuaternion out, const cQuaternion q1, const cQuate
 	float q2z;
 	float k1, k2;
 
-	if( t <= MAGICAL_FLT_EPSILON ) 
+	if( t <= MAGICAL_MATH_EPSILON ) 
 	{
 		magicalQuaternionFill( out, q1 );
 		return;

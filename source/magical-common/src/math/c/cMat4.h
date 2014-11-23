@@ -36,8 +36,8 @@ typedef float cMat4[16];
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBoolean magicalMat4Equals( const cMat4 m1, const cMat4 m2 );
-MAGICALAPI_MATH cBoolean magicalMat4IsIdentity( const cMat4 m );
+MAGICALAPI_MATH cBool magicalMat4Equals( const cMat4 m1, const cMat4 m2 );
+MAGICALAPI_MATH cBool magicalMat4IsIdentity( const cMat4 m );
 
 MAGICALAPI_MATH void magicalMat4FillScalars( cMat4 out,
 	const float rm11, const float rm12, const float rm13, const float rm14,
@@ -82,7 +82,7 @@ MAGICALAPI_MATH void magicalMat4RotateQuaternion( cMat4 out, const cMat4 m, cons
 MAGICALAPI_MATH void magicalMat4RotateAxisAngle( cMat4 out, const cMat4 m, const cVec3 axis, const float angle );
 
 MAGICALAPI_MATH float magicalMat4Determinant( const cMat4 m );
-MAGICALAPI_MATH cBoolean magicalMat4Inverse( cMat4 out, const cMat4 m );
+MAGICALAPI_MATH cBool magicalMat4Inverse( cMat4 out, const cMat4 m );
 MAGICALAPI_MATH void magicalMat4Transpose( cMat4 out, const cMat4 m );
 MAGICALAPI_MATH void magicalMat4Negate( cMat4 out, const cMat4 m );
 

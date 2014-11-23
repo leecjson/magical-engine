@@ -32,12 +32,12 @@ static const float IDENTITY[] =
 	0.0f, 0.0f, 0.0f, 1.0f
 };
 
-cBoolean magicalMat4Equals( const cMat4 m1, const cMat4 m2 )
+cBool magicalMat4Equals( const cMat4 m1, const cMat4 m2 )
 {
 	return memcmp( m1, m2, sizeof( cMat4 ) ) == 0;
 }
 
-cBoolean magicalMat4IsIdentity( const cMat4 m )
+cBool magicalMat4IsIdentity( const cMat4 m )
 {
 	return memcmp( m, IDENTITY, sizeof( cMat4 ) ) == 0;
 }
@@ -314,8 +314,8 @@ void magicalMat4FillRotationX( cMat4 out, const float angle )
 	 * [ 0     0       0     1 ]
 	 */
 
-	float c = magicalCosf( angle );
-	float s = magicalSinf( angle );
+	float c = cosf( angle );
+	float s = sinf( angle );
 
 	out _m11 = 1.0f; out _m12 = 0.0f; out _m13 = 0.0f; out _m14 = 0.0f;
 	out _m21 = 0.0f; out _m22 = c;    out _m23 = s;    out _m24 = 0.0f;
@@ -334,8 +334,8 @@ void magicalMat4FillRotationY( cMat4 out, const float angle )
 	 * [   0     0     0     1 ]
 	 */
 
-	float c = magicalCosf( angle );
-	float s = magicalSinf( angle );
+	float c = cosf( angle );
+	float s = sinf( angle );
 
 	out _m11 = c;    out _m12 = 0.0f; out _m13 = -s;   out _m14 = 0.0f;
 	out _m21 = 0.0f; out _m22 = 1.0f; out _m23 = 0.0f; out _m24 = 0.0f;
@@ -354,8 +354,8 @@ void magicalMat4FillRotationZ( cMat4 out, const float angle )
 	 * [    0       0     0     1 ]
 	 */
 
-	float c = magicalCosf( angle );
-	float s = magicalSinf( angle );
+	float c = cosf( angle );
+	float s = sinf( angle );
 
 	out _m11 = c;    out _m12 = s;    out _m13 = 0.0f; out _m14 = 0.0f;
 	out _m21 = -s;   out _m22 = c;    out _m23 = 0.0f; out _m24 = 0.0f;
@@ -365,12 +365,12 @@ void magicalMat4FillRotationZ( cMat4 out, const float angle )
 
 void magicalMat4FillRotationYawPitchRoll( cMat4 out, const float yaw, const float pitch, const float roll )
 {
-	/*float cr = magicalCosf( pitch );
-	float sr = magicalSinf( pitch );
-	float cp = magicalCosf( yaw );
-	float sp = magicalSinf( yaw );
-	float cy = magicalCosf( roll );
-	float sy = magicalSinf( roll );
+	/*float cr = cosf( pitch );
+	float sr = sinf( pitch );
+	float cp = cosf( yaw );
+	float sp = sinf( yaw );
+	float cy = cosf( roll );
+	float sy = sinf( roll );
 	float srsp = sr * sp;
 	float crsp = cr * sp;
 
@@ -480,11 +480,11 @@ void magicalMat4FillPerspective( cMat4 out, const float fov, const float aspect,
 	float factor;
 
 	factor = magicalTanf( magicalDegToRad( fov ) * 0.5f );
-	magicalMathAssert( !magicalFltIsZero( factor ) && !magicalFltIsZero( aspect ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( factor ) && !magicalAlmostZero( aspect ), "division by 0.f" );
 
 	zoom_y = 1.0f / factor;
 	zoom_x = zoom_y / aspect;
-	magicalMathAssert( !magicalFltIsZero( zfar - znear ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( zfar - znear ), "division by 0.f" );
 
 	out _m11 = zoom_x;
 	out _m12 = 0.0f;
@@ -515,7 +515,7 @@ void magicalMat4FillOrthographic( cMat4 out, const float left, const float right
 	 * [ -(r+l)/(r-l) -(t+b)/(t-b) -(f+n)/(f-n)  1   ]
 	 */
 
-	magicalMathAssert( !magicalFltIsZero( right - left ) && !magicalFltIsZero( top - bottom ) && !magicalFltIsZero( far - near ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( right - left ) && !magicalAlmostZero( top - bottom ) && !magicalAlmostZero( far - near ), "division by 0.f" );
 
 	out _m11 = 2.0f / ( right - left );
 	out _m12 = 0.0f;
@@ -626,7 +626,7 @@ float magicalMat4Determinant( const cMat4 m )
 		( m _m31 * m _m42 - m _m32 * m _m41 );
 }
 
-cBoolean magicalMat4Inverse( cMat4 out, const cMat4 m )
+cBool magicalMat4Inverse( cMat4 out, const cMat4 m )
 {
 	/*
 	 * 求矩阵的逆，当行列式为0时，返回false，矩阵不可逆
@@ -650,7 +650,7 @@ cBoolean magicalMat4Inverse( cMat4 out, const cMat4 m )
 
 	det = a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0;
 
-	if( magicalFltIsZero( det ) )
+	if( magicalAlmostZero( det ) )
 		return 0;
 
 	adj _m11 =   m _m22 * b5 - m _m23 * b4 + m _m24 * b3;

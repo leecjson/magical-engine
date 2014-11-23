@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_EULER_ANGLES_H__
 #define __C_EULER_ANGLES_H__
 
-#include "../MathMacros.h"
+#include "cMathMacros.h"
 
 typedef float cEulerAngles[3];
 
@@ -39,8 +39,8 @@ MAGICALAPI_MATH void magicalEulerAnglesFillYawPitchRoll( cEulerAngles out, const
 MAGICALAPI_MATH void magicalEulerAnglesFillIdentity( cEulerAngles out );
 MAGICALAPI_MATH void magicalEulerAnglesFill( cEulerAngles out, const cEulerAngles ea );
 
-MAGICALAPI_MATH void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q );
-MAGICALAPI_MATH void magicalEulerAnglesFromRotationMat4( cEulerAngles out, const cMat4 m );
+MAGICALAPI_MATH void magicalEulerAnglesFillFromQuaternion( cEulerAngles out, const cQuaternion q );
+MAGICALAPI_MATH void magicalEulerAnglesFillFromRotationMat4( cEulerAngles out, const cMat4 m );
 
 MAGICALAPI_MATH void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea );
 

@@ -25,10 +25,10 @@ SOFTWARE.
 inline bool Quaternion::operator==( const Quaternion& rhs ) const
 {
 	return
-		magicalFltEqual( x, rhs.x ) &&
-		magicalFltEqual( y, rhs.y ) &&
-		magicalFltEqual( z, rhs.z ) &&
-		magicalFltEqual( w, rhs.w );
+		magicalAlmostEqual( x, rhs.x ) &&
+		magicalAlmostEqual( y, rhs.y ) &&
+		magicalAlmostEqual( z, rhs.z ) &&
+		magicalAlmostEqual( w, rhs.w );
 }
 
 inline bool Quaternion::operator!=( const Quaternion& rhs ) const
@@ -39,25 +39,25 @@ inline bool Quaternion::operator!=( const Quaternion& rhs ) const
 inline bool Quaternion::isIdentity( void ) const
 {
 	return 
-		magicalFltIsZero( x ) &&
-		magicalFltIsZero( y ) &&
-		magicalFltIsZero( z ) &&
-		magicalFltEqual( w, 1.0f );
+		magicalAlmostZero( x ) &&
+		magicalAlmostZero( y ) &&
+		magicalAlmostZero( z ) &&
+		magicalAlmostEqual( w, 1.0f );
 }
 
 inline bool Quaternion::isZero( void ) const
 {
 	return 
-		magicalFltIsZero( x ) &&
-		magicalFltIsZero( y ) &&
-		magicalFltIsZero( z ) &&
-		magicalFltIsZero( w );
+		magicalAlmostZero( x ) &&
+		magicalAlmostZero( y ) &&
+		magicalAlmostZero( z ) &&
+		magicalAlmostZero( w );
 }
 
 inline bool Quaternion::isNormalize( void ) const
 {
 	float n = x * x + y * y + z * z + w * w;
-	return magicalFltEqual( n, 1.0f );
+	return magicalAlmostEqual( n, 1.0f );
 }
 
 inline Quaternion Quaternion::operator*( const Quaternion& r ) const
@@ -174,7 +174,7 @@ inline void Quaternion::negate( void )
 inline void Quaternion::inverse( void )
 {
 	float n = x * x + y * y + z * z + w * w;
-	if( magicalFltEqual( n, 1.0f ) )
+	if( magicalAlmostEqual( n, 1.0f ) )
 	{
 		x = -x;
 		y = -y;
@@ -182,7 +182,7 @@ inline void Quaternion::inverse( void )
 		return;
 	}
 
-	if( magicalFltIsZero( n ) )
+	if( magicalAlmostZero( n ) )
 		return;
 
 	n = 1.0f / n;
@@ -195,11 +195,11 @@ inline void Quaternion::inverse( void )
 inline void Quaternion::normalize( void )
 {
 	float n = x * x + y * y + z * z + w * w;
-	if( magicalFltEqual( n, 1.0f ) )
+	if( magicalAlmostEqual( n, 1.0f ) )
 		return;
 
 	n = sqrt( n );
-	if( magicalFltIsZero( n ) )
+	if( magicalAlmostZero( n ) )
 		return;
 
 	n = 1.0f / n;
@@ -226,11 +226,11 @@ inline void Quaternion::lerp( const Quaternion& rhs, float t )
 {
 	//magicalAssert( !( t < 0.0f || t > 1.0f ), "Invaiid operate" );
 
-	if( magicalFltIsZero( t ) )
+	if( magicalAlmostZero( t ) )
 	{
 		return;
 	}	
-	else if( magicalFltEqual( t, 1.0f ) )
+	else if( magicalAlmostEqual( t, 1.0f ) )
 	{
 		memcpy( this, &rhs, sizeof(float) * 4 );
 		return;

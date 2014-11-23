@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_VEC2_H__
 #define __C_VEC2_H__
 
-#include "../MathMacros.h"
+#include "cMathMacros.h"
 
 typedef float cVec2[2];
 
@@ -35,18 +35,18 @@ typedef float cVec2[2];
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBoolean magicalVec2Equals( const cVec2 v1, const cVec2 v2 );
-MAGICALAPI_MATH cBoolean magicalVec2IsZero( const cVec2 v );
-MAGICALAPI_MATH cBoolean magicalVec2IsOne( const cVec2 v );
-MAGICALAPI_MATH cBoolean magicalVec2IsNormalize( const cVec2 v );
+MAGICALAPI_MATH cBool magicalVec2Equals( const cVec2 v1, const cVec2 v2 );
+MAGICALAPI_MATH cBool magicalVec2IsZero( const cVec2 v );
+MAGICALAPI_MATH cBool magicalVec2IsOne( const cVec2 v );
+MAGICALAPI_MATH cBool magicalVec2IsNormalize( const cVec2 v );
 
 MAGICALAPI_MATH void magicalVec2FillScalars( cVec2 out, const float x, const float y );
 MAGICALAPI_MATH void magicalVec2FillZero( cVec2 out );
 MAGICALAPI_MATH void magicalVec2FillOne( cVec2 out );
 MAGICALAPI_MATH void magicalVec2Fill( cVec2 out, const cVec2 v );
 
-MAGICALAPI_MATH void magicalVec2FromVec3( cVec2 out, const cVec3 v );
-MAGICALAPI_MATH void magicalVec2FromVec4( cVec2 out, const cVec4 v );
+MAGICALAPI_MATH void magicalVec2FillFromVec3( cVec2 out, const cVec3 v );
+MAGICALAPI_MATH void magicalVec2FillFromVec4( cVec2 out, const cVec4 v );
 
 MAGICALAPI_MATH void magicalVec2AddScalar( cVec2 out, const cVec2 v, const float a );
 MAGICALAPI_MATH void magicalVec2Add( cVec2 out, const cVec2 v1, const cVec2 v2 );
@@ -67,7 +67,7 @@ MAGICALAPI_MATH float magicalVec2AngleBetween( const cVec2 v1, const cVec2 v2 );
 MAGICALAPI_MATH void magicalVec2Clamp( cVec2 out, const cVec2 v, const cVec2 min, const cVec2 max );
 MAGICALAPI_MATH void magicalVec2Negate( cVec2 out, const cVec2 v );
 MAGICALAPI_MATH void magicalVec2Normalize( cVec2 out, const cVec2 v );
-MAGICALAPI_MATH void magicalVec2Rotate( cVec2 out, const cVec2 v, const cVec2 point, const float angle );
+MAGICALAPI_MATH void magicalVec2Rotate( cVec2 out, const cVec2 v, const float angle );
 MAGICALAPI_MATH void magicalVec2Scale( cVec2 out, const cVec2 v, const float s );
 MAGICALAPI_MATH void magicalVec2MidPointBetween( cVec2 out, const cVec2 v1, const cVec2 v2 );
 MAGICALAPI_MATH void magicalVec2Project( cVec2 out_h, cVec2 out_v, const cVec2 p, const cVec2 n );

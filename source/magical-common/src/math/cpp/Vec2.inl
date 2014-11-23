@@ -84,14 +84,14 @@ inline Vec2 Vec2::operator*( const Vec2& v ) const
 
 inline Vec2 Vec2::operator/( const float a ) const
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	return Vec2( x / a, y / a );
 }
 
 inline Vec2 Vec2::operator/( const Vec2& v ) const
 {
-	magicalMathAssert( !magicalFltIsZero( v.x ) && !magicalFltIsZero( v.y ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( v.x ) && !magicalAlmostZero( v.y ), "division by 0.f" );
 
 	return Vec2( x / v.x, y / v.y );
 }
@@ -140,7 +140,7 @@ inline Vec2& Vec2::operator*=( const Vec2& v )
 
 inline Vec2& Vec2::operator/=( const float a )
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	x /= a;
 	y /= a;
@@ -149,7 +149,7 @@ inline Vec2& Vec2::operator/=( const float a )
 
 inline Vec2& Vec2::operator/=( const Vec2& v )
 {
-	magicalMathAssert( !magicalFltIsZero( v.x ) && !magicalFltIsZero( v.y ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( v.x ) && !magicalAlmostZero( v.y ), "division by 0.f" );
 
 	x /= v.x;
 	y /= v.y;
@@ -195,14 +195,14 @@ inline Vec2 Vec2::mul( const Vec2& v ) const
 
 inline Vec2 Vec2::div( const float a ) const
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	return Vec2( x / a, y / a );
 }
 
 inline Vec2 Vec2::div( const Vec2& v ) const
 {
-	magicalMathAssert( !magicalFltIsZero( v.x ) && !magicalFltIsZero( v.y ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( v.x ) && !magicalAlmostZero( v.y ), "division by 0.f" );
 
 	return Vec2( x / v.x, y / v.y );
 }
@@ -245,7 +245,7 @@ inline void Vec2::mulfill( const Vec2& v )
 
 inline void Vec2::divfill( const float a )
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	x /= a;
 	y /= a;
@@ -253,7 +253,7 @@ inline void Vec2::divfill( const float a )
 
 inline void Vec2::divfill( const Vec2& v )
 {
-	magicalMathAssert( !magicalFltIsZero( v.x ) && !magicalFltIsZero( v.y ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( v.x ) && !magicalAlmostZero( v.y ), "division by 0.f" );
 
 	x /= v.x;
 	y /= v.y;

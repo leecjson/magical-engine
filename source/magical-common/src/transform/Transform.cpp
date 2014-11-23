@@ -186,7 +186,7 @@ void Transform::setPosition( float x, float y, float z )
 
 void Transform::setPositionX( float x )
 {
-	if( magicalFltEqual( _local_position.x, x ) )
+	if( magicalAlmostEqual( _local_position.x, x ) )
 		return;
 
 	_local_position.x = x;
@@ -195,7 +195,7 @@ void Transform::setPositionX( float x )
 
 void Transform::setPositionY( float y )
 {
-	if( magicalFltEqual( _local_position.y, y ) )
+	if( magicalAlmostEqual( _local_position.y, y ) )
 		return;
 
 	_local_position.y = y;
@@ -204,7 +204,7 @@ void Transform::setPositionY( float y )
 
 void Transform::setPositionZ( float z )
 {
-	if( magicalFltEqual( _local_position.z, z ) )
+	if( magicalAlmostEqual( _local_position.z, z ) )
 		return;
 
 	_local_position.z = z;
@@ -233,7 +233,7 @@ void Transform::translate( const Vec3& translation )
 
 void Transform::translateX( float x )
 {
-	if( magicalFltIsZero( x ) )
+	if( magicalAlmostZero( x ) )
 		return;
 
 	_local_position.x += x;
@@ -242,7 +242,7 @@ void Transform::translateX( float x )
 
 void Transform::translateY( float y )
 {
-	if( magicalFltIsZero( y ) )
+	if( magicalAlmostZero( y ) )
 		return;
 
 	_local_position.y += y;
@@ -251,7 +251,7 @@ void Transform::translateY( float y )
 
 void Transform::translateZ( float z )
 {
-	if( magicalFltIsZero( z ) )
+	if( magicalAlmostZero( z ) )
 		return;
 
 	_local_position.z += z;
@@ -260,7 +260,7 @@ void Transform::translateZ( float z )
 
 void Transform::translateRight( float amount )
 {
-	if( magicalFltIsZero( amount ) )
+	if( magicalAlmostZero( amount ) )
 		return;
 
 	if( _local_has_changed != kLocalNotChanged )
@@ -275,7 +275,7 @@ void Transform::translateRight( float amount )
 
 void Transform::translateUp( float amount )
 {
-	if( magicalFltIsZero( amount ) )
+	if( magicalAlmostZero( amount ) )
 		return;
 
 	if( _local_has_changed != kLocalNotChanged )
@@ -290,7 +290,7 @@ void Transform::translateUp( float amount )
 
 void Transform::translateForward( float amount )
 {
-	if( magicalFltIsZero( amount ) )
+	if( magicalAlmostZero( amount ) )
 		return;
 
 	if( _local_has_changed != kLocalNotChanged )
@@ -438,7 +438,7 @@ void Transform::setScale( const Vec3& scale )
 
 void Transform::setScaleX( float x )
 {
-	if( magicalFltEqual( _local_scale.x, x ) )
+	if( magicalAlmostEqual( _local_scale.x, x ) )
 		return;
 
 	_local_scale.x = x;
@@ -447,7 +447,7 @@ void Transform::setScaleX( float x )
 
 void Transform::setScaleY( float y )
 {
-	if( magicalFltEqual( _local_scale.y, y ) )
+	if( magicalAlmostEqual( _local_scale.y, y ) )
 		return;
 
 	_local_scale.y = y;
@@ -456,7 +456,7 @@ void Transform::setScaleY( float y )
 
 void Transform::setScaleZ( float z )
 {
-	if( magicalFltEqual( _local_scale.z, z ) )
+	if( magicalAlmostEqual( _local_scale.z, z ) )
 		return;
 
 	_local_scale.z = z;
@@ -465,7 +465,7 @@ void Transform::setScaleZ( float z )
 
 void Transform::scale( float scaler )
 {
-	if( magicalFltEqual( scaler, 1.f ) )
+	if( magicalAlmostEqual( scaler, 1.f ) )
 		return;
 
 	//_local_scale.scale( scaler );
@@ -474,9 +474,9 @@ void Transform::scale( float scaler )
 
 void Transform::scale( float x, float y, float z )
 {
-	if( magicalFltEqual( x, 1.f ) &&
-		magicalFltEqual( y, 1.f ) && 
-		magicalFltEqual( z, 1.f ) )
+	if( magicalAlmostEqual( x, 1.f ) &&
+		magicalAlmostEqual( y, 1.f ) && 
+		magicalAlmostEqual( z, 1.f ) )
 		return;
 
 	_local_scale.x *= x;
@@ -498,7 +498,7 @@ void Transform::scale( const Vec3& scaler )
 
 void Transform::scaleX( float x )
 {
-	if( magicalFltEqual( x, 1.f ) )
+	if( magicalAlmostEqual( x, 1.f ) )
 		return;
 
 	_local_scale.x *= x;
@@ -507,7 +507,7 @@ void Transform::scaleX( float x )
 
 void Transform::scaleY( float y )
 {
-	if( magicalFltEqual( y, 1.f ) )
+	if( magicalAlmostEqual( y, 1.f ) )
 		return;
 
 	_local_scale.y *= y;
@@ -516,7 +516,7 @@ void Transform::scaleY( float y )
 
 void Transform::scaleZ( float z )
 {
-	if( magicalFltEqual( z, 1.f ) )
+	if( magicalAlmostEqual( z, 1.f ) )
 		return;
 
 	_local_scale.z *= z;

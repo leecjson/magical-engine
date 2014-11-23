@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_VEC3_H__
 #define __C_VEC3_H__
 
-#include "../MathMacros.h"
+#include "cMathMacros.h"
 
 typedef float cVec3[3];
 
@@ -35,18 +35,18 @@ typedef float cVec3[3];
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBoolean magicalVec3Equals( const cVec3 v1, const cVec3 v2 );
-MAGICALAPI_MATH cBoolean magicalVec3IsZero( const cVec3 v );
-MAGICALAPI_MATH cBoolean magicalVec3IsOne( const cVec3 v );
-MAGICALAPI_MATH cBoolean magicalVec3IsNormalize( const cVec3 v );
+MAGICALAPI_MATH cBool magicalVec3Equals( const cVec3 v1, const cVec3 v2 );
+MAGICALAPI_MATH cBool magicalVec3IsZero( const cVec3 v );
+MAGICALAPI_MATH cBool magicalVec3IsOne( const cVec3 v );
+MAGICALAPI_MATH cBool magicalVec3IsNormalize( const cVec3 v );
 
 MAGICALAPI_MATH void magicalVec3FillScalars( cVec3 out, const float x, const float y, const float z );
 MAGICALAPI_MATH void magicalVec3FillZero( cVec3 out );
 MAGICALAPI_MATH void magicalVec3FillOne( cVec3 out );
 MAGICALAPI_MATH void magicalVec3Fill( cVec3 out, const cVec3 v );
 
-MAGICALAPI_MATH void magicalVec3FromVec2( cVec3 out, const cVec2 v );
-MAGICALAPI_MATH void magicalVec3FromVec4( cVec3 out, const cVec4 v );
+MAGICALAPI_MATH void magicalVec3FillFromVec2( cVec3 out, const cVec2 v );
+MAGICALAPI_MATH void magicalVec3FillFromVec4( cVec3 out, const cVec4 v );
 
 MAGICALAPI_MATH void magicalVec3AddScalar( cVec3 out, const cVec3 v, const float a );
 MAGICALAPI_MATH void magicalVec3Add( cVec3 out, const cVec3 v1, const cVec3 v2 );

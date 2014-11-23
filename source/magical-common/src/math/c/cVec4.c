@@ -22,38 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cVec4.h"
-#include "cMacros.h"
 
-cBoolean magicalVec4Equals( const cVec4 v1, const cVec4 v2 )
+cBool magicalVec4Equals( const cVec4 v1, const cVec4 v2 )
 {
 	return
-		magicalFltEqual( v1 _x, v2 _x ) &&
-		magicalFltEqual( v1 _y, v2 _y ) &&
-		magicalFltEqual( v1 _z, v2 _z ) &&
-		magicalFltEqual( v1 _w, v2 _w );
+		magicalAlmostEqual( v1 _x, v2 _x ) &&
+		magicalAlmostEqual( v1 _y, v2 _y ) &&
+		magicalAlmostEqual( v1 _z, v2 _z ) &&
+		magicalAlmostEqual( v1 _w, v2 _w );
 }
 
-cBoolean magicalVec4IsZero( const cVec4 v )
+cBool magicalVec4IsZero( const cVec4 v )
 {
 	return
-		magicalFltIsZero( v _x ) &&
-		magicalFltIsZero( v _y ) &&
-		magicalFltIsZero( v _z ) &&
-		magicalFltIsZero( v _w );
+		magicalAlmostZero( v _x ) &&
+		magicalAlmostZero( v _y ) &&
+		magicalAlmostZero( v _z ) &&
+		magicalAlmostZero( v _w );
 }
 
-cBoolean magicalVec4IsOne( const cVec4 v )
+cBool magicalVec4IsOne( const cVec4 v )
 {
 	return
-		magicalFltEqual( v _x, 1.0f ) &&
-		magicalFltEqual( v _y, 1.0f ) &&
-		magicalFltEqual( v _z, 1.0f ) &&
-		magicalFltEqual( v _w, 1.0f );
+		magicalAlmostEqual( v _x, 1.0f ) &&
+		magicalAlmostEqual( v _y, 1.0f ) &&
+		magicalAlmostEqual( v _z, 1.0f ) &&
+		magicalAlmostEqual( v _w, 1.0f );
 }
 
-cBoolean magicalVec4IsNormalize( const cVec4 v )
+cBool magicalVec4IsNormalize( const cVec4 v )
 {
-	return magicalFltEqual( v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w, 1.0f );
+	return magicalAlmostEqual( v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w, 1.0f );
 }
 
 void magicalVec4FillScalars( cVec4 out, const float x, const float y, const float z, const float w )
@@ -88,7 +87,7 @@ void magicalVec4Fill( cVec4 out, const cVec4 v )
 	out _w = v _w;
 }
 
-void magicalVec4FromVec2( cVec4 out, const cVec2 v )
+void magicalVec4FillFromVec2( cVec4 out, const cVec2 v )
 {
 	out _x = v _x;
 	out _y = v _y;
@@ -96,7 +95,7 @@ void magicalVec4FromVec2( cVec4 out, const cVec2 v )
 	out _w = 0.0f;
 }
 
-void magicalVec4FromVec3( cVec4 out, const cVec3 v )
+void magicalVec4FillFromVec3( cVec4 out, const cVec3 v )
 {
 	out _x = v _x;
 	out _y = v _y;
@@ -154,7 +153,7 @@ void magicalVec4Mul( cVec4 out, const cVec4 v1, const cVec4 v2 )
 
 void magicalVec4DivScalar( cVec4 out, const cVec4 v, const float a )
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	out _x = v _x / a;
 	out _y = v _y / a;
@@ -164,7 +163,7 @@ void magicalVec4DivScalar( cVec4 out, const cVec4 v, const float a )
 
 void magicalVec4Div( cVec4 out, const cVec4 v1, const cVec4 v2 )
 {
-	magicalMathAssert( !magicalVec4IsZero( v2 ), "division by 0.f" );
+	debugassert( !magicalVec4IsZero( v2 ), "division by 0.f" );
 
 	out _x = v1 _x / v2 _x;
 	out _y = v1 _y / v2 _y;
@@ -172,37 +171,40 @@ void magicalVec4Div( cVec4 out, const cVec4 v1, const cVec4 v2 )
 	out _w = v1 _w / v2 _w;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 返回两个向量的点乘运算 done
+ * 
+ * 点乘公式：dot(a,b) = a.x*b.x + a.y*b.y
+ *
+ * 点乘结果等于向量长度与向量夹角的cos值的积
+ * 点乘夹角公式：dot(a,b) = length(a) * length(b) * cos(theta)
+ *
+ * 在3D中两向量的夹角是在包含两向量的平面中定义的
+ *
+ * v1 向量1
+ * v2 向量2
+ * return 点乘结果
+ *        > 0 两向量接近同一方向
+ *        = 0 两向量垂直
+ *        < 0 两向量接近相反方向
+ *-----------------------------------------------------------------------------*/
 float magicalVec4Dot( const cVec4 v1, const cVec4 v2 )
 {
-	/* 
-	 * 返回两个向量的点乘运算
-	 * 点乘公式：dot = a.x * b.x + a.y * b.y + a.z * b.z
-	 * 点乘结果等于向量长度与向量夹角的cos值的积
-	 * 点乘夹角公式：dot = length(a) * length(b) * cos(angle)
-	 *
-	 * 在3D中两向量的夹角是在包含两向量的平面中定义的
-	 *
-	 * 结果范围：任意
-	 *      > 0 两向量方向即将接近
-	 *      = 0 两向量垂直
-	 *      < 0 两向量反向即将相反
-	 */
-	
 	return v1 _x * v2 _x + v1 _y * v2 _y + v1 _z * v2 _z + v1 _w * v2 _w;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 返回两个点之间的距离(a向量到b向量的距离) done
+ * 
+ * 距离公式：distance(a,b) = length(d);
+ * 其中向量d = b-a
+ *
+ * v1 向量1
+ * v2 向量2
+ * return 距离>= 0 当距离=0时 两点在同一位置，或者说两向量大小相同
+ *-----------------------------------------------------------------------------*/
 float magicalVec4DistanceBetween( const cVec4 v1, const cVec4 v2 )
 {
-	/* 
-	 * 返回两个点之间的距离(a到b的向量d的长度)
-	 * 距离公式：distance = length(b - a)
-	 *
-	 * 其中b - a为，a到b的向量d
-	 *
-	 * 结果范围：>= 0
-	 *      = 0 两点在同一位置
-	 */
-
 	float dx = v2 _x - v1 _x;
 	float dy = v2 _y - v1 _y;
 	float dz = v2 _z - v1 _z;
@@ -211,15 +213,16 @@ float magicalVec4DistanceBetween( const cVec4 v1, const cVec4 v2 )
 	return sqrtf( dx * dx + dy * dy + dz * dz + dw * dw );
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 返回两个点之间距离的平方 done
+ *
+ * v1 向量1
+ * v2 向量2
+ * return v1到v2的距离 >= 0 
+ *        = 0时 两点在同一位置，或者说两向量大小相同
+ *-----------------------------------------------------------------------------*/
 float magicalVec4DistanceBetweenSq( const cVec4 v1, const cVec4 v2 )
 {
-	/* 
-	 * 返回两个点之间距离的平方
-	 *
-	 * 结果范围：>= 0
-	 *      = 0 两点在同一位置
-	 */
-
 	float dx = v2 _x - v1 _x;
 	float dy = v2 _y - v1 _y;
 	float dz = v2 _z - v1 _z;
@@ -228,58 +231,65 @@ float magicalVec4DistanceBetweenSq( const cVec4 v1, const cVec4 v2 )
 	return dx * dx + dy * dy + dz * dz + dw * dw;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 返回这个向量的长度(大小、模) done
+ *
+ * 求模公式 length = sqrt(a^2 + b^2 + ... n^2)
+ *
+ * v 求模向量
+ * return v的模 >= 0
+ *        = 0 零向量
+ *        = 1 标准化(单位)向量
+ *-----------------------------------------------------------------------------*/
 float magicalVec4Length( const cVec4 v )
 {
-	/* 
-	 * 返回这个向量的长度(大小、模)
-	 * 勾股定理： a^2 + b^2 = c^2
-	 *
-	 * 结果范围：>= 0
-	 *      = 0 零向量
-	 *      = 1 标准化(单位)向量
-	 */
-
 	return sqrtf( v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w );
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 返回这个向量长度(大小、模)的平方 done
+ *
+ * v 求模平方向量
+ * return v模平方 >= 0
+ *         = 0 零向量
+ *         = 1 标准化(单位)向量
+ *-----------------------------------------------------------------------------*/
 float magicalVec4LengthSq( const cVec4 v )
 {
-	/* 
-	 * 返回这个向量长度(大小、模)的平方
-	 *
-	 * 结果范围：>= 0
-	 *      = 0 零向量
-	 *      = 1 标准化(单位)向量
-	 */
-
 	return v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 返回两个向量之间的夹角(弧度单位) done
+ * 
+ * 参考点乘夹角公式
+ * 转换：theta = acos( dot(a,b) / length(a) * length(b) )
+ *
+ * 两个参与运算的向量都不能为零向量
+ *
+ * v1 向量1
+ * v2 向量2
+ * return 夹角弧度 >=0 and <= PI
+ *        = 0 两向量方向一致
+ *-----------------------------------------------------------------------------*/
 float magicalVec4AngleBetween( const cVec4 v1, const cVec4 v2 )
 {
-	/* 
-	 * 返回两个向量之间的夹角(弧度单位)
-	 * 点乘夹角公式：a.dot(b) = length(a) * length(b) * cos(angle)
-	 * 转换：angle = acos((a.dot(b)) / length(a) * length(b))
-	 * 
-	 * 两个参与运算的向量都不能为零向量
-	 *
-	 * 结果范围：0 <= 结果 <= PI 两向量的夹角(弧度单位)
-	 *      = 0 两向量方向一致
-	 */
+	debugassert( !magicalVec4IsZero( v1 ) && !magicalVec4IsZero( v2 ), "invaild operate!" );
 
-	magicalMathAssert( !magicalVec4IsZero( v1 ) && !magicalVec4IsZero( v2 ), "invaild operate!" );
-
-	return magicalAcosf( magicalVec4Dot( v1, v2 ) / ( magicalVec4Length( v1 ) * magicalVec4Length( v2 ) ) );
+	return magicalSafeAcos( magicalVec4Dot( v1, v2 ) / ( magicalVec4Length( v1 ) * magicalVec4Length( v2 ) ) );
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 使点参照min与max的位置进行收缩 done
+ *
+ * out 结果 min <= out <= max
+ * v 源向量
+ * min 小值
+ * max 大值
+ *-----------------------------------------------------------------------------*/
 void magicalVec4Clamp( cVec4 out, const cVec4 v, const cVec4 min, const cVec4 max )
 {
-	/* 
-	 * 使点参照min与max的位置进行收缩
-	 */
-
-	magicalMathAssert( min _x <= max _x && min _y <= max _y && min _z <= max _z && min _w <= max _w, "invaild operate!" );
+	debugassert( min _x <= max _x && min _y <= max _y && min _z <= max _z && min _w <= max _w, "invaild operate!" );
 
 	out _x = v _x;
 	out _y = v _y;
@@ -296,38 +306,43 @@ void magicalVec4Clamp( cVec4 out, const cVec4 v, const cVec4 min, const cVec4 ma
 	if( out _w > max _w ) out _w = max _w;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算向量的倒数形式 done
+ *
+ * out 结果 v = -v
+ * v 源向量
+ *-----------------------------------------------------------------------------*/
 void magicalVec4Negate( cVec4 out, const cVec4 v )
 {
-	/* 
-	 * 计算向量倒数形式
-	 */
-
 	out _x = -v _x;
 	out _y = -v _y;
 	out _z = -v _z;
 	out _w = -v _w;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算向量的标准化 done
+ * 
+ * 向量标准化公式：normalize(a) = a / length(a)
+ *
+ * 当向量已经标准化或模接近0，则标准化失败
+ *
+ * out 结果 out = normalize(v)
+ * v 源向量
+ *-----------------------------------------------------------------------------*/
 void magicalVec4Normalize( cVec4 out, const cVec4 v )
 {
-	/* 
-	 * 计算标准化向量
-	 * 标准化向量公式：normalize = v / length(v)
-	 * 
-	 * 当向量已经标准化或模接近0，则标准化失败
-	 */
-
 	out _x = v _x;
 	out _y = v _y;
 	out _z = v _z;
 	out _w = v _w;
 
 	float n = v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w;
-	if( magicalFltEqual( n, 1.0f ) )
+	if( magicalAlmostEqual( n, 1.0f ) )
 		return;
 
 	n = sqrtf( n );
-	if( magicalFltIsZero( n ) )
+	if( magicalAlmostZero( n ) )
 		return;
 
 	n = 1.0f / n;
@@ -337,52 +352,60 @@ void magicalVec4Normalize( cVec4 out, const cVec4 v )
 	out _w *= n;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算向量的缩放 done
+ *
+ * out 缩放后的向量
+ * v 源向量
+ * s 缩放系数
+ *-----------------------------------------------------------------------------*/
 void magicalVec4Scale( cVec4 out, const cVec4 v, const float s )
 {
-	/* 
-	 * 计算与缩放因子的乘积
-	 */
-
 	out _x = v _x * s;
 	out _y = v _y * s;
 	out _z = v _z * s;
 	out _w = v _w * s;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 返回由两个点组成的线段的中点 done
+ *
+ * out 返回中点 当两点相等时中点也等于原点
+ * v1 向量1
+ * v2 向量2
+ *-----------------------------------------------------------------------------*/
 void magicalVec4MidPointBetween( cVec4 out, const cVec4 v1, const cVec4 v2 )
 {
-	/* 
-	 * 返回由两个点组成的线段的中点
-	 * 
-	 * 结果范围：任意
-	 *     当两点相等时结果也等于原点
-	 */
-
 	out _x = ( v1 _x + v2 _x ) * 0.5f;
 	out _y = ( v1 _y + v2 _y ) * 0.5f;
 	out _z = ( v1 _z + v2 _z ) * 0.5f;
 	out _w = ( v1 _w + v2 _w ) * 0.5f;
 }
 
+/*-----------------------------------------------------------------------------*\
+ * 计算向量p到向量n的投影，结果由向量h(平行于n)和向量v(垂直于n)返回 done
+ * 
+ * 投影结果满足 p = h + v
+ *
+ * 平行投影向量公式：h = n * ( dot(p,n) / lengthSq(n) )
+ * 如果n为单位向量 ：h = n * ( dot(p,n) )
+ * 垂直投影向量公式：v = p - h;
+ *
+ * 向量p或向量n为零向量时投影无意义
+ *
+ * 如果向量p与向量n方向一致，则 h = p, v = 0
+ * 
+ * out_h 平行与n的投影分量
+ * out_v 垂直于n的投影分量
+ * p 源向量
+ * n 投影目标向量
+ *-----------------------------------------------------------------------------*/
 void magicalVec4Project( cVec4 out_h, cVec4 out_v, const cVec4 p, const cVec4 n )
 {
-	/* 
-	 * 计算向量p到向量n的投影，结果由向量h(平行于n)和向量v(垂直于n)返回
-	 * 投影结果满足 p = h + v
-	 *
-	 * 平行投影向量公式：h = n * (p.dot(n) / lengthSq(n))
-	 * 如果n为单位向量 ：h = n * (p.dot(n))
-	 * 垂直投影向量公式：v = p - h;
-	 *
-	 * 向量p或向量n为零向量时投影无意义
-	 *
-	 * 如果向量p与向量n方向一致，则 h = p, v = 0
-	 */
-
 	float d;
 	cVec4 normalize;
 
-	magicalMathAssert( !magicalVec4IsZero( n ), "invaild operate!" );
+	debugassert( !magicalVec4IsZero( n ), "invaild operate!" );
 	
 	magicalVec4Normalize( normalize, n );
 	d = magicalVec4Dot( p, normalize );

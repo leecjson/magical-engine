@@ -21,41 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_MACROS_H__
-#define __C_MACROS_H__
+#ifndef __C_MAGICAL_MATH_H__
+#define __C_MAGICAL_MATH_H__
 
-#define _x [0x0]
-#define _y [0x1]
-#define _z [0x2]
-#define _w [0x3]
-#define _d [0x3]
 
-#define _min_x [0x0]
-#define _min_y [0x1]
-#define _min_z [0x2]
-#define _max_x [0x3]
-#define _max_y [0x4]
-#define _max_z [0x5]
 
-#define _m11 [0x0]
-#define _m12 [0x1]
-#define _m13 [0x2]
-#define _m14 [0x3]
-#define _m21 [0x4]
-#define _m22 [0x5]
-#define _m23 [0x6]
-#define _m24 [0x7]
-#define _m31 [0x8]
-#define _m32 [0x9]
-#define _m33 [0xA]
-#define _m34 [0xB]
-#define _m41 [0xC]
-#define _m42 [0xD]
-#define _m43 [0xE]
-#define _m44 [0xF]
-
-#define _pitch [0x0]
-#define _yaw   [0x1]
-#define _roll  [0x2]
-
-#endif //__C_MACROS_H__
+#endif //__C_MAGICAL_MATH_H__

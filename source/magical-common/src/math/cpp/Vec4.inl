@@ -91,14 +91,14 @@ inline Vec4 Vec4::operator*( const Vec4& v ) const
 
 inline Vec4 Vec4::operator/( const float a ) const
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	return Vec4( x / a, y / a, z / a, w / a );
 }
 
 inline Vec4 Vec4::operator/( const Vec4& v ) const
 {
-	magicalMathAssert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+	debugassert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
 
 	return Vec4( x / v.x, y / v.y, z / v.z, w / v.w );
 }
@@ -165,7 +165,7 @@ inline Vec4& Vec4::operator*=( const Vec4& v )
 
 inline Vec4& Vec4::operator/=( const float a )
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	x /= a;
 	y /= a;
@@ -176,7 +176,7 @@ inline Vec4& Vec4::operator/=( const float a )
 
 inline Vec4& Vec4::operator/=( const Vec4& v )
 {
-	magicalMathAssert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+	debugassert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
 
 	x /= v.x;
 	y /= v.y;
@@ -232,14 +232,14 @@ inline Vec4 Vec4::mul( const Vec4& v ) const
 
 inline Vec4 Vec4::div( const float a ) const
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	return Vec4( x / a, y / a, z / a, w / a );
 }
 
 inline Vec4 Vec4::div( const Vec4& v ) const
 {
-	magicalMathAssert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+	debugassert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
 
 	return Vec4( x / v.x, y / v.y, z / v.z, w / v.w );
 }
@@ -299,7 +299,7 @@ inline void Vec4::mulfill( const Vec4& v )
 
 inline void Vec4::divfill( const float a )
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	x /= a;
 	y /= a;
@@ -309,7 +309,7 @@ inline void Vec4::divfill( const float a )
 
 inline void Vec4::divfill( const Vec4& v )
 {
-	magicalMathAssert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+	debugassert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
 
 	x /= v.x;
 	y /= v.y;

@@ -70,15 +70,14 @@
     <ClInclude Include="..\src\math\cpp\Vec4.h" />
     <ClInclude Include="..\src\math\c\cAABB3.h" />
     <ClInclude Include="..\src\math\c\cEulerAngles.h" />
-    <ClInclude Include="..\src\math\c\cMacros.h" />
     <ClInclude Include="..\src\math\c\cMat4.h" />
+    <ClInclude Include="..\src\math\c\cMathMacros.h" />
     <ClInclude Include="..\src\math\c\cPlane3.h" />
     <ClInclude Include="..\src\math\c\cQuaternion.h" />
     <ClInclude Include="..\src\math\c\cRay3.h" />
     <ClInclude Include="..\src\math\c\cVec2.h" />
     <ClInclude Include="..\src\math\c\cVec3.h" />
     <ClInclude Include="..\src\math\c\cVec4.h" />
-    <ClInclude Include="..\src\math\MathMacros.h" />
     <ClInclude Include="..\src\PlatformMacros.h" />
     <ClInclude Include="..\src\transform\Transform.h" />
     <ClInclude Include="..\src\utils\Utils.h" />

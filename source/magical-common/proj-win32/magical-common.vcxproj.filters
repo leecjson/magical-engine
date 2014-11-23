@@ -191,9 +191,6 @@
     <ClInclude Include="..\src\base\Viewport.h">
       <Filter>src\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\MathMacros.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\cpp\AABB3.h">
       <Filter>src\math\cpp</Filter>
     </ClInclude>
@@ -239,9 +236,6 @@
     <ClInclude Include="..\src\math\c\cQuaternion.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\c\cMacros.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\c\cAABB3.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
@@ -252,6 +246,9 @@
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cEulerAngles.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cMathMacros.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
   </ItemGroup>

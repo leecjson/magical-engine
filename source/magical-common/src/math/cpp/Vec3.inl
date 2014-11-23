@@ -91,14 +91,14 @@ inline Vec3 Vec3::operator*( const Vec3& v ) const
 
 inline Vec3 Vec3::operator/( const float a ) const
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	return Vec3( x / a, y / a, z / a );
 }
 
 inline Vec3 Vec3::operator/( const Vec3& v ) const
 {
-	magicalMathAssert( !magicalVec3IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+	debugassert( !magicalVec3IsZero( TOFLOAT( &v ) ), "division by 0.f" );
 
 	return Vec3( x / v.x, y / v.y, z / v.z );
 }
@@ -159,7 +159,7 @@ inline Vec3& Vec3::operator*=( const Vec3& v )
 
 inline Vec3& Vec3::operator/=( const float a )
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	x /= a;
 	y /= a;
@@ -169,7 +169,7 @@ inline Vec3& Vec3::operator/=( const float a )
 
 inline Vec3& Vec3::operator/=( const Vec3& v )
 {
-	magicalMathAssert( !magicalVec3IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+	debugassert( !magicalVec3IsZero( TOFLOAT( &v ) ), "division by 0.f" );
 
 	x /= v.x;
 	y /= v.y;
@@ -224,14 +224,14 @@ inline Vec3 Vec3::mul( const Vec3& v ) const
 
 inline Vec3 Vec3::div( const float a ) const
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	return Vec3( x / a, y / a, z / a );
 }
 
 inline Vec3 Vec3::div( const Vec3& v ) const
 {
-	magicalMathAssert( !magicalVec3IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+	debugassert( !magicalVec3IsZero( TOFLOAT( &v ) ), "division by 0.f" );
 
 	return Vec3( x / v.x, y / v.y, z / v.z );
 }
@@ -285,7 +285,7 @@ inline void Vec3::mulfill( const Vec3& v )
 
 inline void Vec3::divfill( const float a )
 {
-	magicalMathAssert( !magicalFltIsZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
 
 	x /= a;
 	y /= a;
@@ -294,7 +294,7 @@ inline void Vec3::divfill( const float a )
 
 inline void Vec3::divfill( const Vec3& v )
 {
-	magicalMathAssert( !magicalVec3IsZero( TOFLOAT( &v ) ), "division by 0.f" );
+	debugassert( !magicalVec3IsZero( TOFLOAT( &v ) ), "division by 0.f" );
 
 	x /= v.x;
 	y /= v.y;

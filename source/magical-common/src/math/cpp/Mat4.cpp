@@ -150,10 +150,10 @@ void Mat4::operator delete( void* ptr )
 //	float z = axis.z;
 //
 //	float n = x * x + y * y + z * z;
-//	if( magicalFltEqual( n, 1.0f ) == false )
+//	if( magicalAlmostEqual( n, 1.0f ) == false )
 //	{
 //		n = sqrt( n );
-//		if( magicalFltIsZero( n ) == false )
+//		if( magicalAlmostZero( n ) == false )
 //		{
 //			n = 1.0f / n;
 //			x *= n;
@@ -234,9 +234,9 @@ void Mat4::operator delete( void* ptr )
 //	float cotangent = 0;
 //
 //	magicalAssert( 
-//		!magicalFltIsZero( delta_z ) &&
-//		!magicalFltIsZero( s ) &&
-//		!magicalFltIsZero( aspect ), "should not be 0.0f" );
+//		!magicalAlmostZero( delta_z ) &&
+//		!magicalAlmostZero( s ) &&
+//		!magicalAlmostZero( aspect ), "should not be 0.0f" );
 //	cotangent = cos( r ) / s;
 //
 //	fillIdentity();
@@ -315,7 +315,7 @@ void Mat4::operator delete( void* ptr )
 //    float b5 = m33 * m44 - m34 * m43;
 //	float det = a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0;
 //
-//	if( magicalFltIsZero( det ) )
+//	if( magicalAlmostZero( det ) )
 //		return false;
 //
 //	Mat4 adj;
@@ -384,9 +384,9 @@ void Mat4::operator delete( void* ptr )
 //		return true;
 //
 //	// Scale too close to zero, can't decompose rotation.
-//	if( magicalFltIsZero( scale_x ) || 
-//		magicalFltIsZero( scale_y ) || 
-//		magicalFltIsZero( scale_z ) )
+//	if( magicalAlmostZero( scale_x ) || 
+//		magicalAlmostZero( scale_y ) || 
+//		magicalAlmostZero( scale_z ) )
 //		return false;
 //
 //    float rn;
@@ -409,7 +409,7 @@ void Mat4::operator delete( void* ptr )
 //    // Now calculate the rotation from the resulting matrix (axes).
 //    float trace = xaxis.x + yaxis.y + zaxis.z + 1.0f;
 //
-//	if( magicalFltIsZero( trace ) == false )
+//	if( magicalAlmostZero( trace ) == false )
 //	{
 //		float s = 0.5f / sqrt( trace );
 //		rotation->w = 0.25f / s;

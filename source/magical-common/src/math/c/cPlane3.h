@@ -24,16 +24,9 @@ SOFTWARE.
 #ifndef __C_PLANE3_H__
 #define __C_PLANE3_H__
 
-#include "../MathMacros.h"
-
-#include "cVec3.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "cMathMacros.h"
 
 typedef enum cPointClassification {
-	MAGICAL_POINT_IN_FRONT_OF_PLANE = -1,
 	cPointInFrontOfPlane = -1,
 	cPointOnPlane = 0,
 	cPointBehindPlane = 1,
@@ -41,16 +34,28 @@ typedef enum cPointClassification {
 
 typedef float cPlane3[4];
 
+#include "cVec3.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 MAGICALAPI_MATH void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const float z, const float d );
-MAGICALAPI_MATH void magicalPlane3Fill( cPlane3 out, const cPlane3 p );
 MAGICALAPI_MATH void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVec3 n, const float d );
 MAGICALAPI_MATH void magicalPlane3FillPointAndNormal( cPlane3 out, const cVec3 p, const cVec3 n );
 MAGICALAPI_MATH void magicalPlane3FillPoints( cPlane3 out, const cVec3 a, const cVec3 b, const cVec3 c );
+MAGICALAPI_MATH void magicalPlane3Fill( cPlane3 out, const cPlane3 p );
 
 MAGICALAPI_MATH void magicalPlane3SetNormal( cPlane3 out, const cVec3 n );
 MAGICALAPI_MATH void magicalPlane3GetNormal( cVec3 out, const cPlane3 p );
 
-MAGICALAPI_MATH cPointClassification magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 v );
+MAGICALAPI_MATH void magicalPlane3NearestPoint( cVec3 out, const cPlane3 p, const cVec3 point );
+MAGICALAPI_MATH void magicalPlane3ProjectPoint( cVec3 out, const cPlane3 p, const cVec3 point );
+MAGICALAPI_MATH float magicalPlane3DistanceToPoint( const cPlane3 p, const cVec3 point );
+
+MAGICALAPI_MATH cPointClassification magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 point );
+
+MAGICALAPI_MATH cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVec3 point );
 
 #ifdef __cplusplus
 }

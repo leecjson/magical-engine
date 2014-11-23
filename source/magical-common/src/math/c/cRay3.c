@@ -50,10 +50,10 @@ MAGICALAPI_MATH float magicalAABB3DiameterX( const cAABB aabb );
 MAGICALAPI_MATH float magicalAABB3DiameterY( const cAABB aabb );
 MAGICALAPI_MATH float magicalAABB3DiameterZ( const cAABB aabb );
 
-MAGICALAPI_MATH cBoolean magicalAABB3Intersects( const cAABB aabb1, const cAABB aabb2 );
-//MAGICALAPI_MATH cBoolean magicalAABB3IntersectsPlane(const C3DPlane* plane,int type);
-//MAGICALAPI_MATH cBoolean magicalAABB3IntersectsSphere(  )
-MAGICALAPI_MATH cBoolean magicalAABB3ContainsPoint( const cAABB aabb, const cVec3 point );
+MAGICALAPI_MATH cBool magicalAABB3Intersects( const cAABB aabb1, const cAABB aabb2 );
+//MAGICALAPI_MATH cBool magicalAABB3IntersectsPlane(const C3DPlane* plane,int type);
+//MAGICALAPI_MATH cBool magicalAABB3IntersectsSphere(  )
+MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB aabb, const cVec3 point );
 
 
 

@@ -24,63 +24,6 @@ SOFTWARE.
 #ifndef __MATH_MACROS_H__
 #define __MATH_MACROS_H__
 
-#include <math.h>
-#include <float.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <memory.h>
-
-#ifndef MAGICAL_ENGINE
-#define MAGICAL_MATH_CACHED_POOL_ENABLE 0
-#else
-#define MAGICAL_MATH_CACHED_POOL_ENABLE 1
-#endif
-
-#ifndef MAGICALAPI_MATH
-#define MAGICALAPI_MATH
-#endif
-
-#ifndef MAGICAL_DEBUG
-#define magicalMathAssert( __con, __msg )
-#else
-#ifndef magicalMathAssert
-#define magicalMathAssert( __con, __msg ) do{                 \
-	if( !( __con ) ) {                                        \
-		assert( ( __con ) && __msg );                         \
-	}                                                         \
-	} while(0)
-#endif
-#endif
-
-typedef unsigned char cBoolean;
-#define cTrue 1
-#define cFalse 0
-
-#define TOFLOAT( __a ) ( (float*)( __a ) )
-
-/*
- constant macros
- */
-#define MAGICAL_DBL_PI 3.14159265358979323846
-#define MAGICAL_DBL_2PI 6.28318530717958647692
-#define MAGICAL_DBL_PI_OVER_2 1.57079632679489661923
-#define MAGICAL_DBL_PI_OVER_180 0.01745329251994329576
-#define MAGICAL_DBL_1_OVER_PI 0.31830988618379067153
-#define MAGICAL_DBL_1_OVER_2PI 0.15915494309189533576
-#define MAGICAL_DBL_180_OVER_PI 57.2957795130823208768
-
-#define MAGICAL_FLT_PI 3.14159265358979323846f
-#define MAGICAL_FLT_2PI 6.28318530717958647692f
-#define MAGICAL_FLT_PI_OVER_2 1.57079632679489661923f
-#define MAGICAL_FLT_PI_OVER_180 0.01745329251994329576f
-#define MAGICAL_FLT_1_OVER_PI 0.31830988618379067153f
-#define MAGICAL_FLT_1_OVER_2PI 0.15915494309189533576f
-#define MAGICAL_FLT_180_OVER_PI 57.2957795130823208768f
-
-#define MAGICAL_FLT_EPSILON 0.000001f
-
-#define MAGICAL_MAT4_SIZE sizeof( float ) * 0xF
-
 /*
  matrix4x4 macros
  */
@@ -101,45 +44,6 @@ typedef unsigned char cBoolean;
 #define m43 m[0xE]
 #define m44 m[0xF]
 
-/*
- function macros
- */
-#define magicalMax( __x, __y ) ( ( ( __x ) > ( __y ) ) ? ( __x ) : ( __y ) )
-#define magicalMin( __x, __y ) ( ( ( __x ) < ( __y ) ) ? ( __x ) : ( __y ) )
-
-#define magicalFltEqual( __x, __y ) ( fabsf( ( __x ) - ( __y ) ) < MAGICAL_FLT_EPSILON )
-#define magicalFltIsZero( __x ) ( fabsf( __x ) < MAGICAL_FLT_EPSILON )
-
-#define magicalDegToRad( __x ) ( ( __x ) * MAGICAL_FLT_PI_OVER_180 )
-#define magicalRadToDeg( __x ) ( ( __x ) * MAGICAL_FLT_180_OVER_PI )
-
-#define magicalCosf( __x ) cosf( ( __x ) )
-#define magicalSinf( __x ) sinf( ( __x ) )
-#define magicalTanf( __x ) tanf( ( __x ) )
-
-__inline void magicalSinfCosf( float* s, float* c, const float theta )
-{
-	*s = magicalSinf( theta );
-	*c = magicalCosf( theta );
-}
-
-__inline float magicalAcosf( const float c )
-{
-	if( c <= -1.0f ) 
-		return MAGICAL_FLT_PI;
-	if( c >= 1.0f ) 
-		return 0.0f;
-
-	return acosf( c );
-}
-
-__inline float magicalCorrectToPI( float c )
-{
-	c += MAGICAL_FLT_PI;
-	c -= floorf( c * MAGICAL_FLT_1_OVER_2PI ) * MAGICAL_FLT_2PI;
-	c -= MAGICAL_FLT_PI;
-	return c;
-}
 
 
 #endif //__MATH_MACROS_H__
