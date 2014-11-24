@@ -188,6 +188,10 @@ void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea )
 	out _x = - cy * sp * cr - sy * cp * sr;
 	out _y =   cy * sp * sr - sy * cr * cp;
 	out _z =   sy * sp * cr - cy * cp * sr;
+
+#if 1
+	magicalQuaternionNormalize( out, out );
+#endif
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -213,24 +217,25 @@ void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, c
 	out _x = - cy * sp * cr - sy * cp * sr;
 	out _y =   cy * sp * sr - sy * cr * cp;
 	out _z =   sy * sp * cr - cy * cp * sr;
+
+#if 1
+	magicalQuaternionNormalize( out, out );
+#endif
 }
 
 /*-----------------------------------------------------------------------------*\
- * 将四元数转换为轴一角对旋转
+ * 将四元数转换为轴一角对旋转 done
  * 
  * out 旋转轴
  * q 源四元数
- * return 绕旋转轴的所旋转的角度
+ * return 绕旋转轴的所旋转的弧度
  *-----------------------------------------------------------------------------*/
 float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q )
 {
 	float angle;
-	float length;
+	float scale = sqrtf( q _x * q _x + q _y * q _y + q _z * q _z );
 
-	angle = magicalSafeAcos( q _w );
-	length = sqrtf( q _x * q _x + q _y * q _y + q _z * q _z );
-
-	if( magicalAlmostZero( length ) )
+	if( magicalAlmostZero( scale ) )
 	{
 		out _x = 0.0f;
 		out _y = 0.0f;
@@ -239,12 +244,34 @@ float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q )
 	}
 	else
 	{
-		angle = angle * 2.0f;
-		out _x = q _x / length;
-		out _y = q _y / length;
-		out _z = q _z / length;
+		angle = magicalSafeAcos( q _w ) * 2.0f;
+		scale = 1.0f / scale;
+		out _x = q _x * scale;
+		out _y = q _y * scale;
+		out _z = q _z * scale;
 		return angle;
 	}
+}
+
+void magicalQuaternionToEulerAngels( cEulerAngles out, const cQuaternion q )
+{
+	magicalEulerAnglesFromQuaternion( out, q );
+}
+
+void magicalQuaternionAdd( cQuaternion out, const cQuaternion q1, const cQuaternion q2 )
+{
+	out _w = q1 _w + q2 _w;
+	out _x = q1 _x + q2 _x;
+	out _y = q1 _y + q2 _y;
+	out _z = q1 _z + q2 _z;
+}
+
+void magicalQuaternionSub( cQuaternion out, const cQuaternion q1, const cQuaternion q2 )
+{
+	out _w = q1 _w - q2 _w;
+	out _x = q1 _x - q2 _x;
+	out _y = q1 _y - q2 _y;
+	out _z = q1 _z - q2 _z;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -266,8 +293,6 @@ float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q )
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuaternion q2 )
 {
-	
-
 #if 0
 	// 变换顺序由右到左
 	float w = q1 _w * q2 _w - q1 _x * q2 _x - q1 _y * q2 _y - q1 _z * q2 _z;
@@ -289,32 +314,38 @@ void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuatern
 }
 
 /*-----------------------------------------------------------------------------*\
- * 四元数乘以3D向量
+ * 四元数乘以3D向量 done
+ *
+ * out 旋转后的向量
+ * q 四元数
+ * v 源向量
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionMulVec3( cVec3 out, const cQuaternion q1, const cVec3 v )
+void magicalQuaternionMulVec3( cVec3 out, const cQuaternion q, const cVec3 v )
 {
-	out _w = cosf( half_angle );
-	out _x = 0.0f;
-	out _y = 0.0f;
-	out _z = sinf( half_angle );
+	// nVidia SDK implementation
 
-#if 0
-	// 变换顺序由右到左
-	//float w = q1 _w * 0.0f - q1 _x * v _x - q1 _y * v _y - q1 _z * v _z;
-	float x = q1 _w * v _x + q1 _x * 0.0f + q1 _y * v _z - q1 _z * v _y;
-	float y = q1 _w * v _y - q1 _x * v _z + q1 _y * 0.0f + q1 _z * v _x;
-	float z = q1 _w * v _z + q1 _x * v _y - q1 _y * v _x + q1 _z * 0.0f;
-#else
-	// 变换顺序由左到右
-	//float w = q1 _w * 0.0f - q1 _x * v _x - q1 _y * v _y - q1 _z * v _z;
-	float x = q1 _w * v _x + q1 _x * 0.0f + q1 _y * v _z - q1 _z * v _y;
-	float y = q1 _w * v _y + q1 _y * 0.0f + q1 _z * v _x - q1 _x * v _z;
-	float z = q1 _w * v _z + q1 _z * 0.0f + q1 _x * v _y - q1 _y * v _x;
-#endif
+	cVec3 uv, uuv, qvec;
 
-	out _x = x;
-	out _y = y;
-	out _z = z;
+	qvec _x = q _x;
+	qvec _y = q _y;
+	qvec _z = q _z;
+
+	magicalVec3Cross( uv, qvec, v );
+	magicalVec3Cross( uuv, qvec, uv );
+
+	magicalVec3Scale( uv, uv, 2.0f * q _w );
+	magicalVec3Scale( uuv, uuv, 2.0f );
+
+	magicalVec3Add( out, v, uv );
+	magicalVec3Add( out, out, uuv );
+}
+
+void magicalQuaternionMulScalar( cQuaternion out, const cQuaternion q, const float a )
+{
+	out _w = q _w * a;
+	out _x = q _x * a;
+	out _y = q _y * a;
+	out _z = q _z * a;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -370,7 +401,10 @@ void magicalQuaternionNormalize( cQuaternion out, const cQuaternion q )
 
 	n = sqrt( n );
 	if( magicalAlmostZero( n ) )
+	{
+		debugassert( cFalse, "if( magicalAlmostZero( n ) )" );
 		return;
+	}
 
 	n = 1.0f / n;
 	out _x *= n;
@@ -416,7 +450,7 @@ void magicalQuaternionNegate( cQuaternion out, const cQuaternion q )
  * q 目标四元数
  * return 是否成功
  *-----------------------------------------------------------------------------*/
-cBool magicalQuaternionInverse( cQuaternion out, const cQuaternion q )
+void magicalQuaternionInverse( cQuaternion out, const cQuaternion q )
 {
 	out _w = q _w;
 	out _x = q _x;
@@ -430,19 +464,21 @@ cBool magicalQuaternionInverse( cQuaternion out, const cQuaternion q )
 		out _x = - q _x;
 		out _y = - q _y;
 		out _z = - q _z;
-		return cTrue;
+		return;
 	}
 
 	n = sqrt( n );
 	if( magicalAlmostZero( n ) )
-		return cFalse;
+	{
+		debugassert( cFalse, "if( magicalAlmostZero( n ) )" );
+		return;
+	}
 		
 	n = 1.0f / n;
 	out _w = q _w * n;
 	out _x = -q _x * n;
 	out _y = -q _y * n;
 	out _z = -q _z * n;
-	return cTrue;
 }
 
 /*-----------------------------------------------------------------------------*\

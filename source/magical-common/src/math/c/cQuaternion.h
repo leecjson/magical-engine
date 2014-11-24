@@ -52,10 +52,15 @@ MAGICALAPI_MATH void magicalQuaternionFillRotationAxisAngle( cQuaternion out, co
 
 MAGICALAPI_MATH void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea );
 MAGICALAPI_MATH void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll );
-MAGICALAPI_MATH float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q );
 
+MAGICALAPI_MATH float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q );
+MAGICALAPI_MATH void magicalQuaternionToEulerAngels( cEulerAngles out, const cQuaternion q );
+
+MAGICALAPI_MATH void magicalQuaternionAdd( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );
+MAGICALAPI_MATH void magicalQuaternionSub( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );
 MAGICALAPI_MATH void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );
-MAGICALAPI_MATH void magicalQuaternionMulVec3( cVec3 out, const cQuaternion q1, const cVec3 v );
+MAGICALAPI_MATH void magicalQuaternionMulVec3( cVec3 out, const cQuaternion q, const cVec3 v );
+MAGICALAPI_MATH void magicalQuaternionMulScalar( cQuaternion out, const cQuaternion q, const float a );
 
 MAGICALAPI_MATH float magicalQuaternionDot( const cQuaternion q1, const cQuaternion q2 );
 MAGICALAPI_MATH float magicalQuaternionLength( const cQuaternion q );
@@ -64,7 +69,7 @@ MAGICALAPI_MATH float magicalQuaternionLengthSq( const cQuaternion q );
 MAGICALAPI_MATH void magicalQuaternionNormalize( cQuaternion out, const cQuaternion q );
 MAGICALAPI_MATH void magicalQuaternionConjugate( cQuaternion out, const cQuaternion q );
 MAGICALAPI_MATH void magicalQuaternionNegate( cQuaternion out, const cQuaternion q );
-MAGICALAPI_MATH cBool magicalQuaternionInverse( cQuaternion out, const cQuaternion q );
+MAGICALAPI_MATH void magicalQuaternionInverse( cQuaternion out, const cQuaternion q );
 
 MAGICALAPI_MATH void magicalQuaternionSlerp( cQuaternion out, const cQuaternion q1, const cQuaternion q2, const float t );
 
