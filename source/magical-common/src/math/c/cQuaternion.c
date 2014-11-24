@@ -88,27 +88,79 @@ void magicalQuaternionFill( cQuaternion out, const cQuaternion q )
 }
 
 /*-----------------------------------------------------------------------------*\
- * 将轴一角对旋转转换为四元数 done
+ * 填充为以绕X轴旋转的四元数 done
  *
- * 轴一角对转换四元数公式：
- * [ cos(a/2) ( sin(a/2)*n.x sin(a/2)*n.y sin(a/2)*n.z ) ]
+ * [ cos(a/2) ( sin(a/2)  0  0 ) ]
+ *
+ * out 结果
+ * angle 旋转弧度
+ *-----------------------------------------------------------------------------*/
+void magicalQuaternionFillRotationX( cQuaternion out, const float angle )
+{
+	float half_angle = angle * 0.5f;
+
+	out _w = cosf( half_angle );
+	out _x = sinf( half_angle );
+	out _y = 0.0f;
+	out _z = 0.0f;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 填充为以绕Y轴旋转的四元数 done
+ *
+ * [ cos(a/2) ( 0  sin(a/2)  0 ) ]
+ *
+ * out 结果
+ * angle 旋转弧度
+ *-----------------------------------------------------------------------------*/
+void magicalQuaternionFillRotationY( cQuaternion out, const float angle )
+{
+	float half_angle = angle * 0.5f;
+
+	out _w = cosf( half_angle );
+	out _x = 0.0f;
+	out _y = sinf( half_angle );
+	out _z = 0.0f;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 填充为以绕Z轴旋转的四元数 done
+ *
+ * [ cos(a/2) ( 0  0  sin(a/2) ) ]
+ *
+ * out 结果
+ * angle 旋转弧度
+ *-----------------------------------------------------------------------------*/
+void magicalQuaternionFillRotationZ( cQuaternion out, const float angle )
+{
+	float half_angle = angle * 0.5f;
+
+	out _w = cosf( half_angle );
+	out _x = 0.0f;
+	out _y = 0.0f;
+	out _z = sinf( half_angle );
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 填充为以轴一角对旋转的四元数 done
+ *
+ * [ cos(a/2) ( sin(a/2)*n.x  sin(a/2)*n.y  sin(a/2)*n.z ) ]
  *
  * out 结果
  * axis 旋转轴
  * angle 绕旋转轴所旋转的弧度
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionFillFromAxisAngle( cQuaternion out, const cVec3 axis, const float angle )
+void magicalQuaternionFillRotationAxisAngle( cQuaternion out, const cVec3 axis, const float angle )
 {
 	cVec3 n;
-	float half;
-	float s;
+	float half_angle, s;
 
-	half = angle / 2.0f;
-	s = sinf( half );
+	half_angle = angle * 0.5f;
+	s = sinf( half_angle );
 
 	magicalVec3Normalize( n, axis );
 
-	out _w = cosf( half );
+	out _w = cosf( half_angle );
     out _x = n _x * s;
     out _y = n _y * s;
     out _z = n _z * s;
@@ -120,14 +172,13 @@ void magicalQuaternionFillFromAxisAngle( cQuaternion out, const cVec3 axis, cons
  * out 结果
  * ea 转换所需要的欧拉角 参考欧拉角定义
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionFillFromEulerAngles( cQuaternion out, const cEulerAngles ea )
+void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea )
 {
 	cEulerAngles ea_dst;
 	float sp, sr, sy;
 	float cp, cr, cy;
 
-	magicalEulerAnglesFill( ea_dst, ea );
-	magicalEulerAnglesCorrects( ea_dst, ea_dst );
+	magicalEulerAnglesCorrects( ea_dst, ea );
 
 	magicalSinCos( &sp, &cp, ea_dst _pitch * 0.5f );
 	magicalSinCos( &sr, &cr, ea_dst _roll * 0.5f );
@@ -145,7 +196,7 @@ void magicalQuaternionFillFromEulerAngles( cQuaternion out, const cEulerAngles e
  * out 结果
  * yaw pitch roll 参考欧拉角的定义
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionFillFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll )
+void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll )
 {
 	cEulerAngles ea_dst;
 	float sp, sr, sy;
@@ -165,7 +216,7 @@ void magicalQuaternionFillFromEulerYawPitchRoll( cQuaternion out, const float ya
 }
 
 /*-----------------------------------------------------------------------------*\
- * 将四元数转换为轴一角对旋转 done
+ * 将四元数转换为轴一角对旋转
  * 
  * out 旋转轴
  * q 源四元数
@@ -215,6 +266,8 @@ float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q )
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuaternion q2 )
 {
+	
+
 #if 0
 	// 变换顺序由右到左
 	float w = q1 _w * q2 _w - q1 _x * q2 _x - q1 _y * q2 _y - q1 _z * q2 _z;
@@ -240,6 +293,11 @@ void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuatern
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionMulVec3( cVec3 out, const cQuaternion q1, const cVec3 v )
 {
+	out _w = cosf( half_angle );
+	out _x = 0.0f;
+	out _y = 0.0f;
+	out _z = sinf( half_angle );
+
 #if 0
 	// 变换顺序由右到左
 	//float w = q1 _w * 0.0f - q1 _x * v _x - q1 _y * v _y - q1 _z * v _z;

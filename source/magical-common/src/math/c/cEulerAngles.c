@@ -100,7 +100,7 @@ void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea )
  * out q的欧拉角表示
  * q 目标四元数
  *-----------------------------------------------------------------------------*/
-void magicalEulerAnglesFillFromQuaternion( cEulerAngles out, const cQuaternion q )
+void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q )
 {
 #if 0
 	float sp = -2.0f * ( q _y * q _z + q _w * q _x );
@@ -126,7 +126,7 @@ void magicalEulerAnglesFillFromQuaternion( cEulerAngles out, const cQuaternion q
  * out m的欧拉角表示
  * m 目标旋转矩阵
  *-----------------------------------------------------------------------------*/
-void magicalEulerAnglesFillFromRotationMat4( cEulerAngles out, const cMat4 m )
+void magicalEulerAnglesFromRotationMat4( cEulerAngles out, const cMat4 m )
 {
 #if 0
 	float sp = -m _m23;
