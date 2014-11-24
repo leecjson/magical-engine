@@ -230,16 +230,10 @@ void magicalMat4FillTranslation( cMat4 out, const float x, const float y, const 
 	 * [ x   y   z   1 ]
 	 */
 
-	memset( out, 0, sizeof( cMat4 ) );
-
-	out _m11 = 1.0f;
-	out _m22 = 1.0f;
-	out _m33 = 1.0f;
-	out _m44 = 1.0f;
-
-	out _m41 = x;
-	out _m42 = y;
-	out _m43 = z;
+	out _m11 = 1.0f; out _m12 = 0.0f; out _m13 = 0.0f; out _m14 = 0.0f;
+	out _m21 = 0.0f; out _m22 = 1.0f; out _m23 = 0.0f; out _m24 = 0.0f;
+	out _m31 = 0.0f; out _m32 = 0.0f; out _m33 = 1.0f; out _m34 = 0.0f;
+	out _m41 = x;    out _m42 = y;    out _m43 = z;    out _m44 = 1.0f;
 }
 
 void magicalMat4FillTranslationVector( cMat4 out, const cVec3 t )
@@ -253,16 +247,10 @@ void magicalMat4FillTranslationVector( cMat4 out, const cVec3 t )
 	 * [ x   y   z   1 ]
 	 */
 
-	memset( out, 0, sizeof( cMat4 ) );
-
-	out _m11 = 1.0f;
-	out _m22 = 1.0f;
-	out _m33 = 1.0f;
-	out _m44 = 1.0f;
-
-	out _m41 = t _x;
-	out _m42 = t _y;
-	out _m43 = t _z;
+	out _m11 = 1.0f; out _m12 = 0.0f; out _m13 = 0.0f; out _m14 = 0.0f;
+	out _m21 = 0.0f; out _m22 = 1.0f; out _m23 = 0.0f; out _m24 = 0.0f;
+	out _m31 = 0.0f; out _m32 = 0.0f; out _m33 = 1.0f; out _m34 = 0.0f;
+	out _m41 = t _x; out _m42 = t _y; out _m43 = t _z; out _m44 = 1.0f;
 }
 
 void magicalMat4FillScaling( cMat4 out, const float x, const float y, const float z )
@@ -276,12 +264,10 @@ void magicalMat4FillScaling( cMat4 out, const float x, const float y, const floa
 	 * [ 0   0   0   1 ]
 	 */
 
-	memset( out, 0, sizeof( cMat4 ) );
-
-	out _m11 = x;
-	out _m22 = y;
-	out _m33 = z;
-	out _m44 = 1.0f;
+	out _m11 = x;    out _m12 = 0.0f; out _m13 = 0.0f; out _m14 = 0.0f;
+	out _m21 = 0.0f; out _m22 = y;    out _m23 = 0.0f; out _m24 = 0.0f;
+	out _m31 = 0.0f; out _m32 = 0.0f; out _m33 = z;    out _m34 = 0.0f;
+	out _m41 = 0.0f; out _m42 = 0.0f; out _m43 = 0.0f; out _m44 = 1.0f;
 }
 
 void magicalMat4FillScalingVector( cMat4 out, const cVec3 s )
@@ -295,12 +281,10 @@ void magicalMat4FillScalingVector( cMat4 out, const cVec3 s )
 	 * [ 0   0   0   1 ]
 	 */
 
-	memset( out, 0, sizeof( cMat4 ) );
-
-	out _m11 = s _x;
-	out _m22 = s _y;
-	out _m33 = s _z;
-	out _m44 = 1.0f;
+	out _m11 = s _x; out _m12 = 0.0f; out _m13 = 0.0f; out _m14 = 0.0f;
+	out _m21 = 0.0f; out _m22 = s _y; out _m23 = 0.0f; out _m24 = 0.0f;
+	out _m31 = 0.0f; out _m32 = 0.0f; out _m33 = s _z; out _m34 = 0.0f;
+	out _m41 = 0.0f; out _m42 = 0.0f; out _m43 = 0.0f; out _m44 = 1.0f;
 }
 
 void magicalMat4FillRotationX( cMat4 out, const float angle )
@@ -348,10 +332,10 @@ void magicalMat4FillRotationZ( cMat4 out, const float angle )
 	/*
 	 * 填充为绕Z轴旋转矩阵
 	 *
-	 * [  cos(a)  sin(a)  0     0 ]
-	 * [ -sin(a)  cos(a)  0     0 ]
-	 * [    0       0     1     0 ]
-	 * [    0       0     0     1 ]
+	 * [  cos(a) sin(a)  0     0  ]
+	 * [ -sin(a) cos(a)  0     0  ]
+	 * [    0      0     1     0  ]
+	 * [    0      0     0     1  ]
 	 */
 
 	float c = cosf( angle );
