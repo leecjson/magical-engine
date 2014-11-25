@@ -67,13 +67,13 @@ void magicalVec2Fill( cVec2 out, const cVec2 v )
 	out _y = v _y;
 }
 
-void magicalVec2FillFromVec3( cVec2 out, const cVec3 v )
+void magicalVec2FromVec3( cVec2 out, const cVec3 v )
 {
 	out _x = v _x;
 	out _y = v _y;
 }
 
-void magicalVec2FillFromVec4( cVec2 out, const cVec4 v )
+void magicalVec2FromVec4( cVec2 out, const cVec4 v )
 {
 	out _x = v _x;
 	out _y = v _y;

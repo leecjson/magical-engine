@@ -30,6 +30,7 @@ typedef float cQuaternion[4];
 
 #include "cVec3.h"
 #include "cEulerAngles.h"
+#include "cMat4.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,13 +49,22 @@ MAGICALAPI_MATH void magicalQuaternionFill( cQuaternion out, const cQuaternion q
 MAGICALAPI_MATH void magicalQuaternionFillRotationX( cQuaternion out, const float angle );
 MAGICALAPI_MATH void magicalQuaternionFillRotationY( cQuaternion out, const float angle );
 MAGICALAPI_MATH void magicalQuaternionFillRotationZ( cQuaternion out, const float angle );
-MAGICALAPI_MATH void magicalQuaternionFillRotationAxisAngle( cQuaternion out, const cVec3 axis, const float angle );
 
+MAGICALAPI_MATH void magicalQuaternionFromAxisAngle( cQuaternion out, const cVec3 axis, const float angle );
 MAGICALAPI_MATH void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea );
 MAGICALAPI_MATH void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH void magicalQuaternionFromMat4( cQuaternion out, const cMat4 m );
 
 MAGICALAPI_MATH float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q );
 MAGICALAPI_MATH void magicalQuaternionToEulerAngels( cEulerAngles out, const cQuaternion q );
+MAGICALAPI_MATH void magicalQuaternionToMat4( cMat4 out, const cQuaternion q );
+
+MAGICALAPI_MATH void magicalQuaternionRotateX( cQuaternion out, const cQuaternion q, const float angle );
+MAGICALAPI_MATH void magicalQuaternionRotateY( cQuaternion out, const cQuaternion q, const float angle );
+MAGICALAPI_MATH void magicalQuaternionRotateZ( cQuaternion out, const cQuaternion q, const float angle );
+MAGICALAPI_MATH void magicalQuaternionRotateAxisAngle( cQuaternion out, const cQuaternion q, const cVec3 axis, const float angle );
+MAGICALAPI_MATH void magicalQuaternionRotateEulerAngles( cQuaternion out, const cQuaternion q, const cEulerAngles ea );
+MAGICALAPI_MATH void magicalQuaternionRotateEulerYawPitchRoll( cQuaternion out, const cQuaternion q, const float yaw, const float pitch, const float roll );
 
 MAGICALAPI_MATH void magicalQuaternionAdd( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );
 MAGICALAPI_MATH void magicalQuaternionSub( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );

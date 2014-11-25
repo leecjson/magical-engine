@@ -40,7 +40,10 @@ MAGICALAPI_MATH void magicalEulerAnglesFillIdentity( cEulerAngles out );
 MAGICALAPI_MATH void magicalEulerAnglesFill( cEulerAngles out, const cEulerAngles ea );
 
 MAGICALAPI_MATH void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q );
-MAGICALAPI_MATH void magicalEulerAnglesFromRotationMat4( cEulerAngles out, const cMat4 m );
+MAGICALAPI_MATH void magicalEulerAnglesFromMat4( cEulerAngles out, const cMat4 m );
+
+MAGICALAPI_MATH void magicalEulerAnglesToQuaternion( cQuaternion out, const cEulerAngles ea );
+MAGICALAPI_MATH void magicalEulerAnglesToMat4( cMat4 out, const cEulerAngles ea );
 
 MAGICALAPI_MATH void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea );
 

@@ -45,6 +45,51 @@ void magicalEulerAnglesFillIdentity( cEulerAngles out )
 }
 
 /*-----------------------------------------------------------------------------*\
+ * 从四元数转换为欧拉角表示 done
+ *
+ * out q的欧拉角表示
+ * q 源四元数
+ *-----------------------------------------------------------------------------*/
+void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q )
+{
+	float sp = -2.0f * ( q _y * q _z + q _w * q _x );
+
+	if( fabsf( sp ) > 0.9999f )
+	{
+		out _pitch = MAGICAL_MATH_PI_OVER_2 * sp;
+		out _yaw   = atan2f( -q _x * q _z - q _w * q _y, 0.5f - q _y * q _y - q _z * q _z );
+		out _roll  = 0.0f;
+	}
+	else
+	{
+		out _pitch = asinf( sp );
+		out _yaw   = atan2f( q _x * q _z - q _w * q _y, 0.5f - q _x * q _x - q _y * q _y );
+		out _roll  = atan2f( q _x * q _y - q _w * q _z, 0.5f - q _x * q _x - q _z * q _z );
+	}
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 从旋转矩阵转换为欧拉角表示
+ *
+ * out m的欧拉角表示
+ * m 源旋转矩阵
+ *-----------------------------------------------------------------------------*/
+void magicalEulerAnglesFromMat4( cEulerAngles out, const cMat4 m )
+{
+
+}
+
+void magicalEulerAnglesToQuaternion( cQuaternion out, const cEulerAngles ea )
+{
+	magicalQuaternionFromEulerAngles( out, ea );
+}
+
+void magicalEulerAnglesToRotationMat4( cMat4 out, const cEulerAngles ea )
+{
+	
+}
+
+/*-----------------------------------------------------------------------------*\
  * 计算欧拉角的限制情况 done
  *
  * 限制欧拉角 
@@ -92,56 +137,4 @@ void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea )
 	out _yaw   = yaw;
 	out _pitch = pitch;
 	out _roll  = roll;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 从四元数转换为欧拉角表示
- *
- * out q的欧拉角表示
- * q 目标四元数
- *-----------------------------------------------------------------------------*/
-void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q )
-{
-#if 0
-	float sp = -2.0f * ( q _y * q _z + q _w * q _x );
-
-	if( fabsf( sp ) > 0.9999f )
-	{
-		out _pitch = MAGICAL_FLT_PI_OVER_2 * sp;
-		out _yaw   = atan2f( -q _x * q _z - q _w * q _y, 0.5f - q _y * q _y - q _z * q _z );
-		out _roll  = 0.0f;
-	}
-	else
-	{
-		out _pitch = asinf( sp );
-		out _yaw   = atan2f( q _x * q _z - q _w * q _y, 0.5f - q _x * q _x - q _y * q _y );
-		out _roll  = atan2f( q _x * q _y - q _w * q _z, 0.5f - q _x * q _x - q _z * q _z );
-	}
-#endif
-}
-
-/*-----------------------------------------------------------------------------*\
- * 从旋转矩阵转换为欧拉角表示
- *
- * out m的欧拉角表示
- * m 目标旋转矩阵
- *-----------------------------------------------------------------------------*/
-void magicalEulerAnglesFromRotationMat4( cEulerAngles out, const cMat4 m )
-{
-#if 0
-	float sp = -m _m23;
-
-	if( fabsf( sp ) > 9.99999f )
-	{
-		out _pitch = MAGICAL_FLT_PI_OVER_2 * sp;
-		out _yaw   = atan2f( -m _m31, m _m11 );
-		out _roll  = 0.0f;
-	}
-	else
-	{
-		out _pitch = asinf( sp );
-		out _yaw   = atan2f( m _m13, m _m33 );
-		out _roll  = atan2f( m _m21, m _m22 );
-	}
-#endif
 }

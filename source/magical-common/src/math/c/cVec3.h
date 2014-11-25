@@ -45,8 +45,8 @@ MAGICALAPI_MATH void magicalVec3FillZero( cVec3 out );
 MAGICALAPI_MATH void magicalVec3FillOne( cVec3 out );
 MAGICALAPI_MATH void magicalVec3Fill( cVec3 out, const cVec3 v );
 
-MAGICALAPI_MATH void magicalVec3FillFromVec2( cVec3 out, const cVec2 v );
-MAGICALAPI_MATH void magicalVec3FillFromVec4( cVec3 out, const cVec4 v );
+MAGICALAPI_MATH void magicalVec3FromVec2( cVec3 out, const cVec2 v );
+MAGICALAPI_MATH void magicalVec3FromVec4( cVec3 out, const cVec4 v );
 
 MAGICALAPI_MATH void magicalVec3AddScalar( cVec3 out, const cVec3 v, const float a );
 MAGICALAPI_MATH void magicalVec3Add( cVec3 out, const cVec3 v1, const cVec3 v2 );

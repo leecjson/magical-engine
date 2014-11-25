@@ -150,7 +150,7 @@ void magicalQuaternionFillRotationZ( cQuaternion out, const float angle )
  * axis 旋转轴
  * angle 绕旋转轴所旋转的弧度
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionFillRotationAxisAngle( cQuaternion out, const cVec3 axis, const float angle )
+void magicalQuaternionFromAxisAngle( cQuaternion out, const cVec3 axis, const float angle )
 {
 	cVec3 n;
 	float half_angle, s;
@@ -223,6 +223,11 @@ void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, c
 #endif
 }
 
+void magicalQuaternionFromMat4( cQuaternion out, const cMat4 m )
+{
+
+}
+
 /*-----------------------------------------------------------------------------*\
  * 将四元数转换为轴一角对旋转 done
  * 
@@ -232,7 +237,6 @@ void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, c
  *-----------------------------------------------------------------------------*/
 float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q )
 {
-	float angle;
 	float scale = sqrtf( q _x * q _x + q _y * q _y + q _z * q _z );
 
 	if( magicalAlmostZero( scale ) )
@@ -244,18 +248,64 @@ float magicalQuaternionToAxisAngle( cVec3 out, const cQuaternion q )
 	}
 	else
 	{
-		angle = magicalSafeAcos( q _w ) * 2.0f;
 		scale = 1.0f / scale;
 		out _x = q _x * scale;
 		out _y = q _y * scale;
 		out _z = q _z * scale;
-		return angle;
+		return magicalSafeAcos( q _w ) * 2.0f;
 	}
 }
 
 void magicalQuaternionToEulerAngels( cEulerAngles out, const cQuaternion q )
 {
 	magicalEulerAnglesFromQuaternion( out, q );
+}
+
+void magicalQuaternionToMat4( cMat4 out, const cQuaternion q )
+{
+	
+}
+
+void magicalQuaternionRotateX( cQuaternion out, const cQuaternion q, const float angle )
+{
+	cQuaternion dst;
+	magicalQuaternionFillRotationX( dst, angle );
+	magicalQuaternionMul( out, q, dst );
+}
+
+void magicalQuaternionRotateY( cQuaternion out, const cQuaternion q, const float angle )
+{
+	cQuaternion dst;
+	magicalQuaternionFillRotationY( dst, angle );
+	magicalQuaternionMul( out, q, dst );
+}
+
+void magicalQuaternionRotateZ( cQuaternion out, const cQuaternion q, const float angle )
+{
+	cQuaternion dst;
+	magicalQuaternionFillRotationZ( dst, angle );
+	magicalQuaternionMul( out, q, dst );
+}
+
+void magicalQuaternionRotateAxisAngle( cQuaternion out, const cQuaternion q, const cVec3 axis, const float angle )
+{
+	cQuaternion dst;
+	magicalQuaternionFromAxisAngle( dst, axis, angle );
+	magicalQuaternionMul( out, q, dst );
+}
+
+void magicalQuaternionRotateEulerAngles( cQuaternion out, const cQuaternion q, const cEulerAngles ea )
+{
+	cQuaternion dst;
+	magicalQuaternionFromEulerAngles( dst, ea );
+	magicalQuaternionMul( out, q, dst );
+}
+
+void magicalQuaternionRotateEulerYawPitchRoll( cQuaternion out, const cQuaternion q, const float yaw, const float pitch, const float roll )
+{
+	cQuaternion dst;
+	magicalQuaternionFromEulerYawPitchRoll( dst, yaw, pitch, roll );
+	magicalQuaternionMul( out, q, dst );
 }
 
 void magicalQuaternionAdd( cQuaternion out, const cQuaternion q1, const cQuaternion q2 )
@@ -386,7 +436,7 @@ float magicalQuaternionLengthSq( const cQuaternion q )
  * 计算四元数的标准化 done
  * 
  * out q的标准化四元数
- * q 目标四元数
+ * q 源四元数
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionNormalize( cQuaternion out, const cQuaternion q )
 {
@@ -417,7 +467,7 @@ void magicalQuaternionNormalize( cQuaternion out, const cQuaternion q )
  * 计算四元数共轭 done
  * 
  * out q的共轭
- * q 目标四元数
+ * q 源四元数
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionConjugate( cQuaternion out, const cQuaternion q )
 {
@@ -431,7 +481,7 @@ void magicalQuaternionConjugate( cQuaternion out, const cQuaternion q )
  * 计算四元数的倒数 done
  * 
  * out q的倒数
- * q 目标四元数
+ * q 源标四元数
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionNegate( cQuaternion out, const cQuaternion q )
 {
@@ -447,7 +497,7 @@ void magicalQuaternionNegate( cQuaternion out, const cQuaternion q )
  * q^-1 = q^* / length(q)
  *
  * out q的逆
- * q 目标四元数
+ * q 源四元数
  * return 是否成功
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionInverse( cQuaternion out, const cQuaternion q )

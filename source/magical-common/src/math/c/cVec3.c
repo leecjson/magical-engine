@@ -80,14 +80,14 @@ void magicalVec3Fill( cVec3 out, const cVec3 v )
 	out _z = v _z;
 }
 
-void magicalVec3FillFromVec2( cVec3 out, const cVec2 v )
+void magicalVec3FromVec2( cVec3 out, const cVec2 v )
 {
 	out _x = v _x;
 	out _y = v _y;
 	out _z = 0.0f;
 }
 
-void magicalVec3FillFromVec4( cVec3 out, const cVec4 v )
+void magicalVec3FromVec4( cVec3 out, const cVec4 v )
 {
 	out _x = v _x;
 	out _y = v _y;

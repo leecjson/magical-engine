@@ -31,6 +31,7 @@ typedef float cMat4[16];
 #include "cVec3.h"
 #include "cVec4.h"
 #include "cQuaternion.h"
+#include "cEulerAngles.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,8 +63,9 @@ MAGICALAPI_MATH void magicalMat4FillScalingVector( cMat4 out, const cVec3 s );
 MAGICALAPI_MATH void magicalMat4FillRotationX( cMat4 out, const float angle );
 MAGICALAPI_MATH void magicalMat4FillRotationY( cMat4 out, const float angle );
 MAGICALAPI_MATH void magicalMat4FillRotationZ( cMat4 out, const float angle );
-MAGICALAPI_MATH void magicalMat4FillRotationYawPitchRoll( cMat4 out, const float yaw, const float pitch, const float roll );
-MAGICALAPI_MATH void magicalMat4FillRotationQuaternion( cMat4 out, const cQuaternion r );
+MAGICALAPI_MATH void magicalMat4FillRotationEulerAngles( cMat4 out, const cEulerAngles ea );
+MAGICALAPI_MATH void magicalMat4FillRotationEulerYawPitchRoll( cMat4 out, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH void magicalMat4FillRotationQuaternion( cMat4 out, const cQuaternion q );
 MAGICALAPI_MATH void magicalMat4FillRotationAxisAngle( cMat4 out, const cVec3 axis, const float angle );
 
 MAGICALAPI_MATH void magicalMat4FillLookAt( cMat4 out, const cVec3 eye, const cVec3 target, const cVec3 up );
@@ -77,8 +79,9 @@ MAGICALAPI_MATH void magicalMat4ScaleVector( cMat4 out, const cMat4 m, const cVe
 MAGICALAPI_MATH void magicalMat4RotateX( cMat4 out, const cMat4 m, const float angle );
 MAGICALAPI_MATH void magicalMat4RotateY( cMat4 out, const cMat4 m, const float angle );
 MAGICALAPI_MATH void magicalMat4RotateZ( cMat4 out, const cMat4 m, const float angle );
-MAGICALAPI_MATH void magicalMat4RotateYawPitchRoll( cMat4 out, const cMat4 m, const float yaw, const float pitch, const float roll );
-MAGICALAPI_MATH void magicalMat4RotateQuaternion( cMat4 out, const cMat4 m, const cQuaternion r );
+MAGICALAPI_MATH void magicalMat4RotateEulerAngles( cMat4 out, const cMat4 m, const cEulerAngles ea );
+MAGICALAPI_MATH void magicalMat4RotateEulerYawPitchRoll( cMat4 out, const cMat4 m, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH void magicalMat4RotateQuaternion( cMat4 out, const cMat4 m, const cQuaternion q );
 MAGICALAPI_MATH void magicalMat4RotateAxisAngle( cMat4 out, const cMat4 m, const cVec3 axis, const float angle );
 
 MAGICALAPI_MATH float magicalMat4Determinant( const cMat4 m );
@@ -96,6 +99,7 @@ MAGICALAPI_MATH void magicalMat4GetBackVector( cVec3 out, const cMat4 m );
 MAGICALAPI_MATH void magicalMat4SetTranslation( cMat4 out, const float x, const float y, const float z );
 MAGICALAPI_MATH void magicalMat4GetTranslation( cVec3 out, const cMat4 m );
 
+MAGICALAPI_MATH void magicalMat4Decompose
 
 #ifdef __cplusplus
 }
