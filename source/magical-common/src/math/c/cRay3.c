@@ -21,46 +21,88 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_AABB3_H__
-#define __C_AABB3_H__
+#include "cRay3.h"
 
-#include "../MathMacros.h"
+void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const float oz, const float dx, const float dy, const float dz )
+{
+	out _o_x = ox;
+	out _o_y = oy;
+	out _o_z = oz;
+	out _d_x = dx;
+	out _d_y = dy;
+	out _d_z = dz;
 
-#include "cVec3.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef float cAABB[6];
-
-MAGICALAPI_MATH void magicalAABB3FillScalars( cAABB out,
-	const float min_x, const float min_y, const float min_z,
-	const float max_x, const float max_y, const float max_z );
-MAGICALAPI_MATH void magicalAABB3Fill( cAABB out, const cAABB aabb );
-MAGICALAPI_MATH void magicalAABB3FillVec3( cAABB out, const cVec3 min, const cVec3 max );
-
-MAGICALAPI_MATH void magicalAABB3ExpandScalars( cAABB out, const cAABB aabb, const float x, const float y, const float z );
-MAGICALAPI_MATH void magicalAABB3Expand( cAABB out, const cAABB aabb, const cVec3 v );
-MAGICALAPI_MATH void magicalAABB3Merge( cAABB out, const cAABB aabb1, const cAABB aabb2 );
-MAGICALAPI_MATH void magicalAABB3Center( cVec3 out, const cAABB aabb );
-
-MAGICALAPI_MATH float magicalAABB3Size( const cAABB aabb );
-MAGICALAPI_MATH float magicalAABB3DiameterX( const cAABB aabb );
-MAGICALAPI_MATH float magicalAABB3DiameterY( const cAABB aabb );
-MAGICALAPI_MATH float magicalAABB3DiameterZ( const cAABB aabb );
-
-MAGICALAPI_MATH cBool magicalAABB3Intersects( const cAABB aabb1, const cAABB aabb2 );
-//MAGICALAPI_MATH cBool magicalAABB3IntersectsPlane(const C3DPlane* plane,int type);
-//MAGICALAPI_MATH cBool magicalAABB3IntersectsSphere(  )
-MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB aabb, const cVec3 point );
-
-
-
-
-
-#ifdef __cplusplus
+	magicalRay3DirectionNormalize( out, out );
 }
-#endif
 
-#endif //__C_AABB3_H__
+void magicalRay3FillOriginAndDirection( cRay3 out, const cVec3 origin, const cVec3 direction )
+{
+	out _o_x = origin _x;
+	out _o_y = origin _y;
+	out _o_z = origin _z;
+	out _d_x = direction _x;
+	out _d_y = direction _y;
+	out _d_z = direction _z;
+
+	magicalRay3DirectionNormalize( out, out );
+}
+
+void magicalRay3Fill( cRay3 out, const cRay3 r3 )
+{
+	out _o_x = r3 _o_x;
+	out _o_y = r3 _o_y;
+	out _o_z = r3 _o_z;
+	out _d_x = r3 _d_x;
+	out _d_y = r3 _d_y;
+	out _d_z = r3 _d_z;
+}
+
+void magicalRay3GetOrigin( cVec3 out, const cRay3 r3 )
+{
+	out _x = r3 _o_x;
+	out _y = r3 _o_y;
+	out _z = r3 _o_z;
+}
+
+void magicalRay3GetDirection( cVec3 out, const cRay3 r3 )
+{
+	out _x = r3 _d_x;
+	out _y = r3 _d_y;
+	out _z = r3 _d_z;
+}
+
+void magicalRay3SetOrigin( cRay3 out, const cVec3 origin )
+{
+	out _o_x = origin _x;
+	out _o_y = origin _y;
+	out _o_z = origin _z;
+}
+
+void magicalRay3SetDirection( cRay3 out, const cVec3 direction )
+{
+	out _d_x = direction _x;
+	out _d_y = direction _y;
+	out _d_z = direction _z;
+
+	magicalRay3DirectionNormalize( out, out );
+}
+
+void magicalRay3DirectionNormalize( cRay3 out, const cRay3 r3 )
+{
+	out _d_x = r3 _d_x;
+	out _d_y = r3 _d_y;
+	out _d_z = r3 _d_z;
+
+	float n = r3 _d_x * r3 _d_x + r3 _d_y * r3 _d_y + r3 _d_z * r3 _d_z;
+	if( magicalAlmostEqual( n, 1.0f ) )
+		return;
+
+	n = sqrtf( n );
+	if( magicalAlmostZero( n ) )
+		return;
+
+	n = 1.0f / n;
+	out _d_x *= n;
+	out _d_y *= n;
+	out _d_z *= n;
+}

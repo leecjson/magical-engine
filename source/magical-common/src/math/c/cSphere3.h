@@ -21,32 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_RAY3_H__
-#define __C_RAY3_H__
+#ifndef __C_SPHERE_H__
+#define __C_SPHERE_H__
 
 #include "cMathMacros.h"
 
-typedef float cRay3[6];
+typedef float cSphere3[4];
 
 #include "cVec3.h"
+#include "cAABB3.h"
+#include "cPlane3.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGICALAPI_MATH void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
-MAGICALAPI_MATH void magicalRay3FillOriginAndDirection( cRay3 out, const cVec3 origin, const cVec3 direction );
-MAGICALAPI_MATH void magicalRay3Fill( cRay3 out, const cRay3 r3 );
+MAGICALAPI_MATH void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r );
+MAGICALAPI_MATH void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVec3 center, const float r );
+MAGICALAPI_MATH void magicalSphere3Fill( cSphere3 out, const cSphere3 sp );
 
-MAGICALAPI_MATH void magicalRay3GetOrigin( cVec3 out, const cRay3 r3 );
-MAGICALAPI_MATH void magicalRay3GetDirection( cVec3 out, const cRay3 r3 );
-MAGICALAPI_MATH void magicalRay3SetOrigin( cRay3 out, const cVec3 origin );
-MAGICALAPI_MATH void magicalRay3SetDirection( cRay3 out, const cVec3 direction );
-
-MAGICALAPI_MATH void magicalRay3DirectionNormalize( cRay3 out, const cRay3 r3 );
+MAGICALAPI_MATH cBool magicalSphere3Intersects( const cSphere3 sp1, const cSphere3 sp2 );
+MAGICALAPI_MATH cBool magicalSphere3IntersectsAABB3( const cSphere3 sp, const cAABB3 aabb );
+MAGICALAPI_MATH cBool magicalSphere3IntersectsPlane3( const cSphere3 sp, const cPlane3 p );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //__C_RAY3_H__
+#endif //__C_SPHERE_H__

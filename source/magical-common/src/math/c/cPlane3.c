@@ -193,21 +193,145 @@ float magicalPlane3DistanceToPoint( const cPlane3 p, const cVec3 point )
  * p 目标平面
  * point 目标点
  * return 分类结果
- *        cPointInFrontOfPlane 在平面前方
- *        cPointBehindPlane 在平面后方
- *        cPointOnPlane 刚好在平面上
+ *        +1 在平面前方
+ *        -1 在平面后方
+ *         0 刚好在平面上
  *-----------------------------------------------------------------------------*/
-cPointClassification magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 point )
+int magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 point )
 {
    float distance = p _x * point _x + p _y * point _y + p _z * point _z - p _d;
 
    if( distance > MAGICAL_MATH_EPSILON ) 
-	   return cPointInFrontOfPlane;
+	   return +1;
 
    if( distance < -MAGICAL_MATH_EPSILON ) 
-	   return cPointBehindPlane;
+	   return -1;
 
-   return cPointOnPlane;
+   return 0;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 分类轴对齐包围盒与面的关系 done
+ *
+ * p 目标平面
+ * aabb 包围盒
+ * return 分类结果
+ *        +1 在平面前方
+ *        -1 在平面后方
+ *         0 与平面相交
+ *-----------------------------------------------------------------------------*/
+int magicalPlane3ClassifyAABB3( const cPlane3 p, const cAABB3 aabb )
+{
+	float min_d, max_d;
+
+	if( p _x > 0.0f )
+	{
+		min_d = p _x * aabb _min_x;
+		max_d = p _x * aabb _max_x;
+	}
+	else
+	{
+		min_d = p _x * aabb _max_x;
+		max_d = p _x * aabb _min_x;
+	}
+
+	if( p _y > 0.0f )
+	{
+		min_d += p _y * aabb _min_y;
+		max_d += p _y * aabb _max_y;
+	}
+	else
+	{
+		min_d += p _y * aabb _max_y;
+		max_d += p _y * aabb _min_y;
+	}
+
+	if( p _z > 0.0f )
+	{
+		min_d += p _z * aabb _min_z;
+		max_d += p _z * aabb _max_z;
+	}
+	else
+	{
+		min_d += p _z * aabb _max_z;
+		max_d += p _z * aabb _min_z;
+	}
+
+	if( min_d >= p _d ) {
+		return +1;
+	}
+
+	if( max_d <= p _d ) {
+		return -1;
+	}
+
+	return 0;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 分配球体与平面的位置关系 done
+ *
+ * p 平面
+ * sp 球体
+ * return 分类结果
+ *        +1 在平面前方
+ *        -1 在平面后方
+ *         0 与平面相交
+ *-----------------------------------------------------------------------------*/
+int magicalPlane3ClassifySphere3( const cPlane3 p, const cSphere3 sp )
+{
+	float distance = p _x * sp _x + p _y * sp _y + p _z * sp _z - p _d;
+
+	if( distance >= sp _r )
+		return +1;
+
+	if( distance <= - sp _r )
+		return -1;
+
+	return 0;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 判断两个平面是否相交，不相交则为平行 done
+ *
+ * p1 平面1
+ * p2 平面2
+ * return 是否相交
+ *-----------------------------------------------------------------------------*/
+cBool magicalPlane3Intersects( const cPlane3 p1, const cPlane3 p2 )
+{
+	if( magicalVec3Equals( p1, p2 ) )
+	{
+		return magicalAlmostEqual( p1 _d, p2 _d );
+	}
+	else
+	{
+		return cTrue;
+	}
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 判断包围盒是否与平面相交 done
+ *
+ * p 平面
+ * aabb 包围盒
+ * return 是否相交
+ *-----------------------------------------------------------------------------*/
+cBool magicalPlane3IntersectsAABB3( const cPlane3 p, const cAABB3 aabb )
+{
+	return magicalPlane3ClassifyAABB3( p, aabb ) == 0;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 判断球体是否与平面相交 done
+ *
+ * p 平面
+ * sp 球体
+ * return 是否相交
+ *-----------------------------------------------------------------------------*/
+cBool magicalPlane3IntersectsSphere3( const cPlane3 p, const cSphere3 sp )
+{
+	return magicalPlane3ClassifySphere3( p, sp ) == 0;
 }
 
 /*-----------------------------------------------------------------------------*\

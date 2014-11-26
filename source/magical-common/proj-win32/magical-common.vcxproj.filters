@@ -135,6 +135,9 @@
     <ClCompile Include="..\src\math\c\cEulerAngles.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\c\cSphere3.cpp">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\assets\AssetsSystem.h">
@@ -249,6 +252,9 @@
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cMathMacros.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cSphere3.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
   </ItemGroup>

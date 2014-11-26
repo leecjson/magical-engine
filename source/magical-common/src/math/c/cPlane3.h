@@ -26,15 +26,11 @@ SOFTWARE.
 
 #include "cMathMacros.h"
 
-typedef enum cPointClassification {
-	cPointInFrontOfPlane = -1,
-	cPointOnPlane = 0,
-	cPointBehindPlane = 1,
-} cPointClassification;
-
 typedef float cPlane3[4];
 
 #include "cVec3.h"
+#include "cAABB3.h"
+#include "cSphere3.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,7 +49,13 @@ MAGICALAPI_MATH void magicalPlane3NearestPoint( cVec3 out, const cPlane3 p, cons
 MAGICALAPI_MATH void magicalPlane3ProjectPoint( cVec3 out, const cPlane3 p, const cVec3 point );
 MAGICALAPI_MATH float magicalPlane3DistanceToPoint( const cPlane3 p, const cVec3 point );
 
-MAGICALAPI_MATH cPointClassification magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 point );
+MAGICALAPI_MATH int magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 point );
+MAGICALAPI_MATH int magicalPlane3ClassifyAABB3( const cPlane3 p, const cAABB3 aabb );
+MAGICALAPI_MATH int magicalPlane3ClassifySphere3( const cPlane3 p, const cSphere3 sp );
+
+MAGICALAPI_MATH cBool magicalPlane3Intersects( const cPlane3 p1, const cPlane3 p2 );
+MAGICALAPI_MATH cBool magicalPlane3IntersectsAABB3( const cPlane3 p, const cAABB3 aabb );
+MAGICALAPI_MATH cBool magicalPlane3IntersectsSphere3( const cPlane3 p, const cSphere3 sp );
 
 MAGICALAPI_MATH cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVec3 point );
 

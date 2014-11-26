@@ -26,7 +26,7 @@ SOFTWARE.
 
 #include "cMathMacros.h"
 
-typedef float cAABB[6];
+typedef float cAABB3[6];
 
 #include "cVec3.h"
 #include "cPlane3.h"
@@ -36,34 +36,35 @@ typedef float cAABB[6];
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBool magicalAABB3IsEmpty( const cAABB aabb );
+MAGICALAPI_MATH cBool magicalAABB3IsEmpty( const cAABB3 aabb );
 
-MAGICALAPI_MATH void magicalAABB3FillScalars( cAABB out, const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z );
-MAGICALAPI_MATH void magicalAABB3FillBox( cAABB out, const cVec3 center, const float width, const float height, const float depth );
-MAGICALAPI_MATH void magicalAABB3FillEmpty( cAABB out );
-MAGICALAPI_MATH void magicalAABB3Fill( cAABB out, const cAABB aabb );
+MAGICALAPI_MATH void magicalAABB3FillScalars( cAABB3 out, const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z );
+MAGICALAPI_MATH void magicalAABB3FillBox( cAABB3 out, const cVec3 center, const float width, const float height, const float depth );
+MAGICALAPI_MATH void magicalAABB3FillEmpty( cAABB3 out );
+MAGICALAPI_MATH void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb );
 
-MAGICALAPI_MATH void magicalAABB3FillFromVec3( cAABB out, const cVec3 min, const cVec3 max );
+MAGICALAPI_MATH void magicalAABB3FromVec3( cAABB3 out, const cVec3 min, const cVec3 max );
 
-MAGICALAPI_MATH void magicalAABB3ExpandScalars( cAABB out, const cAABB aabb, const float x, const float y, const float z );
-MAGICALAPI_MATH void magicalAABB3Expand( cAABB out, const cAABB aabb, const cVec3 v );
-MAGICALAPI_MATH void magicalAABB3Merge( cAABB out, const cAABB aabb1, const cAABB aabb2 );
-MAGICALAPI_MATH void magicalAABB3Center( cVec3 out, const cAABB aabb );
+MAGICALAPI_MATH void magicalAABB3ExtendScalars( cAABB3 out, const cAABB3 aabb, const float x, const float y, const float z );
+MAGICALAPI_MATH void magicalAABB3Extend( cAABB3 out, const cAABB3 aabb, const cVec3 v );
+MAGICALAPI_MATH void magicalAABB3Merge( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 );
+MAGICALAPI_MATH void magicalAABB3Center( cVec3 out, const cAABB3 aabb );
 
-MAGICALAPI_MATH float magicalAABB3Size( const cAABB aabb );
-MAGICALAPI_MATH float magicalAABB3DiameterX( const cAABB aabb );
-MAGICALAPI_MATH float magicalAABB3DiameterY( const cAABB aabb );
-MAGICALAPI_MATH float magicalAABB3DiameterZ( const cAABB aabb );
+MAGICALAPI_MATH float magicalAABB3Size( const cAABB3 aabb );
+MAGICALAPI_MATH float magicalAABB3DiameterX( const cAABB3 aabb );
+MAGICALAPI_MATH float magicalAABB3DiameterY( const cAABB3 aabb );
+MAGICALAPI_MATH float magicalAABB3DiameterZ( const cAABB3 aabb );
 
-MAGICALAPI_MATH void magicalAABB3NearestPoint( cVec3 out, const cAABB aabb, const cVec3 point );
-MAGICALAPI_MATH void magicalAABB3Transform( cAABB out, const cAABB aabb, const cMat4 m );
+MAGICALAPI_MATH void magicalAABB3NearestPoint( cVec3 out, const cAABB3 aabb, const cVec3 point );
+MAGICALAPI_MATH void magicalAABB3Transform( cAABB3 out, const cAABB3 aabb, const cMat4 m );
 
-MAGICALAPI_MATH cBool magicalAABB3IntersectsAABB3( const cAABB aabb1, const cAABB aabb2 );
-MAGICALAPI_MATH cBool magicalAABB3IntersectsPlane3( const cAABB aabb, const cPlane3 p );
-MAGICALAPI_MATH cBool magicalAABB3GetIntersectsAABB3( cAABB out, const cAABB aabb1, const cAABB aabb2 );
-//MAGICALAPI_MATH cBool magicalAABB3IntersectsPlane(const C3DPlane* plane,int type);
-//MAGICALAPI_MATH cBool magicalAABB3IntersectsSphere(  )
-MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB aabb, const cVec3 point );
+MAGICALAPI_MATH cBool magicalAABB3Intersects( const cAABB3 aabb1, const cAABB3 aabb2 );
+MAGICALAPI_MATH cBool magicalAABB3IntersectsPlane3( const cAABB3 aabb, const cPlane3 p );
+MAGICALAPI_MATH cBool magicalAABB3IntersectsSphere3( const cAABB3 aabb, const cSphere3 sp );
+
+MAGICALAPI_MATH cBool magicalAABB3GetIntersectsAABB3( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 );
+
+MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB3 aabb, const cVec3 point );
 
 
 

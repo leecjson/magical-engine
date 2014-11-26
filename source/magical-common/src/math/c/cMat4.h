@@ -99,7 +99,10 @@ MAGICALAPI_MATH void magicalMat4GetBackVector( cVec3 out, const cMat4 m );
 MAGICALAPI_MATH void magicalMat4SetTranslation( cMat4 out, const float x, const float y, const float z );
 MAGICALAPI_MATH void magicalMat4GetTranslation( cVec3 out, const cMat4 m );
 
-MAGICALAPI_MATH void magicalMat4Decompose
+MAGICALAPI_MATH void magicalMat4GetScaling( cVec3 out, const cMat4 m );
+MAGICALAPI_MATH void magicalMat4GetRotationQuaternion( cQuaternion out, const cMat4 m );
+
+MAGICALAPI_MATH cBool magicalMat4Decompose( cVec3 out_translation, cVec3 out_scaling, cQuaternion out_rotation, const cMat4 m );
 
 #ifdef __cplusplus
 }

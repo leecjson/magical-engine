@@ -225,7 +225,7 @@ void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, c
 
 void magicalQuaternionFromMat4( cQuaternion out, const cMat4 m )
 {
-
+	magicalMat4GetRotationQuaternion( out, m );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -263,7 +263,7 @@ void magicalQuaternionToEulerAngels( cEulerAngles out, const cQuaternion q )
 
 void magicalQuaternionToMat4( cMat4 out, const cQuaternion q )
 {
-	
+	magicalMat4FillRotationQuaternion( out, q );
 }
 
 void magicalQuaternionRotateX( cQuaternion out, const cQuaternion q, const float angle )

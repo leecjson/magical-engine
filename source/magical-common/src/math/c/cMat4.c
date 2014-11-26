@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cMat4.h"
+#include <memory.h>
 
 static const float IDENTITY[] =
 {
@@ -558,7 +559,7 @@ void magicalMat4FillPerspective( cMat4 out, const float fov, const float aspect,
 	float zoom_y;
 	float factor;
 
-	factor = magicalTanf( magicalDegToRad( fov ) * 0.5f );
+	factor = tanf( magicalDegToRad( fov ) * 0.5f );
 	debugassert( !magicalAlmostZero( factor ) && !magicalAlmostZero( aspect ), "division by 0.f" );
 
 	zoom_y = 1.0f / factor;
@@ -678,7 +679,7 @@ void magicalMat4RotateEulerAngles( cMat4 out, const cMat4 m, const cEulerAngles 
 void magicalMat4RotateEulerYawPitchRoll( cMat4 out, const cMat4 m, const float yaw, const float pitch, const float roll )
 {
 	cMat4 dst;
-	magicalMat4FillRotationYawPitchRoll( dst, yaw, pitch, roll );
+	magicalMat4FillRotationEulerYawPitchRoll( dst, yaw, pitch, roll );
 	magicalMat4Mul( out, m, dst );
 }
 
@@ -863,4 +864,129 @@ void magicalMat4GetTranslation( cVec3 out, const cMat4 m )
 	out _x = m _m12;
 	out _y = m _m13;
 	out _z = m _m14;
+}
+
+void magicalMat4GetScaling( cVec3 out, const cMat4 m )
+{
+	magicalMat4Decompose( NULL, out, NULL, m );
+}
+
+void magicalMat4GetRotationQuaternion( cQuaternion out, const cMat4 m )
+{
+	magicalMat4Decompose( NULL, NULL, out, m );
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 解析4x4的平移、旋转、缩放 done
+ *
+ * 投影后的矩阵会解析失败
+ *
+ * out_translation 解析平移
+ * out_scaling 解析缩放
+ * out_rotation 解析旋转
+ * m 源矩阵
+ *-----------------------------------------------------------------------------*/
+cBool magicalMat4Decompose( cVec3 out_translation, cVec3 out_scaling, cQuaternion out_rotation, const cMat4 m )
+{
+	cVec3 xaxis;
+	cVec3 yaxis;
+	cVec3 zaxis;
+	float scale_x;
+	float scale_y;
+	float scale_z;
+	float det;
+	float rn;
+	float trace;
+	float s;
+
+	if( out_translation )
+    {
+        out_translation _x = m _m12;
+        out_translation _y = m _m13;
+        out_translation _z = m _m14;
+    }
+
+	if( out_scaling == NULL && out_rotation == NULL )
+		return cTrue;
+
+	magicalVec3FillScalars( xaxis, m _m11, m _m12, m _m13 );
+	scale_x = magicalVec3Length( xaxis );
+
+	magicalVec3FillScalars( yaxis, m _m21, m _m22, m _m23 );
+	scale_y = magicalVec3Length( yaxis );
+
+	magicalVec3FillScalars( zaxis, m _m31, m _m32, m _m33 );
+	scale_z = magicalVec3Length( zaxis );
+
+	det = magicalMat4Determinant( m );
+	if( det < 0 )
+		scale_z = -scale_z;
+
+	if( out_scaling )
+	{
+		out_scaling _x = scale_x;
+		out_scaling _y = scale_y;
+		out_scaling _z = scale_z;
+	}
+
+	if( out_rotation == NULL )
+		return cTrue;
+
+	if( magicalAlmostZero( scale_x ) || magicalAlmostZero( scale_y ) || magicalAlmostZero( scale_z ) )
+		return cFalse;
+
+	rn = 1.0f / scale_x;
+	xaxis _x *= rn;
+	xaxis _y *= rn;
+	xaxis _z *= rn;
+
+	rn = 1.0f / scale_y;
+	yaxis _x *= rn;
+	yaxis _y *= rn;
+	yaxis _z *= rn;
+
+	rn = 1.0f / scale_z;
+	zaxis _x *= rn;
+	zaxis _y *= rn;
+	zaxis _z *= rn;
+
+	trace = xaxis _x + yaxis _y + zaxis _z + 1.0f;
+
+	if( trace > MAGICAL_MATH_EPSILON )
+	{
+		s = 0.5f / sqrt( trace );
+		out_rotation _w = 0.25f / s;
+		out_rotation _x = ( yaxis _z - zaxis _y ) * s;
+		out_rotation _y = ( zaxis _x - xaxis _z ) * s;
+		out_rotation _z = ( xaxis _y - yaxis _x ) * s;
+	}
+	else
+	{
+		if( xaxis _x > yaxis _x && xaxis _x > zaxis _z )
+		{
+			s = 2.0f * sqrt( 1.0f + xaxis _x - yaxis _y - zaxis _z );
+			out_rotation _w = ( yaxis _z - zaxis _y ) / s;
+			out_rotation _x = 0.25f * s;
+			out_rotation _y = ( yaxis _x + xaxis _y ) / s;
+			out_rotation _z = ( zaxis _x + xaxis _z ) / s;
+		}
+		else if( yaxis _y > zaxis _z )
+		{
+			s = 2.0f * sqrt( 1.0f + yaxis _y - xaxis _x - zaxis _z );
+			out_rotation _w = ( zaxis _x - xaxis _z ) / s;
+			out_rotation _x = ( yaxis _x + xaxis _y ) / s;
+			out_rotation _y = 0.25f * s;
+			out_rotation _z = ( zaxis _y + yaxis _z ) / s;
+		}
+		else
+		{
+			s = 2.0f * sqrt( 1.0f + zaxis _z - xaxis _x - yaxis _y );
+			out_rotation _w = ( xaxis _y - yaxis _x ) / s;
+			out_rotation _x = ( zaxis _x + xaxis _z ) / s;
+			out_rotation _y = ( zaxis _y + yaxis _z ) / s;
+			out_rotation _z = 0.25f * s;
+		}
+	}
+
+	return cTrue;
 }

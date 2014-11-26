@@ -114,13 +114,22 @@ __inline float magicalCorrectToPI( float c )
 #define debugassert( con, msg )
 #endif
 
-/* Vec2 Vec3 Vec4 Plane3 */
+/* Vec2 Vec3 Vec4 Plane3 Sphere3 */
 
 #define _x [0x0]
 #define _y [0x1]
 #define _z [0x2]
 #define _w [0x3]
 #define _d [0x3]
+#define _r [0x3]
+
+/* Ray3 */
+#define _o_x [0x0]
+#define _o_y [0x1]
+#define _o_z [0x2]
+#define _d_x [0x3]
+#define _d_y [0x4]
+#define _d_z [0x5]
 
 /* EulerAngles */
 
@@ -155,6 +164,12 @@ __inline float magicalCorrectToPI( float c )
 #define _m42 [0xD]
 #define _m43 [0xE]
 #define _m44 [0xF]
+
+//typedef enum Plane3Classification {
+//	kInFrontOfPlane = 1,
+//	kOnPlane = 0,
+//	kBehindPlane = -1,
+//} Plane3Classification;
 
 
 #endif //__C_MATH_MACROS_H__

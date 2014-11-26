@@ -23,14 +23,12 @@ SOFTWARE.
 *******************************************************************************/
 #include "cAABB3.h"
 
-cBool magicalAABB3IsEmpty( const cAABB aabb )
+cBool magicalAABB3IsEmpty( const cAABB3 aabb )
 {
 	return aabb _min_x > aabb _max_x || aabb _min_y > aabb _max_y || aabb _min_z > aabb _max_z;
 }
 
-void magicalAABB3FillScalars( cAABB out,
-	const float min_x, const float min_y, const float min_z,
-	const float max_x, const float max_y, const float max_z )
+void magicalAABB3FillScalars( cAABB3 out, const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z )
 {
 	out _min_x = min_x;
 	out _min_y = min_y;
@@ -40,7 +38,7 @@ void magicalAABB3FillScalars( cAABB out,
 	out _max_z = max_z;
 }
 
-void magicalAABB3FillEmpty( cAABB out )
+void magicalAABB3FillEmpty( cAABB3 out )
 {
 	out _min_x =   FLT_MAX;
 	out _min_y =   FLT_MAX;
@@ -50,7 +48,7 @@ void magicalAABB3FillEmpty( cAABB out )
 	out _max_z = - FLT_MAX;
 }
 
-void magicalAABB3FillBox( cAABB out, const cVec3 center, const float width, const float height, const float depth )
+void magicalAABB3FillBox( cAABB3 out, const cVec3 center, const float width, const float height, const float depth )
 {
 	float half_width = width / 2;
 	float half_height = height / 2;
@@ -64,7 +62,7 @@ void magicalAABB3FillBox( cAABB out, const cVec3 center, const float width, cons
 	out _max_z = center _z + half_depth;
 }
 
-void magicalAABB3Fill( cAABB out, const cAABB aabb )
+void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb )
 {
 	out _min_x = aabb _min_x;
 	out _min_y = aabb _min_y;
@@ -74,7 +72,7 @@ void magicalAABB3Fill( cAABB out, const cAABB aabb )
 	out _max_z = aabb _max_z;
 }
 
-void magicalAABB3FillFromVec3( cAABB out, const cVec3 min, const cVec3 max )
+void magicalAABB3FromVec3( cAABB3 out, const cVec3 min, const cVec3 max )
 {
 	out _min_x = min _x;
 	out _min_y = min _y;
@@ -93,7 +91,7 @@ void magicalAABB3FillFromVec3( cAABB out, const cVec3 min, const cVec3 max )
  * aabb 展开前的包围盒
  * x y z 目标点
  *-----------------------------------------------------------------------------*/
-void magicalAABB3ExpandScalars( cAABB out, const cAABB aabb, const float x, const float y, const float z )
+void magicalAABB3ExtendScalars( cAABB3 out, const cAABB3 aabb, const float x, const float y, const float z )
 {
 	if( x < aabb _min_x ) out _min_x = x;
 	if( y < aabb _min_y ) out _min_y = y;
@@ -112,7 +110,7 @@ void magicalAABB3ExpandScalars( cAABB out, const cAABB aabb, const float x, cons
  * aabb 展开前的包围盒
  * v 目标点
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Expand( cAABB out, const cAABB aabb, const cVec3 v )
+void magicalAABB3Extend( cAABB3 out, const cAABB3 aabb, const cVec3 v )
 {
 	if( v _x < aabb _min_x ) out _min_x = v _x;
 	if( v _y < aabb _min_y ) out _min_y = v _y;
@@ -128,7 +126,7 @@ void magicalAABB3Expand( cAABB out, const cAABB aabb, const cVec3 v )
  * out 合并后的包围盒
  * aabb1 aabb2 合并前的盒子
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Merge( cAABB out, const cAABB aabb1, const cAABB aabb2 )
+void magicalAABB3Merge( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 )
 {
 	out _min_x = min( aabb1 _min_x, aabb2 _min_x );
 	out _min_y = min( aabb1 _min_y, aabb2 _min_y );
@@ -144,7 +142,7 @@ void magicalAABB3Merge( cAABB out, const cAABB aabb1, const cAABB aabb2 )
  * out 中心点
  * aabb 目标包围盒
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Center( cVec3 out, const cAABB aabb )
+void magicalAABB3Center( cVec3 out, const cAABB3 aabb )
 {
 	out _x = 0.5f * ( aabb _min_x + aabb _max_x );
 	out _y = 0.5f * ( aabb _min_y + aabb _max_y );
@@ -157,7 +155,7 @@ void magicalAABB3Center( cVec3 out, const cAABB aabb )
  * aabb 目标包围盒
  * return 包围盒尺寸，对称顶点线段的长度
  *-----------------------------------------------------------------------------*/
-float magicalAABB3Size( const cAABB aabb )
+float magicalAABB3Size( const cAABB3 aabb )
 {
 	float x, y, z;
 	
@@ -174,7 +172,7 @@ float magicalAABB3Size( const cAABB aabb )
  * aabb 目标包围盒
  * return 包围盒的长，x轴
  *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterX( const cAABB aabb )
+float magicalAABB3DiameterX( const cAABB3 aabb )
 {
 	return aabb _max_x - aabb _min_x;
 }
@@ -185,7 +183,7 @@ float magicalAABB3DiameterX( const cAABB aabb )
  * aabb 目标包围盒
  * return 包围盒的高，y轴
  *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterY( const cAABB aabb )
+float magicalAABB3DiameterY( const cAABB3 aabb )
 {
 	return aabb _max_y - aabb _min_y;
 }
@@ -196,13 +194,13 @@ float magicalAABB3DiameterY( const cAABB aabb )
  * aabb 目标包围盒
  * return 包围盒的宽，z轴
  *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterZ( const cAABB aabb )
+float magicalAABB3DiameterZ( const cAABB3 aabb )
 {
 	return aabb _max_z - aabb _min_z;
 }
 
 /*-----------------------------------------------------------------------------*\
- * 计算任意点到包围盒上的最近点
+ * 计算任意点到包围盒上的最近点 done
  *
  * 任意点到包围盒上的最近点 直线距离最短
  *
@@ -210,7 +208,7 @@ float magicalAABB3DiameterZ( const cAABB aabb )
  * aabb 包围盒
  * point 任意点
  *-----------------------------------------------------------------------------*/
-void magicalAABB3NearestPoint( cVec3 out, const cAABB aabb, const cVec3 point )
+void magicalAABB3NearestPoint( cVec3 out, const cAABB3 aabb, const cVec3 point )
 {
 	cVec3 dst;
 
@@ -259,13 +257,13 @@ void magicalAABB3NearestPoint( cVec3 out, const cAABB aabb, const cVec3 point )
 }
 
 /*-----------------------------------------------------------------------------*\
- * 使包围盒做旋转与缩放的变换
+ * 使包围盒做旋转与缩放的变换 done
  *
  * out 变换后的包围盒
  * aabb 源包围盒
  * m 变换矩阵
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Transform( cAABB out, const cAABB aabb, const cMat4 m )
+void magicalAABB3Transform( cAABB3 out, const cAABB3 aabb, const cMat4 m )
 {
 	cVec3 left_top_front;
 	cVec3 left_bottom_front;
@@ -296,14 +294,14 @@ void magicalAABB3Transform( cAABB out, const cAABB aabb, const cMat4 m )
 
 	magicalAABB3FillEmpty( aabb );
 
-	magicalAABB3Expand( out, aabb, left_top_front );
-	magicalAABB3Expand( out, aabb, left_bottom_front );
-	magicalAABB3Expand( out, aabb, right_top_front );
-	magicalAABB3Expand( out, aabb, right_bottom_front );
-	magicalAABB3Expand( out, aabb, left_top_back );
-	magicalAABB3Expand( out, aabb, left_bottom_back );
-	magicalAABB3Expand( out, aabb, right_top_back );
-	magicalAABB3Expand( out, aabb, right_bottom_back );
+	magicalAABB3Extend( out, aabb, left_top_front );
+	magicalAABB3Extend( out, aabb, left_bottom_front );
+	magicalAABB3Extend( out, aabb, right_top_front );
+	magicalAABB3Extend( out, aabb, right_bottom_front );
+	magicalAABB3Extend( out, aabb, left_top_back );
+	magicalAABB3Extend( out, aabb, left_bottom_back );
+	magicalAABB3Extend( out, aabb, right_top_back );
+	magicalAABB3Extend( out, aabb, right_bottom_back );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -312,7 +310,7 @@ void magicalAABB3Transform( cAABB out, const cAABB aabb, const cMat4 m )
  * aabb1 aabb2 目标包围盒
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3IntersectsAABB3( const cAABB aabb1, const cAABB aabb2 )
+cBool magicalAABB3Intersects( const cAABB3 aabb1, const cAABB3 aabb2 )
 {
 	if( aabb1 _min_x > aabb2 _max_x ) return cFalse;
 	if( aabb1 _max_x < aabb2 _min_x ) return cFalse;
@@ -324,9 +322,34 @@ cBool magicalAABB3IntersectsAABB3( const cAABB aabb1, const cAABB aabb2 )
 	return cTrue;
 }
 
-cBool magicalAABB3IntersectsPlane3( const cAABB aabb, const cPlane3 p )
+/*-----------------------------------------------------------------------------*\
+ * 判断包围盒是否与平面相交 done
+ *
+ * aabb 包围盒
+ * p 平面
+ * return 是否相交
+ *-----------------------------------------------------------------------------*/
+cBool magicalAABB3IntersectsPlane3( const cAABB3 aabb, const cPlane3 p )
 {
+	return magicalPlane3ClassifyAABB3( p, aabb ) == 0;
+}
 
+/*-----------------------------------------------------------------------------*\
+ * 判断包围盒与球体是否相交
+ *
+ * aabb 包围盒
+ * sp 球体
+ * return 是否相交
+ *-----------------------------------------------------------------------------*/
+cBool magicalAABB3IntersectsSphere3( const cAABB3 aabb, const cSphere3 sp )
+{
+	cVec3 nearest;
+	float distance;
+
+	magicalAABB3NearestPoint( nearest, aabb, sp );
+	distance = magicalVec3DistanceBetweenSq( nearest, sp );
+
+	return distance <= ( sp _r * sp _r );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -336,7 +359,7 @@ cBool magicalAABB3IntersectsPlane3( const cAABB aabb, const cPlane3 p )
  * aabb1 aabb2 目标包围盒
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3GetIntersectsAABB3( cAABB out, const cAABB aabb1, const cAABB aabb2 )
+cBool magicalAABB3GetIntersectsAABB3( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 )
 {
 	if( aabb1 _min_x > aabb2 _max_x ) return cFalse;
 	if( aabb1 _max_x < aabb2 _min_x ) return cFalse;
@@ -362,7 +385,7 @@ cBool magicalAABB3GetIntersectsAABB3( cAABB out, const cAABB aabb1, const cAABB 
  * point 目标点
  * return 是否包含
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3ContainsPoint( const cAABB aabb, const cVec3 point )
+cBool magicalAABB3ContainsPoint( const cAABB3 aabb, const cVec3 point )
 {
 	return 
 		point _x >= aabb _min_x &&
