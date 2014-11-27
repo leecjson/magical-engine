@@ -29,6 +29,7 @@ SOFTWARE.
 typedef float cSphere3[4];
 
 #include "cVec3.h"
+#include "cRay3.h"
 #include "cAABB3.h"
 #include "cPlane3.h"
 
@@ -43,6 +44,9 @@ MAGICALAPI_MATH void magicalSphere3Fill( cSphere3 out, const cSphere3 sp );
 MAGICALAPI_MATH cBool magicalSphere3Intersects( const cSphere3 sp1, const cSphere3 sp2 );
 MAGICALAPI_MATH cBool magicalSphere3IntersectsAABB3( const cSphere3 sp, const cAABB3 aabb );
 MAGICALAPI_MATH cBool magicalSphere3IntersectsPlane3( const cSphere3 sp, const cPlane3 p );
+MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3( const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
+
+MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
 
 #ifdef __cplusplus
 }

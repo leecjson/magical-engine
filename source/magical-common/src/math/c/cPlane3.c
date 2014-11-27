@@ -334,6 +334,16 @@ cBool magicalPlane3IntersectsSphere3( const cPlane3 p, const cSphere3 sp )
 	return magicalPlane3ClassifySphere3( p, sp ) == 0;
 }
 
+cBool magicalPlane3IntersectsRay3( const cPlane3 p, const cRay3 r3, const cBool discard_inside )
+{
+	return magicalRay3IntersectsPlane3( r3, p, discard_inside );
+}
+
+cBool magicalPlane3IntersectsRay3Distance( float* dist, const cPlane3 p, const cRay3 r3, const cBool discard_inside )
+{
+	return magicalRay3IntersectsPlane3Distance( dist, r3, p, discard_inside );
+}
+
 /*-----------------------------------------------------------------------------*\
  * 判断平面是否包含3D点 done
  *

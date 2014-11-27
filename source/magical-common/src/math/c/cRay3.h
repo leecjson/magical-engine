@@ -29,12 +29,15 @@ SOFTWARE.
 typedef float cRay3[6];
 
 #include "cVec3.h"
+#include "cAABB3.h"
+#include "cSphere3.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 MAGICALAPI_MATH void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
+MAGICALAPI_MATH void magicalRay3FillOriginToEnd( cRay3 out, const cVec3 origin, const cVec3 end );
 MAGICALAPI_MATH void magicalRay3FillOriginAndDirection( cRay3 out, const cVec3 origin, const cVec3 direction );
 MAGICALAPI_MATH void magicalRay3Fill( cRay3 out, const cRay3 r3 );
 
@@ -44,6 +47,14 @@ MAGICALAPI_MATH void magicalRay3SetOrigin( cRay3 out, const cVec3 origin );
 MAGICALAPI_MATH void magicalRay3SetDirection( cRay3 out, const cVec3 direction );
 
 MAGICALAPI_MATH void magicalRay3DirectionNormalize( cRay3 out, const cRay3 r3 );
+
+MAGICALAPI_MATH cBool magicalRay3IntersectsPlane3( const cRay3 r3, const cPlane3 p, const cBool discard_inside );
+MAGICALAPI_MATH cBool magicalRay3IntersectsAABB3( const cRay3 r3, const cAABB3 aabb, const cBool discard_inside );
+MAGICALAPI_MATH cBool magicalRay3IntersectsSphere3( const cRay3 r3, const cSphere3 sp, const cBool discard_inside );
+
+MAGICALAPI_MATH cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cPlane3 p, const cBool discard_inside );
+MAGICALAPI_MATH cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAABB3 aabb, const cBool discard_inside );
+MAGICALAPI_MATH cBool magicalRay3IntersectsSphere3Distance( float* dist, const cRay3 r3, const cSphere3 sp, const cBool discard_inside );
 
 #ifdef __cplusplus
 }

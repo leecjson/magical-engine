@@ -29,6 +29,7 @@ SOFTWARE.
 typedef float cAABB3[6];
 
 #include "cVec3.h"
+#include "cRay3.h"
 #include "cPlane3.h"
 #include "cMat4.h"
 
@@ -40,10 +41,12 @@ MAGICALAPI_MATH cBool magicalAABB3IsEmpty( const cAABB3 aabb );
 
 MAGICALAPI_MATH void magicalAABB3FillScalars( cAABB3 out, const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z );
 MAGICALAPI_MATH void magicalAABB3FillBox( cAABB3 out, const cVec3 center, const float width, const float height, const float depth );
+MAGICALAPI_MATH void magicalAABB3FillMinMax( cAABB3 out, const cVec3 min, const cVec3 max );
 MAGICALAPI_MATH void magicalAABB3FillEmpty( cAABB3 out );
 MAGICALAPI_MATH void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb );
 
-MAGICALAPI_MATH void magicalAABB3FromVec3( cAABB3 out, const cVec3 min, const cVec3 max );
+MAGICALAPI_MATH void magicalAABB3GetMin( cVec3 out, const cAABB3 aabb );
+MAGICALAPI_MATH void magicalAABB3GetMax( cVec3 out, const cAABB3 aabb );
 
 MAGICALAPI_MATH void magicalAABB3ExtendScalars( cAABB3 out, const cAABB3 aabb, const float x, const float y, const float z );
 MAGICALAPI_MATH void magicalAABB3Extend( cAABB3 out, const cAABB3 aabb, const cVec3 v );
@@ -61,8 +64,10 @@ MAGICALAPI_MATH void magicalAABB3Transform( cAABB3 out, const cAABB3 aabb, const
 MAGICALAPI_MATH cBool magicalAABB3Intersects( const cAABB3 aabb1, const cAABB3 aabb2 );
 MAGICALAPI_MATH cBool magicalAABB3IntersectsPlane3( const cAABB3 aabb, const cPlane3 p );
 MAGICALAPI_MATH cBool magicalAABB3IntersectsSphere3( const cAABB3 aabb, const cSphere3 sp );
+MAGICALAPI_MATH cBool magicalAABB3IntersectsRay3( const cAABB3 aabb, const cRay3 r3, const cBool discard_inside );
 
-MAGICALAPI_MATH cBool magicalAABB3GetIntersectsAABB3( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 );
+MAGICALAPI_MATH cBool magicalAABB3IntersectsPart( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 );
+MAGICALAPI_MATH cBool magicalAABB3IntersectsRay3Distance( float* dist, const cAABB3 aabb, const cRay3 r3, const cBool discard_inside );
 
 MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB3 aabb, const cVec3 point );
 

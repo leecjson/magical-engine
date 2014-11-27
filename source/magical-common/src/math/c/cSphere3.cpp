@@ -61,3 +61,13 @@ cBool magicalSphere3IntersectsPlane3( const cSphere3 sp, const cPlane3 p )
 {
 	return magicalPlane3IntersectsSphere3( p, sp );
 }
+
+cBool magicalSphere3IntersectsRay3( const cSphere3 sp, const cRay3 r3, const cBool discard_inside )
+{
+	return magicalRay3IntersectsSphere3( r3, sp, discard_inside );
+}
+
+cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, const cRay3 r3, const cBool discard_inside )
+{
+	return magicalRay3IntersectsSphere3Distance( dist, r3, sp, discard_inside );
+}

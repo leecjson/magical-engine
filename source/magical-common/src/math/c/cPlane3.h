@@ -56,6 +56,9 @@ MAGICALAPI_MATH int magicalPlane3ClassifySphere3( const cPlane3 p, const cSphere
 MAGICALAPI_MATH cBool magicalPlane3Intersects( const cPlane3 p1, const cPlane3 p2 );
 MAGICALAPI_MATH cBool magicalPlane3IntersectsAABB3( const cPlane3 p, const cAABB3 aabb );
 MAGICALAPI_MATH cBool magicalPlane3IntersectsSphere3( const cPlane3 p, const cSphere3 sp );
+MAGICALAPI_MATH cBool magicalPlane3IntersectsRay3( const cPlane3 p, const cRay3 r3, const cBool discard_inside );
+
+MAGICALAPI_MATH cBool magicalPlane3IntersectsRay3Distance( float* dist, const cPlane3 p, const cRay3 r3, const cBool discard_inside );
 
 MAGICALAPI_MATH cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVec3 point );
 

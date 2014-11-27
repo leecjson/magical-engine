@@ -62,6 +62,16 @@ void magicalAABB3FillBox( cAABB3 out, const cVec3 center, const float width, con
 	out _max_z = center _z + half_depth;
 }
 
+void magicalAABB3FillMinMax( cAABB3 out, const cVec3 min, const cVec3 max )
+{
+	out _min_x = min _x;
+	out _min_y = min _y;
+	out _min_z = min _z;
+	out _max_x = max _x;
+	out _max_y = max _y;
+	out _max_z = max _z;
+}
+
 void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb )
 {
 	out _min_x = aabb _min_x;
@@ -72,14 +82,18 @@ void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb )
 	out _max_z = aabb _max_z;
 }
 
-void magicalAABB3FromVec3( cAABB3 out, const cVec3 min, const cVec3 max )
+void magicalAABB3GetMin( cVec3 out, const cAABB3 aabb )
 {
-	out _min_x = min _x;
-	out _min_y = min _y;
-	out _min_z = min _z;
-	out _max_x = max _x;
-	out _max_y = max _y;
-	out _max_z = max _z;
+	out _x = aabb _min_x;
+	out _y = aabb _min_y;
+	out _z = aabb _min_z;
+}
+
+void magicalAABB3GetMax( cVec3 out, const cAABB3 aabb )
+{
+	out _x = aabb _max_x;
+	out _y = aabb _max_y;
+	out _z = aabb _max_z;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -352,6 +366,11 @@ cBool magicalAABB3IntersectsSphere3( const cAABB3 aabb, const cSphere3 sp )
 	return distance <= ( sp _r * sp _r );
 }
 
+cBool magicalAABB3IntersectsRay3( const cAABB3 aabb, const cRay3 r3, const cBool discard_inside )
+{
+	return magicalRay3IntersectsAABB3( r3, aabb, discard_inside );
+}
+
 /*-----------------------------------------------------------------------------*\
  * 判断包围盒是否相交。并得到相交部分的包围盒 done
  *
@@ -359,7 +378,7 @@ cBool magicalAABB3IntersectsSphere3( const cAABB3 aabb, const cSphere3 sp )
  * aabb1 aabb2 目标包围盒
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3GetIntersectsAABB3( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 )
+cBool magicalAABB3IntersectsPart( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 )
 {
 	if( aabb1 _min_x > aabb2 _max_x ) return cFalse;
 	if( aabb1 _max_x < aabb2 _min_x ) return cFalse;
@@ -376,6 +395,11 @@ cBool magicalAABB3GetIntersectsAABB3( cAABB3 out, const cAABB3 aabb1, const cAAB
 	out _max_z = min( aabb1 _max_z, aabb2 _max_z );
 
 	return cTrue;
+}
+
+cBool magicalAABB3IntersectsRay3Distance( float* dist, const cAABB3 aabb, const cRay3 r3, const cBool discard_inside )
+{
+	return magicalRay3IntersectsAABB3Distance( dist, r3, aabb, discard_inside );
 }
 
 /*-----------------------------------------------------------------------------*\
