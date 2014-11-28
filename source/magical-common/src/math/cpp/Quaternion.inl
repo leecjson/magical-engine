@@ -22,109 +22,63 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline bool Quaternion::operator==( const Quaternion& rhs ) const
+inline bool Quaternion::operator==( const Quaternion& q ) const
 {
-	return
-		magicalAlmostEqual( x, rhs.x ) &&
-		magicalAlmostEqual( y, rhs.y ) &&
-		magicalAlmostEqual( z, rhs.z ) &&
-		magicalAlmostEqual( w, rhs.w );
+	return magicalQuaternionEquals( tofpointer( this ), tofpointer( &q ) );
 }
 
-inline bool Quaternion::operator!=( const Quaternion& rhs ) const
+inline bool Quaternion::operator!=( const Quaternion& q ) const
 {
-	return !( operator==( rhs ) );
+	return !magicalQuaternionEquals( tofpointer( this ), tofpointer( &q ) );
 }
 
-inline bool Quaternion::isIdentity( void ) const
+inline Quaternion Quaternion::operator+( const Quaternion& q ) const
 {
-	return 
-		magicalAlmostZero( x ) &&
-		magicalAlmostZero( y ) &&
-		magicalAlmostZero( z ) &&
-		magicalAlmostEqual( w, 1.0f );
+	return Quaternion( x + q.x, y + q.y, z + q.z, w + q.w );
 }
 
-inline bool Quaternion::isZero( void ) const
+inline Quaternion Quaternion::operator-( const Quaternion& q ) const
 {
-	return 
-		magicalAlmostZero( x ) &&
-		magicalAlmostZero( y ) &&
-		magicalAlmostZero( z ) &&
-		magicalAlmostZero( w );
+	return Quaternion( x - q.x, y - q.y, z - q.z, w - q.w );
 }
 
-inline bool Quaternion::isNormalize( void ) const
+inline Quaternion Quaternion::operator*( const float a ) const
 {
-	float n = x * x + y * y + z * z + w * w;
-	return magicalAlmostEqual( n, 1.0f );
+	return Quaternion( x * a, y * a, z * a, w * a );
 }
 
 inline Quaternion Quaternion::operator*( const Quaternion& r ) const
 {
-	return Quaternion( 
-		w * r.x + x * r.w + y * r.z - z * r.y,
-		w * r.y - x * r.z + y * r.w + z * r.x,
-		w * r.z + x * r.y - y * r.x + z * r.w,
-		w * r.w - x * r.x - y * r.y - z * r.z  );
+	Quaternion ret;
+	magicalQuaternionMul( tofpointer( &ret ), tofpointer( this ), tofpointer( &r ) );
+	return ret;
 }
 
 inline Quaternion& Quaternion::operator*=( const Quaternion& r )
 {
-	float rx = w * r.x + x * r.w + y * r.z - z * r.y;
-	float ry = w * r.y - x * r.z + y * r.w + z * r.x;
-	float rz = w * r.z + x * r.y - y * r.x + z * r.w;
-	float rw = w * r.w - x * r.x - y * r.y - z * r.z;
-
-	x = rx;
-	y = ry;
-	z = rz;
-	w = rw;
+	magicalQuaternionMul( tofpointer( this ), tofpointer( this ), tofpointer( &r ) );
 	return *this;
 }
 
 inline Quaternion& Quaternion::operator=( const Quaternion& r )
 {
-	x = r.x;
-	y = r.y;
-	z = r.z;
-	w = r.w;
+	x = r.x; y = r.y; z = r.z; w = r.w;
 	return *this;
 }
 
-inline Quaternion Quaternion::mul( const Quaternion& r ) const
+inline bool Quaternion::isIdentity( void ) const
 {
-	return Quaternion( 
-		w * r.x + x * r.w + y * r.z - z * r.y,
-		w * r.y - x * r.z + y * r.w + z * r.x,
-		w * r.z + x * r.y - y * r.x + z * r.w,
-		w * r.w - x * r.x - y * r.y - z * r.z  );
+	return magicalQuaternionIsIdentity( tofpointer( this ) );
 }
 
-inline void Quaternion::fillmul( const Quaternion& r )
+inline bool Quaternion::isZero( void ) const
 {
-	float rx = w * r.x + x * r.w + y * r.z - z * r.y;
-	float ry = w * r.y - x * r.z + y * r.w + z * r.x;
-	float rz = w * r.z + x * r.y - y * r.x + z * r.w;
-	float rw = w * r.w - x * r.x - y * r.y - z * r.z;
-
-	x = rx;
-	y = ry;
-	z = rz;
-	w = rw;
+	return magicalQuaternionIsZero( tofpointer( this ) );
 }
 
-inline Quaternion Quaternion::copy( void ) const
+inline bool Quaternion::isNormalize( void ) const
 {
-	return *this;
-}
-
-inline void Quaternion::fill( float x, float y, float z, float w )
-{
-	this->x = x;
-	this->y = y;
-	this->z = z;
-	this->w = w;
+	return magicalQuaternionIsNormalize( tofpointer( this ) );
 }
 
 inline void Quaternion::fill( const Quaternion& r )
@@ -135,17 +89,12 @@ inline void Quaternion::fill( const Quaternion& r )
 	w = r.w;
 }
 
-inline void Quaternion::fillAxisAngle( const Vec3& axis, float angle )
+inline void Quaternion::fill( float x, float y, float z, float w )
 {
-	float half_angle = angle * 0.5f;
-	float sin_half_angle = sinf( half_angle );
-
-	Vec3 normal( axis );
-	normal.normalize();
-	x = normal.x * sin_half_angle;
-	y = normal.y * sin_half_angle;
-	z = normal.z * sin_half_angle;
-	w = cosf( half_angle );
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
 }
 
 inline void Quaternion::fillIdentity( void )
@@ -164,11 +113,44 @@ inline void Quaternion::fillZero( void )
 	w = 0.0f;
 }
 
+inline void Quaternion::fillAxisAngle( const Vec3& axis, const float angle )
+{
+	magicalQuaternionFromAxisAngle( tofpointer( this ), tofpointer( &axis ), angle );
+}
+
+inline void Quaternion::fillEulerAngles( const EulerAngles& ea )
+{
+	magicalQuaternionFromEulerAngles( tofpointer( this ), tofpointer( &ea ) );
+}
+
+inline void Quaternion::fillYawPitchRoll( const float yaw, const float pitch, const float roll )
+{
+	magicalQuaternionFromEulerYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
+}
+
+inline void Quaternion::fillMat4( const Mat4& m )
+{
+	magicalQuaternionFromMat4( tofpointer( this ), tofpointer( &m ) );
+}
+
+inline void Quaternion::fillRotationX( const float angle )
+{
+	magicalQuaternionFillRotationX( tofpointer( this ), angle );
+}
+
+inline void Quaternion::fillRotationY( const float angle )
+{
+	magicalQuaternionFillRotationY( tofpointer( this ), angle );
+}
+
+inline void Quaternion::fillRotationZ( const float angle )
+{
+	magicalQuaternionFillRotationZ( tofpointer( this ), angle );
+}
+
 inline void Quaternion::negate( void )
 {
-	x = -x;
-	y = -y;
-	z = -z;
+
 }
 
 inline void Quaternion::inverse( void )

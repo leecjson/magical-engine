@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Vec4.h"
-#include <exception>
+#include "MathMacros.h"
 
 const Vec4 Vec4::Zero = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 const Vec4 Vec4::One = Vec4( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -37,11 +37,20 @@ const Vec4 Vec4::Space1 = Vec4( 0.0f, 0.0f, 0.0f, 1.0f );
 Vec4 Vec4::placeholder = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 Vec4 Vec4::temp = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
 
-Vec4::Vec4( const float x, const float y, const float z, const float w )
-: x( x )
-, y( y )
-, z( z )
-, w( w )
+Vec4::Vec4( const Vec2& v )
+: x( v.x )
+, y( v.y )
+, z( 0.0f )
+, w( 0.0f )
+{
+
+}
+
+Vec4::Vec4( const Vec3& v )
+: x( v.x )
+, y( v.y )
+, z( v.z )
+, w( 0.0f )
 {
 
 }
@@ -51,6 +60,15 @@ Vec4::Vec4( const Vec4& v )
 , y( v.y )
 , z( v.z )
 , w( v.w )
+{
+
+}
+
+Vec4::Vec4( const float x, const float y, const float z, const float w )
+: x( x )
+, y( y )
+, z( z )
+, w( w )
 {
 
 }

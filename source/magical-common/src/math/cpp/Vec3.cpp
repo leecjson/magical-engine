@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Vec3.h"
-#include <exception>
+#include "MathMacros.h"
 
 const Vec3 Vec3::Zero = Vec3( 0.0f, 0.0f, 0.0f );
 const Vec3 Vec3::One = Vec3( 1.0f, 1.0f, 1.0f );
@@ -36,12 +36,20 @@ const Vec3 Vec3::Back = Vec3( 0.0f, 0.0f, -1.0f );
 Vec3 Vec3::placeholder = Vec3( 0.0f, 0.0f, 0.0f );
 Vec3 Vec3::temp = Vec3( 0.0f, 0.0f, 0.0f );
 
-Vec3::Vec3( const float x, const float y, const float z )
-: x( x )
-, y( y )
-, z( z )
+Vec3::Vec3( const Vec4& v )
+: x( v.x )
+, y( v.y )
+, z( v.z )
 {
-	
+
+}
+
+Vec3::Vec3( const Vec2& v )
+: x( v.x )
+, y( v.y )
+, z( 0.0f )
+{
+
 }
 
 Vec3::Vec3( const Vec3& v )
@@ -50,6 +58,14 @@ Vec3::Vec3( const Vec3& v )
 , z( v.z )
 {
 
+}
+
+Vec3::Vec3( const float x, const float y, const float z )
+: x( x )
+, y( y )
+, z( z )
+{
+	
 }
 
 Vec3::Vec3( void )

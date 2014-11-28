@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cPlane3.h"
+#include "cMathMacros.h"
 
 void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const float z, const float d )
 {
@@ -199,15 +200,15 @@ float magicalPlane3DistanceToPoint( const cPlane3 p, const cVec3 point )
  *-----------------------------------------------------------------------------*/
 int magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 point )
 {
-   float distance = p _x * point _x + p _y * point _y + p _z * point _z - p _d;
+	float distance = p _x * point _x + p _y * point _y + p _z * point _z - p _d;
 
-   if( distance > MAGICAL_MATH_EPSILON ) 
-	   return +1;
+	if( distance > kEpsilon )
+		return +1;
 
-   if( distance < -MAGICAL_MATH_EPSILON ) 
-	   return -1;
+	if( distance < -kEpsilon )
+		return -1;
 
-   return 0;
+	return 0;
 }
 
 /*-----------------------------------------------------------------------------*\

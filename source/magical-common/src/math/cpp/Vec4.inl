@@ -22,34 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+inline Vec4 Vec4::fromVec2( const Vec2& v )
+{
+	return Vec4( v );
+}
+
+inline Vec4 Vec4::fromVec3( const Vec3& v )
+{
+	return Vec4( v );
+}
+
 inline bool Vec4::operator==( const Vec4& v ) const
 {
-	return magicalVec4Equals( TOFLOAT( this ), TOFLOAT( &v ) );
+	return magicalVec4Equals( tofpointer( this ), tofpointer( &v ) );
 }
 
 inline bool Vec4::operator!=( const Vec4& v ) const
 {
-	return !magicalVec4Equals( TOFLOAT( this ), TOFLOAT( &v ) );
-}
-
-inline bool Vec4::isEquals( const Vec4& v ) const
-{
-	return magicalVec4Equals( TOFLOAT( this ), TOFLOAT( &v ) );
-}
-
-inline bool Vec4::isZero( void ) const
-{
-	return magicalVec4IsZero( TOFLOAT( this ) );
-}
-
-inline bool Vec4::isOne( void ) const
-{
-	return magicalVec4IsOne( TOFLOAT( this ) );
-}
-
-inline bool Vec4::isNormalize( void ) const
-{
-	return magicalVec4IsNormalize( TOFLOAT( this ) );
+	return !magicalVec4Equals( tofpointer( this ), tofpointer( &v ) );
 }
 
 inline Vec4 Vec4::operator+( const float a ) const
@@ -75,7 +65,7 @@ inline Vec4 Vec4::operator-( const Vec4& v ) const
 inline Vec4 Vec4::operator*( const Mat4& m ) const
 {
 	Vec4 ret;
-	magicalVec4MulMat4( TOFLOAT( &ret ), TOFLOAT( this ), m.m );
+	magicalVec4MulMat4( tofpointer( &ret ), tofpointer( this ), m.m );
 	return ret;
 }
 
@@ -91,97 +81,69 @@ inline Vec4 Vec4::operator*( const Vec4& v ) const
 
 inline Vec4 Vec4::operator/( const float a ) const
 {
-	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
-
-	return Vec4( x / a, y / a, z / a, w / a );
+	Vec4 ret;
+	magicalVec4DivScalar( tofpointer( &ret ), tofpointer( this ), a );
+	return ret;
 }
 
 inline Vec4 Vec4::operator/( const Vec4& v ) const
 {
-	debugassert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
-
-	return Vec4( x / v.x, y / v.y, z / v.z, w / v.w );
+	Vec4 ret;
+	magicalVec4Div( tofpointer( &ret ), tofpointer( this ), tofpointer( &v ) );
+	return ret;
 }
 
 inline Vec4& Vec4::operator+=( const float a )
 {
-	x += a;
-	y += a;
-	z += a;
-	w += a;
+	x += a; y += a; z += a; w += a;
 	return *this;
 }
 
 inline Vec4& Vec4::operator+=( const Vec4& v )
 {
-	x += v.x;
-	y += v.y;
-	z += v.z;
-	w += v.w;
+	x += v.x; y += v.y; z += v.z; w += v.w;
 	return *this;
 }
 
 inline Vec4& Vec4::operator-=( const float a )
 {
-	x -= a;
-	y -= a;
-	z -= a;
-	w -= a;
+	x -= a; y -= a; z -= a; w -= a;
 	return *this;
 }
 
 inline Vec4& Vec4::operator-=( const Vec4& v )
 {
-	x -= v.x;
-	y -= v.y;
-	z -= v.z;
-	w -= v.w;
+	x -= v.x; y -= v.y; z -= v.z; w -= v.w;
 	return *this;
 }
 
 inline Vec4& Vec4::operator*=( const Mat4& m )
 {
-	magicalVec4MulMat4( TOFLOAT( this ), TOFLOAT( this ), m.m );
+	magicalVec4MulMat4( tofpointer( this ), tofpointer( this ), m.m );
 	return *this;
 }
 
 inline Vec4& Vec4::operator*=( const float a )
 {
-	x *= a;
-	y *= a;
-	z *= a;
-	w *= a;
+	x *= a; y *= a; z *= a; w *= a;
 	return *this;
 }
 
 inline Vec4& Vec4::operator*=( const Vec4& v )
 {
-	x *= v.x;
-	y *= v.y;
-	z *= v.z;
-	w *= v.w;
+	x *= v.x; y *= v.y; z *= v.z; w *= v.w;
 	return *this;
 }
 
 inline Vec4& Vec4::operator/=( const float a )
 {
-	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
-
-	x /= a;
-	y /= a;
-	z /= a;
-	w /= a;
+	magicalVec4DivScalar( tofpointer( this ), tofpointer( this ), a );
 	return *this;
 }
 
 inline Vec4& Vec4::operator/=( const Vec4& v )
 {
-	debugassert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
-
-	x /= v.x;
-	y /= v.y;
-	z /= v.z;
-	w /= v.w;
+	magicalVec4Div( tofpointer( this ), tofpointer( this ), tofpointer( &v ) );
 	return *this;
 }
 
@@ -193,128 +155,69 @@ inline Vec4& Vec4::operator=( const Vec4& v )
 	w = v.w;
 }
 
-inline Vec4 Vec4::add( const float a ) const
+inline void Vec4::add( Vec4& out, const Vec4& v, const float a )
 {
-	return Vec4( x + a, y + a, z + a, w + a );
+	magicalVec4AddScalar( tofpointer( &out ), tofpointer( &v ), a );
 }
 
-inline Vec4 Vec4::add( const Vec4& v ) const
+inline void Vec4::add( Vec4& out, const Vec4& v1, const Vec4& v2 )
 {
-	return Vec4( x + v.x, y + v.y, z + v.z, w + v.w );
+	magicalVec4Add( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
 }
 
-inline Vec4 Vec4::sub( const float a ) const
+inline void Vec4::sub( Vec4& out, const Vec4& v, const float a )
 {
-	return Vec4( x - a, y - a, z - a, w - a );
+	magicalVec4SubScalar( tofpointer( &out ), tofpointer( &v ), a );
 }
 
-inline Vec4 Vec4::sub( const Vec4& v ) const
+inline void Vec4::sub( Vec4& out, const Vec4& v1, const Vec4& v2 )
 {
-	return Vec4( x - v.x, y - v.y, z - v.z, w - v.w );
+	magicalVec4Sub( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
 }
 
-inline Vec4 Vec4::mul( const Mat4& m ) const
+inline void Vec4::mul( Vec4& out, const Vec4& v, const Mat4& m )
 {
-	Vec4 ret;
-	magicalVec4MulMat4( TOFLOAT( &ret ), TOFLOAT( this ), m.m );
-	return ret;
+	magicalVec4MulMat4( tofpointer( &out ), tofpointer( &v ), m.m );
 }
 
-inline Vec4 Vec4::mul( const float a ) const
+inline void Vec4::mul( Vec4& out, const Vec4& v, const float a )
 {
-	return Vec4( x * a, y * a, z * a, w * a );
+	magicalVec4MulScalar( tofpointer( &out ), tofpointer( &v ), a );
 }
 
-inline Vec4 Vec4::mul( const Vec4& v ) const
+inline void Vec4::mul( Vec4& out, const Vec4& v1, const Vec4& v2 )
 {
-	return Vec4( x * v.x, y * v.y, z * v.z, w * v.w );
+	magicalVec4Mul( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
 }
 
-inline Vec4 Vec4::div( const float a ) const
+inline void Vec4::div( Vec4& out, const Vec4& v, const float a )
 {
-	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
-
-	return Vec4( x / a, y / a, z / a, w / a );
+	magicalVec4DivScalar( tofpointer( &out ), tofpointer( &v ), a );
 }
 
-inline Vec4 Vec4::div( const Vec4& v ) const
+inline void Vec4::div( Vec4& out, const Vec4& v1, const Vec4& v2 )
 {
-	debugassert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
-
-	return Vec4( x / v.x, y / v.y, z / v.z, w / v.w );
+	magicalVec4Div( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
 }
 
-inline void Vec4::addfill( const float a )
+inline bool Vec4::isEquals( const Vec4& v ) const
 {
-	x += a;
-	y += a;
-	z += a;
-	w += a;
+	return magicalVec4Equals( tofpointer( this ), tofpointer( &v ) );
 }
 
-inline void Vec4::addfill( const Vec4& v )
+inline bool Vec4::isZero( void ) const
 {
-	x += v.x;
-	y += v.y;
-	z += v.z;
-	w += v.w;
+	return magicalVec4IsZero( tofpointer( this ) );
 }
 
-inline void Vec4::subfill( const float a )
+inline bool Vec4::isOne( void ) const
 {
-	x -= a;
-	y -= a;
-	z -= a;
-	w -= a;
+	return magicalVec4IsOne( tofpointer( this ) );
 }
 
-inline void Vec4::subfill( const Vec4& v )
+inline bool Vec4::isNormalize( void ) const
 {
-	x -= v.x;
-	y -= v.y;
-	z -= v.z;
-	w -= v.w;
-}
-
-inline void Vec4::mulfill( const Mat4& m )
-{
-	magicalVec4MulMat4( TOFLOAT( this ), TOFLOAT( this ), m.m );
-}
-
-inline void Vec4::mulfill( const float a )
-{
-	x *= a;
-	y *= a;
-	z *= a;
-	w *= a;
-}
-
-inline void Vec4::mulfill( const Vec4& v )
-{
-	x *= v.x;
-	y *= v.y;
-	z *= v.z;
-	w *= v.w;
-}
-
-inline void Vec4::divfill( const float a )
-{
-	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
-
-	x /= a;
-	y /= a;
-	z /= a;
-	w /= a;
-}
-
-inline void Vec4::divfill( const Vec4& v )
-{
-	debugassert( !magicalVec4IsZero( TOFLOAT( &v ) ), "division by 0.f" );
-
-	x /= v.x;
-	y /= v.y;
-	z /= v.z;
-	w /= v.w;
+	return magicalVec4IsNormalize( tofpointer( this ) );
 }
 
 inline void Vec4::fill( const float x, const float y, const float z, const float w )
@@ -349,162 +252,138 @@ inline void Vec4::fillOne( void )
 	w = 1.0f;
 }
 
-inline float Vec4::dot( const Vec4& v ) const
+inline void Vec4::fillVec2( const Vec2& v )
 {
-	return magicalVec4Dot( TOFLOAT( this ), TOFLOAT( &v ) );
+	x = v.x;
+	y = v.y;
+	z = 0.0f;
+	w = 0.0f;
 }
 
-inline float Vec4::distanceBetween( const Vec4& v ) const
+inline void Vec4::fillVec3( const Vec3& v )
 {
-	return magicalVec4DistanceBetween( TOFLOAT( this ), TOFLOAT( &v ) );
+	x = v.x;
+	y = v.y;
+	z = v.z;
+	w = 0.0f;
 }
 
-inline float Vec4::distanceBetweenSq( const Vec4& v ) const
+inline void Vec4::clamp( Vec4& out, const Vec4& v, const Vec4& min, const Vec4& max )
 {
-	return magicalVec4DistanceBetweenSq( TOFLOAT( this ), TOFLOAT( &v ) );
+	magicalVec4Clamp( tofpointer( &out ), tofpointer( &v ), tofpointer( &min ), tofpointer( &max ) );
 }
 
-inline float Vec4::length( void ) const
+inline void Vec4::negate( Vec4& out, const Vec4& v )
 {
-	return magicalVec4Length( TOFLOAT( this ) );
+	magicalVec4Negate( tofpointer( &out ), tofpointer( &v ) );
 }
 
-inline float Vec4::lengthSq( void ) const
+inline void Vec4::normalize( Vec4& out, const Vec4& v )
 {
-	return magicalVec4LengthSq( TOFLOAT( this ) );
+	magicalVec4Normalize( tofpointer( &out ), tofpointer( &v ) );
 }
 
-inline float Vec4::angleBetween( const Vec4& v ) const
+inline void Vec4::scale( Vec4& out, const Vec4& v, const float s )
 {
-	return magicalVec4AngleBetween( TOFLOAT( this ), TOFLOAT( &v ) );
+	magicalVec4Scale( tofpointer( &out ), tofpointer( &v ), s );
 }
 
-inline Vec4 Vec4::clamp( const Vec4& min, const Vec4& max ) const
+inline void Vec4::midPointBetween( Vec4& out, const Vec4& v1, const Vec4& v2  )
 {
-	Vec4 ret;
-	magicalVec4Clamp( TOFLOAT( &ret ), TOFLOAT( this ), TOFLOAT( &min ), TOFLOAT( &max ) );
-	return ret;
+	magicalVec4MidPointBetween( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
 }
 
-inline void Vec4::fillClamp( const Vec4& min, const Vec4& max )
+inline void Vec4::clamp( const Vec4& min, const Vec4& max )
 {
-	magicalVec4Clamp( TOFLOAT( this ), TOFLOAT( this ), TOFLOAT( &min ), TOFLOAT( &max ) );
+	magicalVec4Clamp( tofpointer( this ), tofpointer( this ), tofpointer( &min ), tofpointer( &max ) );
 }
 
-inline Vec4 Vec4::negate( void ) const
+inline void Vec4::negate( void )
 {
-	Vec4 ret;
-	magicalVec4Negate( TOFLOAT( &ret ), TOFLOAT( this ) );
-	return ret;
+	magicalVec4Negate( tofpointer( this ), tofpointer( this ) );
 }
 
-inline void Vec4::fillNegate( void )
+inline void Vec4::normalize( void )
 {
-	magicalVec4Negate( TOFLOAT( this ), TOFLOAT( this ) );
+	magicalVec4Normalize( tofpointer( this ), tofpointer( this ) );
 }
 
-inline Vec4 Vec4::normalize( void ) const
+inline void Vec4::scale( const float s )
 {
-	Vec4 ret;
-	magicalVec4Normalize( TOFLOAT( &ret ), TOFLOAT( this ) );
-	return ret;
+	magicalVec4Scale( tofpointer( this ), tofpointer( this ), s );
 }
 
-inline void Vec4::fillNormalize( void )
+inline void Vec4::midPointBetween( const Vec4& point )
 {
-	magicalVec4Normalize( TOFLOAT( this ), TOFLOAT( this ) );
-}
-
-inline Vec4 Vec4::scale( const float s ) const
-{
-	Vec4 ret;
-	magicalVec4Scale( TOFLOAT( &ret ), TOFLOAT( this ), s );
-	return ret;
-}
-
-inline void Vec4::fillScale( const float s )
-{
-	magicalVec4Scale( TOFLOAT( this ), TOFLOAT( this ), s );
-}
-
-inline Vec4 Vec4::midPointBetween( const Vec4& point ) const
-{
-	Vec4 ret;
-	magicalVec4MidPointBetween( TOFLOAT( &ret ), TOFLOAT( this ), TOFLOAT( &point ) );
-	return ret;
+	magicalVec4MidPointBetween( tofpointer( this ), tofpointer( this ), tofpointer( &point ) );
 }
 
 inline void Vec4::project( Vec4& h, Vec4& v, const Vec4& n ) const
 {
-	magicalVec4Project( TOFLOAT( &h ), TOFLOAT( &v ), TOFLOAT( this ), TOFLOAT( &n ) );
+	magicalVec4Project( tofpointer( &h ), tofpointer( &v ), tofpointer( this ), tofpointer( &n ) );
 }
 
-inline void MathVec4::add( Vec4& out, const Vec4& v, const float a )
+inline Vec4 Vec4::getClamp( const Vec4& min, const Vec4& max ) const
 {
-	magicalVec4AddScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
+	Vec4 ret;
+	magicalVec4Clamp( tofpointer( &ret ), tofpointer( this ), tofpointer( &min ), tofpointer( &max ) );
+	return ret;
 }
 
-inline void MathVec4::add( Vec4& out, const Vec4& v1, const Vec4& v2 )
+inline Vec4 Vec4::getNegate( void ) const
 {
-	magicalVec4Add( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
+	Vec4 ret;
+	magicalVec4Negate( tofpointer( &ret ), tofpointer( this ) );
+	return ret;
 }
 
-inline void MathVec4::sub( Vec4& out, const Vec4& v, const float a )
+inline Vec4 Vec4::getNormalize( void ) const
 {
-	magicalVec4SubScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
+	Vec4 ret;
+	magicalVec4Normalize( tofpointer( &ret ), tofpointer( this ) );
+	return ret;
 }
 
-inline void MathVec4::sub( Vec4& out, const Vec4& v1, const Vec4& v2 )
+inline Vec4 Vec4::getScale( const float s ) const
 {
-	magicalVec4Sub( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
+	Vec4 ret;
+	magicalVec4Scale( tofpointer( &ret ), tofpointer( this ), s );
+	return ret;
 }
 
-inline void MathVec4::mul( Vec4& out, const Vec4& v, const Mat4& m )
+inline Vec4 Vec4::getMidPointBetween( const Vec4& point ) const
 {
-	magicalVec4MulMat4( TOFLOAT( &out ), TOFLOAT( &v ), m.m );
+	Vec4 ret;
+	magicalVec4MidPointBetween( tofpointer( &ret ), tofpointer( this ), tofpointer( &point ) );
+	return ret;
 }
 
-inline void MathVec4::mul( Vec4& out, const Vec4& v, const float a )
+inline float Vec4::dot( const Vec4& v ) const
 {
-	magicalVec4MulScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
+	return magicalVec4Dot( tofpointer( this ), tofpointer( &v ) );
 }
 
-inline void MathVec4::mul( Vec4& out, const Vec4& v1, const Vec4& v2 )
+inline float Vec4::distanceBetween( const Vec4& v ) const
 {
-	magicalVec4Mul( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
+	return magicalVec4DistanceBetween( tofpointer( this ), tofpointer( &v ) );
 }
 
-inline void MathVec4::div( Vec4& out, const Vec4& v, const float a )
+inline float Vec4::distanceBetweenSq( const Vec4& v ) const
 {
-	magicalVec4DivScalar( TOFLOAT( &out ), TOFLOAT( &v ), a );
+	return magicalVec4DistanceBetweenSq( tofpointer( this ), tofpointer( &v ) );
 }
 
-inline void MathVec4::div( Vec4& out, const Vec4& v1, const Vec4& v2 )
+inline float Vec4::length( void ) const
 {
-	magicalVec4Div( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
+	return magicalVec4Length( tofpointer( this ) );
 }
 
-inline void MathVec4::clamp( Vec4& out, const Vec4& v, const Vec4& min, const Vec4& max )
+inline float Vec4::lengthSq( void ) const
 {
-	magicalVec4Clamp( TOFLOAT( &out ), TOFLOAT( &v ), TOFLOAT( &min ), TOFLOAT( &max ) );
+	return magicalVec4LengthSq( tofpointer( this ) );
 }
 
-inline void MathVec4::negate( Vec4& out, const Vec4& v )
+inline float Vec4::angleBetween( const Vec4& v ) const
 {
-	magicalVec4Negate( TOFLOAT( &out ), TOFLOAT( &v ) );
-}
-
-inline void MathVec4::normalize( Vec4& out, const Vec4& v )
-{
-	magicalVec4Normalize( TOFLOAT( &out ), TOFLOAT( &v ) );
-}
-
-inline void MathVec4::scale( Vec4& out, const Vec4& v, const float s )
-{
-	magicalVec4Scale( TOFLOAT( &out ), TOFLOAT( &v ), s );
-}
-
-inline void MathVec4::midPointBetween( Vec4& out, const Vec4& v1, const Vec4& v2  )
-{
-	magicalVec4MidPointBetween( TOFLOAT( &out ), TOFLOAT( &v1 ), TOFLOAT( &v2 ) );
+	return magicalVec4AngleBetween( tofpointer( this ), tofpointer( &v ) );
 }

@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_VEC2_H__
 #define __C_VEC2_H__
 
-#include "cMathMacros.h"
+#include "cUtility.h"
 
 typedef float cVec2[2];
 

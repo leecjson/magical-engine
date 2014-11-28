@@ -24,8 +24,19 @@ SOFTWARE.
 #ifndef __VEC2_H__
 #define __VEC2_H__
 
+#include "../c/cVec2.h"
+#include "Vec3.h"
+#include "Vec4.h"
+
+struct Vec3;
+struct Vec4;
+
 struct Vec2
 {
+public:
+	float x;
+	float y;
+
 public:
 	static const Vec2 Zero;
 	static const Vec2 One;
@@ -33,28 +44,23 @@ public:
 	static const Vec2 Left;
 	static const Vec2 Up;
 	static const Vec2 Down;
-
 	static Vec2 placeholder;
 	static Vec2 temp;
 
 public:
-	float x;
-	float y;
-
-	Vec2( const float x, const float y );
+	Vec2( const Vec4& v );
+	Vec2( const Vec3& v );
 	Vec2( const Vec2& v );
+	Vec2( const float x, const float y );
 	Vec2( void );
+
+	static inline Vec2 fromVec3( const Vec3& v );
+	static inline Vec2 fromVec4( const Vec4& v );
 
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
-
 	inline bool operator==( const Vec2& v ) const;
 	inline bool operator!=( const Vec2& v ) const;
-	inline bool isEquals( const Vec2& v ) const;
-	inline bool isZero( void ) const;
-	inline bool isOne( void ) const;
-	inline bool isNormalize( void ) const;
-
 	inline Vec2 operator+( const float a ) const;
 	inline Vec2 operator+( const Vec2& v ) const;
 	inline Vec2 operator-( const float a ) const;
@@ -73,51 +79,6 @@ public:
 	inline Vec2& operator/=( const Vec2& v );
 	inline Vec2& operator=( const Vec2& v );
 
-	inline Vec2 add( const float a ) const;
-	inline Vec2 add( const Vec2& v ) const;
-	inline Vec2 sub( const float a ) const;
-	inline Vec2 sub( const Vec2& v ) const;
-	inline Vec2 mul( const float a ) const;
-	inline Vec2 mul( const Vec2& v ) const;
-	inline Vec2 div( const float a ) const;
-	inline Vec2 div( const Vec2& v ) const;
-	inline void addfill( const float a );
-	inline void addfill( const Vec2& v );
-	inline void subfill( const float a );
-	inline void subfill( const Vec2& v );
-	inline void mulfill( const float a );
-	inline void mulfill( const Vec2& v );
-	inline void divfill( const float a );
-	inline void divfill( const Vec2& v );
-	inline void fill( const float x, const float y );
-	inline void fill( const Vec2& v );
-	inline void fillZero( void );
-	inline void fillOne( void );
-
-	inline float dot( const Vec2& v ) const;
-	inline float distanceBetween( const Vec2& v ) const;
-	inline float distanceBetweenSq( const Vec2& v ) const;
-	inline float length( void ) const;
-	inline float lengthSq( void ) const;
-	inline float angleBetween( const Vec2& v ) const;
-
-	inline Vec2 clamp( const Vec2& min, const Vec2& max ) const;
-	inline void fillClamp( const Vec2& min, const Vec2& max );
-	inline Vec2 negate( void ) const;
-	inline void fillNegate( void );
-	inline Vec2 normalize( void ) const;
-	inline void fillNormalize( void );
-	inline Vec2 rotate( const Vec2& point, const float angle ) const;
-	inline void fillRotate( const Vec2& point, const float angle );
-	inline Vec2 scale( const float s ) const;
-	inline void fillScale( const float s );
-	inline Vec2 midPointBetween( const Vec2& point ) const;
-	inline void project( Vec2& h, Vec2& v, const Vec2& n ) const;
-};
-
-class MathVec2
-{
-public:
 	static inline void add( Vec2& out, const Vec2& v, const float a );
 	static inline void add( Vec2& out, const Vec2& v1, const Vec2& v2 );
 	static inline void sub( Vec2& out, const Vec2& v, const float a );
@@ -127,15 +88,48 @@ public:
 	static inline void div( Vec2& out, const Vec2& v, const float a );
 	static inline void div( Vec2& out, const Vec2& v1, const Vec2& v2 );
 
+public:
+	inline bool isEquals( const Vec2& v ) const;
+	inline bool isZero( void ) const;
+	inline bool isOne( void ) const;
+	inline bool isNormalize( void ) const;
+	inline void fill( const Vec2& v );
+	inline void fill( const float x, const float y );
+	inline void fillZero( void );
+	inline void fillOne( void );
+	inline void fillVec3( const Vec3& v );
+	inline void fillVec4( const Vec3& v );
+
 	static inline void clamp( Vec2& out, const Vec2& v, const Vec2& min, const Vec2& max );
 	static inline void negate( Vec2& out, const Vec2& v );
 	static inline void normalize( Vec2& out, const Vec2& v );
-	static inline void rotate( Vec2& out, const Vec2& v, const Vec2& point, const float angle );
+	static inline void rotate( Vec2& out, const Vec2& v, const float angle );
 	static inline void scale( Vec2& out, const Vec2& v, const float s );
 	static inline void midPointBetween( Vec2& out, const Vec2& v1, const Vec2& v2 );
+
+	inline void clamp( const Vec2& min, const Vec2& max );
+	inline void negate( void );
+	inline void normalize( void );
+	inline void rotate( const float angle );
+	inline void scale( const float s );
+	inline void midPointBetween( const Vec2& point );
+	inline void project( Vec2& h, Vec2& v, const Vec2& n ) const;
+
+	inline Vec2 getClamp( const Vec2& min, const Vec2& max ) const;
+	inline Vec2 getNegate( void ) const;
+	inline Vec2 getNormalize( void ) const;
+	inline Vec2 getRotate( const Vec2& point, const float angle ) const;
+	inline Vec2 getScale( const float s ) const;
+	inline Vec2 getMidPointBetween( const Vec2& point ) const;
+
+	inline float dot( const Vec2& v ) const;
+	inline float distanceBetween( const Vec2& v ) const;
+	inline float distanceBetweenSq( const Vec2& v ) const;
+	inline float length( void ) const;
+	inline float lengthSq( void ) const;
+	inline float angleBetween( const Vec2& v ) const;
 };
 
-#include "../c/cVec2.h"
 #include "Vec2.inl"
 
 #endif //__VEC2_H__

@@ -21,50 +21,66 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __QUATERNION_HPP__
-#define __QUATERNION_HPP__
+#ifndef __QUATERNION_H__
+#define __QUATERNION_H__
 
-#include "MathMacros.h"
+#include "../c/cQuaternion.h"
 #include "Vec3.h"
+#include "Mat4.h"
+#include "EulerAngles.h"
 
 struct Vec3;
-class MathVec3;
+struct Mat4;
+struct EulerAngles;
 
 struct Quaternion
 {
-public:
-	static const Quaternion Identity;
-	static const Quaternion Zero;
-
 public:
 	float x;
 	float y;
 	float z;
 	float w;
 
-	Quaternion( float x, float y, float z, float w );
+public:
+	static const Quaternion Identity;
+	static const Quaternion Zero;
+	static Quaternion placeholder;
+	static Quaternion temp;
+
+public:
 	Quaternion( const Quaternion& r );
-	Quaternion( const Vec3& axis, float angle );
+	Quaternion( float x, float y, float z, float w );
 	Quaternion( void );
 
-	inline bool operator==( const Quaternion& rhs ) const;
-	inline bool operator!=( const Quaternion& rhs ) const;
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
+	inline bool operator==( const Quaternion& q ) const;
+	inline bool operator!=( const Quaternion& q ) const;
+	inline Quaternion operator+( const Quaternion& q ) const;
+	inline Quaternion operator-( const Quaternion& q ) const;
+	inline Quaternion operator*( const float a ) const;
+	inline Quaternion operator*( const Quaternion& q ) const;
+	inline Quaternion& operator*=( const Quaternion& q );
+	inline Quaternion& operator=( const Quaternion& q );
+
+public:
 	inline bool isIdentity( void ) const;
 	inline bool isZero( void ) const;
 	inline bool isNormalize( void ) const;
 
-	inline Quaternion operator*( const Quaternion& r ) const;
-	inline Quaternion& operator*=( const Quaternion& r );
-	inline Quaternion& operator=( const Quaternion& r );
-	
-	inline Quaternion mul( const Quaternion& r ) const;
-	inline void fillmul( const Quaternion& r );
-	inline Quaternion copy( void ) const;
-	inline void fill( float x, float y, float z, float w );
 	inline void fill( const Quaternion& r );
-	inline void fillAxisAngle( const Vec3& axis, float angle );
+	inline void fill( float x, float y, float z, float w );
 	inline void fillIdentity( void );
 	inline void fillZero( void );
+	inline void fillAxisAngle( const Vec3& axis, const float angle );
+	inline void fillEulerAngles( const EulerAngles& ea );
+	inline void fillYawPitchRoll( const float yaw, const float pitch, const float roll );
+	inline void fillMat4( const Mat4& m );
+	inline void fillRotationX( const float angle );
+	inline void fillRotationY( const float angle );
+	inline void fillRotationZ( const float angle );
+
+
 	
 public:
 	inline void negate( void );
@@ -88,4 +104,4 @@ public:
 
 #include "Quaternion.inl"
 	
-#endif //__QUATERNION_HPP__
+#endif //__QUATERNION_H__

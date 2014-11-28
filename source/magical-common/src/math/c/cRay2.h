@@ -21,29 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __MATH_MACROS_H__
-#define __MATH_MACROS_H__
+#ifndef __C_RAY2_H__
+#define __C_RAY2_H__
 
-/*
- matrix4x4 macros
- */
-#define m11 m[0x0]
-#define m12 m[0x1]
-#define m13 m[0x2]
-#define m14 m[0x3]
-#define m21 m[0x4]
-#define m22 m[0x5]
-#define m23 m[0x6]
-#define m24 m[0x7]
-#define m31 m[0x8]
-#define m32 m[0x9]
-#define m33 m[0xA]
-#define m34 m[0xB]
-#define m41 m[0xC]
-#define m42 m[0xD]
-#define m43 m[0xE]
-#define m44 m[0xF]
+#include "cUtility.h"
+
+typedef float cRay2[4];
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
+#ifdef __cplusplus
+}
+#endif
 
-#endif //__MATH_MACROS_H__
+#endif //__C_RAY2_H__

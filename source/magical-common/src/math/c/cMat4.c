@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cMat4.h"
+#include "cMathMacros.h"
+
 #include <memory.h>
 
 static const float IDENTITY[] =
@@ -952,7 +954,7 @@ cBool magicalMat4Decompose( cVec3 out_translation, cVec3 out_scaling, cQuaternio
 
 	trace = xaxis _x + yaxis _y + zaxis _z + 1.0f;
 
-	if( trace > MAGICAL_MATH_EPSILON )
+	if( trace > kEpsilon )
 	{
 		s = 0.5f / sqrt( trace );
 		out_rotation _w = 0.25f / s;

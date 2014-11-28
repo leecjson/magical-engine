@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cVec4.h"
+#include "cMathMacros.h"
 
 cBool magicalVec4Equals( const cVec4 v1, const cVec4 v2 )
 {

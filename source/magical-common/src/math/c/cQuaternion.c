@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cQuaternion.h"
+#include "cMathMacros.h"
 
 cBool magicalQuaternionEquals( const cQuaternion q1, const cQuaternion q2 )
 {
@@ -546,7 +547,7 @@ void magicalQuaternionSlerp( cQuaternion out, const cQuaternion q1, const cQuate
 	float q2z;
 	float k1, k2;
 
-	if( t <= MAGICAL_MATH_EPSILON ) 
+	if( t <= kEpsilon ) 
 	{
 		magicalQuaternionFill( out, q1 );
 		return;

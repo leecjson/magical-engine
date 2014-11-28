@@ -21,35 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_SPHERE_H__
-#define __C_SPHERE_H__
+#ifndef __C_STRAIGHT2_H__
+#define __C_STRAIGHT2_H__
 
 #include "cUtility.h"
 
-typedef float cSphere3[4];
+typedef float cStraight2[3];
 
-#include "cVec3.h"
-#include "cRay3.h"
-#include "cAABB3.h"
-#include "cPlane3.h"
+#include "cVec2.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGICALAPI_MATH void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r );
-MAGICALAPI_MATH void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVec3 center, const float r );
-MAGICALAPI_MATH void magicalSphere3Fill( cSphere3 out, const cSphere3 sp );
+MAGICALAPI_MATH void magicalStraight2FillPointAndNormal( cStraight2 out, const cVec2 p, const cVec2 n );
+MAGICALAPI_MATH void magicalStraight2FillNormalAndDistance( cStraight2 out, const cVec2 n, const float d );
+MAGICALAPI_MATH void magicalStraight2FillScalars( cStraight2 out, const float x, const float y, const float d );
+MAGICALAPI_MATH void magicalStraight2Fill( cStraight2 out, const cStraight2 st );
 
-MAGICALAPI_MATH cBool magicalSphere3Intersects( const cSphere3 sp1, const cSphere3 sp2 );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsAABB3( const cSphere3 sp, const cAABB3 aabb );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsPlane3( const cSphere3 sp, const cPlane3 p );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3( const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
+MAGICALAPI_MATH int magicalStraight2ClassifyPoint( const cStraight2 st, const cVec3 point );
+MAGICALAPI_MATH int magicalStraight2ClassifyStraight2( const cStraight2 st1, const cStraight2 st2 );
 
-MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
+MAGICALAPI_MATH cBool magicalStraight2Intersects( const cStraight2 st1, const cStraight2 st2 );
+
+MAGICALAPI_MATH cBool magicalStraight2ContainsPoint( const cStraight2 st, const cVec3 point );
+
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //__C_SPHERE_H__
+#endif //__C_STRAIGHT2_H__

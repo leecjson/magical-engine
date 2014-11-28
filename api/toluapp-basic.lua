@@ -71,7 +71,7 @@ function post_output_hook(package)
         if k == 0 then print('Pattern not replaced', pattern .. "\n") end
     end
 	replace([[*((LuaFunctionRef*)]], [[(]])
-	replace([[#ifndef TOLUA_RELEASE]], [[#ifdef MAG_DEBUG]])
+	replace([[#ifndef TOLUA_RELEASE]], [[#ifdef MAGICAL_DEBUG]])
 	
 	local size = table.getn(magical_reg_objs);
 	for i=1,size do

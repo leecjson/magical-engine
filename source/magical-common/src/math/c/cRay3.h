@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_RAY3_H__
 #define __C_RAY3_H__
 
-#include "cMathMacros.h"
+#include "cUtility.h"
 
 typedef float cRay3[6];
 

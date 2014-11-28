@@ -24,14 +24,14 @@ SOFTWARE.
 #ifndef __C_AABB3_H__
 #define __C_AABB3_H__
 
-#include "cMathMacros.h"
+#include "cUtility.h"
 
 typedef float cAABB3[6];
 
 #include "cVec3.h"
 #include "cRay3.h"
-#include "cPlane3.h"
 #include "cMat4.h"
+#include "cPlane3.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -70,10 +70,6 @@ MAGICALAPI_MATH cBool magicalAABB3IntersectsPart( cAABB3 out, const cAABB3 aabb1
 MAGICALAPI_MATH cBool magicalAABB3IntersectsRay3Distance( float* dist, const cAABB3 aabb, const cRay3 r3, const cBool discard_inside );
 
 MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB3 aabb, const cVec3 point );
-
-
-
-
 
 #ifdef __cplusplus
 }

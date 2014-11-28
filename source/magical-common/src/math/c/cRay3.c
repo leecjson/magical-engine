@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cRay3.h"
+#include "cMathMacros.h"
 
 void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const float oz, const float dx, const float dy, const float dz )
 {
@@ -152,7 +153,7 @@ cBool magicalRay3IntersectsPlane3( const cRay3 r3, const cPlane3 p, const cBool 
 	dn = magicalVec3Dot( d, p );
 	if( magicalAlmostZero( dn ) == cFalse )
 	{
-		if( ( cp == 1 && dn < -MAGICAL_MATH_EPSILON ) || ( cp == -1 && dn > MAGICAL_MATH_EPSILON ) )
+		if( ( cp == 1 && dn < -kEpsilon ) || ( cp == -1 && dn > kEpsilon ) )
 		{
 			return cTrue;
 		}
@@ -324,7 +325,7 @@ cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cP
 	dn = magicalVec3Dot( d, p );
 	if( magicalAlmostZero( dn ) == cFalse )
 	{
-		if( ( cp == 1 && dn < -MAGICAL_MATH_EPSILON ) || ( cp == -1 && dn > MAGICAL_MATH_EPSILON ) )
+		if( ( cp == 1 && dn < -kEpsilon ) || ( cp == -1 && dn > kEpsilon ) )
 		{
 			*dist = ( p _d - magicalVec3Dot( r3, p ) ) / dn;
 			return cTrue;

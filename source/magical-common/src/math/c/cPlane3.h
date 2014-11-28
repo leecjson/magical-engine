@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_PLANE3_H__
 #define __C_PLANE3_H__
 
-#include "cMathMacros.h"
+#include "cUtility.h"
 
 typedef float cPlane3[4];
 

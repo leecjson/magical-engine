@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cEulerAngles.h"
+#include "cMathMacros.h"
 
 void magicalEulerAnglesFillYawPitchRoll( cEulerAngles out, const float yaw, const float pitch, const float roll )
 {
@@ -56,7 +57,7 @@ void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q )
 
 	if( fabsf( sp ) > 0.9999f )
 	{
-		out _pitch = MAGICAL_MATH_PI_OVER_2 * sp;
+		out _pitch = kPIOver2 * sp;
 		out _yaw   = atan2f( -q _x * q _z - q _w * q _y, 0.5f - q _y * q _y - q _z * q _z );
 		out _roll  = 0.0f;
 	}
@@ -84,7 +85,7 @@ void magicalEulerAnglesToQuaternion( cQuaternion out, const cEulerAngles ea )
 	magicalQuaternionFromEulerAngles( out, ea );
 }
 
-void magicalEulerAnglesToRotationMat4( cMat4 out, const cEulerAngles ea )
+void magicalEulerAnglesToMat4( cMat4 out, const cEulerAngles ea )
 {
 	
 }
@@ -109,20 +110,20 @@ void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea )
 	float roll  = ea _roll;
 
 	pitch = magicalCorrectToPI( pitch );
-	if( pitch < - MAGICAL_MATH_PI_OVER_2 )
+	if( pitch < - kPIOver2 )
 	{
-		pitch = - MAGICAL_MATH_PI - pitch;
-		yaw  +=   MAGICAL_MATH_PI;
-		roll +=   MAGICAL_MATH_PI;
+		pitch = - kPI - pitch;
+		yaw  +=   kPI;
+		roll +=   kPI;
 	}
-	else if( pitch > MAGICAL_MATH_PI_OVER_2 )
+	else if( pitch > kPIOver2 )
 	{
-		pitch = MAGICAL_MATH_PI - pitch;
-		yaw  += MAGICAL_MATH_PI;
-		roll += MAGICAL_MATH_PI;
+		pitch = kPI - pitch;
+		yaw  += kPI;
+		roll += kPI;
 	}
 
-	if( fabsf( pitch ) > ( MAGICAL_MATH_PI_OVER_2 - 1e-4f ) )
+	if( fabsf( pitch ) > ( kPIOver2 - 1e-4f ) )
 	{
 		yaw += roll;
 		roll = 0.0f;

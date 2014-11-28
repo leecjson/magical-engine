@@ -21,35 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_SPHERE_H__
-#define __C_SPHERE_H__
+#include "cRectangle2.h"
+#include "cMathMacros.h"
 
-#include "cUtility.h"
+void magicalRectangle2FillBox( cRectangle2 out, const cVec2 center, const float w, const float h )
+{
+	float hw = w / 2;
+	float hh = h / 2;
 
-typedef float cSphere3[4];
-
-#include "cVec3.h"
-#include "cRay3.h"
-#include "cAABB3.h"
-#include "cPlane3.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-MAGICALAPI_MATH void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r );
-MAGICALAPI_MATH void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVec3 center, const float r );
-MAGICALAPI_MATH void magicalSphere3Fill( cSphere3 out, const cSphere3 sp );
-
-MAGICALAPI_MATH cBool magicalSphere3Intersects( const cSphere3 sp1, const cSphere3 sp2 );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsAABB3( const cSphere3 sp, const cAABB3 aabb );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsPlane3( const cSphere3 sp, const cPlane3 p );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3( const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
-
-MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
-
-#ifdef __cplusplus
+	out _rect_x = center _x - hw;
+	out _rect_y = center _y - hh;
+	out _rect_w = w;
+	out _rect_h = h;
 }
-#endif
 
-#endif //__C_SPHERE_H__
+void magicalRectangle2Fill( cRectangle2 out, const cRectangle2 rect )
+{
+	out _rect_x = rect _rect_x;
+	out _rect_y = rect _rect_y;
+	out _rect_w = rect _rect_w;
+	out _rect_h = rect _rect_h;
+}

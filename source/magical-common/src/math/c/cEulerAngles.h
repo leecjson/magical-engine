@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_EULER_ANGLES_H__
 #define __C_EULER_ANGLES_H__
 
-#include "cMathMacros.h"
+#include "cUtility.h"
 
 typedef float cEulerAngles[3];
 

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Vec2.h"
-#include <exception>
+#include "MathMacros.h"
 
 const Vec2 Vec2::Zero = Vec2( 0.0f, 0.0f );
 const Vec2 Vec2::One = Vec2( 1.0f, 1.0f );
@@ -33,6 +33,20 @@ const Vec2 Vec2::Down = Vec2( 0.0f, -1.0f );
 
 Vec2 Vec2::placeholder = Vec2( 0.0f, 0.0f );
 Vec2 Vec2::temp = Vec2( 0.0f, 0.0f );
+
+Vec2::Vec2( const Vec4& v )
+: x( v.x )
+, y( v.y )
+{
+
+}
+
+Vec2::Vec2( const Vec3& v )
+: x( v.x )
+, y( v.y )
+{
+
+}
 
 Vec2::Vec2( const float x, const float y )
 : x( x )

@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_MAT4_H__
 #define __C_MAT4_H__
 
-#include "cMathMacros.h"
+#include "cUtility.h"
 
 typedef float cMat4[16];
 

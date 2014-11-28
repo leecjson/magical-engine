@@ -21,35 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_SPHERE_H__
-#define __C_SPHERE_H__
+#ifndef __MATH_MACROS_H__
+#define __MATH_MACROS_H__
 
-#include "cUtility.h"
+#include <exception>
 
-typedef float cSphere3[4];
-
-#include "cVec3.h"
-#include "cRay3.h"
-#include "cAABB3.h"
-#include "cPlane3.h"
-
-#ifdef __cplusplus
-extern "C" {
+#if defined MAGICAL_ENGINE
+#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
+#define MAGICAL_MATH_CACHED_POOL_ENABLE 1
+#endif
+#else
+#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
+#define MAGICAL_MATH_CACHED_POOL_ENABLE 0
+#endif
 #endif
 
-MAGICALAPI_MATH void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r );
-MAGICALAPI_MATH void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVec3 center, const float r );
-MAGICALAPI_MATH void magicalSphere3Fill( cSphere3 out, const cSphere3 sp );
-
-MAGICALAPI_MATH cBool magicalSphere3Intersects( const cSphere3 sp1, const cSphere3 sp2 );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsAABB3( const cSphere3 sp, const cAABB3 aabb );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsPlane3( const cSphere3 sp, const cPlane3 p );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3( const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
-
-MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif //__C_SPHERE_H__
+#endif //__MATH_MACROS_H__

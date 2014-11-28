@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cAABB3.h"
+#include "cMathMacros.h"
 
 cBool magicalAABB3IsEmpty( const cAABB3 aabb )
 {

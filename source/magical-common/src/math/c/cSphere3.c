@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cSphere3.h"
+#include "cMathMacros.h"
 
 void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r )
 {

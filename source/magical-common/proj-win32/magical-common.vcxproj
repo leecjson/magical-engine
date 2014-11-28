@@ -21,12 +21,7 @@
     <ClCompile Include="..\src\common\Reference.cpp" />
     <ClCompile Include="..\src\engine\Engine.cpp" />
     <ClCompile Include="..\src\log\win32\LogSystem.cpp" />
-    <ClCompile Include="..\src\math\cpp\AABB3.cpp" />
-    <ClCompile Include="..\src\math\cpp\Mat4.cpp" />
-    <ClCompile Include="..\src\math\cpp\Plane3.cpp" />
     <ClCompile Include="..\src\math\cpp\Quaternion.cpp" />
-    <ClCompile Include="..\src\math\cpp\Ray2.cpp" />
-    <ClCompile Include="..\src\math\cpp\Ray3.cpp" />
     <ClCompile Include="..\src\math\cpp\Vec2.cpp" />
     <ClCompile Include="..\src\math\cpp\Vec3.cpp" />
     <ClCompile Include="..\src\math\cpp\Vec4.cpp" />
@@ -35,8 +30,11 @@
     <ClCompile Include="..\src\math\c\cMat4.c" />
     <ClCompile Include="..\src\math\c\cPlane3.c" />
     <ClCompile Include="..\src\math\c\cQuaternion.c" />
+    <ClCompile Include="..\src\math\c\cRay2.c" />
     <ClCompile Include="..\src\math\c\cRay3.c" />
-    <ClCompile Include="..\src\math\c\cSphere3.cpp" />
+    <ClCompile Include="..\src\math\c\cRectangle2.c" />
+    <ClCompile Include="..\src\math\c\cSphere3.c" />
+    <ClCompile Include="..\src\math\c\cStraight2.c" />
     <ClCompile Include="..\src\math\c\cVec2.c" />
     <ClCompile Include="..\src\math\c\cVec3.c" />
     <ClCompile Include="..\src\math\c\cVec4.c" />
@@ -60,12 +58,8 @@
     <ClInclude Include="..\src\engine\Engine.h" />
     <ClInclude Include="..\src\include\magical-engine.h" />
     <ClInclude Include="..\src\log\LogSystem.h" />
-    <ClInclude Include="..\src\math\cpp\AABB3.h" />
-    <ClInclude Include="..\src\math\cpp\Mat4.h" />
-    <ClInclude Include="..\src\math\cpp\Plane3.h" />
+    <ClInclude Include="..\src\math\cpp\MathMacros.h" />
     <ClInclude Include="..\src\math\cpp\Quaternion.h" />
-    <ClInclude Include="..\src\math\cpp\Ray2.h" />
-    <ClInclude Include="..\src\math\cpp\Ray3.h" />
     <ClInclude Include="..\src\math\cpp\Vec2.h" />
     <ClInclude Include="..\src\math\cpp\Vec3.h" />
     <ClInclude Include="..\src\math\cpp\Vec4.h" />
@@ -75,8 +69,12 @@
     <ClInclude Include="..\src\math\c\cMathMacros.h" />
     <ClInclude Include="..\src\math\c\cPlane3.h" />
     <ClInclude Include="..\src\math\c\cQuaternion.h" />
+    <ClInclude Include="..\src\math\c\cRay2.h" />
     <ClInclude Include="..\src\math\c\cRay3.h" />
+    <ClInclude Include="..\src\math\c\cRectangle2.h" />
     <ClInclude Include="..\src\math\c\cSphere3.h" />
+    <ClInclude Include="..\src\math\c\cStraight2.h" />
+    <ClInclude Include="..\src\math\c\cUtility.h" />
     <ClInclude Include="..\src\math\c\cVec2.h" />
     <ClInclude Include="..\src\math\c\cVec3.h" />
     <ClInclude Include="..\src\math\c\cVec4.h" />
@@ -85,12 +83,7 @@
     <ClInclude Include="..\src\utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\math\cpp\AABB3.inl" />
-    <None Include="..\src\math\cpp\Mat4.inl" />
-    <None Include="..\src\math\cpp\Plane3.inl" />
     <None Include="..\src\math\cpp\Quaternion.inl" />
-    <None Include="..\src\math\cpp\Ray2.inl" />
-    <None Include="..\src\math\cpp\Ray3.inl" />
     <None Include="..\src\math\cpp\Vec2.inl" />
     <None Include="..\src\math\cpp\Vec3.inl" />
     <None Include="..\src\math\cpp\Vec4.inl" />

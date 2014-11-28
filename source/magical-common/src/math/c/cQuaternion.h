@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_QUATERNION_H__
 #define __C_QUATERNION_H__
 
-#include "cMathMacros.h"
+#include "cUtility.h"
 
 typedef float cQuaternion[4];
 
