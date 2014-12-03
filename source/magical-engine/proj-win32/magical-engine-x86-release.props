@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir>$(SolutionDir)bin\win32-release\</OutDir>
+    <IntDir>win32-release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>MAGICAL_ENGINE;MAGICAL_USING_GL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4244;4800</DisableSpecificWarnings>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>false</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalIncludeDirectories>$(SolutionDir)magical-engine\src\magical-common;$(SolutionDir)magical-engine\src\magical-common\assets;$(SolutionDir)magical-engine\src\magical-common\base;$(SolutionDir)magical-engine\src\magical-common\common;$(SolutionDir)magical-engine\src\magical-common\engine;$(SolutionDir)magical-engine\src\magical-common\include;$(SolutionDir)magical-engine\src\magical-common\log;$(SolutionDir)magical-engine\src\magical-common\math;$(SolutionDir)magical-engine\src\magical-common\transform;$(SolutionDir)magical-engine\src\magical-common\utils;$(SolutionDir)magical-engine\src\magical-lua;$(SolutionDir)magical-engine\src\magical-lua\binding;$(SolutionDir)magical-engine\src\magical-lua\extensions;$(SolutionDir)magical-engine\src\magical-lua\lua;$(SolutionDir)magical-engine\src\magical-lua\support;$(SolutionDir)magical-engine\src\magical-lua\tolua;$(SolutionDir)magical-engine\src\magical-renderer;$(SolutionDir)magical-engine\src\magical-renderer\context;$(SolutionDir)magical-engine\src\magical-renderer\renderer;$(SolutionDir)magical-engine\src\magical-renderer\support;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>ws2_32.lib;opengl32.lib;glew32.lib;glfw3.lib;magical-engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

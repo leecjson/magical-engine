@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Main.h"
-#include "magical-engine.h"
+#include "include/magical-engine.h"
 
-MAGICALAPI_USER void mainDelegate( void )
+void mainDelegate( void )
 {
 	Lua::state()->executeScriptFile( "main.lua" );
 	Lua::state()->executeGlobalFunction( kLuaOnCreate );

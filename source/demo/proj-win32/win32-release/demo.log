@@ -1,0 +1,17 @@
+﻿生成启动时间为 2014/12/3 17:43:05。
+     1>项目“C:\Users\Administrator\Documents\GitHub\magical-engine\source\demo\proj-win32\demo.vcxproj”在节点 2 上(Build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“win32-release\demo.tlog\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         所有输出均为最新。
+       Link:
+         所有输出均为最新。
+         demo.vcxproj -> C:\Users\Administrator\Documents\GitHub\magical-engine\source\bin\win32-release\demo.exe
+       FinalizeBuildStatus:
+         正在删除文件“win32-release\demo.tlog\unsuccessfulbuild”。
+         正在对“win32-release\demo.tlog\demo.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“C:\Users\Administrator\Documents\GitHub\magical-engine\source\demo\proj-win32\demo.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.06

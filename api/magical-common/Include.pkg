@@ -17,10 +17,3 @@ $pfile "toluapp-typedef.pkg"
 //$pfile "magical-common/math/Quaternion.pkg"
 
 //$pfile "magical-common/transform/MatrixStack.pkg"
-
-struct Vec2
-{
-public:
-	inline void clamp( const Vec2& min, const Vec2& max );
-	static inline void clamp( Vec2& out, const Vec2& v, const Vec2& min, const Vec2& max );
-};

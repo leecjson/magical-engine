@@ -24,8 +24,6 @@ SOFTWARE.
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
-#include "PlatformMacros.h"
-
-MAGICALAPI_USER void mainDelegate( void );
+extern void mainDelegate( void );
 
 #endif //__MAIN_H__

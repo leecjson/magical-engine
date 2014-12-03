@@ -1,0 +1,83 @@
+﻿/******************************************************************************
+The MIT License (MIT)
+
+Copyright (c) 2014 Jason.lee
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*******************************************************************************/
+#ifndef __SPHERE3_H__
+#define __SPHERE3_H__
+
+class Vec3;
+class Ray3;
+class AABB3;
+class Plane3;
+
+class Sphere3
+{
+public:
+	float x;
+	float y;
+	float z;
+	float r;
+
+public:
+	static const Sphere3 One;
+	static Sphere3 placeholder;
+	static Sphere3 temp;
+
+public:
+	Sphere3( const float x, const float y, const float z, const float r );
+	Sphere3( const Vec3& center, const float r );
+	Sphere3( const Sphere3& sp );
+	Sphere3( void );
+
+public:
+	static inline Sphere3 fromCenterAndRadius( const Vec3& center, const float r );
+
+public:
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
+	inline bool operator==( const Sphere3& sp ) const;
+	inline bool operator!=( const Sphere3& sp ) const;
+	inline Sphere3& operator=( const Sphere3& sp );
+
+public:
+	inline bool isEquals( const Sphere3& sp ) const;
+	inline void fill( const float x, const float y, const float z, const float r );
+	inline void fill( const Vec3& center, const float r );
+	inline void fill( const Sphere3& sp );
+
+	inline bool intersects( const Sphere3& sp ) const;
+	inline bool intersectsAABB3( const AABB3& aabb ) const;
+	inline bool intersectsPlane3( const Plane3& p ) const;
+	inline bool intersectsRay3( const Ray3& r3, const bool discard_inside = false ) const;
+	inline bool intersectsRay3Distance( float& distance, const Ray3& r3, const bool discard_inside = false ) const;
+
+	inline bool containsPoint( const Vec3& point ) const;
+};
+
+#include "../c/cSphere3.h"
+#include "Vec3.h"
+#include "Ray3.h"
+#include "AABB3.h"
+#include "Plane3.h"
+#include "Sphere3.inl"
+
+#endif //__SPHERE3_H__

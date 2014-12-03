@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FB56813F-8606-453E-A972-09246B0ADDE8}</ProjectGuid>
+    <RootNamespace>magicalengine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="magical-engine-x86-debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="magical-engine-x86-release.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile />
+    <Link />
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-libs\glfw3\libs\win32\32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile />
+    <Link />
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-libs\glfw3\libs\win32\32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\magical-common\assets\win32\AssetsSystem.cpp" />
+    <ClCompile Include="..\src\magical-common\base\Camera.cpp" />
+    <ClCompile Include="..\src\magical-common\base\Node.cpp" />
+    <ClCompile Include="..\src\magical-common\base\Scene.cpp" />
+    <ClCompile Include="..\src\magical-common\base\Viewport.cpp" />
+    <ClCompile Include="..\src\magical-common\common\Common.cpp" />
+    <ClCompile Include="..\src\magical-common\common\Data.cpp" />
+    <ClCompile Include="..\src\magical-common\common\Reference.cpp" />
+    <ClCompile Include="..\src\magical-common\engine\Engine.cpp" />
+    <ClCompile Include="..\src\magical-common\log\win32\LogSystem.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\AABB3.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\AxisAngle.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\EulerAngles.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Mat4.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Plane3.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Quaternion.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Ray2.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Ray3.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Sphere3.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Straight2.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Vec2.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Vec3.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Vec4.cpp" />
+    <ClCompile Include="..\src\magical-common\math\c\cAABB3.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cAxisAngle.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cEulerAngles.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cMat4.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cPlane3.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cQuaternion.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cRay2.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cRay3.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cRectangle2.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cSphere3.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cStraight2.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cVec2.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cVec3.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cVec4.c" />
+    <ClCompile Include="..\src\magical-common\transform\Transform.cpp" />
+    <ClCompile Include="..\src\magical-common\utils\Utils.cpp" />
+    <ClCompile Include="..\src\magical-lua\binding\BindCommon.cpp" />
+    <ClCompile Include="..\src\magical-lua\extensions\LuaExtensions.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\auxiliar.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\buffer.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\except.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\inet.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\io.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\luasocket.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\mime.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\options.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\select.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\tcp.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\timeout.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\udp.c" />
+    <ClCompile Include="..\src\magical-lua\extensions\socket\wsocket.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lapi.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lauxlib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lbaselib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lcode.c" />
+    <ClCompile Include="..\src\magical-lua\lua\ldblib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\ldebug.c" />
+    <ClCompile Include="..\src\magical-lua\lua\ldo.c" />
+    <ClCompile Include="..\src\magical-lua\lua\ldump.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lfunc.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lgc.c" />
+    <ClCompile Include="..\src\magical-lua\lua\linit.c" />
+    <ClCompile Include="..\src\magical-lua\lua\liolib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\llex.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lmathlib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lmem.c" />
+    <ClCompile Include="..\src\magical-lua\lua\loadlib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lobject.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lopcodes.c" />
+    <ClCompile Include="..\src\magical-lua\lua\loslib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lparser.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lstate.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lstring.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lstrlib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\ltable.c" />
+    <ClCompile Include="..\src\magical-lua\lua\ltablib.c" />
+    <ClCompile Include="..\src\magical-lua\lua\ltm.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lundump.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lvm.c" />
+    <ClCompile Include="..\src\magical-lua\lua\lzio.c" />
+    <ClCompile Include="..\src\magical-lua\lua\print.c" />
+    <ClCompile Include="..\src\magical-lua\support\LuaMacros.cpp" />
+    <ClCompile Include="..\src\magical-lua\support\LuaState.cpp" />
+    <ClCompile Include="..\src\magical-lua\support\LuaSystem.cpp" />
+    <ClCompile Include="..\src\magical-lua\tolua\tolua_event.c" />
+    <ClCompile Include="..\src\magical-lua\tolua\tolua_ext.c" />
+    <ClCompile Include="..\src\magical-lua\tolua\tolua_is.c" />
+    <ClCompile Include="..\src\magical-lua\tolua\tolua_map.c" />
+    <ClCompile Include="..\src\magical-lua\tolua\tolua_push.c" />
+    <ClCompile Include="..\src\magical-lua\tolua\tolua_to.c" />
+    <ClCompile Include="..\src\magical-renderer\context\Application.cpp" />
+    <ClCompile Include="..\src\magical-renderer\context\win32\gl\ApplicationPlatform.cpp" />
+    <ClCompile Include="..\src\magical-renderer\renderer\gl\RendererSystem.cpp" />
+    <ClCompile Include="..\src\magical-renderer\support\gl\RendererMacros.cpp" />
+    <ClCompile Include="..\src\magical-renderer\support\gl\ShaderProgram.cpp" />
+    <ClCompile Include="..\src\magical-renderer\support\gl\ShaderProgramManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\magical-common\assets\AssetsSystem.h" />
+    <ClInclude Include="..\src\magical-common\base\Camera.h" />
+    <ClInclude Include="..\src\magical-common\base\Node.h" />
+    <ClInclude Include="..\src\magical-common\base\Scene.h" />
+    <ClInclude Include="..\src\magical-common\base\Viewport.h" />
+    <ClInclude Include="..\src\magical-common\common\Array.h" />
+    <ClInclude Include="..\src\magical-common\common\CachedPool.h" />
+    <ClInclude Include="..\src\magical-common\common\Common.h" />
+    <ClInclude Include="..\src\magical-common\common\Data.h" />
+    <ClInclude Include="..\src\magical-common\common\List.h" />
+    <ClInclude Include="..\src\magical-common\common\Map.h" />
+    <ClInclude Include="..\src\magical-common\common\Reference.h" />
+    <ClInclude Include="..\src\magical-common\common\Shared.h" />
+    <ClInclude Include="..\src\magical-common\engine\Engine.h" />
+    <ClInclude Include="..\src\magical-common\include\magical-engine.h" />
+    <ClInclude Include="..\src\magical-common\log\LogSystem.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\AABB3.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\AxisAngle.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\EulerAngles.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Mat4.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\MathMacros.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Plane3.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Quaternion.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Ray2.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Ray3.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Sphere3.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Straight2.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Vec2.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Vec3.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Vec4.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cAABB3.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cAxisAngle.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cEulerAngles.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cMat4.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cMathMacros.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cPlane3.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cQuaternion.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cRay2.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cRay3.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cRectangle2.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cSphere3.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cStraight2.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cUtility.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cVec2.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cVec3.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cVec4.h" />
+    <ClInclude Include="..\src\magical-common\PlatformMacros.h" />
+    <ClInclude Include="..\src\magical-common\transform\Transform.h" />
+    <ClInclude Include="..\src\magical-common\utils\Utils.h" />
+    <ClInclude Include="..\src\magical-lua\binding\BindCommon.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\LuaExtensions.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\auxiliar.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\buffer.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\except.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\inet.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\io.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\luasocket.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\mime.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\options.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\select.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\socket.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\tcp.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\timeout.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\udp.h" />
+    <ClInclude Include="..\src\magical-lua\extensions\socket\wsocket.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lapi.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lauxlib.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lcode.h" />
+    <ClInclude Include="..\src\magical-lua\lua\ldebug.h" />
+    <ClInclude Include="..\src\magical-lua\lua\ldo.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lfunc.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lgc.h" />
+    <ClInclude Include="..\src\magical-lua\lua\llex.h" />
+    <ClInclude Include="..\src\magical-lua\lua\llimits.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lmem.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lobject.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lopcodes.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lparser.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lstate.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lstring.h" />
+    <ClInclude Include="..\src\magical-lua\lua\ltable.h" />
+    <ClInclude Include="..\src\magical-lua\lua\ltm.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lua.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lua.hpp" />
+    <ClInclude Include="..\src\magical-lua\lua\luaconf.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lualib.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lundump.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lvm.h" />
+    <ClInclude Include="..\src\magical-lua\lua\lzio.h" />
+    <ClInclude Include="..\src\magical-lua\support\LuaMacros.h" />
+    <ClInclude Include="..\src\magical-lua\support\LuaState.h" />
+    <ClInclude Include="..\src\magical-lua\support\LuaSystem.h" />
+    <ClInclude Include="..\src\magical-lua\tolua\tolua++.h" />
+    <ClInclude Include="..\src\magical-lua\tolua\tolua_event.h" />
+    <ClInclude Include="..\src\magical-lua\tolua\tolua_ext.h" />
+    <ClInclude Include="..\src\magical-renderer\context\Application.h" />
+    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glew\glew.h" />
+    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glew\glxew.h" />
+    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glew\wglew.h" />
+    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glfw3\glfw3.h" />
+    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glfw3\glfw3native.h" />
+    <ClInclude Include="..\src\magical-renderer\renderer\RendererSystem.h" />
+    <ClInclude Include="..\src\magical-renderer\support\RendererMacros.h" />
+    <ClInclude Include="..\src\magical-renderer\support\ShaderProgram.h" />
+    <ClInclude Include="..\src\magical-renderer\support\ShaderProgramManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\magical-common\math\cpp\AABB3.inl" />
+    <None Include="..\src\magical-common\math\cpp\AxisAngle.inl" />
+    <None Include="..\src\magical-common\math\cpp\EulerAngles.inl" />
+    <None Include="..\src\magical-common\math\cpp\Mat4.inl" />
+    <None Include="..\src\magical-common\math\cpp\Plane3.inl" />
+    <None Include="..\src\magical-common\math\cpp\Quaternion.inl" />
+    <None Include="..\src\magical-common\math\cpp\Ray2.inl" />
+    <None Include="..\src\magical-common\math\cpp\Ray3.inl" />
+    <None Include="..\src\magical-common\math\cpp\Sphere3.inl" />
+    <None Include="..\src\magical-common\math\cpp\Straight2.inl" />
+    <None Include="..\src\magical-common\math\cpp\Vec2.inl" />
+    <None Include="..\src\magical-common\math\cpp\Vec3.inl" />
+    <None Include="..\src\magical-common\math\cpp\Vec4.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
