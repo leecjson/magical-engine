@@ -6,6 +6,6 @@
 *.vspscc
 *.bak
 win32-debug/
-release-debug/
+win32-release/
 ipch/
 obj/
