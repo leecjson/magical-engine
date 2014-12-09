@@ -21,97 +21,68 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Vec4.h"
+#include "Matrix4.h"
 #include "MathMacros.h"
 
-const Vec4 Vec4::Zero = Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
-const Vec4 Vec4::One = Vec4( 1.0f, 1.0f, 1.0f, 1.0f );
-const Vec4 Vec4::Up = Vec4( 0.0f, 1.0f, 0.0f, 0.0f );
-const Vec4 Vec4::Down = Vec4( 0.0f, -1.0f, 0.0f, 0.0f );
-const Vec4 Vec4::Right = Vec4( 1.0f, 0.0f, 0.0f, 0.0f );
-const Vec4 Vec4::Left = Vec4( -1.0f, 0.0f, 0.0f, 0.0f );
-const Vec4 Vec4::Forward = Vec4( 0.0f, 0.0f, 1.0f, 0.0f );
-const Vec4 Vec4::Back = Vec4( 0.0f, 0.0f, -1.0f, 0.0f );
-const Vec4 Vec4::Space1 = Vec4( 0.0f, 0.0f, 0.0f, 1.0f );
+const Matrix4 Matrix4::Identity = Matrix4(
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 1.0f
+);
 
-Vec4 Vec4::placeholder = Vec4::Zero;
-Vec4 Vec4::temp = Vec4::Zero;
+Matrix4 Matrix4::placeholder = Matrix4::Identity;
+Matrix4 Matrix4::temp = Matrix4::Identity;
 
-Vec4::Vec4( const Vec2& v )
-: x( v.x )
-, y( v.y )
-, z( 0.0f )
-, w( 0.0f )
+Matrix4::Matrix4( const float* m )
 {
-
+	magicalMatrix4Fill( tofpointer( this ), m );
 }
 
-Vec4::Vec4( const Vec3& v )
-: x( v.x )
-, y( v.y )
-, z( v.z )
-, w( 0.0f )
+Matrix4::Matrix4(
+const float rm11, const float rm12, const float rm13, const float rm14,
+const float rm21, const float rm22, const float rm23, const float rm24,
+const float rm31, const float rm32, const float rm33, const float rm34,
+const float rm41, const float rm42, const float rm43, const float rm44 )
 {
-
+	magicalMatrix4FillScalars( tofpointer( this ), rm11, rm12, rm13, rm14, rm21, rm22, rm23, rm24, rm31, rm32, rm33, rm34, rm41, rm42, rm43, rm44 );
 }
 
-Vec4::Vec4( const Vec4& v )
-: x( v.x )
-, y( v.y )
-, z( v.z )
-, w( v.w )
+Matrix4::Matrix4( const Matrix4& m )
 {
-
+	magicalMatrix4Fill( tofpointer( this ), tofpointer( &m ) );
 }
 
-Vec4::Vec4( const float x, const float y, const float z, const float w )
-: x( x )
-, y( y )
-, z( z )
-, w( w )
+Matrix4::Matrix4( void )
 {
-
-}
-
-Vec4::Vec4( void )
-: x( 0.0f )
-, y( 0.0f )
-, z( 0.0f )
-, w( 0.0f )
-{
-
+	magicalMatrix4FillIdentity( tofpointer( this ) );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Vec4> s_vec4_cached_pool( 32, 32 );
+static CachedPool<Matrix4> s_matrix4_cached_pool( 32, 32 );
 #endif
 
-void* Vec4::operator new( size_t s )
+void* Matrix4::operator new( size_t s )
 {
-	if( s != sizeof( Vec4 ) )
+	if( s != sizeof( Matrix4 ) )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_vec4_cached_pool.take();
+	return s_matrix4_cached_pool.take();
 #else
-	void* ptr = malloc( s );
-
-	if( ptr == nullptr )
-		throw std::bad_alloc();
-	
-	return ptr;
+	return ::operator new( s );
 #endif
 }
 
-void Vec4::operator delete( void* ptr )
+void Matrix4::operator delete( void* ptr )
 {
 	if( ptr == nullptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_vec4_cached_pool.add( ptr );
+	s_matrix4_cached_pool.push( ptr );
 #else
-	free( ptr );
+	return ::operator delete( ptr );
 #endif
 }

@@ -22,38 +22,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Plane3 Plane3::fromPoints( const Vec3& a, const Vec3& b, const Vec3& c )
+inline Plane3 Plane3::fromPoints( const Vector3& a, const Vector3& b, const Vector3& c )
 {
 	Plane3 ret;
 	magicalPlane3FillPoints( tofpointer( &ret ), tofpointer( &a ), tofpointer( &b ), tofpointer( &c ) );
 	return ret;
 }
 
-inline Plane3 Plane3::fromPointAndNormal( const Vec3& a, const Vec3& n )
+inline Plane3 Plane3::fromPointAndNormal( const Vector3& a, const Vector3& n )
 {
 	Plane3 ret;
 	magicalPlane3FillPointAndNormal( tofpointer( &ret ), tofpointer( &a ), tofpointer( &n ) );
 	return ret;
 }
 
-inline Plane3 Plane3::fromNormalAndDistance( const Vec3& n, const float d )
+inline Plane3 Plane3::fromNormalAndDistance( const Vector3& n, const float d )
 {
 	Plane3 ret;
 	magicalPlane3FillNormalAndDistance( tofpointer( &ret ), tofpointer( &n ), d );
 	return ret;
 }
 
-inline void Plane3::getNormal( Vec3& out, const Plane3& p )
+inline void Plane3::getNormal( Vector3& out, const Plane3& p )
 {
 	magicalPlane3GetNormal( tofpointer( &out ), tofpointer( &p ) );
 }
 
-inline void Plane3::nearestPoint( Vec3& out, const Plane3& p, const Vec3& point )
+inline void Plane3::nearestPoint( Vector3& out, const Plane3& p, const Vector3& point )
 {
 	magicalPlane3NearestPoint( tofpointer( &out ), tofpointer( &p ), tofpointer( &point ) );
 }
 
-inline void Plane3::projectPoint( Vec3& out, const Plane3& p, const Vec3& point )
+inline void Plane3::projectPoint( Vector3& out, const Plane3& p, const Vector3& point )
 {
 	magicalPlane3ProjectPoint( tofpointer( &out ), tofpointer( &p ), tofpointer( &point ) );
 }
@@ -89,22 +89,22 @@ inline void Plane3::fill( const Plane3& p )
 	x = p.x; y = p.y; z = p.z; d = p.d;
 }
 
-inline void Plane3::fillPoints( const Vec3& a, const Vec3& b, const Vec3& c )
+inline void Plane3::fillPoints( const Vector3& a, const Vector3& b, const Vector3& c )
 {
 	magicalPlane3FillPoints( tofpointer( this ), tofpointer( &a ), tofpointer( &b ), tofpointer( &c ) );
 }
 
-inline void Plane3::fillPointAndNormal( const Vec3& a, const Vec3& n )
+inline void Plane3::fillPointAndNormal( const Vector3& a, const Vector3& n )
 {
 	magicalPlane3FillPointAndNormal( tofpointer( this ), tofpointer( &a ), tofpointer( &n ) );
 }
 
-inline void Plane3::fillNormalAndDistance( const Vec3& n, const float d )
+inline void Plane3::fillNormalAndDistance( const Vector3& n, const float d )
 {
 	magicalPlane3FillNormalAndDistance( tofpointer( this ), tofpointer( &n ), d );
 }
 	
-inline void Plane3::setNormal( const Vec3& n )
+inline void Plane3::setNormal( const Vector3& n )
 {
 	magicalPlane3SetNormal( tofpointer( this ), tofpointer( &n ) );
 }
@@ -114,9 +114,9 @@ inline void Plane3::setDistance( const float d )
 	this->d = d;
 }
 
-inline Vec3 Plane3::getNormal( void ) const
+inline Vector3 Plane3::getNormal( void ) const
 {
-	return Vec3( x, y, z );
+	return Vector3( x, y, z );
 }
 
 inline float Plane3::getDistance( void ) const
@@ -124,26 +124,26 @@ inline float Plane3::getDistance( void ) const
 	return d;
 }
 
-inline Vec3 Plane3::nearestPoint( const Vec3& point ) const
+inline Vector3 Plane3::nearestPoint( const Vector3& point ) const
 {
-	Vec3 ret;
+	Vector3 ret;
 	magicalPlane3NearestPoint( tofpointer( &ret ), tofpointer( this ), tofpointer( &point ) );
 	return ret;
 }
 
-inline Vec3 Plane3::projectPoint( const Vec3& point ) const
+inline Vector3 Plane3::projectPoint( const Vector3& point ) const
 {
-	Vec3 ret;
+	Vector3 ret;
 	magicalPlane3ProjectPoint( tofpointer( &ret ), tofpointer( this ), tofpointer( &point ) );
 	return ret;
 }
 
-inline float Plane3::distanceToPoint( const Vec3& point ) const
+inline float Plane3::distanceToPoint( const Vector3& point ) const
 {
 	return magicalPlane3DistanceToPoint( tofpointer( this ), tofpointer( &point ) );
 }
 
-inline Plane3Classification Plane3::classifyPoint( const Vec3& point ) const
+inline Plane3Classification Plane3::classifyPoint( const Vector3& point ) const
 {
 	return (Plane3Classification) magicalPlane3ClassifyPoint( tofpointer( this ), tofpointer( &point ) );
 }
@@ -183,7 +183,7 @@ inline bool Plane3::intersectsRay3Distance( float& distance, const Ray3& r3, con
 	return magicalPlane3IntersectsRay3Distance( &distance, tofpointer( this ), tofpointer( &r3 ), discard_inside );
 }
 
-inline bool Plane3::containsPoint( const Vec3& point ) const
+inline bool Plane3::containsPoint( const Vector3& point ) const
 {
 	return magicalPlane3ContainsPoint( tofpointer( this ), tofpointer( &point ) );
 }

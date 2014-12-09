@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __AXIS_ANGLE_H__
 #define __AXIS_ANGLE_H__
 
-class Vec3;
+class Vector3;
 class Quaternion;
 
 class AxisAngle
@@ -37,18 +37,24 @@ public:
 
 public:
 	static const AxisAngle Identity;
+	static const AxisAngle Zero;
 	static AxisAngle placeholder;
 	static AxisAngle temp;
 
 public:
-	AxisAngle( const Quaternion& q );
 	AxisAngle( const float x, const float y, const float z, const float w );
-	AxisAngle( const Vec3& axis, const float angle );
+	AxisAngle( const Quaternion& q );
+	AxisAngle( const Vector3& axis, const float angle );
 	AxisAngle( void );
+	static inline AxisAngle fromQuaternion( const Quaternion& q );
 
 public:
-	static inline AxisAngle fromQuaternion( const Quaternion& q );
-	static inline void getAxis( Vec3& out, const AxisAngle& aa );
+	inline bool equals( const AxisAngle& aa ) const;
+	inline bool isZero( void ) const;
+	inline bool isIdentity( void ) const;
+	inline void fill( const AxisAngle& aa );
+	inline void fill( const float x, const float y, const float z, const float w );
+	inline void fillQuaternion( const Quaternion& q );
 
 public:
 	static void* operator new( size_t s );
@@ -58,20 +64,17 @@ public:
 	inline AxisAngle& operator=( const AxisAngle& aa );
 
 public:
-	inline bool isEquals( const AxisAngle& aa ) const;
-	inline bool isIdentity( void ) const;
-	inline void fill( const AxisAngle& aa );
-	inline void fill( const float x, const float y, const float z, const float w );
-	inline void fillQuaternion( const Quaternion& q );
+	static inline void getAxis( Vector3& out, const AxisAngle& aa );
 
-	inline void setAxis( const Vec3& axis );
+public:
+	inline void setAxis( const Vector3& axis );
 	inline void setAngle( const float angle );
-	inline Vec3 getAxis( void ) const;
+	inline Vector3 getAxis( void ) const;
 	inline float getAngle( void ) const;
 };
 
 #include "../c/cAxisAngle.h"
-#include "Vec3.h"
+#include "Vector3.h"
 #include "Quaternion.h"
 #include "AxisAngle.inl"
 

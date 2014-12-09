@@ -25,6 +25,7 @@ SOFTWARE.
 #include "MathMacros.h"
 
 const Quaternion Quaternion::Identity = Quaternion( 0.0f, 0.0f, 0.0f, 1.0f );
+const Quaternion Quaternion::Zero = Quaternion( 0.0f, 0.0f, 0.0f, 0.0f );
 
 Quaternion Quaternion::placeholder = Quaternion::Identity;
 Quaternion Quaternion::temp = Quaternion::Identity;
@@ -38,19 +39,19 @@ Quaternion::Quaternion( const float x, const float y, const float z, const float
 
 }
 
-Quaternion::Quaternion( const Mat4& m )
+Quaternion::Quaternion( const Matrix4& m )
 {
-	fillMat4( m );
+	magicalQuaternionFromMatrix4( tofpointer( this ), tofpointer( &m ) );
 }
 
 Quaternion::Quaternion( const AxisAngle& aa )
 {
-	fillAxisAngle( aa );
+	magicalQuaternionFromAxisAngle( tofpointer( this ), tofpointer( &aa ) );
 }
 
 Quaternion::Quaternion( const EulerAngles& ea )
 {
-	fillEuler( ea );
+	magicalQuaternionFromEulerAngles( tofpointer( this ), tofpointer( &ea ) );
 }
 
 Quaternion::Quaternion( const Quaternion& q )
@@ -84,12 +85,7 @@ void* Quaternion::operator new( size_t s )
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_quaternion_cached_pool.take();
 #else
-	void* ptr = malloc( s );
-
-	if( ptr == nullptr )
-		throw std::bad_alloc();
-	
-	return ptr;
+	return ::operator new( s );
 #endif
 }
 
@@ -99,8 +95,8 @@ void Quaternion::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_quaternion_cached_pool.add( ptr );
+	s_quaternion_cached_pool.push( ptr );
 #else
-	free( ptr );
+	return ::operator delete( ptr );
 #endif
 }

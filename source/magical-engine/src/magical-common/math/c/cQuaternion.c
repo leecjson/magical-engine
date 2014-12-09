@@ -33,6 +33,15 @@ cBool magicalQuaternionEquals( const cQuaternion q1, const cQuaternion q2 )
 		magicalAlmostEqual( q1 _w, q2 _w );
 }
 
+cBool magicalQuaternionIsZero( const cQuaternion q )
+{
+	return
+		magicalAlmostZero( q _x ) &&
+		magicalAlmostZero( q _y ) &&
+		magicalAlmostZero( q _z ) &&
+		magicalAlmostZero( q _w );
+}
+
 cBool magicalQuaternionIsIdentity( const cQuaternion q )
 {
 	return
@@ -42,7 +51,7 @@ cBool magicalQuaternionIsIdentity( const cQuaternion q )
 		magicalAlmostEqual( q _w, 1.0f );
 }
 
-cBool magicalQuaternionIsNormalize( const cQuaternion q )
+cBool magicalQuaternionIsNormalized( const cQuaternion q )
 {
 	return magicalAlmostEqual( q _x * q _x + q _y * q _y + q _z * q _z + q _w * q _w, 1.0f );
 }
@@ -61,6 +70,14 @@ void magicalQuaternionFillIdentity( cQuaternion out )
 	out _y = 0.0f;
 	out _z = 0.0f;
 	out _w = 1.0f;
+}
+
+void magicalQuaternionFillZero( cQuaternion out )
+{
+	out _x = 0.0f;
+	out _y = 0.0f;
+	out _z = 0.0f;
+	out _w = 0.0f;
 }
 
 void magicalQuaternionFill( cQuaternion out, const cQuaternion q )
@@ -135,13 +152,13 @@ void magicalQuaternionFillRotationZ( cQuaternion out, const float angle )
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionFromAxisAngle( cQuaternion out, const cAxisAngle aa )
 {
-	cVec3 n;
+	cVector3 n;
 	float half_angle, s;
 
 	half_angle = aa _w * 0.5f;
 	s = sinf( half_angle );
 
-	magicalVec3Normalize( n, aa );
+	magicalVector3Normalize( n, aa );
 
 	out _w = cosf( half_angle );
     out _x = n _x * s;
@@ -158,15 +175,15 @@ void magicalQuaternionFromAxisAngle( cQuaternion out, const cAxisAngle aa )
  * axis 旋转轴
  * angle 绕旋转轴所旋转的弧度
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionFromAxisAngleScalars( cQuaternion out, const cVec3 axis, const float angle )
+void magicalQuaternionFromAxisAngleScalars( cQuaternion out, const cVector3 axis, const float angle )
 {
-	cVec3 n;
+	cVector3 n;
 	float half_angle, s;
 
 	half_angle = angle * 0.5f;
 	s = sinf( half_angle );
 
-	magicalVec3Normalize( n, axis );
+	magicalVector3Normalize( n, axis );
 
 	out _w = cosf( half_angle );
     out _x = n _x * s;
@@ -231,9 +248,9 @@ void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, c
 #endif
 }
 
-void magicalQuaternionFromMat4( cQuaternion out, const cMat4 m )
+void magicalQuaternionFromMatrix4( cQuaternion out, const cMatrix4 m )
 {
-	magicalMat4GetRotationQuaternion( out, m );
+	magicalMatrix4GetRotationQuaternion( out, m );
 }
 
 void magicalQuaternionToAxisAngle( cAxisAngle out, const cQuaternion q )
@@ -246,9 +263,9 @@ void magicalQuaternionToEulerAngels( cEulerAngles out, const cQuaternion q )
 	magicalEulerAnglesFromQuaternion( out, q );
 }
 
-void magicalQuaternionToMat4( cMat4 out, const cQuaternion q )
+void magicalQuaternionToMatrix4( cMatrix4 out, const cQuaternion q )
 {
-	magicalMat4FillRotationQuaternion( out, q );
+	magicalMatrix4FillRotationQuaternion( out, q );
 }
 
 void magicalQuaternionRotateX( cQuaternion out, const cQuaternion q, const float angle )
@@ -279,7 +296,7 @@ void magicalQuaternionRotateAxisAngle( cQuaternion out, const cQuaternion q, con
 	magicalQuaternionMul( out, q, dst );
 }
 
-void magicalQuaternionRotateAxisAngleScalars( cQuaternion out, const cQuaternion q, const cVec3 axis, const float angle )
+void magicalQuaternionRotateAxisAngleScalars( cQuaternion out, const cQuaternion q, const cVector3 axis, const float angle )
 {
 	cQuaternion dst;
 	magicalQuaternionFromAxisAngleScalars( dst, axis, angle );
@@ -362,24 +379,24 @@ void magicalQuaternionMul( cQuaternion out, const cQuaternion q1, const cQuatern
  * q 四元数
  * v 源向量
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionMulVec3( cVec3 out, const cQuaternion q, const cVec3 v )
+void magicalQuaternionMulVector3( cVector3 out, const cQuaternion q, const cVector3 v )
 {
 	// nVidia SDK implementation
 
-	cVec3 uv, uuv, qvec;
+	cVector3 uv, uuv, qvec;
 
 	qvec _x = q _x;
 	qvec _y = q _y;
 	qvec _z = q _z;
 
-	magicalVec3Cross( uv, qvec, v );
-	magicalVec3Cross( uuv, qvec, uv );
+	magicalVector3Cross( uv, qvec, v );
+	magicalVector3Cross( uuv, qvec, uv );
 
-	magicalVec3Scale( uv, uv, 2.0f * q _w );
-	magicalVec3Scale( uuv, uuv, 2.0f );
+	magicalVector3Scale( uv, uv, 2.0f * q _w );
+	magicalVector3Scale( uuv, uuv, 2.0f );
 
-	magicalVec3Add( out, v, uv );
-	magicalVec3Add( out, out, uuv );
+	magicalVector3Add( out, v, uv );
+	magicalVector3Add( out, out, uuv );
 }
 
 void magicalQuaternionMulScalar( cQuaternion out, const cQuaternion q, const float a )

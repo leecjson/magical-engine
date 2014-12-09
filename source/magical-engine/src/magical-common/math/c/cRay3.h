@@ -28,7 +28,7 @@ SOFTWARE.
 
 typedef float cRay3[6];
 
-#include "cVec3.h"
+#include "cVector3.h"
 #include "cAABB3.h"
 #include "cSphere3.h"
 
@@ -40,14 +40,15 @@ MAGICALAPI_MATH cBool magicalRay3Equals( const cRay3 r31, const cRay3 r32 );
 MAGICALAPI_MATH cBool magicalRay3IsZero( const cRay3 r3 );
 
 MAGICALAPI_MATH void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
-MAGICALAPI_MATH void magicalRay3FillOriginToEnd( cRay3 out, const cVec3 origin, const cVec3 end );
-MAGICALAPI_MATH void magicalRay3FillOriginAndDirection( cRay3 out, const cVec3 origin, const cVec3 direction );
+MAGICALAPI_MATH void magicalRay3FillOriginToEnd( cRay3 out, const cVector3 origin, const cVector3 end );
+MAGICALAPI_MATH void magicalRay3FillOriginAndDirection( cRay3 out, const cVector3 origin, const cVector3 direction );
+MAGICALAPI_MATH void magicalRay3FillZero( cRay3 out );
 MAGICALAPI_MATH void magicalRay3Fill( cRay3 out, const cRay3 r3 );
 
-MAGICALAPI_MATH void magicalRay3GetOrigin( cVec3 out, const cRay3 r3 );
-MAGICALAPI_MATH void magicalRay3GetDirection( cVec3 out, const cRay3 r3 );
-MAGICALAPI_MATH void magicalRay3SetOrigin( cRay3 out, const cVec3 origin );
-MAGICALAPI_MATH void magicalRay3SetDirection( cRay3 out, const cVec3 direction );
+MAGICALAPI_MATH void magicalRay3GetOrigin( cVector3 out, const cRay3 r3 );
+MAGICALAPI_MATH void magicalRay3GetDirection( cVector3 out, const cRay3 r3 );
+MAGICALAPI_MATH void magicalRay3SetOrigin( cRay3 out, const cVector3 origin );
+MAGICALAPI_MATH void magicalRay3SetDirection( cRay3 out, const cVector3 direction );
 
 MAGICALAPI_MATH void magicalRay3DirectionNormalize( cRay3 out, const cRay3 r3 );
 

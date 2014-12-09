@@ -28,41 +28,41 @@ SOFTWARE.
 
 typedef float cAABB3[6];
 
-#include "cVec3.h"
 #include "cRay3.h"
-#include "cMat4.h"
 #include "cPlane3.h"
+#include "cVector3.h"
+#include "cMatrix4.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 MAGICALAPI_MATH cBool magicalAABB3Equals( const cAABB3 aabb1, const cAABB3 aabb2 );
-MAGICALAPI_MATH cBool magicalAABB3IsIdentity( const cAABB3 aabb );
+MAGICALAPI_MATH cBool magicalAABB3IsZero( const cAABB3 aabb );
 
 MAGICALAPI_MATH void magicalAABB3FillScalars( cAABB3 out, const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z );
-MAGICALAPI_MATH void magicalAABB3FillBox( cAABB3 out, const cVec3 center, const float width, const float height, const float depth );
-MAGICALAPI_MATH void magicalAABB3FillMinMax( cAABB3 out, const cVec3 min, const cVec3 max );
-MAGICALAPI_MATH void magicalAABB3FillIdentity( cAABB3 out );
+MAGICALAPI_MATH void magicalAABB3FillBox( cAABB3 out, const cVector3 center, const float width, const float height, const float depth );
+MAGICALAPI_MATH void magicalAABB3FillMinMax( cAABB3 out, const cVector3 min, const cVector3 max );
+MAGICALAPI_MATH void magicalAABB3FillZero( cAABB3 out );
 MAGICALAPI_MATH void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb );
 
-MAGICALAPI_MATH void magicalAABB3GetMin( cVec3 out, const cAABB3 aabb );
-MAGICALAPI_MATH void magicalAABB3GetMax( cVec3 out, const cAABB3 aabb );
-MAGICALAPI_MATH void magicalAABB3SetMin( cAABB3 out, const cVec3 min );
-MAGICALAPI_MATH void magicalAABB3SetMax( cAABB3 out, const cVec3 max );
+MAGICALAPI_MATH void magicalAABB3GetMin( cVector3 out, const cAABB3 aabb );
+MAGICALAPI_MATH void magicalAABB3GetMax( cVector3 out, const cAABB3 aabb );
+MAGICALAPI_MATH void magicalAABB3SetMin( cAABB3 out, const cVector3 min );
+MAGICALAPI_MATH void magicalAABB3SetMax( cAABB3 out, const cVector3 max );
 
 MAGICALAPI_MATH void magicalAABB3ExtendScalars( cAABB3 out, const cAABB3 aabb, const float x, const float y, const float z );
-MAGICALAPI_MATH void magicalAABB3Extend( cAABB3 out, const cAABB3 aabb, const cVec3 v );
+MAGICALAPI_MATH void magicalAABB3Extend( cAABB3 out, const cAABB3 aabb, const cVector3 v );
 MAGICALAPI_MATH void magicalAABB3Merge( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 );
-MAGICALAPI_MATH void magicalAABB3Center( cVec3 out, const cAABB3 aabb );
+MAGICALAPI_MATH void magicalAABB3Center( cVector3 out, const cAABB3 aabb );
 
 MAGICALAPI_MATH float magicalAABB3Size( const cAABB3 aabb );
 MAGICALAPI_MATH float magicalAABB3DiameterX( const cAABB3 aabb );
 MAGICALAPI_MATH float magicalAABB3DiameterY( const cAABB3 aabb );
 MAGICALAPI_MATH float magicalAABB3DiameterZ( const cAABB3 aabb );
 
-MAGICALAPI_MATH void magicalAABB3NearestPoint( cVec3 out, const cAABB3 aabb, const cVec3 point );
-MAGICALAPI_MATH void magicalAABB3Transform( cAABB3 out, const cAABB3 aabb, const cMat4 m );
+MAGICALAPI_MATH void magicalAABB3NearestPoint( cVector3 out, const cAABB3 aabb, const cVector3 point );
+MAGICALAPI_MATH void magicalAABB3Transform( cAABB3 out, const cAABB3 aabb, const cMatrix4 m );
 
 MAGICALAPI_MATH cBool magicalAABB3Intersects( const cAABB3 aabb1, const cAABB3 aabb2 );
 MAGICALAPI_MATH cBool magicalAABB3IntersectsPlane3( const cAABB3 aabb, const cPlane3 p );
@@ -72,7 +72,7 @@ MAGICALAPI_MATH cBool magicalAABB3IntersectsRay3( const cAABB3 aabb, const cRay3
 MAGICALAPI_MATH cBool magicalAABB3IntersectsPart( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 );
 MAGICALAPI_MATH cBool magicalAABB3IntersectsRay3Distance( float* dist, const cAABB3 aabb, const cRay3 r3, const cBool discard_inside );
 
-MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB3 aabb, const cVec3 point );
+MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB3 aabb, const cVector3 point );
 
 #ifdef __cplusplus
 }

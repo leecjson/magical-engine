@@ -42,6 +42,15 @@ cBool magicalAxisAngleIsIdentity( const cAxisAngle aa )
 		magicalAlmostZero( aa _w );
 }
 
+cBool magicalAxisAngleIsZero( const cAxisAngle aa )
+{
+	return
+		magicalAlmostZero( aa _x ) &&
+		magicalAlmostZero( aa _y ) &&
+		magicalAlmostZero( aa _z ) &&
+		magicalAlmostZero( aa _w );
+}
+
 void magicalAxisAngleFillScalars( cAxisAngle out, const float x, const float y, const float z, const float w )
 {
 	out _x = x;
@@ -50,7 +59,7 @@ void magicalAxisAngleFillScalars( cAxisAngle out, const float x, const float y, 
 	out _w = w;
 }
 
-void magicalAxisAngleFillAxisAngleScalars( cAxisAngle out, const cVec3 axis, const float angle )
+void magicalAxisAngleFillAxisAngleScalars( cAxisAngle out, const cVector3 axis, const float angle )
 {
 	out _x = axis _x;
 	out _y = axis _y;
@@ -63,6 +72,14 @@ void magicalAxisAngleFillIdentity( cAxisAngle out )
 	out _x = 0.0f;
 	out _y = 0.0f;
 	out _z = 1.0f;
+	out _w = 0.0f;
+}
+
+void magicalAxisAngleFillZero( cAxisAngle out )
+{
+	out _x = 0.0f;
+	out _y = 0.0f;
+	out _z = 0.0f;
 	out _w = 0.0f;
 }
 
@@ -101,7 +118,7 @@ void magicalAxisAngleFromQuaternion( cAxisAngle out, const cQuaternion q )
 	}
 }
 
-void magicalAxisAngleSetAxis( cAxisAngle out, const cVec3 axis )
+void magicalAxisAngleSetAxis( cAxisAngle out, const cVector3 axis )
 {
 	out _x = axis _x;
 	out _y = axis _y;
@@ -113,7 +130,7 @@ void magicalAxisAngleSetAngle( cAxisAngle out, const float angle )
 	out _w = angle;
 }
 
-void magicalAxisAngleGetAxis( cVec3 out, const cAxisAngle aa )
+void magicalAxisAngleGetAxis( cVector3 out, const cAxisAngle aa )
 {
 	out _x = aa _x;
 	out _y = aa _y;

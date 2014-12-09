@@ -24,7 +24,7 @@ SOFTWARE.
 #include "AABB3.h"
 #include "MathMacros.h"
 
-const AABB3 AABB3::Identity = AABB3( FLT_MAX, FLT_MAX, FLT_MAX, -FLT_MAX, -FLT_MAX, -FLT_MAX );
+const AABB3 AABB3::Zero = AABB3( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 
 AABB3::AABB3( const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z )
 : min_x( min_x )
@@ -37,7 +37,7 @@ AABB3::AABB3( const float min_x, const float min_y, const float min_z, const flo
 
 }
 
-AABB3::AABB3( const Vec3& min, const Vec3& max )
+AABB3::AABB3( const Vector3& min, const Vector3& max )
 : min_x( min.x )
 , min_y( min.y )
 , min_z( min.z )
@@ -48,9 +48,9 @@ AABB3::AABB3( const Vec3& min, const Vec3& max )
 
 }
 
-AABB3::AABB3( const Vec3& center, const float width, const float height, const float depth )
+AABB3::AABB3( const Vector3& center, const float width, const float height, const float depth )
 {
-	fillBox( center, width, height, depth );
+	magicalAABB3FillBox( tofpointer( this ), tofpointer( &center ), width, height, depth );
 }
 
 AABB3::AABB3( const AABB3& aabb )
@@ -66,12 +66,12 @@ AABB3::AABB3( const AABB3& aabb )
 
 
 AABB3::AABB3( void )
-: min_x( FLT_MAX )
-, min_y( FLT_MAX )
-, min_z( FLT_MAX )
-, max_x( -FLT_MAX )
-, max_y( -FLT_MAX )
-, max_z( -FLT_MAX )
+: min_x( 0.0f )
+, min_y( 0.0f )
+, min_z( 0.0f )
+, max_x( 0.0f )
+, max_y( 0.0f )
+, max_z( 0.0f )
 {
 
 }

@@ -21,91 +21,80 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Vec3.h"
+#include "Vector2.h"
 #include "MathMacros.h"
 
-const Vec3 Vec3::Zero = Vec3( 0.0f, 0.0f, 0.0f );
-const Vec3 Vec3::One = Vec3( 1.0f, 1.0f, 1.0f );
-const Vec3 Vec3::Up = Vec3( 0.0f, 1.0f, 0.0f );
-const Vec3 Vec3::Down = Vec3( 0.0f, -1.0f, 0.0f );
-const Vec3 Vec3::Right = Vec3( 1.0f, 0.0f, 0.0f );
-const Vec3 Vec3::Left = Vec3( -1.0f, 0.0f, 0.0f );
-const Vec3 Vec3::Forward = Vec3( 0.0f, 0.0f, 1.0f );
-const Vec3 Vec3::Back = Vec3( 0.0f, 0.0f, -1.0f );
+const Vector2 Vector2::Zero = Vector2( 0.0f, 0.0f );
+const Vector2 Vector2::One = Vector2( 1.0f, 1.0f );
+const Vector2 Vector2::Right = Vector2( 1.0f, 0.0f );
+const Vector2 Vector2::Left = Vector2( -1.0f, 0.0f );
+const Vector2 Vector2::Up = Vector2( 0.0f, 1.0f );
+const Vector2 Vector2::Down = Vector2( 0.0f, -1.0f );
 
-Vec3 Vec3::placeholder = Vec3::Zero;
-Vec3 Vec3::temp = Vec3::Zero;
+Vector2 Vector2::placeholder = Vector2::Zero;
+Vector2 Vector2::temp = Vector2::Zero;
 
-Vec3::Vec3( const Vec4& v )
+Vector2::Vector2( const Vector4& v )
 : x( v.x )
 , y( v.y )
-, z( v.z )
-{
-
-}
-
-Vec3::Vec3( const Vec2& v )
-: x( v.x )
-, y( v.y )
-, z( 0.0f )
-{
-
-}
-
-Vec3::Vec3( const Vec3& v )
-: x( v.x )
-, y( v.y )
-, z( v.z )
-{
-
-}
-
-Vec3::Vec3( const float x, const float y, const float z )
-: x( x )
-, y( y )
-, z( z )
 {
 	
 }
 
-Vec3::Vec3( void )
-: x( 0.0f )
-, y( 0.0f )
-, z( 0.0f )
+Vector2::Vector2( const Vector3& v )
+: x( v.x )
+, y( v.y )
 {
 
+}
+
+Vector2::Vector2( const float x, const float y )
+: x( x )
+, y( y )
+{
+
+}
+
+Vector2::Vector2( const Vector2& v )
+: x( v.x )
+, y( v.y )
+{
+	
+}
+
+Vector2::Vector2( void )
+: x( 0.0f )
+, y( 0.0f )
+{
+	
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Vec3> s_vec3_cached_pool( 128, 128 );
+static CachedPool<Vector2> s_vector2_cached_pool( 128, 128 );
 #endif
 
-void* Vec3::operator new( size_t s )
+void* Vector2::operator new( size_t s )
 {
-	if( s != sizeof( Vec3 ) )
+	if( s != sizeof( Vector2 ) )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_vec3_cached_pool.take();
+	return s_vector2_cached_pool.take();
 #else
-	void* ptr = malloc( s );
-
-	if( ptr == nullptr )
-		throw std::bad_alloc();
-	
-	return ptr;
+	return ::operator new( s );
 #endif
 }
 
-void Vec3::operator delete( void* ptr )
+void Vector2::operator delete( void* ptr )
 {
 	if( ptr == nullptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_vec3_cached_pool.add( ptr );
+	s_vector2_cached_pool.push( ptr );
 #else
-	free( ptr );
+	return ::operator delete( ptr );
 #endif
 }
+

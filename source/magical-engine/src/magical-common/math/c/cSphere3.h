@@ -28,19 +28,23 @@ SOFTWARE.
 
 typedef float cSphere3[4];
 
-#include "cVec3.h"
 #include "cRay3.h"
 #include "cAABB3.h"
 #include "cPlane3.h"
+#include "cVector3.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 MAGICALAPI_MATH cBool magicalSphere3Equals( const cSphere3 sp1, const cSphere3 sp2 );
+MAGICALAPI_MATH cBool magicalSphere3IsZero( const cSphere3 sp );
+MAGICALAPI_MATH cBool magicalSphere3IsOne( const cSphere3 sp );
 
 MAGICALAPI_MATH void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r );
-MAGICALAPI_MATH void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVec3 center, const float r );
+MAGICALAPI_MATH void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVector3 center, const float r );
+MAGICALAPI_MATH void magicalSphere3FillZero( cSphere3 out );
+MAGICALAPI_MATH void magicalSphere3FillOne( cSphere3 out );
 MAGICALAPI_MATH void magicalSphere3Fill( cSphere3 out, const cSphere3 sp );
 
 MAGICALAPI_MATH cBool magicalSphere3Intersects( const cSphere3 sp1, const cSphere3 sp2 );
@@ -50,7 +54,7 @@ MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3( const cSphere3 sp, const cRa
 
 MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
 
-MAGICALAPI_MATH cBool magicalSphere3ContainsPoint( const cSphere3 sp, const cVec3 point );
+MAGICALAPI_MATH cBool magicalSphere3ContainsPoint( const cSphere3 sp, const cVector3 point );
 
 #ifdef __cplusplus
 }

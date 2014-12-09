@@ -75,7 +75,7 @@ public:
 		}
 	}
 
-	void add( void* ptr )
+	void push( void* ptr )
 	{
 		grow_capacity();
 

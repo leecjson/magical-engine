@@ -28,7 +28,7 @@ SOFTWARE.
 
 typedef float cAxisAngle[4];
 
-#include "cVec3.h"
+#include "cVector3.h"
 #include "cQuaternion.h"
 
 #ifdef __cplusplus
@@ -37,18 +37,20 @@ extern "C" {
 
 MAGICALAPI_MATH cBool magicalAxisAngleEquals( const cAxisAngle aa1, const cAxisAngle aa2 );
 MAGICALAPI_MATH cBool magicalAxisAngleIsIdentity( const cAxisAngle aa );
+MAGICALAPI_MATH cBool magicalAxisAngleIsZero( const cAxisAngle aa );
 
 MAGICALAPI_MATH void magicalAxisAngleFillScalars( cAxisAngle out, const float x, const float y, const float z, const float w );
-MAGICALAPI_MATH void magicalAxisAngleFillAxisAngleScalars( cAxisAngle out, const cVec3 axis, const float angle );
+MAGICALAPI_MATH void magicalAxisAngleFillAxisAngleScalars( cAxisAngle out, const cVector3 axis, const float angle );
 MAGICALAPI_MATH void magicalAxisAngleFillIdentity( cAxisAngle out );
+MAGICALAPI_MATH void magicalAxisAngleFillZero( cAxisAngle out );
 MAGICALAPI_MATH void magicalAxisAngleFill( cAxisAngle out, const cAxisAngle aa );
 
 MAGICALAPI_MATH void magicalAxisAngleFromQuaternion( cAxisAngle out, const cQuaternion q );
 
-MAGICALAPI_MATH void magicalAxisAngleSetAxis( cAxisAngle out, const cVec3 axis );
+MAGICALAPI_MATH void magicalAxisAngleSetAxis( cAxisAngle out, const cVector3 axis );
 MAGICALAPI_MATH void magicalAxisAngleSetAngle( cAxisAngle out, const float angle );
 
-MAGICALAPI_MATH void magicalAxisAngleGetAxis( cVec3 out, const cAxisAngle aa );
+MAGICALAPI_MATH void magicalAxisAngleGetAxis( cVector3 out, const cAxisAngle aa );
 MAGICALAPI_MATH float magicalAxisAngleGetAngle( const cAxisAngle aa );
 
 #ifdef __cplusplus

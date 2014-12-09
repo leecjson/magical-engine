@@ -21,85 +21,94 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Vec2.h"
+#include "Vector4.h"
 #include "MathMacros.h"
 
-const Vec2 Vec2::Zero = Vec2( 0.0f, 0.0f );
-const Vec2 Vec2::One = Vec2( 1.0f, 1.0f );
-const Vec2 Vec2::Right = Vec2( 1.0f, 0.0f );
-const Vec2 Vec2::Left = Vec2( -1.0f, 0.0f );
-const Vec2 Vec2::Up = Vec2( 0.0f, 1.0f );
-const Vec2 Vec2::Down = Vec2( 0.0f, -1.0f );
+const Vector4 Vector4::Zero = Vector4( 0.0f, 0.0f, 0.0f, 0.0f );
+const Vector4 Vector4::One = Vector4( 1.0f, 1.0f, 1.0f, 1.0f );
+const Vector4 Vector4::Up = Vector4( 0.0f, 1.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Down = Vector4( 0.0f, -1.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Right = Vector4( 1.0f, 0.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Left = Vector4( -1.0f, 0.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Forward = Vector4( 0.0f, 0.0f, 1.0f, 0.0f );
+const Vector4 Vector4::Back = Vector4( 0.0f, 0.0f, -1.0f, 0.0f );
+const Vector4 Vector4::Space0 = Vector4( 0.0f, 0.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Space1 = Vector4( 0.0f, 0.0f, 0.0f, 1.0f );
+const Vector4 Vector4::Space2 = Vector4( 0.0f, 0.0f, 0.0f, 2.0f );
 
-Vec2 Vec2::placeholder = Vec2::Zero;
-Vec2 Vec2::temp = Vec2::Zero;
+Vector4 Vector4::placeholder = Vector4::Zero;
+Vector4 Vector4::temp = Vector4::Zero;
 
-Vec2::Vec2( const Vec4& v )
+Vector4::Vector4( const Vector2& v )
 : x( v.x )
 , y( v.y )
+, z( 0.0f )
+, w( 0.0f )
 {
 
 }
 
-Vec2::Vec2( const Vec3& v )
+Vector4::Vector4( const Vector3& v )
 : x( v.x )
 , y( v.y )
+, z( v.z )
+, w( 0.0f )
 {
 
 }
 
-Vec2::Vec2( const float x, const float y )
+Vector4::Vector4( const Vector4& v )
+: x( v.x )
+, y( v.y )
+, z( v.z )
+, w( v.w )
+{
+
+}
+
+Vector4::Vector4( const float x, const float y, const float z, const float w )
 : x( x )
 , y( y )
+, z( z )
+, w( w )
 {
 
 }
 
-Vec2::Vec2( const Vec2& v )
-: x( v.x )
-, y( v.y )
-{
-	
-}
-
-Vec2::Vec2( void )
+Vector4::Vector4( void )
 : x( 0.0f )
 , y( 0.0f )
+, z( 0.0f )
+, w( 0.0f )
 {
-	
+
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Vec2> s_vec2_cached_pool( 128, 128 );
+static CachedPool<Vector4> s_vector4_cached_pool( 32, 32 );
 #endif
 
-void* Vec2::operator new( size_t s )
+void* Vector4::operator new( size_t s )
 {
-	if( s != sizeof( Vec2 ) )
+	if( s != sizeof( Vector4 ) )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_vec2_cached_pool.take();
+	return s_vector4_cached_pool.take();
 #else
-	void* ptr = malloc( s );
-
-	if( ptr == nullptr )
-		throw std::bad_alloc();
-	
-	return ptr;
+	return ::operator new( s );
 #endif
 }
 
-void Vec2::operator delete( void* ptr )
+void Vector4::operator delete( void* ptr )
 {
 	if( ptr == nullptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_vec2_cached_pool.add( ptr );
+	s_vector4_cached_pool.push( ptr );
 #else
-	free( ptr );
+	return ::operator delete( ptr );
 #endif
 }
-

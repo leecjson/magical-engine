@@ -21,3 +21,82 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+
+inline AxisAngle AxisAngle::fromQuaternion( const Quaternion& q )
+{
+	AxisAngle ret;
+	magicalAxisAngleFromQuaternion( tofpointer( &ret ), tofpointer( &q ) );
+	return ret;
+}
+
+inline bool AxisAngle::equals( const AxisAngle& aa ) const
+{
+	return magicalAxisAngleEquals( tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline bool AxisAngle::isZero( void ) const
+{
+	return magicalAxisAngleIsZero( tofpointer( this ) );
+}
+
+inline bool AxisAngle::isIdentity( void ) const
+{
+	return magicalAxisAngleIsIdentity( tofpointer( this ) );
+}
+
+inline void AxisAngle::fill( const AxisAngle& aa )
+{
+	magicalAxisAngleFill( tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline void AxisAngle::fill( const float x, const float y, const float z, const float w )
+{
+	magicalAxisAngleFillScalars( tofpointer( this ), x, y, z, w );
+}
+
+inline void AxisAngle::fillQuaternion( const Quaternion& q )
+{
+	magicalAxisAngleFromQuaternion( tofpointer( this ), tofpointer( &q ) );
+}
+
+inline bool AxisAngle::operator==( const AxisAngle& aa ) const
+{
+	return magicalAxisAngleEquals( tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline bool AxisAngle::operator!=( const AxisAngle& aa ) const
+{
+	return !magicalAxisAngleEquals( tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline AxisAngle& AxisAngle::operator=( const AxisAngle& aa )
+{
+	magicalAxisAngleFill( tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline void AxisAngle::getAxis( Vector3& out, const AxisAngle& aa )
+{
+	magicalAxisAngleGetAxis( tofpointer( &out ), tofpointer( &aa ) );
+}
+
+inline void AxisAngle::setAxis( const Vector3& axis )
+{
+	magicalAxisAngleSetAxis( tofpointer( this ), tofpointer( &axis ) );
+}
+
+inline void AxisAngle::setAngle( const float angle )
+{
+	magicalAxisAngleSetAngle( tofpointer( this ), angle );
+}
+
+inline Vector3 AxisAngle::getAxis( void ) const
+{
+	Vector3 ret;
+	magicalAxisAngleGetAxis( tofpointer( &ret ), tofpointer( this ) );
+	return ret;
+}
+
+inline float AxisAngle::getAngle( void ) const
+{
+	return magicalAxisAngleGetAngle( tofpointer( this ) );
+}

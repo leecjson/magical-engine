@@ -24,7 +24,7 @@ SOFTWARE.
 #include "Straight2.h"
 #include "MathMacros.h"
 
-inline Straight2 Straight2::fromNormalAndDistance( const Vec2& n, const float d )
+inline Straight2 Straight2::fromNormalAndDistance( const Vector2& n, const float d )
 {
 
 }

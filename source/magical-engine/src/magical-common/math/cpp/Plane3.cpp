@@ -36,17 +36,17 @@ Plane3::Plane3( const float x, const float y, const float z, const float d )
 	magicalPlane3FillScalars( tofpointer( this ), x, y, z, d );
 }
 
-Plane3::Plane3( const Vec3& a, const Vec3& b, const Vec3& c )
+Plane3::Plane3( const Vector3& a, const Vector3& b, const Vector3& c )
 {
 	fillPoints( a, b, c );
 }
 
-Plane3::Plane3( const Vec3& a, const Vec3& n )
+Plane3::Plane3( const Vector3& a, const Vector3& n )
 {
 	fillPointAndNormal( a, n );
 }
 
-Plane3::Plane3( const Vec3& n, const float d )
+Plane3::Plane3( const Vector3& n, const float d )
 {
 	magicalPlane3FillNormalAndDistance( tofpointer( this ), tofpointer( &n ), d );
 }

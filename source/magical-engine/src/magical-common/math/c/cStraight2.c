@@ -24,23 +24,39 @@ SOFTWARE.
 #include "cStraight2.h"
 #include "cMathMacros.h"
 
-void magicalStraight2FillPointAndNormal( cStraight2 out, const cVec2 p, const cVec2 n )
+cBool magicalStraight2Equals( const cStraight2 st1, const cStraight2 st2 )
 {
-	cVec2 nn;
-	magicalVec2Normalize( nn, n );
+	return
+		magicalAlmostEqual( st1 _x, st2 _x ) &&
+		magicalAlmostEqual( st1 _y, st2 _y ) &&
+		magicalAlmostEqual( st1 _z, st2 _z );
+}
+
+cBool magicalStraight2IsZero( const cStraight2 st )
+{
+	return
+		magicalAlmostZero( st _x ) &&
+		magicalAlmostZero( st _y ) &&
+		magicalAlmostZero( st _z );
+}
+
+void magicalStraight2FillPointAndNormal( cStraight2 out, const cVector2 p, const cVector2 n )
+{
+	cVector2 nn;
+	magicalVector2Normalize( nn, n );
 
 	out _x = nn _x;
 	out _y = nn _y;
 	out _z = p _x * nn _x + p _y * nn _y;
 }
 
-void magicalStraight2FillNormalAndDistance( cStraight2 out, const cVec2 n, const float d )
+void magicalStraight2FillNormalAndDistance( cStraight2 out, const cVector2 n, const float d )
 {
 	out _x = n _x;
 	out _y = n _y;
 	out _z = d;
 
-	magicalVec2Normalize( out, out );
+	magicalVector2Normalize( out, out );
 }
 
 void magicalStraight2FillScalars( cStraight2 out, const float x, const float y, const float d )
@@ -49,7 +65,14 @@ void magicalStraight2FillScalars( cStraight2 out, const float x, const float y, 
 	out _y = y;
 	out _z = d;
 
-	magicalVec2Normalize( out, out );
+	magicalVector2Normalize( out, out );
+}
+
+void magicalStraight2FillZero( cStraight2 out )
+{
+	out _x = 0.0f;
+	out _y = 0.0f;
+	out _z = 0.0f;
 }
 
 void magicalStraight2Fill( cStraight2 out, const cStraight2 st )
@@ -99,7 +122,7 @@ int magicalStraight2ClassifyStraight2( const cStraight2 st1, const cStraight2 st
 	if( magicalAlmostZero( dot ) )
 		return -1;
 
-	if( magicalVec2Equals( st1, st2 ) )
+	if( magicalVector2Equals( st1, st2 ) )
 		return +1;
 
 	return 0;

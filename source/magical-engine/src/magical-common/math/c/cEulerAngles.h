@@ -28,8 +28,8 @@ SOFTWARE.
 
 typedef float cEulerAngles[3];
 
+#include "cMatrix4.h"
 #include "cQuaternion.h"
-#include "cMat4.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,10 +48,10 @@ MAGICALAPI_MATH void magicalEulerAnglesMul( cEulerAngles out, const cEulerAngles
 MAGICALAPI_MATH void magicalEulerAnglesMulScalar( cEulerAngles out, const cEulerAngles ea, const float a );
 
 MAGICALAPI_MATH void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q );
-MAGICALAPI_MATH void magicalEulerAnglesFromMat4( cEulerAngles out, const cMat4 m );
+MAGICALAPI_MATH void magicalEulerAnglesFromMatrix4( cEulerAngles out, const cMatrix4 m );
 
 MAGICALAPI_MATH void magicalEulerAnglesToQuaternion( cQuaternion out, const cEulerAngles ea );
-MAGICALAPI_MATH void magicalEulerAnglesToMat4( cMat4 out, const cEulerAngles ea );
+MAGICALAPI_MATH void magicalEulerAnglesToMatrix4( cMatrix4 out, const cEulerAngles ea );
 
 MAGICALAPI_MATH void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea );
 

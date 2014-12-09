@@ -33,6 +33,24 @@ cBool magicalSphere3Equals( const cSphere3 sp1, const cSphere3 sp2 )
 		magicalAlmostEqual( sp1 _r, sp2 _r );
 }
 
+cBool magicalSphere3IsZero( const cSphere3 sp )
+{
+	return
+		magicalAlmostZero( sp _x ) &&
+		magicalAlmostZero( sp _y ) &&
+		magicalAlmostZero( sp _z ) &&
+		magicalAlmostZero( sp _r );
+}
+
+cBool magicalSphere3IsOne( const cSphere3 sp )
+{
+	return
+		magicalAlmostZero( sp _x ) &&
+		magicalAlmostZero( sp _y ) &&
+		magicalAlmostZero( sp _z ) &&
+		magicalAlmostEqual( sp _r, 1.0f );
+}
+
 void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r )
 {
 	out _x = x;
@@ -41,12 +59,28 @@ void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, cons
 	out _r = r;
 }
 
-void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVec3 center, const float r )
+void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVector3 center, const float r )
 {
 	out _x = center _x;
 	out _y = center _y;
 	out _z = center _z;
 	out _r = r;
+}
+
+void magicalSphere3FillZero( cSphere3 out )
+{
+	out _x = 0.0f;
+	out _y = 0.0f;
+	out _z = 0.0f;
+	out _r = 0.0f;
+}
+
+void magicalSphere3FillOne( cSphere3 out )
+{
+	out _x = 0.0f;
+	out _y = 0.0f;
+	out _z = 0.0f;
+	out _r = 1.0f;
 }
 
 void magicalSphere3Fill( cSphere3 out, const cSphere3 sp )
@@ -59,7 +93,7 @@ void magicalSphere3Fill( cSphere3 out, const cSphere3 sp )
 
 cBool magicalSphere3Intersects( const cSphere3 sp1, const cSphere3 sp2 )
 {
-	return magicalVec3DistanceBetweenSq( sp1, sp2 ) <= ( sp1 _r + sp2 _r ) * ( sp1 _r + sp2 _r );
+	return magicalVector3DistanceBetweenSq( sp1, sp2 ) <= ( sp1 _r + sp2 _r ) * ( sp1 _r + sp2 _r );
 }
 
 cBool magicalSphere3IntersectsAABB3( const cSphere3 sp, const cAABB3 aabb )
@@ -82,7 +116,7 @@ cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, cons
 	return magicalRay3IntersectsSphere3Distance( dist, r3, sp, discard_inside );
 }
 
-cBool magicalSphere3ContainsPoint( const cSphere3 sp, const cVec3 point )
+cBool magicalSphere3ContainsPoint( const cSphere3 sp, const cVector3 point )
 {
 	float dx = point _x - sp _x;
 	float dy = point _y - sp _y;

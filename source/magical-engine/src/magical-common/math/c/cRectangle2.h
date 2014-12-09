@@ -28,13 +28,13 @@ SOFTWARE.
 
 typedef float cRectangle2[4];
 
-#include "cVec2.h"
+#include "cVector2.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGICALAPI_MATH void magicalRectangle2FillBox( cRectangle2 out, const cVec2 center, const float w, const float h );
+MAGICALAPI_MATH void magicalRectangle2FillBox( cRectangle2 out, const cVector2 center, const float w, const float h );
 MAGICALAPI_MATH void magicalRectangle2Fill( cRectangle2 out, const cRectangle2 rect );
 
 #ifdef __cplusplus

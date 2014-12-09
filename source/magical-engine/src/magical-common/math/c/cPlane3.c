@@ -33,6 +33,15 @@ cBool magicalPlane3Equals( const cPlane3 p1, const cPlane3 p2 )
 		magicalAlmostEqual( p1 _d, p2 _d );
 }
 
+cBool magicalPlane3IsZero( const cPlane3 p )
+{
+	return
+		magicalAlmostZero( p _x ) &&
+		magicalAlmostZero( p _y ) &&
+		magicalAlmostZero( p _z ) &&
+		magicalAlmostZero( p _d );
+}
+
 void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const float z, const float d )
 {
 	out _x = x;
@@ -40,7 +49,7 @@ void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const 
 	out _z = z;
 	out _d = d;
 
-	magicalVec3Normalize( out, out );
+	magicalVector3Normalize( out, out );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -50,14 +59,14 @@ void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const 
  * n 表面法向量
  * d 原点到平面的距离
  *-----------------------------------------------------------------------------*/
-void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVec3 n, const float d )
+void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVector3 n, const float d )
 {
 	out _x = n _x;
 	out _y = n _y;
 	out _z = n _z;
 	out _d = d;
 
-	magicalVec3Normalize( out, out );
+	magicalVector3Normalize( out, out );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -69,10 +78,10 @@ void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVec3 n, const float
  * p 平面上任意一点
  * n 表面法向量
  *-----------------------------------------------------------------------------*/
-void magicalPlane3FillPointAndNormal( cPlane3 out, const cVec3 p, const cVec3 n )
+void magicalPlane3FillPointAndNormal( cPlane3 out, const cVector3 p, const cVector3 n )
 {
-	cVec3 nn;
-	magicalVec3Normalize( nn, n );
+	cVector3 nn;
+	magicalVector3Normalize( nn, n );
 
 	out _x = nn _x;
 	out _y = nn _y;
@@ -93,9 +102,9 @@ void magicalPlane3FillPointAndNormal( cPlane3 out, const cVec3 p, const cVec3 n 
  * b 第二个点
  * c 第三个点
  *-----------------------------------------------------------------------------*/
-void magicalPlane3FillPoints( cPlane3 out, const cVec3 a, const cVec3 b, const cVec3 c )
+void magicalPlane3FillPoints( cPlane3 out, const cVector3 a, const cVector3 b, const cVector3 c )
 {
-	cVec3 n, e3, e1;
+	cVector3 n, e3, e1;
 	
 	e3 _x = b _x - a _x;
 	e3 _y = b _y - a _y;
@@ -105,16 +114,24 @@ void magicalPlane3FillPoints( cPlane3 out, const cVec3 a, const cVec3 b, const c
 	e1 _y = c _y - b _y;
 	e1 _z = c _z - b _z;
 
-	magicalVec3Cross( n, e3, e1 );
+	magicalVector3Cross( n, e3, e1 );
 	
-	debugassert( !magicalVec3IsZero( n ), "invaild operate!" );
+	debugassert( !magicalVector3IsZero( n ), "invaild operate!" );
 
-	magicalVec3Normalize( n, n );
+	magicalVector3Normalize( n, n );
 
 	out _x = n _x;
 	out _y = n _y;
 	out _z = n _z;
 	out _d = a _x * n _x + a _y * n _y + a _z * n _z;
+}
+
+void magicalPlane3FillZero( cPlane3 out )
+{
+	out _x = 0.0f;
+	out _y = 0.0f;
+	out _z = 0.0f;
+	out _d = 0.0f;
 }
 
 void magicalPlane3Fill( cPlane3 out, const cPlane3 p )
@@ -131,13 +148,13 @@ void magicalPlane3Fill( cPlane3 out, const cPlane3 p )
  * out 目标平面
  * n 设置的法向量
  *-----------------------------------------------------------------------------*/
-void magicalPlane3SetNormal( cPlane3 out, const cVec3 n )
+void magicalPlane3SetNormal( cPlane3 out, const cVector3 n )
 {
 	out _x = n _x;
 	out _y = n _y;
 	out _z = n _z;
 
-	magicalVec3Normalize( out, out );
+	magicalVector3Normalize( out, out );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -146,7 +163,7 @@ void magicalPlane3SetNormal( cPlane3 out, const cVec3 n )
  * out p的法向量
  * p 源平面
  *-----------------------------------------------------------------------------*/
-void magicalPlane3GetNormal( cVec3 out, const cPlane3 p )
+void magicalPlane3GetNormal( cVector3 out, const cPlane3 p )
 {
 	out _x = p _x;
 	out _y = p _y;
@@ -165,19 +182,19 @@ void magicalPlane3GetNormal( cVec3 out, const cPlane3 p )
  * p 目标平面
  * point 任意点
  *-----------------------------------------------------------------------------*/
-void magicalPlane3NearestPoint( cVec3 out, const cPlane3 p, const cVec3 point )
+void magicalPlane3NearestPoint( cVector3 out, const cPlane3 p, const cVector3 point )
 {
-	cVec3 scale_n;
+	cVector3 scale_n;
 	float distance = p _d - p _x * point _x + p _y * point _y + p _z * point _z;
 
-	magicalVec3Scale( scale_n, p, distance );
-	magicalVec3Add( out, point, scale_n );
+	magicalVector3Scale( scale_n, p, distance );
+	magicalVector3Add( out, point, scale_n );
 }
 
 /*-----------------------------------------------------------------------------*\
  * 计算一个点以正交投影的方式投影到平面P后的点
  *-----------------------------------------------------------------------------*/
-void magicalPlane3ProjectPoint( cVec3 out, const cPlane3 p, const cVec3 point )
+void magicalPlane3ProjectPoint( cVector3 out, const cPlane3 p, const cVector3 point )
 {
 	magicalPlane3NearestPoint( out, p , point );
 }
@@ -192,7 +209,7 @@ void magicalPlane3ProjectPoint( cVec3 out, const cPlane3 p, const cVec3 point )
  * out p的法向量
  * p 目标平面
  *-----------------------------------------------------------------------------*/
-float magicalPlane3DistanceToPoint( const cPlane3 p, const cVec3 point )
+float magicalPlane3DistanceToPoint( const cPlane3 p, const cVector3 point )
 {
 	return p _x * point _x + p _y * point _y + p _z * point _z - p _d;
 }
@@ -207,7 +224,7 @@ float magicalPlane3DistanceToPoint( const cPlane3 p, const cVec3 point )
  *        -1 在平面后方
  *         0 刚好在平面上
  *-----------------------------------------------------------------------------*/
-int magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 point )
+int magicalPlane3ClassifyPoint( const cPlane3 p, const cVector3 point )
 {
 	float distance = p _x * point _x + p _y * point _y + p _z * point _z - p _d;
 
@@ -310,7 +327,7 @@ int magicalPlane3ClassifySphere3( const cPlane3 p, const cSphere3 sp )
  *-----------------------------------------------------------------------------*/
 cBool magicalPlane3Intersects( const cPlane3 p1, const cPlane3 p2 )
 {
-	if( magicalVec3Equals( p1, p2 ) )
+	if( magicalVector3Equals( p1, p2 ) )
 	{
 		return magicalAlmostEqual( p1 _d, p2 _d );
 	}
@@ -361,7 +378,7 @@ cBool magicalPlane3IntersectsRay3Distance( float* dist, const cPlane3 p, const c
  * point 目标点
  * return 是否包含
  *-----------------------------------------------------------------------------*/
-cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVec3 point )
+cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVector3 point )
 {
 	return magicalAlmostZero( p _x * point _x + p _y * point _y + p _z * point _z - p _d );
 }

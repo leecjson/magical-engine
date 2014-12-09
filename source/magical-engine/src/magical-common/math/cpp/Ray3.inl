@@ -22,26 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Ray3 Ray3::fromOriginToEnd( const Vec3& origin, const Vec3& end )
+inline Ray3 Ray3::fromOriginToEnd( const Vector3& origin, const Vector3& end )
 {
 	Ray3 ret;
 	magicalRay3FillOriginToEnd( tofpointer( &ret ), tofpointer( &origin ), tofpointer( &end ) );
 	return ret;
 }
 
-inline Ray3 Ray3::fromOriginAndDirection( const Vec3& origin, const Vec3& direction )
+inline Ray3 Ray3::fromOriginAndDirection( const Vector3& origin, const Vector3& direction )
 {
 	Ray3 ret;
 	magicalRay3FillOriginAndDirection( tofpointer( &ret ), tofpointer( &origin ), tofpointer( &direction ) );
 	return ret;
 }
 
-inline void getOrigin( Vec3& out, const Ray3& r3 )
+inline void getOrigin( Vector3& out, const Ray3& r3 )
 {
 	magicalRay3GetOrigin( tofpointer( &out ), tofpointer( &r3 ) );
 }
 
-inline void getDirection( Vec3& out, const Ray3& r3 )
+inline void getDirection( Vector3& out, const Ray3& r3 )
 {
 	magicalRay3GetDirection( tofpointer( &out ), tofpointer( &r3 ) );
 }
@@ -87,32 +87,32 @@ inline void Ray3::fill( const Ray3& r3 )
 	magicalRay3Fill( tofpointer( this ), tofpointer( &r3 ) );
 }
 
-inline void Ray3::fillOriginToEnd( const Vec3& origin, const Vec3& end )
+inline void Ray3::fillOriginToEnd( const Vector3& origin, const Vector3& end )
 {
 	magicalRay3FillOriginToEnd( tofpointer( this ), tofpointer( &origin ), tofpointer( &end ) );
 }
 
-inline void Ray3::fillOriginAndDirection( const Vec3& origin, const Vec3& direction )
+inline void Ray3::fillOriginAndDirection( const Vector3& origin, const Vector3& direction )
 {
 	magicalRay3FillOriginAndDirection( tofpointer( this ), tofpointer( &origin ), tofpointer( &direction ) );
 }
 
-inline Vec3 Ray3::getOrigin( void ) const
+inline Vector3 Ray3::getOrigin( void ) const
 {
-	return Vec3( ox, oy, oz );
+	return Vector3( ox, oy, oz );
 }
 
-inline Vec3 Ray3::getDirection( void ) const
+inline Vector3 Ray3::getDirection( void ) const
 {
-	return Vec3( dx, dy, dz );
+	return Vector3( dx, dy, dz );
 }
 
-inline void Ray3::setOrigin( const Vec3& origin )
+inline void Ray3::setOrigin( const Vector3& origin )
 {
 	magicalRay3SetOrigin( tofpointer( this ), tofpointer( &origin ) );
 }
 
-inline void Ray3::setDirection( const Vec3& direction )
+inline void Ray3::setDirection( const Vector3& direction )
 {
 	magicalRay3SetDirection( tofpointer( this ), tofpointer( &direction ) );
 }

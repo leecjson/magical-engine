@@ -21,78 +21,86 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Mat4.h"
+#include "Vector3.h"
 #include "MathMacros.h"
 
-const Mat4 Mat4::Identity = Mat4(
-	1.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 1.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 1.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 1.0f
-);
+const Vector3 Vector3::Zero = Vector3( 0.0f, 0.0f, 0.0f );
+const Vector3 Vector3::One = Vector3( 1.0f, 1.0f, 1.0f );
+const Vector3 Vector3::Up = Vector3( 0.0f, 1.0f, 0.0f );
+const Vector3 Vector3::Down = Vector3( 0.0f, -1.0f, 0.0f );
+const Vector3 Vector3::Right = Vector3( 1.0f, 0.0f, 0.0f );
+const Vector3 Vector3::Left = Vector3( -1.0f, 0.0f, 0.0f );
+const Vector3 Vector3::Forward = Vector3( 0.0f, 0.0f, 1.0f );
+const Vector3 Vector3::Back = Vector3( 0.0f, 0.0f, -1.0f );
 
-Mat4 Mat4::placeholder = Mat4::Identity;
-Mat4 Mat4::temp = Mat4::Identity;
+Vector3 Vector3::placeholder = Vector3::Zero;
+Vector3 Vector3::temp = Vector3::Zero;
 
-Mat4::Mat4( const float* m )
+Vector3::Vector3( const Vector4& v )
+: x( v.x )
+, y( v.y )
+, z( v.z )
 {
-	magicalMat4FillVector( tofpointer( this ), m );
+
 }
 
-Mat4::Mat4( const Mat4& m )
+Vector3::Vector3( const Vector2& v )
+: x( v.x )
+, y( v.y )
+, z( 0.0f )
 {
-	magicalMat4Fill( tofpointer( this ), tofpointer( &m ) );
+
 }
 
-Mat4::Mat4( const float rm11, const float rm12, const float rm13, const float rm14,
-            const float rm21, const float rm22, const float rm23, const float rm24,
-            const float rm31, const float rm32, const float rm33, const float rm34,
-            const float rm41, const float rm42, const float rm43, const float rm44 )
+Vector3::Vector3( const Vector3& v )
+: x( v.x )
+, y( v.y )
+, z( v.z )
 {
-	magicalMat4FillScalars(
-		tofpointer( this ),
-		rm11, rm12, rm13, rm14,
-		rm21, rm22, rm23, rm24,
-		rm31, rm32, rm33, rm34,
-		rm41, rm42, rm43, rm44 
-		);
+
 }
 
-Mat4::Mat4( void )
+Vector3::Vector3( const float x, const float y, const float z )
+: x( x )
+, y( y )
+, z( z )
 {
-	magicalMat4FillIdentity( tofpointer( this ) );
+	
+}
+
+Vector3::Vector3( void )
+: x( 0.0f )
+, y( 0.0f )
+, z( 0.0f )
+{
+
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Mat4> s_mat4_cached_pool( 32, 32 );
+static CachedPool<Vector3> s_vector3_cached_pool( 128, 128 );
 #endif
 
-void* Mat4::operator new( size_t s )
+void* Vector3::operator new( size_t s )
 {
-	if( s != sizeof( Mat4 ) )
+	if( s != sizeof( Vector3 ) )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_mat4_cached_pool.take();
+	return s_vector3_cached_pool.take();
 #else
-	void* ptr = malloc( s );
-
-	if( ptr == nullptr )
-		throw std::bad_alloc();
-	
-	return ptr;
+	return ::operator new( s );
 #endif
 }
 
-void Mat4::operator delete( void* ptr )
+void Vector3::operator delete( void* ptr )
 {
 	if( ptr == nullptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_mat4_cached_pool.add( ptr );
+	s_vector3_cached_pool.push( ptr );
 #else
-	free( ptr );
+	return ::operator delete( ptr );
 #endif
 }

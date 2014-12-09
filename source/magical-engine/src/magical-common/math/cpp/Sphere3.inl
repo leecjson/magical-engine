@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Sphere3 Sphere3::fromCenterAndRadius( const Vec3& center, const float r )
+inline Sphere3 Sphere3::fromCenterAndRadius( const Vector3& center, const float r )
 {
 	Sphere3 ret;
 	magicalSphere3FillCenterAndRadius( tofpointer( &ret ), tofpointer( &center ), r );
@@ -55,7 +55,7 @@ inline void Sphere3::fill( const float x, const float y, const float z, const fl
 	this->x = x; this->y = y; this->z = z; this->r = r;
 }
 
-inline void Sphere3::fill( const Vec3& center, const float r )
+inline void Sphere3::fill( const Vector3& center, const float r )
 {
 	x = center.x; y = center.y; z = center.z; this->r = r;
 }
@@ -90,7 +90,7 @@ inline bool Sphere3::intersectsRay3Distance( float& distance, const Ray3& r3, co
 	return magicalSphere3IntersectsRay3Distance( &distance, tofpointer( this ), tofpointer( &r3 ), discard_inside );
 }
 
-inline bool Sphere3::containsPoint( const Vec3& point ) const
+inline bool Sphere3::containsPoint( const Vector3& point ) const
 {
 	return magicalSphere3ContainsPoint( tofpointer( this ), tofpointer( &point ) );
 }

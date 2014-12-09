@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __RAY2_H__
 #define __RAY2_H__
 
-class Vec2; 
+class Vector2; 
 
 class Ray2
 {

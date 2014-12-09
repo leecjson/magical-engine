@@ -38,7 +38,7 @@ Sphere3::Sphere3( const float x, const float y, const float z, const float r )
 
 }
 
-Sphere3::Sphere3( const Vec3& center, const float r )
+Sphere3::Sphere3( const Vector3& center, const float r )
 : x( center.x )
 , y( center.y )
 , z( center.z )

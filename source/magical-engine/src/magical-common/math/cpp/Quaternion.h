@@ -24,8 +24,8 @@ SOFTWARE.
 #ifndef __QUATERNION_H__
 #define __QUATERNION_H__
 
-class Vec3;
-class Mat4;
+class Vector3;
+class Matrix4;
 class AxisAngle;
 class EulerAngles;
 
@@ -39,37 +39,49 @@ public:
 
 public:
 	static const Quaternion Identity;
+	static const Quaternion Zero;
 	static Quaternion placeholder;
 	static Quaternion temp;
 
 public:
 	Quaternion( const float x, const float y, const float z, const float w );
-	Quaternion( const Mat4& m );
+	Quaternion( const Matrix4& m );
 	Quaternion( const AxisAngle& aa );
 	Quaternion( const EulerAngles& ea );
 	Quaternion( const Quaternion& q );
 	Quaternion( void );
-
-public:
-	static inline Quaternion fromMat4( const Mat4& m );
+	static inline Quaternion fromMatrix4( const Matrix4& m );
 	static inline Quaternion fromAxisAngle( const AxisAngle& aa );
-	static inline Quaternion fromAxisAngle( const Vec3& axis, const float angle );
+	static inline Quaternion fromAxisAngle( const Vector3& axis, const float angle );
 	static inline Quaternion fromEuler( const EulerAngles& ea );
 	static inline Quaternion fromEuler( const float yaw, const float pitch, const float roll );
 	static inline Quaternion fromRotationX( const float angle );
 	static inline Quaternion fromRotationY( const float angle );
 	static inline Quaternion fromRotationZ( const float angle );
 
-	static inline void add( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
-	static inline void sub( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
-	static inline void mul( Quaternion& out, const Quaternion& q, const float a );
-	static inline void mul( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
-	static inline void normalize( Quaternion& out, const Quaternion& q );
-	static inline void conjugate( Quaternion& out, const Quaternion& q );
-	static inline void negate( Quaternion& out, const Quaternion& q );
-	static inline void inverse( Quaternion& out, const Quaternion& q );
+public:
+	inline bool equals( const Quaternion& q ) const;
+	inline bool isZero( void ) const;
+	inline bool isIdentity( void ) const;
+	inline bool isNormalized( void ) const;
+	inline void fill( const Quaternion& q );
+	inline void fill( float x, float y, float z, float w );
+	inline void fillIdentity( void );
+	inline void fillMatrix4( const Matrix4& m );
+	inline void fillAxisAngle( const AxisAngle& aa );
+	inline void fillAxisAngle( const Vector3& axis, const float angle );
+	inline void fillEuler( const EulerAngles& ea );
+	inline void fillEuler( const float yaw, const float pitch, const float roll );
+	inline void fillRotationX( const float angle );
+	inline void fillRotationY( const float angle );
+	inline void fillRotationZ( const float angle );
 
 public:
+	static inline void add( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
+	static inline void sub( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
+	static inline void mulScalar( Quaternion& out, const Quaternion& q, const float a );
+	static inline void mul( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
+
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
 	inline bool operator==( const Quaternion& q ) const;
@@ -85,30 +97,43 @@ public:
 	inline Quaternion& operator=( const Quaternion& q );
 
 public:
-	inline bool isEquals( const Quaternion& q ) const;
-	inline bool isIdentity( void ) const;
-	inline bool isNormalize( void ) const;
-	inline void fill( const Quaternion& q );
-	inline void fill( float x, float y, float z, float w );
-	inline void fillIdentity( void );
-	inline void fillMat4( const Mat4& m );
-	inline void fillAxisAngle( const AxisAngle& aa );
-	inline void fillAxisAngle( const Vec3& axis, const float angle );
-	inline void fillEuler( const EulerAngles& ea );
-	inline void fillEuler( const float yaw, const float pitch, const float roll );
-	inline void fillRotationX( const float angle );
-	inline void fillRotationY( const float angle );
-	inline void fillRotationZ( const float angle );
+	static inline void rotateX( Quaternion& out, const Quaternion& q, const float angle );
+	static inline void rotateY( Quaternion& out, const Quaternion& q, const float angle );
+	static inline void rotateZ( Quaternion& out, const Quaternion& q, const float angle );
+	static inline void rotateAxisAngle( Quaternion& out, const Quaternion& q, const AxisAngle& aa );
+	static inline void rotateAxisAngle( Quaternion& out, const Quaternion& q, const Vector3& axis, const float angle );
+	static inline void rotateEuler( Quaternion& out, const Quaternion& q, const EulerAngles& ea );
+	static inline void rotateEuler( Quaternion& out, const Quaternion& q, const float yaw, const float pitch, const float roll );
+	static inline void normalize( Quaternion& out, const Quaternion& q );
+	static inline void conjugate( Quaternion& out, const Quaternion& q );
+	static inline void negate( Quaternion& out, const Quaternion& q );
+	static inline void inverse( Quaternion& out, const Quaternion& q );
 
+public:
+	inline void rotateX( const float angle );
+	inline void rotateY( const float angle );
+	inline void rotateZ( const float angle );
+	inline void rotateAxisAngle( const AxisAngle& aa );
+	inline void rotateAxisAngle( const Vector3& axis, const float angle );
+	inline void rotateEuler( const EulerAngles& ea );
+	inline void rotateEuler( const float yaw, const float pitch, const float roll );
 	inline void normalize( void );
 	inline void conjugate( void );
 	inline void negate( void );
 	inline void inverse( void );
 
-	inline Quaternion getNormalize( void ) const;
-	inline Quaternion getConjugate( void ) const;
-	inline Quaternion getNegate( void ) const;
-	inline Quaternion getInverse( void ) const;
+	inline Quaternion getRotatedX( const float angle );
+	inline Quaternion getRotatedY( const float angle );
+	inline Quaternion getRotatedZ( const float angle );
+	inline Quaternion getRotatedAxisAngle( const AxisAngle& aa );
+	inline Quaternion getRotatedAxisAngle( const Vector3& axis, const float angle );
+	inline Quaternion getRotatedEuler( const EulerAngles& ea );
+	inline Quaternion getRotatedEuler( const float yaw, const float pitch, const float roll );
+
+	inline Quaternion getNormalized( void ) const;
+	inline Quaternion getConjugated( void ) const;
+	inline Quaternion getNegated( void ) const;
+	inline Quaternion getInversed( void ) const;
 
 	inline float dot( const Quaternion& q ) const;
 	inline float length( void ) const;
@@ -117,8 +142,8 @@ public:
 };
 
 #include "../c/cQuaternion.h"
-#include "Vec3.h"
-#include "Mat4.h"
+#include "Vector3.h"
+#include "Matrix4.h"
 #include "EulerAngles.h"
 #include "Quaternion.inl"
 	

@@ -28,15 +28,19 @@ SOFTWARE.
 
 typedef float cStraight2[3];
 
-#include "cVec2.h"
+#include "cVector2.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGICALAPI_MATH void magicalStraight2FillPointAndNormal( cStraight2 out, const cVec2 p, const cVec2 n );
-MAGICALAPI_MATH void magicalStraight2FillNormalAndDistance( cStraight2 out, const cVec2 n, const float d );
+MAGICALAPI_MATH cBool magicalStraight2Equals( const cStraight2 st1, const cStraight2 st2 );
+MAGICALAPI_MATH cBool magicalStraight2IsZero( const cStraight2 st );
+
+MAGICALAPI_MATH void magicalStraight2FillPointAndNormal( cStraight2 out, const cVector2 p, const cVector2 n );
+MAGICALAPI_MATH void magicalStraight2FillNormalAndDistance( cStraight2 out, const cVector2 n, const float d );
 MAGICALAPI_MATH void magicalStraight2FillScalars( cStraight2 out, const float x, const float y, const float d );
+MAGICALAPI_MATH void magicalStraight2FillZero( cStraight2 out );
 MAGICALAPI_MATH void magicalStraight2Fill( cStraight2 out, const cStraight2 st );
 
 MAGICALAPI_MATH int magicalStraight2ClassifyPoint( const cStraight2 st, const cVec3 point );

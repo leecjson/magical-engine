@@ -29,30 +29,24 @@ const EulerAngles EulerAngles::Identity = EulerAngles( 0.0f, 0.0f, 0.0f );
 EulerAngles EulerAngles::placeholder = EulerAngles::Identity;
 EulerAngles EulerAngles::temp = EulerAngles::Identity;
 
-EulerAngles::EulerAngles( const Mat4& m )
+EulerAngles::EulerAngles( const Matrix4& m )
 {
-	fillMat4( m );
+	magicalEulerAnglesFromMatrix4( tofpointer( this ), tofpointer( &m ) );
 }
 
 EulerAngles::EulerAngles( const Quaternion& q )
 {
-	fillQuaternion( q );
+	magicalEulerAnglesFromQuaternion( tofpointer( this ), tofpointer( &q ) );
 }
 
 EulerAngles::EulerAngles( const EulerAngles& ea )
-: yaw( ea.yaw )
-, pitch( ea.pitch )
-, roll( ea.roll )
 {
-
+	magicalEulerAnglesFill( tofpointer( this ), tofpointer( &ea ) );
 }
 
 EulerAngles::EulerAngles( const float yaw, const float pitch, const float roll )
-: yaw( yaw )
-, pitch( pitch )
-, roll( roll )
 {
-
+	magicalEulerAnglesFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
 }
 
 EulerAngles::EulerAngles( void )
@@ -65,7 +59,7 @@ EulerAngles::EulerAngles( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<EulerAngles> s_euler_angles_cached_pool( 64, 64 );
+static CachedPool<EulerAngles> s_eulerangles_cached_pool( 32, 32 );
 #endif
 
 void* EulerAngles::operator new( size_t s )
@@ -74,14 +68,9 @@ void* EulerAngles::operator new( size_t s )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_euler_angles_cached_pool.take();
+	return s_eulerangles_cached_pool.take();
 #else
-	void* ptr = malloc( s );
-
-	if( ptr == nullptr )
-		throw std::bad_alloc();
-	
-	return ptr;
+	return ::operator new( s );
 #endif
 }
 
@@ -91,8 +80,8 @@ void EulerAngles::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_euler_angles_cached_pool.add( ptr );
+	s_eulerangles_cached_pool.push( ptr );
 #else
-	free( ptr );
+	return ::operator delete( ptr );
 #endif
 }

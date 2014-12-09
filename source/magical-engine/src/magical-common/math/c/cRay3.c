@@ -58,7 +58,7 @@ void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const fl
 	magicalRay3DirectionNormalize( out, out );
 }
 
-void magicalRay3FillOriginToEnd( cRay3 out, const cVec3 origin, const cVec3 end )
+void magicalRay3FillOriginToEnd( cRay3 out, const cVector3 origin, const cVector3 end )
 {
 	out _o_x = origin _x;
 	out _o_y = origin _y;
@@ -70,7 +70,7 @@ void magicalRay3FillOriginToEnd( cRay3 out, const cVec3 origin, const cVec3 end 
 	magicalRay3DirectionNormalize( out, out );
 }
 
-void magicalRay3FillOriginAndDirection( cRay3 out, const cVec3 origin, const cVec3 direction )
+void magicalRay3FillOriginAndDirection( cRay3 out, const cVector3 origin, const cVector3 direction )
 {
 	out _o_x = origin _x;
 	out _o_y = origin _y;
@@ -80,6 +80,16 @@ void magicalRay3FillOriginAndDirection( cRay3 out, const cVec3 origin, const cVe
 	out _d_z = direction _z;
 
 	magicalRay3DirectionNormalize( out, out );
+}
+
+void magicalRay3FillZero( cRay3 out )
+{
+	out _o_x = 0.0f;
+	out _o_y = 0.0f;
+	out _o_z = 0.0f;
+	out _d_x = 0.0f;
+	out _d_y = 0.0f;
+	out _d_z = 0.0f;
 }
 
 void magicalRay3Fill( cRay3 out, const cRay3 r3 )
@@ -92,28 +102,28 @@ void magicalRay3Fill( cRay3 out, const cRay3 r3 )
 	out _d_z = r3 _d_z;
 }
 
-void magicalRay3GetOrigin( cVec3 out, const cRay3 r3 )
+void magicalRay3GetOrigin( cVector3 out, const cRay3 r3 )
 {
 	out _x = r3 _o_x;
 	out _y = r3 _o_y;
 	out _z = r3 _o_z;
 }
 
-void magicalRay3GetDirection( cVec3 out, const cRay3 r3 )
+void magicalRay3GetDirection( cVector3 out, const cRay3 r3 )
 {
 	out _x = r3 _d_x;
 	out _y = r3 _d_y;
 	out _z = r3 _d_z;
 }
 
-void magicalRay3SetOrigin( cRay3 out, const cVec3 origin )
+void magicalRay3SetOrigin( cRay3 out, const cVector3 origin )
 {
 	out _o_x = origin _x;
 	out _o_y = origin _y;
 	out _o_z = origin _z;
 }
 
-void magicalRay3SetDirection( cRay3 out, const cVec3 direction )
+void magicalRay3SetDirection( cRay3 out, const cVector3 direction )
 {
 	out _d_x = direction _x;
 	out _d_y = direction _y;
@@ -160,7 +170,7 @@ cBool magicalRay3IntersectsPlane3( const cRay3 r3, const cPlane3 p, const cBool 
 {
 	int cp;
 	float dn;
-	cVec3 d;
+	cVector3 d;
 
 	cp = magicalPlane3ClassifyPoint( p, r3 );
 	if( cp == 0 )
@@ -172,7 +182,7 @@ cBool magicalRay3IntersectsPlane3( const cRay3 r3, const cPlane3 p, const cBool 
 	d _y = r3 _d_y;
 	d _z = r3 _d_z;
 
-	dn = magicalVec3Dot( d, p );
+	dn = magicalVector3Dot( d, p );
 	if( magicalAlmostZero( dn ) == cFalse )
 	{
 		if( ( cp == 1 && dn < -kEpsilon ) || ( cp == -1 && dn > kEpsilon ) )
@@ -195,7 +205,7 @@ cBool magicalRay3IntersectsPlane3( const cRay3 r3, const cPlane3 p, const cBool 
 cBool magicalRay3IntersectsAABB3( const cRay3 r3, const cAABB3 aabb, const cBool discard_inside )
 {
 	float t;
-	cVec3 p;
+	cVector3 p;
 
 	if( r3 _o_x >= aabb _min_x &&
 		r3 _o_y >= aabb _min_y &&
@@ -293,19 +303,19 @@ cBool magicalRay3IntersectsAABB3( const cRay3 r3, const cAABB3 aabb, const cBool
  *-----------------------------------------------------------------------------*/
 cBool magicalRay3IntersectsSphere3( const cRay3 r3, const cSphere3 sp, const cBool discard_inside )
 {
-	cVec3 ve, vd;
+	cVector3 ve, vd;
 	float a, esq, fsq;
 
 	magicalRay3GetDirection( vd, r3 );
-	magicalVec3Sub( ve, sp, r3 );
+	magicalVector3Sub( ve, sp, r3 );
 
-	esq = magicalVec3LengthSq( ve );
+	esq = magicalVector3LengthSq( ve );
 	if( esq <= sp _r * sp _r )
 	{
 		return !discard_inside;
 	}
 
-	a = magicalVec3Dot( ve, vd );
+	a = magicalVector3Dot( ve, vd );
 	fsq = sp _r * sp _r - esq + a * a;
 
 	if( fsq < 0.0f )
@@ -331,7 +341,7 @@ cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cP
 {
 	int cp;
 	float dn;
-	cVec3 d;
+	cVector3 d;
 
 	cp = magicalPlane3ClassifyPoint( p, r3 );
 	if( cp == 0 )
@@ -344,12 +354,12 @@ cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cP
 	d _y = r3 _d_y;
 	d _z = r3 _d_z;
 
-	dn = magicalVec3Dot( d, p );
+	dn = magicalVector3Dot( d, p );
 	if( magicalAlmostZero( dn ) == cFalse )
 	{
 		if( ( cp == 1 && dn < -kEpsilon ) || ( cp == -1 && dn > kEpsilon ) )
 		{
-			*dist = ( p _d - magicalVec3Dot( r3, p ) ) / dn;
+			*dist = ( p _d - magicalVector3Dot( r3, p ) ) / dn;
 			return cTrue;
 		}
 	}
@@ -370,7 +380,7 @@ cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cP
 cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAABB3 aabb, const cBool discard_inside )
 {
 	float t;
-	cVec3 p;
+	cVector3 p;
 
 	if( r3 _o_x >= aabb _min_x &&
 		r3 _o_y >= aabb _min_y &&
@@ -484,20 +494,20 @@ cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAA
  *-----------------------------------------------------------------------------*/
 cBool magicalRay3IntersectsSphere3Distance( float* dist, const cRay3 r3, const cSphere3 sp, const cBool discard_inside )
 {
-	cVec3 ve, vd;
+	cVector3 ve, vd;
 	float a, esq, f, fsq;
 
 	magicalRay3GetDirection( vd, r3 );
-	magicalVec3Sub( ve, sp, r3 );
+	magicalVector3Sub( ve, sp, r3 );
 
-	esq = magicalVec3LengthSq( ve );
+	esq = magicalVector3LengthSq( ve );
 	if( esq <= sp _r * sp _r )
 	{
 		*dist = 0.0f;
 		return !discard_inside;
 	}
 
-	a = magicalVec3Dot( ve, vd );
+	a = magicalVector3Dot( ve, vd );
 	fsq = sp _r * sp _r - esq + a * a;
 
 	if( fsq < 0.0f )

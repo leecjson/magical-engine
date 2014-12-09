@@ -119,7 +119,7 @@ void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q )
  * out m的欧拉角表示
  * m 源旋转矩阵
  *-----------------------------------------------------------------------------*/
-void magicalEulerAnglesFromMat4( cEulerAngles out, const cMat4 m )
+void magicalEulerAnglesFromMatrix4( cEulerAngles out, const cMatrix4 m )
 {
 
 }
@@ -129,7 +129,7 @@ void magicalEulerAnglesToQuaternion( cQuaternion out, const cEulerAngles ea )
 	magicalQuaternionFromEulerAngles( out, ea );
 }
 
-void magicalEulerAnglesToMat4( cMat4 out, const cEulerAngles ea )
+void magicalEulerAnglesToMatrix4( cMatrix4 out, const cEulerAngles ea )
 {
 	
 }

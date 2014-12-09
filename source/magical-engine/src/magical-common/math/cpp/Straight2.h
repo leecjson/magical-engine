@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __STRAIGHT2_H__
 #define __STRAIGHT2_H__
 
-class Vec2;
+class Vector2;
 
 enum class Straight2Classification
 {
@@ -46,8 +46,8 @@ public:
 	Straight2( void );
 
 public:
-	static inline Straight2 fromNormalAndDistance( const Vec2& n, const float d );
-	static inline Straight2 fromPointAndNormal( const Vec2& a, const Vec2& n );
+	static inline Straight2 fromNormalAndDistance( const Vector2& n, const float d );
+	static inline Straight2 fromPointAndNormal( const Vector2& a, const Vector2& n );
 
 public:
 	static void* operator new( size_t s );
@@ -60,16 +60,16 @@ public:
 	inline bool isEquals( const Straight2& st ) const;
 	inline void fill( const float x, const float y, const float d );
 	inline void fill( const Straight2& st );
-	inline void fillNormalAndDistance( const Vec2& n, const float d );
-	inline void fillPointAndNormal( const Vec2& a, const Vec2& n );
+	inline void fillNormalAndDistance( const Vector2& n, const float d );
+	inline void fillPointAndNormal( const Vector2& a, const Vector2& n );
 
-	inline Straight2Classification classifyPoint( const Vec2& point ) const;
+	inline Straight2Classification classifyPoint( const Vector2& point ) const;
 	inline bool intersects( const Straight2& st ) const;
 	inline bool containsPoint( const Straight2& st ) const;
 };
 
 #include "../c/cStraight2.h"
-#include "Vec2.h"
+#include "Vector2.h"
 #include "Straight2.inl"
 
 #endif //__STRAIGHT2_H__

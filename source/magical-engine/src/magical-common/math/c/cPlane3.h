@@ -28,8 +28,8 @@ SOFTWARE.
 
 typedef float cPlane3[4];
 
-#include "cVec3.h"
 #include "cAABB3.h"
+#include "cVector3.h"
 #include "cSphere3.h"
 
 #ifdef __cplusplus
@@ -37,21 +37,23 @@ extern "C" {
 #endif
 
 MAGICALAPI_MATH cBool magicalPlane3Equals( const cPlane3 p1, const cPlane3 p2 );
+MAGICALAPI_MATH cBool magicalPlane3IsZero( const cPlane3 p );
 
 MAGICALAPI_MATH void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const float z, const float d );
-MAGICALAPI_MATH void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVec3 n, const float d );
-MAGICALAPI_MATH void magicalPlane3FillPointAndNormal( cPlane3 out, const cVec3 p, const cVec3 n );
-MAGICALAPI_MATH void magicalPlane3FillPoints( cPlane3 out, const cVec3 a, const cVec3 b, const cVec3 c );
+MAGICALAPI_MATH void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVector3 n, const float d );
+MAGICALAPI_MATH void magicalPlane3FillPointAndNormal( cPlane3 out, const cVector3 p, const cVector3 n );
+MAGICALAPI_MATH void magicalPlane3FillPoints( cPlane3 out, const cVector3 a, const cVector3 b, const cVector3 c );
+MAGICALAPI_MATH void magicalPlane3FillZero( cPlane3 out );
 MAGICALAPI_MATH void magicalPlane3Fill( cPlane3 out, const cPlane3 p );
 
-MAGICALAPI_MATH void magicalPlane3SetNormal( cPlane3 out, const cVec3 n );
-MAGICALAPI_MATH void magicalPlane3GetNormal( cVec3 out, const cPlane3 p );
+MAGICALAPI_MATH void magicalPlane3SetNormal( cPlane3 out, const cVector3 n );
+MAGICALAPI_MATH void magicalPlane3GetNormal( cVector3 out, const cPlane3 p );
 
-MAGICALAPI_MATH void magicalPlane3NearestPoint( cVec3 out, const cPlane3 p, const cVec3 point );
-MAGICALAPI_MATH void magicalPlane3ProjectPoint( cVec3 out, const cPlane3 p, const cVec3 point );
-MAGICALAPI_MATH float magicalPlane3DistanceToPoint( const cPlane3 p, const cVec3 point );
+MAGICALAPI_MATH void magicalPlane3NearestPoint( cVector3 out, const cPlane3 p, const cVector3 point );
+MAGICALAPI_MATH void magicalPlane3ProjectPoint( cVector3 out, const cPlane3 p, const cVector3 point );
+MAGICALAPI_MATH float magicalPlane3DistanceToPoint( const cPlane3 p, const cVector3 point );
 
-MAGICALAPI_MATH int magicalPlane3ClassifyPoint( const cPlane3 p, const cVec3 point );
+MAGICALAPI_MATH int magicalPlane3ClassifyPoint( const cPlane3 p, const cVector3 point );
 MAGICALAPI_MATH int magicalPlane3ClassifyAABB3( const cPlane3 p, const cAABB3 aabb );
 MAGICALAPI_MATH int magicalPlane3ClassifySphere3( const cPlane3 p, const cSphere3 sp );
 
@@ -61,7 +63,7 @@ MAGICALAPI_MATH cBool magicalPlane3IntersectsSphere3( const cPlane3 p, const cSp
 MAGICALAPI_MATH cBool magicalPlane3IntersectsRay3( const cPlane3 p, const cRay3 r3, const cBool discard_inside );
 MAGICALAPI_MATH cBool magicalPlane3IntersectsRay3Distance( float* dist, const cPlane3 p, const cRay3 r3, const cBool discard_inside );
 
-MAGICALAPI_MATH cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVec3 point );
+MAGICALAPI_MATH cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVector3 point );
 
 #ifdef __cplusplus
 }

@@ -25,6 +25,60 @@ SOFTWARE.
 #include "MathMacros.h"
 
 const AxisAngle AxisAngle::Identity = AxisAngle( 0.0f, 0.0f, 1.0f, 0.0f );
+const AxisAngle AxisAngle::Zero = AxisAngle( 0.0f, 0.0f, 0.0f, 0.0f );
 
 AxisAngle AxisAngle::placeholder = AxisAngle::Identity;
 AxisAngle AxisAngle::temp = AxisAngle::Identity;
+
+AxisAngle::AxisAngle( const float x, const float y, const float z, const float w )
+{
+	magicalAxisAngleFillScalars( tofpointer( this ), x, y, z, w );
+}
+
+AxisAngle::AxisAngle( const Quaternion& q )
+{
+	magicalAxisAngleFromQuaternion( tofpointer( this ), tofpointer( &q ) );
+}
+
+AxisAngle::AxisAngle( const Vector3& axis, const float angle )
+{
+	magicalAxisAngleFillAxisAngleScalars( tofpointer( this ), tofpointer( &axis ), angle );
+}
+
+AxisAngle::AxisAngle( void )
+: x( 0.0f )
+, y( 0.0f )
+, z( 1.0f )
+, w( 0.0f )
+{
+
+}
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachedPool.h"
+static CachedPool<AxisAngle> s_axisangle_cached_pool( 32, 32 );
+#endif
+
+void* AxisAngle::operator new( size_t s )
+{
+	if( s != sizeof( AxisAngle ) )
+		return ::operator new( s );
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	return s_axisangle_cached_pool.take();
+#else
+	return ::operator new( s );
+#endif
+}
+
+void AxisAngle::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_axisangle_cached_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
+#endif
+}

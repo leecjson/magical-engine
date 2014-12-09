@@ -35,9 +35,15 @@ cBool magicalAABB3Equals( const cAABB3 aabb1, const cAABB3 aabb2 )
 		magicalAlmostEqual( aabb1 _max_z, aabb2 _max_z );
 }
 
-cBool magicalAABB3IsIdentity( const cAABB3 aabb )
+cBool magicalAABB3IsZero( const cAABB3 aabb )
 {
-	return aabb _min_x > aabb _max_x || aabb _min_y > aabb _max_y || aabb _min_z > aabb _max_z;
+	return
+		magicalAlmostZero( aabb _min_x ) &&
+		magicalAlmostZero( aabb _min_y ) &&
+		magicalAlmostZero( aabb _min_z ) &&
+		magicalAlmostZero( aabb _max_x ) &&
+		magicalAlmostZero( aabb _max_y ) &&
+		magicalAlmostZero( aabb _max_z );
 }
 
 void magicalAABB3FillScalars( cAABB3 out, const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z )
@@ -50,7 +56,7 @@ void magicalAABB3FillScalars( cAABB3 out, const float min_x, const float min_y, 
 	out _max_z = max_z;
 }
 
-void magicalAABB3FillBox( cAABB3 out, const cVec3 center, const float width, const float height, const float depth )
+void magicalAABB3FillBox( cAABB3 out, const cVector3 center, const float width, const float height, const float depth )
 {
 	float half_width = width / 2;
 	float half_height = height / 2;
@@ -64,7 +70,7 @@ void magicalAABB3FillBox( cAABB3 out, const cVec3 center, const float width, con
 	out _max_z = center _z + half_depth;
 }
 
-void magicalAABB3FillMinMax( cAABB3 out, const cVec3 min, const cVec3 max )
+void magicalAABB3FillMinMax( cAABB3 out, const cVector3 min, const cVector3 max )
 {
 	out _min_x = min _x;
 	out _min_y = min _y;
@@ -74,14 +80,14 @@ void magicalAABB3FillMinMax( cAABB3 out, const cVec3 min, const cVec3 max )
 	out _max_z = max _z;
 }
 
-void magicalAABB3FillIdentity( cAABB3 out )
+void magicalAABB3FillZero( cAABB3 out )
 {
-	out _min_x =   FLT_MAX;
-	out _min_y =   FLT_MAX;
-	out _min_z =   FLT_MAX;
-	out _max_x = - FLT_MAX;
-	out _max_y = - FLT_MAX;
-	out _max_z = - FLT_MAX;
+	out _min_x = 0.0f;
+	out _min_y = 0.0f;
+	out _min_z = 0.0f;
+	out _max_x = 0.0f;
+	out _max_y = 0.0f;
+	out _max_z = 0.0f;
 }
 
 void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb )
@@ -94,28 +100,28 @@ void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb )
 	out _max_z = aabb _max_z;
 }
 
-void magicalAABB3GetMin( cVec3 out, const cAABB3 aabb )
+void magicalAABB3GetMin( cVector3 out, const cAABB3 aabb )
 {
 	out _x = aabb _min_x;
 	out _y = aabb _min_y;
 	out _z = aabb _min_z;
 }
 
-void magicalAABB3GetMax( cVec3 out, const cAABB3 aabb )
+void magicalAABB3GetMax( cVector3 out, const cAABB3 aabb )
 {
 	out _x = aabb _max_x;
 	out _y = aabb _max_y;
 	out _z = aabb _max_z;
 }
 
-void magicalAABB3SetMin( cAABB3 out, const cVec3 min )
+void magicalAABB3SetMin( cAABB3 out, const cVector3 min )
 {
 	out _min_x = min _x;
 	out _min_y = min _y;
 	out _min_z = min _z;
 }
 
-void magicalAABB3SetMax( cAABB3 out, const cVec3 max )
+void magicalAABB3SetMax( cAABB3 out, const cVector3 max )
 {
 	out _max_x = max _x;
 	out _max_y = max _y;
@@ -150,7 +156,7 @@ void magicalAABB3ExtendScalars( cAABB3 out, const cAABB3 aabb, const float x, co
  * aabb 展开前的包围盒
  * v 目标点
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Extend( cAABB3 out, const cAABB3 aabb, const cVec3 v )
+void magicalAABB3Extend( cAABB3 out, const cAABB3 aabb, const cVector3 v )
 {
 	if( v _x < aabb _min_x ) out _min_x = v _x;
 	if( v _y < aabb _min_y ) out _min_y = v _y;
@@ -182,7 +188,7 @@ void magicalAABB3Merge( cAABB3 out, const cAABB3 aabb1, const cAABB3 aabb2 )
  * out 中心点
  * aabb 目标包围盒
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Center( cVec3 out, const cAABB3 aabb )
+void magicalAABB3Center( cVector3 out, const cAABB3 aabb )
 {
 	out _x = 0.5f * ( aabb _min_x + aabb _max_x );
 	out _y = 0.5f * ( aabb _min_y + aabb _max_y );
@@ -248,9 +254,9 @@ float magicalAABB3DiameterZ( const cAABB3 aabb )
  * aabb 包围盒
  * point 任意点
  *-----------------------------------------------------------------------------*/
-void magicalAABB3NearestPoint( cVec3 out, const cAABB3 aabb, const cVec3 point )
+void magicalAABB3NearestPoint( cVector3 out, const cAABB3 aabb, const cVector3 point )
 {
-	cVec3 dst;
+	cVector3 dst;
 
 	if( point _x < aabb _min_x )
 	{
@@ -303,34 +309,34 @@ void magicalAABB3NearestPoint( cVec3 out, const cAABB3 aabb, const cVec3 point )
  * aabb 源包围盒
  * m 变换矩阵
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Transform( cAABB3 out, const cAABB3 aabb, const cMat4 m )
+void magicalAABB3Transform( cAABB3 out, const cAABB3 aabb, const cMatrix4 m )
 {
-	cVec3 left_top_front;
-	cVec3 left_bottom_front;
-	cVec3 right_top_front;
-	cVec3 right_bottom_front;
-	cVec3 left_top_back;
-	cVec3 left_bottom_back;
-	cVec3 right_top_back;
-	cVec3 right_bottom_back;
+	cVector3 left_top_front;
+	cVector3 left_bottom_front;
+	cVector3 right_top_front;
+	cVector3 right_bottom_front;
+	cVector3 left_top_back;
+	cVector3 left_bottom_back;
+	cVector3 right_top_back;
+	cVector3 right_bottom_back;
 
-	magicalVec3FillScalars( left_top_front, aabb _min_x, aabb _max_y, aabb _max_z );
-	magicalVec3FillScalars( left_bottom_front, aabb _min_x, aabb _min_y, aabb _max_z );
-	magicalVec3FillScalars( right_top_front, aabb _max_x, aabb _max_y, aabb _max_z );
-	magicalVec3FillScalars( right_bottom_front, aabb _max_x, aabb _min_y, aabb _max_z );
-	magicalVec3FillScalars( left_top_back, aabb _min_x, aabb _max_y, aabb _min_z );
-	magicalVec3FillScalars( left_bottom_back, aabb _min_x, aabb _min_y, aabb _min_z );
-	magicalVec3FillScalars( right_top_back, aabb _max_x, aabb _max_y, aabb _min_z );
-	magicalVec3FillScalars( right_bottom_back, aabb _max_x, aabb _min_y, aabb _min_z );
+	magicalVector3FillScalars( left_top_front, aabb _min_x, aabb _max_y, aabb _max_z );
+	magicalVector3FillScalars( left_bottom_front, aabb _min_x, aabb _min_y, aabb _max_z );
+	magicalVector3FillScalars( right_top_front, aabb _max_x, aabb _max_y, aabb _max_z );
+	magicalVector3FillScalars( right_bottom_front, aabb _max_x, aabb _min_y, aabb _max_z );
+	magicalVector3FillScalars( left_top_back, aabb _min_x, aabb _max_y, aabb _min_z );
+	magicalVector3FillScalars( left_bottom_back, aabb _min_x, aabb _min_y, aabb _min_z );
+	magicalVector3FillScalars( right_top_back, aabb _max_x, aabb _max_y, aabb _min_z );
+	magicalVector3FillScalars( right_bottom_back, aabb _max_x, aabb _min_y, aabb _min_z );
 
-	magicalVec3MulMat4( left_top_front, left_top_front, m );
-	magicalVec3MulMat4( left_bottom_front, left_bottom_front, m );
-	magicalVec3MulMat4( right_top_front, right_top_front, m );
-	magicalVec3MulMat4( right_bottom_front, right_bottom_front, m );
-	magicalVec3MulMat4( left_top_back, left_top_back, m );
-	magicalVec3MulMat4( left_bottom_back, left_bottom_back, m );
-	magicalVec3MulMat4( right_top_back, right_top_back, m );
-	magicalVec3MulMat4( right_bottom_back, right_bottom_back, m );
+	magicalVector3MulMatrix4( left_top_front, left_top_front, m );
+	magicalVector3MulMatrix4( left_bottom_front, left_bottom_front, m );
+	magicalVector3MulMatrix4( right_top_front, right_top_front, m );
+	magicalVector3MulMatrix4( right_bottom_front, right_bottom_front, m );
+	magicalVector3MulMatrix4( left_top_back, left_top_back, m );
+	magicalVector3MulMatrix4( left_bottom_back, left_bottom_back, m );
+	magicalVector3MulMatrix4( right_top_back, right_top_back, m );
+	magicalVector3MulMatrix4( right_bottom_back, right_bottom_back, m );
 
 	magicalAABB3FillIdentity( out );
 
@@ -383,11 +389,11 @@ cBool magicalAABB3IntersectsPlane3( const cAABB3 aabb, const cPlane3 p )
  *-----------------------------------------------------------------------------*/
 cBool magicalAABB3IntersectsSphere3( const cAABB3 aabb, const cSphere3 sp )
 {
-	cVec3 nearest;
+	cVector3 nearest;
 	float distance;
 
 	magicalAABB3NearestPoint( nearest, aabb, sp );
-	distance = magicalVec3DistanceBetweenSq( nearest, sp );
+	distance = magicalVector3DistanceBetweenSq( nearest, sp );
 
 	return distance <= ( sp _r * sp _r );
 }
@@ -435,7 +441,7 @@ cBool magicalAABB3IntersectsRay3Distance( float* dist, const cAABB3 aabb, const 
  * point 目标点
  * return 是否包含
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3ContainsPoint( const cAABB3 aabb, const cVec3 point )
+cBool magicalAABB3ContainsPoint( const cAABB3 aabb, const cVector3 point )
 {
 	return 
 		point _x >= aabb _min_x &&

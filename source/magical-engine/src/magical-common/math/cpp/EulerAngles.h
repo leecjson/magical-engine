@@ -25,7 +25,7 @@ SOFTWARE.
 #define __EULER_ANGLES_H__
 
 class Quaternion;
-class Mat4;
+class Matrix4;
 
 class EulerAngles
 {
@@ -40,22 +40,29 @@ public:
 	static EulerAngles temp;
 
 public:
-	EulerAngles( const Mat4& m );
+	EulerAngles( const Matrix4& m );
 	EulerAngles( const Quaternion& q );
 	EulerAngles( const EulerAngles& ea );
 	EulerAngles( const float yaw, const float pitch, const float roll );
 	EulerAngles( void );
+	static inline EulerAngles fromMatrix4( const Matrix4& m );
+	static inline EulerAngles fromQuaternion( const Quaternion& q );
 
 public:
-	static inline EulerAngles fromMat4( const Mat4& m );
-	static inline EulerAngles fromQuaternion( const Quaternion& q );
+	inline bool equals( const EulerAngles& ea ) const;
+	inline bool isIdentity( void ) const;
+	inline void fill( const EulerAngles& ea );
+	inline void fill( const float yaw, const float pitch, const float roll );
+	inline void fillIdentity( void );
+	inline void fillMatrix4( const Matrix4& m );
+	inline void fillQuaternion( const Quaternion& q );
+
+public:
 	static inline void add( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
 	static inline void sub( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
+	static inline void mulScalar( EulerAngles& out, const EulerAngles& ea, const float a );
 	static inline void mul( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
-	static inline void mul( EulerAngles& out, const EulerAngles& ea, const float a );
-	static inline void corrects( EulerAngles& out, const EulerAngles& ea );
 
-public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
 	inline bool operator==( const EulerAngles& ea ) const;
@@ -69,23 +76,18 @@ public:
 	inline EulerAngles& operator*=( const EulerAngles& ea );
 	inline EulerAngles& operator*=( const float a );
 	inline EulerAngles& operator=( const EulerAngles& ea );
+	
+public:
+	static inline void corrects( EulerAngles& out, const EulerAngles& ea );
 
 public:
-	inline bool isEquals( const EulerAngles& ea ) const;
-	inline bool isIdentity( void ) const;
-	inline void fill( const EulerAngles& ea );
-	inline void fill( const float yaw, const float pitch, const float roll );
-	inline void fillIdentity( void );
-	inline void fillMat4( const Mat4& m );
-	inline void fillQuaternion( const Quaternion& q );
-	
 	inline void corrects( void );
-	inline EulerAngles getCorrects( void ) const;
+	inline EulerAngles getCorrected( void ) const;
 };
 
 #include "../c/cEulerAngles.h"
 #include "Quaternion.h"
-#include "Mat4.h"
+#include "Matrix4.h"
 #include "EulerAngles.inl"
 	
 #endif //__EULER_ANGLES_H__

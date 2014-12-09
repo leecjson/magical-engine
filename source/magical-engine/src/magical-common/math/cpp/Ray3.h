@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __RAY3_H__
 #define __RAY3_H__
 
-class Vec3;
+class Vector3;
 class AABB3;
 class Plane3;
 class Sphere3;
@@ -50,10 +50,10 @@ public:
 	Ray3( void );
 
 public:
-	static inline Ray3 fromOriginToEnd( const Vec3& origin, const Vec3& end );
-	static inline Ray3 fromOriginAndDirection( const Vec3& origin, const Vec3& direction );
-	static inline void getOrigin( Vec3& out, const Ray3& r3 );
-	static inline void getDirection( Vec3& out, const Ray3& r3 );
+	static inline Ray3 fromOriginToEnd( const Vector3& origin, const Vector3& end );
+	static inline Ray3 fromOriginAndDirection( const Vector3& origin, const Vector3& direction );
+	static inline void getOrigin( Vector3& out, const Ray3& r3 );
+	static inline void getDirection( Vector3& out, const Ray3& r3 );
 	static inline void directionNormalize( Ray3& out, const Ray3& r3 );
 
 public:
@@ -68,13 +68,13 @@ public:
 	inline bool isEquals( const Ray3& r3 ) const;
 	inline void fill( const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
 	inline void fill( const Ray3& r3 );
-	inline void fillOriginToEnd( const Vec3& origin, const Vec3& end );
-	inline void fillOriginAndDirection( const Vec3& origin, const Vec3& direction );
+	inline void fillOriginToEnd( const Vector3& origin, const Vector3& end );
+	inline void fillOriginAndDirection( const Vector3& origin, const Vector3& direction );
 
-	inline Vec3 getOrigin( void ) const;
-	inline Vec3 getDirection( void ) const;
-	inline void setOrigin( const Vec3& origin );
-	inline void setDirection( const Vec3& direction );
+	inline Vector3 getOrigin( void ) const;
+	inline Vector3 getDirection( void ) const;
+	inline void setOrigin( const Vector3& origin );
+	inline void setDirection( const Vector3& direction );
 
 	inline void directionNormalize( void );
 
@@ -89,7 +89,7 @@ public:
 };
 
 #include "../c/cRay3.h"
-#include "Vec3.h"
+#include "Vector3.h"
 #include "AABB3.h"
 #include "Plane3.h"
 #include "Sphere3.h"

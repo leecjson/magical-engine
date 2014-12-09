@@ -24,7 +24,7 @@ SOFTWARE.
 #include "cRectangle2.h"
 #include "cMathMacros.h"
 
-void magicalRectangle2FillBox( cRectangle2 out, const cVec2 center, const float w, const float h )
+void magicalRectangle2FillBox( cRectangle2 out, const cVector2 center, const float w, const float h )
 {
 	float hw = w / 2;
 	float hh = h / 2;

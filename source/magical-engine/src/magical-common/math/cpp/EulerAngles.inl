@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline EulerAngles EulerAngles::fromMat4( const Mat4& m )
+inline EulerAngles EulerAngles::fromMatrix4( const Matrix4& m )
 {
 	EulerAngles ret;
-	magicalEulerAnglesFromMat4( tofpointer( &ret ), tofpointer( &m ) );
+	magicalEulerAnglesFromMatrix4( tofpointer( &ret ), tofpointer( &m ) );
 	return ret;
 }
 
@@ -34,6 +34,41 @@ inline EulerAngles EulerAngles::fromQuaternion( const Quaternion& q )
 	EulerAngles ret;
 	magicalEulerAnglesFromQuaternion( tofpointer( &ret ), tofpointer( &q ) );
 	return ret;
+}
+
+inline bool EulerAngles::equals( const EulerAngles& ea ) const
+{
+	return magicalEulerAnglesEqulas( tofpointer( this ), tofpointer( &ea ) );
+}
+
+inline bool EulerAngles::isIdentity( void ) const
+{
+	return magicalEulerAnglesIsIdentity( tofpointer( this ) );
+}
+
+inline void EulerAngles::fill( const EulerAngles& ea )
+{
+	magicalEulerAnglesFill( tofpointer( this ), tofpointer( &ea ) );
+}
+
+inline void EulerAngles::fill( const float yaw, const float pitch, const float roll )
+{
+	magicalEulerAnglesFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
+}
+
+inline void EulerAngles::fillIdentity( void )
+{
+	magicalEulerAnglesFillIdentity( tofpointer( this ) );
+}
+
+inline void EulerAngles::fillMatrix4( const Matrix4& m )
+{
+	magicalEulerAnglesFromMatrix4( tofpointer( this ), tofpointer( &m ) );
+}
+
+inline void EulerAngles::fillQuaternion( const Quaternion& q )
+{
+	magicalEulerAnglesFromQuaternion( tofpointer( this ), tofpointer( &q ) );
 }
 
 inline void EulerAngles::add( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 )
@@ -46,19 +81,14 @@ inline void EulerAngles::sub( EulerAngles& out, const EulerAngles& ea1, const Eu
 	magicalEulerAnglesSub( tofpointer( &out ), tofpointer( &ea1 ), tofpointer( &ea2 ) );
 }
 
-inline void EulerAngles::mul( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 )
-{
-	magicalEulerAnglesMul( tofpointer( &out ), tofpointer( &ea1 ), tofpointer( &ea2 ) );
-}
-
-inline void EulerAngles::mul( EulerAngles& out, const EulerAngles& ea, const float a )
+inline void EulerAngles::mulScalar( EulerAngles& out, const EulerAngles& ea, const float a )
 {
 	magicalEulerAnglesMulScalar( tofpointer( &out ), tofpointer( &ea ), a );
 }
 
-inline void EulerAngles::corrects( EulerAngles& out, const EulerAngles& ea )
+inline void EulerAngles::mul( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 )
 {
-	magicalEulerAnglesCorrects( tofpointer( &out ), tofpointer( &ea ) );
+	magicalEulerAnglesMul( tofpointer( &out ), tofpointer( &ea1 ), tofpointer( &ea2 ) );
 }
 
 inline bool EulerAngles::operator==( const EulerAngles& ea ) const
@@ -117,43 +147,13 @@ inline EulerAngles& EulerAngles::operator*=( const float a )
 
 inline EulerAngles& EulerAngles::operator=( const EulerAngles& ea )
 {
-	yaw = ea.yaw; pitch = ea.pitch; roll = ea.roll;
+	magicalEulerAnglesFill( tofpointer( this ), tofpointer( &ea ) );
 	return *this;
 }
 
-inline bool EulerAngles::isEquals( const EulerAngles& ea ) const
+inline void EulerAngles::corrects( EulerAngles& out, const EulerAngles& ea )
 {
-	return magicalEulerAnglesEqulas( tofpointer( this ), tofpointer( &ea ) );
-}
-
-inline bool EulerAngles::isIdentity( void ) const
-{
-	return magicalEulerAnglesIsIdentity( tofpointer( this ) );
-}
-
-inline void EulerAngles::fill( const EulerAngles& ea )
-{
-	yaw = ea.yaw; pitch = ea.pitch; roll = ea.roll;
-}
-
-inline void EulerAngles::fill( const float yaw, const float pitch, const float roll )
-{
-	this->yaw = yaw; this->pitch = pitch; this->roll = roll;
-}
-
-inline void EulerAngles::fillIdentity( void )
-{
-	magicalEulerAnglesFillIdentity( tofpointer( this ) );
-}
-
-inline void EulerAngles::fillMat4( const Mat4& m )
-{
-	magicalEulerAnglesFromMat4( tofpointer( this ), tofpointer( &m ) );
-}
-
-inline void EulerAngles::fillQuaternion( const Quaternion& q )
-{
-	magicalEulerAnglesFromQuaternion( tofpointer( this ), tofpointer( &q ) );
+	magicalEulerAnglesCorrects( tofpointer( &out ), tofpointer( &ea ) );
 }
 
 inline void EulerAngles::corrects( void )
@@ -161,7 +161,7 @@ inline void EulerAngles::corrects( void )
 	magicalEulerAnglesCorrects( tofpointer( this ), tofpointer( this ) );
 }
 
-inline EulerAngles EulerAngles::getCorrects( void ) const
+inline EulerAngles EulerAngles::getCorrected( void ) const
 {
 	EulerAngles ret;
 	magicalEulerAnglesCorrects( tofpointer( &ret ), tofpointer( this ) );
