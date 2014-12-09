@@ -29,6 +29,11 @@ inline AxisAngle AxisAngle::fromQuaternion( const Quaternion& q )
 	return ret;
 }
 
+inline void AxisAngle::getAxis( Vector3& out, const AxisAngle& aa )
+{
+	magicalAxisAngleGetAxis( tofpointer( &out ), tofpointer( &aa ) );
+}
+
 inline bool AxisAngle::equals( const AxisAngle& aa ) const
 {
 	return magicalAxisAngleEquals( tofpointer( this ), tofpointer( &aa ) );
@@ -54,6 +59,16 @@ inline void AxisAngle::fill( const float x, const float y, const float z, const 
 	magicalAxisAngleFillScalars( tofpointer( this ), x, y, z, w );
 }
 
+inline void AxisAngle::fillZero( void )
+{
+	magicalAxisAngleFillZero( tofpointer( this ) );
+}
+
+inline void AxisAngle::fillIdentity( void )
+{
+	magicalAxisAngleFillIdentity( tofpointer( this ) );
+}
+
 inline void AxisAngle::fillQuaternion( const Quaternion& q )
 {
 	magicalAxisAngleFromQuaternion( tofpointer( this ), tofpointer( &q ) );
@@ -72,11 +87,6 @@ inline bool AxisAngle::operator!=( const AxisAngle& aa ) const
 inline AxisAngle& AxisAngle::operator=( const AxisAngle& aa )
 {
 	magicalAxisAngleFill( tofpointer( this ), tofpointer( &aa ) );
-}
-
-inline void AxisAngle::getAxis( Vector3& out, const AxisAngle& aa )
-{
-	magicalAxisAngleGetAxis( tofpointer( &out ), tofpointer( &aa ) );
 }
 
 inline void AxisAngle::setAxis( const Vector3& axis )

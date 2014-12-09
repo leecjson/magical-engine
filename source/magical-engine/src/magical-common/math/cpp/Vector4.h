@@ -57,8 +57,27 @@ public:
 	Vector4( const Vector4& v );
 	Vector4( const float x, const float y, const float z, const float w );
 	Vector4( void );
+
+public:
 	static inline Vector4 fromVector2( const Vector2& v );
 	static inline Vector4 fromVector3( const Vector3& v );
+
+	static inline void addScalar( Vector4& out, const Vector4& v, const float a );
+	static inline void add( Vector4& out, const Vector4& v1, const Vector4& v2 );
+	static inline void subScalar( Vector4& out, const Vector4& v, const float a );
+	static inline void sub( Vector4& out, const Vector4& v1, const Vector4& v2 );
+	static inline void mulMatrix( Vector4& out, const Vector4& v, const Matrix4& m );
+	static inline void mulScalar( Vector4& out, const Vector4& v, const float a );
+	static inline void mul( Vector4& out, const Vector4& v1, const Vector4& v2 );
+	static inline void divScalar( Vector4& out, const Vector4& v, const float a );
+	static inline void div( Vector4& out, const Vector4& v1, const Vector4& v2 );
+
+	static inline void clamp( Vector4& out, const Vector4& v, const Vector4& min, const Vector4& max );
+	static inline void negate( Vector4& out, const Vector4& v );
+	static inline void normalize( Vector4& out, const Vector4& v );
+	static inline void scale( Vector4& out, const Vector4& v, const float s );
+	static inline void midPointBetween( Vector4& out, const Vector4& v1, const Vector4& v2 );
+	static inline void project( Vector4& out, const Vector4& v, const Vector4& n );
 
 public:
 	inline bool equals( const Vector4& v ) const;
@@ -73,22 +92,14 @@ public:
 	inline void fillVector3( const Vector3& v );
 
 public:
-	static inline void addScalar( Vector4& out, const Vector4& v, const float a );
-	static inline void add( Vector4& out, const Vector4& v1, const Vector4& v2 );
-	static inline void subScalar( Vector4& out, const Vector4& v, const float a );
-	static inline void sub( Vector4& out, const Vector4& v1, const Vector4& v2 );
-	static inline void mulMatrix( Vector4& out, const Vector4& v, const Matrix4& m );
-	static inline void mulScalar( Vector4& out, const Vector4& v, const float a );
-	static inline void mul( Vector4& out, const Vector4& v1, const Vector4& v2 );
-	static inline void divScalar( Vector4& out, const Vector4& v, const float a );
-	static inline void div( Vector4& out, const Vector4& v1, const Vector4& v2 );
-
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
 	inline bool operator==( const Vector4& v ) const;
 	inline bool operator!=( const Vector4& v ) const;
+	inline Vector4 operator+( void ) const;
 	inline Vector4 operator+( const float a ) const;
 	inline Vector4 operator+( const Vector4& v ) const;
+	inline Vector4 operator-( void ) const;
 	inline Vector4 operator-( const float a ) const;
 	inline Vector4 operator-( const Vector4& v ) const;
 	inline Vector4 operator*( const Matrix4& m ) const;
@@ -106,14 +117,6 @@ public:
 	inline Vector4& operator/=( const float a );
 	inline Vector4& operator/=( const Vector4& v );
 	inline Vector4& operator=( const Vector4& v );
-
-public:
-	static inline void clamp( Vector4& out, const Vector4& v, const Vector4& min, const Vector4& max );
-	static inline void negate( Vector4& out, const Vector4& v );
-	static inline void normalize( Vector4& out, const Vector4& v );
-	static inline void scale( Vector4& out, const Vector4& v, const float s );
-	static inline void midPointBetween( Vector4& out, const Vector4& v1, const Vector4& v2 );
-	static inline void project( Vector4& out, const Vector4& v, const Vector4& n );
 	
 public:
 	inline void clamp( const Vector4& min, const Vector4& max );

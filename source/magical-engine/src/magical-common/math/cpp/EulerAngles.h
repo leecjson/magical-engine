@@ -45,8 +45,15 @@ public:
 	EulerAngles( const EulerAngles& ea );
 	EulerAngles( const float yaw, const float pitch, const float roll );
 	EulerAngles( void );
+
+public:
 	static inline EulerAngles fromMatrix4( const Matrix4& m );
 	static inline EulerAngles fromQuaternion( const Quaternion& q );
+	static inline void add( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
+	static inline void sub( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
+	static inline void mulScalar( EulerAngles& out, const EulerAngles& ea, const float a );
+	static inline void mul( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
+	static inline void corrects( EulerAngles& out, const EulerAngles& ea );
 
 public:
 	inline bool equals( const EulerAngles& ea ) const;
@@ -58,11 +65,6 @@ public:
 	inline void fillQuaternion( const Quaternion& q );
 
 public:
-	static inline void add( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
-	static inline void sub( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
-	static inline void mulScalar( EulerAngles& out, const EulerAngles& ea, const float a );
-	static inline void mul( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
-
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
 	inline bool operator==( const EulerAngles& ea ) const;
@@ -76,9 +78,6 @@ public:
 	inline EulerAngles& operator*=( const EulerAngles& ea );
 	inline EulerAngles& operator*=( const float a );
 	inline EulerAngles& operator=( const EulerAngles& ea );
-	
-public:
-	static inline void corrects( EulerAngles& out, const EulerAngles& ea );
 
 public:
 	inline void corrects( void );

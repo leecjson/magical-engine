@@ -32,6 +32,81 @@ inline Vector4 Vector4::fromVector3( const Vector3& v )
 	return Vector4( v );
 }
 
+inline void Vector4::addScalar( Vector4& out, const Vector4& v, const float a )
+{
+	magicalVector4AddScalar( tofpointer( &out ), tofpointer( &v ), a );
+}
+
+inline void Vector4::add( Vector4& out, const Vector4& v1, const Vector4& v2 )
+{
+	magicalVector4Add( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector4::subScalar( Vector4& out, const Vector4& v, const float a )
+{
+	magicalVector4SubScalar( tofpointer( &out ), tofpointer( &v ), a );
+}
+
+inline void Vector4::sub( Vector4& out, const Vector4& v1, const Vector4& v2 )
+{
+	magicalVector4Sub( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector4::mulMatrix( Vector4& out, const Vector4& v, const Matrix4& m )
+{
+	magicalVector4MulMatrix4( tofpointer( &out ), tofpointer( &v ), tofpointer( &m ) );
+}
+
+inline void Vector4::mulScalar( Vector4& out, const Vector4& v, const float a )
+{
+	magicalVector4MulScalar( tofpointer( &out ), tofpointer( &v ), a );
+}
+
+inline void Vector4::mul( Vector4& out, const Vector4& v1, const Vector4& v2 )
+{
+	magicalVector4Mul( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector4::divScalar( Vector4& out, const Vector4& v, const float a )
+{
+	magicalVector4DivScalar( tofpointer( &out ), tofpointer( &v ), a );
+}
+
+inline void Vector4::div( Vector4& out, const Vector4& v1, const Vector4& v2 )
+{
+	magicalVector4Div( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector4::clamp( Vector4& out, const Vector4& v, const Vector4& min, const Vector4& max )
+{
+	magicalVector4Clamp( tofpointer( &out ), tofpointer( &v ), tofpointer( &min ), tofpointer( &max ) );
+}
+
+inline void Vector4::negate( Vector4& out, const Vector4& v )
+{
+	magicalVector4Negate( tofpointer( &out ), tofpointer( &v ) );
+}
+
+inline void Vector4::normalize( Vector4& out, const Vector4& v )
+{
+	magicalVector4Normalize( tofpointer( &out ), tofpointer( &v ) );
+}
+
+inline void Vector4::scale( Vector4& out, const Vector4& v, const float s )
+{
+	magicalVector4Scale( tofpointer( &out ), tofpointer( &v ), s );
+}
+
+inline void Vector4::midPointBetween( Vector4& out, const Vector4& v1, const Vector4& v2  )
+{
+	magicalVector4MidPointBetween( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector4::project( Vector4& out, const Vector4& v, const Vector4& n )
+{
+	magicalVector4Project( tofpointer( &out ), tofpointer( &v ), tofpointer( &n ) );
+}
+
 inline bool Vector4::equals( const Vector4& v ) const
 {
 	return magicalVector4Equals( tofpointer( this ), tofpointer( &v ) );
@@ -100,51 +175,6 @@ inline void Vector4::fillVector3( const Vector3& v )
 	w = 0.0f;
 }
 
-inline void Vector4::addScalar( Vector4& out, const Vector4& v, const float a )
-{
-	magicalVector4AddScalar( tofpointer( &out ), tofpointer( &v ), a );
-}
-
-inline void Vector4::add( Vector4& out, const Vector4& v1, const Vector4& v2 )
-{
-	magicalVector4Add( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
-inline void Vector4::subScalar( Vector4& out, const Vector4& v, const float a )
-{
-	magicalVector4SubScalar( tofpointer( &out ), tofpointer( &v ), a );
-}
-
-inline void Vector4::sub( Vector4& out, const Vector4& v1, const Vector4& v2 )
-{
-	magicalVector4Sub( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
-inline void Vector4::mulMatrix( Vector4& out, const Vector4& v, const Matrix4& m )
-{
-	magicalVector4MulMatrix4( tofpointer( &out ), tofpointer( &v ), tofpointer( &m ) );
-}
-
-inline void Vector4::mulScalar( Vector4& out, const Vector4& v, const float a )
-{
-	magicalVector4MulScalar( tofpointer( &out ), tofpointer( &v ), a );
-}
-
-inline void Vector4::mul( Vector4& out, const Vector4& v1, const Vector4& v2 )
-{
-	magicalVector4Mul( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
-inline void Vector4::divScalar( Vector4& out, const Vector4& v, const float a )
-{
-	magicalVector4DivScalar( tofpointer( &out ), tofpointer( &v ), a );
-}
-
-inline void Vector4::div( Vector4& out, const Vector4& v1, const Vector4& v2 )
-{
-	magicalVector4Div( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
 inline bool Vector4::operator==( const Vector4& v ) const
 {
 	return magicalVector4Equals( tofpointer( this ), tofpointer( &v ) );
@@ -155,6 +185,11 @@ inline bool Vector4::operator!=( const Vector4& v ) const
 	return !magicalVector4Equals( tofpointer( this ), tofpointer( &v ) );
 }
 
+inline Vector4 Vector4::operator+( void ) const
+{
+	return *this;
+}
+
 inline Vector4 Vector4::operator+( const float a ) const
 {
 	return Vector4( x + a, y + a, z + a, w + a );
@@ -163,6 +198,11 @@ inline Vector4 Vector4::operator+( const float a ) const
 inline Vector4 Vector4::operator+( const Vector4& v ) const
 {
 	return Vector4( x + v.x, y + v.y, z + v.z, w + v.w );
+}
+
+inline Vector4 Vector4::operator-( void ) const
+{
+	return Vector4( -x, -y, -z, -w );
 }
 
 inline Vector4 Vector4::operator-( const float a ) const
@@ -263,36 +303,6 @@ inline Vector4& Vector4::operator/=( const Vector4& v )
 inline Vector4& Vector4::operator=( const Vector4& v )
 {
 	x = v.x; y = v.y; z = v.z; w = v.w;
-}
-
-inline void Vector4::clamp( Vector4& out, const Vector4& v, const Vector4& min, const Vector4& max )
-{
-	magicalVector4Clamp( tofpointer( &out ), tofpointer( &v ), tofpointer( &min ), tofpointer( &max ) );
-}
-
-inline void Vector4::negate( Vector4& out, const Vector4& v )
-{
-	magicalVector4Negate( tofpointer( &out ), tofpointer( &v ) );
-}
-
-inline void Vector4::normalize( Vector4& out, const Vector4& v )
-{
-	magicalVector4Normalize( tofpointer( &out ), tofpointer( &v ) );
-}
-
-inline void Vector4::scale( Vector4& out, const Vector4& v, const float s )
-{
-	magicalVector4Scale( tofpointer( &out ), tofpointer( &v ), s );
-}
-
-inline void Vector4::midPointBetween( Vector4& out, const Vector4& v1, const Vector4& v2  )
-{
-	magicalVector4MidPointBetween( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
-inline void Vector4::project( Vector4& out, const Vector4& v, const Vector4& n )
-{
-	magicalVector4Project( tofpointer( &out ), tofpointer( &v ), tofpointer( &n ) );
 }
 
 inline void Vector4::clamp( const Vector4& min, const Vector4& max )

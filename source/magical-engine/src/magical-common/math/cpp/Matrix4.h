@@ -53,42 +53,9 @@ public:
 	Matrix4( void );
 
 public:
-	inline bool equals( const Matrix4& m ) const;
-	inline bool isIdentity( void ) const;
-	inline void fill( const float* m );
-	inline void fill( const Matrix4& m );
-	inline void fillIdentity( void );
-	inline void fillTranslation( const float x, const float y, const float z );
-	inline void fillTranslation( const Vector3& t );
-	inline void fillScale( const float x, const float y, const float z );
-	inline void fillScale( const Vector3& s );
-	inline void fillRotationX( const float angle );
-	inline void fillRotationY( const float angle );
-	inline void fillRotationZ( const float angle );
-	inline void fillRotationQuaternion( const Quaternion& q );
-	inline void fillRotationEulerAngles( const float yaw, const float pitch, const float roll );
-	inline void fillRotationEulerAngles( const EulerAngles& ea );
-	inline void fillRotationAxisAngle( const Vector3& axis, const float angle );
-	inline void fillRotationAxisAngle( const AxisAngle& aa );
-	inline void fillLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
-	inline void fillPerspective( const float fov, const float aspect, const float znear, const float zfar );
-	inline void fillOrthographic( const float left, const float right, const float bottom, const float top, const float near, const float far );
-
-public:
 	static inline void mulScalar( Matrix4& out, const Matrix4& m, const float a );
 	static inline void mul( Matrix4& out, const Matrix4& m1, const Matrix4& m2 );
 
-	static void* operator new( size_t s );
-	static void operator delete( void* ptr );
-	inline bool operator==( const Matrix4& m ) const;
-	inline bool operator!=( const Matrix4& m ) const;
-	inline Matrix4 operator*( const float a ) const;
-	inline Matrix4 operator*( const Matrix4& m ) const;
-	inline Matrix4& operator*=( const float a );
-	inline Matrix4& operator*=( const Matrix4& m );
-	inline Matrix4& operator=( const Matrix4& m );
-
-public:
 	static inline void translate( Matrix4& out, const Matrix4& m, const float x, const float y, const float z );
 	static inline void translate( Matrix4& out, const Matrix4& m, const Vector3& t );
 	static inline void scale( Matrix4& out, const Matrix4& m, const float x, const float y, const float z );
@@ -113,6 +80,40 @@ public:
 	static inline bool inverse( Matrix4& out, const Matrix4& m );
 	static inline void transpose( Matrix4& out, const Matrix4& m );
 	static inline void negate( Matrix4& out, const Matrix4& m );
+
+public:
+	inline bool equals( const Matrix4& m ) const;
+	inline bool isZero( void ) const;
+	inline bool isIdentity( void ) const;
+	inline void fill( const float* m );
+	inline void fill( const Matrix4& m );
+	inline void fillIdentity( void );
+	inline void fillTranslation( const float x, const float y, const float z );
+	inline void fillTranslation( const Vector3& t );
+	inline void fillScale( const float x, const float y, const float z );
+	inline void fillScale( const Vector3& s );
+	inline void fillRotationX( const float angle );
+	inline void fillRotationY( const float angle );
+	inline void fillRotationZ( const float angle );
+	inline void fillRotationQuaternion( const Quaternion& q );
+	inline void fillRotationEulerAngles( const float yaw, const float pitch, const float roll );
+	inline void fillRotationEulerAngles( const EulerAngles& ea );
+	inline void fillRotationAxisAngle( const Vector3& axis, const float angle );
+	inline void fillRotationAxisAngle( const AxisAngle& aa );
+	inline void fillLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
+	inline void fillPerspective( const float fov, const float aspect, const float znear, const float zfar );
+	inline void fillOrthographic( const float left, const float right, const float bottom, const float top, const float near, const float far );
+
+public:
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
+	inline bool operator==( const Matrix4& m ) const;
+	inline bool operator!=( const Matrix4& m ) const;
+	inline Matrix4 operator*( const float a ) const;
+	inline Matrix4 operator*( const Matrix4& m ) const;
+	inline Matrix4& operator*=( const float a );
+	inline Matrix4& operator*=( const Matrix4& m );
+	inline Matrix4& operator=( const Matrix4& m );
 
 public:
 	inline void translate( const float x, const float y, const float z );

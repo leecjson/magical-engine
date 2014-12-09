@@ -46,7 +46,10 @@ public:
 	AxisAngle( const Quaternion& q );
 	AxisAngle( const Vector3& axis, const float angle );
 	AxisAngle( void );
+
+public:
 	static inline AxisAngle fromQuaternion( const Quaternion& q );
+	static inline void getAxis( Vector3& out, const AxisAngle& aa );
 
 public:
 	inline bool equals( const AxisAngle& aa ) const;
@@ -54,6 +57,8 @@ public:
 	inline bool isIdentity( void ) const;
 	inline void fill( const AxisAngle& aa );
 	inline void fill( const float x, const float y, const float z, const float w );
+	inline void fillZero( void );
+	inline void fillIdentity( void );
 	inline void fillQuaternion( const Quaternion& q );
 
 public:
@@ -62,9 +67,6 @@ public:
 	inline bool operator==( const AxisAngle& aa ) const;
 	inline bool operator!=( const AxisAngle& aa ) const;
 	inline AxisAngle& operator=( const AxisAngle& aa );
-
-public:
-	static inline void getAxis( Vector3& out, const AxisAngle& aa );
 
 public:
 	inline void setAxis( const Vector3& axis );

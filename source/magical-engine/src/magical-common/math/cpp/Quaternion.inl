@@ -78,6 +78,81 @@ inline Quaternion Quaternion::fromRotationZ( const float angle )
 	return ret;
 }
 
+inline void Quaternion::add( Quaternion& out, const Quaternion& q1, const Quaternion& q2 )
+{
+	magicalQuaternionAdd( tofpointer( &out ), tofpointer( &q1 ), tofpointer( &q2 ) );
+}
+
+inline void Quaternion::sub( Quaternion& out, const Quaternion& q1, const Quaternion& q2 )
+{
+	magicalQuaternionSub( tofpointer( &out ), tofpointer( &q1 ), tofpointer( &q2 ) );
+}
+
+inline void Quaternion::mulScalar( Quaternion& out, const Quaternion& q, const float a )
+{
+	magicalQuaternionMulScalar( tofpointer( &out ), tofpointer( &q ), a );
+}
+
+inline void Quaternion::mul( Quaternion& out, const Quaternion& q1, const Quaternion& q2 )
+{
+	magicalQuaternionMul( tofpointer( &out ), tofpointer( &q1 ), tofpointer( &q2 ) );
+}
+
+inline void Quaternion::rotateX( Quaternion& out, const Quaternion& q, const float angle )
+{
+	magicalQuaternionRotateX( tofpointer( &out ), tofpointer( &q ), angle );
+}
+
+inline void Quaternion::rotateY( Quaternion& out, const Quaternion& q, const float angle )
+{
+	magicalQuaternionRotateY( tofpointer( &out ), tofpointer( &q ), angle );
+}
+
+inline void Quaternion::rotateZ( Quaternion& out, const Quaternion& q, const float angle )
+{
+	magicalQuaternionRotateZ( tofpointer( &out ), tofpointer( &q ), angle );
+}
+
+inline void Quaternion::rotateAxisAngle( Quaternion& out, const Quaternion& q, const AxisAngle& aa )
+{
+	magicalQuaternionRotateAxisAngle( tofpointer( &out ), tofpointer( &q ), tofpointer( &aa ) );
+}
+
+inline void Quaternion::rotateAxisAngle( Quaternion& out, const Quaternion& q, const Vector3& axis, const float angle )
+{
+	magicalQuaternionRotateAxisAngleScalars( tofpointer( &out ), tofpointer( &q ), tofpointer( &axis ), angle );
+}
+
+inline void Quaternion::rotateEuler( Quaternion& out, const Quaternion& q, const EulerAngles& ea )
+{
+	magicalQuaternionRotateEulerAngles( tofpointer( &out ), tofpointer( &q ), tofpointer( &ea ) );
+}
+
+inline void Quaternion::rotateEuler( Quaternion& out, const Quaternion& q, const float yaw, const float pitch, const float roll )
+{
+	magicalQuaternionRotateEulerYawPitchRoll( tofpointer( &out ), tofpointer( &q ), yaw, pitch, roll );
+}
+
+inline void Quaternion::normalize( Quaternion& out, const Quaternion& q )
+{
+	magicalQuaternionNormalize( tofpointer( &out ), tofpointer( &q ) );
+}
+
+inline void Quaternion::conjugate( Quaternion& out, const Quaternion& q )
+{
+	magicalQuaternionConjugate( tofpointer( &out ), tofpointer( &q ) );
+}
+
+inline void Quaternion::negate( Quaternion& out, const Quaternion& q )
+{
+	magicalQuaternionNegate( tofpointer( &out ), tofpointer( &q ) );
+}
+
+inline void Quaternion::inverse( Quaternion& out, const Quaternion& q )
+{
+	magicalQuaternionInverse( tofpointer( &out ), tofpointer( &q ) );
+}
+
 inline bool Quaternion::equals( const Quaternion& q ) const
 {
 	return magicalQuaternionEquals( tofpointer( this ), tofpointer( &q ) );
@@ -106,6 +181,11 @@ inline void Quaternion::fill( const Quaternion& r )
 inline void Quaternion::fill( float x, float y, float z, float w )
 {
 	this->x = x; this->y = y; this->z = z; this->w = w;
+}
+
+inline void Quaternion::fillZero( void )
+{
+	x = 0.0f; y = 0.0f; z = 0.0f; w = 0.0f;
 }
 
 inline void Quaternion::fillIdentity( void )
@@ -151,26 +231,6 @@ inline void Quaternion::fillRotationY( const float angle )
 inline void Quaternion::fillRotationZ( const float angle )
 {
 	magicalQuaternionFillRotationZ( tofpointer( this ), angle );
-}
-
-inline void Quaternion::add( Quaternion& out, const Quaternion& q1, const Quaternion& q2 )
-{
-	magicalQuaternionAdd( tofpointer( &out ), tofpointer( &q1 ), tofpointer( &q2 ) );
-}
-
-inline void Quaternion::sub( Quaternion& out, const Quaternion& q1, const Quaternion& q2 )
-{
-	magicalQuaternionSub( tofpointer( &out ), tofpointer( &q1 ), tofpointer( &q2 ) );
-}
-
-inline void Quaternion::mulScalar( Quaternion& out, const Quaternion& q, const float a )
-{
-	magicalQuaternionMulScalar( tofpointer( &out ), tofpointer( &q ), a );
-}
-
-inline void Quaternion::mul( Quaternion& out, const Quaternion& q1, const Quaternion& q2 )
-{
-	magicalQuaternionMul( tofpointer( &out ), tofpointer( &q1 ), tofpointer( &q2 ) );
 }
 
 inline bool Quaternion::operator==( const Quaternion& q ) const
@@ -235,61 +295,6 @@ inline Quaternion& Quaternion::operator=( const Quaternion& q )
 	return *this;
 }
 
-inline void Quaternion::rotateX( Quaternion& out, const Quaternion& q, const float angle )
-{
-	magicalQuaternionRotateX( tofpointer( &out ), tofpointer( &q ), angle );
-}
-
-inline void Quaternion::rotateY( Quaternion& out, const Quaternion& q, const float angle )
-{
-	magicalQuaternionRotateY( tofpointer( &out ), tofpointer( &q ), angle );
-}
-
-inline void Quaternion::rotateZ( Quaternion& out, const Quaternion& q, const float angle )
-{
-	magicalQuaternionRotateZ( tofpointer( &out ), tofpointer( &q ), angle );
-}
-
-inline void Quaternion::rotateAxisAngle( Quaternion& out, const Quaternion& q, const AxisAngle& aa )
-{
-	magicalQuaternionRotateAxisAngle( tofpointer( &out ), tofpointer( &q ), tofpointer( &aa ) );
-}
-
-inline void Quaternion::rotateAxisAngle( Quaternion& out, const Quaternion& q, const Vector3& axis, const float angle )
-{
-	magicalQuaternionRotateAxisAngleScalars( tofpointer( &out ), tofpointer( &q ), tofpointer( &axis ), angle );
-}
-
-inline void Quaternion::rotateEuler( Quaternion& out, const Quaternion& q, const EulerAngles& ea )
-{
-	magicalQuaternionRotateEulerAngles( tofpointer( &out ), tofpointer( &q ), tofpointer( &ea ) );
-}
-
-inline void Quaternion::rotateEuler( Quaternion& out, const Quaternion& q, const float yaw, const float pitch, const float roll )
-{
-	magicalQuaternionRotateEulerYawPitchRoll( tofpointer( &out ), tofpointer( &q ), yaw, pitch, roll );
-}
-
-inline void Quaternion::normalize( Quaternion& out, const Quaternion& q )
-{
-	magicalQuaternionNormalize( tofpointer( &out ), tofpointer( &q ) );
-}
-
-inline void Quaternion::conjugate( Quaternion& out, const Quaternion& q )
-{
-	magicalQuaternionConjugate( tofpointer( &out ), tofpointer( &q ) );
-}
-
-inline void Quaternion::negate( Quaternion& out, const Quaternion& q )
-{
-	magicalQuaternionNegate( tofpointer( &out ), tofpointer( &q ) );
-}
-
-inline void Quaternion::inverse( Quaternion& out, const Quaternion& q )
-{
-	magicalQuaternionInverse( tofpointer( &out ), tofpointer( &q ) );
-}
-
 inline void Quaternion::rotateX( const float angle )
 {
 	magicalQuaternionRotateX( tofpointer( this ), tofpointer( this ), angle );
@@ -345,6 +350,55 @@ inline void Quaternion::inverse( void )
 	magicalQuaternionInverse( tofpointer( this ), tofpointer( this ) );
 }
 
+inline Quaternion Quaternion::getRotatedX( const float angle )
+{
+	Quaternion ret;
+	magicalQuaternionRotateX( tofpointer( &ret ), tofpointer( this ), angle );
+	return ret;
+}
+
+inline Quaternion Quaternion::getRotatedY( const float angle )
+{
+	Quaternion ret;
+	magicalQuaternionRotateY( tofpointer( &ret ), tofpointer( this ), angle );
+	return ret;
+}
+
+inline Quaternion Quaternion::getRotatedZ( const float angle )
+{
+	Quaternion ret;
+	magicalQuaternionRotateZ( tofpointer( &ret ), tofpointer( this ), angle );
+	return ret;
+}
+
+inline Quaternion Quaternion::getRotatedAxisAngle( const AxisAngle& aa )
+{
+	Quaternion ret;
+	magicalQuaternionRotateAxisAngle( tofpointer( &ret ), tofpointer( this ), tofpointer( &aa ) );
+	return ret;
+}
+
+inline Quaternion Quaternion::getRotatedAxisAngle( const Vector3& axis, const float angle )
+{
+	Quaternion ret;
+	magicalQuaternionRotateAxisAngleScalars( tofpointer( &ret ), tofpointer( this ), tofpointer( &axis ), angle );
+	return ret;
+}
+
+inline Quaternion Quaternion::getRotatedEuler( const EulerAngles& ea )
+{
+	Quaternion ret;
+	magicalQuaternionRotateEulerAngles( tofpointer( &ret ), tofpointer( this ), tofpointer( &ea ) );
+	return ret;
+}
+
+inline Quaternion Quaternion::getRotatedEuler( const float yaw, const float pitch, const float roll )
+{
+	Quaternion ret;
+	magicalQuaternionRotateEulerYawPitchRoll( tofpointer( &ret ), tofpointer( this ), yaw, pitch, roll );
+	return ret;
+}
+
 inline Quaternion Quaternion::getNormalized( void ) const
 {
 	Quaternion ret;
@@ -387,8 +441,3 @@ inline float Quaternion::lengthSq( void ) const
 {
 	return magicalQuaternionLengthSq( tofpointer( this ) );
 }
-
-//inline float Quaternion::toAxisAngle( Vector3& out ) const
-//{
-//	return magicalQuaternionToAxisAngle( tofpointer( &out ), tofpointer( this ) );
-//}

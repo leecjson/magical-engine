@@ -37,106 +37,6 @@ SOFTWARE.
 //		);*/
 //}
 
-inline bool Matrix4::equals( const Matrix4& m ) const
-{
-	return magicalMatrix4Equals( tofpointer( this ), tofpointer( &m ) );
-}
-
-inline bool Matrix4::isIdentity( void ) const
-{
-	return magicalMatrix4IsIdentity( tofpointer( this ) );
-}
-
-inline void Matrix4::fill( const float* m )
-{
-	magicalMatrix4Fill( tofpointer( this ), m );
-}
-
-inline void Matrix4::fill( const Matrix4& m )
-{
-	magicalMatrix4Fill( tofpointer( this ), tofpointer( &m ) );
-}
-
-inline void Matrix4::fillIdentity( void )
-{
-	magicalMatrix4FillIdentity( tofpointer( this ) );
-}
-
-inline void Matrix4::fillTranslation( const float x, const float y, const float z )
-{
-	magicalMatrix4FillTranslation( tofpointer( this ), x, y, z );
-}
-
-inline void Matrix4::fillTranslation( const Vector3& t )
-{
-	magicalMatrix4FillTranslationVector( tofpointer( this ), tofpointer( &t ) );
-}
-
-inline void Matrix4::fillScale( const float x, const float y, const float z )
-{
-	magicalMatrix4FillScale( tofpointer( this ), x, y, z );
-}
-
-inline void Matrix4::fillScale( const Vector3& s )
-{
-    magicalMatrix4FillScaleVector( tofpointer( this ), tofpointer( &s ) );
-}
-
-inline void Matrix4::fillRotationX( const float angle )
-{
-	magicalMatrix4FillRotationX( tofpointer( this ), angle );
-}
-
-inline void Matrix4::fillRotationY( const float angle )
-{
-	magicalMatrix4FillRotationY( tofpointer( this ), angle );
-}
-
-inline void Matrix4::fillRotationZ( const float angle )
-{
-	magicalMatrix4FillRotationZ( tofpointer( this ), angle );
-}
-
-inline void Matrix4::fillRotationQuaternion( const Quaternion& q )
-{
-	magicalMatrix4FillRotationQuaternion( tofpointer( this ), tofpointer( &q ) );
-}
-
-inline void Matrix4::fillRotationEulerAngles( const float yaw, const float pitch, const float roll )
-{
-	magicalMatrix4FillRotationEulerYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
-}
-
-inline void Matrix4::fillRotationEulerAngles( const EulerAngles& ea )
-{
-	magicalMatrix4FillRotationEulerAngles( tofpointer( this ), tofpointer( &ea ) );
-}
-
-inline void Matrix4::fillRotationAxisAngle( const Vector3& axis, const float angle )
-{
-	magicalMatrix4FillRotationAxisAngleScalars( tofpointer( this ), tofpointer( &axis ), angle );
-}
-
-inline void Matrix4::fillRotationAxisAngle( const AxisAngle& aa )
-{
-	magicalMatrix4FillRotationAxisAngle( tofpointer( this ), tofpointer( &aa ) );
-}
-
-inline void Matrix4::fillLookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
-{
-	magicalMatrix4FillLookAt( tofpointer( this ), tofpointer( &eye ), tofpointer( &target ), tofpointer( &up ) );
-}
-
-inline void Matrix4::fillPerspective( const float fov, const float aspect, const float znear, const float zfar )
-{
-	magicalMatrix4FillPerspective( tofpointer( this ), fov, aspect, znear, zfar );
-}
-
-inline void Matrix4::fillOrthographic( const float left, const float right, const float bottom, const float top, const float near, const float far )
-{
-	magicalMatrix4FillOrthographic( tofpointer( this ), left, right, bottom, top, near, far );
-}
-
 inline void Matrix4::mulScalar( Matrix4& out, const Matrix4& m, const float a )
 {
 	magicalMatrix4MulScalar( tofpointer( &out ), tofpointer( &m ), a );
@@ -145,48 +45,6 @@ inline void Matrix4::mulScalar( Matrix4& out, const Matrix4& m, const float a )
 inline void Matrix4::mul( Matrix4& out, const Matrix4& m1, const Matrix4& m2 )
 {
 	magicalMatrix4Mul( tofpointer( &out ), tofpointer( &m1 ), tofpointer( &m2 ) );
-}
-
-inline bool Matrix4::operator==( const Matrix4& m ) const
-{
-	return magicalMatrix4Equals( tofpointer( this ), tofpointer( &m ) );
-}
-
-inline bool Matrix4::operator!=( const Matrix4& m ) const
-{
-	return !magicalMatrix4Equals( tofpointer( this ), tofpointer( &m ) );
-}
-
-inline Matrix4 Matrix4::operator*( const float a ) const
-{
-	Matrix4 ret;
-	magicalMatrix4MulScalar( tofpointer( &ret ), tofpointer( this ), a );
-	return ret;
-}
-
-inline Matrix4 Matrix4::operator*( const Matrix4& m ) const
-{
-	Matrix4 ret;
-	magicalMatrix4Mul( tofpointer( &ret ), tofpointer( this ), tofpointer( &m ) );
-	return ret;
-}
-
-inline Matrix4& Matrix4::operator*=( const float a )
-{
-	magicalMatrix4MulScalar( tofpointer( this ), tofpointer( this ), a );
-	return *this;
-}
-
-inline Matrix4& Matrix4::operator*=( const Matrix4& m )
-{
-	magicalMatrix4Mul( tofpointer( this ), tofpointer( this ), tofpointer( &m ) );
-	return *this;
-}
-
-inline Matrix4& Matrix4::operator=( const Matrix4& m )
-{
-	magicalMatrix4Fill( tofpointer( this ), tofpointer( &m ) );
-	return *this;
 }
 
 inline void Matrix4::translate( Matrix4& out, const Matrix4& m, const float x, const float y, const float z )
@@ -307,6 +165,150 @@ inline void Matrix4::transpose( Matrix4& out, const Matrix4& m )
 inline void Matrix4::negate( Matrix4& out, const Matrix4& m )
 {
 	magicalMatrix4Negate( tofpointer( &out ), tofpointer( &m ) );
+}
+
+inline bool Matrix4::equals( const Matrix4& m ) const
+{
+	return magicalMatrix4Equals( tofpointer( this ), tofpointer( &m ) );
+}
+
+inline bool Matrix4::isIdentity( void ) const
+{
+	return magicalMatrix4IsIdentity( tofpointer( this ) );
+}
+
+inline void Matrix4::fill( const float* m )
+{
+	magicalMatrix4Fill( tofpointer( this ), m );
+}
+
+inline void Matrix4::fill( const Matrix4& m )
+{
+	magicalMatrix4Fill( tofpointer( this ), tofpointer( &m ) );
+}
+
+inline void Matrix4::fillIdentity( void )
+{
+	magicalMatrix4FillIdentity( tofpointer( this ) );
+}
+
+inline void Matrix4::fillTranslation( const float x, const float y, const float z )
+{
+	magicalMatrix4FillTranslation( tofpointer( this ), x, y, z );
+}
+
+inline void Matrix4::fillTranslation( const Vector3& t )
+{
+	magicalMatrix4FillTranslationVector( tofpointer( this ), tofpointer( &t ) );
+}
+
+inline void Matrix4::fillScale( const float x, const float y, const float z )
+{
+	magicalMatrix4FillScale( tofpointer( this ), x, y, z );
+}
+
+inline void Matrix4::fillScale( const Vector3& s )
+{
+    magicalMatrix4FillScaleVector( tofpointer( this ), tofpointer( &s ) );
+}
+
+inline void Matrix4::fillRotationX( const float angle )
+{
+	magicalMatrix4FillRotationX( tofpointer( this ), angle );
+}
+
+inline void Matrix4::fillRotationY( const float angle )
+{
+	magicalMatrix4FillRotationY( tofpointer( this ), angle );
+}
+
+inline void Matrix4::fillRotationZ( const float angle )
+{
+	magicalMatrix4FillRotationZ( tofpointer( this ), angle );
+}
+
+inline void Matrix4::fillRotationQuaternion( const Quaternion& q )
+{
+	magicalMatrix4FillRotationQuaternion( tofpointer( this ), tofpointer( &q ) );
+}
+
+inline void Matrix4::fillRotationEulerAngles( const float yaw, const float pitch, const float roll )
+{
+	magicalMatrix4FillRotationEulerYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
+}
+
+inline void Matrix4::fillRotationEulerAngles( const EulerAngles& ea )
+{
+	magicalMatrix4FillRotationEulerAngles( tofpointer( this ), tofpointer( &ea ) );
+}
+
+inline void Matrix4::fillRotationAxisAngle( const Vector3& axis, const float angle )
+{
+	magicalMatrix4FillRotationAxisAngleScalars( tofpointer( this ), tofpointer( &axis ), angle );
+}
+
+inline void Matrix4::fillRotationAxisAngle( const AxisAngle& aa )
+{
+	magicalMatrix4FillRotationAxisAngle( tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline void Matrix4::fillLookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
+{
+	magicalMatrix4FillLookAt( tofpointer( this ), tofpointer( &eye ), tofpointer( &target ), tofpointer( &up ) );
+}
+
+inline void Matrix4::fillPerspective( const float fov, const float aspect, const float znear, const float zfar )
+{
+	magicalMatrix4FillPerspective( tofpointer( this ), fov, aspect, znear, zfar );
+}
+
+inline void Matrix4::fillOrthographic( const float left, const float right, const float bottom, const float top, const float near, const float far )
+{
+	magicalMatrix4FillOrthographic( tofpointer( this ), left, right, bottom, top, near, far );
+}
+
+
+
+inline bool Matrix4::operator==( const Matrix4& m ) const
+{
+	return magicalMatrix4Equals( tofpointer( this ), tofpointer( &m ) );
+}
+
+inline bool Matrix4::operator!=( const Matrix4& m ) const
+{
+	return !magicalMatrix4Equals( tofpointer( this ), tofpointer( &m ) );
+}
+
+inline Matrix4 Matrix4::operator*( const float a ) const
+{
+	Matrix4 ret;
+	magicalMatrix4MulScalar( tofpointer( &ret ), tofpointer( this ), a );
+	return ret;
+}
+
+inline Matrix4 Matrix4::operator*( const Matrix4& m ) const
+{
+	Matrix4 ret;
+	magicalMatrix4Mul( tofpointer( &ret ), tofpointer( this ), tofpointer( &m ) );
+	return ret;
+}
+
+inline Matrix4& Matrix4::operator*=( const float a )
+{
+	magicalMatrix4MulScalar( tofpointer( this ), tofpointer( this ), a );
+	return *this;
+}
+
+inline Matrix4& Matrix4::operator*=( const Matrix4& m )
+{
+	magicalMatrix4Mul( tofpointer( this ), tofpointer( this ), tofpointer( &m ) );
+	return *this;
+}
+
+inline Matrix4& Matrix4::operator=( const Matrix4& m )
+{
+	magicalMatrix4Fill( tofpointer( this ), tofpointer( &m ) );
+	return *this;
 }
 
 inline void Matrix4::translate( const float x, const float y, const float z )

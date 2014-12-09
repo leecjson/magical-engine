@@ -32,6 +32,81 @@ inline Vector2 Vector2::fromVector4( const Vector4& v )
 	return Vector2( v );
 }
 
+inline void Vector2::addScalar( Vector2& out, const Vector2& v, const float a )
+{
+	magicalVector2AddScalar( tofpointer( &out ), tofpointer( &v ), a );
+}
+
+inline void Vector2::add( Vector2& out, const Vector2& v1, const Vector2& v2 )
+{
+	magicalVector2Add( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector2::subScalar( Vector2& out, const Vector2& v, const float a )
+{
+	magicalVector2SubScalar( tofpointer( &out ), tofpointer( &v ), a );
+}
+
+inline void Vector2::sub( Vector2& out, const Vector2& v1, const Vector2& v2 )
+{
+	magicalVector2Sub( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector2::mulScalar( Vector2& out, const Vector2& v, const float a )
+{
+	magicalVector2MulScalar( tofpointer( &out ), tofpointer( &v ), a );
+}
+
+inline void Vector2::mul( Vector2& out, const Vector2& v1, const Vector2& v2 )
+{
+	magicalVector2Mul( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector2::divScalar( Vector2& out, const Vector2& v, const float a )
+{
+	magicalVector2DivScalar( tofpointer( &out ), tofpointer( &v ), a );
+}
+
+inline void Vector2::div( Vector2& out, const Vector2& v1, const Vector2& v2 )
+{
+	magicalVector2Div( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector2::clamp( Vector2& out, const Vector2& v, const Vector2& min, const Vector2& max )
+{
+	magicalVector2Clamp( tofpointer( &out ), tofpointer( &v ), tofpointer( &min ), tofpointer( &max ) );
+}
+
+inline void Vector2::negate( Vector2& out, const Vector2& v )
+{
+	magicalVector2Negate( tofpointer( &out ), tofpointer( &v ) );
+}
+
+inline void Vector2::normalize( Vector2& out, const Vector2& v )
+{
+	magicalVector2Normalize( tofpointer( &out ), tofpointer( &v ) );
+}
+
+inline void Vector2::rotate( Vector2& out, const Vector2& v, const float angle )
+{
+	magicalVector2Rotate( tofpointer( &out ), tofpointer( &v ), angle );
+}
+
+inline void Vector2::scale( Vector2& out, const Vector2& v, const float s )
+{
+	magicalVector2Scale( tofpointer( &out ), tofpointer( &v ), s );
+}
+
+inline void Vector2::midPointBetween( Vector2& out, const Vector2& v1, const Vector2& v2 )
+{
+	magicalVector2MidPointBetween( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
+}
+
+inline void Vector2::project( Vector2& out, const Vector2& v, const Vector2& n )
+{
+	magicalVector2Project( tofpointer( &out ), tofpointer( &v ), tofpointer( &n ) );
+}
+
 inline bool Vector2::equals( const Vector2& v ) const
 {
 	return magicalVector2Equals( tofpointer( this ), tofpointer( &v ) );
@@ -80,46 +155,6 @@ inline void Vector2::fillVector3( const Vector3& v )
 inline void Vector2::fillVector4( const Vector3& v )
 {
 	x = v.x; y = v.y;
-}
-
-inline void Vector2::addScalar( Vector2& out, const Vector2& v, const float a )
-{
-	magicalVector2AddScalar( tofpointer( &out ), tofpointer( &v ), a );
-}
-
-inline void Vector2::add( Vector2& out, const Vector2& v1, const Vector2& v2 )
-{
-	magicalVector2Add( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
-inline void Vector2::subScalar( Vector2& out, const Vector2& v, const float a )
-{
-	magicalVector2SubScalar( tofpointer( &out ), tofpointer( &v ), a );
-}
-
-inline void Vector2::sub( Vector2& out, const Vector2& v1, const Vector2& v2 )
-{
-	magicalVector2Sub( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
-inline void Vector2::mulScalar( Vector2& out, const Vector2& v, const float a )
-{
-	magicalVector2MulScalar( tofpointer( &out ), tofpointer( &v ), a );
-}
-
-inline void Vector2::mul( Vector2& out, const Vector2& v1, const Vector2& v2 )
-{
-	magicalVector2Mul( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
-inline void Vector2::divScalar( Vector2& out, const Vector2& v, const float a )
-{
-	magicalVector2DivScalar( tofpointer( &out ), tofpointer( &v ), a );
-}
-
-inline void Vector2::div( Vector2& out, const Vector2& v1, const Vector2& v2 )
-{
-	magicalVector2Div( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
 }
 
 inline bool Vector2::operator==( const Vector2& v ) const
@@ -238,41 +273,6 @@ inline Vector2& Vector2::operator=( const Vector2& v )
 {
 	x = v.x; y = v.y;
 	return *this;
-}
-
-inline void Vector2::clamp( Vector2& out, const Vector2& v, const Vector2& min, const Vector2& max )
-{
-	magicalVector2Clamp( tofpointer( &out ), tofpointer( &v ), tofpointer( &min ), tofpointer( &max ) );
-}
-
-inline void Vector2::negate( Vector2& out, const Vector2& v )
-{
-	magicalVector2Negate( tofpointer( &out ), tofpointer( &v ) );
-}
-
-inline void Vector2::normalize( Vector2& out, const Vector2& v )
-{
-	magicalVector2Normalize( tofpointer( &out ), tofpointer( &v ) );
-}
-
-inline void Vector2::rotate( Vector2& out, const Vector2& v, const float angle )
-{
-	magicalVector2Rotate( tofpointer( &out ), tofpointer( &v ), angle );
-}
-
-inline void Vector2::scale( Vector2& out, const Vector2& v, const float s )
-{
-	magicalVector2Scale( tofpointer( &out ), tofpointer( &v ), s );
-}
-
-inline void Vector2::midPointBetween( Vector2& out, const Vector2& v1, const Vector2& v2 )
-{
-	magicalVector2MidPointBetween( tofpointer( &out ), tofpointer( &v1 ), tofpointer( &v2 ) );
-}
-
-inline void Vector2::project( Vector2& out, const Vector2& v, const Vector2& n )
-{
-	magicalVector2Project( tofpointer( &out ), tofpointer( &v ), tofpointer( &n ) );
 }
 
 inline void Vector2::clamp( const Vector2& min, const Vector2& max )
