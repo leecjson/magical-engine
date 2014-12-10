@@ -21,7 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "../c/cVector2.h"
 #include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Vector2.inl"
 #include "MathMacros.h"
 
 const Vector2 Vector2::Zero = Vector2( 0.0f, 0.0f );
@@ -33,20 +37,6 @@ const Vector2 Vector2::Down = Vector2( 0.0f, -1.0f );
 
 Vector2 Vector2::placeholder = Vector2::Zero;
 Vector2 Vector2::temp = Vector2::Zero;
-
-Vector2::Vector2( const Vector4& v )
-: x( v.x )
-, y( v.y )
-{
-	
-}
-
-Vector2::Vector2( const Vector3& v )
-: x( v.x )
-, y( v.y )
-{
-
-}
 
 Vector2::Vector2( const float x, const float y )
 : x( x )

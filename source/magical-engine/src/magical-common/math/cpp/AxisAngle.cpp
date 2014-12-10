@@ -21,7 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "../c/cVector3.h"
+#include "../c/cAxisAngle.h"
+#include "../c/cQuaternion.h"
+#include "Vector3.h"
 #include "AxisAngle.h"
+#include "Quaternion.h"
+#include "AxisAngle.inl"
 #include "MathMacros.h"
 
 const AxisAngle AxisAngle::Identity = AxisAngle( 0.0f, 0.0f, 1.0f, 0.0f );
@@ -35,14 +41,14 @@ AxisAngle::AxisAngle( const float x, const float y, const float z, const float w
 	magicalAxisAngleFillScalars( tofpointer( this ), x, y, z, w );
 }
 
-AxisAngle::AxisAngle( const Quaternion& q )
-{
-	magicalAxisAngleFromQuaternion( tofpointer( this ), tofpointer( &q ) );
-}
-
 AxisAngle::AxisAngle( const Vector3& axis, const float angle )
 {
 	magicalAxisAngleFillAxisAngleScalars( tofpointer( this ), tofpointer( &axis ), angle );
+}
+
+AxisAngle::AxisAngle( const AxisAngle& aa )
+{
+	magicalAxisAngleFill( tofpointer( this ), tofpointer( &aa ) );
 }
 
 AxisAngle::AxisAngle( void )

@@ -22,6 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+inline AxisAngle AxisAngle::fromIdentity( void )
+{
+	return AxisAngle::Identity;
+}
+
+inline AxisAngle AxisAngle::fromZero( void )
+{
+	return AxisAngle::Zero;
+}
+
 inline AxisAngle AxisAngle::fromQuaternion( const Quaternion& q )
 {
 	AxisAngle ret;
@@ -39,14 +49,14 @@ inline bool AxisAngle::equals( const AxisAngle& aa ) const
 	return magicalAxisAngleEquals( tofpointer( this ), tofpointer( &aa ) );
 }
 
-inline bool AxisAngle::isZero( void ) const
-{
-	return magicalAxisAngleIsZero( tofpointer( this ) );
-}
-
 inline bool AxisAngle::isIdentity( void ) const
 {
 	return magicalAxisAngleIsIdentity( tofpointer( this ) );
+}
+
+inline bool AxisAngle::isZero( void ) const
+{
+	return magicalAxisAngleIsZero( tofpointer( this ) );
 }
 
 inline void AxisAngle::fill( const AxisAngle& aa )
@@ -54,19 +64,19 @@ inline void AxisAngle::fill( const AxisAngle& aa )
 	magicalAxisAngleFill( tofpointer( this ), tofpointer( &aa ) );
 }
 
-inline void AxisAngle::fill( const float x, const float y, const float z, const float w )
+inline void AxisAngle::fillScalars( const float x, const float y, const float z, const float w )
 {
 	magicalAxisAngleFillScalars( tofpointer( this ), x, y, z, w );
-}
-
-inline void AxisAngle::fillZero( void )
-{
-	magicalAxisAngleFillZero( tofpointer( this ) );
 }
 
 inline void AxisAngle::fillIdentity( void )
 {
 	magicalAxisAngleFillIdentity( tofpointer( this ) );
+}
+
+inline void AxisAngle::fillZero( void )
+{
+	magicalAxisAngleFillZero( tofpointer( this ) );
 }
 
 inline void AxisAngle::fillQuaternion( const Quaternion& q )

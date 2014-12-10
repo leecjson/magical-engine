@@ -83,10 +83,5 @@ public:
 	inline void corrects( void );
 	inline EulerAngles getCorrected( void ) const;
 };
-
-#include "../c/cEulerAngles.h"
-#include "Quaternion.h"
-#include "Matrix4.h"
-#include "EulerAngles.inl"
 	
 #endif //__EULER_ANGLES_H__

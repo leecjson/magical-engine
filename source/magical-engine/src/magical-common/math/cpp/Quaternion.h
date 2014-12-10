@@ -52,14 +52,17 @@ public:
 	Quaternion( void );
 
 public:
-	static inline Quaternion fromMatrix4( const Matrix4& m );
+	static inline Quaternion fromIdentity( void );
+	static inline Quaternion fromZero( void );
+
 	static inline Quaternion fromAxisAngle( const AxisAngle& aa );
 	static inline Quaternion fromAxisAngle( const Vector3& axis, const float angle );
-	static inline Quaternion fromEuler( const EulerAngles& ea );
-	static inline Quaternion fromEuler( const float yaw, const float pitch, const float roll );
+	static inline Quaternion fromEulerAngles( const EulerAngles& ea );
+	static inline Quaternion fromEulerAngles( const float yaw, const float pitch, const float roll );
 	static inline Quaternion fromRotationX( const float angle );
 	static inline Quaternion fromRotationY( const float angle );
 	static inline Quaternion fromRotationZ( const float angle );
+	static inline Quaternion fromMatrix4( const Matrix4& m );
 
 	static inline void add( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
 	static inline void sub( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
@@ -80,13 +83,13 @@ public:
 
 public:
 	inline bool equals( const Quaternion& q ) const;
-	inline bool isZero( void ) const;
 	inline bool isIdentity( void ) const;
+	inline bool isZero( void ) const;
 	inline bool isNormalized( void ) const;
 	inline void fill( const Quaternion& q );
 	inline void fill( float x, float y, float z, float w );
-	inline void fillZero( void );
 	inline void fillIdentity( void );
+	inline void fillZero( void );
 	inline void fillMatrix4( const Matrix4& m );
 	inline void fillAxisAngle( const AxisAngle& aa );
 	inline void fillAxisAngle( const Vector3& axis, const float angle );
@@ -101,6 +104,7 @@ public:
 	static void operator delete( void* ptr );
 	inline bool operator==( const Quaternion& q ) const;
 	inline bool operator!=( const Quaternion& q ) const;
+	inline float operator[]( const unsigned int i ) const;
 	inline Quaternion operator+( const Quaternion& q ) const;
 	inline Quaternion operator-( const Quaternion& q ) const;
 	inline Quaternion operator*( const float a ) const;
@@ -140,11 +144,5 @@ public:
 	inline float length( void ) const;
 	inline float lengthSq( void ) const;
 };
-
-#include "../c/cQuaternion.h"
-#include "Vector3.h"
-#include "Matrix4.h"
-#include "EulerAngles.h"
-#include "Quaternion.inl"
 	
 #endif //__QUATERNION_H__

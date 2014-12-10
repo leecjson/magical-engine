@@ -267,8 +267,6 @@ inline void Matrix4::fillOrthographic( const float left, const float right, cons
 	magicalMatrix4FillOrthographic( tofpointer( this ), left, right, bottom, top, near, far );
 }
 
-
-
 inline bool Matrix4::operator==( const Matrix4& m ) const
 {
 	return magicalMatrix4Equals( tofpointer( this ), tofpointer( &m ) );
@@ -284,6 +282,14 @@ inline Matrix4 Matrix4::operator*( const float a ) const
 	Matrix4 ret;
 	magicalMatrix4MulScalar( tofpointer( &ret ), tofpointer( this ), a );
 	return ret;
+}
+
+inline float Matrix4::operator[]( const unsigned int i ) const
+{
+#if MAGICAL_DEBUG
+	assert( 0 <= i && i <= 15 && "index out of range" );
+#endif
+	return ((float*)this)[i];
 }
 
 inline Matrix4 Matrix4::operator*( const Matrix4& m ) const

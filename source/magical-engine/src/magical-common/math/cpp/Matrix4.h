@@ -27,8 +27,8 @@ SOFTWARE.
 class Vector3;
 class Vector4;
 class AxisAngle;
-class Quaternion;
 class EulerAngles;
+class Quaternion;
 
 class Matrix4
 {
@@ -40,6 +40,7 @@ public:
 
 public:
 	static const Matrix4 Identity;
+	static const Matrix4 Zero;
 	static Matrix4 placeholder;
 	static Matrix4 temp;
 
@@ -109,6 +110,7 @@ public:
 	static void operator delete( void* ptr );
 	inline bool operator==( const Matrix4& m ) const;
 	inline bool operator!=( const Matrix4& m ) const;
+	inline float operator[]( const unsigned int i ) const;
 	inline Matrix4 operator*( const float a ) const;
 	inline Matrix4 operator*( const Matrix4& m ) const;
 	inline Matrix4& operator*=( const float a );
@@ -146,13 +148,5 @@ public:
 	inline Matrix4 getNegated( void ) const;
 	inline float determinant( void ) const;
 };
-
-#include "../c/cMatrix4.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "AxisAngle.h"
-#include "Quaternion.h"
-#include "EulerAngles.h"
-#include "Matrix4.inl"
 
 #endif //__MATRIX4_H__

@@ -22,14 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+inline Vector3 Vector3::fromZero( void )
+{
+	return Vector3::Zero;
+}
+
+inline Vector3 Vector3::fromOne( void )
+{
+	return Vector3::One;
+}
+
 inline Vector3 Vector3::fromVector2( const Vector2& v )
 {
-	return Vector3( v );
+	return Vector3( v.x, v.y, 0.0f );
 }
 
 inline Vector3 Vector3::fromVector4( const Vector4& v )
 {
-	return Vector3( v );
+	return Vector3( v.x, v.y, v.z );
 }
 
 inline void Vector3::addScalar( Vector3& out, const Vector3& v, const float a )
@@ -139,13 +149,6 @@ inline void Vector3::fill( const Vector3& v )
 	z = v.z;
 }
 
-inline void Vector3::fill( const float x, const float y, const float z )
-{
-	this->x = x;
-	this->y = y;
-	this->z = z;
-}
-
 inline void Vector3::fillZero( void )
 {
 	x = 0.0f;
@@ -158,6 +161,13 @@ inline void Vector3::fillOne( void )
 	x = 1.0f;
 	y = 1.0f;
 	z = 1.0f;
+}
+
+inline void Vector3::fillScalars( const float x, const float y, const float z )
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
 }
 
 inline void Vector3::fillVector2( const Vector2& v )
@@ -182,6 +192,14 @@ inline bool Vector3::operator==( const Vector3& v ) const
 inline bool Vector3::operator!=( const Vector3& v ) const
 {
 	return !magicalVector3Equals( tofpointer( this ), tofpointer( &v ) );
+}
+
+inline float Vector3::operator[]( const unsigned int i ) const
+{
+#if MAGICAL_DEBUG
+	assert( 0 <= i && i <= 2 && "index out of range" );
+#endif
+	return ((float*)this)[i];
 }
 
 inline Vector3 Vector3::operator+( void ) const

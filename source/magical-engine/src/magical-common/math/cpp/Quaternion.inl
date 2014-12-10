@@ -22,11 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Quaternion Quaternion::fromMatrix4( const Matrix4& m )
+inline Quaternion Quaternion::fromIdentity( void )
 {
-	Quaternion ret;
-	magicalQuaternionFromMatrix4( tofpointer( &ret ), tofpointer( &m ) );
-	return ret;
+	return Quaternion::Identity;
+}
+
+inline Quaternion Quaternion::fromZero( void )
+{
+	return Quaternion::Zero;
 }
 
 inline Quaternion Quaternion::fromAxisAngle( const AxisAngle& aa )
@@ -69,12 +72,21 @@ inline Quaternion Quaternion::fromRotationY( const float angle )
 	Quaternion ret;
 	magicalQuaternionFillRotationY( tofpointer( &ret ), angle );
 	return ret;
+
+	Quaternion q = Quaternion::fromEuler( x, y, z );
 }
 
 inline Quaternion Quaternion::fromRotationZ( const float angle )
 {
 	Quaternion ret;
 	magicalQuaternionFillRotationZ( tofpointer( &ret ), angle );
+	return ret;
+}
+
+inline Quaternion Quaternion::fromMatrix4( const Matrix4& m )
+{
+	Quaternion ret;
+	magicalQuaternionFromMatrix4( tofpointer( &ret ), tofpointer( &m ) );
 	return ret;
 }
 
@@ -158,14 +170,14 @@ inline bool Quaternion::equals( const Quaternion& q ) const
 	return magicalQuaternionEquals( tofpointer( this ), tofpointer( &q ) );
 }
 
-inline bool Quaternion::isZero( void ) const
-{
-	return magicalQuaternionIsZero( tofpointer( this ) );
-}
-
 inline bool Quaternion::isIdentity( void ) const
 {
 	return magicalQuaternionIsIdentity( tofpointer( this ) );
+}
+
+inline bool Quaternion::isZero( void ) const
+{
+	return magicalQuaternionIsZero( tofpointer( this ) );
 }
 
 inline bool Quaternion::isNormalized( void ) const
@@ -183,14 +195,14 @@ inline void Quaternion::fill( float x, float y, float z, float w )
 	this->x = x; this->y = y; this->z = z; this->w = w;
 }
 
-inline void Quaternion::fillZero( void )
-{
-	x = 0.0f; y = 0.0f; z = 0.0f; w = 0.0f;
-}
-
 inline void Quaternion::fillIdentity( void )
 {
 	x = 0.0f; y = 0.0f; z = 0.0f; w = 1.0f;
+}
+
+inline void Quaternion::fillZero( void )
+{
+	x = 0.0f; y = 0.0f; z = 0.0f; w = 0.0f;
 }
 
 inline void Quaternion::fillMatrix4( const Matrix4& m )
@@ -241,6 +253,14 @@ inline bool Quaternion::operator==( const Quaternion& q ) const
 inline bool Quaternion::operator!=( const Quaternion& q ) const
 {
 	return !magicalQuaternionEquals( tofpointer( this ), tofpointer( &q ) );
+}
+
+inline float Quaternion::operator[]( const unsigned int i ) const
+{
+#if MAGICAL_DEBUG
+	assert( 0 <= i && i <= 3 && "index out of range" );
+#endif
+	return ((float*)this)[i];
 }
 
 inline Quaternion Quaternion::operator+( const Quaternion& q ) const

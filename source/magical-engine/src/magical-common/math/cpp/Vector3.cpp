@@ -21,7 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "../c/cVector3.h"
+#include "../c/cMatrix4.h"
+#include "Vector2.h"
 #include "Vector3.h"
+#include "Vector4.h"
+#include "Matrix4.h"
+#include "Vector3.inl"
 #include "MathMacros.h"
 
 const Vector3 Vector3::Zero = Vector3( 0.0f, 0.0f, 0.0f );
@@ -36,20 +42,12 @@ const Vector3 Vector3::Back = Vector3( 0.0f, 0.0f, -1.0f );
 Vector3 Vector3::placeholder = Vector3::Zero;
 Vector3 Vector3::temp = Vector3::Zero;
 
-Vector3::Vector3( const Vector4& v )
-: x( v.x )
-, y( v.y )
-, z( v.z )
+Vector3::Vector3( const float x, const float y, const float z )
+: x( x )
+, y( y )
+, z( z )
 {
-
-}
-
-Vector3::Vector3( const Vector2& v )
-: x( v.x )
-, y( v.y )
-, z( 0.0f )
-{
-
+	
 }
 
 Vector3::Vector3( const Vector3& v )
@@ -58,14 +56,6 @@ Vector3::Vector3( const Vector3& v )
 , z( v.z )
 {
 
-}
-
-Vector3::Vector3( const float x, const float y, const float z )
-: x( x )
-, y( y )
-, z( z )
-{
-	
 }
 
 Vector3::Vector3( void )

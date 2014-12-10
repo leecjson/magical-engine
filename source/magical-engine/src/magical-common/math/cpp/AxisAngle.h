@@ -43,22 +43,24 @@ public:
 
 public:
 	AxisAngle( const float x, const float y, const float z, const float w );
-	AxisAngle( const Quaternion& q );
 	AxisAngle( const Vector3& axis, const float angle );
+	AxisAngle( const AxisAngle& aa );
 	AxisAngle( void );
 
 public:
+	static inline AxisAngle fromIdentity( void );
+	static inline AxisAngle fromZero( void );
 	static inline AxisAngle fromQuaternion( const Quaternion& q );
 	static inline void getAxis( Vector3& out, const AxisAngle& aa );
 
 public:
 	inline bool equals( const AxisAngle& aa ) const;
-	inline bool isZero( void ) const;
 	inline bool isIdentity( void ) const;
+	inline bool isZero( void ) const;
 	inline void fill( const AxisAngle& aa );
-	inline void fill( const float x, const float y, const float z, const float w );
-	inline void fillZero( void );
+	inline void fillScalars( const float x, const float y, const float z, const float w );
 	inline void fillIdentity( void );
+	inline void fillZero( void );
 	inline void fillQuaternion( const Quaternion& q );
 
 public:
@@ -74,10 +76,5 @@ public:
 	inline Vector3 getAxis( void ) const;
 	inline float getAngle( void ) const;
 };
-
-#include "../c/cAxisAngle.h"
-#include "Vector3.h"
-#include "Quaternion.h"
-#include "AxisAngle.inl"
 
 #endif //__AXIS_ANGLE_H__

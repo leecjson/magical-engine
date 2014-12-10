@@ -52,13 +52,13 @@ public:
 	static Vector4 temp;
 
 public:
-	Vector4( const Vector2& v );
-	Vector4( const Vector3& v );
-	Vector4( const Vector4& v );
 	Vector4( const float x, const float y, const float z, const float w );
+	Vector4( const Vector4& v );
 	Vector4( void );
 
 public:
+	static inline Vector4 fromZero( void );
+	static inline Vector4 fromOne( void );
 	static inline Vector4 fromVector2( const Vector2& v );
 	static inline Vector4 fromVector3( const Vector3& v );
 
@@ -84,10 +84,10 @@ public:
 	inline bool isZero( void ) const;
 	inline bool isOne( void ) const;
 	inline bool isNormalized( void ) const;
-	inline void fill( const float x, const float y, const float z, const float w );
 	inline void fill( const Vector4& v );
 	inline void fillZero( void );
 	inline void fillOne( void );
+	inline void fillScalars( const float x, const float y, const float z, const float w );
 	inline void fillVector2( const Vector2& v );
 	inline void fillVector3( const Vector3& v );
 
@@ -96,6 +96,7 @@ public:
 	static void operator delete( void* ptr );
 	inline bool operator==( const Vector4& v ) const;
 	inline bool operator!=( const Vector4& v ) const;
+	inline float operator[]( const unsigned int i ) const;
 	inline Vector4 operator+( void ) const;
 	inline Vector4 operator+( const float a ) const;
 	inline Vector4 operator+( const Vector4& v ) const;
@@ -138,10 +139,4 @@ public:
 	inline Vector4 project( const Vector4& n ) const;
 };
 
-#include "../c/cVector4.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Matrix4.h"
-#include "Vector4.inl"
-	
 #endif //__VECTOR4_H__

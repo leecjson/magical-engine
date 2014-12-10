@@ -44,13 +44,13 @@ public:
 	static Vector2 temp;
 
 public:
-	Vector2( const Vector4& v );
-	Vector2( const Vector3& v );
-	Vector2( const Vector2& v );
 	Vector2( const float x, const float y );
+	Vector2( const Vector2& v );
 	Vector2( void );
 
 public:
+	static inline Vector2 fromZero( void );
+	static inline Vector2 fromOne( void );
 	static inline Vector2 fromVector3( const Vector3& v );
 	static inline Vector2 fromVector4( const Vector4& v );
 
@@ -77,9 +77,9 @@ public:
 	inline bool isOne( void ) const;
 	inline bool isNormalized( void ) const;
 	inline void fill( const Vector2& v );
-	inline void fill( const float x, const float y );
 	inline void fillZero( void );
 	inline void fillOne( void );
+	inline void fillScalars( const float x, const float y );
 	inline void fillVector3( const Vector3& v );
 	inline void fillVector4( const Vector3& v );
 
@@ -88,6 +88,7 @@ public:
 	static void operator delete( void* ptr );
 	inline bool operator==( const Vector2& v ) const;
 	inline bool operator!=( const Vector2& v ) const;
+	inline float operator[]( const unsigned int i ) const;
 	inline Vector2 operator+( void ) const;
 	inline Vector2 operator+( const float a ) const;
 	inline Vector2 operator+( const Vector2& v ) const;
@@ -130,10 +131,5 @@ public:
 	inline Vector2 midPointBetween( const Vector2& v ) const;
 	inline Vector2 project( const Vector2& n ) const;
 };
-
-#include "../c/cVector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Vector2.inl"
 
 #endif //__VECTOR2_H__

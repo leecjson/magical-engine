@@ -641,6 +641,9 @@
     <ClInclude Include="..\src\magical-common\math\c\cAABB3.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\cpp\magical-math.h">
+      <Filter>src\magical-common\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\magical-common\math\cpp\AxisAngle.inl">
@@ -652,16 +655,16 @@
     <None Include="..\src\magical-common\math\cpp\Quaternion.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-common\math\cpp\Vector2.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
-    <None Include="..\src\magical-common\math\cpp\Vector3.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
     <None Include="..\src\magical-common\math\cpp\Vector4.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
     <None Include="..\src\magical-common\math\cpp\Matrix4.inl">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </None>
+    <None Include="..\src\magical-common\math\cpp\Vector2.inl">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </None>
+    <None Include="..\src\magical-common\math\cpp\Vector3.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
   </ItemGroup>

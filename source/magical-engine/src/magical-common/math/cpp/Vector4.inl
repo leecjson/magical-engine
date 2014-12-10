@@ -22,14 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+inline Vector4 Vector4::fromZero( void )
+{
+	return Vector4::Zero;
+}
+
+inline Vector4 Vector4::fromOne( void )
+{
+	return Vector4::One;
+}
+
 inline Vector4 Vector4::fromVector2( const Vector2& v )
 {
-	return Vector4( v );
+	return Vector4( v.x, v.y, 0.0f, 0.0f );
 }
 
 inline Vector4 Vector4::fromVector3( const Vector3& v )
 {
-	return Vector4( v );
+	return Vector4( v.x, v.y, v.z, 0.0f );
 }
 
 inline void Vector4::addScalar( Vector4& out, const Vector4& v, const float a )
@@ -127,14 +137,6 @@ inline bool Vector4::isNormalized( void ) const
 	return magicalVector4IsNormalized( tofpointer( this ) );
 }
 
-inline void Vector4::fill( const float x, const float y, const float z, const float w )
-{
-	this->x = x;
-	this->y = y;
-	this->z = z;
-	this->w = w;
-}
-
 inline void Vector4::fill( const Vector4& v )
 {
 	x = v.x;
@@ -157,6 +159,14 @@ inline void Vector4::fillOne( void )
 	y = 1.0f;
 	z = 1.0f;
 	w = 1.0f;
+}
+
+inline void Vector4::fillScalars( const float x, const float y, const float z, const float w )
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
 }
 
 inline void Vector4::fillVector2( const Vector2& v )
@@ -183,6 +193,14 @@ inline bool Vector4::operator==( const Vector4& v ) const
 inline bool Vector4::operator!=( const Vector4& v ) const
 {
 	return !magicalVector4Equals( tofpointer( this ), tofpointer( &v ) );
+}
+
+inline float Vector4::operator[]( const unsigned int i ) const
+{
+#if MAGICAL_DEBUG
+	assert( 0 <= i && i <= 3 && "index out of range" );
+#endif
+	return ((float*)this)[i];
 }
 
 inline Vector4 Vector4::operator+( void ) const

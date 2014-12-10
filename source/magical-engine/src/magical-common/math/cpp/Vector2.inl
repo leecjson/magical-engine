@@ -22,14 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+inline Vector2 Vector2::fromZero( void )
+{
+	return Vector2::Zero;
+}
+
+inline Vector2 Vector2::fromOne( void )
+{
+	return Vector2::One;
+}
+
 inline Vector2 Vector2::fromVector3( const Vector3& v )
 {
-	return Vector2( v );
+	return Vector2( v.x, v.y );
 }
 
 inline Vector2 Vector2::fromVector4( const Vector4& v )
 {
-	return Vector2( v );
+	return Vector2( v.x, v.y );
 }
 
 inline void Vector2::addScalar( Vector2& out, const Vector2& v, const float a )
@@ -132,11 +142,6 @@ inline void Vector2::fill( const Vector2& v )
 	x = v.x; y = v.y;
 }
 
-inline void Vector2::fill( const float x, const float y )
-{
-	this->x = x; this->y = y;
-}
-
 inline void Vector2::fillZero( void )
 {
 	x = 0.0f; y = 0.0f;
@@ -145,6 +150,11 @@ inline void Vector2::fillZero( void )
 inline void Vector2::fillOne( void )
 {
 	x = 1.0f; y = 1.0f;
+}
+
+inline void Vector2::fillScalars( const float x, const float y )
+{
+	this->x = x; this->y = y;
 }
 
 inline void Vector2::fillVector3( const Vector3& v )
@@ -165,6 +175,14 @@ inline bool Vector2::operator==( const Vector2& v ) const
 inline bool Vector2::operator!=( const Vector2& v ) const
 {
 	return !magicalVector2Equals( tofpointer( this ), tofpointer( &v ) );
+}
+
+inline float Vector2::operator[]( const unsigned int i ) const
+{
+#if MAGICAL_DEBUG
+	assert( 0 <= i && i <= 1 && "index out of range" );
+#endif
+	return ((float*)this)[i];
 }
 
 inline Vector2 Vector2::operator+( void ) const
