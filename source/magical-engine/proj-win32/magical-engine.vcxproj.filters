@@ -641,7 +641,7 @@
     <ClInclude Include="..\src\magical-common\math\c\cAABB3.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\magical-math.h">
+    <ClInclude Include="..\src\magical-common\math\magical-math.h">
       <Filter>src\magical-common\math</Filter>
     </ClInclude>
   </ItemGroup>

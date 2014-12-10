@@ -37,24 +37,14 @@ const EulerAngles EulerAngles::Identity = EulerAngles( 0.0f, 0.0f, 0.0f );
 EulerAngles EulerAngles::placeholder = EulerAngles::Identity;
 EulerAngles EulerAngles::temp = EulerAngles::Identity;
 
-EulerAngles::EulerAngles( const Matrix4& m )
+EulerAngles::EulerAngles( const float yaw, const float pitch, const float roll )
 {
-	magicalEulerAnglesFromMatrix4( tofpointer( this ), tofpointer( &m ) );
-}
-
-EulerAngles::EulerAngles( const Quaternion& q )
-{
-	magicalEulerAnglesFromQuaternion( tofpointer( this ), tofpointer( &q ) );
+	magicalEulerAnglesFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
 }
 
 EulerAngles::EulerAngles( const EulerAngles& ea )
 {
 	magicalEulerAnglesFill( tofpointer( this ), tofpointer( &ea ) );
-}
-
-EulerAngles::EulerAngles( const float yaw, const float pitch, const float roll )
-{
-	magicalEulerAnglesFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
 }
 
 EulerAngles::EulerAngles( void )
