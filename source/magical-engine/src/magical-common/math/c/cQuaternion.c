@@ -150,7 +150,7 @@ void magicalQuaternionFillRotationZ( cQuaternion out, const float angle )
  * out 结果
  * aa 轴一角对
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionFromAxisAngle( cQuaternion out, const cAxisAngle aa )
+void magicalQuaternionFromAxisA( cQuaternion out, const cAxisA aa )
 {
 	cVector3 n;
 	float half_angle, s;
@@ -167,72 +167,18 @@ void magicalQuaternionFromAxisAngle( cQuaternion out, const cAxisAngle aa )
 }
 
 /*-----------------------------------------------------------------------------*\
- * 填充为以轴一角对旋转的四元数 done
- *
- * [ cos(a/2) ( sin(a/2)*n.x  sin(a/2)*n.y  sin(a/2)*n.z ) ]
- *
- * out 结果
- * axis 旋转轴
- * angle 绕旋转轴所旋转的弧度
- *-----------------------------------------------------------------------------*/
-void magicalQuaternionFromAxisAngleScalars( cQuaternion out, const cVector3 axis, const float angle )
-{
-	cVector3 n;
-	float half_angle, s;
-
-	half_angle = angle * 0.5f;
-	s = sinf( half_angle );
-
-	magicalVector3Normalize( n, axis );
-
-	out _w = cosf( half_angle );
-    out _x = n _x * s;
-    out _y = n _y * s;
-    out _z = n _z * s;
-}
-
-/*-----------------------------------------------------------------------------*\
  * 将一组欧拉角旋转转换为四元数 done
  *
  * out 结果
  * ea 转换所需要的欧拉角 参考欧拉角定义
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea )
+void magicalQuaternionFromEulerA( cQuaternion out, const cEulerA ea )
 {
-	cEulerAngles ea_dst;
+	cEulerA ea_dst;
 	float sp, sr, sy;
 	float cp, cr, cy;
 
-	magicalEulerAnglesCorrects( ea_dst, ea );
-
-	magicalSinCos( &sp, &cp, ea_dst _pitch * 0.5f );
-	magicalSinCos( &sr, &cr, ea_dst _roll * 0.5f );
-	magicalSinCos( &sy, &cy, ea_dst _yaw * 0.5f );
-
-	out _w =   cy * cp * cr + sy * sp * sr;
-	out _x = - cy * sp * cr - sy * cp * sr;
-	out _y =   cy * sp * sr - sy * cr * cp;
-	out _z =   sy * sp * cr - cy * cp * sr;
-
-#if 1
-	magicalQuaternionNormalize( out, out );
-#endif
-}
-
-/*-----------------------------------------------------------------------------*\
- * 将欧拉角yaw pitch roll旋转转换为四元数 done
- *
- * out 结果
- * yaw pitch roll 参考欧拉角的定义
- *-----------------------------------------------------------------------------*/
-void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll )
-{
-	cEulerAngles ea_dst;
-	float sp, sr, sy;
-	float cp, cr, cy;
-
-	magicalEulerAnglesFillYawPitchRoll( ea_dst, yaw, pitch, roll );
-	magicalEulerAnglesCorrects( ea_dst, ea_dst );
+	magicalEulerACorrects( ea_dst, ea );
 
 	magicalSinCos( &sp, &cp, ea_dst _pitch * 0.5f );
 	magicalSinCos( &sr, &cr, ea_dst _roll * 0.5f );
@@ -253,14 +199,14 @@ void magicalQuaternionFromMatrix4( cQuaternion out, const cMatrix4 m )
 	magicalMatrix4GetRotationQuaternion( out, m );
 }
 
-void magicalQuaternionToAxisAngle( cAxisAngle out, const cQuaternion q )
+void magicalQuaternionToAxisAngle( cAxisA out, const cQuaternion q )
 {
-	magicalAxisAngleFromQuaternion( out, q );
+	magicalAxisAFromQuaternion( out, q );
 }
 
-void magicalQuaternionToEulerAngels( cEulerAngles out, const cQuaternion q )
+void magicalQuaternionToEulerAngels( cEulerA out, const cQuaternion q )
 {
-	magicalEulerAnglesFromQuaternion( out, q );
+	magicalEulerAFromQuaternion( out, q );
 }
 
 void magicalQuaternionToMatrix4( cMatrix4 out, const cQuaternion q )
@@ -289,31 +235,17 @@ void magicalQuaternionRotateZ( cQuaternion out, const cQuaternion q, const float
 	magicalQuaternionMul( out, q, dst );
 }
 
-void magicalQuaternionRotateAxisAngle( cQuaternion out, const cQuaternion q, const cAxisAngle aa )
+void magicalQuaternionRotateAxisA( cQuaternion out, const cQuaternion q, const cAxisA aa )
 {
 	cQuaternion dst;
-	magicalQuaternionFromAxisAngle( dst, aa );
+	magicalQuaternionFromAxisA( dst, aa );
 	magicalQuaternionMul( out, q, dst );
 }
 
-void magicalQuaternionRotateAxisAngleScalars( cQuaternion out, const cQuaternion q, const cVector3 axis, const float angle )
+void magicalQuaternionRotateEulerA( cQuaternion out, const cQuaternion q, const cEulerA ea )
 {
 	cQuaternion dst;
-	magicalQuaternionFromAxisAngleScalars( dst, axis, angle );
-	magicalQuaternionMul( out, q, dst );
-}
-
-void magicalQuaternionRotateEulerAngles( cQuaternion out, const cQuaternion q, const cEulerAngles ea )
-{
-	cQuaternion dst;
-	magicalQuaternionFromEulerAngles( dst, ea );
-	magicalQuaternionMul( out, q, dst );
-}
-
-void magicalQuaternionRotateEulerYawPitchRoll( cQuaternion out, const cQuaternion q, const float yaw, const float pitch, const float roll )
-{
-	cQuaternion dst;
-	magicalQuaternionFromEulerYawPitchRoll( dst, yaw, pitch, roll );
+	magicalQuaternionFromEulerA( dst, ea );
 	magicalQuaternionMul( out, q, dst );
 }
 

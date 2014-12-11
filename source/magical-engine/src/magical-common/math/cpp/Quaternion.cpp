@@ -23,13 +23,13 @@ SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector3.h"
 #include "../c/cMatrix4.h"
-#include "../c/cAxisAngle.h"
-#include "../c/cEulerAngles.h"
+#include "../c/cAxisA.h"
+#include "../c/cEulerA.h"
 #include "../c/cQuaternion.h"
 #include "Vector3.h"
 #include "Matrix4.h"
-#include "AxisAngle.h"
-#include "EulerAngles.h"
+#include "AxisA.h"
+#include "EulerA.h"
 #include "Quaternion.h"
 #include "Quaternion.inl"
 #include "MathMacros.h"
@@ -47,21 +47,6 @@ Quaternion::Quaternion( const float x, const float y, const float z, const float
 , w( w )
 {
 
-}
-
-Quaternion::Quaternion( const Matrix4& m )
-{
-	magicalQuaternionFromMatrix4( tofpointer( this ), tofpointer( &m ) );
-}
-
-Quaternion::Quaternion( const AxisAngle& aa )
-{
-	magicalQuaternionFromAxisAngle( tofpointer( this ), tofpointer( &aa ) );
-}
-
-Quaternion::Quaternion( const EulerAngles& ea )
-{
-	magicalQuaternionFromEulerAngles( tofpointer( this ), tofpointer( &ea ) );
 }
 
 Quaternion::Quaternion( const Quaternion& q )

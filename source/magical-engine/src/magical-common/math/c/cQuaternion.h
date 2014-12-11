@@ -30,8 +30,8 @@ typedef float cQuaternion[4];
 
 #include "cVector3.h"
 #include "cMatrix4.h"
-#include "cAxisAngle.h"
-#include "cEulerAngles.h"
+#include "cAxisA.h"
+#include "cEulerA.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -51,23 +51,19 @@ MAGICALAPI_MATH void magicalQuaternionFillRotationX( cQuaternion out, const floa
 MAGICALAPI_MATH void magicalQuaternionFillRotationY( cQuaternion out, const float angle );
 MAGICALAPI_MATH void magicalQuaternionFillRotationZ( cQuaternion out, const float angle );
 
-MAGICALAPI_MATH void magicalQuaternionFromAxisAngle( cQuaternion out, const cAxisAngle aa );
-MAGICALAPI_MATH void magicalQuaternionFromAxisAngleScalars( cQuaternion out, const cVector3 axis, const float angle );
-MAGICALAPI_MATH void magicalQuaternionFromEulerAngles( cQuaternion out, const cEulerAngles ea );
-MAGICALAPI_MATH void magicalQuaternionFromEulerYawPitchRoll( cQuaternion out, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH void magicalQuaternionFromAxisA( cQuaternion out, const cAxisA aa );
+MAGICALAPI_MATH void magicalQuaternionFromEulerA( cQuaternion out, const cEulerA ea );
 MAGICALAPI_MATH void magicalQuaternionFromMatrix4( cQuaternion out, const cMatrix4 m );
 
-MAGICALAPI_MATH void magicalQuaternionToAxisAngle( cAxisAngle out, const cQuaternion q );
-MAGICALAPI_MATH void magicalQuaternionToEulerAngels( cEulerAngles out, const cQuaternion q );
+MAGICALAPI_MATH void magicalQuaternionToAxisA( cAxisA out, const cQuaternion q );
+MAGICALAPI_MATH void magicalQuaternionToEulerA( cEulerA out, const cQuaternion q );
 MAGICALAPI_MATH void magicalQuaternionToMatrix4( cMatrix4 out, const cQuaternion q );
 
 MAGICALAPI_MATH void magicalQuaternionRotateX( cQuaternion out, const cQuaternion q, const float angle );
 MAGICALAPI_MATH void magicalQuaternionRotateY( cQuaternion out, const cQuaternion q, const float angle );
 MAGICALAPI_MATH void magicalQuaternionRotateZ( cQuaternion out, const cQuaternion q, const float angle );
-MAGICALAPI_MATH void magicalQuaternionRotateAxisAngle( cQuaternion out, const cQuaternion q, const cAxisAngle aa );
-MAGICALAPI_MATH void magicalQuaternionRotateAxisAngleScalars( cQuaternion out, const cQuaternion q, const cVector3 axis, const float angle );
-MAGICALAPI_MATH void magicalQuaternionRotateEulerAngles( cQuaternion out, const cQuaternion q, const cEulerAngles ea );
-MAGICALAPI_MATH void magicalQuaternionRotateEulerYawPitchRoll( cQuaternion out, const cQuaternion q, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH void magicalQuaternionRotateAxisA( cQuaternion out, const cQuaternion q, const cAxisA aa );
+MAGICALAPI_MATH void magicalQuaternionRotateEulerA( cQuaternion out, const cQuaternion q, const cEulerA ea );
 
 MAGICALAPI_MATH void magicalQuaternionAdd( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );
 MAGICALAPI_MATH void magicalQuaternionSub( cQuaternion out, const cQuaternion q1, const cQuaternion q2 );

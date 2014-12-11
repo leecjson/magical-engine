@@ -7,8 +7,10 @@ function onCreate() --> void
 end
 
 function go()
-	
-	-- print("gaga");
+
+	q:fromEulerA( a );
+
+	Quaternion:fromAxisA( AxisA( v, 30 ) );
 
 end
 

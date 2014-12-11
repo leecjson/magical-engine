@@ -21,40 +21,42 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_AXIS_ANGLE_H__
-#define __C_AXIS_ANGLE_H__
+#ifndef __C_EULERA_H__
+#define __C_EULERA_H__
 
 #include "cUtility.h"
 
-typedef float cAxisAngle[4];
+typedef float cEulerA[3];
 
-#include "cVector3.h"
+#include "cMatrix4.h"
 #include "cQuaternion.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBool magicalAxisAngleEquals( const cAxisAngle aa1, const cAxisAngle aa2 );
-MAGICALAPI_MATH cBool magicalAxisAngleIsIdentity( const cAxisAngle aa );
-MAGICALAPI_MATH cBool magicalAxisAngleIsZero( const cAxisAngle aa );
+MAGICALAPI_MATH cBool magicalEulerAEqulas( const cEulerA ea1, const cEulerA ea2 );
+MAGICALAPI_MATH cBool magicalEulerAIsIdentity( const cEulerA ea );
 
-MAGICALAPI_MATH void magicalAxisAngleFillScalars( cAxisAngle out, const float x, const float y, const float z, const float w );
-MAGICALAPI_MATH void magicalAxisAngleFillAxisAngleScalars( cAxisAngle out, const cVector3 axis, const float angle );
-MAGICALAPI_MATH void magicalAxisAngleFillIdentity( cAxisAngle out );
-MAGICALAPI_MATH void magicalAxisAngleFillZero( cAxisAngle out );
-MAGICALAPI_MATH void magicalAxisAngleFill( cAxisAngle out, const cAxisAngle aa );
+MAGICALAPI_MATH void magicalEulerAFillYawPitchRoll( cEulerA out, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH void magicalEulerAFillIdentity( cEulerA out );
+MAGICALAPI_MATH void magicalEulerAFill( cEulerA out, const cEulerA ea );
 
-MAGICALAPI_MATH void magicalAxisAngleFromQuaternion( cAxisAngle out, const cQuaternion q );
+MAGICALAPI_MATH void magicalEulerAAdd( cEulerA out, const cEulerA ea1, const cEulerA ea2 );
+MAGICALAPI_MATH void magicalEulerASub( cEulerA out, const cEulerA ea1, const cEulerA ea2 );
+MAGICALAPI_MATH void magicalEulerAMul( cEulerA out, const cEulerA ea1, const cEulerA ea2 );
+MAGICALAPI_MATH void magicalEulerAMulScalar( cEulerA out, const cEulerA ea, const float a );
 
-MAGICALAPI_MATH void magicalAxisAngleSetAxis( cAxisAngle out, const cVector3 axis );
-MAGICALAPI_MATH void magicalAxisAngleSetAngle( cAxisAngle out, const float angle );
+MAGICALAPI_MATH void magicalEulerAFromQuaternion( cEulerA out, const cQuaternion q );
+MAGICALAPI_MATH void magicalEulerAFromMatrix4( cEulerA out, const cMatrix4 m );
 
-MAGICALAPI_MATH void magicalAxisAngleGetAxis( cVector3 out, const cAxisAngle aa );
-MAGICALAPI_MATH float magicalAxisAngleGetAngle( const cAxisAngle aa );
+MAGICALAPI_MATH void magicalEulerAToQuaternion( cQuaternion out, const cEulerA ea );
+MAGICALAPI_MATH void magicalEulerAToMatrix4( cMatrix4 out, const cEulerA ea );
+
+MAGICALAPI_MATH void magicalEulerACorrects( cEulerA out, const cEulerA ea );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //__C_AXIS_ANGLE_H__
+#endif //__C_EULERA_H__

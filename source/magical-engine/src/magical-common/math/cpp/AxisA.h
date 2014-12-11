@@ -21,13 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __AXIS_ANGLE_H__
-#define __AXIS_ANGLE_H__
+#ifndef __AXISA_H__
+#define __AXISA_H__
 
 class Vector3;
 class Quaternion;
 
-class AxisAngle
+class AxisA
 {
 public:
 	float x;
@@ -36,28 +36,28 @@ public:
 	float w;
 
 public:
-	static const AxisAngle Identity;
-	static const AxisAngle Zero;
-	static AxisAngle placeholder;
-	static AxisAngle temp;
+	static const AxisA Identity;
+	static const AxisA Zero;
+	static AxisA placeholder;
+	static AxisA temp;
 
 public:
-	AxisAngle( const float x, const float y, const float z, const float w );
-	AxisAngle( const Vector3& axis, const float angle );
-	AxisAngle( const AxisAngle& aa );
-	AxisAngle( void );
+	AxisA( const float x, const float y, const float z, const float w );
+	AxisA( const Vector3& axis, const float angle );
+	AxisA( const AxisA& aa );
+	AxisA( void );
 
 public:
-	static inline AxisAngle fromIdentity( void );
-	static inline AxisAngle fromZero( void );
-	static inline AxisAngle fromQuaternion( const Quaternion& q );
-	static inline void getAxis( Vector3& out, const AxisAngle& aa );
+	static inline AxisA fromIdentity( void );
+	static inline AxisA fromZero( void );
+	static inline AxisA fromQuaternion( const Quaternion& q );
+	static inline void getAxis( Vector3& out, const AxisA& aa );
 
 public:
-	inline bool equals( const AxisAngle& aa ) const;
+	inline bool equals( const AxisA& aa ) const;
 	inline bool isIdentity( void ) const;
 	inline bool isZero( void ) const;
-	inline void fill( const AxisAngle& aa );
+	inline void fill( const AxisA& aa );
 	inline void fillScalars( const float x, const float y, const float z, const float w );
 	inline void fillIdentity( void );
 	inline void fillZero( void );
@@ -66,9 +66,9 @@ public:
 public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
-	inline bool operator==( const AxisAngle& aa ) const;
-	inline bool operator!=( const AxisAngle& aa ) const;
-	inline AxisAngle& operator=( const AxisAngle& aa );
+	inline bool operator==( const AxisA& aa ) const;
+	inline bool operator!=( const AxisA& aa ) const;
+	inline AxisA& operator=( const AxisA& aa );
 
 public:
 	inline void setAxis( const Vector3& axis );
@@ -77,4 +77,4 @@ public:
 	inline float getAngle( void ) const;
 };
 
-#endif //__AXIS_ANGLE_H__
+#endif //__AXISA_H__

@@ -21,10 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cEulerAngles.h"
+#include "cEulerA.h"
 #include "cMathMacros.h"
 
-cBool magicalEulerAnglesEqulas( const cEulerAngles ea1, const cEulerAngles ea2 )
+cBool magicalEulerAEqulas( const cEulerA ea1, const cEulerA ea2 )
 {
 	return
 		magicalAlmostEqual( ea1 _yaw, ea2 _yaw ) &&
@@ -32,7 +32,7 @@ cBool magicalEulerAnglesEqulas( const cEulerAngles ea1, const cEulerAngles ea2 )
 		magicalAlmostEqual( ea1 _roll, ea2 _roll );
 }
 
-cBool magicalEulerAnglesIsIdentity( const cEulerAngles ea )
+cBool magicalEulerAIsIdentity( const cEulerA ea )
 {
 	return
 		magicalAlmostZero( ea _yaw ) &&
@@ -40,49 +40,49 @@ cBool magicalEulerAnglesIsIdentity( const cEulerAngles ea )
 		magicalAlmostZero( ea _roll );
 }
 
-void magicalEulerAnglesFillYawPitchRoll( cEulerAngles out, const float yaw, const float pitch, const float roll )
+void magicalEulerAFillYawPitchRoll( cEulerA out, const float yaw, const float pitch, const float roll )
 {
 	out _yaw   = yaw;
 	out _pitch = pitch;
 	out _roll  = roll;
 }
 
-void magicalEulerAnglesFill( cEulerAngles out, const cEulerAngles ea )
+void magicalEulerAFill( cEulerA out, const cEulerA ea )
 {
 	out _yaw   = ea _yaw;
 	out _pitch = ea _pitch;
 	out _roll  = ea _roll;
 }
 
-void magicalEulerAnglesFillIdentity( cEulerAngles out )
+void magicalEulerAFillIdentity( cEulerA out )
 {
 	out _yaw   = 0.0f;
 	out _pitch = 0.0f;
 	out _roll  = 0.0f;
 }
 
-void magicalEulerAnglesAdd( cEulerAngles out, const cEulerAngles ea1, const cEulerAngles ea2 )
+void magicalEulerAAdd( cEulerA out, const cEulerA ea1, const cEulerA ea2 )
 {
 	out _yaw = ea1 _yaw + ea2 _yaw;
 	out _pitch = ea1 _pitch + ea2 _pitch;
 	out _roll = ea1 _roll + ea2 _roll;
 }
 
-void magicalEulerAnglesSub( cEulerAngles out, const cEulerAngles ea1, const cEulerAngles ea2 )
+void magicalEulerASub( cEulerA out, const cEulerA ea1, const cEulerA ea2 )
 {
 	out _yaw = ea1 _yaw - ea2 _yaw;
 	out _pitch = ea1 _pitch - ea2 _pitch;
 	out _roll = ea1 _roll - ea2 _roll;
 }
 
-void magicalEulerAnglesMul( cEulerAngles out, const cEulerAngles ea1, const cEulerAngles ea2 )
+void magicalEulerAMul( cEulerA out, const cEulerA ea1, const cEulerA ea2 )
 {
 	out _yaw = ea1 _yaw * ea2 _yaw;
 	out _pitch = ea1 _pitch * ea2 _pitch;
 	out _roll = ea1 _roll * ea2 _roll;
 }
 
-void magicalEulerAnglesMulScalar( cEulerAngles out, const cEulerAngles ea, const float a )
+void magicalEulerAMulScalar( cEulerA out, const cEulerA ea, const float a )
 {
 	out _yaw = ea _yaw * a;
 	out _pitch = ea _pitch * a;
@@ -95,7 +95,7 @@ void magicalEulerAnglesMulScalar( cEulerAngles out, const cEulerAngles ea, const
  * out q的欧拉角表示
  * q 源四元数
  *-----------------------------------------------------------------------------*/
-void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q )
+void magicalEulerAFromQuaternion( cEulerA out, const cQuaternion q )
 {
 	float sp = -2.0f * ( q _y * q _z + q _w * q _x );
 
@@ -119,17 +119,17 @@ void magicalEulerAnglesFromQuaternion( cEulerAngles out, const cQuaternion q )
  * out m的欧拉角表示
  * m 源旋转矩阵
  *-----------------------------------------------------------------------------*/
-void magicalEulerAnglesFromMatrix4( cEulerAngles out, const cMatrix4 m )
+void magicalEulerAFromMatrix4( cEulerA out, const cMatrix4 m )
 {
 
 }
 
-void magicalEulerAnglesToQuaternion( cQuaternion out, const cEulerAngles ea )
+void magicalEulerAToQuaternion( cQuaternion out, const cEulerA ea )
 {
-	magicalQuaternionFromEulerAngles( out, ea );
+	magicalQuaternionFromEulerA( out, ea );
 }
 
-void magicalEulerAnglesToMatrix4( cMatrix4 out, const cEulerAngles ea )
+void magicalEulerAToMatrix4( cMatrix4 out, const cEulerA ea )
 {
 	
 }
@@ -147,7 +147,7 @@ void magicalEulerAnglesToMatrix4( cMatrix4 out, const cEulerAngles ea )
  * out 返回限制欧拉角
  * ea 源欧拉角
  *-----------------------------------------------------------------------------*/
-void magicalEulerAnglesCorrects( cEulerAngles out, const cEulerAngles ea )
+void magicalEulerACorrects( cEulerA out, const cEulerA ea )
 {
 	float yaw   = ea _yaw;
 	float pitch = ea _pitch;

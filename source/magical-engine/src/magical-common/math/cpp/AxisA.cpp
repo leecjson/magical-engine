@@ -22,36 +22,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector3.h"
-#include "../c/cAxisAngle.h"
+#include "../c/cAxisA.h"
 #include "../c/cQuaternion.h"
 #include "Vector3.h"
-#include "AxisAngle.h"
+#include "AxisA.h"
 #include "Quaternion.h"
-#include "AxisAngle.inl"
+#include "AxisA.inl"
 #include "MathMacros.h"
 
-const AxisAngle AxisAngle::Identity = AxisAngle( 0.0f, 0.0f, 1.0f, 0.0f );
-const AxisAngle AxisAngle::Zero = AxisAngle( 0.0f, 0.0f, 0.0f, 0.0f );
+const AxisA AxisA::Identity = AxisA( 0.0f, 0.0f, 1.0f, 0.0f );
+const AxisA AxisA::Zero = AxisA( 0.0f, 0.0f, 0.0f, 0.0f );
 
-AxisAngle AxisAngle::placeholder = AxisAngle::Identity;
-AxisAngle AxisAngle::temp = AxisAngle::Identity;
+AxisA AxisA::placeholder = AxisA::Identity;
+AxisA AxisA::temp = AxisA::Identity;
 
-AxisAngle::AxisAngle( const float x, const float y, const float z, const float w )
+AxisA::AxisA( const float x, const float y, const float z, const float w )
 {
-	magicalAxisAngleFillScalars( tofpointer( this ), x, y, z, w );
+	magicalAxisAFillScalars( tofpointer( this ), x, y, z, w );
 }
 
-AxisAngle::AxisAngle( const Vector3& axis, const float angle )
+AxisA::AxisA( const Vector3& axis, const float angle )
 {
-	magicalAxisAngleFillAxisAngleScalars( tofpointer( this ), tofpointer( &axis ), angle );
+	//magicalAxisAFillAxisAScalars( tofpointer( this ), tofpointer( &axis ), angle );
 }
 
-AxisAngle::AxisAngle( const AxisAngle& aa )
+AxisA::AxisA( const AxisA& aa )
 {
-	magicalAxisAngleFill( tofpointer( this ), tofpointer( &aa ) );
+	magicalAxisAFill( tofpointer( this ), tofpointer( &aa ) );
 }
 
-AxisAngle::AxisAngle( void )
+AxisA::AxisA( void )
 : x( 0.0f )
 , y( 0.0f )
 , z( 1.0f )
@@ -62,28 +62,28 @@ AxisAngle::AxisAngle( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<AxisAngle> s_axisangle_cached_pool( 32, 32 );
+static CachedPool<AxisA> s_axisa_cached_pool( 32, 32 );
 #endif
 
-void* AxisAngle::operator new( size_t s )
+void* AxisA::operator new( size_t s )
 {
-	if( s != sizeof( AxisAngle ) )
+	if( s != sizeof( AxisA ) )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_axisangle_cached_pool.take();
+	return s_axisa_cached_pool.take();
 #else
 	return ::operator new( s );
 #endif
 }
 
-void AxisAngle::operator delete( void* ptr )
+void AxisA::operator delete( void* ptr )
 {
 	if( ptr == nullptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_axisangle_cached_pool.push( ptr );
+	s_axisa_cached_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif

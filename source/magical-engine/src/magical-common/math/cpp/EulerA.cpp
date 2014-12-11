@@ -22,32 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector3.h"
-#include "../c/cEulerAngles.h"
+#include "../c/cEulerA.h"
 #include "../c/cQuaternion.h"
 #include "../c/cMatrix4.h"
 #include "Vector3.h"
-#include "EulerAngles.h"
+#include "EulerA.h"
 #include "Quaternion.h"
 #include "Matrix4.h"
-#include "EulerAngles.inl"
+#include "EulerA.inl"
 #include "MathMacros.h"
 
-const EulerAngles EulerAngles::Identity = EulerAngles( 0.0f, 0.0f, 0.0f );
+const EulerA EulerA::Identity = EulerA( 0.0f, 0.0f, 0.0f );
 
-EulerAngles EulerAngles::placeholder = EulerAngles::Identity;
-EulerAngles EulerAngles::temp = EulerAngles::Identity;
+EulerA EulerA::placeholder = EulerA::Identity;
+EulerA EulerA::temp = EulerA::Identity;
 
-EulerAngles::EulerAngles( const float yaw, const float pitch, const float roll )
+EulerA::EulerA( const float yaw, const float pitch, const float roll )
 {
-	magicalEulerAnglesFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
+	magicalEulerAFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
 }
 
-EulerAngles::EulerAngles( const EulerAngles& ea )
+EulerA::EulerA( const EulerA& ea )
 {
-	magicalEulerAnglesFill( tofpointer( this ), tofpointer( &ea ) );
+	magicalEulerAFill( tofpointer( this ), tofpointer( &ea ) );
 }
 
-EulerAngles::EulerAngles( void )
+EulerA::EulerA( void )
 : yaw( 0.0f )
 , pitch( 0.0f )
 , roll( 0.0f )
@@ -57,28 +57,28 @@ EulerAngles::EulerAngles( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<EulerAngles> s_eulerangles_cached_pool( 32, 32 );
+static CachedPool<EulerA> s_eulera_cached_pool( 32, 32 );
 #endif
 
-void* EulerAngles::operator new( size_t s )
+void* EulerA::operator new( size_t s )
 {
-	if( s != sizeof( EulerAngles ) )
+	if( s != sizeof( EulerA ) )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_eulerangles_cached_pool.take();
+	return s_eulera_cached_pool.take();
 #else
 	return ::operator new( s );
 #endif
 }
 
-void EulerAngles::operator delete( void* ptr )
+void EulerA::operator delete( void* ptr )
 {
 	if( ptr == nullptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_eulerangles_cached_pool.push( ptr );
+	s_eulera_cached_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif

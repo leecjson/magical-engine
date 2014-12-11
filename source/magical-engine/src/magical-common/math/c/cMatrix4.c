@@ -360,55 +360,52 @@ void magicalMatrix4FillRotationZ( cMatrix4 out, const float angle )
 }
 
 /*-----------------------------------------------------------------------------*\
- * 填充为欧拉角旋转矩阵 done
+ * 填充为任意旋转轴旋转矩阵 done
  *
- *
+ * out 结果
+ * aa 任意轴
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4FillRotationEulerAngles( cMatrix4 out, const cEulerAngles ea )
+void magicalMatrix4FillRotationAxisA( cMatrix4 out, const cAxisA aa )
 {
-	cEulerAngles dst;
-	magicalEulerAnglesCorrects( dst, ea );
+	float s, c;
+	magicalSinCos( &s, &c, aa _w );
 
-	float cr = cosf( dst _pitch );
-	float sr = sinf( dst _pitch );
-	float cp = cosf( dst _yaw );
-	float sp = sinf( dst _yaw );
-	float cy = cosf( dst _roll );
-	float sy = sinf( dst _roll );
-	float srsp = sr * sp;
-	float crsp = cr * sp;
+	float a = 1.0f - c;
+	float ax = a * aa _x;
+	float ay = a * aa _y;
+	float az = a * aa _z;
 
-    out _m11 = cp * cy;
-    out _m21 = cp * sy;
-    out _m31 = -    sp;
-	out _m41 = 0.0f;
-
-	out _m12 = srsp * cy - cr * sy;
-	out _m22 = srsp * sy + cr * cy;
-	out _m32 = sr * cp;
-	out _m42 = 0.0f;
-
-	out _m13 = crsp * cy + sr * sy;
-	out _m23 = crsp * sy - sr * cy;
-	out _m33 = cr * cp;
-	out _m43 = 0.0f;
-
+	out _m11 = ax * aa _x + c;
+	out _m12 = ax * aa _y + aa _z * s;
+	out _m13 = ax * aa _z - aa _y * s;
 	out _m14 = 0.0f;
+
+	out _m21 = ay * aa _x - aa _z * s;
+	out _m22 = ay * aa _y + c;
+	out _m23 = ay * aa _z + aa _x * s;
 	out _m24 = 0.0f;
+
+	out _m31 = az * aa _x + aa _y * s;
+	out _m32 = az * aa _y - aa _x * s;
+	out _m33 = az * aa _z + c;
 	out _m34 = 0.0f;
+
+	out _m41 = 0.0f;
+	out _m42 = 0.0f;
+	out _m43 = 0.0f;
 	out _m44 = 1.0f;
 }
 
 /*-----------------------------------------------------------------------------*\
  * 填充为欧拉角旋转矩阵 done
  *
- *
+ * out 结果
+ * ea 欧拉角
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4FillRotationEulerYawPitchRoll( cMatrix4 out, const float yaw, const float pitch, const float roll )
+void magicalMatrix4FillRotationEulerA( cMatrix4 out, const cEulerA ea )
 {
-	cEulerAngles dst;
-	magicalEulerAnglesFillYawPitchRoll( dst, yaw, pitch, roll );
-	magicalEulerAnglesCorrects( dst, dst );
+	cEulerA dst;
+	magicalEulerACorrects( dst, ea );
 
 	float cr = cosf( dst _pitch );
 	float sr = sinf( dst _pitch );
@@ -443,7 +440,8 @@ void magicalMatrix4FillRotationEulerYawPitchRoll( cMatrix4 out, const float yaw,
 /*-----------------------------------------------------------------------------*\
  * 填充为四元数旋转矩阵 done
  *
- *
+ * out 结果
+ * q 旋转四元数
  *-----------------------------------------------------------------------------*/
 void magicalMatrix4FillRotationQuaternion( cMatrix4 out, const cQuaternion q )
 {
@@ -460,52 +458,6 @@ void magicalMatrix4FillRotationQuaternion( cMatrix4 out, const cQuaternion q )
 	out _m31 = 2.0f * ( q _x * q _z + q _y * q _w );
 	out _m32 = 2.0f * ( q _y * q _z - q _x * q _w );
 	out _m33 = 1.0f - 2.0f * ( q _x * q _x + q _y * q _y );
-	out _m34 = 0.0f;
-
-	out _m41 = 0.0f;
-	out _m42 = 0.0f;
-	out _m43 = 0.0f;
-	out _m44 = 1.0f;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 填充为任意旋转轴旋转矩阵 done
- *
- *
- *-----------------------------------------------------------------------------*/
-void magicalMatrix4FillRotationAxisAngle( cMatrix4 out, const cAxisAngle aa )
-{
-	magicalMatrix4FillRotationAxisAngleScalars( out, aa, aa _w );
-}
-
-/*-----------------------------------------------------------------------------*\
- * 填充为任意旋转轴旋转矩阵 done
- *
- *
- *-----------------------------------------------------------------------------*/
-void magicalMatrix4FillRotationAxisAngleScalars( cMatrix4 out, const cVector3 axis, const float angle )
-{
-	float s, c;
-	magicalSinCos( &s, &c, angle );
-
-	float a = 1.0f - c;
-	float ax = a * axis _x;
-	float ay = a * axis _y;
-	float az = a * axis _z;
-
-	out _m11 = ax * axis _x + c;
-	out _m12 = ax * axis _y + axis _z * s;
-	out _m13 = ax * axis _z - axis _y * s;
-	out _m14 = 0.0f;
-
-	out _m21 = ay * axis _x - axis _z * s;
-	out _m22 = ay * axis _y + c;
-	out _m23 = ay * axis _z + axis _x * s;
-	out _m24 = 0.0f;
-
-	out _m31 = az * axis _x + axis _y * s;
-	out _m32 = az * axis _y - axis _x * s;
-	out _m33 = az * axis _z + c;
 	out _m34 = 0.0f;
 
 	out _m41 = 0.0f;
@@ -691,17 +643,17 @@ void magicalMatrix4RotateZ( cMatrix4 out, const cMatrix4 m, const float angle )
 	magicalMatrix4Mul( out, m, dst );
 }
 
-void magicalMatrix4RotateEulerAngles( cMatrix4 out, const cMatrix4 m, const cEulerAngles ea )
+void magicalMatrix4RotateAxisA( cMatrix4 out, const cMatrix4 m, const cAxisA aa )
 {
 	cMatrix4 dst;
-	magicalMatrix4FillRotationEulerAngles( dst, ea );
+	magicalMatrix4FillRotationAxisA( dst, aa );
 	magicalMatrix4Mul( out, m, dst );
 }
 
-void magicalMatrix4RotateEulerYawPitchRoll( cMatrix4 out, const cMatrix4 m, const float yaw, const float pitch, const float roll )
+void magicalMatrix4RotateEulerA( cMatrix4 out, const cMatrix4 m, const cEulerA ea )
 {
 	cMatrix4 dst;
-	magicalMatrix4FillRotationEulerYawPitchRoll( dst, yaw, pitch, roll );
+	magicalMatrix4FillRotationEulerA( dst, ea );
 	magicalMatrix4Mul( out, m, dst );
 }
 
@@ -709,20 +661,6 @@ void magicalMatrix4RotateQuaternion( cMatrix4 out, const cMatrix4 m, const cQuat
 {
 	cMatrix4 dst;
 	magicalMatrix4FillRotationQuaternion( dst, q );
-	magicalMatrix4Mul( out, m, dst );
-}
-
-void magicalMatrix4RotateAxisAngle( cMatrix4 out, const cMatrix4 m, const cAxisAngle aa )
-{
-	cMatrix4 dst;
-	magicalMatrix4FillRotationAxisAngle( dst, aa );
-	magicalMatrix4Mul( out, m, dst );
-}
-
-void magicalMatrix4RotateAxisAngleScalars( cMatrix4 out, const cMatrix4 m, const cVector3 axis, const float angle )
-{
-	cMatrix4 dst;
-	magicalMatrix4FillRotationAxisAngleScalars( dst, axis, angle );
 	magicalMatrix4Mul( out, m, dst );
 }
 

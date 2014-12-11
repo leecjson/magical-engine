@@ -21,10 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cAxisAngle.h"
+#include "cAxisA.h"
 #include "cMathMacros.h"
 
-cBool magicalAxisAngleEquals( const cAxisAngle aa1, const cAxisAngle aa2 )
+cBool magicalAxisAEquals( const cAxisA aa1, const cAxisA aa2 )
 {
 	return
 		magicalAlmostEqual( aa1 _x, aa2 _x ) &&
@@ -33,7 +33,7 @@ cBool magicalAxisAngleEquals( const cAxisAngle aa1, const cAxisAngle aa2 )
 		magicalAlmostEqual( aa1 _w, aa2 _w );
 }
 
-cBool magicalAxisAngleIsIdentity( const cAxisAngle aa )
+cBool magicalAxisAIsIdentity( const cAxisA aa )
 {
 	return
 		magicalAlmostZero( aa _x ) &&
@@ -42,7 +42,7 @@ cBool magicalAxisAngleIsIdentity( const cAxisAngle aa )
 		magicalAlmostZero( aa _w );
 }
 
-cBool magicalAxisAngleIsZero( const cAxisAngle aa )
+cBool magicalAxisAIsZero( const cAxisA aa )
 {
 	return
 		magicalAlmostZero( aa _x ) &&
@@ -51,7 +51,7 @@ cBool magicalAxisAngleIsZero( const cAxisAngle aa )
 		magicalAlmostZero( aa _w );
 }
 
-void magicalAxisAngleFillScalars( cAxisAngle out, const float x, const float y, const float z, const float w )
+void magicalAxisAFillScalars( cAxisA out, const float x, const float y, const float z, const float w )
 {
 	out _x = x;
 	out _y = y;
@@ -59,15 +59,7 @@ void magicalAxisAngleFillScalars( cAxisAngle out, const float x, const float y, 
 	out _w = w;
 }
 
-void magicalAxisAngleFillAxisAngleScalars( cAxisAngle out, const cVector3 axis, const float angle )
-{
-	out _x = axis _x;
-	out _y = axis _y;
-	out _z = axis _z;
-	out _w = angle;
-}
-
-void magicalAxisAngleFillIdentity( cAxisAngle out )
+void magicalAxisAFillIdentity( cAxisA out )
 {
 	out _x = 0.0f;
 	out _y = 0.0f;
@@ -75,7 +67,7 @@ void magicalAxisAngleFillIdentity( cAxisAngle out )
 	out _w = 0.0f;
 }
 
-void magicalAxisAngleFillZero( cAxisAngle out )
+void magicalAxisAFillZero( cAxisA out )
 {
 	out _x = 0.0f;
 	out _y = 0.0f;
@@ -83,7 +75,7 @@ void magicalAxisAngleFillZero( cAxisAngle out )
 	out _w = 0.0f;
 }
 
-void magicalAxisAngleFill( cAxisAngle out, const cAxisAngle aa )
+void magicalAxisAFill( cAxisA out, const cAxisA aa )
 {
 	out _x = aa _x;
 	out _y = aa _y;
@@ -97,7 +89,7 @@ void magicalAxisAngleFill( cAxisAngle out, const cAxisAngle aa )
  * out 轴一角对
  * q 源四元数
  *-----------------------------------------------------------------------------*/
-void magicalAxisAngleFromQuaternion( cAxisAngle out, const cQuaternion q )
+void magicalAxisAFromQuaternion( cAxisA out, const cQuaternion q )
 {
 	float scale = sqrtf( q _x * q _x + q _y * q _y + q _z * q _z );
 
@@ -118,26 +110,26 @@ void magicalAxisAngleFromQuaternion( cAxisAngle out, const cQuaternion q )
 	}
 }
 
-void magicalAxisAngleSetAxis( cAxisAngle out, const cVector3 axis )
+void magicalAxisASetAxis( cAxisA out, const cVector3 axis )
 {
 	out _x = axis _x;
 	out _y = axis _y;
 	out _z = axis _z;
 }
 
-void magicalAxisAngleSetAngle( cAxisAngle out, const float angle )
+void magicalAxisASetAngle( cAxisA out, const float angle )
 {
 	out _w = angle;
 }
 
-void magicalAxisAngleGetAxis( cVector3 out, const cAxisAngle aa )
+void magicalAxisAGetAxis( cVector3 out, const cAxisA aa )
 {
 	out _x = aa _x;
 	out _y = aa _y;
 	out _z = aa _z;
 }
 
-float magicalAxisAngleGetAngle( const cAxisAngle aa )
+float magicalAxisAGetAngle( const cAxisA aa )
 {
 	return aa _w;
 }

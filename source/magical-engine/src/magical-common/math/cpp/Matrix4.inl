@@ -82,29 +82,31 @@ inline void Matrix4::rotateZ( Matrix4& out, const Matrix4& m, const float angle 
 	magicalMatrix4RotateZ( tofpointer( &out ), tofpointer( &m ), angle );
 }
 
+inline void Matrix4::rotateAxisA( Matrix4& out, const Matrix4& m, const Vector3& axis, const float angle )
+{
+	AxisA aa( axis, angle );
+	magicalMatrix4RotateAxisA( tofpointer( &out ), tofpointer( &m ), tofpointer( &aa ) );
+}
+
+inline void Matrix4::rotateAxisA( Matrix4& out, const Matrix4& m, const AxisA& aa )
+{
+	magicalMatrix4RotateAxisA( tofpointer( &out ), tofpointer( &m ), tofpointer( &aa ) );
+}
+
+inline void Matrix4::rotateEulerA( Matrix4& out, const Matrix4& m, const float yaw, const float pitch, const float roll )
+{
+	EulerA ea( yaw, pitch, roll );
+	magicalMatrix4RotateEulerA( tofpointer( &out ), tofpointer( &m ), tofpointer( &ea ) );
+}
+
+inline void Matrix4::rotateEulerA( Matrix4& out, const Matrix4& m, const EulerA& ea )
+{
+	magicalMatrix4RotateEulerA( tofpointer( &out ), tofpointer( &m ), tofpointer( &ea ) );
+}
+
 inline void Matrix4::rotateQuaternion( Matrix4& out, const Matrix4& m, const Quaternion& q )
 {
 	magicalMatrix4RotateQuaternion( tofpointer( &out ), tofpointer( &m ), tofpointer( &q ) );
-}
-
-inline void Matrix4::rotateEulerAngles( Matrix4& out, const Matrix4& m, const float yaw, const float pitch, const float roll )
-{
-	magicalMatrix4RotateEulerYawPitchRoll( tofpointer( &out ), tofpointer( &m ), yaw, pitch, roll );
-}
-
-inline void Matrix4::rotateEulerAngles( Matrix4& out, const Matrix4& m, const EulerAngles& ea )
-{
-	magicalMatrix4RotateEulerAngles( tofpointer( &out ), tofpointer( &m ), tofpointer( &ea ) );
-}
-
-inline void Matrix4::rotateAxisAngle( Matrix4& out, const Matrix4& m, const Vector3& axis, const float angle )
-{
-	magicalMatrix4RotateAxisAngleScalars( tofpointer( &out ), tofpointer( &m ), tofpointer( &axis ), angle );
-}
-
-inline void Matrix4::rotateAxisAngle( Matrix4& out, const Matrix4& m, const AxisAngle& aa )
-{
-	magicalMatrix4RotateAxisAngle( tofpointer( &out ), tofpointer( &m ), tofpointer( &aa ) );
 }
 
 inline void Matrix4::getUpVector( Vector3& out, const Matrix4& m )
@@ -227,29 +229,31 @@ inline void Matrix4::fillRotationZ( const float angle )
 	magicalMatrix4FillRotationZ( tofpointer( this ), angle );
 }
 
+inline void Matrix4::fillRotationAxisA( const Vector3& axis, const float angle )
+{
+	AxisA aa( axis, angle );
+	magicalMatrix4FillRotationAxisA( tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline void Matrix4::fillRotationAxisA( const AxisA& aa )
+{
+	magicalMatrix4FillRotationAxisA( tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline void Matrix4::fillRotationEulerA( const float yaw, const float pitch, const float roll )
+{
+	EulerA ea( yaw, pitch, roll );
+	magicalMatrix4FillRotationEulerA( tofpointer( this ), tofpointer( &ea ) );
+}
+
+inline void Matrix4::fillRotationEulerA( const EulerA& ea )
+{
+	magicalMatrix4FillRotationEulerA( tofpointer( this ), tofpointer( &ea ) );
+}
+
 inline void Matrix4::fillRotationQuaternion( const Quaternion& q )
 {
 	magicalMatrix4FillRotationQuaternion( tofpointer( this ), tofpointer( &q ) );
-}
-
-inline void Matrix4::fillRotationEulerAngles( const float yaw, const float pitch, const float roll )
-{
-	magicalMatrix4FillRotationEulerYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
-}
-
-inline void Matrix4::fillRotationEulerAngles( const EulerAngles& ea )
-{
-	magicalMatrix4FillRotationEulerAngles( tofpointer( this ), tofpointer( &ea ) );
-}
-
-inline void Matrix4::fillRotationAxisAngle( const Vector3& axis, const float angle )
-{
-	magicalMatrix4FillRotationAxisAngleScalars( tofpointer( this ), tofpointer( &axis ), angle );
-}
-
-inline void Matrix4::fillRotationAxisAngle( const AxisAngle& aa )
-{
-	magicalMatrix4FillRotationAxisAngle( tofpointer( this ), tofpointer( &aa ) );
 }
 
 inline void Matrix4::fillLookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
@@ -352,29 +356,31 @@ inline void Matrix4::rotateZ( const float angle )
 	magicalMatrix4RotateZ( tofpointer( this ), tofpointer( this ), angle );
 }
 
+inline void Matrix4::rotateAxisA( const Vector3& axis, const float angle )
+{
+	AxisA aa( axis, angle );
+	magicalMatrix4RotateAxisA( tofpointer( this ), tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline void Matrix4::rotateAxisA( const AxisA& aa )
+{
+	magicalMatrix4RotateAxisA( tofpointer( this ), tofpointer( this ), tofpointer( &aa ) );
+}
+
+inline void Matrix4::rotateEulerA( const float yaw, const float pitch, const float roll )
+{
+	EulerA ea( yaw, pitch, roll );
+	magicalMatrix4RotateEulerA( tofpointer( this ), tofpointer( this ), tofpointer( &ea ) );
+}
+
+inline void Matrix4::rotateEulerA( const EulerA& ea )
+{
+	magicalMatrix4RotateEulerA( tofpointer( this ), tofpointer( this ), tofpointer( &ea ) );
+}
+
 inline void Matrix4::rotateQuaternion( const Quaternion& q )
 {
 	magicalMatrix4RotateQuaternion( tofpointer( this ), tofpointer( this ), tofpointer( &q ) );
-}
-
-inline void Matrix4::rotateEulerAngles( const float yaw, const float pitch, const float roll )
-{
-	magicalMatrix4RotateEulerYawPitchRoll( tofpointer( this ), tofpointer( this ), yaw, pitch, roll );
-}
-
-inline void Matrix4::rotateEulerAngles( const EulerAngles& ea )
-{
-	magicalMatrix4RotateEulerAngles( tofpointer( this ), tofpointer( this ), tofpointer( &ea ) );
-}
-
-inline void Matrix4::rotateAxisAngle( const Vector3& axis, const float angle )
-{
-	magicalMatrix4RotateAxisAngleScalars( tofpointer( this ), tofpointer( this ), tofpointer( &axis ), angle );
-}
-
-inline void Matrix4::rotateAxisAngle( const AxisAngle& aa )
-{
-	magicalMatrix4RotateAxisAngle( tofpointer( this ), tofpointer( this ), tofpointer( &aa ) );
 }
 
 inline Vector3 Matrix4::getUpVector( void ) const

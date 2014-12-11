@@ -129,20 +129,8 @@
     <ClCompile Include="..\src\magical-common\log\win32\LogSystem.cpp">
       <Filter>src\magical-common\log\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cAxisAngle.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cEulerAngles.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\magical-common\math\c\cQuaternion.c">
       <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\AxisAngle.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\EulerAngles.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\src\magical-common\math\cpp\Quaternion.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
@@ -357,8 +345,17 @@
     <ClCompile Include="..\src\magical-common\math\cpp\Matrix4.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cAABB3.c">
+    <ClCompile Include="..\src\magical-common\math\c\cAxisA.c">
       <Filter>src\magical-common\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\c\cEulerA.c">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\cpp\AxisA.cpp">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\cpp\EulerA.cpp">
+      <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -410,12 +407,6 @@
     <ClInclude Include="..\src\magical-common\log\LogSystem.h">
       <Filter>src\magical-common\log</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cAxisAngle.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cEulerAngles.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\magical-common\math\c\cMathMacros.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
@@ -424,12 +415,6 @@
     </ClInclude>
     <ClInclude Include="..\src\magical-common\math\c\cUtility.h">
       <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\AxisAngle.h">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\EulerAngles.h">
-      <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
     <ClInclude Include="..\src\magical-common\math\cpp\MathMacros.h">
       <Filter>src\magical-common\math\cpp</Filter>
@@ -638,20 +623,23 @@
     <ClInclude Include="..\src\magical-common\math\cpp\Matrix4.h">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cAABB3.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\magical-common\math\magical-math.h">
       <Filter>src\magical-common\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\c\cAxisA.h">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\c\cEulerA.h">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\cpp\AxisA.h">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\cpp\EulerA.h">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\magical-common\math\cpp\AxisAngle.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
-    <None Include="..\src\magical-common\math\cpp\EulerAngles.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
     <None Include="..\src\magical-common\math\cpp\Quaternion.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
@@ -665,6 +653,12 @@
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
     <None Include="..\src\magical-common\math\cpp\Vector3.inl">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </None>
+    <None Include="..\src\magical-common\math\cpp\AxisA.inl">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </None>
+    <None Include="..\src\magical-common\math\cpp\EulerA.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
   </ItemGroup>

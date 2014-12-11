@@ -30,9 +30,9 @@ typedef float cMatrix4[16];
 
 #include "cVector3.h"
 #include "cVector4.h"
-#include "cAxisAngle.h"
+#include "cAxisA.h"
+#include "cEulerA.h"
 #include "cQuaternion.h"
-#include "cEulerAngles.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,11 +65,9 @@ MAGICALAPI_MATH void magicalMatrix4FillScaleVector( cMatrix4 out, const cVector3
 MAGICALAPI_MATH void magicalMatrix4FillRotationX( cMatrix4 out, const float angle );
 MAGICALAPI_MATH void magicalMatrix4FillRotationY( cMatrix4 out, const float angle );
 MAGICALAPI_MATH void magicalMatrix4FillRotationZ( cMatrix4 out, const float angle );
-MAGICALAPI_MATH void magicalMatrix4FillRotationEulerAngles( cMatrix4 out, const cEulerAngles ea );
-MAGICALAPI_MATH void magicalMatrix4FillRotationEulerYawPitchRoll( cMatrix4 out, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH void magicalMatrix4FillRotationAxisA( cMatrix4 out, const cAxisA aa );
+MAGICALAPI_MATH void magicalMatrix4FillRotationEulerA( cMatrix4 out, const cEulerA ea );
 MAGICALAPI_MATH void magicalMatrix4FillRotationQuaternion( cMatrix4 out, const cQuaternion q );
-MAGICALAPI_MATH void magicalMatrix4FillRotationAxisAngle( cMatrix4 out, const cAxisAngle aa );
-MAGICALAPI_MATH void magicalMatrix4FillRotationAxisAngleScalars( cMatrix4 out, const cVector3 axis, const float angle );
 
 MAGICALAPI_MATH void magicalMatrix4FillLookAt( cMatrix4 out, const cVector3 eye, const cVector3 target, const cVector3 up );
 MAGICALAPI_MATH void magicalMatrix4FillPerspective( cMatrix4 out, const float fov, const float aspect, const float znear, const float zfar );
@@ -82,11 +80,9 @@ MAGICALAPI_MATH void magicalMatrix4ScaleVector( cMatrix4 out, const cMatrix4 m, 
 MAGICALAPI_MATH void magicalMatrix4RotateX( cMatrix4 out, const cMatrix4 m, const float angle );
 MAGICALAPI_MATH void magicalMatrix4RotateY( cMatrix4 out, const cMatrix4 m, const float angle );
 MAGICALAPI_MATH void magicalMatrix4RotateZ( cMatrix4 out, const cMatrix4 m, const float angle );
-MAGICALAPI_MATH void magicalMatrix4RotateEulerAngles( cMatrix4 out, const cMatrix4 m, const cEulerAngles ea );
-MAGICALAPI_MATH void magicalMatrix4RotateEulerYawPitchRoll( cMatrix4 out, const cMatrix4 m, const float yaw, const float pitch, const float roll );
+MAGICALAPI_MATH void magicalMatrix4RotateAxisA( cMatrix4 out, const cMatrix4 m, const cAxisA aa );
+MAGICALAPI_MATH void magicalMatrix4RotateEulerA( cMatrix4 out, const cMatrix4 m, const cEulerA ea );
 MAGICALAPI_MATH void magicalMatrix4RotateQuaternion( cMatrix4 out, const cMatrix4 m, const cQuaternion q );
-MAGICALAPI_MATH void magicalMatrix4RotateAxisAngle( cMatrix4 out, const cMatrix4 m, const cAxisAngle aa );
-MAGICALAPI_MATH void magicalMatrix4RotateAxisAngleScalars( cMatrix4 out, const cMatrix4 m, const cVector3 axis, const float angle );
 
 MAGICALAPI_MATH float magicalMatrix4Determinant( const cMatrix4 m );
 MAGICALAPI_MATH cBool magicalMatrix4Inverse( cMatrix4 out, const cMatrix4 m );

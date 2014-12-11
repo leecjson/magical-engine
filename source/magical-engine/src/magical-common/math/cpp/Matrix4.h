@@ -26,8 +26,8 @@ SOFTWARE.
 
 class Vector3;
 class Vector4;
-class AxisAngle;
-class EulerAngles;
+class AxisA;
+class EulerA;
 class Quaternion;
 
 class Matrix4
@@ -64,11 +64,13 @@ public:
 	static inline void rotateX( Matrix4& out, const Matrix4& m, const float angle );
 	static inline void rotateY( Matrix4& out, const Matrix4& m, const float angle );
 	static inline void rotateZ( Matrix4& out, const Matrix4& m, const float angle );
+	static inline void rotateAxisA( Matrix4& out, const Matrix4& m, const Vector3& axis, const float angle );
+	static inline void rotateAxisA( Matrix4& out, const Matrix4& m, const AxisA& aa );
+	static inline void rotateEulerA( Matrix4& out, const Matrix4& m, const float yaw, const float pitch, const float roll );
+	static inline void rotateEulerA( Matrix4& out, const Matrix4& m, const EulerA& ea );
 	static inline void rotateQuaternion( Matrix4& out, const Matrix4& m, const Quaternion& q );
-	static inline void rotateEulerAngles( Matrix4& out, const Matrix4& m, const float yaw, const float pitch, const float roll );
-	static inline void rotateEulerAngles( Matrix4& out, const Matrix4& m, const EulerAngles& ea );
-	static inline void rotateAxisAngle( Matrix4& out, const Matrix4& m, const Vector3& axis, const float angle );
-	static inline void rotateAxisAngle( Matrix4& out, const Matrix4& m, const AxisAngle& aa );
+	
+	
 	static inline void getUpVector( Vector3& out, const Matrix4& m );
 	static inline void getDownVector( Vector3& out, const Matrix4& m );
 	static inline void getLeftVector( Vector3& out, const Matrix4& m );
@@ -96,11 +98,11 @@ public:
 	inline void fillRotationX( const float angle );
 	inline void fillRotationY( const float angle );
 	inline void fillRotationZ( const float angle );
+	inline void fillRotationAxisA( const Vector3& axis, const float angle );
+	inline void fillRotationAxisA( const AxisA& aa );
+	inline void fillRotationEulerA( const float yaw, const float pitch, const float roll );
+	inline void fillRotationEulerA( const EulerA& ea );
 	inline void fillRotationQuaternion( const Quaternion& q );
-	inline void fillRotationEulerAngles( const float yaw, const float pitch, const float roll );
-	inline void fillRotationEulerAngles( const EulerAngles& ea );
-	inline void fillRotationAxisAngle( const Vector3& axis, const float angle );
-	inline void fillRotationAxisAngle( const AxisAngle& aa );
 	inline void fillLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
 	inline void fillPerspective( const float fov, const float aspect, const float znear, const float zfar );
 	inline void fillOrthographic( const float left, const float right, const float bottom, const float top, const float near, const float far );
@@ -125,11 +127,11 @@ public:
 	inline void rotateX( const float angle );
 	inline void rotateY( const float angle );
 	inline void rotateZ( const float angle );
+	inline void rotateAxisA( const Vector3& axis, const float angle );
+	inline void rotateAxisA( const AxisA& aa );
+	inline void rotateEulerA( const float yaw, const float pitch, const float roll );
+	inline void rotateEulerA( const EulerA& ea );
 	inline void rotateQuaternion( const Quaternion& q );
-	inline void rotateEulerAngles( const float yaw, const float pitch, const float roll );
-	inline void rotateEulerAngles( const EulerAngles& ea );
-	inline void rotateAxisAngle( const Vector3& axis, const float angle );
-	inline void rotateAxisAngle( const AxisAngle& aa );
 	inline Vector3 getUpVector( void ) const;
 	inline Vector3 getDownVector( void ) const;
 	inline Vector3 getLeftVector( void ) const;

@@ -21,13 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __EULER_ANGLES_H__
-#define __EULER_ANGLES_H__
+#ifndef __EULERA_H__
+#define __EULERA_H__
 
 class Quaternion;
 class Matrix4;
 
-class EulerAngles
+class EulerA
 {
 public:
 	float yaw;
@@ -35,30 +35,30 @@ public:
 	float roll;
 
 public:
-	static const EulerAngles Identity;
-	static EulerAngles placeholder;
-	static EulerAngles temp;
+	static const EulerA Identity;
+	static EulerA placeholder;
+	static EulerA temp;
 
 public:
-	EulerAngles( const float yaw, const float pitch, const float roll );
-	EulerAngles( const EulerAngles& ea );
-	EulerAngles( void );
+	EulerA( const float yaw, const float pitch, const float roll );
+	EulerA( const EulerA& ea );
+	EulerA( void );
 
 public:
-	static inline EulerAngles fromIdentity( void );
-	static inline EulerAngles fromMatrix4( const Matrix4& m );
-	static inline EulerAngles fromQuaternion( const Quaternion& q );
+	static inline EulerA fromIdentity( void );
+	static inline EulerA fromMatrix4( const Matrix4& m );
+	static inline EulerA fromQuaternion( const Quaternion& q );
 
-	static inline void add( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
-	static inline void sub( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
-	static inline void mulScalar( EulerAngles& out, const EulerAngles& ea, const float a );
-	static inline void mul( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
-	static inline void corrects( EulerAngles& out, const EulerAngles& ea );
+	static inline void add( EulerA& out, const EulerA& ea1, const EulerA& ea2 );
+	static inline void sub( EulerA& out, const EulerA& ea1, const EulerA& ea2 );
+	static inline void mulScalar( EulerA& out, const EulerA& ea, const float a );
+	static inline void mul( EulerA& out, const EulerA& ea1, const EulerA& ea2 );
+	static inline void corrects( EulerA& out, const EulerA& ea );
 
 public:
-	inline bool equals( const EulerAngles& ea ) const;
+	inline bool equals( const EulerA& ea ) const;
 	inline bool isIdentity( void ) const;
-	inline void fill( const EulerAngles& ea );
+	inline void fill( const EulerA& ea );
 	inline void fill( const float yaw, const float pitch, const float roll );
 	inline void fillIdentity( void );
 	inline void fillMatrix4( const Matrix4& m );
@@ -67,21 +67,21 @@ public:
 public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
-	inline bool operator==( const EulerAngles& ea ) const;
-	inline bool operator!=( const EulerAngles& ea ) const;
-	inline EulerAngles operator+( const EulerAngles& ea ) const;
-	inline EulerAngles operator-( const EulerAngles& ea ) const;
-	inline EulerAngles operator*( const EulerAngles& ea ) const;
-	inline EulerAngles operator*( const float a ) const;
-	inline EulerAngles& operator+=( const EulerAngles& ea );
-	inline EulerAngles& operator-=( const EulerAngles& ea );
-	inline EulerAngles& operator*=( const EulerAngles& ea );
-	inline EulerAngles& operator*=( const float a );
-	inline EulerAngles& operator=( const EulerAngles& ea );
+	inline bool operator==( const EulerA& ea ) const;
+	inline bool operator!=( const EulerA& ea ) const;
+	inline EulerA operator+( const EulerA& ea ) const;
+	inline EulerA operator-( const EulerA& ea ) const;
+	inline EulerA operator*( const EulerA& ea ) const;
+	inline EulerA operator*( const float a ) const;
+	inline EulerA& operator+=( const EulerA& ea );
+	inline EulerA& operator-=( const EulerA& ea );
+	inline EulerA& operator*=( const EulerA& ea );
+	inline EulerA& operator*=( const float a );
+	inline EulerA& operator=( const EulerA& ea );
 
 public:
 	inline void corrects( void );
-	inline EulerAngles getCorrected( void ) const;
+	inline EulerA getCorrected( void ) const;
 };
 	
-#endif //__EULER_ANGLES_H__
+#endif //__EULERA_H__
