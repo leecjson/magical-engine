@@ -54,6 +54,9 @@ public:
 	Matrix4( void );
 
 public:
+	static inline Matrix4 fromIdentity( void );
+	static inline Matrix4 fromZero( void );
+
 	static inline void mulScalar( Matrix4& out, const Matrix4& m, const float a );
 	static inline void mul( Matrix4& out, const Matrix4& m1, const Matrix4& m2 );
 
@@ -69,7 +72,6 @@ public:
 	static inline void rotateEulerA( Matrix4& out, const Matrix4& m, const float yaw, const float pitch, const float roll );
 	static inline void rotateEulerA( Matrix4& out, const Matrix4& m, const EulerA& ea );
 	static inline void rotateQuaternion( Matrix4& out, const Matrix4& m, const Quaternion& q );
-	
 	
 	static inline void getUpVector( Vector3& out, const Matrix4& m );
 	static inline void getDownVector( Vector3& out, const Matrix4& m );

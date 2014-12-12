@@ -22,11 +22,61 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+inline Sphere3 Sphere3::fromZero( void )
+{
+	return Sphere3::Zero;
+}
+
+inline Sphere3 Sphere3::fromOne( void )
+{
+	return Sphere3::One;
+}
+
 inline Sphere3 Sphere3::fromCenterAndRadius( const Vector3& center, const float r )
 {
 	Sphere3 ret;
 	magicalSphere3FillCenterAndRadius( tofpointer( &ret ), tofpointer( &center ), r );
 	return ret;
+}
+
+inline bool Sphere3::equals( const Sphere3& sp ) const
+{
+	return magicalSphere3Equals( tofpointer( this ), tofpointer( &sp ) );
+}
+
+inline bool Sphere3::isZero( void ) const
+{
+	return magicalSphere3IsZero( tofpointer( this ) );
+}
+
+inline bool Sphere3::isOne( void ) const
+{
+	return magicalSphere3IsOne( tofpointer( this ) );
+}
+
+inline void Sphere3::fill( const Sphere3& sp )
+{
+	x = sp.x; y = sp.y; z = sp.z; r = sp.r;
+}
+
+inline void Sphere3::fillZero( void )
+{
+	magicalSphere3FillZero( tofpointer( this ) );
+}
+
+inline void Sphere3::fillOne( void )
+{
+	magicalSphere3FillOne( tofpointer( this ) );
+}
+
+inline void Sphere3::fillScalars( const float x, const float y, const float z, const float r )
+{
+	this->x = x; this->y = y; this->z = z; this->r = r;
+}
+
+inline void Sphere3::fillCenterAndRadius( const Vector3& center, const float r )
+{
+	x = center.x; y = center.y; z = center.z; this->r = r;
 }
 
 inline bool Sphere3::operator==( const Sphere3& sp ) const
@@ -43,26 +93,6 @@ inline Sphere3& Sphere3::operator=( const Sphere3& sp )
 {
 	x = sp.x; y = sp.y; z = sp.z; r = sp.r;
 	return *this;
-}
-
-inline bool Sphere3::isEquals( const Sphere3& sp ) const
-{
-	return magicalSphere3Equals( tofpointer( this ), tofpointer( &sp ) );
-}
-
-inline void Sphere3::fill( const float x, const float y, const float z, const float r )
-{
-	this->x = x; this->y = y; this->z = z; this->r = r;
-}
-
-inline void Sphere3::fill( const Vector3& center, const float r )
-{
-	x = center.x; y = center.y; z = center.z; this->r = r;
-}
-
-inline void Sphere3::fill( const Sphere3& sp )
-{
-	x = sp.x; y = sp.y; z = sp.z; r = sp.r;
 }
 
 inline bool Sphere3::intersects( const Sphere3& sp ) const

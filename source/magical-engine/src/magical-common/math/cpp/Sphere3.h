@@ -38,18 +38,30 @@ public:
 	float r;
 
 public:
+	static const Sphere3 Zero;
 	static const Sphere3 One;
 	static Sphere3 placeholder;
 	static Sphere3 temp;
 
 public:
 	Sphere3( const float x, const float y, const float z, const float r );
-	Sphere3( const Vector3& center, const float r );
 	Sphere3( const Sphere3& sp );
 	Sphere3( void );
 
 public:
+	static inline Sphere3 fromZero( void );
+	static inline Sphere3 fromOne( void );
 	static inline Sphere3 fromCenterAndRadius( const Vector3& center, const float r );
+
+public:
+	inline bool equals( const Sphere3& sp ) const;
+	inline bool isZero( void ) const;
+	inline bool isOne( void ) const;
+	inline void fill( const Sphere3& sp );
+	inline void fillZero( void );
+	inline void fillOne( void );
+	inline void fillScalars( const float x, const float y, const float z, const float r );
+	inline void fillCenterAndRadius( const Vector3& center, const float r );
 
 public:
 	static void* operator new( size_t s );
@@ -59,11 +71,6 @@ public:
 	inline Sphere3& operator=( const Sphere3& sp );
 
 public:
-	inline bool isEquals( const Sphere3& sp ) const;
-	inline void fill( const float x, const float y, const float z, const float r );
-	inline void fill( const Vector3& center, const float r );
-	inline void fill( const Sphere3& sp );
-
 	inline bool intersects( const Sphere3& sp ) const;
 	inline bool intersectsAABB3( const AABB3& aabb ) const;
 	inline bool intersectsPlane3( const Plane3& p ) const;
@@ -72,12 +79,5 @@ public:
 
 	inline bool containsPoint( const Vector3& point ) const;
 };
-
-#include "../c/cSphere3.h"
-#include "Vector3.h"
-#include "Ray3.h"
-#include "AABB3.h"
-#include "Plane3.h"
-#include "Sphere3.inl"
 
 #endif //__SPHERE3_H__

@@ -43,7 +43,8 @@ AxisA::AxisA( const float x, const float y, const float z, const float w )
 
 AxisA::AxisA( const Vector3& axis, const float angle )
 {
-	//magicalAxisAFillAxisAScalars( tofpointer( this ), tofpointer( &axis ), angle );
+	magicalAxisASetAxis( tofpointer( this ), tofpointer( &axis ) );
+	magicalAxisASetAngle( tofpointer( this ), angle );
 }
 
 AxisA::AxisA( const AxisA& aa )

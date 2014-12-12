@@ -41,7 +41,7 @@ MAGICALAPI_MATH cBool magicalPlane3IsZero( const cPlane3 p );
 
 MAGICALAPI_MATH void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const float z, const float d );
 MAGICALAPI_MATH void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVector3 n, const float d );
-MAGICALAPI_MATH void magicalPlane3FillPointAndNormal( cPlane3 out, const cVector3 p, const cVector3 n );
+MAGICALAPI_MATH void magicalPlane3FillNormalAndPoint( cPlane3 out, const cVector3 n, const cVector3 p );
 MAGICALAPI_MATH void magicalPlane3FillPoints( cPlane3 out, const cVector3 a, const cVector3 b, const cVector3 c );
 MAGICALAPI_MATH void magicalPlane3FillZero( cPlane3 out );
 MAGICALAPI_MATH void magicalPlane3Fill( cPlane3 out, const cPlane3 p );

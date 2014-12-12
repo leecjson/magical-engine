@@ -746,7 +746,7 @@ cBool magicalMatrix4Inverse( cMatrix4 out, const cMatrix4 m )
  *-----------------------------------------------------------------------------*/
 void magicalMatrix4Transpose( cMatrix4 out, const cMatrix4 m )
 {
-	const float t[16] = {
+	float t[16] = {
 		m _m11, m _m21, m _m31, m _m41,
 		m _m12, m _m22, m _m32, m _m42,
 		m _m13, m _m23, m _m33, m _m43,

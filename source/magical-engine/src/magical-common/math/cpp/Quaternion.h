@@ -84,7 +84,7 @@ public:
 	inline bool isZero( void ) const;
 	inline bool isNormalized( void ) const;
 	inline void fill( const Quaternion& q );
-	inline void fill( float x, float y, float z, float w );
+	inline void fillScalars( float x, float y, float z, float w );
 	inline void fillIdentity( void );
 	inline void fillZero( void );
 	inline void fillMatrix4( const Matrix4& m );

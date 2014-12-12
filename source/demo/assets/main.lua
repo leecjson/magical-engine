@@ -12,6 +12,26 @@ function go()
 
 	Quaternion:fromAxisA( AxisA( v, 30 ) );
 
+	AABB3 aabb;
+	aabb.min.x;
+	aabb.min_x;
+	aabb.minx;
+
+	fillScalars( aabb.min.x, aabb.max.x )
+
+	aabb:getCenter();
+
+	SgtLine line;
+	line:addChild( a );
+
+	SgtLine
+
+	straight line
+
+	StLine
+
+	StLine2 s;
+
 end
 
 

@@ -21,46 +21,42 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "../c/cVector3.h"
+#include "../c/cAABB3.h"
+#include "../c/cPlane3.h"
+#include "../c/cSphere3.h"
+#include "../c/cRay3.h"
+#include "Vector3.h"
+#include "AABB3.h"
 #include "Plane3.h"
+#include "Sphere3.h"
+#include "Ray3.h"
+#include "Plane3.inl"
 #include "MathMacros.h"
 
+const Plane3 Plane3::Zero = Plane3( 0.0f, 0.0f, 0.0f, 0.0f );
 const Plane3 Plane3::NormalX = Plane3( 1.0f, 0.0f, 0.0f, 0.0f );
 const Plane3 Plane3::NormalY = Plane3( 0.0f, 1.0f, 0.0f, 0.0f );
 const Plane3 Plane3::NormalZ = Plane3( 0.0f, 0.0f, 1.0f, 0.0f );
 
-Plane3 Plane3::placeholder = Plane3::NormalX;
-Plane3 Plane3::temp = Plane3::NormalX;
+Plane3 Plane3::placeholder = Plane3::Zero;
+Plane3 Plane3::temp = Plane3::Zero;
 
 Plane3::Plane3( const float x, const float y, const float z, const float d )
 {
 	magicalPlane3FillScalars( tofpointer( this ), x, y, z, d );
 }
 
-Plane3::Plane3( const Vector3& a, const Vector3& b, const Vector3& c )
-{
-	fillPoints( a, b, c );
-}
-
-Plane3::Plane3( const Vector3& a, const Vector3& n )
-{
-	fillPointAndNormal( a, n );
-}
-
-Plane3::Plane3( const Vector3& n, const float d )
-{
-	magicalPlane3FillNormalAndDistance( tofpointer( this ), tofpointer( &n ), d );
-}
-
 Plane3::Plane3( const Plane3& p )
-: x( p.x )
-, y( p.y )
-, z( p.z )
-, d( p.d )
 {
-
+	magicalPlane3Fill( tofpointer( this ), tofpointer( &p ) );
 }
 
 Plane3::Plane3( void )
+: x( 0.0f )
+, y( 0.0f )
+, z( 0.0f )
+, d( 0.0f )
 {
 
 }
@@ -78,12 +74,7 @@ void* Plane3::operator new( size_t s )
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_plane3_cached_pool.take();
 #else
-	void* ptr = malloc( s );
-
-	if( ptr == nullptr )
-		throw std::bad_alloc();
-	
-	return ptr;
+	return ::operator new( s );
 #endif
 }
 
@@ -93,8 +84,8 @@ void Plane3::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_plane3_cached_pool.add( ptr );
+	s_plane3_cached_pool.push( ptr );
 #else
-	free( ptr );
+	return ::operator delete( ptr );
 #endif
 }

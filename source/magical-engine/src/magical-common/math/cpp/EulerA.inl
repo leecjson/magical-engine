@@ -81,7 +81,7 @@ inline void EulerA::fill( const EulerA& ea )
 	magicalEulerAFill( tofpointer( this ), tofpointer( &ea ) );
 }
 
-inline void EulerA::fill( const float yaw, const float pitch, const float roll )
+inline void EulerA::fillScalars( const float yaw, const float pitch, const float roll )
 {
 	magicalEulerAFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
 }

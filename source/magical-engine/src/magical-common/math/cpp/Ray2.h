@@ -24,8 +24,6 @@ SOFTWARE.
 #ifndef __RAY2_H__
 #define __RAY2_H__
 
-class Vector2; 
-
 class Ray2
 {
 public:
@@ -34,8 +32,5 @@ public:
 	float dx;
 	float dy;
 };
-
-#include "../c/cRay2.h"
-#include "Ray2.inl"
 
 #endif //__RAY2_H__

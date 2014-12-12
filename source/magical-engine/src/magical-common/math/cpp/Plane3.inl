@@ -22,24 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Plane3 Plane3::fromPoints( const Vector3& a, const Vector3& b, const Vector3& c )
+inline Plane3 Plane3::fromZero( void )
 {
-	Plane3 ret;
-	magicalPlane3FillPoints( tofpointer( &ret ), tofpointer( &a ), tofpointer( &b ), tofpointer( &c ) );
-	return ret;
-}
-
-inline Plane3 Plane3::fromPointAndNormal( const Vector3& a, const Vector3& n )
-{
-	Plane3 ret;
-	magicalPlane3FillPointAndNormal( tofpointer( &ret ), tofpointer( &a ), tofpointer( &n ) );
-	return ret;
+	return Plane3::Zero;
 }
 
 inline Plane3 Plane3::fromNormalAndDistance( const Vector3& n, const float d )
 {
 	Plane3 ret;
 	magicalPlane3FillNormalAndDistance( tofpointer( &ret ), tofpointer( &n ), d );
+	return ret;
+}
+
+inline Plane3 Plane3::fromNormalAndPoint( const Vector3& n, const Vector3& a )
+{
+	Plane3 ret;
+	magicalPlane3FillNormalAndPoint( tofpointer( &ret ), tofpointer( &n ), tofpointer( &a ) );
+	return ret;
+}
+
+inline Plane3 Plane3::fromPoints( const Vector3& a, const Vector3& b, const Vector3& c )
+{
+	Plane3 ret;
+	magicalPlane3FillPoints( tofpointer( &ret ), tofpointer( &a ), tofpointer( &b ), tofpointer( &c ) );
 	return ret;
 }
 
@@ -58,6 +63,46 @@ inline void Plane3::projectPoint( Vector3& out, const Plane3& p, const Vector3& 
 	magicalPlane3ProjectPoint( tofpointer( &out ), tofpointer( &p ), tofpointer( &point ) );
 }
 
+inline bool Plane3::equals( const Plane3& p ) const
+{
+	return magicalPlane3Equals( tofpointer( this ), tofpointer( &p ) );
+}
+
+inline bool Plane3::isZero( void ) const
+{
+	return magicalPlane3IsZero( tofpointer( this ) );
+}
+
+inline void Plane3::fill( const Plane3& p )
+{
+	magicalPlane3Fill( tofpointer( this ), tofpointer( &p ) );
+}
+
+inline void Plane3::fillZero( void )
+{
+	magicalPlane3FillZero( tofpointer( this ) );
+}
+
+inline void Plane3::fillScalars( const float x, const float y, const float z, const float d )
+{
+	magicalPlane3FillScalars( tofpointer( this ), x, y, z, d );
+}
+
+inline void Plane3::fillNormalAndDistance( const Vector3& n, const float d )
+{
+	magicalPlane3FillNormalAndDistance( tofpointer( this ), tofpointer( &n ), d );
+}
+
+inline void Plane3::fillNormalAndPoint( const Vector3& n, const Vector3& a )
+{
+	magicalPlane3FillNormalAndPoint( tofpointer( this ), tofpointer( &n ), tofpointer( &a ) );
+}
+
+inline void Plane3::fillPoints( const Vector3& a, const Vector3& b, const Vector3& c )
+{
+	magicalPlane3FillPoints( tofpointer( this ), tofpointer( &a ), tofpointer( &b ), tofpointer( &c ) );
+}
+
 inline bool Plane3::operator==( const Plane3& p ) const
 {
 	return magicalPlane3Equals( tofpointer( this ), tofpointer( &p ) );
@@ -70,38 +115,8 @@ inline bool Plane3::operator!=( const Plane3& p ) const
 
 inline Plane3& Plane3::operator=( const Plane3& p )
 {
-	x = p.x; y = p.y; z = p.z; d = p.d;
+	magicalPlane3Fill( tofpointer( this ), tofpointer( &p ) );
 	return *this;
-}
-
-inline bool Plane3::isEquals( const Plane3& p ) const
-{
-	return magicalPlane3Equals( tofpointer( this ), tofpointer( &p ) );
-}
-
-inline void Plane3::fill( const float x, const float y, const float z, const float d )
-{
-	magicalPlane3FillScalars( tofpointer( this ), x, y, z, d );
-}
-
-inline void Plane3::fill( const Plane3& p )
-{
-	x = p.x; y = p.y; z = p.z; d = p.d;
-}
-
-inline void Plane3::fillPoints( const Vector3& a, const Vector3& b, const Vector3& c )
-{
-	magicalPlane3FillPoints( tofpointer( this ), tofpointer( &a ), tofpointer( &b ), tofpointer( &c ) );
-}
-
-inline void Plane3::fillPointAndNormal( const Vector3& a, const Vector3& n )
-{
-	magicalPlane3FillPointAndNormal( tofpointer( this ), tofpointer( &a ), tofpointer( &n ) );
-}
-
-inline void Plane3::fillNormalAndDistance( const Vector3& n, const float d )
-{
-	magicalPlane3FillNormalAndDistance( tofpointer( this ), tofpointer( &n ), d );
 }
 	
 inline void Plane3::setNormal( const Vector3& n )

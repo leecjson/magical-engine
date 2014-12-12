@@ -37,6 +37,16 @@ SOFTWARE.
 //		);*/
 //}
 
+inline Matrix4 Matrix4::fromIdentity( void )
+{
+	return Matrix4::Identity;
+}
+
+inline Matrix4 Matrix4::fromZero( void )
+{
+	return Matrix4::Zero;
+}
+
 inline void Matrix4::mulScalar( Matrix4& out, const Matrix4& m, const float a )
 {
 	magicalMatrix4MulScalar( tofpointer( &out ), tofpointer( &m ), a );

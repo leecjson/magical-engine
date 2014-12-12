@@ -192,7 +192,7 @@ inline void Quaternion::fill( const Quaternion& r )
 	x = r.x; y = r.y; z = r.z; w = r.w;
 }
 
-inline void Quaternion::fill( float x, float y, float z, float w )
+inline void Quaternion::fillScalars( float x, float y, float z, float w )
 {
 	this->x = x; this->y = y; this->z = z; this->w = w;
 }

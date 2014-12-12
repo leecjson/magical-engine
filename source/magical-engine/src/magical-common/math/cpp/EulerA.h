@@ -59,7 +59,7 @@ public:
 	inline bool equals( const EulerA& ea ) const;
 	inline bool isIdentity( void ) const;
 	inline void fill( const EulerA& ea );
-	inline void fill( const float yaw, const float pitch, const float roll );
+	inline void fillScalars( const float yaw, const float pitch, const float roll );
 	inline void fillIdentity( void );
 	inline void fillMatrix4( const Matrix4& m );
 	inline void fillQuaternion( const Quaternion& q );

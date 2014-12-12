@@ -56,7 +56,7 @@ void magicalAABB3FillScalars( cAABB3 out, const float min_x, const float min_y, 
 	out _max_z = max_z;
 }
 
-void magicalAABB3FillBox( cAABB3 out, const cVector3 center, const float width, const float height, const float depth )
+void magicalAABB3FillCenterAround( cAABB3 out, const cVector3 center, const float width, const float height, const float depth )
 {
 	float half_width = width / 2;
 	float half_height = height / 2;
@@ -70,7 +70,7 @@ void magicalAABB3FillBox( cAABB3 out, const cVector3 center, const float width, 
 	out _max_z = center _z + half_depth;
 }
 
-void magicalAABB3FillMinMax( cAABB3 out, const cVector3 min, const cVector3 max )
+void magicalAABB3FillPoints( cAABB3 out, const cVector3 min, const cVector3 max )
 {
 	out _min_x = min _x;
 	out _min_y = min _y;

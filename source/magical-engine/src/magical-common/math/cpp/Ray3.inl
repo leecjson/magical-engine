@@ -22,6 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+inline Ray3 Ray3::fromZero( void )
+{
+	return Ray3::Zero;
+}
+
 inline Ray3 Ray3::fromOriginToEnd( const Vector3& origin, const Vector3& end )
 {
 	Ray3 ret;
@@ -36,19 +41,54 @@ inline Ray3 Ray3::fromOriginAndDirection( const Vector3& origin, const Vector3& 
 	return ret;
 }
 
-inline void getOrigin( Vector3& out, const Ray3& r3 )
+inline void Ray3::getOrigin( Vector3& out, const Ray3& r3 )
 {
 	magicalRay3GetOrigin( tofpointer( &out ), tofpointer( &r3 ) );
 }
 
-inline void getDirection( Vector3& out, const Ray3& r3 )
+inline void Ray3::getDirection( Vector3& out, const Ray3& r3 )
 {
 	magicalRay3GetDirection( tofpointer( &out ), tofpointer( &r3 ) );
 }
 
-inline void directionNormalize( Ray3& out, const Ray3& r3 )
+inline void Ray3::directionNormalize( Ray3& out, const Ray3& r3 )
 {
 	magicalRay3DirectionNormalize( tofpointer( &out ), tofpointer( &r3 ) );
+}
+
+inline bool Ray3::equals( const Ray3& r3 ) const
+{
+	return magicalRay3Equals( tofpointer( this ), tofpointer( &r3 ) );
+}
+
+inline bool Ray3::isZero( void ) const
+{
+	return magicalRay3IsZero( tofpointer( this ) );
+}
+
+inline void Ray3::fill( const Ray3& r3 )
+{
+	magicalRay3Fill( tofpointer( this ), tofpointer( &r3 ) );
+}
+
+inline void Ray3::fillZero( void )
+{
+	magicalRay3FillZero( tofpointer( this ) );
+}
+
+inline void Ray3::fillScalars( const float ox, const float oy, const float oz, const float dx, const float dy, const float dz )
+{
+	magicalRay3FillScalars( tofpointer( this ), ox, oy, oz, dx, dy, dz );
+}
+
+inline void Ray3::fillOriginToEnd( const Vector3& origin, const Vector3& end )
+{
+	magicalRay3FillOriginToEnd( tofpointer( this ), tofpointer( &origin ), tofpointer( &end ) );
+}
+
+inline void Ray3::fillOriginAndDirection( const Vector3& origin, const Vector3& direction )
+{
+	magicalRay3FillOriginAndDirection( tofpointer( this ), tofpointer( &origin ), tofpointer( &direction ) );
 }
 
 inline bool Ray3::operator==( const Ray3& r3 ) const
@@ -65,36 +105,6 @@ inline Ray3& Ray3::operator=( const Ray3& r3 )
 {
 	magicalRay3Fill( tofpointer( this ), tofpointer( &r3 ) );
 	return *this;
-}
-
-inline bool Ray3::isZero( void ) const
-{
-	return magicalRay3IsZero( tofpointer( this ) );
-}
-
-inline bool Ray3::isEquals( const Ray3& r3 ) const
-{
-	return magicalRay3Equals( tofpointer( this ), tofpointer( &r3 ) );
-}
-
-inline void Ray3::fill( const float ox, const float oy, const float oz, const float dx, const float dy, const float dz )
-{
-	magicalRay3FillScalars( tofpointer( this ), ox, oy, oz, dx, dy, dz );
-}
-
-inline void Ray3::fill( const Ray3& r3 )
-{
-	magicalRay3Fill( tofpointer( this ), tofpointer( &r3 ) );
-}
-
-inline void Ray3::fillOriginToEnd( const Vector3& origin, const Vector3& end )
-{
-	magicalRay3FillOriginToEnd( tofpointer( this ), tofpointer( &origin ), tofpointer( &end ) );
-}
-
-inline void Ray3::fillOriginAndDirection( const Vector3& origin, const Vector3& direction )
-{
-	magicalRay3FillOriginAndDirection( tofpointer( this ), tofpointer( &origin ), tofpointer( &direction ) );
 }
 
 inline Vector3 Ray3::getOrigin( void ) const

@@ -21,13 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "../c/cVector3.h"
+#include "../c/cAABB3.h"
+#include "../c/cSphere3.h"
+#include "../c/cPlane3.h"
+#include "../c/cRay3.h"
+#include "Vector3.h"
+#include "AABB3.h"
 #include "Sphere3.h"
+#include "Plane3.h"
+#include "Ray3.h"
+#include "Sphere3.inl"
 #include "MathMacros.h"
 
+const Sphere3 Sphere3::Zero = Sphere3( 0.0f, 0.0f, 0.0f, 0.0f );
 const Sphere3 Sphere3::One = Sphere3( 0.0f, 0.0f, 0.0f, 1.0f );
 
-Sphere3 Sphere3::placeholder = Sphere3::One;
-Sphere3 Sphere3::temp = Sphere3::One;
+Sphere3 Sphere3::placeholder = Sphere3::Zero;
+Sphere3 Sphere3::temp = Sphere3::Zero;
 
 Sphere3::Sphere3( const float x, const float y, const float z, const float r )
 : x( x )
@@ -35,16 +46,7 @@ Sphere3::Sphere3( const float x, const float y, const float z, const float r )
 , z( z )
 , r( r )
 {
-
-}
-
-Sphere3::Sphere3( const Vector3& center, const float r )
-: x( center.x )
-, y( center.y )
-, z( center.z )
-, r( r )
-{
-
+	
 }
 
 Sphere3::Sphere3( const Sphere3& sp )
@@ -74,12 +76,7 @@ void* Sphere3::operator new( size_t s )
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_sphere3_cached_pool.take();
 #else
-	void* ptr = malloc( s );
-
-	if( ptr == nullptr )
-		throw std::bad_alloc();
-	
-	return ptr;
+	return ::operator new( s );
 #endif
 }
 
@@ -89,8 +86,8 @@ void Sphere3::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_sphere3_cached_pool.add( ptr );
+	s_sphere3_cached_pool.push( ptr );
 #else
-	free( ptr );
+	return ::operator delete( ptr );
 #endif
 }

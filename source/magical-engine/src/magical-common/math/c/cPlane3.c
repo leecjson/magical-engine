@@ -78,7 +78,7 @@ void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVector3 n, const fl
  * p 平面上任意一点
  * n 表面法向量
  *-----------------------------------------------------------------------------*/
-void magicalPlane3FillPointAndNormal( cPlane3 out, const cVector3 p, const cVector3 n )
+void magicalPlane3FillPointAndNormal( cPlane3 out, const cVector3 n, const cVector3 p )
 {
 	cVector3 nn;
 	magicalVector3Normalize( nn, n );

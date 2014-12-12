@@ -50,11 +50,21 @@ public:
 	Ray3( void );
 
 public:
+	static inline Ray3 fromZero( void );
 	static inline Ray3 fromOriginToEnd( const Vector3& origin, const Vector3& end );
 	static inline Ray3 fromOriginAndDirection( const Vector3& origin, const Vector3& direction );
 	static inline void getOrigin( Vector3& out, const Ray3& r3 );
 	static inline void getDirection( Vector3& out, const Ray3& r3 );
 	static inline void directionNormalize( Ray3& out, const Ray3& r3 );
+
+public:
+	inline bool equals( const Ray3& r3 ) const;
+	inline bool isZero( void ) const;
+	inline void fill( const Ray3& r3 );
+	inline void fillZero( void );
+	inline void fillScalars( const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
+	inline void fillOriginToEnd( const Vector3& origin, const Vector3& end );
+	inline void fillOriginAndDirection( const Vector3& origin, const Vector3& direction );
 
 public:
 	static void* operator new( size_t s );
@@ -63,19 +73,10 @@ public:
 	inline bool operator!=( const Ray3& r3 ) const;
 	inline Ray3& operator=( const Ray3& r3 );
 
-public:
-	inline bool isZero( void ) const;
-	inline bool isEquals( const Ray3& r3 ) const;
-	inline void fill( const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
-	inline void fill( const Ray3& r3 );
-	inline void fillOriginToEnd( const Vector3& origin, const Vector3& end );
-	inline void fillOriginAndDirection( const Vector3& origin, const Vector3& direction );
-
 	inline Vector3 getOrigin( void ) const;
 	inline Vector3 getDirection( void ) const;
 	inline void setOrigin( const Vector3& origin );
 	inline void setDirection( const Vector3& direction );
-
 	inline void directionNormalize( void );
 
 	inline bool intersectsPlane3( const Plane3& p, const bool discard_inside = false ) const;
@@ -85,14 +86,6 @@ public:
 	inline bool intersectsPlane3Distance( float& distance, const Plane3& p, const bool discard_inside = false ) const;
 	inline bool intersectsAABB3Distance( float& distance, const AABB3& aabb, const bool discard_inside = false ) const;
 	inline bool intersectsSphere3Distance( float& distance, const Sphere3& sp, const bool discard_inside = false ) const;
-
 };
-
-#include "../c/cRay3.h"
-#include "Vector3.h"
-#include "AABB3.h"
-#include "Plane3.h"
-#include "Sphere3.h"
-#include "Ray3.inl"
 
 #endif //__RAY3_H__

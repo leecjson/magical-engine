@@ -41,8 +41,8 @@ MAGICALAPI_MATH cBool magicalAABB3Equals( const cAABB3 aabb1, const cAABB3 aabb2
 MAGICALAPI_MATH cBool magicalAABB3IsZero( const cAABB3 aabb );
 
 MAGICALAPI_MATH void magicalAABB3FillScalars( cAABB3 out, const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z );
-MAGICALAPI_MATH void magicalAABB3FillBox( cAABB3 out, const cVector3 center, const float width, const float height, const float depth );
-MAGICALAPI_MATH void magicalAABB3FillMinMax( cAABB3 out, const cVector3 min, const cVector3 max );
+MAGICALAPI_MATH void magicalAABB3FillCenterAround( cAABB3 out, const cVector3 center, const float width, const float height, const float depth );
+MAGICALAPI_MATH void magicalAABB3FillPoints( cAABB3 out, const cVector3 min, const cVector3 max );
 MAGICALAPI_MATH void magicalAABB3FillZero( cAABB3 out );
 MAGICALAPI_MATH void magicalAABB3Fill( cAABB3 out, const cAABB3 aabb );
 
