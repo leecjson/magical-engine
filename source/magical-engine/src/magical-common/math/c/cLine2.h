@@ -21,10 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Straight2.h"
-#include "MathMacros.h"
+#ifndef __C_LINE2_H__
+#define __C_LINE2_H__
 
-inline Straight2 Straight2::fromNormalAndDistance( const Vector2& n, const float d )
-{
+#include "cUtility.h"
 
+typedef float cLine2[3];
+
+#include "cVector2.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+MAGICALAPI_MATH cBool magicalLine2Equals( const cLine2 l1, const cLine2 l2 );
+MAGICALAPI_MATH cBool magicalLine2IsZero( const cLine2 l );
+
+MAGICALAPI_MATH void magicalLine2FillNormalAndDistance( cLine2 out, const cVector2 n, const float d );
+MAGICALAPI_MATH void magicalLine2FillNormalAndPoint( cLine2 out, const cVector2 n, const cVector2 p );
+MAGICALAPI_MATH void magicalLine2FillScalars( cLine2 out, const float x, const float y, const float d );
+MAGICALAPI_MATH void magicalLine2FillZero( cLine2 out );
+MAGICALAPI_MATH void magicalLine2Fill( cLine2 out, const cLine2 l );
+
+MAGICALAPI_MATH int magicalLine2ClassifyPoint( const cLine2 l, const cVector3 point );
+MAGICALAPI_MATH int magicalLine2ClassifyLine2( const cLine2 l1, const cLine2 l2 );
+
+MAGICALAPI_MATH cBool magicalLine2Intersects( const cLine2 l1, const cLine2 l2 );
+
+MAGICALAPI_MATH cBool magicalLine2ContainsPoint( const cLine2 l, const cVector3 point );
+
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif //__C_LINE2_H__

@@ -39,10 +39,10 @@ extern "C" {
 #endif
 
 MAGICALAPI_MATH void magicalMatrix4FillScalars( cMatrix4 out,
-const float rm11, const float rm12, const float rm13, const float rm14,
-const float rm21, const float rm22, const float rm23, const float rm24,
-const float rm31, const float rm32, const float rm33, const float rm34,
-const float rm41, const float rm42, const float rm43, const float rm44 );
+	const float m11, const float m12, const float m13, const float m14,
+	const float m21, const float m22, const float m23, const float m24,
+	const float m31, const float m32, const float m33, const float m34,
+	const float m41, const float m42, const float m43, const float m44 );
 
 MAGICALAPI_MATH cBool magicalMatrix4Equals( const cMatrix4 m1, const cMatrix4 m2 );
 MAGICALAPI_MATH cBool magicalMatrix4IsIdentity( const cMatrix4 m );

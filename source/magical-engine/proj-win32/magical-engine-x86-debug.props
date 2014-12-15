@@ -11,7 +11,7 @@
     <ClCompile>
       <PreprocessorDefinitions>MAGICAL_DEBUG;LUASOCKET_DEBUG;MAGICAL_ENGINE;MAGICAL_USING_GL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4244;4800</DisableSpecificWarnings>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointExceptions>true</FloatingPointExceptions>

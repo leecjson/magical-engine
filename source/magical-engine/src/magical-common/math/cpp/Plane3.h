@@ -31,9 +31,9 @@ class Sphere3;
 
 enum class Plane3Classification
 {
-	InFrontOfPlane = 1,
+	Front = 1,
 	OnPlane = 0,
-	BehindPlane = -1
+	Behind = -1
 };
 
 class Plane3

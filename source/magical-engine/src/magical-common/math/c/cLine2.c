@@ -21,26 +21,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cStraight2.h"
+#include "cLine2.h"
 #include "cMathMacros.h"
 
-cBool magicalStraight2Equals( const cStraight2 st1, const cStraight2 st2 )
+cBool magicalLine2Equals( const cLine2 l1, const cLine2 l2 )
 {
 	return
-		magicalAlmostEqual( st1 _x, st2 _x ) &&
-		magicalAlmostEqual( st1 _y, st2 _y ) &&
-		magicalAlmostEqual( st1 _z, st2 _z );
+		magicalAlmostEqual( l1 _x, l2 _x ) &&
+		magicalAlmostEqual( l1 _y, l2 _y ) &&
+		magicalAlmostEqual( l1 _z, l2 _z );
 }
 
-cBool magicalStraight2IsZero( const cStraight2 st )
+cBool magicalLine2IsZero( const cLine2 l )
 {
 	return
-		magicalAlmostZero( st _x ) &&
-		magicalAlmostZero( st _y ) &&
-		magicalAlmostZero( st _z );
+		magicalAlmostZero( l _x ) &&
+		magicalAlmostZero( l _y ) &&
+		magicalAlmostZero( l _z );
 }
 
-void magicalStraight2FillPointAndNormal( cStraight2 out, const cVector2 p, const cVector2 n )
+void magicalLine2FillNormalAndDistance( cLine2 out, const cVector2 n, const float d )
+{
+	out _x = n _x;
+	out _y = n _y;
+	out _z = d;
+
+	magicalVector2Normalize( out, out );
+}
+
+void magicalLine2FillNormalAndPoint( cLine2 out, const cVector2 n, const cVector2 p )
 {
 	cVector2 nn;
 	magicalVector2Normalize( nn, n );
@@ -50,16 +59,7 @@ void magicalStraight2FillPointAndNormal( cStraight2 out, const cVector2 p, const
 	out _z = p _x * nn _x + p _y * nn _y;
 }
 
-void magicalStraight2FillNormalAndDistance( cStraight2 out, const cVector2 n, const float d )
-{
-	out _x = n _x;
-	out _y = n _y;
-	out _z = d;
-
-	magicalVector2Normalize( out, out );
-}
-
-void magicalStraight2FillScalars( cStraight2 out, const float x, const float y, const float d )
+void magicalLine2FillScalars( cLine2 out, const float x, const float y, const float d )
 {
 	out _x = x;
 	out _y = y;
@@ -68,33 +68,33 @@ void magicalStraight2FillScalars( cStraight2 out, const float x, const float y, 
 	magicalVector2Normalize( out, out );
 }
 
-void magicalStraight2FillZero( cStraight2 out )
+void magicalLine2FillZero( cLine2 out )
 {
 	out _x = 0.0f;
 	out _y = 0.0f;
 	out _z = 0.0f;
 }
 
-void magicalStraight2Fill( cStraight2 out, const cStraight2 st )
+void magicalLine2Fill( cLine2 out, const cLine2 l )
 {
-	out _x = st _x;
-	out _y = st _y;
-	out _z = st _z;
+	out _x = l _x;
+	out _y = l _y;
+	out _z = l _z;
 }
 
 /*-----------------------------------------------------------------------------*\
  * 分类2D点与2D直线的关系 done
  *
- * st 直线
+ * l 直线
  * point 目标点
  * return 分类结果
  *        +1 在直线前方
  *        -1 在直线后方
  *         0 刚好在直线上
  *-----------------------------------------------------------------------------*/
-int magicalStraight2ClassifyPoint( const cStraight2 st, const cVec3 point )
+int magicalLine2ClassifyPoint( const cLine2 l, const cVector3 point )
 {
-	float distance = st _x * point _x + st _y * point _y - st _z;
+	float distance = l _x * point _x + l _y * point _y - l _z;
 
 	if( distance > kEpsilon )
 		return +1;
@@ -108,21 +108,21 @@ int magicalStraight2ClassifyPoint( const cStraight2 st, const cVec3 point )
 /*-----------------------------------------------------------------------------*\
  * 分类两个2D直线的关系 done
  *
- * st1 直线1
- * st2 直线2
+ * l1 直线1
+ * l2 直线2
  * int 分类结果
  *     +1 平行
  *     -1 垂直
  *      0 相交
  *-----------------------------------------------------------------------------*/
-int magicalStraight2ClassifyStraight2( const cStraight2 st1, const cStraight2 st2 )
+int magicalLine2ClassifyLine2( const cLine2 l1, const cLine2 l2 )
 {
-	float dot = st1 _x * st2 _x + st1 _y * st2 _y;
+	float dot = l1 _x * l2 _x + l1 _y * l2 _y;
 
 	if( magicalAlmostZero( dot ) )
 		return -1;
 
-	if( magicalVector2Equals( st1, st2 ) )
+	if( magicalVector2Equals( l1, l2 ) )
 		return +1;
 
 	return 0;
@@ -133,24 +133,24 @@ int magicalStraight2ClassifyStraight2( const cStraight2 st1, const cStraight2 st
  *
  * 不平行并且不垂直 就有交点
  *
- * st1 直线1
- * st2 直线2
+ * l1 直线1
+ * l2 直线2
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalStraight2Intersects( const cStraight2 st1, const cStraight2 st2 )
+cBool magicalLine2Intersects( const cLine2 l1, const cLine2 l2 )
 {
-	return magicalStraight2ClassifyStraight2( st1, st2 ) == 0;
+	return magicalLine2ClassifyLine2( l1, l2 ) == 0;
 }
 
 /*-----------------------------------------------------------------------------*\
  * 判断2D直线是否包含一个2D点 done
  *
- * st 直线
+ * l 直线
  * point 目标点
  * return 是否包含
  *-----------------------------------------------------------------------------*/
-cBool magicalStraight2ContainsPoint( const cStraight2 st, const cVec3 point )
+cBool magicalLine2ContainsPoint( const cLine2 l, const cVector3 point )
 {
-	return magicalAlmostZero( st _x * point _x + st _y * point _y - st _z );
+	return magicalAlmostZero( l _x * point _x + l _y * point _y - l _z );
 }
 

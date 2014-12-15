@@ -21,19 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __STRAIGHT2_H__
-#define __STRAIGHT2_H__
+#ifndef __LINE2_H__
+#define __LINE2_H__
 
 class Vector2;
 
-enum class Straight2Classification
+enum class Line2Classification
 {
-	InFrontOfStraight = 1,
-	OnStraight = 0,
-	BehindStraight = -1
+	Front = 1,
+	OnLine = 0,
+	Behind = -1,
+	Parallel = 1,
+	Intersect = 0,
+	Vertical = -1,
 };
 
-class Straight2
+class Line2
 {
 public:
 	float x;
@@ -41,35 +44,42 @@ public:
 	float d;
 
 public:
-	Straight2( const float x, const float y, const float d );
-	Straight2( const Straight2& st );
-	Straight2( void );
+	static const Line2 Zero;
+	static Line2 placeholder;
+	static Line2 temp;
 
 public:
-	static inline Straight2 fromNormalAndDistance( const Vector2& n, const float d );
-	static inline Straight2 fromPointAndNormal( const Vector2& a, const Vector2& n );
+	Line2( const float x, const float y, const float d );
+	Line2( const Line2& l );
+	Line2( void );
+
+public:
+	static inline Line2 fromZero( void );
+	static inline Line2 fromNormalAndDistance( const Vector2& n, const float d );
+	static inline Line2 fromNormalAndPoint( const Vector2& n, const Vector2& a );
+
+public:
+	inline bool equals( const Line2& l ) const;
+	inline bool isZero( void ) const;
+	inline void fill( const Line2& l );
+	inline void fillZero( void );
+	inline void fillScalars( const float x, const float y, const float d );
+	inline void fillNormalAndDistance( const Vector2& n, const float d );
+	inline void fillNormalAndPoint( const Vector2& n, const Vector2& a );
 
 public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
-	inline bool operator==( const Straight2& st ) const;
-	inline bool operator!=( const Straight2& st ) const;
-	inline Straight2& operator=( const Straight2& st );
+	inline bool operator==( const Line2& l ) const;
+	inline bool operator!=( const Line2& l ) const;
+	inline Line2& operator=( const Line2& l );
 
 public:
-	inline bool isEquals( const Straight2& st ) const;
-	inline void fill( const float x, const float y, const float d );
-	inline void fill( const Straight2& st );
-	inline void fillNormalAndDistance( const Vector2& n, const float d );
-	inline void fillPointAndNormal( const Vector2& a, const Vector2& n );
+	inline Line2Classification classifyPoint( const Vector2& point ) const;
+	inline Line2Classification classifyLine( const Line2& l ) const;
 
-	inline Straight2Classification classifyPoint( const Vector2& point ) const;
-	inline bool intersects( const Straight2& st ) const;
-	inline bool containsPoint( const Straight2& st ) const;
+	inline bool intersects( const Line2& l ) const;
+	inline bool containsPoint( const Line2& l ) const;
 };
 
-#include "../c/cStraight2.h"
-#include "Vector2.h"
-#include "Straight2.inl"
-
-#endif //__STRAIGHT2_H__
+#endif //__LINE2_H__

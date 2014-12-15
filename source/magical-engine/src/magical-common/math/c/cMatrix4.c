@@ -43,15 +43,15 @@ static const float ZERO[] =
 };
 
 void magicalMatrix4FillScalars( cMatrix4 out,
-                                const float rm11, const float rm12, const float rm13, const float rm14,
-                                const float rm21, const float rm22, const float rm23, const float rm24,
-                                const float rm31, const float rm32, const float rm33, const float rm34,
-                                const float rm41, const float rm42, const float rm43, const float rm44 )
+	const float m11, const float m12, const float m13, const float m14,
+	const float m21, const float m22, const float m23, const float m24,
+	const float m31, const float m32, const float m33, const float m34,
+	const float m41, const float m42, const float m43, const float m44 )
 {
-	out _m11 = rm11; out _m12 = rm12; out _m13 = rm13; out _m14 = rm14;
-	out _m21 = rm21; out _m22 = rm22; out _m23 = rm23; out _m24 = rm24;
-	out _m31 = rm31; out _m32 = rm32; out _m33 = rm33; out _m34 = rm34;
-	out _m41 = rm41; out _m42 = rm42; out _m43 = rm43; out _m44 = rm44;
+	out _m11 = m11; out _m12 = m12; out _m13 = m13; out _m14 = m14;
+	out _m21 = m21; out _m22 = m22; out _m23 = m23; out _m24 = m24;
+	out _m31 = m31; out _m32 = m32; out _m33 = m33; out _m34 = m34;
+	out _m41 = m41; out _m42 = m42; out _m43 = m43; out _m44 = m44;
 }
 
 cBool magicalMatrix4Equals( const cMatrix4 m1, const cMatrix4 m2 )

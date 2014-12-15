@@ -26,6 +26,8 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 
+#include "magical-math.h"
+
 #include "Common.h"
 #include "Shared.h"
 #include "Reference.h"

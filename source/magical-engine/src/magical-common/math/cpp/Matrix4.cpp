@@ -59,12 +59,12 @@ Matrix4::Matrix4( const float* m )
 }
 
 Matrix4::Matrix4(
-const float rm11, const float rm12, const float rm13, const float rm14,
-const float rm21, const float rm22, const float rm23, const float rm24,
-const float rm31, const float rm32, const float rm33, const float rm34,
-const float rm41, const float rm42, const float rm43, const float rm44 )
+	const float m11, const float m12, const float m13, const float m14,
+	const float m21, const float m22, const float m23, const float m24,
+	const float m31, const float m32, const float m33, const float m34,
+	const float m41, const float m42, const float m43, const float m44 )
 {
-	magicalMatrix4FillScalars( tofpointer( this ), rm11, rm12, rm13, rm14, rm21, rm22, rm23, rm24, rm31, rm32, rm33, rm34, rm41, rm42, rm43, rm44 );
+	magicalMatrix4FillScalars( tofpointer( this ), m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44 );
 }
 
 Matrix4::Matrix4( const Matrix4& m )

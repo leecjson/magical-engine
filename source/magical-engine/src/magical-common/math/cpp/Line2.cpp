@@ -21,38 +21,61 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_STRAIGHT2_H__
-#define __C_STRAIGHT2_H__
+#include "../c/cVector2.h"
+#include "../c/cLine2.h"
+#include "Vector2.h"
+#include "Line2.h"
+#include "Line2.inl"
+#include "MathMacros.h"
 
-#include "cUtility.h"
+const Line2 Line2::Zero = Line2( 0.0f, 0.0f, 0.0f );
 
-typedef float cStraight2[3];
+Line2 Line2::placeholder = Line2::Zero;
+Line2 Line2::temp = Line2::Zero;
 
-#include "cVector2.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-MAGICALAPI_MATH cBool magicalStraight2Equals( const cStraight2 st1, const cStraight2 st2 );
-MAGICALAPI_MATH cBool magicalStraight2IsZero( const cStraight2 st );
-
-MAGICALAPI_MATH void magicalStraight2FillPointAndNormal( cStraight2 out, const cVector2 p, const cVector2 n );
-MAGICALAPI_MATH void magicalStraight2FillNormalAndDistance( cStraight2 out, const cVector2 n, const float d );
-MAGICALAPI_MATH void magicalStraight2FillScalars( cStraight2 out, const float x, const float y, const float d );
-MAGICALAPI_MATH void magicalStraight2FillZero( cStraight2 out );
-MAGICALAPI_MATH void magicalStraight2Fill( cStraight2 out, const cStraight2 st );
-
-MAGICALAPI_MATH int magicalStraight2ClassifyPoint( const cStraight2 st, const cVec3 point );
-MAGICALAPI_MATH int magicalStraight2ClassifyStraight2( const cStraight2 st1, const cStraight2 st2 );
-
-MAGICALAPI_MATH cBool magicalStraight2Intersects( const cStraight2 st1, const cStraight2 st2 );
-
-MAGICALAPI_MATH cBool magicalStraight2ContainsPoint( const cStraight2 st, const cVec3 point );
-
-
-#ifdef __cplusplus
+Line2::Line2( const float x, const float y, const float d )
+{
+	magicalLine2FillScalars( tofpointer( this ), x, y, d );
 }
+
+Line2::Line2( const Line2& l )
+{
+	magicalLine2Fill( tofpointer( this ), tofpointer( &l ) );
+}
+
+Line2::Line2( void )
+: x( 0.0f )
+, y( 0.0f )
+, d( 0.0f )
+{
+
+}
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachedPool.h"
+static CachedPool<Line2> s_line2_cached_pool( 16, 16 );
 #endif
 
-#endif //__C_STRAIGHT2_H__
+void* Line2::operator new( size_t s )
+{
+	if( s != sizeof( Line2 ) )
+		return ::operator new( s );
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	return s_line2_cached_pool.take();
+#else
+	return ::operator new( s );
+#endif
+}
+
+void Line2::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_line2_cached_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
+#endif
+}

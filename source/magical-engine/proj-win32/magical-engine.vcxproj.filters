@@ -387,10 +387,10 @@
     <ClCompile Include="..\src\magical-common\math\cpp\Ray2.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cStraight2.c">
+    <ClCompile Include="..\src\magical-common\math\c\cLine2.c">
       <Filter>src\magical-common\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\Straight2.cpp">
+    <ClCompile Include="..\src\magical-common\math\cpp\Line2.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -704,10 +704,10 @@
     <ClInclude Include="..\src\magical-common\math\cpp\Ray2.h">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cStraight2.h">
+    <ClInclude Include="..\src\magical-common\math\c\cLine2.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\Straight2.h">
+    <ClInclude Include="..\src\magical-common\math\cpp\Line2.h">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
   </ItemGroup>
@@ -748,7 +748,7 @@
     <None Include="..\src\magical-common\math\cpp\Ray2.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-common\math\cpp\Straight2.inl">
+    <None Include="..\src\magical-common\math\cpp\Line2.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
   </ItemGroup>

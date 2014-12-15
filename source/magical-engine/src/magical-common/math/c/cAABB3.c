@@ -338,7 +338,7 @@ void magicalAABB3Transform( cAABB3 out, const cAABB3 aabb, const cMatrix4 m )
 	magicalVector3MulMatrix4( right_top_back, right_top_back, m );
 	magicalVector3MulMatrix4( right_bottom_back, right_bottom_back, m );
 
-	magicalAABB3FillIdentity( out );
+	magicalAABB3FillZero( out );
 
 	magicalAABB3Extend( out, aabb, left_top_front );
 	magicalAABB3Extend( out, aabb, left_bottom_front );
