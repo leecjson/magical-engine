@@ -36,6 +36,6 @@ Camera::~Camera( void )
 Shared<Camera> Camera::create( void )
 {
 	Camera* ret = new Camera();
-	magicalAssert( ret, "New Scene() failed" );
+	magicalAssert( ret, "new Camera() failed" );
 	return Shared<Camera>( Initializer<Camera>( ret ) );
 }

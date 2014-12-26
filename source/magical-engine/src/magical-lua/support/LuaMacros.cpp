@@ -31,13 +31,13 @@ SOFTWARE.
 
 MAGICALAPI_USER void magicalLuaStateDump( lua_State* L )
 {
-	int  i = 0;
-	int  top = lua_gettop( L );
+	int i = 0;
+	int top = lua_gettop( L );
 
 	magicalFormat( "Total [%d] in lua stack: ", top );
 	magicalLog( magicalBuffer );
 
-	for( i = -1; i >= -top; i-- )
+	for( i = -1; i >= -top; i -- )
 	{
 		int t = lua_type( L, i );
 		switch( t )

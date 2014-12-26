@@ -105,7 +105,7 @@ bool ShaderProgram::build( void )
 	{
 		if( magicalGetShaderInfoLog( vertex_shader ) )
 		{
-			magicalSetLastErrorInfoAt( magicalBuffer );
+			magicalSetLastErrorInfoB( magicalBuffer );
 			magicalLogLastError();
 		}
 		else
@@ -123,7 +123,7 @@ bool ShaderProgram::build( void )
 	{
 		if( magicalGetShaderInfoLog( fragment_shader ) )
 		{
-			magicalSetLastErrorInfoAt( magicalBuffer );
+			magicalSetLastErrorInfoB( magicalBuffer );
 			magicalLogLastError();
 		}
 		else
@@ -177,7 +177,7 @@ bool ShaderProgram::link( void )
 	{
 		if( magicalGetProgramInfoLog( _program_id ) )
 		{
-			magicalSetLastErrorInfoAt( magicalBuffer );
+			magicalSetLastErrorInfoB( magicalBuffer );
 			magicalLogLastError();
 		}
 		else
@@ -195,7 +195,7 @@ bool ShaderProgram::link( void )
 	{
 		if( magicalGetProgramInfoLog( _program_id ) )
 		{
-			magicalSetLastErrorInfoAt( magicalBuffer );
+			magicalSetLastErrorInfoB( magicalBuffer );
 			magicalLogLastError();
 		}
 		else

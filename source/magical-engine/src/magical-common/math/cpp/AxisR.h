@@ -21,13 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __AXISA_H__
-#define __AXISA_H__
+#ifndef __AXISR_H__
+#define __AXISR_H__
 
-class Vector3;
-class Quaternion;
+struct Vector3;
+struct Quaternion;
 
-class AxisA
+struct AxisRotation : public cAxisRotation
 {
 public:
 	float x;
@@ -36,45 +36,38 @@ public:
 	float w;
 
 public:
-	static const AxisA Identity;
-	static const AxisA Zero;
-	static AxisA placeholder;
-	static AxisA temp;
+	static const float Epsilon;
+	static const AxisRotation Identity;
+	static const AxisRotation Zero;
+	static AxisRotation var;
 
 public:
-	AxisA( const float x, const float y, const float z, const float w );
-	AxisA( const Vector3& axis, const float angle );
-	AxisA( const AxisA& aa );
-	AxisA( void );
-
-public:
-	static inline AxisA fromIdentity( void );
-	static inline AxisA fromZero( void );
-	static inline AxisA fromQuaternion( const Quaternion& q );
-	static inline void getAxis( Vector3& out, const AxisA& aa );
-
-public:
-	inline bool equals( const AxisA& aa ) const;
-	inline bool isIdentity( void ) const;
-	inline bool isZero( void ) const;
-	inline void fill( const AxisA& aa );
-	inline void fillScalars( const float x, const float y, const float z, const float w );
-	inline void fillIdentity( void );
-	inline void fillZero( void );
-	inline void fillQuaternion( const Quaternion& q );
+	AxisRotation( float x, float y, float z, float w );
+	AxisRotation( const Vector3& axis, float angle );
+	AxisRotation( const AxisRotation& aa );
+	AxisRotation( void );
+	static inline AxisRotation createIdentity( void );
+	static inline AxisRotation createZero( void );
+	static inline AxisRotation create( const Vector3& axis, float angle );
+	static inline AxisRotation createFromQuaternion( const Quaternion& q );
 
 public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
-	inline bool operator==( const AxisA& aa ) const;
-	inline bool operator!=( const AxisA& aa ) const;
-	inline AxisA& operator=( const AxisA& aa );
-
-public:
-	inline void setAxis( const Vector3& axis );
-	inline void setAngle( const float angle );
-	inline Vector3 getAxis( void ) const;
-	inline float getAngle( void ) const;
+	inline bool equals( const AxisRotation& aa ) const;
+	inline bool isIdentity( void ) const;
+	inline bool isZero( void ) const;
+	inline bool operator==( const AxisRotation& aa ) const;
+	inline bool operator!=( const AxisRotation& aa ) const;
+	inline AxisRotation& operator=( const AxisRotation& aa );
+	inline void set( const AxisRotation& aa );
+	inline void set( const Vector3& axis, float angle );
+	inline void setIdentity( void );
+	inline void setZero( void );
+	inline void setScalars( float x, float y, float z, float w );
+	inline void setQuaternion( const Quaternion& q );
+	inline Vector3 axis( void ) const;
+	inline Quaternion toQuaternion( void ) const;
 };
 
-#endif //__AXISA_H__
+#endif //__AXISR_H__

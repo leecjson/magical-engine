@@ -39,12 +39,12 @@ extern "C" {
 MAGICALAPI_MATH cBool magicalPlane3Equals( const cPlane3 p1, const cPlane3 p2 );
 MAGICALAPI_MATH cBool magicalPlane3IsZero( const cPlane3 p );
 
-MAGICALAPI_MATH void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const float z, const float d );
-MAGICALAPI_MATH void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVector3 n, const float d );
-MAGICALAPI_MATH void magicalPlane3FillNormalAndPoint( cPlane3 out, const cVector3 n, const cVector3 p );
-MAGICALAPI_MATH void magicalPlane3FillPoints( cPlane3 out, const cVector3 a, const cVector3 b, const cVector3 c );
-MAGICALAPI_MATH void magicalPlane3FillZero( cPlane3 out );
-MAGICALAPI_MATH void magicalPlane3Fill( cPlane3 out, const cPlane3 p );
+MAGICALAPI_MATH void magicalPlane3SetScalars( cPlane3 out, float x, float y, float z, float d );
+MAGICALAPI_MATH void magicalPlane3SetNormalAndDistance( cPlane3 out, const cVector3 n, float d );
+MAGICALAPI_MATH void magicalPlane3SetNormalAndPoint( cPlane3 out, const cVector3 n, const cVector3 p );
+MAGICALAPI_MATH void magicalPlane3SetPoints( cPlane3 out, const cVector3 a, const cVector3 b, const cVector3 c );
+MAGICALAPI_MATH void magicalPlane3SetZero( cPlane3 out );
+MAGICALAPI_MATH void magicalPlane3Set( cPlane3 out, const cPlane3 p );
 
 MAGICALAPI_MATH void magicalPlane3SetNormal( cPlane3 out, const cVector3 n );
 MAGICALAPI_MATH void magicalPlane3GetNormal( cVector3 out, const cPlane3 p );
@@ -60,8 +60,7 @@ MAGICALAPI_MATH int magicalPlane3ClassifySphere3( const cPlane3 p, const cSphere
 MAGICALAPI_MATH cBool magicalPlane3Intersects( const cPlane3 p1, const cPlane3 p2 );
 MAGICALAPI_MATH cBool magicalPlane3IntersectsAABB3( const cPlane3 p, const cAABB3 aabb );
 MAGICALAPI_MATH cBool magicalPlane3IntersectsSphere3( const cPlane3 p, const cSphere3 sp );
-MAGICALAPI_MATH cBool magicalPlane3IntersectsRay3( const cPlane3 p, const cRay3 r3, const cBool discard_inside );
-MAGICALAPI_MATH cBool magicalPlane3IntersectsRay3Distance( float* dist, const cPlane3 p, const cRay3 r3, const cBool discard_inside );
+MAGICALAPI_MATH void magicalPlane3IntersectsRay3( cRayIntersectResult out, const cPlane3 p, const cRay3 r3, const cBool discard_inside );
 
 MAGICALAPI_MATH cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVector3 point );
 

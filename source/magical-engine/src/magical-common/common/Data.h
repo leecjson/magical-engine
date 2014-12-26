@@ -38,9 +38,9 @@ public:
 	static Shared<Data> create( void );
 
 public:
-	void assign( char* data, const size_t size );
-	void malloc( const size_t size );
-	void realloc( const size_t size );
+	void assign( char* data, size_t size );
+	void malloc( size_t size );
+	void realloc( size_t size );
 	bool empty( void ) const;
 	size_t size( void ) const;
 	char* ptr( void ) const;

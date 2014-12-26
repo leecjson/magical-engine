@@ -24,6 +24,8 @@ SOFTWARE.
 #ifndef __AABB3_H__
 #define __AABB3_H__
 
+#include "Vector3.h"
+
 class Vector3;
 class Matrix4;
 class Ray3;
@@ -33,12 +35,8 @@ class Sphere3;
 class AABB3
 {
 public:
-	float min_x;
-	float min_y;
-	float min_z;
-	float max_x;
-	float max_y;
-	float max_z;
+	Vector3 min;
+	Vector3 max;
 
 public:
 	static const AABB3 Zero;
@@ -46,19 +44,19 @@ public:
 	static AABB3 temp;
 
 public:
-	AABB3( const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z );
+	AABB3( const Vector3& min, const Vector3& max );
 	AABB3( const AABB3& aabb );
 	AABB3( void );
 
 public:
 	static inline AABB3 fromZero( void );
 	static inline AABB3 fromPoints( const Vector3& min, const Vector3& max );
-	static inline AABB3 fromCenterAround( const Vector3& center, const float width, const float height, const float depth );
+	static inline AABB3 fromCenterAround( const Vector3& center, float width, float height, float depth );
 
 	static inline void mul( AABB3& out, const AABB3& aabb, const Matrix4& m );
 	static inline void getMin( Vector3& out, const AABB3& aabb );
 	static inline void getMax( Vector3& out, const AABB3& aabb );
-	static inline void extend( Vector3& out, const AABB3& aabb, const float x, const float y, const float z );
+	static inline void extend( Vector3& out, const AABB3& aabb, float x, float y, float z );
 	static inline void extend( Vector3& out, const AABB3& aabb, const Vector3& v );
 	static inline void merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 );
 	static inline void getCenter( Vector3& out, const AABB3& aabb );
@@ -67,11 +65,11 @@ public:
 public:
 	inline bool equals( const AABB3& aabb ) const;
 	inline bool isZero( void ) const;
-	inline void fill( const AABB3& aabb );
-	inline void fillZero( void );
-	inline void fillScalars( const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z );
-	inline void fillPoints( const Vector3& min, const Vector3& max );
-	inline void fillCenterAround( const Vector3& center, const float width, const float height, const float depth );
+	inline void set( const AABB3& aabb );
+	inline void setZero( void );
+	inline void setScalars( float min_x, float min_y, float min_z, float max_x, float max_y, float max_z );
+	inline void setPoints( const Vector3& min, const Vector3& max );
+	inline void setCenterAround( const Vector3& center, float width, float height, float depth );
 
 public:
 	static void* operator new( size_t s );
@@ -85,7 +83,7 @@ public:
 public:
 	inline void setMin( const Vector3& min );
 	inline void setMax( const Vector3& max );
-	inline void extend( const float x, const float y, const float z );
+	inline void extend( float x, float y, float z );
 	inline void extend( const Vector3& v );
 	inline void merge( const AABB3& aabb );
 	inline float size( void ) const;
@@ -101,8 +99,8 @@ public:
 	inline bool intersects( const AABB3& aabb ) const;
 	inline bool intersectsPlane3( const Plane3& p ) const;
 	inline bool intersectsSphere3( const Sphere3& sp ) const;
-	inline bool intersectsRay3( const Ray3& r3, const bool discard_inside = false ) const;
-	inline bool intersectsRay3Distance( float& distance, const Ray3& r3, const bool discard_inside = false ) const;
+	inline bool intersectsRay3( const Ray3& r3, bool discard_inside = false ) const;
+	inline bool intersectsRay3Distance( float& distance, const Ray3& r3, bool discard_inside = false ) const;
 	inline bool intersectsPart( AABB3& out, const AABB3& aabb ) const;
 
 	inline bool containsPoint( const Vector3& point ) const;

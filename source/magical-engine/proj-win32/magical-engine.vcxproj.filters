@@ -132,9 +132,6 @@
     <ClCompile Include="..\src\magical-common\math\c\cQuaternion.c">
       <Filter>src\magical-common\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\Quaternion.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\magical-common\transform\Transform.cpp">
       <Filter>src\magical-common\transform</Filter>
     </ClCompile>
@@ -330,7 +327,7 @@
     <ClCompile Include="..\src\magical-common\math\c\cVector4.c">
       <Filter>src\magical-common\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cMatrix4.c">
+    <ClCompile Include="..\src\magical-common\math\c\cEulerA.c">
       <Filter>src\magical-common\math\c</Filter>
     </ClCompile>
     <ClCompile Include="..\src\magical-common\math\cpp\Vector2.cpp">
@@ -342,55 +339,16 @@
     <ClCompile Include="..\src\magical-common\math\cpp\Vector4.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\Matrix4.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cAxisA.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cEulerA.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\AxisA.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\magical-common\math\cpp\EulerA.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cAABB3.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\AABB3.cpp">
+    <ClCompile Include="..\src\magical-common\math\cpp\Quaternion.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cPlane3.c">
+    <ClCompile Include="..\src\magical-common\math\c\cAxisR.c">
       <Filter>src\magical-common\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\Plane3.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cSphere3.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\Sphere3.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cRay3.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\Ray3.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cRay2.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\Ray2.cpp">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\c\cLine2.c">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\math\cpp\Line2.cpp">
+    <ClCompile Include="..\src\magical-common\math\cpp\AxisR.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -443,20 +401,11 @@
     <ClInclude Include="..\src\magical-common\log\LogSystem.h">
       <Filter>src\magical-common\log</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cMathMacros.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\magical-common\math\c\cQuaternion.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\magical-common\math\c\cUtility.h">
       <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\MathMacros.h">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\Quaternion.h">
-      <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
     <ClInclude Include="..\src\magical-common\transform\Transform.h">
       <Filter>src\magical-common\transform</Filter>
@@ -644,7 +593,10 @@
     <ClInclude Include="..\src\magical-common\math\c\cVector4.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cMatrix4.h">
+    <ClInclude Include="..\src\magical-common\math\magical-math.h">
+      <Filter>src\magical-common\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\c\cEulerA.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\magical-common\math\cpp\Vector2.h">
@@ -656,99 +608,36 @@
     <ClInclude Include="..\src\magical-common\math\cpp\Vector4.h">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\Matrix4.h">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\magical-math.h">
-      <Filter>src\magical-common\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cAxisA.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cEulerA.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\AxisA.h">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\magical-common\math\cpp\EulerA.h">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cAABB3.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\AABB3.h">
+    <ClInclude Include="..\src\magical-common\math\cpp\Quaternion.h">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cPlane3.h">
+    <ClInclude Include="..\src\magical-common\math\c\cAxisR.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\Plane3.h">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cSphere3.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\Sphere3.h">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cRay3.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\Ray3.h">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cRay2.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\Ray2.h">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\c\cLine2.h">
-      <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\math\cpp\Line2.h">
+    <ClInclude Include="..\src\magical-common\math\cpp\AxisR.h">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\magical-common\math\cpp\Quaternion.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
-    <None Include="..\src\magical-common\math\cpp\Vector4.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
-    <None Include="..\src\magical-common\math\cpp\Matrix4.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
     <None Include="..\src\magical-common\math\cpp\Vector2.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
     <None Include="..\src\magical-common\math\cpp\Vector3.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-common\math\cpp\AxisA.inl">
+    <None Include="..\src\magical-common\math\cpp\Vector4.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
     <None Include="..\src\magical-common\math\cpp\EulerA.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-common\math\cpp\AABB3.inl">
+    <None Include="..\src\magical-common\math\cpp\Quaternion.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-common\math\cpp\Plane3.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
-    <None Include="..\src\magical-common\math\cpp\Sphere3.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
-    <None Include="..\src\magical-common\math\cpp\Ray3.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
-    <None Include="..\src\magical-common\math\cpp\Ray2.inl">
-      <Filter>src\magical-common\math\cpp</Filter>
-    </None>
-    <None Include="..\src\magical-common\math\cpp\Line2.inl">
+    <None Include="..\src\magical-common\math\cpp\AxisR.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
   </ItemGroup>

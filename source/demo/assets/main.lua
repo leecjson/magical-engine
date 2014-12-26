@@ -6,31 +6,41 @@ function onCreate() --> void
     
 end
 
+function v( g )
+end
+
+function onCreate()
+
+end
+
+
+function onUpdate()
+
+end
+
+function 
+
+end
+
 function go()
 
-	q:fromEulerA( a );
+	local q = Quaternion:createIdentity();
+	local q2 = Quaternion:createAxisRotationX( 50 );
 
-	Quaternion:fromAxisA( AxisA( v, 30 ) );
+	local q3 = q * q2;
 
-	AABB3 aabb;
-	aabb.min.x;
-	aabb.min_x;
-	aabb.minx;
+	local ea = q3:toEulerA();
+	ea.yaw = 5;
+	ea.pitch = 4;
+	ea.roll = 2;
 
-	fillScalars( aabb.min.x, aabb.max.x )
+	q:getRotationAxis();
+	q:getRotationAngle();
 
-	aabb:getCenter();
+	local a = q:rotationAngle();
 
-	SgtLine line;
-	line:addChild( a );
-
-	SgtLine
-
-	straight line
-
-	StLine
-
-	StLine2 s;
+	local axis = q:GetrotationAxis();
+	local angle = q:rotationAngle();
 
 end
 

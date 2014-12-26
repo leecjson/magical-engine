@@ -32,32 +32,32 @@ SOFTWARE.
 #include "EulerA.inl"
 #include "MathMacros.h"
 
+const float EulerA::Epsilon = kEpsilonEulerA;
 const EulerA EulerA::Identity = EulerA( 0.0f, 0.0f, 0.0f );
+EulerA EulerA::var = EulerA::Identity;
 
-EulerA EulerA::placeholder = EulerA::Identity;
-EulerA EulerA::temp = EulerA::Identity;
-
-EulerA::EulerA( const float yaw, const float pitch, const float roll )
+EulerA::EulerA( float yaw, float pitch, float roll )
 {
-	magicalEulerAFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
+	this->yaw = yaw;
+	this->pitch = pitch;
+	this->roll = roll;
 }
 
 EulerA::EulerA( const EulerA& ea )
 {
-	magicalEulerAFill( tofpointer( this ), tofpointer( &ea ) );
+	yaw = ea.yaw;
+	pitch = ea.pitch;
+	roll = ea.roll;
 }
 
 EulerA::EulerA( void )
-: yaw( 0.0f )
-, pitch( 0.0f )
-, roll( 0.0f )
 {
-
+	magicalEulerASetIdentity( this );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<EulerA> s_eulera_cached_pool( 32, 32 );
+static CachedPool<EulerA> s_eulerag_cached_pool( 64, 64 );
 #endif
 
 void* EulerA::operator new( size_t s )
@@ -66,7 +66,7 @@ void* EulerA::operator new( size_t s )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_eulera_cached_pool.take();
+	return s_eulerag_cached_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -78,7 +78,7 @@ void EulerA::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_eulera_cached_pool.push( ptr );
+	s_eulerag_cached_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif

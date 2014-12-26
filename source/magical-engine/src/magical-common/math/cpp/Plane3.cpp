@@ -42,7 +42,7 @@ const Plane3 Plane3::NormalZ = Plane3( 0.0f, 0.0f, 1.0f, 0.0f );
 Plane3 Plane3::placeholder = Plane3::Zero;
 Plane3 Plane3::temp = Plane3::Zero;
 
-Plane3::Plane3( const float x, const float y, const float z, const float d )
+Plane3::Plane3( float x, float y, float z, float d )
 {
 	magicalPlane3FillScalars( tofpointer( this ), x, y, z, d );
 }

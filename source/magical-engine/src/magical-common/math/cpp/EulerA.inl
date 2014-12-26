@@ -22,93 +22,61 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline EulerA EulerA::fromIdentity( void )
+inline EulerA EulerA::createIdentity( void )
 {
 	return EulerA::Identity;
 }
 
-inline EulerA EulerA::fromMatrix4( const Matrix4& m )
+inline EulerA EulerA::createFromQuaternion( const Quaternion& q )
 {
 	EulerA ret;
-	magicalEulerAFromMatrix4( tofpointer( &ret ), tofpointer( &m ) );
-	return ret;
-}
-
-inline EulerA EulerA::fromQuaternion( const Quaternion& q )
-{
-	EulerA ret;
-	magicalEulerAFromQuaternion( tofpointer( &ret ), tofpointer( &q ) );
+	magicalEulerAFromQuaternion( &ret, &q );
 	return ret;
 }
 
 inline void EulerA::add( EulerA& out, const EulerA& ea1, const EulerA& ea2 )
 {
-	magicalEulerAAdd( tofpointer( &out ), tofpointer( &ea1 ), tofpointer( &ea2 ) );
+	magicalEulerAAdd( &out, &ea1, &ea2 );
 }
 
 inline void EulerA::sub( EulerA& out, const EulerA& ea1, const EulerA& ea2 )
 {
-	magicalEulerASub( tofpointer( &out ), tofpointer( &ea1 ), tofpointer( &ea2 ) );
+	magicalEulerASub( &out, &ea1, &ea2 );
 }
 
-inline void EulerA::mulScalar( EulerA& out, const EulerA& ea, const float a )
+inline void EulerA::mulScalar( EulerA& out, const EulerA& ea, float a )
 {
-	magicalEulerAMulScalar( tofpointer( &out ), tofpointer( &ea ), a );
+	magicalEulerAMulScalar( &out, &ea, a );
 }
 
 inline void EulerA::mul( EulerA& out, const EulerA& ea1, const EulerA& ea2 )
 {
-	magicalEulerAMul( tofpointer( &out ), tofpointer( &ea1 ), tofpointer( &ea2 ) );
+	magicalEulerAMul( &out, &ea1, &ea2 );
 }
 
-inline void EulerA::corrects( EulerA& out, const EulerA& ea )
+inline void EulerA::limit( EulerA& out, const EulerA& ea )
 {
-	magicalEulerACorrects( tofpointer( &out ), tofpointer( &ea ) );
+	magicalEulerALimit( &out, &ea );
 }
 
 inline bool EulerA::equals( const EulerA& ea ) const
 {
-	return magicalEulerAEqulas( tofpointer( this ), tofpointer( &ea ) );
+	return magicalEulerAEqulas( this, &ea );
 }
 
 inline bool EulerA::isIdentity( void ) const
 {
-	return magicalEulerAIsIdentity( tofpointer( this ) );
-}
-
-inline void EulerA::fill( const EulerA& ea )
-{
-	magicalEulerAFill( tofpointer( this ), tofpointer( &ea ) );
-}
-
-inline void EulerA::fillScalars( const float yaw, const float pitch, const float roll )
-{
-	magicalEulerAFillYawPitchRoll( tofpointer( this ), yaw, pitch, roll );
-}
-
-inline void EulerA::fillIdentity( void )
-{
-	magicalEulerAFillIdentity( tofpointer( this ) );
-}
-
-inline void EulerA::fillMatrix4( const Matrix4& m )
-{
-	magicalEulerAFromMatrix4( tofpointer( this ), tofpointer( &m ) );
-}
-
-inline void EulerA::fillQuaternion( const Quaternion& q )
-{
-	magicalEulerAFromQuaternion( tofpointer( this ), tofpointer( &q ) );
+	return magicalEulerAIsIdentity( this );
 }
 
 inline bool EulerA::operator==( const EulerA& ea ) const
 {
-	return magicalEulerAEqulas( tofpointer( this ), tofpointer( &ea ) );
+	return magicalEulerAEqulas( this, &ea );
 }
 
 inline bool EulerA::operator!=( const EulerA& ea ) const
 {
-	return !magicalEulerAEqulas( tofpointer( this ), tofpointer( &ea ) );
+	return !magicalEulerAEqulas( this, &ea );
 }
 
 inline EulerA EulerA::operator+( const EulerA& ea ) const
@@ -126,7 +94,7 @@ inline EulerA EulerA::operator*( const EulerA& ea ) const
 	return EulerA( yaw * ea.yaw, pitch * ea.pitch, roll * ea.roll );
 }
 
-inline EulerA EulerA::operator*( const float a ) const
+inline EulerA EulerA::operator*( float a ) const
 {
 	return EulerA( yaw * a, pitch * a, roll * a );
 }
@@ -149,7 +117,7 @@ inline EulerA& EulerA::operator*=( const EulerA& ea )
 	return *this;
 }
 
-inline EulerA& EulerA::operator*=( const float a )
+inline EulerA& EulerA::operator*=( float a )
 {
 	yaw *= a; pitch *= a; roll *= a;
 	return *this;
@@ -157,18 +125,45 @@ inline EulerA& EulerA::operator*=( const float a )
 
 inline EulerA& EulerA::operator=( const EulerA& ea )
 {
-	magicalEulerAFill( tofpointer( this ), tofpointer( &ea ) );
+	yaw = ea.yaw; pitch = ea.pitch; roll = ea.roll;
 	return *this;
 }
 
-inline void EulerA::corrects( void )
+inline void EulerA::set( const EulerA& ea )
 {
-	magicalEulerACorrects( tofpointer( this ), tofpointer( this ) );
+	yaw = ea.yaw; pitch = ea.pitch; roll = ea.roll;
 }
 
-inline EulerA EulerA::getCorrected( void ) const
+inline void EulerA::setIdentity( void )
+{
+	magicalEulerASetIdentity( this );
+}
+
+inline void EulerA::setScalars( float yaw, float pitch, float roll )
+{
+	magicalEulerAFill( this, yaw, pitch, roll );
+}
+
+inline void EulerA::setQuaternion( const Quaternion& q )
+{
+	magicalEulerAFromQuaternion( this, &q );
+}
+
+inline void EulerA::limit( void )
+{
+	magicalEulerALimit( this, this );
+}
+
+inline EulerA EulerA::getLimited( void ) const
 {
 	EulerA ret;
-	magicalEulerACorrects( tofpointer( &ret ), tofpointer( this ) );
+	magicalEulerALimit( &ret, this );
+	return ret;
+}
+
+inline Quaternion EulerA::toQuaternion( void ) const
+{
+	Quaternion ret;
+	magicalEulerAToQuaternion( &ret, this );
 	return ret;
 }

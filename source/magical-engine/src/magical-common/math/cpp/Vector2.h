@@ -24,103 +24,97 @@ SOFTWARE.
 #ifndef __VECTOR2_H__
 #define __VECTOR2_H__
 
-class Vector3;
-class Vector4;
+struct Vector3;
+struct Vector4;
 
-class Vector2
+struct Vector2 : public cVector2
 {
 public:
-	float x;
-	float y;
-
-public:
+	static const float Epsilon;
 	static const Vector2 Zero;
 	static const Vector2 One;
 	static const Vector2 Right;
 	static const Vector2 Left;
 	static const Vector2 Up;
 	static const Vector2 Down;
-	static Vector2 placeholder;
-	static Vector2 temp;
+	static Vector2 var;
 
 public:
-	Vector2( const float x, const float y );
+	Vector2( float x, float y );
 	Vector2( const Vector2& v );
 	Vector2( void );
-
+	
 public:
-	static inline Vector2 fromZero( void );
-	static inline Vector2 fromOne( void );
-	static inline Vector2 fromVector3( const Vector3& v );
-	static inline Vector2 fromVector4( const Vector4& v );
+	static inline Vector2 createZero( void );
+	static inline Vector2 createOne( void );
+	static inline Vector2 createFromVector3( const Vector3& v );
+	static inline Vector2 createFromVector4( const Vector4& v );
 
-	static inline void addScalar( Vector2& out, const Vector2& v, const float a );
+	static inline void addScalar( Vector2& out, const Vector2& v, float a );
 	static inline void add( Vector2& out, const Vector2& v1, const Vector2& v2 );
-	static inline void subScalar( Vector2& out, const Vector2& v, const float a );
+	static inline void subScalar( Vector2& out, const Vector2& v, float a );
 	static inline void sub( Vector2& out, const Vector2& v1, const Vector2& v2 );
-	static inline void mulScalar( Vector2& out, const Vector2& v, const float a );
+	static inline void mulScalar( Vector2& out, const Vector2& v, float a );
 	static inline void mul( Vector2& out, const Vector2& v1, const Vector2& v2 );
-	static inline void divScalar( Vector2& out, const Vector2& v, const float a );
+	static inline void divScalar( Vector2& out, const Vector2& v, float a );
 	static inline void div( Vector2& out, const Vector2& v1, const Vector2& v2 );
-
 	static inline void clamp( Vector2& out, const Vector2& v, const Vector2& min, const Vector2& max );
 	static inline void negate( Vector2& out, const Vector2& v );
 	static inline void normalize( Vector2& out, const Vector2& v );
-	static inline void rotate( Vector2& out, const Vector2& v, const float angle );
-	static inline void scale( Vector2& out, const Vector2& v, const float s );
+	static inline void rotate( Vector2& out, const Vector2& v, float angle );
+	static inline void scale( Vector2& out, const Vector2& v, float s );
 	static inline void midPointBetween( Vector2& out, const Vector2& v1, const Vector2& v2 );
 	static inline void project( Vector2& out, const Vector2& v, const Vector2& n );
 
 public:
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
 	inline bool equals( const Vector2& v ) const;
 	inline bool isZero( void ) const;
 	inline bool isOne( void ) const;
 	inline bool isNormalized( void ) const;
-	inline void fill( const Vector2& v );
-	inline void fillZero( void );
-	inline void fillOne( void );
-	inline void fillScalars( const float x, const float y );
-	inline void fillVector3( const Vector3& v );
-	inline void fillVector4( const Vector3& v );
-
-public:
-	static void* operator new( size_t s );
-	static void operator delete( void* ptr );
 	inline bool operator==( const Vector2& v ) const;
 	inline bool operator!=( const Vector2& v ) const;
 	inline float operator[]( const unsigned int i ) const;
 	inline Vector2 operator+( void ) const;
-	inline Vector2 operator+( const float a ) const;
+	inline Vector2 operator+( float a ) const;
 	inline Vector2 operator+( const Vector2& v ) const;
 	inline Vector2 operator-( void ) const;
-	inline Vector2 operator-( const float a ) const;
+	inline Vector2 operator-( float a ) const;
 	inline Vector2 operator-( const Vector2& v ) const;
-	inline Vector2 operator*( const float a ) const;
+	inline Vector2 operator*( float a ) const;
 	inline Vector2 operator*( const Vector2& v ) const;
-	inline Vector2 operator/( const float a ) const;
+	inline Vector2 operator/( float a ) const;
 	inline Vector2 operator/( const Vector2& v ) const;
-	inline Vector2& operator+=( const float a );
+	inline Vector2& operator+=( float a );
 	inline Vector2& operator+=( const Vector2& v );
-	inline Vector2& operator-=( const float a );
+	inline Vector2& operator-=( float a );
 	inline Vector2& operator-=( const Vector2& v );
-	inline Vector2& operator*=( const float a );
+	inline Vector2& operator*=( float a );
 	inline Vector2& operator*=( const Vector2& v );
-	inline Vector2& operator/=( const float a );
+	inline Vector2& operator/=( float a );
 	inline Vector2& operator/=( const Vector2& v );
 	inline Vector2& operator=( const Vector2& v );
+
+public:
+	inline void set( const Vector2& v );
+	inline void setZero( void );
+	inline void setOne( void );
+	inline void setScalars( float x, float y );
+	inline void setVector3( const Vector3& v );
+	inline void setVector4( const Vector3& v );
 
 public:
 	inline void clamp( const Vector2& min, const Vector2& max );
 	inline void negate( void );
 	inline void normalize( void );
-	inline void rotate( const float angle );
-	inline void scale( const float s );
+	inline void rotate( float angle );
+	inline void scale( float s );
 	inline Vector2 getClamped( const Vector2& min, const Vector2& max ) const;
 	inline Vector2 getNegated( void ) const;
 	inline Vector2 getNormalized( void ) const;
-	inline Vector2 getRotated( const float angle ) const;
-	inline Vector2 getScaled( const float s ) const;
-
+	inline Vector2 getRotated( float angle ) const;
+	inline Vector2 getScaled( float s ) const;
 	inline float dot( const Vector2& v ) const;
 	inline float cross( const Vector2& v ) const;
 	inline float distanceBetween( const Vector2& v ) const;

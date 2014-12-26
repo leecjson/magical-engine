@@ -22,49 +22,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector3.h"
-#include "../c/cMatrix4.h"
-#include "../c/cAxisA.h"
+#include "../c/cAxisR.h"
 #include "../c/cEulerA.h"
 #include "../c/cQuaternion.h"
 #include "Vector3.h"
-#include "Matrix4.h"
-#include "AxisA.h"
+#include "AxisR.h"
 #include "EulerA.h"
 #include "Quaternion.h"
 #include "Quaternion.inl"
 #include "MathMacros.h"
 
+const float Quaternion::Epsilon = kEpsilonQuaternion;
 const Quaternion Quaternion::Identity = Quaternion( 0.0f, 0.0f, 0.0f, 1.0f );
 const Quaternion Quaternion::Zero = Quaternion( 0.0f, 0.0f, 0.0f, 0.0f );
+Quaternion Quaternion::var = Quaternion::Identity;
 
-Quaternion Quaternion::placeholder = Quaternion::Identity;
-Quaternion Quaternion::temp = Quaternion::Identity;
-
-Quaternion::Quaternion( const float x, const float y, const float z, const float w )
-: x( x )
-, y( y )
-, z( z )
-, w( w )
+Quaternion::Quaternion( float x, float y, float z, float w )
 {
-
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
 }
 
 Quaternion::Quaternion( const Quaternion& q )
-: x( q.x )
-, y( q.y )
-, z( q.z )
-, w( q.w )
 {
-
+	x = q.x;
+	y = q.y;
+	z = q.z;
+	w = q.w;
 }
 
 Quaternion::Quaternion( void )
-: x( 0.0f )
-, y( 0.0f )
-, z( 0.0f )
-, w( 1.0f )
 {
-
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
+	w = 1.0f;
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE

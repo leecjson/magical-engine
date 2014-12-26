@@ -24,112 +24,121 @@ SOFTWARE.
 #include "cVector2.h"
 #include "cMathMacros.h"
 
-cBool magicalVector2Equals( const cVector2 v1, const cVector2 v2 ) 
+cBool magicalVector2Equals( const cVector2* v1, const cVector2* v2 ) 
 {
-	return magicalAlmostEqual( v1 _x, v2 _x ) && magicalAlmostEqual( v1 _y, v2 _y );
+	return
+		magicalAlmostEqual( v1->x, v2->x, kEpsilonVector2 )
+		&&
+		magicalAlmostEqual( v1->y, v2->y, kEpsilonVector2 );
 }
 
-cBool magicalVector2IsZero( const cVector2 v )
+cBool magicalVector2IsZero( const cVector2* v )
 {
-	return magicalAlmostZero( v _x ) && magicalAlmostZero( v _y );
+	return
+		magicalAlmostZero( v->x, kEpsilonVector2 )
+		&&
+		magicalAlmostZero( v->y, kEpsilonVector2 );
 }
 
-cBool magicalVector2IsOne( const cVector2 v )
+cBool magicalVector2IsOne( const cVector2* v )
 {
-	return magicalAlmostEqual( v _x, 1.0f ) && magicalAlmostEqual( v _y, 1.0f );
+	return
+		magicalAlmostEqual( v->x, 1.0f, kEpsilonVector2 )
+		&&
+		magicalAlmostEqual( v->y, 1.0f, kEpsilonVector2 );
 }
 
-cBool magicalVector2IsNormalized( const cVector2 v )
+cBool magicalVector2IsNormalized( const cVector2* v )
 {
-	return magicalAlmostEqual( v _x * v _x + v _y * v _y, 1.0f );
+	return magicalAlmostEqual( v->x * v->x + v->y * v->y, 1.0f, kEpsilonVector2 );
 }
 
-void magicalVector2FillScalars( cVector2 out, const float x, const float y )
+void magicalVector2Fill( cVector2* out, float x, float y )
 {
-	out _x = x;
-	out _y = y;
+	out->x = x;
+	out->y = y;
 }
 
-void magicalVector2FillZero( cVector2 out )
+void magicalVector2Copy( cVector2* out, const cVector2* v )
 {
-	out _x = 0.0f;
-	out _y = 0.0f;
+	out->x = v->x;
+	out->y = v->y;
 }
 
-void magicalVector2FillOne( cVector2 out )
+void magicalVector2SetZero( cVector2* out )
 {
-	out _x = 1.0f;
-	out _y = 1.0f;
+	out->x = 0.0f;
+	out->y = 0.0f;
 }
 
-void magicalVector2Fill( cVector2 out, const cVector2 v )
+void magicalVector2SetOne( cVector2* out )
 {
-	out _x = v _x;
-	out _y = v _y;
+	out->x = 1.0f;
+	out->y = 1.0f;
 }
 
-void magicalVector2FromVector3( cVector2 out, const cVector3 v )
+void magicalVector2FromVector3( cVector2* out, const cVector3* v )
 {
-	out _x = v _x;
-	out _y = v _y;
+	out->x = v->x;
+	out->y = v->y;
 }
 
-void magicalVector2FromVector4( cVector2 out, const cVector4 v )
+void magicalVector2FromVector4( cVector2* out, const cVector4* v )
 {
-	out _x = v _x;
-	out _y = v _y;
+	out->x = v->x;
+	out->y = v->y;
 }
 
-void magicalVector2AddScalar( cVector2 out, const cVector2 v, const float a )
+void magicalVector2AddScalar( cVector2* out, const cVector2* v, float a )
 {
-	out _x = v _x + a;
-	out _y = v _y + a;
+	out->x = v->x + a;
+	out->y = v->y + a;
 }
 
-void magicalVector2Add( cVector2 out, const cVector2 v1, const cVector2 v2 )
+void magicalVector2Add( cVector2* out, const cVector2* v1, const cVector2* v2 )
 {
-	out _x = v1 _x + v2 _x;
-	out _y = v1 _y + v2 _y;
+	out->x = v1->x + v2->x;
+	out->y = v1->y + v2->y;
 }
 
-void magicalVector2SubScalar( cVector2 out, const cVector2 v, const float a )
+void magicalVector2SubScalar( cVector2* out, const cVector2* v, float a )
 {
-	out _x = v _x - a;
-	out _y = v _y - a;
+	out->x = v->x - a;
+	out->y = v->y - a;
 }
 
-void magicalVector2Sub( cVector2 out, const cVector2 v1, const cVector2 v2 )
+void magicalVector2Sub( cVector2* out, const cVector2* v1, const cVector2* v2 )
 {
-	out _x = v1 _x - v2 _x;
-	out _y = v1 _y - v2 _y;
+	out->x = v1->x - v2->x;
+	out->y = v1->y - v2->y;
 }
 
-void magicalVector2MulScalar( cVector2 out, const cVector2 v, const float a )
+void magicalVector2MulScalar( cVector2* out, const cVector2* v, float a )
 {
-	out _x = v _x * a;
-	out _y = v _y * a;
+	out->x = v->x * a;
+	out->y = v->y * a;
 }
 
-void magicalVector2Mul( cVector2 out, const cVector2 v1, const cVector2 v2 )
+void magicalVector2Mul( cVector2* out, const cVector2* v1, const cVector2* v2 )
 {
-	out _x = v1 _x * v2 _x;
-	out _y = v1 _y * v2 _y;
+	out->x = v1->x * v2->x;
+	out->y = v1->y * v2->y;
 }
 
-void magicalVector2DivScalar( cVector2 out, const cVector2 v, const float a )
+void magicalVector2DivScalar( cVector2* out, const cVector2* v, float a )
 {
-	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a, kEpsilonVector2 ), "division by 0.f" );
 
-	out _x = v _x / a;
-	out _y = v _y / a;
+	out->x = v->x / a;
+	out->y = v->y / a;
 }
 
-void magicalVector2Div( cVector2 out, const cVector2 v1, const cVector2 v2 )
+void magicalVector2Div( cVector2* out, const cVector2* v1, const cVector2* v2 )
 {
-	debugassert( !magicalAlmostZero( v2 _x ) && !magicalAlmostZero( v2 _y ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( v2->x, kEpsilonVector2 ) && !magicalAlmostZero( v2->y, kEpsilonVector2 ), "division by 0.f" );
 
-	out _x = v1 _x / v2 _x;
-	out _y = v1 _y / v2 _y;
+	out->x = v1->x / v2->x;
+	out->y = v1->y / v2->y;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -149,14 +158,14 @@ void magicalVector2Div( cVector2 out, const cVector2 v1, const cVector2 v2 )
  *        = 0 两向量垂直
  *        < 0 两向量接近相反方向
  *-----------------------------------------------------------------------------*/
-float magicalVector2Dot( const cVector2 v1, const cVector2 v2 )
+float magicalVector2Dot( const cVector2* v1, const cVector2* v2 )
 {
-	return v1 _x * v2 _x + v1 _y * v2 _y;
+	return v1->x * v2->x + v1->y * v2->y;
 }
 
-float magicalVector2Cross( const cVector2 v1, const cVector2 v2 )
+float magicalVector2Cross( const cVector2* v1, const cVector2* v2 )
 {
-	return v1 _x * v2 _y - v1 _y * v2 _x;
+	return v1->x * v2->y - v1->y * v2->x;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -169,10 +178,10 @@ float magicalVector2Cross( const cVector2 v1, const cVector2 v2 )
  * v2 向量2
  * return 距离>= 0 当距离=0时 两点在同一位置，或者说两向量大小相同
  *-----------------------------------------------------------------------------*/
-float magicalVector2DistanceBetween( const cVector2 v1, const cVector2 v2 )
+float magicalVector2DistanceBetween( const cVector2* v1, const cVector2* v2 )
 {
-	float dx = v2 _x - v1 _x;
-	float dy = v2 _y - v1 _y;
+	float dx = v2->x - v1->x;
+	float dy = v2->y - v1->y;
 
 	return sqrtf( dx * dx + dy * dy );
 }
@@ -185,10 +194,10 @@ float magicalVector2DistanceBetween( const cVector2 v1, const cVector2 v2 )
  * return v1到v2的距离 >= 0 
  *        = 0时 两点在同一位置，或者说两向量大小相同
  *-----------------------------------------------------------------------------*/
-float magicalVector2DistanceBetweenSq( const cVector2 v1, const cVector2 v2 )
+float magicalVector2DistanceBetweenSq( const cVector2* v1, const cVector2* v2 )
 {
-	float dx = v2 _x - v1 _x;
-	float dy = v2 _y - v1 _y;
+	float dx = v2->x - v1->x;
+	float dy = v2->y - v1->y;
 
 	return dx * dx + dy * dy;
 }
@@ -203,9 +212,9 @@ float magicalVector2DistanceBetweenSq( const cVector2 v1, const cVector2 v2 )
  *        = 0 零向量
  *        = 1 标准化(单位)向量
  *-----------------------------------------------------------------------------*/
-float magicalVector2Length( const cVector2 v )
+float magicalVector2Length( const cVector2* v )
 {
-	return sqrtf( v _x * v _x + v _y * v _y );
+	return sqrtf( v->x * v->x + v->y * v->y );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -216,9 +225,9 @@ float magicalVector2Length( const cVector2 v )
  *         = 0 零向量
  *         = 1 标准化(单位)向量
  *-----------------------------------------------------------------------------*/
-float magicalVector2LengthSq( const cVector2 v )
+float magicalVector2LengthSq( const cVector2* v )
 {
-	return v _x * v _x + v _y * v _y;
+	return v->x * v->x + v->y * v->y;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -234,7 +243,7 @@ float magicalVector2LengthSq( const cVector2 v )
  * return 夹角弧度 >=0 and <= PI
  *        = 0 两向量方向一致
  *-----------------------------------------------------------------------------*/
-float magicalVector2AngleBetween( const cVector2 v1, const cVector2 v2 )
+float magicalVector2AngleBetween( const cVector2* v1, const cVector2* v2 )
 {
 	debugassert( !magicalVector2IsZero( v1 ) && !magicalVector2IsZero( v2 ), "invaild operate!" );
 
@@ -249,17 +258,17 @@ float magicalVector2AngleBetween( const cVector2 v1, const cVector2 v2 )
  * min 小值
  * max 大值
  *-----------------------------------------------------------------------------*/
-void magicalVector2Clamp( cVector2 out, const cVector2 v, const cVector2 min, const cVector2 max )
+void magicalVector2Clamp( cVector2* out, const cVector2* v, const cVector2* min, const cVector2* max )
 {
-	debugassert( min _x <= max _x && min _y <= max _y, "invaild operate!" );
+	debugassert( min->x <= max->x && min->y <= max->y, "invaild operate!" );
 
-	out _x = v _x;
-	out _y = v _y;
+	out->x = v->x;
+	out->y = v->y;
 
-	if( out _x < min _x ) out _x = min _x;
-	if( out _x > max _x ) out _x = max _x;
-	if( out _y < min _y ) out _y = min _y;
-	if( out _y > max _y ) out _y = max _y;
+	if( out->x < min->x ) out->x = min->x;
+	if( out->x > max->x ) out->x = max->x;
+	if( out->y < min->y ) out->y = min->y;
+	if( out->y > max->y ) out->y = max->y;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -268,10 +277,10 @@ void magicalVector2Clamp( cVector2 out, const cVector2 v, const cVector2 min, co
  * out 结果 v = -v
  * v 源向量
  *-----------------------------------------------------------------------------*/
-void magicalVector2Negate( cVector2 out, const cVector2 v )
+void magicalVector2Negate( cVector2* out, const cVector2* v )
 {
-	out _x = -v _x;
-	out _y = -v _y;
+	out->x = -v->x;
+	out->y = -v->y;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -284,22 +293,22 @@ void magicalVector2Negate( cVector2 out, const cVector2 v )
  * out 结果 out = normalize(v)
  * v 源向量
  *-----------------------------------------------------------------------------*/
-void magicalVector2Normalize( cVector2 out, const cVector2 v )
+void magicalVector2Normalize( cVector2* out, const cVector2* v )
 {
-	out _x = v _x;
-	out _y = v _y;
+	out->x = v->x;
+	out->y = v->y;
 
-	float n = v _x * v _x + v _y * v _y;
-	if( magicalAlmostEqual( n, 1.0f ) )
+	float n = v->x * v->x + v->y * v->y;
+	if( magicalAlmostEqual( n, 1.0f, kEpsilonVector2 ) )
 		return;
 
 	n = sqrtf( n );
-	if( magicalAlmostZero( n ) )
+	if( magicalAlmostZero( n, kEpsilonVector2 ) )
 		return;
 
 	n = 1.0f / n;
-	out _x *= n;
-	out _y *= n;
+	out->x *= n;
+	out->y *= n;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -313,18 +322,18 @@ void magicalVector2Normalize( cVector2 out, const cVector2 v )
  * v 源向量
  * angle 旋转的弧度
  *-----------------------------------------------------------------------------*/
-void magicalVector2Rotate( cVector2 out, const cVector2 v, const float angle )
+void magicalVector2Rotate( cVector2* out, const cVector2* v, float a )
 {
 	float rx, ry, s, c;
 
-	s = sinf( angle );
-	c = cosf( angle );
+	s = sinf( a );
+	c = cosf( a );
 
-	rx = v _x * c - v _y * s;
-	ry = v _x * s + v _y * c;
+	rx = v->x * c - v->y * s;
+	ry = v->x * s + v->y * c;
 
-	out _x = rx;
-	out _y = ry;
+	out->x = rx;
+	out->y = ry;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -334,10 +343,10 @@ void magicalVector2Rotate( cVector2 out, const cVector2 v, const float angle )
  * v 源向量
  * s 缩放系数
  *-----------------------------------------------------------------------------*/
-void magicalVector2Scale( cVector2 out, const cVector2 v, const float s )
+void magicalVector2Scale( cVector2* out, const cVector2* v, float s )
 {
-	out _x = v _x * s;
-	out _y = v _y * s;
+	out->x = v->x * s;
+	out->y = v->y * s;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -347,10 +356,10 @@ void magicalVector2Scale( cVector2 out, const cVector2 v, const float s )
  * v1 向量1
  * v2 向量2
  *-----------------------------------------------------------------------------*/
-void magicalVector2MidPointBetween( cVector2 out, const cVector2 v1, const cVector2 v2 )
+void magicalVector2MidPointBetween( cVector2* out, const cVector2* v1, const cVector2* v2 )
 {
-	out _x = ( v1 _x + v2 _x ) * 0.5f;
-	out _y = ( v1 _y + v2 _y ) * 0.5f;
+	out->x = ( v1->x + v2->x ) * 0.5f;
+	out->y = ( v1->y + v2->y ) * 0.5f;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -370,27 +379,27 @@ void magicalVector2MidPointBetween( cVector2 out, const cVector2 v1, const cVect
  * p 源向量
  * n 投影目标向量
  *-----------------------------------------------------------------------------*/
-void magicalVector2Project( cVector2 out, const cVector2 p, const cVector2 n )
+void magicalVector2Project( cVector2* out, const cVector2* p, const cVector2* n )
 {
 	float d;
 	cVector2 normalize;
 
 	debugassert( !magicalVector2IsZero( n ), "invaild operate!" );
 	
-	magicalVector2Normalize( normalize, n );
-	d = magicalVector2Dot( p, normalize );
+	magicalVector2Normalize( &normalize, n );
+	d = magicalVector2Dot( p, &normalize );
 
-	out _x = normalize _x * d;
-	out _y = normalize _y * d;
+	out->x = normalize.x * d;
+	out->y = normalize.y * d;
 
 	/*if( magicalVector2Equals( out_h, p ) )
 	{
-		out_v _x = 0.0f;
-		out_v _y = 0.0f;
+		out_v->x = 0.0f;
+		out_v->y = 0.0f;
 	}
 	else
 	{
-		out_v _x = p _x - out_h _x;
-		out_v _y = p _y - out_h _y;
+		out_v->x = p->x - out_h->x;
+		out_v->y = p->y - out_h->y;
 	}*/
 }

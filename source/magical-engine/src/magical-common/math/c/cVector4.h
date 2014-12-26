@@ -26,7 +26,14 @@ SOFTWARE.
 
 #include "cUtility.h"
 
-typedef float cVector4[4];
+#define kEpsilonVector4 1e-005f
+
+typedef struct cVector4 {
+	float x;
+	float y;
+	float z;
+	float w;
+} cVector4;
 
 #include "cVector2.h"
 #include "cVector3.h"
@@ -35,41 +42,41 @@ typedef float cVector4[4];
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBool magicalVector4Equals( const cVector4 v1, const cVector4 v2 );
-MAGICALAPI_MATH cBool magicalVector4IsZero( const cVector4 v );
-MAGICALAPI_MATH cBool magicalVector4IsOne( const cVector4 v );
-MAGICALAPI_MATH cBool magicalVector4IsNormalized( const cVector4 v );
+MAGICALAPI_MATH cBool magicalVector4Equals( const cVector4* v1, const cVector4* v2 );
+MAGICALAPI_MATH cBool magicalVector4IsZero( const cVector4* v );
+MAGICALAPI_MATH cBool magicalVector4IsOne( const cVector4* v );
+MAGICALAPI_MATH cBool magicalVector4IsNormalized( const cVector4* v );
 
-MAGICALAPI_MATH void magicalVector4FillScalars( cVector4 out, const float x, const float y, const float z, const float w );
-MAGICALAPI_MATH void magicalVector4FillZero( cVector4 out );
-MAGICALAPI_MATH void magicalVector4FillOne( cVector4 out );
-MAGICALAPI_MATH void magicalVector4Fill( cVector4 out, const cVector4 v );
+MAGICALAPI_MATH void magicalVector4Fill( cVector4* out, float x, float y, float z, float w );
+MAGICALAPI_MATH void magicalVector4Copy( cVector4* out, const cVector4* v );
+MAGICALAPI_MATH void magicalVector4SetZero( cVector4* out );
+MAGICALAPI_MATH void magicalVector4SetOne( cVector4* out );
 
-MAGICALAPI_MATH void magicalVector4FromVector2( cVector4 out, const cVector2 v );
-MAGICALAPI_MATH void magicalVector4FromVector3( cVector4 out, const cVector3 v );
+MAGICALAPI_MATH void magicalVector4FromVector2( cVector4* out, const cVector2* v );
+MAGICALAPI_MATH void magicalVector4FromVector3( cVector4* out, const cVector3* v );
 
-MAGICALAPI_MATH void magicalVector4AddScalar( cVector4 out, const cVector4 v, const float a );
-MAGICALAPI_MATH void magicalVector4Add( cVector4 out, const cVector4 v1, const cVector4 v2 );
-MAGICALAPI_MATH void magicalVector4SubScalar( cVector4 out, const cVector4 v, const float a );
-MAGICALAPI_MATH void magicalVector4Sub( cVector4 out, const cVector4 v1, const cVector4 v2 );
-MAGICALAPI_MATH void magicalVector4MulScalar( cVector4 out, const cVector4 v, const float a );
-MAGICALAPI_MATH void magicalVector4Mul( cVector4 out, const cVector4 v1, const cVector4 v2 );
-MAGICALAPI_MATH void magicalVector4DivScalar( cVector4 out, const cVector4 v, const float a );
-MAGICALAPI_MATH void magicalVector4Div( cVector4 out, const cVector4 v1, const cVector4 v2 );
+MAGICALAPI_MATH void magicalVector4AddScalar( cVector4* out, const cVector4* v, float a );
+MAGICALAPI_MATH void magicalVector4Add( cVector4* out, const cVector4* v1, const cVector4* v2 );
+MAGICALAPI_MATH void magicalVector4SubScalar( cVector4* out, const cVector4* v, float a );
+MAGICALAPI_MATH void magicalVector4Sub( cVector4* out, const cVector4* v1, const cVector4* v2 );
+MAGICALAPI_MATH void magicalVector4MulScalar( cVector4* out, const cVector4* v, float a );
+MAGICALAPI_MATH void magicalVector4Mul( cVector4* out, const cVector4* v1, const cVector4* v2 );
+MAGICALAPI_MATH void magicalVector4DivScalar( cVector4* out, const cVector4* v, float a );
+MAGICALAPI_MATH void magicalVector4Div( cVector4* out, const cVector4* v1, const cVector4* v2 );
 
-MAGICALAPI_MATH float magicalVector4Dot( const cVector4 v1, const cVector4 v2 );
-MAGICALAPI_MATH float magicalVector4DistanceBetween( const cVector4 v1, const cVector4 v2 );
-MAGICALAPI_MATH float magicalVector4DistanceBetweenSq( const cVector4 v1, const cVector4 v2 );
-MAGICALAPI_MATH float magicalVector4Length( const cVector4 v );
-MAGICALAPI_MATH float magicalVector4LengthSq( const cVector4 v );
-MAGICALAPI_MATH float magicalVector4AngleBetween( const cVector4 v1, const cVector4 v2 );
+MAGICALAPI_MATH float magicalVector4Dot( const cVector4* v1, const cVector4* v2 );
+MAGICALAPI_MATH float magicalVector4DistanceBetween( const cVector4* v1, const cVector4* v2 );
+MAGICALAPI_MATH float magicalVector4DistanceBetweenSq( const cVector4* v1, const cVector4* v2 );
+MAGICALAPI_MATH float magicalVector4Length( const cVector4* v );
+MAGICALAPI_MATH float magicalVector4LengthSq( const cVector4* v );
+MAGICALAPI_MATH float magicalVector4AngleBetween( const cVector4* v1, const cVector4* v2 );
 
-MAGICALAPI_MATH void magicalVector4Clamp( cVector4 out, const cVector4 v, const cVector4 min, const cVector4 max );
-MAGICALAPI_MATH void magicalVector4Negate( cVector4 out, const cVector4 v );
-MAGICALAPI_MATH void magicalVector4Normalize( cVector4 out, const cVector4 v );
-MAGICALAPI_MATH void magicalVector4Scale( cVector4 out, const cVector4 v, const float s );
-MAGICALAPI_MATH void magicalVector4MidPointBetween( cVector4 out, const cVector4 v1, const cVector4 v2 );
-MAGICALAPI_MATH void magicalVector4Project( cVector4 out, const cVector4 p, const cVector4 n );
+MAGICALAPI_MATH void magicalVector4Clamp( cVector4* out, const cVector4* v, const cVector4* min, const cVector4* max );
+MAGICALAPI_MATH void magicalVector4Negate( cVector4* out, const cVector4* v );
+MAGICALAPI_MATH void magicalVector4Normalize( cVector4* out, const cVector4* v );
+MAGICALAPI_MATH void magicalVector4Scale( cVector4* out, const cVector4* v, float s );
+MAGICALAPI_MATH void magicalVector4MidPointBetween( cVector4* out, const cVector4* v1, const cVector4* v2 );
+MAGICALAPI_MATH void magicalVector4Project( cVector4* out, const cVector4* p, const cVector4* n );
 
 #ifdef __cplusplus
 }

@@ -24,152 +24,152 @@ SOFTWARE.
 #include "cVector4.h"
 #include "cMathMacros.h"
 
-cBool magicalVector4Equals( const cVector4 v1, const cVector4 v2 )
+cBool magicalVector4Equals( const cVector4* v1, const cVector4* v2 )
 {
 	return
-		magicalAlmostEqual( v1 _x, v2 _x ) &&
-		magicalAlmostEqual( v1 _y, v2 _y ) &&
-		magicalAlmostEqual( v1 _z, v2 _z ) &&
-		magicalAlmostEqual( v1 _w, v2 _w );
+		magicalAlmostEqual( v1->x, v2->x, kEpsilonVector4 ) &&
+		magicalAlmostEqual( v1->y, v2->y, kEpsilonVector4 ) &&
+		magicalAlmostEqual( v1->z, v2->z, kEpsilonVector4 ) &&
+		magicalAlmostEqual( v1->w, v2->w, kEpsilonVector4 );
 }
 
-cBool magicalVector4IsZero( const cVector4 v )
+cBool magicalVector4IsZero( const cVector4* v )
 {
 	return
-		magicalAlmostZero( v _x ) &&
-		magicalAlmostZero( v _y ) &&
-		magicalAlmostZero( v _z ) &&
-		magicalAlmostZero( v _w );
+		magicalAlmostZero( v->x, kEpsilonVector4 ) &&
+		magicalAlmostZero( v->y, kEpsilonVector4 ) &&
+		magicalAlmostZero( v->z, kEpsilonVector4 ) &&
+		magicalAlmostZero( v->w, kEpsilonVector4 );
 }
 
-cBool magicalVector4IsOne( const cVector4 v )
+cBool magicalVector4IsOne( const cVector4* v )
 {
 	return
-		magicalAlmostEqual( v _x, 1.0f ) &&
-		magicalAlmostEqual( v _y, 1.0f ) &&
-		magicalAlmostEqual( v _z, 1.0f ) &&
-		magicalAlmostEqual( v _w, 1.0f );
+		magicalAlmostEqual( v->x, 1.0f, kEpsilonVector4 ) &&
+		magicalAlmostEqual( v->y, 1.0f, kEpsilonVector4 ) &&
+		magicalAlmostEqual( v->z, 1.0f, kEpsilonVector4 ) &&
+		magicalAlmostEqual( v->w, 1.0f, kEpsilonVector4 );
 }
 
-cBool magicalVector4IsNormalized( const cVector4 v )
+cBool magicalVector4IsNormalized( const cVector4* v )
 {
-	return magicalAlmostEqual( v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w, 1.0f );
+	return magicalAlmostEqual( v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w, 1.0f, kEpsilonVector4 );
 }
 
-void magicalVector4FillScalars( cVector4 out, const float x, const float y, const float z, const float w )
+void magicalVector4Fill( cVector4* out, float x, float y, float z, float w )
 {
-	out _x = x;
-	out _y = y;
-	out _z = z;
-	out _w = w;
+	out->x = x;
+	out->y = y;
+	out->z = z;
+	out->w = w;
 }
 
-void magicalVector4FillZero( cVector4 out )
+void magicalVector4Copy( cVector4* out, const cVector4* v )
 {
-	out _x = 0.0f;
-	out _y = 0.0f;
-	out _z = 0.0f;
-	out _w = 0.0f;
+	out->x = v->x;
+	out->y = v->y;
+	out->z = v->z;
+	out->w = v->w;
 }
 
-void magicalVector4FillOne( cVector4 out )
+void magicalVector4SetZero( cVector4* out )
 {
-	out _x = 1.0f;
-	out _y = 1.0f;
-	out _z = 1.0f;
-	out _w = 1.0f;
+	out->x = 0.0f;
+	out->y = 0.0f;
+	out->z = 0.0f;
+	out->w = 0.0f;
 }
 
-void magicalVector4Fill( cVector4 out, const cVector4 v )
+void magicalVector4SetOne( cVector4* out )
 {
-	out _x = v _x;
-	out _y = v _y;
-	out _z = v _z;
-	out _w = v _w;
+	out->x = 1.0f;
+	out->y = 1.0f;
+	out->z = 1.0f;
+	out->w = 1.0f;
 }
 
-void magicalVector4FromVector2( cVector4 out, const cVector2 v )
+void magicalVector4FromVector2( cVector4* out, const cVector2* v )
 {
-	out _x = v _x;
-	out _y = v _y;
-	out _z = 0.0f;
-	out _w = 0.0f;
+	out->x = v->x;
+	out->y = v->y;
+	out->z = 0.0f;
+	out->w = 0.0f;
 }
 
-void magicalVector4FromVector3( cVector4 out, const cVector3 v )
+void magicalVector4FromVector3( cVector4* out, const cVector3* v )
 {
-	out _x = v _x;
-	out _y = v _y;
-	out _z = v _z;
-	out _w = 0.0f;
+	out->x = v->x;
+	out->y = v->y;
+	out->z = v->z;
+	out->w = 0.0f;
 }
 
-void magicalVector4AddScalar( cVector4 out, const cVector4 v, const float a )
+void magicalVector4AddScalar( cVector4* out, const cVector4* v, float a )
 {
-	out _x = v _x + a;
-	out _y = v _y + a;
-	out _z = v _z + a;
-	out _w = v _w + a;
+	out->x = v->x + a;
+	out->y = v->y + a;
+	out->z = v->z + a;
+	out->w = v->w + a;
 }
 
-void magicalVector4Add( cVector4 out, const cVector4 v1, const cVector4 v2 )
+void magicalVector4Add( cVector4* out, const cVector4* v1, const cVector4* v2 )
 {
-	out _x = v1 _x + v2 _x;
-	out _y = v1 _y + v2 _y;
-	out _z = v1 _z + v2 _z;
-	out _w = v1 _w + v2 _w;
+	out->x = v1->x + v2->x;
+	out->y = v1->y + v2->y;
+	out->z = v1->z + v2->z;
+	out->w = v1->w + v2->w;
 }
 
-void magicalVector4SubScalar( cVector4 out, const cVector4 v, const float a )
+void magicalVector4SubScalar( cVector4* out, const cVector4* v, float a )
 {
-	out _x = v _x - a;
-	out _y = v _y - a;
-	out _z = v _z - a;
-	out _w = v _w - a;
+	out->x = v->x - a;
+	out->y = v->y - a;
+	out->z = v->z - a;
+	out->w = v->w - a;
 }
 
-void magicalVector4Sub( cVector4 out, const cVector4 v1, const cVector4 v2 )
+void magicalVector4Sub( cVector4* out, const cVector4* v1, const cVector4* v2 )
 {
-	out _x = v1 _x - v2 _x;
-	out _y = v1 _y - v2 _y;
-	out _z = v1 _z - v2 _z;
-	out _w = v1 _w - v2 _w;
+	out->x = v1->x - v2->x;
+	out->y = v1->y - v2->y;
+	out->z = v1->z - v2->z;
+	out->w = v1->w - v2->w;
 }
 
-void magicalVector4MulScalar( cVector4 out, const cVector4 v, const float a )
+void magicalVector4MulScalar( cVector4* out, const cVector4* v, float a )
 {
-	out _x = v _x * a;
-	out _y = v _y * a;
-	out _z = v _z * a;
-	out _w = v _w * a;
+	out->x = v->x * a;
+	out->y = v->y * a;
+	out->z = v->z * a;
+	out->w = v->w * a;
 }
 
-void magicalVector4Mul( cVector4 out, const cVector4 v1, const cVector4 v2 )
+void magicalVector4Mul( cVector4* out, const cVector4* v1, const cVector4* v2 )
 {
-	out _x = v1 _x * v2 _x;
-	out _y = v1 _y * v2 _y;
-	out _z = v1 _z * v2 _z;
-	out _w = v1 _w * v2 _w;
+	out->x = v1->x * v2->x;
+	out->y = v1->y * v2->y;
+	out->z = v1->z * v2->z;
+	out->w = v1->w * v2->w;
 }
 
-void magicalVector4DivScalar( cVector4 out, const cVector4 v, const float a )
+void magicalVector4DivScalar( cVector4* out, const cVector4* v, float a )
 {
-	debugassert( !magicalAlmostZero( a ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a, kEpsilonVector4 ), "division by 0.f" );
 
-	out _x = v _x / a;
-	out _y = v _y / a;
-	out _z = v _z / a;
-	out _w = v _w / a;
+	out->x = v->x / a;
+	out->y = v->y / a;
+	out->z = v->z / a;
+	out->w = v->w / a;
 }
 
-void magicalVector4Div( cVector4 out, const cVector4 v1, const cVector4 v2 )
+void magicalVector4Div( cVector4* out, const cVector4* v1, const cVector4* v2 )
 {
 	debugassert( !magicalVector4IsZero( v2 ), "division by 0.f" );
 
-	out _x = v1 _x / v2 _x;
-	out _y = v1 _y / v2 _y;
-	out _z = v1 _z / v2 _z;
-	out _w = v1 _w / v2 _w;
+	out->x = v1->x / v2->x;
+	out->y = v1->y / v2->y;
+	out->z = v1->z / v2->z;
+	out->w = v1->w / v2->w;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -189,9 +189,9 @@ void magicalVector4Div( cVector4 out, const cVector4 v1, const cVector4 v2 )
  *        = 0 两向量垂直
  *        < 0 两向量接近相反方向
  *-----------------------------------------------------------------------------*/
-float magicalVector4Dot( const cVector4 v1, const cVector4 v2 )
+float magicalVector4Dot( const cVector4* v1, const cVector4* v2 )
 {
-	return v1 _x * v2 _x + v1 _y * v2 _y + v1 _z * v2 _z + v1 _w * v2 _w;
+	return v1->x * v2->x + v1->y * v2->y + v1->z * v2->z + v1->w * v2->w;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -204,12 +204,12 @@ float magicalVector4Dot( const cVector4 v1, const cVector4 v2 )
  * v2 向量2
  * return 距离>= 0 当距离=0时 两点在同一位置，或者说两向量大小相同
  *-----------------------------------------------------------------------------*/
-float magicalVector4DistanceBetween( const cVector4 v1, const cVector4 v2 )
+float magicalVector4DistanceBetween( const cVector4* v1, const cVector4* v2 )
 {
-	float dx = v2 _x - v1 _x;
-	float dy = v2 _y - v1 _y;
-	float dz = v2 _z - v1 _z;
-	float dw = v2 _w - v1 _w;
+	float dx = v2->x - v1->x;
+	float dy = v2->y - v1->y;
+	float dz = v2->z - v1->z;
+	float dw = v2->w - v1->w;
 
 	return sqrtf( dx * dx + dy * dy + dz * dz + dw * dw );
 }
@@ -222,12 +222,12 @@ float magicalVector4DistanceBetween( const cVector4 v1, const cVector4 v2 )
  * return v1到v2的距离 >= 0 
  *        = 0时 两点在同一位置，或者说两向量大小相同
  *-----------------------------------------------------------------------------*/
-float magicalVector4DistanceBetweenSq( const cVector4 v1, const cVector4 v2 )
+float magicalVector4DistanceBetweenSq( const cVector4* v1, const cVector4* v2 )
 {
-	float dx = v2 _x - v1 _x;
-	float dy = v2 _y - v1 _y;
-	float dz = v2 _z - v1 _z;
-	float dw = v2 _w - v1 _w;
+	float dx = v2->x - v1->x;
+	float dy = v2->y - v1->y;
+	float dz = v2->z - v1->z;
+	float dw = v2->w - v1->w;
 
 	return dx * dx + dy * dy + dz * dz + dw * dw;
 }
@@ -242,9 +242,9 @@ float magicalVector4DistanceBetweenSq( const cVector4 v1, const cVector4 v2 )
  *        = 0 零向量
  *        = 1 标准化(单位)向量
  *-----------------------------------------------------------------------------*/
-float magicalVector4Length( const cVector4 v )
+float magicalVector4Length( const cVector4* v )
 {
-	return sqrtf( v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w );
+	return sqrtf( v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -255,9 +255,9 @@ float magicalVector4Length( const cVector4 v )
  *         = 0 零向量
  *         = 1 标准化(单位)向量
  *-----------------------------------------------------------------------------*/
-float magicalVector4LengthSq( const cVector4 v )
+float magicalVector4LengthSq( const cVector4* v )
 {
-	return v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w;
+	return v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -273,7 +273,7 @@ float magicalVector4LengthSq( const cVector4 v )
  * return 夹角弧度 >=0 and <= PI
  *        = 0 两向量方向一致
  *-----------------------------------------------------------------------------*/
-float magicalVector4AngleBetween( const cVector4 v1, const cVector4 v2 )
+float magicalVector4AngleBetween( const cVector4* v1, const cVector4* v2 )
 {
 	debugassert( !magicalVector4IsZero( v1 ) && !magicalVector4IsZero( v2 ), "invaild operate!" );
 
@@ -288,23 +288,23 @@ float magicalVector4AngleBetween( const cVector4 v1, const cVector4 v2 )
  * min 小值
  * max 大值
  *-----------------------------------------------------------------------------*/
-void magicalVector4Clamp( cVector4 out, const cVector4 v, const cVector4 min, const cVector4 max )
+void magicalVector4Clamp( cVector4* out, const cVector4* v, const cVector4* min, const cVector4* max )
 {
-	debugassert( min _x <= max _x && min _y <= max _y && min _z <= max _z && min _w <= max _w, "invaild operate!" );
+	debugassert( min->x <= max->x && min->y <= max->y && min->z <= max->z && min->w <= max->w, "invaild operate!" );
 
-	out _x = v _x;
-	out _y = v _y;
-	out _z = v _z;
-	out _w = v _w;
+	out->x = v->x;
+	out->y = v->y;
+	out->z = v->z;
+	out->w = v->w;
 
-	if( out _x < min _x ) out _x = min _x;
-	if( out _x > max _x ) out _x = max _x;
-	if( out _y < min _y ) out _y = min _y;
-	if( out _y > max _y ) out _y = max _y;
-	if( out _z < min _z ) out _z = min _z;
-	if( out _z > max _z ) out _z = max _z;
-	if( out _w < min _w ) out _w = min _w;
-	if( out _w > max _w ) out _w = max _w;
+	if( out->x < min->x ) out->x = min->x;
+	if( out->x > max->x ) out->x = max->x;
+	if( out->y < min->y ) out->y = min->y;
+	if( out->y > max->y ) out->y = max->y;
+	if( out->z < min->z ) out->z = min->z;
+	if( out->z > max->z ) out->z = max->z;
+	if( out->w < min->w ) out->w = min->w;
+	if( out->w > max->w ) out->w = max->w;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -313,12 +313,12 @@ void magicalVector4Clamp( cVector4 out, const cVector4 v, const cVector4 min, co
  * out 结果 v = -v
  * v 源向量
  *-----------------------------------------------------------------------------*/
-void magicalVector4Negate( cVector4 out, const cVector4 v )
+void magicalVector4Negate( cVector4* out, const cVector4* v )
 {
-	out _x = -v _x;
-	out _y = -v _y;
-	out _z = -v _z;
-	out _w = -v _w;
+	out->x = -v->x;
+	out->y = -v->y;
+	out->z = -v->z;
+	out->w = -v->w;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -331,26 +331,26 @@ void magicalVector4Negate( cVector4 out, const cVector4 v )
  * out 结果 out = normalize(v)
  * v 源向量
  *-----------------------------------------------------------------------------*/
-void magicalVector4Normalize( cVector4 out, const cVector4 v )
+void magicalVector4Normalize( cVector4* out, const cVector4* v )
 {
-	out _x = v _x;
-	out _y = v _y;
-	out _z = v _z;
-	out _w = v _w;
+	out->x = v->x;
+	out->y = v->y;
+	out->z = v->z;
+	out->w = v->w;
 
-	float n = v _x * v _x + v _y * v _y + v _z * v _z + v _w * v _w;
-	if( magicalAlmostEqual( n, 1.0f ) )
+	float n = v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
+	if( magicalAlmostEqual( n, 1.0f, kEpsilonVector4 ) )
 		return;
 
 	n = sqrtf( n );
-	if( magicalAlmostZero( n ) )
+	if( magicalAlmostZero( n, kEpsilonVector4 ) )
 		return;
 
 	n = 1.0f / n;
-	out _x *= n;
-	out _y *= n;
-	out _z *= n;
-	out _w *= n;
+	out->x *= n;
+	out->y *= n;
+	out->z *= n;
+	out->w *= n;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -360,12 +360,12 @@ void magicalVector4Normalize( cVector4 out, const cVector4 v )
  * v 源向量
  * s 缩放系数
  *-----------------------------------------------------------------------------*/
-void magicalVector4Scale( cVector4 out, const cVector4 v, const float s )
+void magicalVector4Scale( cVector4* out, const cVector4* v, float s )
 {
-	out _x = v _x * s;
-	out _y = v _y * s;
-	out _z = v _z * s;
-	out _w = v _w * s;
+	out->x = v->x * s;
+	out->y = v->y * s;
+	out->z = v->z * s;
+	out->w = v->w * s;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -375,12 +375,12 @@ void magicalVector4Scale( cVector4 out, const cVector4 v, const float s )
  * v1 向量1
  * v2 向量2
  *-----------------------------------------------------------------------------*/
-void magicalVector4MidPointBetween( cVector4 out, const cVector4 v1, const cVector4 v2 )
+void magicalVector4MidPointBetween( cVector4* out, const cVector4* v1, const cVector4* v2 )
 {
-	out _x = ( v1 _x + v2 _x ) * 0.5f;
-	out _y = ( v1 _y + v2 _y ) * 0.5f;
-	out _z = ( v1 _z + v2 _z ) * 0.5f;
-	out _w = ( v1 _w + v2 _w ) * 0.5f;
+	out->x = ( v1->x + v2->x ) * 0.5f;
+	out->y = ( v1->y + v2->y ) * 0.5f;
+	out->z = ( v1->z + v2->z ) * 0.5f;
+	out->w = ( v1->w + v2->w ) * 0.5f;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -400,18 +400,18 @@ void magicalVector4MidPointBetween( cVector4 out, const cVector4 v1, const cVect
  * p 源向量
  * n 投影目标向量
  *-----------------------------------------------------------------------------*/
-void magicalVector4Project( cVector4 out, const cVector4 p, const cVector4 n )
+void magicalVector4Project( cVector4* out, const cVector4* p, const cVector4* n )
 {
 	float d;
 	cVector4 normalize;
 
 	debugassert( !magicalVector4IsZero( n ), "invaild operate!" );
 	
-	magicalVector4Normalize( normalize, n );
-	d = magicalVector4Dot( p, normalize );
+	magicalVector4Normalize( &normalize, n );
+	d = magicalVector4Dot( p, &normalize );
 
-	out _x = normalize _x * d;
-	out _y = normalize _y * d;
-	out _z = normalize _z * d;
-	out _w = normalize _w * d;
+	out->x = normalize.x * d;
+	out->y = normalize.y * d;
+	out->z = normalize.z * d;
+	out->w = normalize.w * d;
 }

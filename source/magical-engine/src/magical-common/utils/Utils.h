@@ -46,8 +46,6 @@ class TimeUtils
 {
 public:
 	static int64_t currentMicrosecondsTime( void );
-	static void beginTicking( void );
-	static float endTicking( void );
 };
 
 class FileUtils

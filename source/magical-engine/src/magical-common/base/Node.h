@@ -27,10 +27,9 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "Transform.h"
+#include "magical-math.h"
 
-
-class Node : public Transform
+class Node : public Reference
 {
 public:
 	Node( void );
@@ -38,6 +37,31 @@ public:
 
 public:
 	static Shared<Node> create( void );
+
+public:
+	void setPosition( const Vector3& v );
+	void setPosition( const Vector2& v );
+	void setPosition( float x, float y, float z );
+
+	void setRotation( const Quaternion& q );
+
+private:
+	void transformChanged( int chg );
+
+private:
+	Matrix4 _local_to_world_matrix;
+	bool _has_changed = true;
+
+	Vector3 _position;
+	Quaternion _rotation;
+	Vector3 _scale;
+	
+	Vector3 _derived_position;
+	Quaternion _derived_rotation;
+	Vector3 _derived_scale;
+
+	bool _inherit_scale = true;
+	bool _inherit_rotation = true;
 };
 
 

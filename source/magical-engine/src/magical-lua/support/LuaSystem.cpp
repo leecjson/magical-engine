@@ -23,10 +23,12 @@ SOFTWARE.
 *******************************************************************************/
 #include "LuaSystem.h"
 
-static Shared<LuaState> s_lua_state;
+static LuaState* s_lua_state = nullptr;
 
 void Lua::init( void )
 {
+	s_lua_state = new LuaState();
+
 	s_lua_state = LuaState::create();
 }
 

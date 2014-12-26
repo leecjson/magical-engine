@@ -27,22 +27,22 @@ SOFTWARE.
 cBool magicalPlane3Equals( const cPlane3 p1, const cPlane3 p2 )
 {
 	return
-		magicalAlmostEqual( p1 _x, p2 _x ) &&
-		magicalAlmostEqual( p1 _y, p2 _y ) &&
-		magicalAlmostEqual( p1 _z, p2 _z ) &&
-		magicalAlmostEqual( p1 _d, p2 _d );
+		magicalAlmostEqual( p1 _x, p2 _x, kEpsilon ) &&
+		magicalAlmostEqual( p1 _y, p2 _y, kEpsilon ) &&
+		magicalAlmostEqual( p1 _z, p2 _z, kEpsilon ) &&
+		magicalAlmostEqual( p1 _d, p2 _d, kEpsilon );
 }
 
 cBool magicalPlane3IsZero( const cPlane3 p )
 {
 	return
-		magicalAlmostZero( p _x ) &&
-		magicalAlmostZero( p _y ) &&
-		magicalAlmostZero( p _z ) &&
-		magicalAlmostZero( p _d );
+		magicalAlmostZero( p _x, kEpsilon ) &&
+		magicalAlmostZero( p _y, kEpsilon ) &&
+		magicalAlmostZero( p _z, kEpsilon ) &&
+		magicalAlmostZero( p _d, kEpsilon );
 }
 
-void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const float z, const float d )
+void magicalPlane3SetScalars( cPlane3 out, float x, float y, float z, float d )
 {
 	out _x = x;
 	out _y = y;
@@ -59,7 +59,7 @@ void magicalPlane3FillScalars( cPlane3 out, const float x, const float y, const 
  * n 表面法向量
  * d 原点到平面的距离
  *-----------------------------------------------------------------------------*/
-void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVector3 n, const float d )
+void magicalPlane3SetNormalAndDistance( cPlane3 out, const cVector3 n, float d )
 {
 	out _x = n _x;
 	out _y = n _y;
@@ -78,7 +78,7 @@ void magicalPlane3FillNormalAndDistance( cPlane3 out, const cVector3 n, const fl
  * p 平面上任意一点
  * n 表面法向量
  *-----------------------------------------------------------------------------*/
-void magicalPlane3FillPointAndNormal( cPlane3 out, const cVector3 n, const cVector3 p )
+void magicalPlane3SetNormalAndPoint( cPlane3 out, const cVector3 n, const cVector3 p )
 {
 	cVector3 nn;
 	magicalVector3Normalize( nn, n );
@@ -102,7 +102,7 @@ void magicalPlane3FillPointAndNormal( cPlane3 out, const cVector3 n, const cVect
  * b 第二个点
  * c 第三个点
  *-----------------------------------------------------------------------------*/
-void magicalPlane3FillPoints( cPlane3 out, const cVector3 a, const cVector3 b, const cVector3 c )
+void magicalPlane3SetPoints( cPlane3 out, const cVector3 a, const cVector3 b, const cVector3 c )
 {
 	cVector3 n, e3, e1;
 	
@@ -126,7 +126,7 @@ void magicalPlane3FillPoints( cPlane3 out, const cVector3 a, const cVector3 b, c
 	out _d = a _x * n _x + a _y * n _y + a _z * n _z;
 }
 
-void magicalPlane3FillZero( cPlane3 out )
+void magicalPlane3SetZero( cPlane3 out )
 {
 	out _x = 0.0f;
 	out _y = 0.0f;
@@ -134,7 +134,7 @@ void magicalPlane3FillZero( cPlane3 out )
 	out _d = 0.0f;
 }
 
-void magicalPlane3Fill( cPlane3 out, const cPlane3 p )
+void magicalPlane3Set( cPlane3 out, const cPlane3 p )
 {
 	out _x = p _x;
 	out _y = p _y;
@@ -329,7 +329,7 @@ cBool magicalPlane3Intersects( const cPlane3 p1, const cPlane3 p2 )
 {
 	if( magicalVector3Equals( p1, p2 ) )
 	{
-		return magicalAlmostEqual( p1 _d, p2 _d );
+		return magicalAlmostEqual( p1 _d, p2 _d, kEpsilon );
 	}
 	else
 	{
@@ -361,14 +361,9 @@ cBool magicalPlane3IntersectsSphere3( const cPlane3 p, const cSphere3 sp )
 	return magicalPlane3ClassifySphere3( p, sp ) == 0;
 }
 
-cBool magicalPlane3IntersectsRay3( const cPlane3 p, const cRay3 r3, const cBool discard_inside )
+void magicalPlane3IntersectsRay3( cRayIntersectResult out, const cPlane3 p, const cRay3 r3, const cBool discard_inside )
 {
-	return magicalRay3IntersectsPlane3( r3, p, discard_inside );
-}
-
-cBool magicalPlane3IntersectsRay3Distance( float* dist, const cPlane3 p, const cRay3 r3, const cBool discard_inside )
-{
-	return magicalRay3IntersectsPlane3Distance( dist, r3, p, discard_inside );
+	magicalRay3IntersectsPlane3( out, r3, p, discard_inside );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -380,5 +375,5 @@ cBool magicalPlane3IntersectsRay3Distance( float* dist, const cPlane3 p, const c
  *-----------------------------------------------------------------------------*/
 cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVector3 point )
 {
-	return magicalAlmostZero( p _x * point _x + p _y * point _y + p _z * point _z - p _d );
+	return magicalAlmostZero( p _x * point _x + p _y * point _y + p _z * point _z - p _d, kEpsilon );
 }

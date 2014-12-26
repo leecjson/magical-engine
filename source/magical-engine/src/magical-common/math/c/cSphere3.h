@@ -41,18 +41,16 @@ MAGICALAPI_MATH cBool magicalSphere3Equals( const cSphere3 sp1, const cSphere3 s
 MAGICALAPI_MATH cBool magicalSphere3IsZero( const cSphere3 sp );
 MAGICALAPI_MATH cBool magicalSphere3IsOne( const cSphere3 sp );
 
-MAGICALAPI_MATH void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r );
-MAGICALAPI_MATH void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVector3 center, const float r );
-MAGICALAPI_MATH void magicalSphere3FillZero( cSphere3 out );
-MAGICALAPI_MATH void magicalSphere3FillOne( cSphere3 out );
-MAGICALAPI_MATH void magicalSphere3Fill( cSphere3 out, const cSphere3 sp );
+MAGICALAPI_MATH void magicalSphere3SetScalars( cSphere3 out, float x, float y, float z, float r );
+MAGICALAPI_MATH void magicalSphere3SetCenterAndRadius( cSphere3 out, const cVector3 center, float r );
+MAGICALAPI_MATH void magicalSphere3SetZero( cSphere3 out );
+MAGICALAPI_MATH void magicalSphere3SetOne( cSphere3 out );
+MAGICALAPI_MATH void magicalSphere3Set( cSphere3 out, const cSphere3 sp );
 
 MAGICALAPI_MATH cBool magicalSphere3Intersects( const cSphere3 sp1, const cSphere3 sp2 );
 MAGICALAPI_MATH cBool magicalSphere3IntersectsAABB3( const cSphere3 sp, const cAABB3 aabb );
 MAGICALAPI_MATH cBool magicalSphere3IntersectsPlane3( const cSphere3 sp, const cPlane3 p );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3( const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
-
-MAGICALAPI_MATH cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
+MAGICALAPI_MATH void magicalSphere3IntersectsRay3( cRayIntersectResult out, const cSphere3 sp, const cRay3 r3, const cBool discard_inside );
 
 MAGICALAPI_MATH cBool magicalSphere3ContainsPoint( const cSphere3 sp, const cVector3 point );
 

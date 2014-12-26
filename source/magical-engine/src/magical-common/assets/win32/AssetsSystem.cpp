@@ -22,14 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "AssetsSystem.h"
-
-#include <windows.h>
-
-#include "utils/Utils.h"
+#include "Utils.h"
 #include "Array.h"
 #include "Map.h"
 
-static std::string s_assets_path;
+#include <windows.h>
+
+std::string Assets::s_assets_path;
 
 void Assets::init( void )
 {
@@ -44,11 +43,11 @@ void Assets::delc( void )
 
 void Assets::resetAssetsPath( void )
 {
-	GetCurrentDirectoryA( kMaxBufferLength, magicalBuffer );
+	GetCurrentDirectoryA( kBufferLen, magicalBuffer );
 
 	if( strlen( magicalBuffer ) == 0 )
 	{
-		magicalSetLastErrorInfoAt( "result of GetCurrentDirectoryA is empty." );
+		magicalSetLastErrorInfoB( "result of GetCurrentDirectoryA is empty." );
 		magicalLogLastError();
 		return;
 	}
@@ -68,6 +67,7 @@ void Assets::setAssetsPath( const char* path )
 	{
 		unix_path += "/";
 	}
+
 	s_assets_path = unix_path;
 }
 
@@ -122,7 +122,7 @@ Shared<Data> Assets::getAssetsFileData( const char* file_name )
 	FILE* fp = fopen( abs_path.c_str(), "rb" );
 	if( fp == nullptr )
 	{
-		magicalSetLastErrorInfoAt( StringUtils::format<512>( "get assets file data failed! file(%s).", file_name ).c_str() );
+		magicalSetLastErrorInfoB( StringUtils::format<512>( "get assets file data failed! file(%s).", file_name ).c_str() );
 		magicalLogLastError();
 		return nullptr;
 	}

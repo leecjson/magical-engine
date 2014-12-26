@@ -47,15 +47,19 @@ c++ include
 #include "PlatformMacros.h"
 #include "LogSystem.h"
 
-/*
-general macros
-*/
-#define kMaxBufferLength 1024 * 100
+#define kBufferLen 1024 * 100
 
+/*
+buffer macros
+*/
 extern char g_buffer[];
+
 #define magicalBuffer g_buffer
 #define magicalFormat( __format, ... ) std::sprintf( magicalBuffer, __format, ##__VA_ARGS__ )
 
+/*
+func macros
+*/
 #define magicalSafeFree( __var ) do{ if( __var ) std::free( __var ); } while(0)
 #define magicalSafeFreeNull( __var ) do{ if( __var ) std::free( __var ); __var == nullptr; } while(0)
 #define magicalSafeDelete( __var ) do{ if( __var ) delete __var; } while(0)
@@ -67,33 +71,21 @@ extern char g_buffer[];
 #define magicalSafeReleaseNull( __var ) do{ if( __var ){ __var->release(); __var = nullptr; } } while(0)
 
 /*
-error
+error macros
 */
 MAGICALAPI bool magicalIsError( void );
 MAGICALAPI void magicalIgnoreLastError( void );
 MAGICALAPI void magicalSetLastErrorInfo( const char* info, const char* func = nullptr, int line = 0 );
-#define magicalSetLastErrorInfoAt( __info ) magicalSetLastErrorInfo( __info, __FUNCTION__, __LINE__ )
+#define magicalSetLastErrorInfoB( __info ) magicalSetLastErrorInfo( __info, __FUNCTION__, __LINE__ )
 MAGICALAPI const char* magicalGetLastErrorInfo( void );
-
+#define magicalShowLastError() do { if( magicalIsError() ) magicalMessageBox( magicalGetLastErrorInfo(), "Error" ); } while(0)
 #define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
 #define magicalReturnVarIfError( __var ) do{ if( magicalIsError() ) return __var; } while(0)
-#define magicalShowLastError() do { if( magicalIsError() ) magicalMessageBox( magicalGetLastErrorInfo(), "Error" ); } while(0)
-
-//#ifndef MAGICAL_DEBUG
-//#define magicalDebugReturnIfError()
-//#define magicalDebugReturnVarIfError( __var );
-//#define magicalDebugShowLastError()
-//#else
-//#define magicalDebugReturnIfError() magicalReturnIfError()
-//#define magicalDebugReturnVarIfError( __var ) magicalReturnVarIfError( __var )
-//#define magicalDebugShowLastError() magicalShowLastError()
-//#endif
 
 /*
-message box
+messagebox macros, multi-platform implement
 */
 MAGICALAPI void magicalMessageBox( const char* msg, const char* title );
-
 #ifndef MAGICAL_DEBUG
 #define magicalDebugMessageBox( __msg, __title )
 #else
@@ -101,12 +93,12 @@ MAGICALAPI void magicalMessageBox( const char* msg, const char* title );
 #endif
 
 /*
-assert function
+asserts macros
 */
 #ifdef MAGICAL_DEBUG
 #define magicalAssert( __con, __msg ) do{                     \
 	if( !( __con ) ) {                                        \
-		magicalSetLastErrorInfoAt( __msg );                   \
+		magicalSetLastErrorInfoB( __msg );                    \
 		magicalLogLastError();                                \
 		assert( ( __con ) && __msg );                         \
 	}                                                         \
@@ -116,93 +108,53 @@ assert function
 #endif
 
 /*
-time function
+timer macros
 */
-#ifndef MAGICAL_DEBUG
-#define magicalBeginTicking()
-#define magicalEndTicking()
-#else
-#define magicalBeginTicking() do {                                      \
-	magicalLog( "Begin Ticking : --------" );                           \
-	TimeUtils::beginTicking();                                          \
-	} while(0)                                                          
-#define magicalEndTicking() do {                                        \
-	magicalFormat( "Ended Ticking : %.6f", TimeUtils::endTicking() );   \
-	magicalLog( magicalBuffer );                                        \
-	} while(0)
-#endif
+MAGICALAPI_USER bool magicalIsTimerStarted( void );
+MAGICALAPI_USER void magicalStartTimer( void );
+MAGICALAPI_USER double magicalEndTimer( void );
 
 /*
-reference observer
+objects lift listener macros, only work on debug protocol
 */
-#ifdef MAGICAL_DEBUG
-extern bool g_is_observing;
-extern int g_observer_move_construct_count;
-extern int g_observer_copy_construct_count;
-extern int g_observer_construct_count;
-extern int g_observer_destruct_count;
-#endif
+#define kEngineObjectsListener 1
+#define kCustomObjectsListener 2
 
-#ifdef MAGICAL_DEBUG
-#define magicalBeginObserve() do {                                                                 \
-	if( g_is_observing ) break;                                                                    \
-	Log::D( "Begin Observe : ------------------------------------------------" );                  \
-	g_is_observing = true;                                                                         \
-	g_observer_construct_count = 0;                                                                \
-	g_observer_destruct_count  = 0;                                                                \
-	g_observer_move_construct_count = 0;                                                           \
-	g_observer_copy_construct_count = 0;                                                           \
-	} while(0)
-#define magicalEndObserve() do {                                                                   \
-	if(! g_is_observing ) break;                                                                   \
-	char __tmbf[256];                                                                              \
-	sprintf( __tmbf, "Ended Observe : "                                                            \
-	"Construct = %d Move = %d Copy = %d Destruct = %d",                                            \
-	g_observer_construct_count,                                                                    \
-	g_observer_move_construct_count,                                                               \
-	g_observer_copy_construct_count,                                                               \
-	g_observer_destruct_count );                                                                   \
-	g_is_observing = false;                                                                        \
-	Log::D( __tmbf );                                                                              \
-	} while(0)
-#define magicalRefConstruct() do {                                                                 \
-	if( g_is_observing ) ++ g_observer_construct_count;                                            \
-	} while(0)
-#define magicalRefMove() do {                                                                      \
-	if( g_is_observing ) ++ g_observer_move_construct_count;                                       \
-	} while(0)
-#define magicalRefCopy() do {                                                                      \
-	if( g_is_observing ) ++ g_observer_copy_construct_count;                                       \
-	} while(0)
-#define magicalRefDestruct() do {                                                                  \
-	if( g_is_observing ) ++ g_observer_destruct_count;                                             \
-	} while(0)
+#ifndef MAGICAL_DEBUG
+#define magicalStartObjectsListener( listener )
+#define magicalEndObjectsListener( listener )
+#define magicalIsObjectsListenerStarted( listener ) false
+#define magicalObjectConstruct()
+#define magicalObjectDestruct()
+#define magicalGetObjectsConstructCount( listener ) 0
+#define magicalGetObjectsDestructCount( listener ) 0
 #else
-#define magicalBeginObserve()
-#define magicalEndObserve()
-#define magicalRefConstruct()
-#define magicalRefMove()
-#define magicalRefCopy()
-#define magicalRefDestruct()
+MAGICALAPI void magicalStartObjectsListener( int listener );
+MAGICALAPI void magicalEndObjectsListener( int listener );
+MAGICALAPI bool magicalIsObjectsListenerStarted( int listener );
+MAGICALAPI void magicalObjectConstruct( void );
+MAGICALAPI void magicalObjectDestruct( void );
+MAGICALAPI int magicalGetObjectsConstructCount( int listener );
+MAGICALAPI int magicalGetObjectsDestructCount( int listener );
 #endif
 
-struct Color4F
-{
-public:
-	float r;
-	float g;
-	float b;
-	float a;
-};
-
-struct Color4B
-{
-public:
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
-	uint8_t a;
-};
+//struct Color4F
+//{
+//public:
+//	float r;
+//	float g;
+//	float b;
+//	float a;
+//};
+//
+//struct Color4B
+//{
+//public:
+//	uint8_t r;
+//	uint8_t g;
+//	uint8_t b;
+//	uint8_t a;
+//};
 
 //Color kColorRed = { 1.0f, 0.0f, 0.0f, 1.0f };                   // 红
 //Color kColorGreen = { 0.0f, 1.0f, 0.0f, 1.0f };                 // 绿

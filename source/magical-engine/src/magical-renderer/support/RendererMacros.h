@@ -38,7 +38,7 @@ SOFTWARE.
 		if( GLenum __err_singnal = glGetError() ) \
 		{ \
 			magicalFormat( "[GL] Error 0x%04X", __err_singnal ); \
-			magicalSetLastErrorInfoAt( magicalBuffer ); \
+			magicalSetLastErrorInfoB( magicalBuffer ); \
 			magicalLogLastError(); \
 		} \
 	} while( 0 )

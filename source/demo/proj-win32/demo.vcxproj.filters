@@ -4,6 +4,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{c88fddb6-42af-45c9-887a-826b08439d35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{42c38db4-8dc2-44ad-a477-54f300de0918}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Main.cpp">
@@ -15,5 +18,10 @@
     <ClInclude Include="..\src\Main.h">
       <Filter>src</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\main.lua">
+      <Filter>assets</Filter>
+    </None>
   </ItemGroup>
 </Project>

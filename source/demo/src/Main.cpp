@@ -26,7 +26,8 @@ SOFTWARE.
 
 void mainDelegate( void )
 {
-	Lua::state()->executeScriptFile( "main.lua" );
-	Lua::state()->executeGlobalFunction( kLuaOnCreate );
+	if( Lua::state()->executeScriptFile( "main.lua" ) == 0 )
+		Lua::state()->executeGlobalFunction( kLuaOnCreate );
+
 	Lua::state()->clean();
 }

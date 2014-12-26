@@ -22,56 +22,69 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "LogSystem.h"
-
+#include "Utils.h"
 #include <windows.h>
 
-static void win32Log( const char* title, const char* msg );
+#define MAGICAL_LOG_DEBUG "DEBUG"
+#define MAGICAL_LOG_ERROR "ERROR"
+
+static char s_buffer[ kBufferLen ];
+static FILE* s_output_file = nullptr;
+
+void magicalLogLastError( void )
+{
+	char temp[ kBufferLen ];
+	const char* last_error = magicalGetLastErrorInfo();
+	
+	std::sprintf( temp, "[%s]: %s", MAGICAL_LOG_ERROR, last_error );
+	magicalLog( temp );
+}
 
 void Log::init( void )
 {
-	
+	std::string dir, name;
+	char buff[MAX_PATH];
+	std::memset( buff, 0, MAX_PATH );
+
+	GetModuleFileNameA( NULL, buff, MAX_PATH );
+	dir = FileUtils::toUnixStylePath( buff );
+	dir = dir.substr( 0, dir.find_last_of( "/" ) );
+
+	name = dir + "/magical-log.log";
+	s_output_file = std::fopen( name.c_str(), "w" );
+	if( s_output_file == nullptr )
+	{
+		magicalSetLastErrorInfoB( "open file(debug.log) failed!" );
+		magicalLogLastError();
+		return;
+	}
 }
 
 void Log::delc( void )
 {
-	
+	std::fclose( s_output_file );
+	s_output_file = nullptr;
 }
 
-void Log::D( const char* msg )
+void Log::write( const char* txt )
 {
-	if( msg == nullptr )
-		return;
+#ifdef MAGICAL_DEBUG
+	magicalAssert( txt, "should not be nullptr." );
+#else
+	if( !txt ) return;
+#endif
 
-	win32Log( kLogChannelDebugTitle, msg );
-}
+#if MAGICAL_DEBUG
+	std::sprintf( s_buffer, "%s", txt );
 
-void Log::E( const char* msg )
-{
-	if( msg == nullptr )
-		return;
-
-	win32Log( kLogChannelErrorTitle, msg );
-}
-
-static void win32Log( const char* title, const char* msg )
-{
-	static char buff[ kMaxBufferLength ];
-
-	tm tm_now;
-	time_t now;
-	time( &now );
-	tm_now = *localtime( &now );
-
-	std::sprintf( buff, "[%s %02d/%02d %02d:%02d:%02d]: %s",
-		title,
-		tm_now.tm_mon + 1,
-		tm_now.tm_mday,
-		tm_now.tm_hour,
-		tm_now.tm_min,
-		tm_now.tm_sec,
-		msg );
-
-	OutputDebugStringA( buff );
+	OutputDebugStringA( s_buffer );
 	OutputDebugStringA( "\n" );
-	printf( "%s\n", buff );
+	std::printf( "%s\n", s_buffer );
+#endif
+
+	if( s_output_file )
+	{
+		std::fprintf( s_output_file, "%s\n", txt );
+		std::fflush( s_output_file );
+	}
 }

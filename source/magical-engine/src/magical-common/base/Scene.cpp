@@ -36,6 +36,6 @@ Scene::~Scene( void )
 Shared<Scene> Scene::create( void )
 {
 	Scene* ret = new Scene();
-	magicalAssert( ret, "New Scene() failed" );
+	magicalAssert( ret, "new Scene() failed" );
 	return Shared<Scene>( Initializer<Scene>( ret ) );
 }

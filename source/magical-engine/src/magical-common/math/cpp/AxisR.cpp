@@ -22,69 +22,63 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector3.h"
-#include "../c/cAxisA.h"
+#include "../c/cAxisR.h"
 #include "../c/cQuaternion.h"
 #include "Vector3.h"
-#include "AxisA.h"
+#include "AxisR.h"
 #include "Quaternion.h"
-#include "AxisA.inl"
+#include "AxisR.inl"
 #include "MathMacros.h"
 
-const AxisA AxisA::Identity = AxisA( 0.0f, 0.0f, 1.0f, 0.0f );
-const AxisA AxisA::Zero = AxisA( 0.0f, 0.0f, 0.0f, 0.0f );
+const float AxisRotation::Epsilon = kEpsilonAxisRotation;
+const AxisRotation AxisRotation::Identity = AxisRotation( 0.0f, 0.0f, 1.0f, 0.0f );
+const AxisRotation AxisRotation::Zero = AxisRotation( 0.0f, 0.0f, 0.0f, 0.0f );
+AxisRotation AxisRotation::var = AxisRotation::Identity;
 
-AxisA AxisA::placeholder = AxisA::Identity;
-AxisA AxisA::temp = AxisA::Identity;
-
-AxisA::AxisA( const float x, const float y, const float z, const float w )
+AxisRotation::AxisRotation( float x, float y, float z, float w )
 {
-	magicalAxisAFillScalars( tofpointer( this ), x, y, z, w );
+	magicalAxisRotationFill( this, x, y, z, w );
 }
 
-AxisA::AxisA( const Vector3& axis, const float angle )
+AxisRotation::AxisRotation( const Vector3& axis, float angle )
 {
-	magicalAxisASetAxis( tofpointer( this ), tofpointer( &axis ) );
-	magicalAxisASetAngle( tofpointer( this ), angle );
+	magicalAxisRotationFill( this, axis.x, axis.y, axis.z, angle );
 }
 
-AxisA::AxisA( const AxisA& aa )
+AxisRotation::AxisRotation( const AxisRotation& ar )
 {
-	magicalAxisAFill( tofpointer( this ), tofpointer( &aa ) );
+	magicalAxisRotationCopy( this, &ar );
 }
 
-AxisA::AxisA( void )
-: x( 0.0f )
-, y( 0.0f )
-, z( 1.0f )
-, w( 0.0f )
+AxisRotation::AxisRotation( void )
 {
-
+	magicalAxisRotationSetIdentity( this );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<AxisA> s_axisa_cached_pool( 32, 32 );
+static CachedPool<AxisRotation> s_axisag_cached_pool( 32, 32 );
 #endif
 
-void* AxisA::operator new( size_t s )
+void* AxisRotation::operator new( size_t s )
 {
-	if( s != sizeof( AxisA ) )
+	if( s != sizeof( AxisRotation ) )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_axisa_cached_pool.take();
+	return s_axisag_cached_pool.take();
 #else
 	return ::operator new( s );
 #endif
 }
 
-void AxisA::operator delete( void* ptr )
+void AxisRotation::operator delete( void* ptr )
 {
 	if( ptr == nullptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_axisa_cached_pool.push( ptr );
+	s_axisag_cached_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif

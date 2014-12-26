@@ -39,7 +39,7 @@ const Ray3 Ray3::Zero = Ray3( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 Ray3 Ray3::placeholder = Ray3::Zero;
 Ray3 Ray3::temp = Ray3::Zero;
 
-Ray3::Ray3( const float ox, const float oy, const float oz, const float dx, const float dy, const float dz )
+Ray3::Ray3( float ox, float oy, float oz, float dx, float dy, float dz )
 {
 	magicalRay3FillScalars( tofpointer( this ), ox, oy, oz, dx, dy, dz );
 }

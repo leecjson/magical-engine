@@ -25,8 +25,8 @@ SOFTWARE.
 #define __ASSETS_SYSTEM_H__
 
 #include "PlatformMacros.h"
-#include "common/Common.h"
-#include "common/Data.h"
+#include "Common.h"
+#include "Data.h"
 
 class Assets
 {
@@ -41,6 +41,9 @@ public:
 	static std::string getAssetsAbsoluteFilename( const char* file_name );
 	static bool isAssetsFileExist( const char* file_name );
 	static Shared<Data> getAssetsFileData( const char* file_name );
+
+private:
+	static std::string s_assets_path;
 };
 
 #endif //__ASSETS_SYSTEM_H__

@@ -44,7 +44,7 @@ public:
 
 protected:
 	template< class T >
-	Shared<T> sharedFromThis( void )
+	Shared<T> sharedFromThis( void ) const
 	{
 		return Shared<T>( this );
 	}

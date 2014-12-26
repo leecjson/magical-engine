@@ -40,7 +40,7 @@ Shared<Data> Data::create( void )
 	return Shared<Data>( Initializer<Data>( ret ) );
 }
 
-void Data::assign( char* data, const size_t size )
+void Data::assign( char* data, size_t size )
 {
 	magicalAssert( data && size > 0, "data should not be nullptr and size should > 0" );
 
@@ -49,25 +49,25 @@ void Data::assign( char* data, const size_t size )
 	_size = size;
 }
 
-void Data::malloc( const size_t size )
+void Data::malloc( size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
 
 	magicalSafeFree( _data );
-	_data = (char*) ::malloc( size );
-	magicalAssert( _data, "(char*) ::malloc( size );" );
+	_data = (char*) std::malloc( size );
+	magicalAssert( _data, "(char*) std::malloc( size );" );
 	_size = size;
 }
 
-void Data::realloc( const size_t size )
+void Data::realloc( size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
 	magicalAssert( _data, "_data should not be nullptr." );
 
 	if( size > _size )
 	{
-		_data = (char*) ::realloc( _data, size );
-		magicalAssert( _data, "(char*) ::realloc( _data, size );" );
+		_data = (char*) std::realloc( _data, size );
+		magicalAssert( _data, "(char*) std::realloc( _data, size );" );
 	}
 	else
 	{

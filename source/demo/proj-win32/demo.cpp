@@ -26,8 +26,6 @@ SOFTWARE.
 
 int main( int argc, char* argv[] )
 {
-	magicalBeginObserve();
-
 	Application::init();
 	magicalReturnVarIfError( -1 );
 
@@ -36,8 +34,6 @@ int main( int argc, char* argv[] )
 
 	Application::delc();
 	magicalReturnVarIfError( -1 );
-
-	magicalEndObserve();
 
 	return 0;
 }

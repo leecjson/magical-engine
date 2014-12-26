@@ -58,20 +58,18 @@ public:
 	{
 		size_t obj_size = sizeof( T );
 
-		if( obj_size == 0 )
+		if( obj_size == 0 ) 
 			obj_size = 1;
 
 		for( size_t i = 0; i < size; ++i )
 		{
 			grow_capacity();
+			typename T* ptr = (T*)malloc( obj_size );
 
-			typename T* ptr = (T*) malloc( obj_size );
+			if( !ptr ) throw std::bad_alloc();
 
-			if( ptr == nullptr )
-				throw std::bad_alloc();
-
-			_objects[ _size ] = ptr;
-			_size ++;
+			_objects[_size] = ptr;
+			++_size;
 		}
 	}
 
@@ -79,8 +77,8 @@ public:
 	{
 		grow_capacity();
 
-		_objects[ _size ] = (T*) ptr;
-		_size ++;
+		_objects[_size] = (T*)ptr;
+		++_size;
 	}
 
 	void* take( void )
@@ -90,19 +88,19 @@ public:
 			grow_capacity();
 			fill( _capacity );
 			
-			typename T* ptr = _objects[ _size - 1 ];
+			typename T* ptr = _objects[_size - 1];
 
 			if( _size != 0 )
-				_size --;
+				--_size;
 
 			return ptr;
 		}
 		else
 		{
-			typename T* ptr = _objects[ _size - 1 ];
+			typename T* ptr = _objects[_size - 1];
 
 			if( _size != 0 )
-				_size --;
+				--_size;
 
 			return ptr;
 		}
@@ -131,16 +129,15 @@ public:
 		if( _objects )
 		{
 			_capacity += size;
-			_objects = (T**) realloc( _objects, _capacity * sizeof( T* ) );
+			_objects = (T**)realloc( _objects, _capacity * sizeof( T* ) );
 		}
 		else
 		{
 			_capacity = size;
-			_objects = (T**) malloc( size * sizeof( T* ) );
+			_objects = (T**)malloc( size * sizeof( T* ) );
 		}
 
-		if( _objects == nullptr )
-			throw std::bad_alloc();
+		if( !_objects ) throw std::bad_alloc();
 	}
 
 	void clear( void )
@@ -151,8 +148,8 @@ public:
 			{
 				free( _objects[i] );
 			}
-			free( _objects );
 
+			free( _objects );
 			_size = 0;
 			_capacity = 0;
 			_objects = nullptr;

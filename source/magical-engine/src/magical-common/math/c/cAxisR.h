@@ -21,12 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_AXISA_H__
-#define __C_AXISA_H__
+#ifndef __C_AXISR_H__
+#define __C_AXISR_H__
 
 #include "cUtility.h"
 
-typedef float cAxisA[4];
+#define kEpsilonAxisRotation 1e-005f
+
+typedef struct cAxisRotation {
+	float x;
+	float y;
+	float z;
+	float w;
+} cAxisRotation;
 
 #include "cVector3.h"
 #include "cQuaternion.h"
@@ -35,25 +42,20 @@ typedef float cAxisA[4];
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBool magicalAxisAEquals( const cAxisA aa1, const cAxisA aa2 );
-MAGICALAPI_MATH cBool magicalAxisAIsIdentity( const cAxisA aa );
-MAGICALAPI_MATH cBool magicalAxisAIsZero( const cAxisA aa );
+MAGICALAPI_MATH cBool magicalAxisRotationEquals( const cAxisRotation* ar1, const cAxisRotation* ar2 );
+MAGICALAPI_MATH cBool magicalAxisRotationIsIdentity( const cAxisRotation* ar );
+MAGICALAPI_MATH cBool magicalAxisRotationIsZero( const cAxisRotation* ar );
 
-MAGICALAPI_MATH void magicalAxisAFillScalars( cAxisA out, const float x, const float y, const float z, const float w );
-MAGICALAPI_MATH void magicalAxisAFillIdentity( cAxisA out );
-MAGICALAPI_MATH void magicalAxisAFillZero( cAxisA out );
-MAGICALAPI_MATH void magicalAxisAFill( cAxisA out, const cAxisA aa );
+MAGICALAPI_MATH void magicalAxisRotationFill( cAxisRotation* out, float x, float y, float z, float w );
+MAGICALAPI_MATH void magicalAxisRotationCopy( cAxisRotation* out, const cAxisRotation* ar );
+MAGICALAPI_MATH void magicalAxisRotationSetIdentity( cAxisRotation* out );
+MAGICALAPI_MATH void magicalAxisRotationSetZero( cAxisRotation* out );
 
-MAGICALAPI_MATH void magicalAxisAFromQuaternion( cAxisA out, const cQuaternion q );
-
-MAGICALAPI_MATH void magicalAxisASetAxis( cAxisA out, const cVector3 axis );
-MAGICALAPI_MATH void magicalAxisASetAngle( cAxisA out, const float angle );
-
-MAGICALAPI_MATH void magicalAxisAGetAxis( cVector3 out, const cAxisA aa );
-MAGICALAPI_MATH float magicalAxisAGetAngle( const cAxisA aa );
+MAGICALAPI_MATH void magicalAxisRotationFromQuaternion( cAxisRotation* out, const cQuaternion* q );
+MAGICALAPI_MATH void magicalAxisRotationToQuaternion( cQuaternion* out, const cAxisRotation* ar );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //__C_AXISA_H__
+#endif //__C_AXISR_H__

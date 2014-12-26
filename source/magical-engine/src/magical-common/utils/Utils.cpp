@@ -24,28 +24,11 @@ SOFTWARE.
 #include "Utils.h"
 #include <chrono>
 
-static int64_t s_ticking;
-
-
 int64_t TimeUtils::currentMicrosecondsTime( void )
 {
 	std::chrono::system_clock::duration scd = std::chrono::system_clock::now().time_since_epoch();
 	std::chrono::microseconds::rep now = std::chrono::duration_cast<std::chrono::microseconds>( scd ).count();
 	return now;
-}
-
-void TimeUtils::beginTicking( void )
-{
-	s_ticking = TimeUtils::currentMicrosecondsTime();
-}
-
-float TimeUtils::endTicking( void )
-{
-	float result;
-	int64_t now = TimeUtils::currentMicrosecondsTime();
-	result = std::max<float>( 0, ( now - s_ticking ) / 1000000.0f );
-	s_ticking = 0;
-	return result;
 }
 
 bool FileUtils::isAbsolutePath( const char* path )
@@ -69,7 +52,7 @@ std::string FileUtils::toUnixStylePath( const char* path )
 	magicalAssert( path, "should not be nullptr." );
 
 	std::string ret = path;
-    int len = ret.length();
+	int len = ret.length();
     for( int i = 0; i < len; ++i )
     {
         if( ret[i] == '\\' )

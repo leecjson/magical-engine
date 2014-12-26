@@ -24,69 +24,41 @@ SOFTWARE.
 #include "cEulerA.h"
 #include "cMathMacros.h"
 
-cBool magicalEulerAEqulas( const cEulerA ea1, const cEulerA ea2 )
+cBool magicalEulerAEqulas( const cEulerA* ea1, const cEulerA* ea2 )
 {
 	return
-		magicalAlmostEqual( ea1 _yaw, ea2 _yaw ) &&
-		magicalAlmostEqual( ea1 _pitch, ea2 _pitch ) &&
-		magicalAlmostEqual( ea1 _roll, ea2 _roll );
+		magicalAlmostEqual( ea1->yaw, ea2->yaw, kEpsilonEulerA ) &&
+		magicalAlmostEqual( ea1->pitch, ea2->pitch, kEpsilonEulerA ) &&
+		magicalAlmostEqual( ea1->roll, ea2->roll, kEpsilonEulerA );
 }
 
-cBool magicalEulerAIsIdentity( const cEulerA ea )
+cBool magicalEulerAIsIdentity( const cEulerA* ea )
 {
 	return
-		magicalAlmostZero( ea _yaw ) &&
-		magicalAlmostZero( ea _pitch ) &&
-		magicalAlmostZero( ea _roll );
+		magicalAlmostZero( ea->yaw, kEpsilonEulerA ) &&
+		magicalAlmostZero( ea->pitch, kEpsilonEulerA ) &&
+		magicalAlmostZero( ea->roll, kEpsilonEulerA );
 }
 
-void magicalEulerAFillYawPitchRoll( cEulerA out, const float yaw, const float pitch, const float roll )
+void magicalEulerAFill( cEulerA* out, float yaw, float pitch, float roll )
 {
-	out _yaw   = yaw;
-	out _pitch = pitch;
-	out _roll  = roll;
+	out->yaw = yaw;
+	out->pitch = pitch;
+	out->roll = roll;
 }
 
-void magicalEulerAFill( cEulerA out, const cEulerA ea )
+void magicalEulerACopy( cEulerA* out, const cEulerA* ea )
 {
-	out _yaw   = ea _yaw;
-	out _pitch = ea _pitch;
-	out _roll  = ea _roll;
+	out->yaw = ea->yaw;
+	out->pitch = ea->pitch;
+	out->roll = ea->roll;
 }
 
-void magicalEulerAFillIdentity( cEulerA out )
+void magicalEulerASetIdentity( cEulerA* out )
 {
-	out _yaw   = 0.0f;
-	out _pitch = 0.0f;
-	out _roll  = 0.0f;
-}
-
-void magicalEulerAAdd( cEulerA out, const cEulerA ea1, const cEulerA ea2 )
-{
-	out _yaw = ea1 _yaw + ea2 _yaw;
-	out _pitch = ea1 _pitch + ea2 _pitch;
-	out _roll = ea1 _roll + ea2 _roll;
-}
-
-void magicalEulerASub( cEulerA out, const cEulerA ea1, const cEulerA ea2 )
-{
-	out _yaw = ea1 _yaw - ea2 _yaw;
-	out _pitch = ea1 _pitch - ea2 _pitch;
-	out _roll = ea1 _roll - ea2 _roll;
-}
-
-void magicalEulerAMul( cEulerA out, const cEulerA ea1, const cEulerA ea2 )
-{
-	out _yaw = ea1 _yaw * ea2 _yaw;
-	out _pitch = ea1 _pitch * ea2 _pitch;
-	out _roll = ea1 _roll * ea2 _roll;
-}
-
-void magicalEulerAMulScalar( cEulerA out, const cEulerA ea, const float a )
-{
-	out _yaw = ea _yaw * a;
-	out _pitch = ea _pitch * a;
-	out _roll = ea _roll * a;
+	out->yaw = 0.0f;
+	out->pitch = 0.0f;
+	out->roll = 0.0f;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -95,43 +67,55 @@ void magicalEulerAMulScalar( cEulerA out, const cEulerA ea, const float a )
  * out q的欧拉角表示
  * q 源四元数
  *-----------------------------------------------------------------------------*/
-void magicalEulerAFromQuaternion( cEulerA out, const cQuaternion q )
+void magicalEulerAFromQuaternion( cEulerA* out, const cQuaternion* q )
 {
-	float sp = -2.0f * ( q _y * q _z + q _w * q _x );
+	float sp = -2.0f * ( q->y * q->z + q->w * q->x );
 
 	if( fabsf( sp ) > 0.9999f )
 	{
-		out _pitch = kPIOver2 * sp;
-		out _yaw   = atan2f( -q _x * q _z - q _w * q _y, 0.5f - q _y * q _y - q _z * q _z );
-		out _roll  = 0.0f;
+		out->pitch = kPIOver2 * sp;
+		out->yaw   = atan2f( -q->x * q->z - q->w * q->y, 0.5f - q->y * q->y - q->z * q->z );
+		out->roll  = 0.0f;
 	}
 	else
 	{
-		out _pitch = asinf( sp );
-		out _yaw   = atan2f( q _x * q _z - q _w * q _y, 0.5f - q _x * q _x - q _y * q _y );
-		out _roll  = atan2f( q _x * q _y - q _w * q _z, 0.5f - q _x * q _x - q _z * q _z );
+		out->pitch = asinf( sp );
+		out->yaw   = atan2f( q->x * q->z - q->w * q->y, 0.5f - q->x * q->x - q->y * q->y );
+		out->roll  = atan2f( q->x * q->y - q->w * q->z, 0.5f - q->x * q->x - q->z * q->z );
 	}
 }
 
-/*-----------------------------------------------------------------------------*\
- * 从旋转矩阵转换为欧拉角表示
- *
- * out m的欧拉角表示
- * m 源旋转矩阵
- *-----------------------------------------------------------------------------*/
-void magicalEulerAFromMatrix4( cEulerA out, const cMatrix4 m )
-{
-
-}
-
-void magicalEulerAToQuaternion( cQuaternion out, const cEulerA ea )
+void magicalEulerAToQuaternion( cQuaternion* out, const cEulerA* ea )
 {
 	magicalQuaternionFromEulerA( out, ea );
 }
 
-void magicalEulerAToMatrix4( cMatrix4 out, const cEulerA ea )
+void magicalEulerAAdd( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 )
 {
-	
+	out->yaw = ea1->yaw + ea2->yaw;
+	out->pitch = ea1->pitch + ea2->pitch;
+	out->roll = ea1->roll + ea2->roll;
+}
+
+void magicalEulerASub( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 )
+{
+	out->yaw = ea1->yaw - ea2->yaw;
+	out->pitch = ea1->pitch - ea2->pitch;
+	out->roll = ea1->roll - ea2->roll;
+}
+
+void magicalEulerAMul( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 )
+{
+	out->yaw = ea1->yaw * ea2->yaw;
+	out->pitch = ea1->pitch * ea2->pitch;
+	out->roll = ea1->roll * ea2->roll;
+}
+
+void magicalEulerAMulScalar( cEulerA* out, const cEulerA* ea, float a )
+{
+	out->yaw = ea->yaw * a;
+	out->pitch = ea->pitch * a;
+	out->roll = ea->roll * a;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -147,11 +131,11 @@ void magicalEulerAToMatrix4( cMatrix4 out, const cEulerA ea )
  * out 返回限制欧拉角
  * ea 源欧拉角
  *-----------------------------------------------------------------------------*/
-void magicalEulerACorrects( cEulerA out, const cEulerA ea )
+void magicalEulerALimit( cEulerA* out, const cEulerA* ea )
 {
-	float yaw   = ea _yaw;
-	float pitch = ea _pitch;
-	float roll  = ea _roll;
+	float yaw   = ea->yaw;
+	float pitch = ea->pitch;
+	float roll  = ea->roll;
 
 	pitch = magicalCorrectToPI( pitch );
 	if( pitch < - kPIOver2 )
@@ -176,10 +160,8 @@ void magicalEulerACorrects( cEulerA out, const cEulerA ea )
 	{
 		roll = magicalCorrectToPI( roll );
 	}
-
-	yaw = magicalCorrectToPI( yaw );
-
-	out _yaw   = yaw;
-	out _pitch = pitch;
-	out _roll  = roll;
+	
+	out->yaw   = magicalCorrectToPI( yaw );
+	out->pitch = pitch;
+	out->roll  = roll;
 }

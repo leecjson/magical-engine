@@ -24,55 +24,30 @@ SOFTWARE.
 #ifndef __MATRIX4_H__
 #define __MATRIX4_H__
 
-class Vector3;
-class Vector4;
-class AxisA;
-class EulerA;
-class Quaternion;
+struct Vector3;
+struct Vector4;
+struct AxisA;
+struct EulerA;
+struct Quaternion;
 
-class Matrix4
+struct Matrix4 : public cMatrix4
 {
-public:
-	float m11, m12, m13, m14;
-	float m21, m22, m23, m24;
-	float m31, m32, m33, m34;
-	float m41, m42, m43, m44;
-
 public:
 	static const Matrix4 Identity;
 	static const Matrix4 Zero;
-	static Matrix4 placeholder;
-	static Matrix4 temp;
+	static Matrix4 var;
 
 public:
 	Matrix4( const float* m );
-	Matrix4( const float m11, const float m12, const float m13, const float m14,
-             const float m21, const float m22, const float m23, const float m24,
-             const float m31, const float m32, const float m33, const float m34,
-             const float m41, const float m42, const float m43, const float m44 );
+	Matrix4( float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44 );
 	Matrix4( const Matrix4& m );
 	Matrix4( void );
 
 public:
-	static inline Matrix4 fromIdentity( void );
-	static inline Matrix4 fromZero( void );
-
-	static inline void mulScalar( Matrix4& out, const Matrix4& m, const float a );
+	static inline Matrix4 createIdentity( void );
+	static inline Matrix4 createZero( void );
+	static inline void mulScalar( Matrix4& out, const Matrix4& m, float a );
 	static inline void mul( Matrix4& out, const Matrix4& m1, const Matrix4& m2 );
-
-	static inline void translate( Matrix4& out, const Matrix4& m, const float x, const float y, const float z );
-	static inline void translate( Matrix4& out, const Matrix4& m, const Vector3& t );
-	static inline void scale( Matrix4& out, const Matrix4& m, const float x, const float y, const float z );
-	static inline void scale( Matrix4& out, const Matrix4& m, const Vector3& s );
-	static inline void rotateX( Matrix4& out, const Matrix4& m, const float angle );
-	static inline void rotateY( Matrix4& out, const Matrix4& m, const float angle );
-	static inline void rotateZ( Matrix4& out, const Matrix4& m, const float angle );
-	static inline void rotateAxisA( Matrix4& out, const Matrix4& m, const Vector3& axis, const float angle );
-	static inline void rotateAxisA( Matrix4& out, const Matrix4& m, const AxisA& aa );
-	static inline void rotateEulerA( Matrix4& out, const Matrix4& m, const float yaw, const float pitch, const float roll );
-	static inline void rotateEulerA( Matrix4& out, const Matrix4& m, const EulerA& ea );
-	static inline void rotateQuaternion( Matrix4& out, const Matrix4& m, const Quaternion& q );
-	
 	static inline void getUpVector( Vector3& out, const Matrix4& m );
 	static inline void getDownVector( Vector3& out, const Matrix4& m );
 	static inline void getLeftVector( Vector3& out, const Matrix4& m );
@@ -87,60 +62,50 @@ public:
 	static inline void negate( Matrix4& out, const Matrix4& m );
 
 public:
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
 	inline bool equals( const Matrix4& m ) const;
 	inline bool isZero( void ) const;
 	inline bool isIdentity( void ) const;
-	inline void fill( const float* m );
-	inline void fill( const Matrix4& m );
-	inline void fillIdentity( void );
-	inline void fillTranslation( const float x, const float y, const float z );
-	inline void fillTranslation( const Vector3& t );
-	inline void fillScale( const float x, const float y, const float z );
-	inline void fillScale( const Vector3& s );
-	inline void fillRotationX( const float angle );
-	inline void fillRotationY( const float angle );
-	inline void fillRotationZ( const float angle );
-	inline void fillRotationAxisA( const Vector3& axis, const float angle );
-	inline void fillRotationAxisA( const AxisA& aa );
-	inline void fillRotationEulerA( const float yaw, const float pitch, const float roll );
-	inline void fillRotationEulerA( const EulerA& ea );
-	inline void fillRotationQuaternion( const Quaternion& q );
-	inline void fillLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
-	inline void fillPerspective( const float fov, const float aspect, const float znear, const float zfar );
-	inline void fillOrthographic( const float left, const float right, const float bottom, const float top, const float near, const float far );
-
-public:
-	static void* operator new( size_t s );
-	static void operator delete( void* ptr );
 	inline bool operator==( const Matrix4& m ) const;
 	inline bool operator!=( const Matrix4& m ) const;
 	inline float operator[]( const unsigned int i ) const;
-	inline Matrix4 operator*( const float a ) const;
+	inline Matrix4 operator*( float a ) const;
 	inline Matrix4 operator*( const Matrix4& m ) const;
-	inline Matrix4& operator*=( const float a );
+	inline Matrix4& operator*=( float a );
 	inline Matrix4& operator*=( const Matrix4& m );
 	inline Matrix4& operator=( const Matrix4& m );
 
 public:
-	inline void translate( const float x, const float y, const float z );
-	inline void translate( const Vector3& t );
-	inline void scale( const float x, const float y, const float z );
-	inline void scale( const Vector3& s );
-	inline void rotateX( const float angle );
-	inline void rotateY( const float angle );
-	inline void rotateZ( const float angle );
-	inline void rotateAxisA( const Vector3& axis, const float angle );
-	inline void rotateAxisA( const AxisA& aa );
-	inline void rotateEulerA( const float yaw, const float pitch, const float roll );
-	inline void rotateEulerA( const EulerA& ea );
-	inline void rotateQuaternion( const Quaternion& q );
+	inline void set( const float* m );
+	inline void set( const Matrix4& m );
+	inline void setIdentity( void );
+	inline void setZero( void );
+	inline void setLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
+	inline void setPerspective( float fov, float aspect, float znear, float zfar );
+	inline void setOrth( float left, float right, float bottom, float top, float near, float far );
+	inline void setupTranslation( float x, float y, float z );
+	inline void setupTranslation( const Vector3& t );
+	inline void setupScale( float x, float y, float z );
+	inline void setupScale( const Vector3& s );
+	inline void setupRotationX( float angle );
+	inline void setupRotationY( float angle );
+	inline void setupRotationZ( float angle );
+	inline void setupRotationAxisA( const Vector3& axis, float angle );
+	inline void setupRotationAxisA( const AxisA& aa );
+	inline void setupRotationEulerA( float yaw, float pitch, float roll );
+	inline void setupRotationEulerA( const EulerA& ea );
+	inline void setupRotationQuaternion( const Quaternion& q );
+
+public:
 	inline Vector3 getUpVector( void ) const;
 	inline Vector3 getDownVector( void ) const;
 	inline Vector3 getLeftVector( void ) const;
 	inline Vector3 getRightVector( void ) const;
 	inline Vector3 getForwardVector( void ) const;
 	inline Vector3 getBackVector( void ) const;
-	inline void setTranslation( const float x, const float y, const float z );
+	inline void setTranslation( float x, float y, float z );
+	inline void setTranslation( const Vector3& t );
 	inline Vector3 getTranslation( void ) const;
 	inline Vector3 getScale( void ) const;
 	inline Quaternion getRotationQuaternion( void ) const;

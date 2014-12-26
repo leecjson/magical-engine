@@ -33,7 +33,7 @@ const Line2 Line2::Zero = Line2( 0.0f, 0.0f, 0.0f );
 Line2 Line2::placeholder = Line2::Zero;
 Line2 Line2::temp = Line2::Zero;
 
-Line2::Line2( const float x, const float y, const float d )
+Line2::Line2( float x, float y, float d )
 {
 	magicalLine2FillScalars( tofpointer( this ), x, y, d );
 }

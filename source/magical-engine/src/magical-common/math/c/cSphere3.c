@@ -27,31 +27,31 @@ SOFTWARE.
 cBool magicalSphere3Equals( const cSphere3 sp1, const cSphere3 sp2 )
 {
 	return
-		magicalAlmostEqual( sp1 _x, sp2 _x ) &&
-		magicalAlmostEqual( sp1 _y, sp2 _y ) &&
-		magicalAlmostEqual( sp1 _z, sp2 _z ) &&
-		magicalAlmostEqual( sp1 _r, sp2 _r );
+		magicalAlmostEqual( sp1 _x, sp2 _x, kEpsilon ) &&
+		magicalAlmostEqual( sp1 _y, sp2 _y, kEpsilon ) &&
+		magicalAlmostEqual( sp1 _z, sp2 _z, kEpsilon ) &&
+		magicalAlmostEqual( sp1 _r, sp2 _r, kEpsilon );
 }
 
 cBool magicalSphere3IsZero( const cSphere3 sp )
 {
 	return
-		magicalAlmostZero( sp _x ) &&
-		magicalAlmostZero( sp _y ) &&
-		magicalAlmostZero( sp _z ) &&
-		magicalAlmostZero( sp _r );
+		magicalAlmostZero( sp _x, kEpsilon ) &&
+		magicalAlmostZero( sp _y, kEpsilon ) &&
+		magicalAlmostZero( sp _z, kEpsilon ) &&
+		magicalAlmostZero( sp _r, kEpsilon );
 }
 
 cBool magicalSphere3IsOne( const cSphere3 sp )
 {
 	return
-		magicalAlmostZero( sp _x ) &&
-		magicalAlmostZero( sp _y ) &&
-		magicalAlmostZero( sp _z ) &&
-		magicalAlmostEqual( sp _r, 1.0f );
+		magicalAlmostZero( sp _x, kEpsilon ) &&
+		magicalAlmostZero( sp _y, kEpsilon ) &&
+		magicalAlmostZero( sp _z, kEpsilon ) &&
+		magicalAlmostEqual( sp _r, 1.0f, kEpsilon );
 }
 
-void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, const float z, const float r )
+void magicalSphere3SetScalars( cSphere3 out, float x, float y, float z, float r )
 {
 	out _x = x;
 	out _y = y;
@@ -59,7 +59,7 @@ void magicalSphere3FillScalars( cSphere3 out, const float x, const float y, cons
 	out _r = r;
 }
 
-void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVector3 center, const float r )
+void magicalSphere3SetCenterAndRadius( cSphere3 out, const cVector3 center, float r )
 {
 	out _x = center _x;
 	out _y = center _y;
@@ -67,7 +67,7 @@ void magicalSphere3FillCenterAndRadius( cSphere3 out, const cVector3 center, con
 	out _r = r;
 }
 
-void magicalSphere3FillZero( cSphere3 out )
+void magicalSphere3SetZero( cSphere3 out )
 {
 	out _x = 0.0f;
 	out _y = 0.0f;
@@ -75,7 +75,7 @@ void magicalSphere3FillZero( cSphere3 out )
 	out _r = 0.0f;
 }
 
-void magicalSphere3FillOne( cSphere3 out )
+void magicalSphere3SetOne( cSphere3 out )
 {
 	out _x = 0.0f;
 	out _y = 0.0f;
@@ -83,7 +83,7 @@ void magicalSphere3FillOne( cSphere3 out )
 	out _r = 1.0f;
 }
 
-void magicalSphere3Fill( cSphere3 out, const cSphere3 sp )
+void magicalSphere3Set( cSphere3 out, const cSphere3 sp )
 {
 	out _x = sp _x;
 	out _y = sp _y;
@@ -106,14 +106,9 @@ cBool magicalSphere3IntersectsPlane3( const cSphere3 sp, const cPlane3 p )
 	return magicalPlane3IntersectsSphere3( p, sp );
 }
 
-cBool magicalSphere3IntersectsRay3( const cSphere3 sp, const cRay3 r3, const cBool discard_inside )
+void magicalSphere3IntersectsRay3( cRayIntersectResult out, const cSphere3 sp, const cRay3 r3, const cBool discard_inside )
 {
-	return magicalRay3IntersectsSphere3( r3, sp, discard_inside );
-}
-
-cBool magicalSphere3IntersectsRay3Distance( float* dist, const cSphere3 sp, const cRay3 r3, const cBool discard_inside )
-{
-	return magicalRay3IntersectsSphere3Distance( dist, r3, sp, discard_inside );
+	magicalRay3IntersectsSphere3( out, r3, sp, discard_inside );
 }
 
 cBool magicalSphere3ContainsPoint( const cSphere3 sp, const cVector3 point )

@@ -44,14 +44,14 @@ public:
 	static Sphere3 temp;
 
 public:
-	Sphere3( const float x, const float y, const float z, const float r );
+	Sphere3( float x, float y, float z, float r );
 	Sphere3( const Sphere3& sp );
 	Sphere3( void );
 
 public:
 	static inline Sphere3 fromZero( void );
 	static inline Sphere3 fromOne( void );
-	static inline Sphere3 fromCenterAndRadius( const Vector3& center, const float r );
+	static inline Sphere3 fromCenterAndRadius( const Vector3& center, float r );
 
 public:
 	inline bool equals( const Sphere3& sp ) const;
@@ -60,8 +60,8 @@ public:
 	inline void fill( const Sphere3& sp );
 	inline void fillZero( void );
 	inline void fillOne( void );
-	inline void fillScalars( const float x, const float y, const float z, const float r );
-	inline void fillCenterAndRadius( const Vector3& center, const float r );
+	inline void fillScalars( float x, float y, float z, float r );
+	inline void fillCenterAndRadius( const Vector3& center, float r );
 
 public:
 	static void* operator new( size_t s );
@@ -74,8 +74,8 @@ public:
 	inline bool intersects( const Sphere3& sp ) const;
 	inline bool intersectsAABB3( const AABB3& aabb ) const;
 	inline bool intersectsPlane3( const Plane3& p ) const;
-	inline bool intersectsRay3( const Ray3& r3, const bool discard_inside = false ) const;
-	inline bool intersectsRay3Distance( float& distance, const Ray3& r3, const bool discard_inside = false ) const;
+	inline bool intersectsRay3( const Ray3& r3, bool discard_inside = false ) const;
+	inline bool intersectsRay3Distance( float& distance, const Ray3& r3, bool discard_inside = false ) const;
 
 	inline bool containsPoint( const Vector3& point ) const;
 };

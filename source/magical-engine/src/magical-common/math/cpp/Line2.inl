@@ -27,7 +27,7 @@ inline Line2 Line2::fromZero( void )
 	return Line2::Zero;
 }
 
-inline Line2 Line2::fromNormalAndDistance( const Vector2& n, const float d )
+inline Line2 Line2::fromNormalAndDistance( const Vector2& n, float d )
 {
 	Line2 ret;
 	magicalLine2FillNormalAndDistance( tofpointer( &ret ), tofpointer( &n ), d );
@@ -61,12 +61,12 @@ inline void Line2::fillZero( void )
 	magicalLine2FillZero( tofpointer( this ) );
 }
 
-inline void Line2::fillScalars( const float x, const float y, const float d )
+inline void Line2::fillScalars( float x, float y, float d )
 {
 	magicalLine2FillScalars( tofpointer( this ), x, y, d );
 }
 
-inline void Line2::fillNormalAndDistance( const Vector2& n, const float d )
+inline void Line2::fillNormalAndDistance( const Vector2& n, float d )
 {
 	magicalLine2FillNormalAndDistance( tofpointer( this ), tofpointer( &n ), d );
 }

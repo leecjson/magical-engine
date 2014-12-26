@@ -32,7 +32,7 @@ inline Sphere3 Sphere3::fromOne( void )
 	return Sphere3::One;
 }
 
-inline Sphere3 Sphere3::fromCenterAndRadius( const Vector3& center, const float r )
+inline Sphere3 Sphere3::fromCenterAndRadius( const Vector3& center, float r )
 {
 	Sphere3 ret;
 	magicalSphere3FillCenterAndRadius( tofpointer( &ret ), tofpointer( &center ), r );
@@ -69,12 +69,12 @@ inline void Sphere3::fillOne( void )
 	magicalSphere3FillOne( tofpointer( this ) );
 }
 
-inline void Sphere3::fillScalars( const float x, const float y, const float z, const float r )
+inline void Sphere3::fillScalars( float x, float y, float z, float r )
 {
 	this->x = x; this->y = y; this->z = z; this->r = r;
 }
 
-inline void Sphere3::fillCenterAndRadius( const Vector3& center, const float r )
+inline void Sphere3::fillCenterAndRadius( const Vector3& center, float r )
 {
 	x = center.x; y = center.y; z = center.z; this->r = r;
 }
@@ -110,12 +110,12 @@ inline bool Sphere3::intersectsPlane3( const Plane3& p ) const
 	return magicalSphere3IntersectsPlane3( tofpointer( this ), tofpointer( &p ) );
 }
 
-inline bool Sphere3::intersectsRay3( const Ray3& r3, const bool discard_inside ) const
+inline bool Sphere3::intersectsRay3( const Ray3& r3, bool discard_inside ) const
 {
 	return magicalSphere3IntersectsRay3( tofpointer( this ), tofpointer( &r3 ), discard_inside );
 }
 
-inline bool Sphere3::intersectsRay3Distance( float& distance, const Ray3& r3, const bool discard_inside ) const
+inline bool Sphere3::intersectsRay3Distance( float& distance, const Ray3& r3, bool discard_inside ) const
 {
 	return magicalSphere3IntersectsRay3Distance( &distance, tofpointer( this ), tofpointer( &r3 ), discard_inside );
 }

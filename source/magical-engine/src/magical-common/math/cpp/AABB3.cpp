@@ -36,41 +36,22 @@ SOFTWARE.
 #include "AABB3.inl"
 #include "MathMacros.h"
 
-const AABB3 AABB3::Zero = AABB3( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+const AABB3 AABB3::Zero = AABB3( Vector3::Zero, Vector3::Zero );
 
 AABB3 AABB3::placeholder = AABB3::Zero;
 AABB3 AABB3::temp = AABB3::Zero;
 
-AABB3::AABB3( const float min_x, const float min_y, const float min_z, const float max_x, const float max_y, const float max_z )
-: min_x( min_x )
-, min_y( min_y )
-, min_z( min_z )
-, max_x( max_x )
-, max_y( max_y )
-, max_z( max_z )
+AABB3::AABB3( const Vector3& min, const Vector3& max )
 {
-
+	magicalAABB3SetPoints( tofpointer( this ), tofpointer( &min ), tofpointer( &max ) );
 }
 
 AABB3::AABB3( const AABB3& aabb )
-: min_x( aabb.min_x )
-, min_y( aabb.min_y )
-, min_z( aabb.min_z )
-, max_x( aabb.max_x )
-, max_y( aabb.max_y )
-, max_z( aabb.max_z )
 {
-
+	magicalAABB3Set( tofpointer( this ), tofpointer( &aabb ) );
 }
 
-
 AABB3::AABB3( void )
-: min_x( 0.0f )
-, min_y( 0.0f )
-, min_z( 0.0f )
-, max_x( 0.0f )
-, max_y( 0.0f )
-, max_z( 0.0f )
 {
 
 }

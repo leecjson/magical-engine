@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Engine.h"
+#include "magical-math.h"
 #include "Utils.h"
 #include "AssetsSystem.h"
 #include "LuaSystem.h"
@@ -29,30 +30,11 @@ SOFTWARE.
 #include "Application.h"
 #include "Node.h"
 
-static void calcDeltaTime( void );
-
-static int64_t s_last_update_time;
-static float s_delta_time;
-
-//#include "cpp/Vec2.h"
-//#include "cpp/Vec3.h"
-//#include "cpp/Vec4.h"
-
-#include <vector>
+int64_t Engine::s_last_update_time = 0;
+double Engine::s_delta_time = 0.0;
 
 void Engine::init( void )
 {
-	magicalBeginTicking();
-
-	for( int i = 0; i < 10000; ++i )
-	{
-		/*Vec2* v = new Vec2();
-		delete v;*/
-	}
-
-	magicalEndTicking();
-
-	s_delta_time = 0.0f;
 	s_last_update_time = TimeUtils::currentMicrosecondsTime();
 }
 
@@ -79,9 +61,9 @@ float Engine::getDeltaTime( void )
 	return s_delta_time;
 }
 
-static void calcDeltaTime( void )
+void Engine::calcDeltaTime( void )
 {
 	int64_t now = TimeUtils::currentMicrosecondsTime();
-	s_delta_time = std::max<float>( 0, ( now - s_last_update_time ) / 1000000.0f );
+	s_delta_time = std::max<double>( 0, ( now - s_last_update_time ) / 1000000.0 );
 	s_last_update_time = now;
 }

@@ -43,43 +43,40 @@ const Matrix4 Matrix4::Identity = Matrix4(
 	0.0f, 0.0f, 0.0f, 1.0f
 );
 
-static const Matrix4 Zero = Matrix4(
+const Matrix4 Matrix4::Zero = Matrix4(
 	0.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 0.0f, 0.0f, 0.0f
 );
 
-Matrix4 Matrix4::placeholder = Matrix4::Identity;
-Matrix4 Matrix4::temp = Matrix4::Identity;
+Matrix4 Matrix4::var = Matrix4::Identity;
 
 Matrix4::Matrix4( const float* m )
 {
-	magicalMatrix4Fill( tofpointer( this ), m );
+	magicalMatrix4Copy( this, (Matrix4*)m );
 }
 
 Matrix4::Matrix4(
-	const float m11, const float m12, const float m13, const float m14,
-	const float m21, const float m22, const float m23, const float m24,
-	const float m31, const float m32, const float m33, const float m34,
-	const float m41, const float m42, const float m43, const float m44 )
+	float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
+	float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44 )
 {
-	magicalMatrix4FillScalars( tofpointer( this ), m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44 );
+	magicalMatrix4Fill( this, m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44 );
 }
 
 Matrix4::Matrix4( const Matrix4& m )
 {
-	magicalMatrix4Fill( tofpointer( this ), tofpointer( &m ) );
+	magicalMatrix4Copy( this, &m );
 }
 
 Matrix4::Matrix4( void )
 {
-	magicalMatrix4FillIdentity( tofpointer( this ) );
+	magicalMatrix4SetIdentity( this );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<Matrix4> s_matrix4_cached_pool( 32, 32 );
+static CachedPool<Matrix4> s_matrix4_cached_pool( 8, 8 );
 #endif
 
 void* Matrix4::operator new( size_t s )

@@ -24,19 +24,14 @@ SOFTWARE.
 #ifndef __VECTOR4_H__
 #define __VECTOR4_H__
 
-class Vector2;
-class Vector3;
-class Matrix4;
+struct Vector2;
+struct Vector3;
+struct Matrix4;
 
-class Vector4
+struct Vector4 : public cVector4
 {
 public:
-	float x;
-	float y;
-	float z;
-	float w;
-
-public:
+	static const float Epsilon;
 	static const Vector4 Zero;
 	static const Vector4 One;
 	static const Vector4 Up;
@@ -48,87 +43,84 @@ public:
 	static const Vector4 Space0;
 	static const Vector4 Space1;
 	static const Vector4 Space2;
-	static Vector4 placeholder;
-	static Vector4 temp;
+	static Vector4 var;
 
 public:
-	Vector4( const float x, const float y, const float z, const float w );
+	Vector4( float x, float y, float z, float w );
 	Vector4( const Vector4& v );
 	Vector4( void );
 
 public:
-	static inline Vector4 fromZero( void );
-	static inline Vector4 fromOne( void );
-	static inline Vector4 fromVector2( const Vector2& v );
-	static inline Vector4 fromVector3( const Vector3& v );
+	static inline Vector4 createZero( void );
+	static inline Vector4 createOne( void );
+	static inline Vector4 createFromVector2( const Vector2& v );
+	static inline Vector4 createFromVector3( const Vector3& v );
 
-	static inline void addScalar( Vector4& out, const Vector4& v, const float a );
+	static inline void addScalar( Vector4& out, const Vector4& v, float a );
 	static inline void add( Vector4& out, const Vector4& v1, const Vector4& v2 );
-	static inline void subScalar( Vector4& out, const Vector4& v, const float a );
+	static inline void subScalar( Vector4& out, const Vector4& v, float a );
 	static inline void sub( Vector4& out, const Vector4& v1, const Vector4& v2 );
-	static inline void mulMatrix( Vector4& out, const Vector4& v, const Matrix4& m );
-	static inline void mulScalar( Vector4& out, const Vector4& v, const float a );
+	static inline void mulMatrix4( Vector4& out, const Vector4& v, const Matrix4& m );
+	static inline void mulScalar( Vector4& out, const Vector4& v, float a );
 	static inline void mul( Vector4& out, const Vector4& v1, const Vector4& v2 );
-	static inline void divScalar( Vector4& out, const Vector4& v, const float a );
+	static inline void divScalar( Vector4& out, const Vector4& v, float a );
 	static inline void div( Vector4& out, const Vector4& v1, const Vector4& v2 );
-
 	static inline void clamp( Vector4& out, const Vector4& v, const Vector4& min, const Vector4& max );
 	static inline void negate( Vector4& out, const Vector4& v );
 	static inline void normalize( Vector4& out, const Vector4& v );
-	static inline void scale( Vector4& out, const Vector4& v, const float s );
+	static inline void scale( Vector4& out, const Vector4& v, float s );
 	static inline void midPointBetween( Vector4& out, const Vector4& v1, const Vector4& v2 );
 	static inline void project( Vector4& out, const Vector4& v, const Vector4& n );
 
 public:
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
 	inline bool equals( const Vector4& v ) const;
 	inline bool isZero( void ) const;
 	inline bool isOne( void ) const;
 	inline bool isNormalized( void ) const;
-	inline void fill( const Vector4& v );
-	inline void fillZero( void );
-	inline void fillOne( void );
-	inline void fillScalars( const float x, const float y, const float z, const float w );
-	inline void fillVector2( const Vector2& v );
-	inline void fillVector3( const Vector3& v );
-
-public:
-	static void* operator new( size_t s );
-	static void operator delete( void* ptr );
 	inline bool operator==( const Vector4& v ) const;
 	inline bool operator!=( const Vector4& v ) const;
 	inline float operator[]( const unsigned int i ) const;
 	inline Vector4 operator+( void ) const;
-	inline Vector4 operator+( const float a ) const;
+	inline Vector4 operator+( float a ) const;
 	inline Vector4 operator+( const Vector4& v ) const;
 	inline Vector4 operator-( void ) const;
-	inline Vector4 operator-( const float a ) const;
+	inline Vector4 operator-( float a ) const;
 	inline Vector4 operator-( const Vector4& v ) const;
 	inline Vector4 operator*( const Matrix4& m ) const;
-	inline Vector4 operator*( const float a ) const;
+	inline Vector4 operator*( float a ) const;
 	inline Vector4 operator*( const Vector4& v ) const;
-	inline Vector4 operator/( const float a ) const;
+	inline Vector4 operator/( float a ) const;
 	inline Vector4 operator/( const Vector4& v ) const;
-	inline Vector4& operator+=( const float a );
+	inline Vector4& operator+=( float a );
 	inline Vector4& operator+=( const Vector4& v );
-	inline Vector4& operator-=( const float a );
+	inline Vector4& operator-=( float a );
 	inline Vector4& operator-=( const Vector4& v );
 	inline Vector4& operator*=( const Matrix4& m );
-	inline Vector4& operator*=( const float a );
+	inline Vector4& operator*=( float a );
 	inline Vector4& operator*=( const Vector4& v );
-	inline Vector4& operator/=( const float a );
+	inline Vector4& operator/=( float a );
 	inline Vector4& operator/=( const Vector4& v );
 	inline Vector4& operator=( const Vector4& v );
+
+public:
+	inline void set( const Vector4& v );
+	inline void setZero( void );
+	inline void setOne( void );
+	inline void setScalars( float x, float y, float z, float w );
+	inline void setVector2( const Vector2& v );
+	inline void setVector3( const Vector3& v );
 	
 public:
 	inline void clamp( const Vector4& min, const Vector4& max );
 	inline void negate( void );
 	inline void normalize( void );
-	inline void scale( const float s );
+	inline void scale( float s );
 	inline Vector4 getClamped( const Vector4& min, const Vector4& max ) const;
 	inline Vector4 getNegated( void ) const;
 	inline Vector4 getNormalized( void ) const;
-	inline Vector4 getScaled( const float s ) const;
-	
+	inline Vector4 getScaled( float s ) const;
 	inline float dot( const Vector4& v ) const;
 	inline float distanceBetween( const Vector4& v ) const;
 	inline float distanceBetweenSq( const Vector4& v ) const;

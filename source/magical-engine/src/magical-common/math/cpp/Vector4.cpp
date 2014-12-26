@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "../c/cVector3.h"
+#include "../c/cVector4.h"
 #include "../c/cMatrix4.h"
 #include "Vector2.h"
 #include "Vector3.h"
@@ -30,6 +30,7 @@ SOFTWARE.
 #include "Vector3.inl"
 #include "MathMacros.h"
 
+const float Vector4::Epsilon = kEpsilonVector4;
 const Vector4 Vector4::Zero = Vector4( 0.0f, 0.0f, 0.0f, 0.0f );
 const Vector4 Vector4::One = Vector4( 1.0f, 1.0f, 1.0f, 1.0f );
 const Vector4 Vector4::Up = Vector4( 0.0f, 1.0f, 0.0f, 0.0f );
@@ -41,35 +42,30 @@ const Vector4 Vector4::Back = Vector4( 0.0f, 0.0f, -1.0f, 0.0f );
 const Vector4 Vector4::Space0 = Vector4( 0.0f, 0.0f, 0.0f, 0.0f );
 const Vector4 Vector4::Space1 = Vector4( 0.0f, 0.0f, 0.0f, 1.0f );
 const Vector4 Vector4::Space2 = Vector4( 0.0f, 0.0f, 0.0f, 2.0f );
+Vector4 Vector4::var = Vector4::Zero;
 
-Vector4 Vector4::placeholder = Vector4::Zero;
-Vector4 Vector4::temp = Vector4::Zero;
-
-Vector4::Vector4( const float x, const float y, const float z, const float w )
-: x( x )
-, y( y )
-, z( z )
-, w( w )
+Vector4::Vector4( float x, float y, float z, float w )
 {
-
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
 }
 
 Vector4::Vector4( const Vector4& v )
-: x( v.x )
-, y( v.y )
-, z( v.z )
-, w( v.w )
 {
-
+	x = v.x;
+	y = v.y;
+	z = v.z;
+	w = v.w;
 }
 
 Vector4::Vector4( void )
-: x( 0.0f )
-, y( 0.0f )
-, z( 0.0f )
-, w( 0.0f )
 {
-
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
+	w = 0.0f;
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE

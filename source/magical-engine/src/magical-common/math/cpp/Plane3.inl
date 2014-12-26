@@ -27,7 +27,7 @@ inline Plane3 Plane3::fromZero( void )
 	return Plane3::Zero;
 }
 
-inline Plane3 Plane3::fromNormalAndDistance( const Vector3& n, const float d )
+inline Plane3 Plane3::fromNormalAndDistance( const Vector3& n, float d )
 {
 	Plane3 ret;
 	magicalPlane3FillNormalAndDistance( tofpointer( &ret ), tofpointer( &n ), d );
@@ -83,12 +83,12 @@ inline void Plane3::fillZero( void )
 	magicalPlane3FillZero( tofpointer( this ) );
 }
 
-inline void Plane3::fillScalars( const float x, const float y, const float z, const float d )
+inline void Plane3::fillScalars( float x, float y, float z, float d )
 {
 	magicalPlane3FillScalars( tofpointer( this ), x, y, z, d );
 }
 
-inline void Plane3::fillNormalAndDistance( const Vector3& n, const float d )
+inline void Plane3::fillNormalAndDistance( const Vector3& n, float d )
 {
 	magicalPlane3FillNormalAndDistance( tofpointer( this ), tofpointer( &n ), d );
 }
@@ -124,7 +124,7 @@ inline void Plane3::setNormal( const Vector3& n )
 	magicalPlane3SetNormal( tofpointer( this ), tofpointer( &n ) );
 }
 
-inline void Plane3::setDistance( const float d )
+inline void Plane3::setDistance( float d )
 {
 	this->d = d;
 }

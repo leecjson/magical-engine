@@ -27,6 +27,7 @@ SOFTWARE.
 #include "cUtility.h"
 
 typedef float cRay3[6];
+typedef int cRayIntersectResult[2];
 
 #include "cVector3.h"
 #include "cAABB3.h"
@@ -39,11 +40,11 @@ extern "C" {
 MAGICALAPI_MATH cBool magicalRay3Equals( const cRay3 r31, const cRay3 r32 );
 MAGICALAPI_MATH cBool magicalRay3IsZero( const cRay3 r3 );
 
-MAGICALAPI_MATH void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
-MAGICALAPI_MATH void magicalRay3FillOriginToEnd( cRay3 out, const cVector3 origin, const cVector3 end );
-MAGICALAPI_MATH void magicalRay3FillOriginAndDirection( cRay3 out, const cVector3 origin, const cVector3 direction );
-MAGICALAPI_MATH void magicalRay3FillZero( cRay3 out );
-MAGICALAPI_MATH void magicalRay3Fill( cRay3 out, const cRay3 r3 );
+MAGICALAPI_MATH void magicalRay3SetScalars( cRay3 out, float ox, float oy, float oz, float dx, float dy, float dz );
+MAGICALAPI_MATH void magicalRay3SetOriginToEnd( cRay3 out, const cVector3 origin, const cVector3 end );
+MAGICALAPI_MATH void magicalRay3SetOriginAndDirection( cRay3 out, const cVector3 origin, const cVector3 direction );
+MAGICALAPI_MATH void magicalRay3SetZero( cRay3 out );
+MAGICALAPI_MATH void magicalRay3Set( cRay3 out, const cRay3 r3 );
 
 MAGICALAPI_MATH void magicalRay3GetOrigin( cVector3 out, const cRay3 r3 );
 MAGICALAPI_MATH void magicalRay3GetDirection( cVector3 out, const cRay3 r3 );
@@ -52,13 +53,9 @@ MAGICALAPI_MATH void magicalRay3SetDirection( cRay3 out, const cVector3 directio
 
 MAGICALAPI_MATH void magicalRay3DirectionNormalize( cRay3 out, const cRay3 r3 );
 
-MAGICALAPI_MATH cBool magicalRay3IntersectsPlane3( const cRay3 r3, const cPlane3 p, const cBool discard_inside );
-MAGICALAPI_MATH cBool magicalRay3IntersectsAABB3( const cRay3 r3, const cAABB3 aabb, const cBool discard_inside );
-MAGICALAPI_MATH cBool magicalRay3IntersectsSphere3( const cRay3 r3, const cSphere3 sp, const cBool discard_inside );
-
-MAGICALAPI_MATH cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cPlane3 p, const cBool discard_inside );
-MAGICALAPI_MATH cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAABB3 aabb, const cBool discard_inside );
-MAGICALAPI_MATH cBool magicalRay3IntersectsSphere3Distance( float* dist, const cRay3 r3, const cSphere3 sp, const cBool discard_inside );
+MAGICALAPI_MATH void magicalRay3IntersectsPlane3( cRayIntersectResult out, const cRay3 r3, const cPlane3 p, const cBool discard_inside );
+MAGICALAPI_MATH void magicalRay3IntersectsAABB3( cRayIntersectResult out, const cRay3 r3, const cAABB3 aabb, const cBool discard_inside );
+MAGICALAPI_MATH void magicalRay3IntersectsSphere3( cRayIntersectResult out, const cRay3 r3, const cSphere3 sp, const cBool discard_inside );
 
 #ifdef __cplusplus
 }

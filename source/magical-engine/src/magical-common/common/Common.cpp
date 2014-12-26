@@ -22,6 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Common.h"
+#include "Utils.h"
+
+#ifdef MAGICAL_DEBUG
+#include <mutex>
+#endif
+
 /*
 platform include
 */
@@ -29,49 +35,57 @@ platform include
 #include <windows.h>
 #endif
 
-char g_buffer[ kMaxBufferLength ];
+char g_buffer[ kBufferLen ];
 
 static bool s_last_error = false;
-static char s_last_error_info[ kMaxBufferLength ];
+static char s_last_error_info[ kBufferLen ];
+static int64_t s_timer_mark_var = 0;
 
 #ifdef MAGICAL_DEBUG
-bool g_is_observing = false;
-int g_observer_move_construct_count = 0;
-int g_observer_copy_construct_count = 0;
-int g_observer_construct_count = 0;
-int g_observer_destruct_count = 0;
+static struct {
+	int construct_count;
+	int destruct_count;
+} 
+s_engine_objects_listener, 
+s_custom_objects_listener;
+
+static std::mutex s_olc_mutex;
+static std::mutex s_old_mutex;
+
+static bool s_is_engine_objects_listener_started = false;
+static bool s_is_custom_objects_listener_started = false;
 #endif
 
-MAGICALAPI bool magicalIsError( void )
+bool magicalIsError( void )
 {
 	return s_last_error;
 }
 
-MAGICALAPI void magicalIgnoreLastError( void )
+void magicalIgnoreLastError( void )
 {
 	s_last_error = false;
 }
 
-MAGICALAPI void magicalSetLastErrorInfo( const char* info, const char* func, int line )
+void magicalSetLastErrorInfo( const char* info, const char* func, int line )
 {
 	if( info == nullptr )
 		return;
 
 	if( func )
 	{
-		sprintf( s_last_error_info, "%s %s:%d", info, func, line );
+		std::sprintf( s_last_error_info, "%s %s:%d", info, func, line );
 	}
 	else
 	{
-		strcpy( s_last_error_info, info );
+		std::strcpy( s_last_error_info, info );
 	}
 
 	s_last_error = true;
 }
 
-MAGICALAPI const char* magicalGetLastErrorInfo( void )
+const char* magicalGetLastErrorInfo( void )
 {
-	if( strlen(s_last_error_info) > 0 )
+	if( std::strlen( s_last_error_info ) > 0 )
 	{
 		return s_last_error_info;
 	}
@@ -82,8 +96,140 @@ MAGICALAPI const char* magicalGetLastErrorInfo( void )
 }
 
 #ifdef MAGICAL_WIN32
-MAGICALAPI void magicalMessageBox( const char* msg, const char* title )
+void magicalMessageBox( const char* msg, const char* title )
 {
 	MessageBoxA( nullptr, msg, title, MB_OK );
+}
+#elif MAGICAL_MAC
+
+#elif MAGICAL_ANDROID
+
+#elif MAGICAL_IOS
+
+#endif
+
+bool magicalIsTimerStarted( void )
+{
+	return s_timer_mark_var != 0;
+}
+
+void magicalStartTimer( void )
+{
+	s_timer_mark_var = TimeUtils::currentMicrosecondsTime();
+}
+
+double magicalEndTimer( void )
+{
+	if( s_timer_mark_var == 0 )
+		return 0.0;
+
+	double result;
+	int64_t now = TimeUtils::currentMicrosecondsTime();
+	result = std::max<double>( 0, ( now - s_timer_mark_var ) / 1000000.0 );
+	s_timer_mark_var = 0;
+	return result;
+}
+
+#ifdef MAGICAL_DEBUG
+void magicalStartObjectsListener( int listener )
+{
+	if( listener == kEngineObjectsListener )
+	{
+		s_engine_objects_listener.destruct_count = 0;
+		s_engine_objects_listener.construct_count = 0;
+		s_is_engine_objects_listener_started = true;
+	}
+	else
+	{
+		s_custom_objects_listener.destruct_count = 0;
+		s_custom_objects_listener.construct_count = 0;
+		s_is_custom_objects_listener_started = true;
+	}
+}
+
+void magicalEndObjectsListener( int listener )
+{
+	if( listener == kEngineObjectsListener )
+	{
+		s_engine_objects_listener.destruct_count = 0;
+		s_engine_objects_listener.construct_count = 0;
+		s_is_engine_objects_listener_started = false;
+	}
+	else
+	{
+		s_custom_objects_listener.destruct_count = 0;
+		s_custom_objects_listener.construct_count = 0;
+		s_is_custom_objects_listener_started = false;
+	}
+}
+
+bool magicalIsObjectsListenerStarted( int listener )
+{
+	if( listener == kEngineObjectsListener )
+	{
+		return s_is_engine_objects_listener_started;
+	}
+	else
+	{
+		return s_is_custom_objects_listener_started;
+	}
+}
+
+void magicalObjectConstruct( void )
+{
+	s_olc_mutex.lock();
+
+	if( s_is_engine_objects_listener_started )
+	{
+		s_engine_objects_listener.construct_count += 1;
+	}
+
+	if( s_is_custom_objects_listener_started )
+	{
+		s_custom_objects_listener.construct_count += 1;
+	}
+
+	s_olc_mutex.unlock();
+}
+
+void magicalObjectDestruct( void )
+{
+	s_old_mutex.lock();
+
+	if( s_is_engine_objects_listener_started )
+	{
+		s_engine_objects_listener.destruct_count += 1;
+	}
+
+	if( s_is_custom_objects_listener_started )
+	{
+		s_custom_objects_listener.destruct_count += 1;
+	}
+
+	s_old_mutex.unlock();
+}
+
+int magicalGetObjectsConstructCount( int listener )
+{
+	if( listener == kEngineObjectsListener )
+	{
+		return s_engine_objects_listener.construct_count;
+	}
+	else
+	{
+		return s_custom_objects_listener.construct_count;
+	}
+}
+
+int magicalGetObjectsDestructCount( int listener )
+{
+	if( listener == kEngineObjectsListener )
+	{
+		return s_engine_objects_listener.destruct_count;
+	}
+	else
+	{
+		return s_custom_objects_listener.destruct_count;
+	}
 }
 #endif

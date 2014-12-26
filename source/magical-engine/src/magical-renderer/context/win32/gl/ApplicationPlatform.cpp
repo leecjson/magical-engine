@@ -41,7 +41,7 @@ static GLFWwindow* s_window = nullptr;
 static LARGE_INTEGER s_interval_win32;
 static double s_interval;
 static bool s_window_resizable = true;
-static std::string s_window_title = "Magical-Engine";
+static std::string s_window_title = "magical-engine";
 
 void Application::run( MainDelegate mainDelegate )
 {
@@ -154,7 +154,7 @@ void Application::initRenderContext( void )
 	if( atof( (const char*) gl_version ) < 1.5 )
 	{
 		magicalFormat( "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.", gl_version );
-		magicalSetLastErrorInfoAt( magicalBuffer );
+		magicalSetLastErrorInfoB( magicalBuffer );
 		magicalLogLastError();
 		return;
 	}
@@ -163,7 +163,7 @@ void Application::initRenderContext( void )
 	if( result != GLEW_OK )
 	{
 		magicalFormat( "%s %s", "Init glew error.", (char*)glewGetErrorString( result ) );
-		magicalSetLastErrorInfoAt( magicalBuffer );
+		magicalSetLastErrorInfoB( magicalBuffer );
 		magicalLogLastError();
 		return;
 	}
@@ -194,7 +194,7 @@ void Application::delcRenderContext( void )
 
 static void win32ErrorCallBack( int err_id, const char* error_desc )
 {
-	magicalSetLastErrorInfoAt( error_desc );
+	magicalSetLastErrorInfoB( error_desc );
 	magicalLogLastError();
 
 	magicalLog( "win32ErrorCallBack" );

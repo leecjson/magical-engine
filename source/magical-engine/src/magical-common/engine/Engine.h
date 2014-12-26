@@ -36,9 +36,14 @@ public:
 public:
 	static void mainLoop( void );
 	static void resize( int w, int h );
-
-public:
 	static float getDeltaTime( void );
+
+private:
+	static void calcDeltaTime( void );
+
+private:
+	static int64_t s_last_update_time;
+	static double s_delta_time;
 };
 
 

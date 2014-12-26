@@ -49,13 +49,13 @@ public:
 	static Line2 temp;
 
 public:
-	Line2( const float x, const float y, const float d );
+	Line2( float x, float y, float d );
 	Line2( const Line2& l );
 	Line2( void );
 
 public:
 	static inline Line2 fromZero( void );
-	static inline Line2 fromNormalAndDistance( const Vector2& n, const float d );
+	static inline Line2 fromNormalAndDistance( const Vector2& n, float d );
 	static inline Line2 fromNormalAndPoint( const Vector2& n, const Vector2& a );
 
 public:
@@ -63,8 +63,8 @@ public:
 	inline bool isZero( void ) const;
 	inline void fill( const Line2& l );
 	inline void fillZero( void );
-	inline void fillScalars( const float x, const float y, const float d );
-	inline void fillNormalAndDistance( const Vector2& n, const float d );
+	inline void fillScalars( float x, float y, float d );
+	inline void fillNormalAndDistance( const Vector2& n, float d );
 	inline void fillNormalAndPoint( const Vector2& n, const Vector2& a );
 
 public:

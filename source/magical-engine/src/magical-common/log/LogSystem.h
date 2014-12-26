@@ -27,18 +27,13 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
-#define kLogChannelDebug 1
-#define kLogChannelError 2
-#define kLogChannelDebugTitle "Debug"
-#define kLogChannelErrorTitle "Error"
-
-#define magicalLogLastError() Log::E( magicalGetLastErrorInfo() )
-#define magicalInfoLog( __txt ) Log::D( __txt )
+MAGICALAPI void magicalLogLastError( void ); 
+#define magicalLog( __txt ) Log::write( __txt )
 
 #ifndef MAGICAL_DEBUG
-#define magicalLog( __txt )
+#define magicalDebugLog( __txt )
 #else
-#define magicalLog( __txt ) Log::D( __txt )
+#define magicalDebugLog( __txt ) magicalLog( __txt )
 #endif
 
 class Log
@@ -48,8 +43,7 @@ public:
 	static void delc( void );
 
 public:
-	static void D( const char* msg );
-	static void E( const char* msg );
+	static void write( const char* txt );
 };
 
 #endif  //__LOG_SYSTEM_H__

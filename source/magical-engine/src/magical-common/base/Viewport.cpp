@@ -36,7 +36,7 @@ Viewport::~Viewport( void )
 Shared<Viewport> Viewport::create( void )
 {
 	Viewport* ret = new Viewport();
-	magicalAssert( ret, "New Viewport() failed" );
+	magicalAssert( ret, "new Viewport() failed" );
 	return Shared<Viewport>( Initializer<Viewport>( ret ) );
 }
 

@@ -31,6 +31,9 @@ SOFTWARE.
 #define _d [0x3]
 #define _r [0x3]
 
+#define _inst [0x0]
+#define _dist [0x1]
+
 #define _o_x [0x0]
 #define _o_y [0x1]
 #define _o_z [0x2]
@@ -71,13 +74,6 @@ SOFTWARE.
 #define _rect_w [0x2]
 #define _rect_h [0x3]
 
-#if defined MAGICAL_DEBUG
-#define debugassert( con, msg ) do{            \
-	if( !( con ) ) {                           \
-		assert( ( con ) && msg );              \
-	}}  while( 0 )
-#else
-#define debugassert( con, msg )
-#endif
+
 
 #endif //__C_MATH_MACROS_H__

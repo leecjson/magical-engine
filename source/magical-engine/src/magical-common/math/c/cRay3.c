@@ -27,26 +27,26 @@ SOFTWARE.
 cBool magicalRay3Equals( const cRay3 r31, const cRay3 r32 )
 {
 	return
-		magicalAlmostEqual( r31 _o_x, r32 _o_x ) &&
-		magicalAlmostEqual( r31 _o_y, r32 _o_y ) &&
-		magicalAlmostEqual( r31 _o_z, r32 _o_z ) &&
-		magicalAlmostEqual( r31 _d_x, r32 _d_x ) &&
-		magicalAlmostEqual( r31 _d_y, r32 _d_y ) &&
-		magicalAlmostEqual( r31 _d_z, r32 _d_z );
+		magicalAlmostEqual( r31 _o_x, r32 _o_x, kEpsilon ) &&
+		magicalAlmostEqual( r31 _o_y, r32 _o_y, kEpsilon ) &&
+		magicalAlmostEqual( r31 _o_z, r32 _o_z, kEpsilon ) &&
+		magicalAlmostEqual( r31 _d_x, r32 _d_x, kEpsilon ) &&
+		magicalAlmostEqual( r31 _d_y, r32 _d_y, kEpsilon ) &&
+		magicalAlmostEqual( r31 _d_z, r32 _d_z, kEpsilon );
 }
 
 cBool magicalRay3IsZero( const cRay3 r3 )
 {
 	return
-		magicalAlmostZero( r3 _o_x ) &&
-		magicalAlmostZero( r3 _o_y ) &&
-		magicalAlmostZero( r3 _o_z ) &&
-		magicalAlmostZero( r3 _d_x ) &&
-		magicalAlmostZero( r3 _d_y ) &&
-		magicalAlmostZero( r3 _d_z );
+		magicalAlmostZero( r3 _o_x, kEpsilon ) &&
+		magicalAlmostZero( r3 _o_y, kEpsilon ) &&
+		magicalAlmostZero( r3 _o_z, kEpsilon ) &&
+		magicalAlmostZero( r3 _d_x, kEpsilon ) &&
+		magicalAlmostZero( r3 _d_y, kEpsilon ) &&
+		magicalAlmostZero( r3 _d_z, kEpsilon );
 }
 
-void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const float oz, const float dx, const float dy, const float dz )
+void magicalRay3SetScalars( cRay3 out, float ox, float oy, float oz, float dx, float dy, float dz )
 {
 	out _o_x = ox;
 	out _o_y = oy;
@@ -58,7 +58,7 @@ void magicalRay3FillScalars( cRay3 out, const float ox, const float oy, const fl
 	magicalRay3DirectionNormalize( out, out );
 }
 
-void magicalRay3FillOriginToEnd( cRay3 out, const cVector3 origin, const cVector3 end )
+void magicalRay3SetOriginToEnd( cRay3 out, const cVector3 origin, const cVector3 end )
 {
 	out _o_x = origin _x;
 	out _o_y = origin _y;
@@ -70,7 +70,7 @@ void magicalRay3FillOriginToEnd( cRay3 out, const cVector3 origin, const cVector
 	magicalRay3DirectionNormalize( out, out );
 }
 
-void magicalRay3FillOriginAndDirection( cRay3 out, const cVector3 origin, const cVector3 direction )
+void magicalRay3SetOriginAndDirection( cRay3 out, const cVector3 origin, const cVector3 direction )
 {
 	out _o_x = origin _x;
 	out _o_y = origin _y;
@@ -82,7 +82,7 @@ void magicalRay3FillOriginAndDirection( cRay3 out, const cVector3 origin, const 
 	magicalRay3DirectionNormalize( out, out );
 }
 
-void magicalRay3FillZero( cRay3 out )
+void magicalRay3SetZero( cRay3 out )
 {
 	out _o_x = 0.0f;
 	out _o_y = 0.0f;
@@ -92,7 +92,7 @@ void magicalRay3FillZero( cRay3 out )
 	out _d_z = 0.0f;
 }
 
-void magicalRay3Fill( cRay3 out, const cRay3 r3 )
+void magicalRay3Set( cRay3 out, const cRay3 r3 )
 {
 	out _o_x = r3 _o_x;
 	out _o_y = r3 _o_y;
@@ -145,187 +145,17 @@ void magicalRay3DirectionNormalize( cRay3 out, const cRay3 r3 )
 	out _d_z = r3 _d_z;
 
 	float n = r3 _d_x * r3 _d_x + r3 _d_y * r3 _d_y + r3 _d_z * r3 _d_z;
-	if( magicalAlmostEqual( n, 1.0f ) )
+	if( magicalAlmostEqual( n, 1.0f, kEpsilonVector3 ) )
 		return;
 
 	n = sqrtf( n );
-	if( magicalAlmostZero( n ) )
+	if( magicalAlmostZero( n, kEpsilonVector3 ) )
 		return;
 
 	n = 1.0f / n;
 	out _d_x *= n;
 	out _d_y *= n;
 	out _d_z *= n;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 检测射线与3D平面的相交关系 done
- *
- * r3 源射线
- * p 平面
- * discard_inside 是否忽略原点在平面内的相交检测
- * return 是否相交
- *-----------------------------------------------------------------------------*/
-cBool magicalRay3IntersectsPlane3( const cRay3 r3, const cPlane3 p, const cBool discard_inside )
-{
-	int cp;
-	float dn;
-	cVector3 d;
-
-	cp = magicalPlane3ClassifyPoint( p, r3 );
-	if( cp == 0 )
-	{
-		return !discard_inside;
-	}
-
-	d _x = r3 _d_x;
-	d _y = r3 _d_y;
-	d _z = r3 _d_z;
-
-	dn = magicalVector3Dot( d, p );
-	if( magicalAlmostZero( dn ) == cFalse )
-	{
-		if( ( cp == 1 && dn < -kEpsilon ) || ( cp == -1 && dn > kEpsilon ) )
-		{
-			return cTrue;
-		}
-	}
-
-	return cFalse;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 检测射线与轴对齐包围盒的相交关系 done
- *
- * r3 源射线
- * aabb 包围盒
- * discard_inside 是否忽略原点在包围盒内的相交检测
- * return 是否相交
- *-----------------------------------------------------------------------------*/
-cBool magicalRay3IntersectsAABB3( const cRay3 r3, const cAABB3 aabb, const cBool discard_inside )
-{
-	float t;
-	cVector3 p;
-
-	if( r3 _o_x >= aabb _min_x &&
-		r3 _o_y >= aabb _min_y &&
-		r3 _o_z >= aabb _min_z &&
-		r3 _o_x <= aabb _max_x &&
-		r3 _o_y <= aabb _max_y &&
-		r3 _o_z <= aabb _max_z )
-		return !discard_inside;
-
-	if( magicalAlmostZero( r3 _d_x ) == cFalse )
-	{
-		if( r3 _d_x > 0.0f )
-		{
-			t = ( aabb _min_x - r3 _o_x ) / r3 _d_x;
-		}
-		else
-		{
-			t = ( aabb _max_x - r3 _o_x ) / r3 _d_x;
-		}
-
-		if( t > 0.0f )
-		{
-			p _x = r3 _o_x + r3 _d_x * t;
-			p _y = r3 _o_y + r3 _d_y * t;
-			p _z = r3 _o_z + r3 _d_z * t;
-
-			if( p _y >= aabb _min_y &&
-				p _y <= aabb _max_y &&
-				p _z >= aabb _min_z &&
-				p _z <= aabb _max_z )
-				return cTrue;
-		}
-	}
-
-	if( magicalAlmostZero( r3 _d_y ) == cFalse )
-	{
-		if( r3 _d_y > 0.0f )
-		{
-			t = ( aabb _min_y - r3 _o_y ) / r3 _d_y;
-		}
-		else
-		{
-			t = ( aabb _max_y - r3 _o_y ) / r3 _d_y;
-		}
-
-		if( t > 0.0f )
-		{
-			p _x = r3 _o_x + r3 _d_x * t;
-			p _y = r3 _o_y + r3 _d_y * t;
-			p _z = r3 _o_z + r3 _d_z * t;
-
-			if( p _z >= aabb _min_z &&
-				p _z <= aabb _max_z &&
-				p _x >= aabb _min_x &&
-				p _x <= aabb _max_x )
-				return cTrue;
-		}
-	}
-
-	if( magicalAlmostZero( r3 _d_z ) == cFalse )
-	{
-		if( r3 _d_z > 0.0f )
-		{
-			t = ( aabb _min_z - r3 _o_z ) / r3 _d_z;
-		}
-		else
-		{
-			t = ( aabb _max_z - r3 _o_z ) / r3 _d_z;
-		}
-
-		if( t > 0.0f )
-		{
-			p _x = r3 _o_x + r3 _d_x * t;
-			p _y = r3 _o_y + r3 _d_y * t;
-			p _z = r3 _o_z + r3 _d_z * t;
-
-			if( p _x >= aabb _min_x &&
-				p _x <= aabb _max_x &&
-				p _y >= aabb _min_y &&
-				p _y <= aabb _max_y )
-				return cTrue;
-		}
-	}
-	
-	return cFalse;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 检测射线与球体的相交情况 done
- *
- * r3 源射线
- * sp 球体
- * discard_inside 是否忽略原点在球体内的相交检测
- * return 是否相交
- *-----------------------------------------------------------------------------*/
-cBool magicalRay3IntersectsSphere3( const cRay3 r3, const cSphere3 sp, const cBool discard_inside )
-{
-	cVector3 ve, vd;
-	float a, esq, fsq;
-
-	magicalRay3GetDirection( vd, r3 );
-	magicalVector3Sub( ve, sp, r3 );
-
-	esq = magicalVector3LengthSq( ve );
-	if( esq <= sp _r * sp _r )
-	{
-		return !discard_inside;
-	}
-
-	a = magicalVector3Dot( ve, vd );
-	fsq = sp _r * sp _r - esq + a * a;
-
-	if( fsq < 0.0f )
-	{
-		return cFalse;
-	}
-	else
-	{
-		return cTrue;
-	}
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -337,7 +167,7 @@ cBool magicalRay3IntersectsSphere3( const cRay3 r3, const cSphere3 sp, const cBo
  * discard_inside 是否忽略原点在平面内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cPlane3 p, const cBool discard_inside )
+void magicalRay3IntersectsPlane3( cRayIntersectResult out, const cRay3 r3, const cPlane3 p, const cBool discard_inside )
 {
 	int cp;
 	float dn;
@@ -346,8 +176,9 @@ cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cP
 	cp = magicalPlane3ClassifyPoint( p, r3 );
 	if( cp == 0 )
 	{
-		*dist = 0.0f;
-		return !discard_inside;
+		out _dist = 0.0f;
+		out _inst = !discard_inside;
+		return;
 	}
 
 	d _x = r3 _d_x;
@@ -355,17 +186,18 @@ cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cP
 	d _z = r3 _d_z;
 
 	dn = magicalVector3Dot( d, p );
-	if( magicalAlmostZero( dn ) == cFalse )
+	if( magicalAlmostZero( dn, kEpsilonVector3 ) == cFalse )
 	{
-		if( ( cp == 1 && dn < -kEpsilon ) || ( cp == -1 && dn > kEpsilon ) )
+		if( ( cp == 1 && dn < -kEpsilonVector3 ) || ( cp == -1 && dn > kEpsilonVector3 ) )
 		{
-			*dist = ( p _d - magicalVector3Dot( r3, p ) ) / dn;
-			return cTrue;
+			out _dist = ( p _d - magicalVector3Dot( r3, p ) ) / dn; 
+			out _inst = cTrue;
+			return;
 		}
 	}
 
-	*dist = 0.0f;
-	return cFalse;
+	out _dist = 0.0f;
+	out _inst = cFalse;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -377,7 +209,7 @@ cBool magicalRay3IntersectsPlane3Distance( float* dist, const cRay3 r3, const cP
  * discard_inside 是否忽略原点在包围盒内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAABB3 aabb, const cBool discard_inside )
+void magicalRay3IntersectsAABB3( cRayIntersectResult out, const cRay3 r3, const cAABB3 aabb, const cBool discard_inside )
 {
 	float t;
 	cVector3 p;
@@ -389,11 +221,12 @@ cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAA
 		r3 _o_y <= aabb _max_y &&
 		r3 _o_z <= aabb _max_z )
 	{
-		*dist = 0.0f;
-		return !discard_inside;
+		out _dist = 0.0f;
+		out _inst = !discard_inside;
+		return;
 	}
 
-	if( magicalAlmostZero( r3 _d_x ) == cFalse )
+	if( magicalAlmostZero( r3 _d_x, kEpsilonVector3 ) == cFalse )
 	{
 		if( r3 _d_x > 0.0f )
 		{
@@ -415,13 +248,14 @@ cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAA
 				p _z >= aabb _min_z &&
 				p _z <= aabb _max_z )
 			{
-				*dist = t;
-				return cTrue;
+				out _dist = t;
+				out _inst = cTrue;
+				return;
 			}
 		}
 	}
 
-	if( magicalAlmostZero( r3 _d_y ) == cFalse )
+	if( magicalAlmostZero( r3 _d_y, kEpsilonVector3 ) == cFalse )
 	{
 		if( r3 _d_y > 0.0f )
 		{
@@ -443,13 +277,14 @@ cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAA
 				p _x >= aabb _min_x &&
 				p _x <= aabb _max_x )
 			{
-				*dist = t;
-				return cTrue;
+				out _dist = t;
+				out _inst = cTrue;
+				return;
 			}
 		}
 	}
 
-	if( magicalAlmostZero( r3 _d_z ) == cFalse )
+	if( magicalAlmostZero( r3 _d_z, kEpsilonVector3 ) == cFalse )
 	{
 		if( r3 _d_z > 0.0f )
 		{
@@ -471,15 +306,16 @@ cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAA
 				p _y >= aabb _min_y &&
 				p _y <= aabb _max_y )
 			{
-				*dist = t;
-				return cTrue;
+				out _dist = t;
+				out _inst = cTrue;
+				return;
 			}
 				
 		}
 	}
 	
-	*dist = 0.0f;
-	return cFalse;
+	out _dist = 0.0f;
+	out _inst = cFalse;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -492,7 +328,7 @@ cBool magicalRay3IntersectsAABB3Distance( float* dist, const cRay3 r3, const cAA
  * discard_inside 是否忽略原点在球体内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalRay3IntersectsSphere3Distance( float* dist, const cRay3 r3, const cSphere3 sp, const cBool discard_inside )
+void magicalRay3IntersectsSphere3( cRayIntersectResult out, const cRay3 r3, const cSphere3 sp, const cBool discard_inside )
 {
 	cVector3 ve, vd;
 	float a, esq, f, fsq;
@@ -503,8 +339,9 @@ cBool magicalRay3IntersectsSphere3Distance( float* dist, const cRay3 r3, const c
 	esq = magicalVector3LengthSq( ve );
 	if( esq <= sp _r * sp _r )
 	{
-		*dist = 0.0f;
-		return !discard_inside;
+		out _dist = 0.0f;
+		out _inst = !discard_inside;
+		return;
 	}
 
 	a = magicalVector3Dot( ve, vd );
@@ -512,11 +349,12 @@ cBool magicalRay3IntersectsSphere3Distance( float* dist, const cRay3 r3, const c
 
 	if( fsq < 0.0f )
 	{
-		*dist = 0.0f;
-		return cFalse;
+		out _dist = 0.0f;
+		out _inst = cFalse;
+		return;
 	}
 
 	f = sqrtf( fsq );
-	*dist = a - f;
-	return cTrue;
+	out _dist = a - f;
+	out _inst = cTrue;
 }

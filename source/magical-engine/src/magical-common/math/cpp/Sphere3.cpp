@@ -40,7 +40,7 @@ const Sphere3 Sphere3::One = Sphere3( 0.0f, 0.0f, 0.0f, 1.0f );
 Sphere3 Sphere3::placeholder = Sphere3::Zero;
 Sphere3 Sphere3::temp = Sphere3::Zero;
 
-Sphere3::Sphere3( const float x, const float y, const float z, const float r )
+Sphere3::Sphere3( float x, float y, float z, float r )
 : x( x )
 , y( y )
 , z( z )

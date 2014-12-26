@@ -36,7 +36,7 @@ public:
 	static void delc( void );
 	static void run( MainDelegate mainDelegate );
 
-public:
+public:	
 	static void setInterval( double interval );
 	static double getInterval( void );
 	static void setResizable( bool resizable );
@@ -46,6 +46,11 @@ public:
 	static void exit( void );
 
 private:
+	static void initStart( void );
+	static void initEnded( void );
+	static void delcStart( void );
+	static void delcEnded( void );
+
 	static void initWindow( void );
 	static void delcWindow( void );
 	static void initRenderContext( void );

@@ -53,13 +53,13 @@ public:
 	static Plane3 temp;
 
 public:
-	Plane3( const float x, const float y, const float z, const float d );
+	Plane3( float x, float y, float z, float d );
 	Plane3( const Plane3& p );
 	Plane3( void );
 
 public:
 	static inline Plane3 fromZero( void );
-	static inline Plane3 fromNormalAndDistance( const Vector3& n, const float d );
+	static inline Plane3 fromNormalAndDistance( const Vector3& n, float d );
 	static inline Plane3 fromNormalAndPoint( const Vector3& n, const Vector3& a );
 	static inline Plane3 fromPoints( const Vector3& a, const Vector3& b, const Vector3& c );
 	
@@ -72,8 +72,8 @@ public:
 	inline bool isZero( void ) const;
 	inline void fill( const Plane3& p );
 	inline void fillZero( void );
-	inline void fillScalars( const float x, const float y, const float z, const float d );
-	inline void fillNormalAndDistance( const Vector3& n, const float d );
+	inline void fillScalars( float x, float y, float z, float d );
+	inline void fillNormalAndDistance( const Vector3& n, float d );
 	inline void fillNormalAndPoint( const Vector3& n, const Vector3& a );
 	inline void fillPoints( const Vector3& a, const Vector3& b, const Vector3& c );
 
@@ -86,7 +86,7 @@ public:
 
 public:	
 	inline void setNormal( const Vector3& n );
-	inline void setDistance( const float d );
+	inline void setDistance( float d );
 	inline Vector3 getNormal( void ) const;
 	inline float getDistance( void ) const;
 	inline Vector3 nearestPoint( const Vector3& point ) const;

@@ -45,7 +45,7 @@ public:
 	static Ray3 temp;
 
 public:
-	Ray3( const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
+	Ray3( float ox, float oy, float oz, float dx, float dy, float dz );
 	Ray3( const Ray3& r3 );
 	Ray3( void );
 
@@ -62,7 +62,7 @@ public:
 	inline bool isZero( void ) const;
 	inline void fill( const Ray3& r3 );
 	inline void fillZero( void );
-	inline void fillScalars( const float ox, const float oy, const float oz, const float dx, const float dy, const float dz );
+	inline void fillScalars( float ox, float oy, float oz, float dx, float dy, float dz );
 	inline void fillOriginToEnd( const Vector3& origin, const Vector3& end );
 	inline void fillOriginAndDirection( const Vector3& origin, const Vector3& direction );
 
@@ -79,13 +79,13 @@ public:
 	inline void setDirection( const Vector3& direction );
 	inline void directionNormalize( void );
 
-	inline bool intersectsPlane3( const Plane3& p, const bool discard_inside = false ) const;
-	inline bool intersectsAABB3( const AABB3& aabb, const bool discard_inside = false ) const;
-	inline bool intersectsSphere3( const Sphere3& sp, const bool discard_insid = false ) const;
+	inline bool intersectsPlane3( const Plane3& p, bool discard_inside = false ) const;
+	inline bool intersectsAABB3( const AABB3& aabb, bool discard_inside = false ) const;
+	inline bool intersectsSphere3( const Sphere3& sp, bool discard_insid = false ) const;
 
-	inline bool intersectsPlane3Distance( float& distance, const Plane3& p, const bool discard_inside = false ) const;
-	inline bool intersectsAABB3Distance( float& distance, const AABB3& aabb, const bool discard_inside = false ) const;
-	inline bool intersectsSphere3Distance( float& distance, const Sphere3& sp, const bool discard_inside = false ) const;
+	inline bool intersectsPlane3Distance( float& distance, const Plane3& p, bool discard_inside = false ) const;
+	inline bool intersectsAABB3Distance( float& distance, const AABB3& aabb, bool discard_inside = false ) const;
+	inline bool intersectsSphere3Distance( float& distance, const Sphere3& sp, bool discard_inside = false ) const;
 };
 
 #endif //__RAY3_H__

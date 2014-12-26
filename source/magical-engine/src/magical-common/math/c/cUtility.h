@@ -29,37 +29,42 @@ SOFTWARE.
 #include <assert.h>
 #include <stdlib.h>
 
-#if defined MAGICAL_ENGINE
-#include "PlatformMacros.h"
+#ifndef MAGICAL_ENGINE
+	typedef unsigned char cBool;
+	#ifndef cTrue
+		#define cTrue 1
+	#endif
+	#ifndef cFalse
+		#define cFalse 0
+	#endif
 #else
-typedef unsigned char cBool;
-#ifndef cTrue
-#define cTrue 1
-#endif
-#ifndef cFalse
-#define cFalse 0
-#endif
+	#include "PlatformMacros.h"
 #endif
 
 #ifndef MAGICALAPI_MATH
-#define MAGICALAPI_MATH
+	#define MAGICALAPI_MATH
 #endif
 
-#ifndef tofpointer
-#define tofpointer( a ) ( (float*)(a) )
+#ifndef MAGICAL_DEBUG
+	#define debugassert( con, msg )
+#else
+	#define debugassert( con, msg ) do{ \
+		if( !( con ) ) {                \
+			assert( ( con ) && msg );   \
+		}}  while( 0 )
 #endif
 
-#define kEpsilon 0.00001f
-#define kPI 3.14159265358979323846f
-#define k2PI 6.28318530717958647692f
-#define kPIOver2 1.57079632679489661923f
-#define kPIOver180 0.01745329251994329576f
-#define k1OverPI 0.31830988618379067153f
-#define k1Over2PI 0.15915494309189533576f
-#define k180OverPI 57.2957795130823208768f
+const float kPI = 3.14159265358979323846f;
+const float k2PI = 6.28318530717958647692f;
+const float kPIOver2 = 1.57079632679489661923f;
+const float kPIOver180 = 0.01745329251994329576f;
+const float k1OverPI = 0.31830988618379067153f;
+const float k1Over2PI = 0.15915494309189533576f;
+const float k180OverPI = 57.2957795130823208768f;
+const float kEpsilon = 1e-006f;
 
-#define magicalAlmostEqual( a, b ) ( fabs( (a) - (b) ) < kEpsilon )
-#define magicalAlmostZero( a ) ( fabs(a) < kEpsilon )
+#define magicalAlmostEqual( a, b, e ) ( fabs( (a) - (b) ) < e )
+#define magicalAlmostZero( a, e ) ( fabs(a) < e )
 #define magicalDegToRad( a ) ( (a) * kPIOver180 )
 #define magicalRadToDeg( a ) ( (a) * k180OverPI )
 

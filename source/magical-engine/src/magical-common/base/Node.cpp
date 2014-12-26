@@ -23,20 +23,55 @@ SOFTWARE.
 *******************************************************************************/
 #include "Node.h"
 
-Node::Node( void )
-//: _transform( nullptr )
+enum
 {
-	//_transform = new Transform();
+	kNotChanged = 0x00,
+	kTranslationChanged = 0x01,
+	kRotationChanged = 0x02,
+	kScaleChanged = 0x04,
+};
+
+Node::Node( void )
+{
+
 }
 
 Node::~Node( void )
 {
-	//_transform->release();
+
 }
 
 Shared<Node> Node::create( void )
 {
 	Node* ret = new Node();
-	magicalAssert( ret, "New Node() failed" );
+	magicalAssert( ret, "new Node() failed" );
 	return Shared<Node>( Initializer<Node>( ret ) );
+}
+
+void Node::transformChanged( int chg )
+{
+	_has_changed |= chg;
+}
+
+void Node::setPosition( const Vector3& v )
+{
+	_position = v;
+	transformChanged( kTranslationChanged );
+}
+
+void Node::setPosition( const Vector2& v )
+{
+	//_position.fillVector2( v );
+	transformChanged( kTranslationChanged );
+}
+
+void Node::setPosition( const float x, const float y, const float z )
+{
+	//_position.fillScalars( x, y, z );
+	transformChanged( kTranslationChanged );
+}
+
+void Node::setRotation( const Quaternion& q )
+{
+
 }
