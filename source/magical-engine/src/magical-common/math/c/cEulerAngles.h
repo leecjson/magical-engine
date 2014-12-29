@@ -21,18 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_EULERA_H__
-#define __C_EULERA_H__
+#ifndef __C_EULER_ANGLES_H__
+#define __C_EULER_ANGLES_H__
 
 #include "cUtility.h"
 
-#define kEpsilonEulerA 1e-004f
-
-typedef struct cEulerA {
+typedef struct cEulerAngles {
 	float yaw;
 	float pitch;
 	float roll;
-} cEulerA;
+} cEulerAngles;
 
 #include "cQuaternion.h"
 
@@ -40,25 +38,25 @@ typedef struct cEulerA {
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBool magicalEulerAEqulas( const cEulerA* ea1, const cEulerA* ea2 );
-MAGICALAPI_MATH cBool magicalEulerAIsIdentity( const cEulerA* ea );
+MAGICALAPI_MATH cBool magicalEulerAnglesEqulas( const cEulerAngles* ea1, const cEulerAngles* ea2 );
+MAGICALAPI_MATH cBool magicalEulerAnglesIsZero( const cEulerAngles* ea );
 
-MAGICALAPI_MATH void magicalEulerAFill( cEulerA* out, float yaw, float pitch, float roll );
-MAGICALAPI_MATH void magicalEulerACopy( cEulerA* out, const cEulerA* ea );
-MAGICALAPI_MATH void magicalEulerASetIdentity( cEulerA* out );
+MAGICALAPI_MATH void magicalEulerAnglesFill( cEulerAngles* out, float yaw, float pitch, float roll );
+MAGICALAPI_MATH void magicalEulerAnglesCopy( cEulerAngles* out, const cEulerAngles* ea );
+MAGICALAPI_MATH void magicalEulerAnglesSetZero( cEulerAngles* out );
 
-MAGICALAPI_MATH void magicalEulerAFromQuaternion( cEulerA* out, const cQuaternion* q );
-MAGICALAPI_MATH void magicalEulerAToQuaternion( cQuaternion* out, const cEulerA* ea );
+MAGICALAPI_MATH void magicalEulerAnglesFromQuaternion( cEulerAngles* out, const cQuaternion* q );
+MAGICALAPI_MATH void magicalEulerAnglesToQuaternion( cQuaternion* out, const cEulerAngles* ea );
 
-MAGICALAPI_MATH void magicalEulerAAdd( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 );
-MAGICALAPI_MATH void magicalEulerASub( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 );
-MAGICALAPI_MATH void magicalEulerAMul( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 );
-MAGICALAPI_MATH void magicalEulerAMulScalar( cEulerA* out, const cEulerA* ea, float a );
+MAGICALAPI_MATH void magicalEulerAnglesAdd( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 );
+MAGICALAPI_MATH void magicalEulerAnglesSub( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 );
+MAGICALAPI_MATH void magicalEulerAnglesMul( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 );
+MAGICALAPI_MATH void magicalEulerAnglesMulScalar( cEulerAngles* out, const cEulerAngles* ea, float a );
 
-MAGICALAPI_MATH void magicalEulerALimit( cEulerA* out, const cEulerA* ea );
+MAGICALAPI_MATH void magicalEulerAnglesLimit( cEulerAngles* out, const cEulerAngles* ea );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //__C_EULERA_H__
+#endif //__C_EULER_ANGLES_H__

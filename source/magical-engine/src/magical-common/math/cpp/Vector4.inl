@@ -147,7 +147,7 @@ inline bool Vector4::operator!=( const Vector4& v ) const
 	return !magicalVector4Equals( this, &v );
 }
 
-inline float Vector4::operator[]( const unsigned int i ) const
+inline float& Vector4::operator[]( const unsigned int i ) const
 {
 #ifdef MAGICAL_DEBUG
 	assert( 0 <= i && i <= 3 && "index out of range" );
@@ -307,7 +307,7 @@ inline void Vector4::setScalars( float x, float y, float z, float w )
 	this->w = w;
 }
 
-inline void Vector4::setVector2( const Vector2& v )
+inline void Vector4::fromVector2( const Vector2& v )
 {
 	x = v.x;
 	y = v.y;
@@ -315,7 +315,7 @@ inline void Vector4::setVector2( const Vector2& v )
 	w = 0.0f;
 }
 
-inline void Vector4::setVector3( const Vector3& v )
+inline void Vector4::fromVector3( const Vector3& v )
 {
 	x = v.x;
 	y = v.y;

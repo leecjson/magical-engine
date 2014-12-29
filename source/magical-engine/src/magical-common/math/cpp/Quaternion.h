@@ -25,13 +25,12 @@ SOFTWARE.
 #define __QUATERNION_H__
 
 struct Vector3;
-struct AxisRotation;
-struct EulerA;
+struct AxisAngle;
+struct EulerAngles;
 
 struct Quaternion : public cQuaternion
 {
 public:
-	static const float Epsilon;
 	static const Quaternion Identity;
 	static const Quaternion Zero;
 	static Quaternion var;
@@ -44,13 +43,13 @@ public:
 public:
 	static inline Quaternion createIdentity( void );
 	static inline Quaternion createZero( void );
-	static inline Quaternion createAxisRotationX( float angle );
-	static inline Quaternion createAxisRotationY( float angle );
-	static inline Quaternion createAxisRotationZ( float angle );
-	static inline Quaternion createAxisRotation( const AxisRotation& ar );
-	static inline Quaternion createAxisRotation( const Vector3& axis, float angle );
-	static inline Quaternion createFromEulerA( const EulerA& ea );
-	static inline Quaternion createFromEulerA( float yaw, float pitch, float roll );
+	static inline Quaternion createRotationX( float angle );
+	static inline Quaternion createRotationY( float angle );
+	static inline Quaternion createRotationZ( float angle );
+	static inline Quaternion createFromAxisAngle( const AxisAngle& aa );
+	static inline Quaternion createFromAxisAngle( const Vector3& axis, float angle );
+	static inline Quaternion createFromEulerAngles( const EulerAngles& ea );
+	static inline Quaternion createFromEulerAngles( float yaw, float pitch, float roll );
 
 	static inline void add( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
 	static inline void sub( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
@@ -71,7 +70,7 @@ public:
 	inline bool isNormalized( void ) const;
 	inline bool operator==( const Quaternion& q ) const;
 	inline bool operator!=( const Quaternion& q ) const;
-	inline float operator[]( const unsigned int i ) const;
+	inline float& operator[]( const unsigned int i ) const;
 	inline Quaternion operator+( const Quaternion& q ) const;
 	inline Quaternion operator-( const Quaternion& q ) const;
 	inline Quaternion operator*( float a ) const;
@@ -87,14 +86,18 @@ public:
 	inline void setIdentity( void );
 	inline void setZero( void );
 	inline void setScalars( float x, float y, float z, float w );
-	inline void setAxisRotationX( float angle );
-	inline void setAxisRotationY( float angle );
-	inline void setAxisRotationZ( float angle );
-	inline void setAxisRotation( const AxisRotation& ar );
-	inline void setAxisRotation( const Vector3& axis, float angle );
-	inline void setEulerA( const EulerA& ea );
-	inline void setEulerA( float yaw, float pitch, float roll );
+	inline void setRotationX( float angle );
+	inline void setRotationY( float angle );
+	inline void setRotationZ( float angle );
 
+public:
+	inline void fromAxisAngle( const AxisAngle& aa );
+	inline void fromAxisAngle( const Vector3& axis, float angle );
+	inline AxisAngle toAxisAngle( void ) const;
+	inline void fromEulerAngles( const EulerAngles& ea );
+	inline void fromEulerAngles( float yaw, float pitch, float roll );
+	inline EulerAngles toEulerAngles( void ) const;
+	
 public:
 	inline void normalize( void );
 	inline void conjugate( void );
@@ -107,8 +110,6 @@ public:
 	inline float dot( const Quaternion& q ) const;
 	inline float length( void ) const;
 	inline float lengthSq( void ) const;
-	inline AxisRotation toAxisRotation( void ) const;
-	inline EulerA toEulerA( void ) const;
 };
 	
 #endif //__QUATERNION_H__

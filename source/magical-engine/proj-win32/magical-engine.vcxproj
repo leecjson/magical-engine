@@ -66,23 +66,26 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\magical-common\assets\win32\AssetsSystem.cpp" />
-    <ClCompile Include="..\src\magical-common\base\Camera.cpp" />
-    <ClCompile Include="..\src\magical-common\base\Node.cpp" />
-    <ClCompile Include="..\src\magical-common\base\Scene.cpp" />
-    <ClCompile Include="..\src\magical-common\base\Viewport.cpp" />
-    <ClCompile Include="..\src\magical-common\common\Common.cpp" />
-    <ClCompile Include="..\src\magical-common\common\Data.cpp" />
-    <ClCompile Include="..\src\magical-common\common\Reference.cpp" />
+    <ClCompile Include="..\src\magical-common\base\Common.cpp" />
+    <ClCompile Include="..\src\magical-common\base\Data.cpp" />
+    <ClCompile Include="..\src\magical-common\base\Reference.cpp" />
+    <ClCompile Include="..\src\magical-common\engine\Camera.cpp" />
     <ClCompile Include="..\src\magical-common\engine\Engine.cpp" />
+    <ClCompile Include="..\src\magical-common\engine\Node.cpp" />
+    <ClCompile Include="..\src\magical-common\engine\Scene.cpp" />
+    <ClCompile Include="..\src\magical-common\engine\Viewport.cpp" />
     <ClCompile Include="..\src\magical-common\log\win32\LogSystem.cpp" />
-    <ClCompile Include="..\src\magical-common\math\cpp\AxisR.cpp" />
-    <ClCompile Include="..\src\magical-common\math\cpp\EulerA.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\AxisAngle.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\EulerAngles.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\Matrix4.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\Quaternion.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\Vector2.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\Vector3.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\Vector4.cpp" />
-    <ClCompile Include="..\src\magical-common\math\c\cAxisR.c" />
-    <ClCompile Include="..\src\magical-common\math\c\cEulerA.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cAxisAngle.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cEulerAngles.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cMatrix3.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cMatrix4.c" />
     <ClCompile Include="..\src\magical-common\math\c\cQuaternion.c" />
     <ClCompile Include="..\src\magical-common\math\c\cVector2.c" />
     <ClCompile Include="..\src\magical-common\math\c\cVector3.c" />
@@ -152,29 +155,29 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\magical-common\assets\AssetsSystem.h" />
-    <ClInclude Include="..\src\magical-common\base\Camera.h" />
-    <ClInclude Include="..\src\magical-common\base\Node.h" />
-    <ClInclude Include="..\src\magical-common\base\Scene.h" />
-    <ClInclude Include="..\src\magical-common\base\Viewport.h" />
-    <ClInclude Include="..\src\magical-common\common\Array.h" />
-    <ClInclude Include="..\src\magical-common\common\CachedPool.h" />
-    <ClInclude Include="..\src\magical-common\common\Common.h" />
-    <ClInclude Include="..\src\magical-common\common\Data.h" />
-    <ClInclude Include="..\src\magical-common\common\List.h" />
-    <ClInclude Include="..\src\magical-common\common\Map.h" />
-    <ClInclude Include="..\src\magical-common\common\Reference.h" />
-    <ClInclude Include="..\src\magical-common\common\Shared.h" />
+    <ClInclude Include="..\src\magical-common\base\CachedPool.h" />
+    <ClInclude Include="..\src\magical-common\base\Common.h" />
+    <ClInclude Include="..\src\magical-common\base\Data.h" />
+    <ClInclude Include="..\src\magical-common\base\Reference.h" />
+    <ClInclude Include="..\src\magical-common\base\Shared.h" />
+    <ClInclude Include="..\src\magical-common\engine\Camera.h" />
     <ClInclude Include="..\src\magical-common\engine\Engine.h" />
+    <ClInclude Include="..\src\magical-common\engine\Node.h" />
+    <ClInclude Include="..\src\magical-common\engine\Scene.h" />
+    <ClInclude Include="..\src\magical-common\engine\Viewport.h" />
     <ClInclude Include="..\src\magical-common\include\magical-engine.h" />
     <ClInclude Include="..\src\magical-common\log\LogSystem.h" />
-    <ClInclude Include="..\src\magical-common\math\cpp\AxisR.h" />
-    <ClInclude Include="..\src\magical-common\math\cpp\EulerA.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\AxisAngle.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\EulerAngles.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\Matrix4.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\Quaternion.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\Vector2.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\Vector3.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\Vector4.h" />
-    <ClInclude Include="..\src\magical-common\math\c\cAxisR.h" />
-    <ClInclude Include="..\src\magical-common\math\c\cEulerA.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cAxisAngle.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cEulerAngles.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cMatrix3.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cMatrix4.h" />
     <ClInclude Include="..\src\magical-common\math\c\cQuaternion.h" />
     <ClInclude Include="..\src\magical-common\math\c\cUtility.h" />
     <ClInclude Include="..\src\magical-common\math\c\cVector2.h" />
@@ -242,8 +245,9 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\src\magical-renderer\support\ShaderProgramManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\magical-common\math\cpp\AxisR.inl" />
-    <None Include="..\src\magical-common\math\cpp\EulerA.inl" />
+    <None Include="..\src\magical-common\math\cpp\AxisAngle.inl" />
+    <None Include="..\src\magical-common\math\cpp\EulerAngles.inl" />
+    <None Include="..\src\magical-common\math\cpp\Matrix4.inl" />
     <None Include="..\src\magical-common\math\cpp\Quaternion.inl" />
     <None Include="..\src\magical-common\math\cpp\Vector2.inl" />
     <None Include="..\src\magical-common\math\cpp\Vector3.inl" />

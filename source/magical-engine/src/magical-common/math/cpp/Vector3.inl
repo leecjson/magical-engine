@@ -152,7 +152,7 @@ inline bool Vector3::operator!=( const Vector3& v ) const
 	return !magicalVector3Equals( this, &v );
 }
 
-inline float Vector3::operator[]( const unsigned int i ) const
+inline float& Vector3::operator[]( const unsigned int i ) const
 {
 #ifdef MAGICAL_DEBUG
 	assert( 0 <= i && i <= 2 && "index out of range" );
@@ -309,14 +309,14 @@ inline void Vector3::setScalars( float x, float y, float z )
 	this->z = z;
 }
 
-inline void Vector3::setVector2( const Vector2& v )
+inline void Vector3::fromVector2( const Vector2& v )
 {
 	x = v.x;
 	y = v.y;
 	z = 0.0f;
 }
 
-inline void Vector3::setVector4( const Vector4& v )
+inline void Vector3::fromVector4( const Vector4& v )
 {
 	x = v.x;
 	y = v.y;

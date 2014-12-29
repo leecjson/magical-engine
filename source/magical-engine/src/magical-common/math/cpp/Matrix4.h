@@ -26,8 +26,8 @@ SOFTWARE.
 
 struct Vector3;
 struct Vector4;
-struct AxisA;
-struct EulerA;
+struct AxisAngle;
+struct EulerAngles;
 struct Quaternion;
 
 struct Matrix4 : public cMatrix4
@@ -46,6 +46,7 @@ public:
 public:
 	static inline Matrix4 createIdentity( void );
 	static inline Matrix4 createZero( void );
+
 	static inline void mulScalar( Matrix4& out, const Matrix4& m, float a );
 	static inline void mul( Matrix4& out, const Matrix4& m1, const Matrix4& m2 );
 	static inline void getUpVector( Vector3& out, const Matrix4& m );
@@ -69,7 +70,7 @@ public:
 	inline bool isIdentity( void ) const;
 	inline bool operator==( const Matrix4& m ) const;
 	inline bool operator!=( const Matrix4& m ) const;
-	inline float operator[]( const unsigned int i ) const;
+	inline float& operator[]( const unsigned int i ) const;
 	inline Matrix4 operator*( float a ) const;
 	inline Matrix4 operator*( const Matrix4& m ) const;
 	inline Matrix4& operator*=( float a );
@@ -84,18 +85,20 @@ public:
 	inline void setLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
 	inline void setPerspective( float fov, float aspect, float znear, float zfar );
 	inline void setOrth( float left, float right, float bottom, float top, float near, float far );
-	inline void setupTranslation( float x, float y, float z );
-	inline void setupTranslation( const Vector3& t );
-	inline void setupScale( float x, float y, float z );
-	inline void setupScale( const Vector3& s );
-	inline void setupRotationX( float angle );
-	inline void setupRotationY( float angle );
-	inline void setupRotationZ( float angle );
-	inline void setupRotationAxisA( const Vector3& axis, float angle );
-	inline void setupRotationAxisA( const AxisA& aa );
-	inline void setupRotationEulerA( float yaw, float pitch, float roll );
-	inline void setupRotationEulerA( const EulerA& ea );
-	inline void setupRotationQuaternion( const Quaternion& q );
+	inline void setTRS( const Vector3& t, const Quaternion& q, const Vector3& s );
+
+	inline void makeTranslation( float x, float y, float z );
+	inline void makeTranslation( const Vector3& t );
+	inline void makeScale( float x, float y, float z );
+	inline void makeScale( const Vector3& s );
+	inline void makeRotationX( float angle );
+	inline void makeRotationY( float angle );
+	inline void makeRotationZ( float angle );
+	inline void makeRotationAxisAngle( const Vector3& axis, float angle );
+	inline void makeRotationAxisAngle( const AxisAngle& aa );
+	inline void makeRotationEulerAngles( float yaw, float pitch, float roll );
+	inline void makeRotationEulerAngles( const EulerAngles& ea );
+	inline void makeRotationQuaternion( const Quaternion& q );
 
 public:
 	inline Vector3 getUpVector( void ) const;

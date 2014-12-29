@@ -3,15 +3,15 @@ The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
+Permission is hereby granted, free of chaage, to any person obtaining a copy
+of this softwaae and associated documentation files (the "Softwaae"), to deal
+in the Softwaae without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
+copies of the Softwaae, and to permit persons to whom the Softwaae is
 furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+copies or substantial portions of the Softwaae.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,47 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector3.h"
-#include "../c/cAxisR.h"
+#include "../c/cAxisAngle.h"
 #include "../c/cQuaternion.h"
 #include "Vector3.h"
-#include "AxisR.h"
+#include "AxisAngle.h"
 #include "Quaternion.h"
-#include "AxisR.inl"
+#include "AxisAngle.inl"
 #include "MathMacros.h"
 
-const float AxisRotation::Epsilon = kEpsilonAxisRotation;
-const AxisRotation AxisRotation::Identity = AxisRotation( 0.0f, 0.0f, 1.0f, 0.0f );
-const AxisRotation AxisRotation::Zero = AxisRotation( 0.0f, 0.0f, 0.0f, 0.0f );
-AxisRotation AxisRotation::var = AxisRotation::Identity;
+const AxisAngle AxisAngle::Identity = AxisAngle( 0.0f, 0.0f, 1.0f, 0.0f );
+const AxisAngle AxisAngle::Zero = AxisAngle( 0.0f, 0.0f, 0.0f, 0.0f );
+AxisAngle AxisAngle::var = AxisAngle::Identity;
 
-AxisRotation::AxisRotation( float x, float y, float z, float w )
+AxisAngle::AxisAngle( float x, float y, float z, float w )
 {
-	magicalAxisRotationFill( this, x, y, z, w );
+	magicalAxisAngleFill( this, x, y, z, w );
 }
 
-AxisRotation::AxisRotation( const Vector3& axis, float angle )
+AxisAngle::AxisAngle( const Vector3& axis, float angle )
 {
-	magicalAxisRotationFill( this, axis.x, axis.y, axis.z, angle );
+	magicalAxisAngleFill( this, axis.x, axis.y, axis.z, angle );
 }
 
-AxisRotation::AxisRotation( const AxisRotation& ar )
+AxisAngle::AxisAngle( const AxisAngle& aa )
 {
-	magicalAxisRotationCopy( this, &ar );
+	magicalAxisAngleCopy( this, &aa );
 }
 
-AxisRotation::AxisRotation( void )
+AxisAngle::AxisAngle( void )
 {
-	magicalAxisRotationSetIdentity( this );
+	magicalAxisAngleSetIdentity( this );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachedPool.h"
-static CachedPool<AxisRotation> s_axisag_cached_pool( 32, 32 );
+static CachedPool<AxisAngle> s_axisag_cached_pool( 32, 32 );
 #endif
 
-void* AxisRotation::operator new( size_t s )
+void* AxisAngle::operator new( size_t s )
 {
-	if( s != sizeof( AxisRotation ) )
+	if( s != sizeof( AxisAngle ) )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
@@ -72,7 +71,7 @@ void* AxisRotation::operator new( size_t s )
 #endif
 }
 
-void AxisRotation::operator delete( void* ptr )
+void AxisAngle::operator delete( void* ptr )
 {
 	if( ptr == nullptr )
 		return;

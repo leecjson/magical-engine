@@ -95,7 +95,9 @@ MAGICALAPI void magicalMessageBox( const char* msg, const char* title );
 /*
 asserts macros
 */
-#ifdef MAGICAL_DEBUG
+#ifndef MAGICAL_DEBUG
+#define magicalAssert( __con, __msg )
+#else
 #define magicalAssert( __con, __msg ) do{                     \
 	if( !( __con ) ) {                                        \
 		magicalSetLastErrorInfoB( __msg );                    \
@@ -103,8 +105,6 @@ asserts macros
 		assert( ( __con ) && __msg );                         \
 	}                                                         \
 	} while(0)
-#else
-#define magicalAssert( __con, __msg )
 #endif
 
 /*
@@ -117,26 +117,26 @@ MAGICALAPI_USER double magicalEndTimer( void );
 /*
 objects lift listener macros, only work on debug protocol
 */
-#define kEngineObjectsListener 1
-#define kCustomObjectsListener 2
-
-#ifndef MAGICAL_DEBUG
-#define magicalStartObjectsListener( listener )
-#define magicalEndObjectsListener( listener )
-#define magicalIsObjectsListenerStarted( listener ) false
-#define magicalObjectConstruct()
-#define magicalObjectDestruct()
-#define magicalGetObjectsConstructCount( listener ) 0
-#define magicalGetObjectsDestructCount( listener ) 0
-#else
-MAGICALAPI void magicalStartObjectsListener( int listener );
-MAGICALAPI void magicalEndObjectsListener( int listener );
-MAGICALAPI bool magicalIsObjectsListenerStarted( int listener );
-MAGICALAPI void magicalObjectConstruct( void );
-MAGICALAPI void magicalObjectDestruct( void );
-MAGICALAPI int magicalGetObjectsConstructCount( int listener );
-MAGICALAPI int magicalGetObjectsDestructCount( int listener );
-#endif
+//#define kEngineObjectsListener 1
+//#define kCustomObjectsListener 2
+//
+//#ifndef MAGICAL_DEBUG
+//#define magicalStartObjectsListener( listener )
+//#define magicalEndObjectsListener( listener )
+//#define magicalIsObjectsListenerStarted( listener ) false
+//#define magicalObjectConstruct()
+//#define magicalObjectDestruct()
+//#define magicalGetObjectsConstructCount( listener ) 0
+//#define magicalGetObjectsDestructCount( listener ) 0
+//#else
+//MAGICALAPI void magicalStartObjectsListener( int listener );
+//MAGICALAPI void magicalEndObjectsListener( int listener );
+//MAGICALAPI bool magicalIsObjectsListenerStarted( int listener );
+//MAGICALAPI void magicalObjectConstruct( void );
+//MAGICALAPI void magicalObjectDestruct( void );
+//MAGICALAPI int magicalGetObjectsConstructCount( int listener );
+//MAGICALAPI int magicalGetObjectsDestructCount( int listener );
+//#endif
 
 //struct Color4F
 //{

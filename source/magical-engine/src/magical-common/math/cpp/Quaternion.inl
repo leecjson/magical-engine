@@ -32,52 +32,52 @@ inline Quaternion Quaternion::createZero( void )
 	return Quaternion::Zero;
 }
 
-inline Quaternion Quaternion::createAxisRotationX( float angle )
+inline Quaternion Quaternion::createRotationX( float angle )
 {
 	Quaternion ret;
-	magicalQuaternionFromAxisRotationX( &ret, angle );
+	magicalQuaternionSetRotationX( &ret, angle );
 	return ret;
 }
 
-inline Quaternion Quaternion::createAxisRotationY( float angle )
+inline Quaternion Quaternion::createRotationY( float angle )
 {
 	Quaternion ret;
-	magicalQuaternionFromAxisRotationY( &ret, angle );
+	magicalQuaternionSetRotationY( &ret, angle );
 	return ret;
 }
 
-inline Quaternion Quaternion::createAxisRotationZ( float angle )
+inline Quaternion Quaternion::createRotationZ( float angle )
 {
 	Quaternion ret;
-	magicalQuaternionFromAxisRotationZ( &ret, angle );
+	magicalQuaternionSetRotationZ( &ret, angle );
 	return ret;
 }
 
-inline Quaternion Quaternion::createAxisRotation( const AxisRotation& ar )
+inline Quaternion Quaternion::createFromAxisAngle( const AxisAngle& aa )
 {
 	Quaternion ret;
-	magicalQuaternionFromAxisRotation( &ret, &ar );
+	magicalQuaternionFromAxisAngle( &ret, &aa );
 	return ret;
 }
 
-inline Quaternion Quaternion::createAxisRotation( const Vector3& axis, float angle )
+inline Quaternion Quaternion::createFromAxisAngle( const Vector3& axis, float angle )
 {
 	Quaternion ret;
-	magicalQuaternionFromAxisRotation( &ret, &AxisRotation( axis, angle ) );
+	magicalQuaternionFromAxisAngle( &ret, &AxisAngle( axis, angle ) );
 	return ret;
 }
 
-inline Quaternion Quaternion::createFromEulerA( const EulerA& ea )
+inline Quaternion Quaternion::createFromEulerAngles( const EulerAngles& ea )
 {
 	Quaternion ret;
-	magicalQuaternionFromEulerA( &ret, &ea );
+	magicalQuaternionFromEulerAngles( &ret, &ea );
 	return ret;
 }
 
-inline Quaternion Quaternion::createFromEulerA( float yaw, float pitch, float roll )
+inline Quaternion Quaternion::createFromEulerAngles( float yaw, float pitch, float roll )
 {
 	Quaternion ret;
-	magicalQuaternionFromEulerA( &ret, &EulerA( yaw, pitch, roll ) );
+	magicalQuaternionFromEulerAngles( &ret, &EulerAngles( yaw, pitch, roll ) );
 	return ret;
 }
 
@@ -156,7 +156,7 @@ inline bool Quaternion::operator!=( const Quaternion& q ) const
 	return !magicalQuaternionEquals( this, &q );
 }
 
-inline float Quaternion::operator[]( const unsigned int i ) const
+inline float& Quaternion::operator[]( const unsigned int i ) const
 {
 #ifdef MAGICAL_DEBUG
 	assert( 0 <= i && i <= 3 && "index out of range" );
@@ -236,39 +236,53 @@ inline void Quaternion::setScalars( float x, float y, float z, float w )
 	this->x = x; this->y = y; this->z = z; this->w = w;
 }
 
-inline void Quaternion::setAxisRotationX( float angle )
+inline void Quaternion::setRotationX( float angle )
 {
-	magicalQuaternionFromAxisRotationX( this, angle );
+	magicalQuaternionSetRotationX( this, angle );
 }
 
-inline void Quaternion::setAxisRotationY( float angle )
+inline void Quaternion::setRotationY( float angle )
 {
-	magicalQuaternionFromAxisRotationY( this, angle );
+	magicalQuaternionSetRotationY( this, angle );
 }
 
-inline void Quaternion::setAxisRotationZ( float angle )
+inline void Quaternion::setRotationZ( float angle )
 {
-	magicalQuaternionFromAxisRotationZ( this, angle );
+	magicalQuaternionSetRotationZ( this, angle );
 }
 
-inline void Quaternion::setAxisRotation( const AxisRotation& ar )
+inline void Quaternion::fromAxisAngle( const AxisAngle& aa )
 {
-	magicalQuaternionFromAxisRotation( this, &ar );
+	magicalQuaternionFromAxisAngle( this, &aa );
 }
 
-inline void Quaternion::setAxisRotation( const Vector3& axis, float angle )
+inline void Quaternion::fromAxisAngle( const Vector3& axis, float angle )
 {
-	magicalQuaternionFromAxisRotation( this, &AxisRotation( axis, angle ) );
+	magicalQuaternionFromAxisAngle( this, &AxisAngle( axis, angle ) );
 }
 
-inline void Quaternion::setEulerA( const EulerA& ea )
+inline AxisAngle Quaternion::toAxisAngle( void ) const
 {
-	magicalQuaternionFromEulerA( this, &ea );
+	AxisAngle aa;
+	magicalQuaternionToAxisAngle( &aa, this );
+	return aa;
 }
 
-inline void Quaternion::setEulerA( float yaw, float pitch, float roll )
+inline void Quaternion::fromEulerAngles( const EulerAngles& ea )
 {
-	magicalQuaternionFromEulerA( this, &EulerA( yaw, pitch, roll ) );
+	magicalQuaternionFromEulerAngles( this, &ea );
+}
+
+inline void Quaternion::fromEulerAngles( float yaw, float pitch, float roll )
+{
+	magicalQuaternionFromEulerAngles( this, &EulerAngles( yaw, pitch, roll ) );
+}
+
+inline EulerAngles Quaternion::toEulerAngles( void ) const
+{
+	EulerAngles ea;
+	magicalQuaternionToEulerAngles( &ea, this );
+	return ea;
 }
 
 inline void Quaternion::normalize( void )
@@ -332,18 +346,4 @@ inline float Quaternion::length( void ) const
 inline float Quaternion::lengthSq( void ) const
 {
 	return magicalQuaternionLengthSq( this );
-}
-
-inline AxisRotation Quaternion::toAxisRotation( void ) const
-{
-	AxisRotation ar;
-	magicalQuaternionToAxisRotation( &ar, this );
-	return ar;
-}
-
-inline EulerA Quaternion::toEulerA( void ) const
-{
-	EulerA ea;
-	magicalQuaternionToEulerA( &ea, this );
-	return ea;
 }

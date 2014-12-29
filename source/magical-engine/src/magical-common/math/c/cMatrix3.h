@@ -21,57 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Node.h"
+#ifndef __C_MATRIX3_H__
+#define __C_MATRIX3_H__
 
-enum
-{
-	kNotChanged = 0x00,
-	kTranslationChanged = 0x01,
-	kRotationChanged = 0x02,
-	kScaleChanged = 0x04,
-};
+#include "cUtility.h"
 
-Node::Node( void )
-{
+typedef struct cMatrix3{
+	float m11;
+	float m12;
+	float m13;
+	float m21;
+	float m22;
+	float m23;
+	float m31;
+	float m32;
+	float m33;
+} cMatrix3;
 
+#include "cVector3.h"
+#include "cAxisAngle.h"
+#include "cEulerAngles.h"
+#include "cQuaternion.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
 }
+#endif
 
-Node::~Node( void )
-{
-
-}
-
-Shared<Node> Node::create( void )
-{
-	Node* ret = new Node();
-	magicalAssert( ret, "new Node() failed" );
-	return Shared<Node>( Initializer<Node>( ret ) );
-}
-
-void Node::transformChanged( int chg )
-{
-	_has_changed |= chg;
-}
-
-void Node::setPosition( const Vector3& v )
-{
-	_position = v;
-	transformChanged( kTranslationChanged );
-}
-
-void Node::setPosition( const Vector2& v )
-{
-	//_position.fillVector2( v );
-	transformChanged( kTranslationChanged );
-}
-
-void Node::setPosition( const float x, const float y, const float z )
-{
-	//_position.fillScalars( x, y, z );
-	transformChanged( kTranslationChanged );
-}
-
-void Node::setRotation( const Quaternion& q )
-{
-
-}
+#endif //__C_MATRIX3_H__

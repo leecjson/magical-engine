@@ -22,38 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cVector4.h"
-#include "cMathMacros.h"
 
 cBool magicalVector4Equals( const cVector4* v1, const cVector4* v2 )
 {
 	return
-		magicalAlmostEqual( v1->x, v2->x, kEpsilonVector4 ) &&
-		magicalAlmostEqual( v1->y, v2->y, kEpsilonVector4 ) &&
-		magicalAlmostEqual( v1->z, v2->z, kEpsilonVector4 ) &&
-		magicalAlmostEqual( v1->w, v2->w, kEpsilonVector4 );
+		magicalAlmostEqual( v1->x, v2->x, kVectorEpsilon ) &&
+		magicalAlmostEqual( v1->y, v2->y, kVectorEpsilon ) &&
+		magicalAlmostEqual( v1->z, v2->z, kVectorEpsilon ) &&
+		magicalAlmostEqual( v1->w, v2->w, kVectorEpsilon );
 }
 
 cBool magicalVector4IsZero( const cVector4* v )
 {
 	return
-		magicalAlmostZero( v->x, kEpsilonVector4 ) &&
-		magicalAlmostZero( v->y, kEpsilonVector4 ) &&
-		magicalAlmostZero( v->z, kEpsilonVector4 ) &&
-		magicalAlmostZero( v->w, kEpsilonVector4 );
+		magicalAlmostZero( v->x, kVectorEpsilon ) &&
+		magicalAlmostZero( v->y, kVectorEpsilon ) &&
+		magicalAlmostZero( v->z, kVectorEpsilon ) &&
+		magicalAlmostZero( v->w, kVectorEpsilon );
 }
 
 cBool magicalVector4IsOne( const cVector4* v )
 {
 	return
-		magicalAlmostEqual( v->x, 1.0f, kEpsilonVector4 ) &&
-		magicalAlmostEqual( v->y, 1.0f, kEpsilonVector4 ) &&
-		magicalAlmostEqual( v->z, 1.0f, kEpsilonVector4 ) &&
-		magicalAlmostEqual( v->w, 1.0f, kEpsilonVector4 );
+		magicalAlmostEqual( v->x, 1.0f, kVectorEpsilon ) &&
+		magicalAlmostEqual( v->y, 1.0f, kVectorEpsilon ) &&
+		magicalAlmostEqual( v->z, 1.0f, kVectorEpsilon ) &&
+		magicalAlmostEqual( v->w, 1.0f, kVectorEpsilon );
 }
 
 cBool magicalVector4IsNormalized( const cVector4* v )
 {
-	return magicalAlmostEqual( v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w, 1.0f, kEpsilonVector4 );
+	return magicalAlmostEqual( v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w, 1.0f, kVectorEpsilon );
 }
 
 void magicalVector4Fill( cVector4* out, float x, float y, float z, float w )
@@ -154,7 +153,7 @@ void magicalVector4Mul( cVector4* out, const cVector4* v1, const cVector4* v2 )
 
 void magicalVector4DivScalar( cVector4* out, const cVector4* v, float a )
 {
-	debugassert( !magicalAlmostZero( a, kEpsilonVector4 ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a, kVectorEpsilon ), "division by 0.f" );
 
 	out->x = v->x / a;
 	out->y = v->y / a;
@@ -339,11 +338,11 @@ void magicalVector4Normalize( cVector4* out, const cVector4* v )
 	out->w = v->w;
 
 	float n = v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
-	if( magicalAlmostEqual( n, 1.0f, kEpsilonVector4 ) )
+	if( magicalAlmostEqual( n, 1.0f, kVectorEpsilon ) )
 		return;
 
 	n = sqrtf( n );
-	if( magicalAlmostZero( n, kEpsilonVector4 ) )
+	if( magicalAlmostZero( n, kVectorEpsilon ) )
 		return;
 
 	n = 1.0f / n;

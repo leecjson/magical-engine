@@ -30,7 +30,9 @@ SOFTWARE.
 
 void Application::init( void )
 {
-	initStart();
+	Log::init();
+	magicalShowLastError();
+	magicalReturnIfError();
 
 	Assets::init();
 	magicalShowLastError();
@@ -56,13 +58,21 @@ void Application::init( void )
 	magicalShowLastError();
 	magicalReturnIfError();
 
-	initEnded();
+	std::string msg;
+	msg += "<init>\n";
+
+#ifdef MAGICAL_DEBUG
+	msg += "  [debug model]: Yes\n";
+#else
+	msg += "  [debug model]: No\n";
+#endif
+
+	msg += "<init>\n";
+	magicalLog( msg.c_str() );
 }
 
 void Application::delc( void )
 {
-	delcStart();
-
 	Renderer::delc();
 	magicalShowLastError();
 	magicalReturnIfError();
@@ -87,65 +97,7 @@ void Application::delc( void )
 	magicalShowLastError();
 	magicalReturnIfError();
 
-	delcEnded();
-}
-
-void Application::initStart( void )
-{
-	Log::init();
-	magicalShowLastError();
-	magicalReturnIfError();
-
-#ifdef MAGICAL_DEBUG
-	magicalStartObjectsListener( kEngineObjectsListener );
-#endif
-}
-
-void Application::initEnded( void )
-{
-	std::string msg;
-	msg += "<init>\n";
-
-#ifdef MAGICAL_DEBUG
-	msg += "  [debug model]: Yes\n";
-#else
-	msg += "  [debug model]: No\n";
-#endif
-	
-#ifdef MAGICAL_DEBUG
-	msg += "  [objects listener]: Yes\n";
-#else
-	msg += "  [objects listener]: No\n";
-#endif
-
-	msg += "<init>\n";
-	magicalLog( msg.c_str() );
-}
-
-void Application::delcStart( void )
-{
-
-}
-
-void Application::delcEnded( void )
-{
-	std::string msg;
-	msg += "\n<delc>\n";
-
-#ifdef MAGICAL_DEBUG
-	int c = magicalGetObjectsConstructCount( kEngineObjectsListener );
-	int d = magicalGetObjectsDestructCount( kEngineObjectsListener );
-	magicalFormat( "  [objects listener]: construct = %d destruct = %d\n", c, d );
-	msg += magicalBuffer;
-#else
-	msg += "  [objects listener]: No\n";
-#endif
-
-	msg += "<delc>\n";
-	magicalLog( msg.c_str() );
-
 	Log::delc();
 	magicalShowLastError();
 	magicalReturnIfError();
 }
-

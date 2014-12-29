@@ -26,8 +26,16 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Reference.h"
 #include "magical-math.h"
+
+#include <unordered_map>
+#include "Reference.h"
+
+enum class Space
+{
+	Local,
+	World,
+};
 
 class Node : public Reference
 {
@@ -39,31 +47,37 @@ public:
 	static Shared<Node> create( void );
 
 public:
+	virtual void addChild( const Node* child );
+
+public:
 	void setPosition( const Vector3& v );
 	void setPosition( const Vector2& v );
 	void setPosition( float x, float y, float z );
-
+	const Vector3& getPosition( void ) const;
 	void setRotation( const Quaternion& q );
+	void setRotation( const EulerAngles& ea );
+	void setRotation( float yaw, float pitch, float roll );
+	const Quaternion& getRotation( void ) const;
+	void setScale( const Vector3& s );
+	void setScale( float x, float y, float z );
+	const Vector3& getScale( void ) const;
 
 private:
-	void transformChanged( int chg );
+	void transformChanged( int flag );
 
 private:
-	Matrix4 _local_to_world_matrix;
-	bool _has_changed = true;
-
-	Vector3 _position;
-	Quaternion _rotation;
-	Vector3 _scale;
-	
-	Vector3 _derived_position;
-	Quaternion _derived_rotation;
-	Vector3 _derived_scale;
+	std::unordered_map<int, Shared<Node> > _children;
 
 	bool _inherit_scale = true;
 	bool _inherit_rotation = true;
+	int _has_changed = true;
+	Matrix4 _local_to_world_matrix;
+	Vector3 _local_position;
+	Quaternion _local_rotation;
+	Vector3 _local_scale;
+	Vector3 _world_position;
+	Quaternion _world_rotation;
+	Vector3 _world_scale;
 };
-
-
 
 #endif //__NODE_H__

@@ -25,16 +25,16 @@ SOFTWARE.
 
 Reference::Reference( void ) 
 {
-#ifdef MAGICAL_DEBUG
-	magicalObjectConstruct();
-#endif
+//#ifdef MAGICAL_DEBUG
+//	magicalObjectConstruct();
+//#endif
 }
 
 Reference::~Reference( void )
 {
-#ifdef MAGICAL_DEBUG
-	magicalObjectDestruct();
-#endif
+//#ifdef MAGICAL_DEBUG
+//	magicalObjectDestruct();
+//#endif
 }
 
 void Reference::retain( void )

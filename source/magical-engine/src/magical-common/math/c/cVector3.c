@@ -22,35 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cVector3.h"
-#include "cMathMacros.h"
 
 cBool magicalVector3Equals( const cVector3* v1, const cVector3* v2 )
 {
 	return
-		magicalAlmostEqual( v1->x, v2->x, kEpsilonVector3 ) &&
-		magicalAlmostEqual( v1->y, v2->y, kEpsilonVector3 ) &&
-		magicalAlmostEqual( v1->z, v2->z, kEpsilonVector3 );
+		magicalAlmostEqual( v1->x, v2->x, kVectorEpsilon ) &&
+		magicalAlmostEqual( v1->y, v2->y, kVectorEpsilon ) &&
+		magicalAlmostEqual( v1->z, v2->z, kVectorEpsilon );
 }
 
 cBool magicalVector3IsZero( const cVector3* v )
 {
 	return
-		magicalAlmostZero( v->x, kEpsilonVector3 ) &&
-		magicalAlmostZero( v->y, kEpsilonVector3 ) &&
-		magicalAlmostZero( v->z, kEpsilonVector3 );
+		magicalAlmostZero( v->x, kVectorEpsilon ) &&
+		magicalAlmostZero( v->y, kVectorEpsilon ) &&
+		magicalAlmostZero( v->z, kVectorEpsilon );
 }
 
 cBool magicalVector3IsOne( const cVector3* v )
 {
 	return
-		magicalAlmostEqual( v->x, 1.0f, kEpsilonVector3 ) &&
-		magicalAlmostEqual( v->y, 1.0f, kEpsilonVector3 ) &&
-		magicalAlmostEqual( v->z, 1.0f, kEpsilonVector3 );
+		magicalAlmostEqual( v->x, 1.0f, kVectorEpsilon ) &&
+		magicalAlmostEqual( v->y, 1.0f, kVectorEpsilon ) &&
+		magicalAlmostEqual( v->z, 1.0f, kVectorEpsilon );
 }
 
 cBool magicalVector3IsNormalized( const cVector3* v )
 {
-	return magicalAlmostEqual( v->x * v->x + v->y * v->y + v->z * v->z, 1.0f, kEpsilonVector3 );
+	return magicalAlmostEqual( v->x * v->x + v->y * v->y + v->z * v->z, 1.0f, kVectorEpsilon );
 }
 
 void magicalVector3Fill( cVector3* out, float x, float y, float z )
@@ -139,7 +138,7 @@ void magicalVector3Mul( cVector3* out, const cVector3* v1, const cVector3* v2 )
 
 void magicalVector3DivScalar( cVector3* out, const cVector3* v, float a )
 {
-	debugassert( !magicalAlmostZero( a, kEpsilonVector3 ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a, kVectorEpsilon ), "division by 0.f" );
 
 	out->x = v->x / a;
 	out->y = v->y / a;
@@ -349,11 +348,11 @@ void magicalVector3Normalize( cVector3* out, const cVector3* v )
 	out->z = v->z;
 
 	float n = v->x * v->x + v->y * v->y + v->z * v->z;
-	if( magicalAlmostEqual( n, 1.0f, kEpsilonVector3 ) )
+	if( magicalAlmostEqual( n, 1.0f, kVectorEpsilon ) )
 		return;
 
 	n = sqrtf( n );
-	if( magicalAlmostZero( n, kEpsilonVector3 ) )
+	if( magicalAlmostZero( n, kVectorEpsilon ) )
 		return;
 
 	n = 1.0f / n;

@@ -49,6 +49,11 @@ void Engine::mainLoop( void )
 	calcDeltaTime();
 
 	Renderer::render();
+
+
+	Shared<Node> node = Node::create();
+	node.reset();
+
 }
 
 void Engine::resize( int w, int h )

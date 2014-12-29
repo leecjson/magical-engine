@@ -22,35 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cVector2.h"
-#include "cMathMacros.h"
 
 cBool magicalVector2Equals( const cVector2* v1, const cVector2* v2 ) 
 {
 	return
-		magicalAlmostEqual( v1->x, v2->x, kEpsilonVector2 )
+		magicalAlmostEqual( v1->x, v2->x, kVectorEpsilon )
 		&&
-		magicalAlmostEqual( v1->y, v2->y, kEpsilonVector2 );
+		magicalAlmostEqual( v1->y, v2->y, kVectorEpsilon );
 }
 
 cBool magicalVector2IsZero( const cVector2* v )
 {
 	return
-		magicalAlmostZero( v->x, kEpsilonVector2 )
+		magicalAlmostZero( v->x, kVectorEpsilon )
 		&&
-		magicalAlmostZero( v->y, kEpsilonVector2 );
+		magicalAlmostZero( v->y, kVectorEpsilon );
 }
 
 cBool magicalVector2IsOne( const cVector2* v )
 {
 	return
-		magicalAlmostEqual( v->x, 1.0f, kEpsilonVector2 )
+		magicalAlmostEqual( v->x, 1.0f, kVectorEpsilon )
 		&&
-		magicalAlmostEqual( v->y, 1.0f, kEpsilonVector2 );
+		magicalAlmostEqual( v->y, 1.0f, kVectorEpsilon );
 }
 
 cBool magicalVector2IsNormalized( const cVector2* v )
 {
-	return magicalAlmostEqual( v->x * v->x + v->y * v->y, 1.0f, kEpsilonVector2 );
+	return magicalAlmostEqual( v->x * v->x + v->y * v->y, 1.0f, kVectorEpsilon );
 }
 
 void magicalVector2Fill( cVector2* out, float x, float y )
@@ -127,7 +126,7 @@ void magicalVector2Mul( cVector2* out, const cVector2* v1, const cVector2* v2 )
 
 void magicalVector2DivScalar( cVector2* out, const cVector2* v, float a )
 {
-	debugassert( !magicalAlmostZero( a, kEpsilonVector2 ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( a, kVectorEpsilon ), "division by 0.f" );
 
 	out->x = v->x / a;
 	out->y = v->y / a;
@@ -135,7 +134,7 @@ void magicalVector2DivScalar( cVector2* out, const cVector2* v, float a )
 
 void magicalVector2Div( cVector2* out, const cVector2* v1, const cVector2* v2 )
 {
-	debugassert( !magicalAlmostZero( v2->x, kEpsilonVector2 ) && !magicalAlmostZero( v2->y, kEpsilonVector2 ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( v2->x, kVectorEpsilon ) && !magicalAlmostZero( v2->y, kVectorEpsilon ), "division by 0.f" );
 
 	out->x = v1->x / v2->x;
 	out->y = v1->y / v2->y;
@@ -299,11 +298,11 @@ void magicalVector2Normalize( cVector2* out, const cVector2* v )
 	out->y = v->y;
 
 	float n = v->x * v->x + v->y * v->y;
-	if( magicalAlmostEqual( n, 1.0f, kEpsilonVector2 ) )
+	if( magicalAlmostEqual( n, 1.0f, kVectorEpsilon ) )
 		return;
 
 	n = sqrtf( n );
-	if( magicalAlmostZero( n, kEpsilonVector2 ) )
+	if( magicalAlmostZero( n, kVectorEpsilon ) )
 		return;
 
 	n = 1.0f / n;

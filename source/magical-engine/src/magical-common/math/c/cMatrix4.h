@@ -47,8 +47,9 @@ typedef struct cMatrix4 {
 
 #include "cVector3.h"
 #include "cVector4.h"
-#include "cAxisA.h"
-#include "cEulerA.h"
+#include "cMatrix3.h"
+#include "cAxisAngle.h"
+#include "cEulerAngles.h"
 #include "cQuaternion.h"
 
 #ifdef __cplusplus
@@ -67,17 +68,18 @@ MAGICALAPI_MATH void magicalMatrix4SetZero( cMatrix4* out );
 MAGICALAPI_MATH void magicalMatrix4SetLookAt( cMatrix4* out, const cVector3* eye, const cVector3* target, const cVector3* up );
 MAGICALAPI_MATH void magicalMatrix4SetPerspective( cMatrix4* out, float fov, float aspect, float znear, float zfar );
 MAGICALAPI_MATH void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom, float top, float near, float far );
+MAGICALAPI_MATH void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* q, const cVector3* s );
 
-MAGICALAPI_MATH void magicalMatrix4SetupTranslationScalars( cMatrix4* out, float x, float y, float z );
-MAGICALAPI_MATH void magicalMatrix4SetupTranslation( cMatrix4* out, const cVector3* t );
-MAGICALAPI_MATH void magicalMatrix4SetupScaleScalars( cMatrix4* out, float x, float y, float z );
-MAGICALAPI_MATH void magicalMatrix4SetupScale( cMatrix4* out, const cVector3* s );
-MAGICALAPI_MATH void magicalMatrix4SetupRotationX( cMatrix4* out, float angle );
-MAGICALAPI_MATH void magicalMatrix4SetupRotationY( cMatrix4* out, float angle );
-MAGICALAPI_MATH void magicalMatrix4SetupRotationZ( cMatrix4* out, float angle );
-MAGICALAPI_MATH void magicalMatrix4SetupRotationAxisA( cMatrix4* out, const cAxisA* aa );
-MAGICALAPI_MATH void magicalMatrix4SetupRotationEulerA( cMatrix4* out, const cEulerA* ea );
-MAGICALAPI_MATH void magicalMatrix4SetupRotationQuaternion( cMatrix4* out, const cQuaternion* q );
+MAGICALAPI_MATH void magicalMatrix4MakeTranslationScalars( cMatrix4* out, float x, float y, float z );
+MAGICALAPI_MATH void magicalMatrix4MakeTranslation( cMatrix4* out, const cVector3* t );
+MAGICALAPI_MATH void magicalMatrix4MakeScaleScalars( cMatrix4* out, float x, float y, float z );
+MAGICALAPI_MATH void magicalMatrix4MakeScale( cMatrix4* out, const cVector3* s );
+MAGICALAPI_MATH void magicalMatrix4MakeRotationX( cMatrix4* out, float angle );
+MAGICALAPI_MATH void magicalMatrix4MakeRotationY( cMatrix4* out, float angle );
+MAGICALAPI_MATH void magicalMatrix4MakeRotationZ( cMatrix4* out, float angle );
+MAGICALAPI_MATH void magicalMatrix4MakeRotationAxisAngle( cMatrix4* out, const cAxisAngle* aa );
+MAGICALAPI_MATH void magicalMatrix4MakeRotationEulerAngles( cMatrix4* out, const cEulerAngles* ea );
+MAGICALAPI_MATH void magicalMatrix4MakeRotationQuaternion( cMatrix4* out, const cQuaternion* q );
 
 MAGICALAPI_MATH void magicalMatrix4MulScalar( cMatrix4* out, const cMatrix4* m, float a );
 MAGICALAPI_MATH void magicalMatrix4Mul( cMatrix4* out, const cMatrix4* m1, const cMatrix4* m2 );
@@ -87,8 +89,6 @@ MAGICALAPI_MATH void magicalVector4MulMatrix4( cVector4* out, const cVector4* v,
 
 MAGICALAPI_MATH void magicalMatrix4Transpose( cMatrix4* out, const cMatrix4* m );
 MAGICALAPI_MATH void magicalMatrix4Negate( cMatrix4* out, const cMatrix4* m );
-MAGICALAPI_MATH float magicalMatrix4Determinant( const cMatrix4* m );
-MAGICALAPI_MATH cBool magicalMatrix4Inverse( cMatrix4* out, const cMatrix4* m );
 
 MAGICALAPI_MATH void magicalMatrix4GetUpVector( cVector3* out, const cMatrix4* m );
 MAGICALAPI_MATH void magicalMatrix4GetDownVector( cVector3* out, const cMatrix4* m );
@@ -96,13 +96,14 @@ MAGICALAPI_MATH void magicalMatrix4GetLeftVector( cVector3* out, const cMatrix4*
 MAGICALAPI_MATH void magicalMatrix4GetRightVector( cVector3* out, const cMatrix4* m );
 MAGICALAPI_MATH void magicalMatrix4GetForwardVector( cVector3* out, const cMatrix4* m );
 MAGICALAPI_MATH void magicalMatrix4GetBackVector( cVector3* out, const cMatrix4* m );
-
 MAGICALAPI_MATH void magicalMatrix4SetTranslation( cMatrix4* out, const cVector3* m );
 MAGICALAPI_MATH void magicalMatrix4GetTranslation( cVector3* out, const cMatrix4* m );
 MAGICALAPI_MATH void magicalMatrix4GetScale( cVector3* out, const cMatrix4* m );
 MAGICALAPI_MATH void magicalMatrix4GetRotationQuaternion( cQuaternion* out, const cMatrix4* m );
 
-MAGICALAPI_MATH cBool magicalMatrix4Decompose( cVector3* out_translation, cVector3* out_scaling, cQuaternion* out_rotation, const cMatrix4* m );
+MAGICALAPI_MATH float magicalMatrix4Determinant( const cMatrix4* m );
+MAGICALAPI_MATH cBool magicalMatrix4Inverse( cMatrix4* out, const cMatrix4* m );
+MAGICALAPI_MATH cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_q, cVector3* out_s, const cMatrix4* m );
 
 #ifdef __cplusplus
 }

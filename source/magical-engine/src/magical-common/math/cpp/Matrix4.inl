@@ -107,6 +107,11 @@ inline bool Matrix4::equals( const Matrix4& m ) const
 	return magicalMatrix4Equals( this, &m );
 }
 
+inline bool Matrix4::isZero( void ) const
+{
+	return magicalMatrix4IsZero( this );
+}
+
 inline bool Matrix4::isIdentity( void ) const
 {
 	return magicalMatrix4IsIdentity( this );
@@ -122,7 +127,7 @@ inline bool Matrix4::operator!=( const Matrix4& m ) const
 	return !magicalMatrix4Equals( this, &m );
 }
 
-inline float Matrix4::operator[]( const unsigned int i ) const
+inline float& Matrix4::operator[]( const unsigned int i ) const
 {
 #ifdef MAGICAL_DEBUG
 	assert( 0 <= i && i <= 15 && "index out of range" );
@@ -133,14 +138,14 @@ inline float Matrix4::operator[]( const unsigned int i ) const
 inline Matrix4 Matrix4::operator*( float a ) const
 {
 	Matrix4 ret;
-	magicalMatrix4MulScalar( ( &ret ), this, a );
+	magicalMatrix4MulScalar( &ret, this, a );
 	return ret;
 }
 
 inline Matrix4 Matrix4::operator*( const Matrix4& m ) const
 {
 	Matrix4 ret;
-	magicalMatrix4Mul( ( &ret ), this, &m );
+	magicalMatrix4Mul( &ret, this, &m );
 	return ret;
 }
 
@@ -184,7 +189,7 @@ inline void Matrix4::setZero( void )
 
 inline void Matrix4::setLookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
 {
-	magicalMatrix4SetLookAt( this, ( &eye ), ( &target ), ( &up ) );
+	magicalMatrix4SetLookAt( this, &eye, &target, &up );
 }
 
 inline void Matrix4::setPerspective( float fov, float aspect, float znear, float zfar )
@@ -197,64 +202,69 @@ inline void Matrix4::setOrth( float left, float right, float bottom, float top, 
 	magicalMatrix4SetOrth( this, left, right, bottom, top, near, far );
 }
 
-inline void Matrix4::setupTranslation( float x, float y, float z )
+inline void Matrix4::setTRS( const Vector3& t, const Quaternion& q, const Vector3& s )
 {
-	magicalMatrix4SetupTranslationScalars( this, x, y, z );
+	magicalMatrix4SetTRS( this, &t, &q, &s );
 }
 
-inline void Matrix4::setupTranslation( const Vector3& t )
+inline void Matrix4::makeTranslation( float x, float y, float z )
 {
-	magicalMatrix4SetupTranslation( this, &t );
+	magicalMatrix4MakeTranslationScalars( this, x, y, z );
 }
 
-inline void Matrix4::setupScale( float x, float y, float z )
+inline void Matrix4::makeTranslation( const Vector3& t )
 {
-	magicalMatrix4SetupScaleScalars( this, x, y, z );
+	magicalMatrix4MakeTranslation( this, &t );
 }
 
-inline void Matrix4::setupScale( const Vector3& s )
+inline void Matrix4::makeScale( float x, float y, float z )
 {
-    magicalMatrix4SetupScale( this, &s );
+	magicalMatrix4MakeScaleScalars( this, x, y, z );
 }
 
-inline void Matrix4::setupRotationX( float angle )
+inline void Matrix4::makeScale( const Vector3& s )
 {
-	magicalMatrix4SetupRotationX( this, angle );
+    magicalMatrix4MakeScale( this, &s );
 }
 
-inline void Matrix4::setupRotationY( float angle )
+inline void Matrix4::makeRotationX( float angle )
 {
-	magicalMatrix4SetupRotationY( this, angle );
+	magicalMatrix4MakeRotationX( this, angle );
 }
 
-inline void Matrix4::setupRotationZ( float angle )
+inline void Matrix4::makeRotationY( float angle )
 {
-	magicalMatrix4SetupRotationZ( this, angle );
+	magicalMatrix4MakeRotationY( this, angle );
 }
 
-inline void Matrix4::setupRotationAxisA( const Vector3& axis, float angle )
+inline void Matrix4::makeRotationZ( float angle )
 {
-	magicalMatrix4SetupRotationAxisA( this, &AxisA( axis, angle ) );
+	magicalMatrix4MakeRotationZ( this, angle );
 }
 
-inline void Matrix4::setupRotationAxisA( const AxisA& aa )
+inline void Matrix4::makeRotationAxisAngle( const Vector3& axis, float angle )
 {
-	magicalMatrix4SetupRotationAxisA( this, &aa );
+	magicalMatrix4MakeRotationAxisAngle( this, &AxisAngle( axis, angle ) );
 }
 
-inline void Matrix4::setupRotationEulerA( float yaw, float pitch, float roll )
+inline void Matrix4::makeRotationAxisAngle( const AxisAngle& aa )
 {
-	magicalMatrix4SetupRotationEulerA( this, &EulerA( yaw, pitch, roll ) );
+	magicalMatrix4MakeRotationAxisAngle( this, &aa );
 }
 
-inline void Matrix4::setupRotationEulerA( const EulerA& ea )
+inline void Matrix4::makeRotationEulerAngles( float yaw, float pitch, float roll )
 {
-	magicalMatrix4SetupRotationEulerA( this, &ea );
+	magicalMatrix4MakeRotationEulerAngles( this, &EulerAngles( yaw, pitch, roll ) );
 }
 
-inline void Matrix4::setupRotationQuaternion( const Quaternion& q )
+inline void Matrix4::makeRotationEulerAngles( const EulerAngles& ea )
 {
-	magicalMatrix4SetupRotationQuaternion( this, &q );
+	magicalMatrix4MakeRotationEulerAngles( this, &ea );
+}
+
+inline void Matrix4::makeRotationQuaternion( const Quaternion& q )
+{
+	magicalMatrix4MakeRotationQuaternion( this, &q );
 }
 
 inline Vector3 Matrix4::getUpVector( void ) const
@@ -301,21 +311,21 @@ inline void Matrix4::setTranslation( const Vector3& t )
 inline Vector3 Matrix4::getTranslation( void ) const
 {
 	Vector3 ret;
-	magicalMatrix4GetTranslation( ( &ret ), this );
+	magicalMatrix4GetTranslation( &ret, this );
 	return ret;
 }
 
 inline Vector3 Matrix4::getScale( void ) const
 {
 	Vector3 ret;
-	magicalMatrix4GetScale( ( &ret ), this );
+	magicalMatrix4GetScale( &ret, this );
 	return ret;
 }
 
 inline Quaternion Matrix4::getRotationQuaternion( void ) const
 {
 	Quaternion ret;
-	magicalMatrix4GetRotationQuaternion( ( &ret ), this );
+	magicalMatrix4GetRotationQuaternion( &ret, this );
 	return ret;
 }
 
@@ -342,14 +352,14 @@ inline bool Matrix4::getInversed( Matrix4& out ) const
 inline Matrix4 Matrix4::getTransposed( void ) const
 {
 	Matrix4 ret;
-	magicalMatrix4Transpose( ( &ret ), this );
+	magicalMatrix4Transpose( &ret, this );
 	return ret;
 }
 
 inline Matrix4 Matrix4::getNegated( void ) const
 {
 	Matrix4 ret;
-	magicalMatrix4Negate( ( &ret ), this );
+	magicalMatrix4Negate( &ret, this );
 	return ret;
 }
 

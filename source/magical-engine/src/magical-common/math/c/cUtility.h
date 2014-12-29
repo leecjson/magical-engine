@@ -54,14 +54,18 @@ SOFTWARE.
 		}}  while( 0 )
 #endif
 
-const float kPI = 3.14159265358979323846f;
-const float k2PI = 6.28318530717958647692f;
-const float kPIOver2 = 1.57079632679489661923f;
-const float kPIOver180 = 0.01745329251994329576f;
-const float k1OverPI = 0.31830988618379067153f;
-const float k1Over2PI = 0.15915494309189533576f;
-const float k180OverPI = 57.2957795130823208768f;
-const float kEpsilon = 1e-006f;
+#define kPI 3.14159265358979323846f
+#define k2PI 6.28318530717958647692f
+#define kPIOver2 1.57079632679489661923f
+#define kPIOver180 0.01745329251994329576f
+#define k1OverPI 0.31830988618379067153f
+#define k1Over2PI 0.15915494309189533576f
+#define k180OverPI 57.2957795130823208768f
+#define kNumberEpsilon 1.0e-007f
+#define kQuaternionEpsilon 1.0e-006f
+#define kVectorEpsilon 1.0e-005f
+#define kRadianEpsilon 1.0e-005f
+#define kDegreeEpsilon 1.0e-004f
 
 #define magicalAlmostEqual( a, b, e ) ( fabs( (a) - (b) ) < e )
 #define magicalAlmostZero( a, e ) ( fabs(a) < e )
@@ -75,7 +79,7 @@ const float kEpsilon = 1e-006f;
  * c 返回cos(theta)
  * theta 弧度
  *-----------------------------------------------------------------------------*/
-__inline void magicalSinCos( float* s, float* c, const float theta )
+__inline void magicalSinCos( float* s, float* c, float theta )
 {
 	*s = sinf( theta );
 	*c = cosf( theta );
@@ -87,14 +91,14 @@ __inline void magicalSinCos( float* s, float* c, const float theta )
  * c 余弦值
  * return theta
  *-----------------------------------------------------------------------------*/
-__inline float magicalSafeAcos( const float c )
+__inline float magicalSafeAcos( float theta )
 {
-	if( c <= -1.0f ) 
+	if( theta <= -1.0f ) 
 		return kPI;
-	if( c >= 1.0f ) 
+	if( theta >= 1.0f ) 
 		return 0.0f;
 
-	return acosf( c );
+	return acosf( theta );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -103,12 +107,12 @@ __inline float magicalSafeAcos( const float c )
  * c 弧度值
  * return 转换到-pi与pi之间的值
  *-----------------------------------------------------------------------------*/
-__inline float magicalCorrectToPI( float c )
+__inline float magicalCorrectToPI( float theta )
 {
-	c += kPI;
-	c -= floorf( c * k1Over2PI ) * k2PI;
-	c -= kPI;
-	return c;
+	theta += kPI;
+	theta -= floorf( theta * k1Over2PI ) * k2PI;
+	theta -= kPI;
+	return theta;
 }
 
 #endif //__C_UTILITY_H__

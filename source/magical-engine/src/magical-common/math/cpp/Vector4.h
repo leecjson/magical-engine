@@ -31,7 +31,6 @@ struct Matrix4;
 struct Vector4 : public cVector4
 {
 public:
-	static const float Epsilon;
 	static const Vector4 Zero;
 	static const Vector4 One;
 	static const Vector4 Up;
@@ -81,7 +80,7 @@ public:
 	inline bool isNormalized( void ) const;
 	inline bool operator==( const Vector4& v ) const;
 	inline bool operator!=( const Vector4& v ) const;
-	inline float operator[]( const unsigned int i ) const;
+	inline float& operator[]( const unsigned int i ) const;
 	inline Vector4 operator+( void ) const;
 	inline Vector4 operator+( float a ) const;
 	inline Vector4 operator+( const Vector4& v ) const;
@@ -109,8 +108,8 @@ public:
 	inline void setZero( void );
 	inline void setOne( void );
 	inline void setScalars( float x, float y, float z, float w );
-	inline void setVector2( const Vector2& v );
-	inline void setVector3( const Vector3& v );
+	inline void fromVector2( const Vector2& v );
+	inline void fromVector3( const Vector3& v );
 	
 public:
 	inline void clamp( const Vector4& min, const Vector4& max );

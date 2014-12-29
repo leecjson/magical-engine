@@ -26,8 +26,6 @@ SOFTWARE.
 
 #include "cUtility.h"
 
-#define kEpsilonQuaternion 1e-006f
-
 typedef struct cQuaternion {
 	float x;
 	float y;
@@ -36,8 +34,8 @@ typedef struct cQuaternion {
 } cQuaternion;
 
 #include "cVector3.h"
-#include "cAxisR.h"
-#include "cEulerA.h"
+#include "cAxisAngle.h"
+#include "cEulerAngles.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,24 +51,14 @@ MAGICALAPI_MATH void magicalQuaternionCopy( cQuaternion* out, const cQuaternion*
 MAGICALAPI_MATH void magicalQuaternionSetIdentity( cQuaternion* out );
 MAGICALAPI_MATH void magicalQuaternionSetZero( cQuaternion* out );
 
-MAGICALAPI_MATH void magicalQuaternionSetRotationX();
-MAGICALAPI_MATH void magicalQuaternionSetRotationY();
-MAGICALAPI_MATH void magicalQuaternionSetRotationZ();
-MAGICALAPI_MATH void magicalQuaternionSetRotationAxisAngle()
+MAGICALAPI_MATH void magicalQuaternionSetRotationX( cQuaternion* out, float angle );
+MAGICALAPI_MATH void magicalQuaternionSetRotationY( cQuaternion* out, float angle );
+MAGICALAPI_MATH void magicalQuaternionSetRotationZ( cQuaternion* out, float angle );
 
-MAGICALAPI_MATH void magicalQuaternionGetRotationAxis();
-MAGICALAPI_MATH float magicalQuaternionGetRotationAngle();
-
-q:rotation
-
-
-MAGICALAPI_MATH void magicalQuaternionFromAxisRotationX( cQuaternion* out, float angle );
-MAGICALAPI_MATH void magicalQuaternionFromAxisRotationY( cQuaternion* out, float angle );
-MAGICALAPI_MATH void magicalQuaternionFromAxisRotationZ( cQuaternion* out, float angle );
-MAGICALAPI_MATH void magicalQuaternionFromAxisRotation( cQuaternion* out, const cAxisRotation* ar );
-MAGICALAPI_MATH void magicalQuaternionFromEulerA( cQuaternion* out, const cEulerA* ea );
-MAGICALAPI_MATH void magicalQuaternionToAxisRotation( cAxisRotation* out, const cQuaternion* q );
-MAGICALAPI_MATH void magicalQuaternionToEulerA( cEulerA* out, const cQuaternion* q );
+MAGICALAPI_MATH void magicalQuaternionFromAxisAngle( cQuaternion* out, const cAxisAngle* aa );
+MAGICALAPI_MATH void magicalQuaternionFromEulerAngles( cQuaternion* out, const cEulerAngles* ea );
+MAGICALAPI_MATH void magicalQuaternionToAxisAngle( cAxisAngle* out, const cQuaternion* q );
+MAGICALAPI_MATH void magicalQuaternionToEulerAngles( cEulerAngles* out, const cQuaternion* q );
 
 MAGICALAPI_MATH void magicalQuaternionAdd( cQuaternion* out, const cQuaternion* q1, const cQuaternion* q2 );
 MAGICALAPI_MATH void magicalQuaternionSub( cQuaternion* out, const cQuaternion* q1, const cQuaternion* q2 );

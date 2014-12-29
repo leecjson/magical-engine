@@ -21,41 +21,66 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_AXISR_H__
-#define __C_AXISR_H__
+#include "../c/cVector3.h"
+#include "../c/cEulerAngles.h"
+#include "../c/cQuaternion.h"
+#include "../c/cMatrix4.h"
+#include "Vector3.h"
+#include "EulerAngles.h"
+#include "Quaternion.h"
+#include "Matrix4.h"
+#include "EulerAngles.inl"
+#include "MathMacros.h"
 
-#include "cUtility.h"
+const EulerAngles EulerAngles::Zero = EulerAngles( 0.0f, 0.0f, 0.0f );
+EulerAngles EulerAngles::var = EulerAngles::Zero;
 
-#define kEpsilonAxisRotation 1e-005f
-
-typedef struct cAxisRotation {
-	float x;
-	float y;
-	float z;
-	float w;
-} cAxisRotation;
-
-#include "cVector3.h"
-#include "cQuaternion.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-MAGICALAPI_MATH cBool magicalAxisRotationEquals( const cAxisRotation* ar1, const cAxisRotation* ar2 );
-MAGICALAPI_MATH cBool magicalAxisRotationIsIdentity( const cAxisRotation* ar );
-MAGICALAPI_MATH cBool magicalAxisRotationIsZero( const cAxisRotation* ar );
-
-MAGICALAPI_MATH void magicalAxisRotationFill( cAxisRotation* out, float x, float y, float z, float w );
-MAGICALAPI_MATH void magicalAxisRotationCopy( cAxisRotation* out, const cAxisRotation* ar );
-MAGICALAPI_MATH void magicalAxisRotationSetIdentity( cAxisRotation* out );
-MAGICALAPI_MATH void magicalAxisRotationSetZero( cAxisRotation* out );
-
-MAGICALAPI_MATH void magicalAxisRotationFromQuaternion( cAxisRotation* out, const cQuaternion* q );
-MAGICALAPI_MATH void magicalAxisRotationToQuaternion( cQuaternion* out, const cAxisRotation* ar );
-
-#ifdef __cplusplus
+EulerAngles::EulerAngles( float yaw, float pitch, float roll )
+{
+	this->yaw = yaw;
+	this->pitch = pitch;
+	this->roll = roll;
 }
+
+EulerAngles::EulerAngles( const EulerAngles& ea )
+{
+	yaw = ea.yaw;
+	pitch = ea.pitch;
+	roll = ea.roll;
+}
+
+EulerAngles::EulerAngles( void )
+{
+	yaw = 0.0f;
+	pitch = 0.0f;
+	roll = 0.0f;
+}
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachedPool.h"
+static CachedPool<EulerAngles> s_eulerag_cached_pool( 64, 64 );
 #endif
 
-#endif //__C_AXISR_H__
+void* EulerAngles::operator new( size_t s )
+{
+	if( s != sizeof( EulerAngles ) )
+		return ::operator new( s );
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	return s_eulerag_cached_pool.take();
+#else
+	return ::operator new( s );
+#endif
+}
+
+void EulerAngles::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_eulerag_cached_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
+#endif
+}

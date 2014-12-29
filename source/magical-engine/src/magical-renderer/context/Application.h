@@ -46,11 +46,6 @@ public:
 	static void exit( void );
 
 private:
-	static void initStart( void );
-	static void initEnded( void );
-	static void delcStart( void );
-	static void delcEnded( void );
-
 	static void initWindow( void );
 	static void delcWindow( void );
 	static void initRenderContext( void );

@@ -22,17 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector3.h"
-#include "../c/cAxisR.h"
-#include "../c/cEulerA.h"
+#include "../c/cAxisAngle.h"
+#include "../c/cEulerAngles.h"
 #include "../c/cQuaternion.h"
 #include "Vector3.h"
-#include "AxisR.h"
-#include "EulerA.h"
+#include "AxisAngle.h"
+#include "EulerAngles.h"
 #include "Quaternion.h"
 #include "Quaternion.inl"
 #include "MathMacros.h"
 
-const float Quaternion::Epsilon = kEpsilonQuaternion;
 const Quaternion Quaternion::Identity = Quaternion( 0.0f, 0.0f, 0.0f, 1.0f );
 const Quaternion Quaternion::Zero = Quaternion( 0.0f, 0.0f, 0.0f, 0.0f );
 Quaternion Quaternion::var = Quaternion::Identity;

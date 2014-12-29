@@ -30,7 +30,6 @@ struct Vector4;
 struct Vector2 : public cVector2
 {
 public:
-	static const float Epsilon;
 	static const Vector2 Zero;
 	static const Vector2 One;
 	static const Vector2 Right;
@@ -75,7 +74,7 @@ public:
 	inline bool isNormalized( void ) const;
 	inline bool operator==( const Vector2& v ) const;
 	inline bool operator!=( const Vector2& v ) const;
-	inline float operator[]( const unsigned int i ) const;
+	inline float& operator[]( const unsigned int i ) const;
 	inline Vector2 operator+( void ) const;
 	inline Vector2 operator+( float a ) const;
 	inline Vector2 operator+( const Vector2& v ) const;
@@ -101,8 +100,8 @@ public:
 	inline void setZero( void );
 	inline void setOne( void );
 	inline void setScalars( float x, float y );
-	inline void setVector3( const Vector3& v );
-	inline void setVector4( const Vector3& v );
+	inline void fromVector3( const Vector3& v );
+	inline void fromVector4( const Vector3& v );
 
 public:
 	inline void clamp( const Vector2& min, const Vector2& max );

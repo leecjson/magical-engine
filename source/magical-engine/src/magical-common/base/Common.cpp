@@ -41,20 +41,20 @@ static bool s_last_error = false;
 static char s_last_error_info[ kBufferLen ];
 static int64_t s_timer_mark_var = 0;
 
-#ifdef MAGICAL_DEBUG
-static struct {
-	int construct_count;
-	int destruct_count;
-} 
-s_engine_objects_listener, 
-s_custom_objects_listener;
-
-static std::mutex s_olc_mutex;
-static std::mutex s_old_mutex;
-
-static bool s_is_engine_objects_listener_started = false;
-static bool s_is_custom_objects_listener_started = false;
-#endif
+//#ifdef MAGICAL_DEBUG
+//static struct {
+//	int construct_count;
+//	int destruct_count;
+//} 
+//s_engine_objects_listener, 
+//s_custom_objects_listener;
+//
+//static std::mutex s_olc_mutex;
+//static std::mutex s_old_mutex;
+//
+//static bool s_is_engine_objects_listener_started = false;
+//static bool s_is_custom_objects_listener_started = false;
+//#endif
 
 bool magicalIsError( void )
 {
@@ -130,106 +130,106 @@ double magicalEndTimer( void )
 	return result;
 }
 
-#ifdef MAGICAL_DEBUG
-void magicalStartObjectsListener( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		s_engine_objects_listener.destruct_count = 0;
-		s_engine_objects_listener.construct_count = 0;
-		s_is_engine_objects_listener_started = true;
-	}
-	else
-	{
-		s_custom_objects_listener.destruct_count = 0;
-		s_custom_objects_listener.construct_count = 0;
-		s_is_custom_objects_listener_started = true;
-	}
-}
-
-void magicalEndObjectsListener( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		s_engine_objects_listener.destruct_count = 0;
-		s_engine_objects_listener.construct_count = 0;
-		s_is_engine_objects_listener_started = false;
-	}
-	else
-	{
-		s_custom_objects_listener.destruct_count = 0;
-		s_custom_objects_listener.construct_count = 0;
-		s_is_custom_objects_listener_started = false;
-	}
-}
-
-bool magicalIsObjectsListenerStarted( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		return s_is_engine_objects_listener_started;
-	}
-	else
-	{
-		return s_is_custom_objects_listener_started;
-	}
-}
-
-void magicalObjectConstruct( void )
-{
-	s_olc_mutex.lock();
-
-	if( s_is_engine_objects_listener_started )
-	{
-		s_engine_objects_listener.construct_count += 1;
-	}
-
-	if( s_is_custom_objects_listener_started )
-	{
-		s_custom_objects_listener.construct_count += 1;
-	}
-
-	s_olc_mutex.unlock();
-}
-
-void magicalObjectDestruct( void )
-{
-	s_old_mutex.lock();
-
-	if( s_is_engine_objects_listener_started )
-	{
-		s_engine_objects_listener.destruct_count += 1;
-	}
-
-	if( s_is_custom_objects_listener_started )
-	{
-		s_custom_objects_listener.destruct_count += 1;
-	}
-
-	s_old_mutex.unlock();
-}
-
-int magicalGetObjectsConstructCount( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		return s_engine_objects_listener.construct_count;
-	}
-	else
-	{
-		return s_custom_objects_listener.construct_count;
-	}
-}
-
-int magicalGetObjectsDestructCount( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		return s_engine_objects_listener.destruct_count;
-	}
-	else
-	{
-		return s_custom_objects_listener.destruct_count;
-	}
-}
-#endif
+//#ifdef MAGICAL_DEBUG
+//void magicalStartObjectsListener( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		s_engine_objects_listener.destruct_count = 0;
+//		s_engine_objects_listener.construct_count = 0;
+//		s_is_engine_objects_listener_started = true;
+//	}
+//	else
+//	{
+//		s_custom_objects_listener.destruct_count = 0;
+//		s_custom_objects_listener.construct_count = 0;
+//		s_is_custom_objects_listener_started = true;
+//	}
+//}
+//
+//void magicalEndObjectsListener( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		s_engine_objects_listener.destruct_count = 0;
+//		s_engine_objects_listener.construct_count = 0;
+//		s_is_engine_objects_listener_started = false;
+//	}
+//	else
+//	{
+//		s_custom_objects_listener.destruct_count = 0;
+//		s_custom_objects_listener.construct_count = 0;
+//		s_is_custom_objects_listener_started = false;
+//	}
+//}
+//
+//bool magicalIsObjectsListenerStarted( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		return s_is_engine_objects_listener_started;
+//	}
+//	else
+//	{
+//		return s_is_custom_objects_listener_started;
+//	}
+//}
+//
+//void magicalObjectConstruct( void )
+//{
+//	s_olc_mutex.lock();
+//
+//	if( s_is_engine_objects_listener_started )
+//	{
+//		s_engine_objects_listener.construct_count += 1;
+//	}
+//
+//	if( s_is_custom_objects_listener_started )
+//	{
+//		s_custom_objects_listener.construct_count += 1;
+//	}
+//
+//	s_olc_mutex.unlock();
+//}
+//
+//void magicalObjectDestruct( void )
+//{
+//	s_old_mutex.lock();
+//
+//	if( s_is_engine_objects_listener_started )
+//	{
+//		s_engine_objects_listener.destruct_count += 1;
+//	}
+//
+//	if( s_is_custom_objects_listener_started )
+//	{
+//		s_custom_objects_listener.destruct_count += 1;
+//	}
+//
+//	s_old_mutex.unlock();
+//}
+//
+//int magicalGetObjectsConstructCount( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		return s_engine_objects_listener.construct_count;
+//	}
+//	else
+//	{
+//		return s_custom_objects_listener.construct_count;
+//	}
+//}
+//
+//int magicalGetObjectsDestructCount( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		return s_engine_objects_listener.destruct_count;
+//	}
+//	else
+//	{
+//		return s_custom_objects_listener.destruct_count;
+//	}
+//}
+//#endif

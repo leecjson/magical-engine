@@ -21,40 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cEulerA.h"
-#include "cMathMacros.h"
+#include "cEulerAngles.h"
 
-cBool magicalEulerAEqulas( const cEulerA* ea1, const cEulerA* ea2 )
+cBool magicalEulerAnglesEqulas( const cEulerAngles* ea1, const cEulerAngles* ea2 )
 {
 	return
-		magicalAlmostEqual( ea1->yaw, ea2->yaw, kEpsilonEulerA ) &&
-		magicalAlmostEqual( ea1->pitch, ea2->pitch, kEpsilonEulerA ) &&
-		magicalAlmostEqual( ea1->roll, ea2->roll, kEpsilonEulerA );
+		magicalAlmostEqual( ea1->yaw, ea2->yaw, kDegreeEpsilon ) &&
+		magicalAlmostEqual( ea1->pitch, ea2->pitch, kDegreeEpsilon ) &&
+		magicalAlmostEqual( ea1->roll, ea2->roll, kDegreeEpsilon );
 }
 
-cBool magicalEulerAIsIdentity( const cEulerA* ea )
+cBool magicalEulerAnglesIsZero( const cEulerAngles* ea )
 {
 	return
-		magicalAlmostZero( ea->yaw, kEpsilonEulerA ) &&
-		magicalAlmostZero( ea->pitch, kEpsilonEulerA ) &&
-		magicalAlmostZero( ea->roll, kEpsilonEulerA );
+		magicalAlmostZero( ea->yaw, kDegreeEpsilon ) &&
+		magicalAlmostZero( ea->pitch, kDegreeEpsilon ) &&
+		magicalAlmostZero( ea->roll, kDegreeEpsilon );
 }
 
-void magicalEulerAFill( cEulerA* out, float yaw, float pitch, float roll )
+void magicalEulerAnglesFill( cEulerAngles* out, float yaw, float pitch, float roll )
 {
 	out->yaw = yaw;
 	out->pitch = pitch;
 	out->roll = roll;
 }
 
-void magicalEulerACopy( cEulerA* out, const cEulerA* ea )
+void magicalEulerAnglesCopy( cEulerAngles* out, const cEulerAngles* ea )
 {
 	out->yaw = ea->yaw;
 	out->pitch = ea->pitch;
 	out->roll = ea->roll;
 }
 
-void magicalEulerASetIdentity( cEulerA* out )
+void magicalEulerAnglesSetZero( cEulerAngles* out )
 {
 	out->yaw = 0.0f;
 	out->pitch = 0.0f;
@@ -67,7 +66,7 @@ void magicalEulerASetIdentity( cEulerA* out )
  * out q的欧拉角表示
  * q 源四元数
  *-----------------------------------------------------------------------------*/
-void magicalEulerAFromQuaternion( cEulerA* out, const cQuaternion* q )
+void magicalEulerAnglesFromQuaternion( cEulerAngles* out, const cQuaternion* q )
 {
 	float sp = -2.0f * ( q->y * q->z + q->w * q->x );
 
@@ -85,33 +84,33 @@ void magicalEulerAFromQuaternion( cEulerA* out, const cQuaternion* q )
 	}
 }
 
-void magicalEulerAToQuaternion( cQuaternion* out, const cEulerA* ea )
+void magicalEulerAnglesToQuaternion( cQuaternion* out, const cEulerAngles* ea )
 {
-	magicalQuaternionFromEulerA( out, ea );
+	magicalQuaternionFromEulerAngles( out, ea );
 }
 
-void magicalEulerAAdd( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 )
+void magicalEulerAnglesAdd( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 )
 {
 	out->yaw = ea1->yaw + ea2->yaw;
 	out->pitch = ea1->pitch + ea2->pitch;
 	out->roll = ea1->roll + ea2->roll;
 }
 
-void magicalEulerASub( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 )
+void magicalEulerAnglesSub( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 )
 {
 	out->yaw = ea1->yaw - ea2->yaw;
 	out->pitch = ea1->pitch - ea2->pitch;
 	out->roll = ea1->roll - ea2->roll;
 }
 
-void magicalEulerAMul( cEulerA* out, const cEulerA* ea1, const cEulerA* ea2 )
+void magicalEulerAnglesMul( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 )
 {
 	out->yaw = ea1->yaw * ea2->yaw;
 	out->pitch = ea1->pitch * ea2->pitch;
 	out->roll = ea1->roll * ea2->roll;
 }
 
-void magicalEulerAMulScalar( cEulerA* out, const cEulerA* ea, float a )
+void magicalEulerAnglesMulScalar( cEulerAngles* out, const cEulerAngles* ea, float a )
 {
 	out->yaw = ea->yaw * a;
 	out->pitch = ea->pitch * a;
@@ -131,11 +130,11 @@ void magicalEulerAMulScalar( cEulerA* out, const cEulerA* ea, float a )
  * out 返回限制欧拉角
  * ea 源欧拉角
  *-----------------------------------------------------------------------------*/
-void magicalEulerALimit( cEulerA* out, const cEulerA* ea )
+void magicalEulerAnglesLimit( cEulerAngles* out, const cEulerAngles* ea )
 {
-	float yaw   = ea->yaw;
-	float pitch = ea->pitch;
-	float roll  = ea->roll;
+	float yaw   = magicalDegToRad( ea->yaw );
+	float pitch = magicalDegToRad( ea->pitch );
+	float roll  = magicalDegToRad( ea->roll );
 
 	pitch = magicalCorrectToPI( pitch );
 	if( pitch < - kPIOver2 )
@@ -161,7 +160,7 @@ void magicalEulerALimit( cEulerA* out, const cEulerA* ea )
 		roll = magicalCorrectToPI( roll );
 	}
 	
-	out->yaw   = magicalCorrectToPI( yaw );
-	out->pitch = pitch;
-	out->roll  = roll;
+	out->yaw   = magicalRadToDeg( magicalCorrectToPI( yaw ) );
+	out->pitch = magicalRadToDeg( pitch );
+	out->roll  = magicalRadToDeg( roll );
 }

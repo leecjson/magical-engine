@@ -26,8 +26,6 @@ SOFTWARE.
 
 #include "cUtility.h"
 
-#define kEpsilonVector4 1e-005f
-
 typedef struct cVector4 {
 	float x;
 	float y;
