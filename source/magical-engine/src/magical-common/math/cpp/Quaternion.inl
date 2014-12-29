@@ -179,6 +179,13 @@ inline Quaternion Quaternion::operator*( float a ) const
 	return Quaternion( x * a, y * a, z * a, w * a );
 }
 
+inline Vector3 Quaternion::operator*( const Vector3& v ) const
+{
+	Vector3 ret;
+	magicalQuaternionMulVector3( &ret, this, &v );
+	return ret;
+}
+
 inline Quaternion Quaternion::operator*( const Quaternion& q ) const
 {
 	Quaternion ret;

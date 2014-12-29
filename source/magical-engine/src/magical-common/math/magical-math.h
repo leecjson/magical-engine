@@ -30,6 +30,7 @@ SOFTWARE.
 #include "c/cAxisAngle.h"
 #include "c/cEulerAngles.h"
 #include "c/cQuaternion.h"
+#include "c/cMatrix3.h"
 #include "c/cMatrix4.h"
 //#include "c/cAABB3.h"
 //#include "c/cPlane3.h"

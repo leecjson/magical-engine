@@ -27,15 +27,9 @@ SOFTWARE.
 #include "cUtility.h"
 
 typedef struct cMatrix3{
-	float m11;
-	float m12;
-	float m13;
-	float m21;
-	float m22;
-	float m23;
-	float m31;
-	float m32;
-	float m33;
+	float m11; float m12; float m13;
+	float m21; float m22; float m23;
+	float m31; float m32; float m33;
 } cMatrix3;
 
 #include "cVector3.h"

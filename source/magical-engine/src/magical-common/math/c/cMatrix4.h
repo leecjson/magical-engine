@@ -27,22 +27,10 @@ SOFTWARE.
 #include "cUtility.h"
 
 typedef struct cMatrix4 {
-	float m11;
-	float m12;
-	float m13;
-	float m14;
-	float m21;
-	float m22;
-	float m23;
-	float m24;
-	float m31;
-	float m32;
-	float m33;
-	float m34;
-	float m41;
-	float m42;
-	float m43;
-	float m44;
+	float m11; float m12; float m13; float m14;
+	float m21; float m22; float m23; float m24;
+	float m31; float m32; float m33; float m34;
+	float m41; float m42; float m43; float m44;
 } cMatrix4;
 
 #include "cVector3.h"
@@ -68,7 +56,7 @@ MAGICALAPI_MATH void magicalMatrix4SetZero( cMatrix4* out );
 MAGICALAPI_MATH void magicalMatrix4SetLookAt( cMatrix4* out, const cVector3* eye, const cVector3* target, const cVector3* up );
 MAGICALAPI_MATH void magicalMatrix4SetPerspective( cMatrix4* out, float fov, float aspect, float znear, float zfar );
 MAGICALAPI_MATH void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom, float top, float near, float far );
-MAGICALAPI_MATH void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* q, const cVector3* s );
+MAGICALAPI_MATH void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* r, const cVector3* s );
 
 MAGICALAPI_MATH void magicalMatrix4MakeTranslationScalars( cMatrix4* out, float x, float y, float z );
 MAGICALAPI_MATH void magicalMatrix4MakeTranslation( cMatrix4* out, const cVector3* t );
@@ -103,7 +91,7 @@ MAGICALAPI_MATH void magicalMatrix4GetRotationQuaternion( cQuaternion* out, cons
 
 MAGICALAPI_MATH float magicalMatrix4Determinant( const cMatrix4* m );
 MAGICALAPI_MATH cBool magicalMatrix4Inverse( cMatrix4* out, const cMatrix4* m );
-MAGICALAPI_MATH cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_q, cVector3* out_s, const cMatrix4* m );
+MAGICALAPI_MATH cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_r, cVector3* out_s, const cMatrix4* m );
 
 #ifdef __cplusplus
 }

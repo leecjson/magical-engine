@@ -23,17 +23,9 @@ SOFTWARE.
 *******************************************************************************/
 #include "Node.h"
 
-enum
-{
-	kNotChanged = 0x00,
-	kTranslationChanged = 0x01,
-	kRotationChanged = 0x02,
-	kScaleChanged = 0x04,
-};
-
 Node::Node( void )
 {
-
+	
 }
 
 Node::~Node( void )
@@ -48,27 +40,116 @@ Shared<Node> Node::create( void )
 	return Shared<Node>( Initializer<Node>( ret ) );
 }
 
-void Node::transformChanged( int flag )
+void Node::addChild( Shared<Node>& child )
 {
-	_has_changed |= flag;
+	
 }
 
-void Node::setPosition( const Vector3& v )
+void Node::removeChild( Shared<Node>& child )
 {
-	_local_position.set( v );
-	transformChanged( kTranslationChanged );
+
 }
 
-void Node::setPosition( const Vector2& v )
+void Node::setParent( Shared<Node>& parent )
 {
-	_local_position.fromVector2( v );
-	transformChanged( kTranslationChanged );
+
+}
+
+void Node::removeParent( Shared<Node>& parent )
+{
+
+}
+
+Node* Node::getChild( void ) const
+{
+
+}
+
+Node* Node::getParent( void ) const
+{
+
+}
+
+void Node::updateTransform( void )
+{
+	if( _ts_need_update != kHasNotChanged )
+		return;
+
+	const Vector3& t = getDerivedPosition();
+	const Quaternion& r = getDerivedRotation();
+	const Vector3& s = getDerivedScale();
+
+	_local_to_world_matrix.setTRS( t, r, s );
+	_ts_need_update = kHasNotChanged;
+}
+
+const Vector3& Node::getDerivedPosition( void ) const
+{
+	if( _ts_need_update & kNeedToUpdateTranslation || _ts_need_update & kNeedToUpdateRotation || _ts_need_update & kNeedToUpdateScale )
+	{
+		if( _parent )
+		{
+			_derived_position = _parent->getDerivedRotation() * _local_position * _parent->getDerivedScale();
+		}
+		else
+		{
+			_derived_position = _local_position;
+		}
+	}
+	
+	return _derived_position;
+}
+
+const Quaternion& Node::getDerivedRotation( void ) const
+{
+	if( _ts_need_update & kNeedToUpdateRotation )
+	{
+		if( _parent )
+		{
+			_derived_rotation = _parent->getDerivedRotation() * _local_rotation;
+		}
+		else
+		{
+			_derived_rotation = _local_rotation;
+		}
+	}
+
+	return _derived_rotation;
+}
+
+const Vector3& Node::getDerivedScale( void ) const
+{
+	if( _ts_need_update & kNeedToUpdateScale )
+	{
+		if( _parent )
+		{
+			_derived_scale = _parent->getDerivedScale() * _local_scale;
+		}
+		else
+		{
+			_derived_scale = _local_scale;
+		}
+	}
+
+	return _derived_scale;
+}
+
+void Node::setPosition( const Vector3& t )
+{
+	_local_position = t;
+	_ts_need_update |= kNeedToUpdateTranslation;
+}
+
+void Node::setPosition( const Vector2& t )
+{
+	_local_position.fromVector2( t );
+	_ts_need_update |= kNeedToUpdateTranslation;
 }
 
 void Node::setPosition( const float x, const float y, const float z )
 {
 	_local_position.setScalars( x, y, z );
-	transformChanged( kTranslationChanged );
+	_ts_need_update |= kNeedToUpdateTranslation;
 }
 
 const Vector3& Node::getPosition( void ) const
@@ -76,22 +157,50 @@ const Vector3& Node::getPosition( void ) const
 	return _local_position;
 }
 
-void Node::setRotation( const Quaternion& q )
+void Node::translate( const Vector2& t, Space relative )
 {
-	_local_rotation.set( q );
-	transformChanged( kRotationChanged );
+	translate( Vector3::createFromVector2( t ), relative );
 }
 
-void Node::setRotation( const EulerAngles& ea )
+void Node::translate( const Vector3& t, Space relative )
 {
-	_local_rotation.fromEulerAngles( ea );
-	transformChanged( kRotationChanged );
+	if( relative == Space::Self )
+	{
+		_local_position += t;
+	}
+	else if( relative == Space::World )
+	{
+		_local_position += ( _parent->getDerivedRotation().getInversed() * t )
+			/ _parent->getDerivedScale();
+	}
+}
+
+void Node::translate( float x, float y, Space relative )
+{
+	translate( Vector3( x, y, 0.0f ), relative );
+}
+
+void Node::translate( float x, float y, float z, Space relative )
+{
+	translate( Vector3( x, y, z ), relative );
+}
+
+void Node::setRotation( const EulerAngles& r )
+{
+	_local_rotation.fromEulerAngles( r );
+	_ts_need_update |= kNeedToUpdateRotation;
+}
+
+void Node::setRotation( const Quaternion& r )
+{
+	_local_rotation = r;
+	_ts_need_update |= kNeedToUpdateRotation;
 }
 
 void Node::setRotation( float yaw, float pitch, float roll )
 {
 	_local_rotation.fromEulerAngles( yaw, pitch, roll );
-	transformChanged( kRotationChanged );
+	_ts_need_update |= kNeedToUpdateRotation;
 }
 
 const Quaternion& Node::getRotation( void ) const
@@ -99,19 +208,86 @@ const Quaternion& Node::getRotation( void ) const
 	return _local_rotation;
 }
 
+void Node::rotate( const EulerAngles& r, Space relative )
+{
+	rotate( r.toQuaternion(), relative );
+}
+
+void Node::rotate( const Quaternion& r, Space relative )
+{
+	if( relative == Space::Self )
+	{
+		_local_rotation = _local_rotation * r;
+	}
+	else if( relative == Space::World )
+	{
+		_local_rotation = _local_rotation * getDerivedRotation().getInversed() * r * getDerivedRotation();
+	}
+
+	_ts_need_update |= kNeedToUpdateRotation;
+}
+
+void Node::rotate( float yaw, float pitch, float roll, Space relative )
+{
+	EulerAngles ea;
+	ea.setScalars( yaw, pitch, roll );
+	rotate( ea.toQuaternion(), relative );
+}
+
+void Node::yaw( float yaw, Space relative )
+{
+	rotate( Quaternion::createRotationY( yaw ), relative );
+}
+
+void Node::pitch( float pitch, Space relative )
+{
+	rotate( Quaternion::createRotationX( pitch ), relative );
+}
+
+void Node::roll( float roll, Space relative )
+{
+	rotate( Quaternion::createRotationZ( roll ), relative );
+}
+
 void Node::setScale( const Vector3& s )
 {
-	_local_scale.set( s );
-	transformChanged( kScaleChanged );
+	_local_scale = s;
+	_ts_need_update |= kNeedToUpdateScale;
 }
 
 void Node::setScale( float x, float y, float z )
 {
 	_local_scale.setScalars( x, y, z );
-	transformChanged( kScaleChanged );
+	_ts_need_update |= kNeedToUpdateScale;
 }
 
 const Vector3& Node::getScale( void ) const
 {
 	return _local_scale;
+}
+
+void Node::scale( const Vector2& s )
+{
+	scale( Vector3( s.x, s.y, 1.0f ) );
+}
+
+void Node::scale( const Vector3& s )
+{
+	_local_scale *= s;
+	_ts_need_update |= kNeedToUpdateScale;
+}
+
+void Node::scale( float x, float y )
+{
+	scale( Vector3( x, y, 1.0f ) );
+}
+
+void Node::scale( float x, float y, float z )
+{
+	scale( Vector3( x, y, z ) );
+}
+
+void Node::scale( float s )
+{
+	scale( Vector3( s, s, s ) );
 }

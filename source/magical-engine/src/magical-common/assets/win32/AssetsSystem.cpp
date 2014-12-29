@@ -84,6 +84,7 @@ std::string Assets::getAssetsAbsoluteFilename( const char* file_name )
 	{
 		return file_name;
 	}
+
 	std::string unix_path = FileUtils::toUnixStylePath( file_name );
 	std::string abs_path = s_assets_path + unix_path;
 

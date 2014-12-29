@@ -74,6 +74,7 @@ public:
 	inline Quaternion operator+( const Quaternion& q ) const;
 	inline Quaternion operator-( const Quaternion& q ) const;
 	inline Quaternion operator*( float a ) const;
+	inline Vector3 operator*( const Vector3& v ) const;
 	inline Quaternion operator*( const Quaternion& q ) const;
 	inline Quaternion& operator+=( const Quaternion& q );
 	inline Quaternion& operator-=( const Quaternion& q );

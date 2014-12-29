@@ -32,6 +32,13 @@ inline Matrix4 Matrix4::createZero( void )
 	return Matrix4::Zero;
 }
 
+inline Matrix4 Matrix4::createTRS( const Vector3& t, const Quaternion& r, const Vector3& s )
+{
+	Matrix4 ret;
+	magicalMatrix4SetTRS( &ret, &t, &r, &s );
+	return ret;
+}
+
 inline void Matrix4::mulScalar( Matrix4& out, const Matrix4& m, float a )
 {
 	magicalMatrix4MulScalar( &out, &m, a );
@@ -202,9 +209,9 @@ inline void Matrix4::setOrth( float left, float right, float bottom, float top, 
 	magicalMatrix4SetOrth( this, left, right, bottom, top, near, far );
 }
 
-inline void Matrix4::setTRS( const Vector3& t, const Quaternion& q, const Vector3& s )
+inline void Matrix4::setTRS( const Vector3& t, const Quaternion& r, const Vector3& s )
 {
-	magicalMatrix4SetTRS( this, &t, &q, &s );
+	magicalMatrix4SetTRS( this, &t, &r, &s );
 }
 
 inline void Matrix4::makeTranslation( float x, float y, float z )

@@ -184,6 +184,15 @@ public:
 		return _reference;
 	}
 
+	T* take( void )
+	{
+		if( _reference )
+		{
+			_reference->retatin();
+		}
+		return _reference;
+	}
+
 public:
 	Shared& operator=( T* ref )
 	{

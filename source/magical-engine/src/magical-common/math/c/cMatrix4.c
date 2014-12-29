@@ -238,21 +238,21 @@ void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom
 	out->m44 = 1.0f;
 }
 
-void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* q, const cVector3* s )
+void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* r, const cVector3* s )
 {
 	cMatrix3 rm3;
 
-	rm3.m11 = 1.0f - 2.0f * ( q->y * q->y + q->z * q->z );
-	rm3.m12 = 2.0f * ( q->x * q->y + q->z * q->w );
-	rm3.m13 = 2.0f * ( q->x * q->z - q->y * q->w );
+	rm3.m11 = 1.0f - 2.0f * ( r->y * r->y + r->z * r->z );
+	rm3.m12 = 2.0f * ( r->x * r->y + r->z * r->w );
+	rm3.m13 = 2.0f * ( r->x * r->z - r->y * r->w );
 
-	rm3.m21 = 2.0f * ( q->x * q->y - q->z * q->w );
-	rm3.m22 = 1.0f - 2.0f * ( q->x * q->x + q->z * q->z );
-	rm3.m23 = 2.0f * ( q->z * q->y + q->x * q->w );
+	rm3.m21 = 2.0f * ( r->x * r->y - r->z * r->w );
+	rm3.m22 = 1.0f - 2.0f * ( r->x * r->x + r->z * r->z );
+	rm3.m23 = 2.0f * ( r->z * r->y + r->x * r->w );
 
-	rm3.m31 = 2.0f * ( q->x * q->z + q->y * q->w );
-	rm3.m32 = 2.0f * ( q->y * q->z - q->x * q->w );
-	rm3.m33 = 1.0f - 2.0f * ( q->x * q->x + q->y * q->y );
+	rm3.m31 = 2.0f * ( r->x * r->z + r->y * r->w );
+	rm3.m32 = 2.0f * ( r->y * r->z - r->x * r->w );
+	rm3.m33 = 1.0f - 2.0f * ( r->x * r->x + r->y * r->y );
 
 	out->m11 = rm3.m11 * s->x; out->m12 = rm3.m12 * s->y; out->m13 = rm3.m13 * s->z; out->m14 = 0.0f;
 	out->m21 = rm3.m21 * s->x; out->m22 = rm3.m22 * s->y; out->m23 = rm3.m23 * s->z; out->m24 = 0.0f;
@@ -833,11 +833,11 @@ cBool magicalMatrix4Inverse( cMatrix4* out, const cMatrix4* m )
  * 投影后的矩阵会解析失败
  *
  * out_t 解析平移
- * out_s 解析缩放
  * out_r 解析旋转
+ * out_s 解析缩放
  * m 源矩阵
  *-----------------------------------------------------------------------------*/
-cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_q, cVector3* out_s, const cMatrix4* m )
+cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_r, cVector3* out_s, const cMatrix4* m )
 {
 	cVector3 xaxis;
 	cVector3 yaxis;
@@ -857,7 +857,7 @@ cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_q, cVector3* ou
         out_t->z = m->m14;
     }
 
-	if( out_s == NULL && out_q == NULL )
+	if( out_s == NULL && out_r == NULL )
 		return cTrue;
 
 	magicalVector3Fill( &xaxis, m->m11, m->m12, m->m13 );
@@ -880,7 +880,7 @@ cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_q, cVector3* ou
 		out_s->z = scale_z;
 	}
 
-	if( out_q == NULL )
+	if( out_r == NULL )
 		return cTrue;
 
 	if( magicalAlmostZero( scale_x, kVectorEpsilon ) || magicalAlmostZero( scale_y, kVectorEpsilon ) || magicalAlmostZero( scale_z, kVectorEpsilon ) )
@@ -906,36 +906,36 @@ cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_q, cVector3* ou
 	if( trace > kVectorEpsilon )
 	{
 		s = 0.5f / sqrt( trace );
-		out_q->w = 0.25f / s;
-		out_q->x = ( yaxis.z - zaxis.y ) * s;
-		out_q->y = ( zaxis.x - xaxis.z ) * s;
-		out_q->z = ( xaxis.y - yaxis.x ) * s;
+		out_r->w = 0.25f / s;
+		out_r->x = ( yaxis.z - zaxis.y ) * s;
+		out_r->y = ( zaxis.x - xaxis.z ) * s;
+		out_r->z = ( xaxis.y - yaxis.x ) * s;
 	}
 	else
 	{
 		if( xaxis.x > yaxis.x && xaxis.x > zaxis.z )
 		{
 			s = 2.0f * sqrt( 1.0f + xaxis.x - yaxis.y - zaxis.z );
-			out_q->w = ( yaxis.z - zaxis.y ) / s;
-			out_q->x = 0.25f * s;
-			out_q->y = ( yaxis.x + xaxis.y ) / s;
-			out_q->z = ( zaxis.x + xaxis.z ) / s;
+			out_r->w = ( yaxis.z - zaxis.y ) / s;
+			out_r->x = 0.25f * s;
+			out_r->y = ( yaxis.x + xaxis.y ) / s;
+			out_r->z = ( zaxis.x + xaxis.z ) / s;
 		}
 		else if( yaxis.y > zaxis.z )
 		{
 			s = 2.0f * sqrt( 1.0f + yaxis.y - xaxis.x - zaxis.z );
-			out_q->w = ( zaxis.x - xaxis.z ) / s;
-			out_q->x = ( yaxis.x + xaxis.y ) / s;
-			out_q->y = 0.25f * s;
-			out_q->z = ( zaxis.y + yaxis.z ) / s;
+			out_r->w = ( zaxis.x - xaxis.z ) / s;
+			out_r->x = ( yaxis.x + xaxis.y ) / s;
+			out_r->y = 0.25f * s;
+			out_r->z = ( zaxis.y + yaxis.z ) / s;
 		}
 		else
 		{
 			s = 2.0f * sqrt( 1.0f + zaxis.z - xaxis.x - yaxis.y );
-			out_q->w = ( xaxis.y - yaxis.x ) / s;
-			out_q->x = ( zaxis.x + xaxis.z ) / s;
-			out_q->y = ( zaxis.y + yaxis.z ) / s;
-			out_q->z = 0.25f * s;
+			out_r->w = ( xaxis.y - yaxis.x ) / s;
+			out_r->x = ( zaxis.x + xaxis.z ) / s;
+			out_r->y = ( zaxis.y + yaxis.z ) / s;
+			out_r->z = 0.25f * s;
 		}
 	}
 
