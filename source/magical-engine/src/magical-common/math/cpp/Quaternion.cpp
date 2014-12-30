@@ -38,18 +38,12 @@ Quaternion Quaternion::var = Quaternion::Identity;
 
 Quaternion::Quaternion( float x, float y, float z, float w )
 {
-	this->x = x;
-	this->y = y;
-	this->z = z;
-	this->w = w;
+	magicalQuaternionFill( this, x, y, z, w );
 }
 
 Quaternion::Quaternion( const Quaternion& q )
 {
-	x = q.x;
-	y = q.y;
-	z = q.z;
-	w = q.w;
+	magicalQuaternionCopy( this, &q );
 }
 
 Quaternion::Quaternion( void )

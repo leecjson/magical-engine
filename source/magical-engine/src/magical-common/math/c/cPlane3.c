@@ -24,32 +24,36 @@ SOFTWARE.
 #include "cPlane3.h"
 #include "cMathMacros.h"
 
-cBool magicalPlane3Equals( const cPlane3 p1, const cPlane3 p2 )
+cBool magicalPlane3Equals( const cPlane3* p1, const cPlane3* p2 )
 {
 	return
-		magicalAlmostEqual( p1 _x, p2 _x, kEpsilon ) &&
-		magicalAlmostEqual( p1 _y, p2 _y, kEpsilon ) &&
-		magicalAlmostEqual( p1 _z, p2 _z, kEpsilon ) &&
-		magicalAlmostEqual( p1 _d, p2 _d, kEpsilon );
+		magicalAlmostEqual( p1->x, p2->x, kVectorEpsilon ) &&
+		magicalAlmostEqual( p1->y, p2->y, kVectorEpsilon ) &&
+		magicalAlmostEqual( p1->z, p2->z, kVectorEpsilon ) &&
+		magicalAlmostEqual( p1->d, p2->d, kVectorEpsilon );
 }
 
-cBool magicalPlane3IsZero( const cPlane3 p )
+cBool magicalPlane3IsZero( const cPlane3* p )
 {
 	return
-		magicalAlmostZero( p _x, kEpsilon ) &&
-		magicalAlmostZero( p _y, kEpsilon ) &&
-		magicalAlmostZero( p _z, kEpsilon ) &&
-		magicalAlmostZero( p _d, kEpsilon );
+		magicalAlmostZero( p->x, kVectorEpsilon ) &&
+		magicalAlmostZero( p->y, kVectorEpsilon ) &&
+		magicalAlmostZero( p->z, kVectorEpsilon ) &&
+		magicalAlmostZero( p->d, kVectorEpsilon );
 }
 
-void magicalPlane3SetScalars( cPlane3 out, float x, float y, float z, float d )
+void magicalPlane3SetScalars( cPlane3* out, float x, float y, float z, float d )
 {
-	out _x = x;
-	out _y = y;
-	out _z = z;
-	out _d = d;
+	cVector3 nn;
+	nn.x = x;
+	nn.y = y;
+	nn.z = z;
+	magicalVector3Normalize( &nn, &nn );
 
-	magicalVector3Normalize( out, out );
+	out->x = nn.x;
+	out->y = nn.y;
+	out->z = nn.z;
+	out->d = d;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -59,14 +63,15 @@ void magicalPlane3SetScalars( cPlane3 out, float x, float y, float z, float d )
  * n 表面法向量
  * d 原点到平面的距离
  *-----------------------------------------------------------------------------*/
-void magicalPlane3SetNormalAndDistance( cPlane3 out, const cVector3 n, float d )
+void magicalPlane3SetNormalAndDistance( cPlane3* out, const cVector3* n, float d )
 {
-	out _x = n _x;
-	out _y = n _y;
-	out _z = n _z;
-	out _d = d;
+	cVector3 nn;
+	magicalVector3Normalize( &nn, n );
 
-	magicalVector3Normalize( out, out );
+	out->x = nn.x;
+	out->y = nn.y;
+	out->z = nn.z;
+	out->d = d;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -78,15 +83,15 @@ void magicalPlane3SetNormalAndDistance( cPlane3 out, const cVector3 n, float d )
  * p 平面上任意一点
  * n 表面法向量
  *-----------------------------------------------------------------------------*/
-void magicalPlane3SetNormalAndPoint( cPlane3 out, const cVector3 n, const cVector3 p )
+void magicalPlane3SetNormalAndPoint( cPlane3* out, const cVector3* n, const cVector3* p )
 {
 	cVector3 nn;
-	magicalVector3Normalize( nn, n );
+	magicalVector3Normalize( &nn, n );
 
-	out _x = nn _x;
-	out _y = nn _y;
-	out _z = nn _z;
-	out _d = p _x * nn _x + p _y * nn _y + p _z * nn _z;
+	out->x = nn.x;
+	out->y = nn.y;
+	out->z = nn.z;
+	out->d = p->x * nn.x + p->y * nn.y + p->z * nn.z;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -102,44 +107,42 @@ void magicalPlane3SetNormalAndPoint( cPlane3 out, const cVector3 n, const cVecto
  * b 第二个点
  * c 第三个点
  *-----------------------------------------------------------------------------*/
-void magicalPlane3SetPoints( cPlane3 out, const cVector3 a, const cVector3 b, const cVector3 c )
+void magicalPlane3SetPoints( cPlane3* out, const cVector3* a, const cVector3* b, const cVector3* c )
 {
 	cVector3 n, e3, e1;
 	
-	e3 _x = b _x - a _x;
-	e3 _y = b _y - a _y;
-	e3 _z = b _z - a _z;
+	e3.x = b->x - a->x;
+	e3.y = b->y - a->y;
+	e3.z = b->z - a->z;
 
-	e1 _x = c _x - b _x;
-	e1 _y = c _y - b _y;
-	e1 _z = c _z - b _z;
+	e1.x = c->x - b->x;
+	e1.y = c->y - b->y;
+	e1.z = c->z - b->z;
 
-	magicalVector3Cross( n, e3, e1 );
-	
-	debugassert( !magicalVector3IsZero( n ), "invaild operate!" );
+	magicalVector3Cross( &n, &e3, &e1 );
+	debugassert( !magicalVector3IsZero( &n ), "invaild operate!" );
+	magicalVector3Normalize( &n, &n );
 
-	magicalVector3Normalize( n, n );
-
-	out _x = n _x;
-	out _y = n _y;
-	out _z = n _z;
-	out _d = a _x * n _x + a _y * n _y + a _z * n _z;
+	out->x = n.x;
+	out->y = n.y;
+	out->z = n.z;
+	out->d = a->x * n.x + a->y * n.y + a->z * n.z;
 }
 
-void magicalPlane3SetZero( cPlane3 out )
+void magicalPlane3SetZero( cPlane3* out )
 {
-	out _x = 0.0f;
-	out _y = 0.0f;
-	out _z = 0.0f;
-	out _d = 0.0f;
+	out->x = 0.0f;
+	out->y = 0.0f;
+	out->z = 0.0f;
+	out->d = 0.0f;
 }
 
-void magicalPlane3Set( cPlane3 out, const cPlane3 p )
+void magicalPlane3Set( cPlane3* out, const cPlane3* p )
 {
-	out _x = p _x;
-	out _y = p _y;
-	out _z = p _z;
-	out _d = p _d;
+	out->x = p->x;
+	out->y = p->y;
+	out->z = p->z;
+	out->d = p->d;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -148,13 +151,14 @@ void magicalPlane3Set( cPlane3 out, const cPlane3 p )
  * out 目标平面
  * n 设置的法向量
  *-----------------------------------------------------------------------------*/
-void magicalPlane3SetNormal( cPlane3 out, const cVector3 n )
+void magicalPlane3SetNormal( cPlane3* out, const cVector3* n )
 {
-	out _x = n _x;
-	out _y = n _y;
-	out _z = n _z;
+	cVector3 nn;
+	magicalVector3Normalize( &nn, &n );
 
-	magicalVector3Normalize( out, out );
+	out->x = nn.x;
+	out->y = nn.y;
+	out->z = nn.z;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -163,11 +167,11 @@ void magicalPlane3SetNormal( cPlane3 out, const cVector3 n )
  * out p的法向量
  * p 源平面
  *-----------------------------------------------------------------------------*/
-void magicalPlane3GetNormal( cVector3 out, const cPlane3 p )
+void magicalPlane3GetNormal( cVector3* out, const cPlane3* p )
 {
-	out _x = p _x;
-	out _y = p _y;
-	out _z = p _z;
+	out->x = p->x;
+	out->y = p->y;
+	out->z = p->z;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -182,19 +186,19 @@ void magicalPlane3GetNormal( cVector3 out, const cPlane3 p )
  * p 目标平面
  * point 任意点
  *-----------------------------------------------------------------------------*/
-void magicalPlane3NearestPoint( cVector3 out, const cPlane3 p, const cVector3 point )
+void magicalPlane3NearestPoint( cVector3* out, const cPlane3* p, const cVector3* point )
 {
 	cVector3 scale_n;
-	float distance = p _d - p _x * point _x + p _y * point _y + p _z * point _z;
+	float distance = p->d - p->x * point->x + p->y * point->y + p->z * point->z;
 
-	magicalVector3Scale( scale_n, p, distance );
-	magicalVector3Add( out, point, scale_n );
+	magicalVector3Scale( &scale_n, p, distance );
+	magicalVector3Add( out, point, &scale_n );
 }
 
 /*-----------------------------------------------------------------------------*\
  * 计算一个点以正交投影的方式投影到平面P后的点
  *-----------------------------------------------------------------------------*/
-void magicalPlane3ProjectPoint( cVector3 out, const cPlane3 p, const cVector3 point )
+void magicalPlane3ProjectPoint( cVector3* out, const cPlane3* p, const cVector3* point )
 {
 	magicalPlane3NearestPoint( out, p , point );
 }
@@ -209,9 +213,9 @@ void magicalPlane3ProjectPoint( cVector3 out, const cPlane3 p, const cVector3 po
  * out p的法向量
  * p 目标平面
  *-----------------------------------------------------------------------------*/
-float magicalPlane3DistanceToPoint( const cPlane3 p, const cVector3 point )
+float magicalPlane3DistanceToPoint( const cPlane3* p, const cVector3* point )
 {
-	return p _x * point _x + p _y * point _y + p _z * point _z - p _d;
+	return p->x * point->x + p->y * point->y + p->z * point->z - p->d;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -224,14 +228,14 @@ float magicalPlane3DistanceToPoint( const cPlane3 p, const cVector3 point )
  *        -1 在平面后方
  *         0 刚好在平面上
  *-----------------------------------------------------------------------------*/
-int magicalPlane3ClassifyPoint( const cPlane3 p, const cVector3 point )
+int magicalPlane3ClassifyPoint( const cPlane3* p, const cVector3* point )
 {
-	float distance = p _x * point _x + p _y * point _y + p _z * point _z - p _d;
+	float distance = p->x * point->x + p->y * point->y + p->z * point->z - p->d;
 
-	if( distance > kEpsilon )
+	if( distance > kVectorEpsilon )
 		return +1;
 
-	if( distance < -kEpsilon )
+	if( distance < -kVectorEpsilon )
 		return -1;
 
 	return 0;
@@ -247,48 +251,48 @@ int magicalPlane3ClassifyPoint( const cPlane3 p, const cVector3 point )
  *        -1 在平面后方
  *         0 与平面相交
  *-----------------------------------------------------------------------------*/
-int magicalPlane3ClassifyAABB3( const cPlane3 p, const cAABB3 aabb )
+int magicalPlane3ClassifyAABB3( const cPlane3* p, const cAABB3* aabb )
 {
 	float min_d, max_d;
 
-	if( p _x > 0.0f )
+	if( p->x > 0.0f )
 	{
-		min_d = p _x * aabb _min_x;
-		max_d = p _x * aabb _max_x;
+		min_d = p->x * aabb.min_x;
+		max_d = p->x * aabb.max_x;
 	}
 	else
 	{
-		min_d = p _x * aabb _max_x;
-		max_d = p _x * aabb _min_x;
+		min_d = p->x * aabb.max_x;
+		max_d = p->x * aabb.min_x;
 	}
 
-	if( p _y > 0.0f )
+	if( p->y > 0.0f )
 	{
-		min_d += p _y * aabb _min_y;
-		max_d += p _y * aabb _max_y;
+		min_d += p->y * aabb.min_y;
+		max_d += p->y * aabb.max_y;
 	}
 	else
 	{
-		min_d += p _y * aabb _max_y;
-		max_d += p _y * aabb _min_y;
+		min_d += p->y * aabb.max_y;
+		max_d += p->y * aabb.min_y;
 	}
 
-	if( p _z > 0.0f )
+	if( p->z > 0.0f )
 	{
-		min_d += p _z * aabb _min_z;
-		max_d += p _z * aabb _max_z;
+		min_d += p->z * aabb.min_z;
+		max_d += p->z * aabb.max_z;
 	}
 	else
 	{
-		min_d += p _z * aabb _max_z;
-		max_d += p _z * aabb _min_z;
+		min_d += p->z * aabb.max_z;
+		max_d += p->z * aabb.min_z;
 	}
 
-	if( min_d >= p _d ) {
+	if( min_d >= p->d ) {
 		return +1;
 	}
 
-	if( max_d <= p _d ) {
+	if( max_d <= p->d ) {
 		return -1;
 	}
 
@@ -305,14 +309,14 @@ int magicalPlane3ClassifyAABB3( const cPlane3 p, const cAABB3 aabb )
  *        -1 在平面后方
  *         0 与平面相交
  *-----------------------------------------------------------------------------*/
-int magicalPlane3ClassifySphere3( const cPlane3 p, const cSphere3 sp )
+int magicalPlane3ClassifySphere3( const cPlane3* p, const cSphere3* sp )
 {
-	float distance = p _x * sp _x + p _y * sp _y + p _z * sp _z - p _d;
+	float distance = p->x * sp->x + p->y * sp->y + p->z * sp->z - p->d;
 
-	if( distance >= sp _r )
+	if( distance >= sp.r )
 		return +1;
 
-	if( distance <= - sp _r )
+	if( distance <= -sp.r )
 		return -1;
 
 	return 0;
@@ -325,11 +329,11 @@ int magicalPlane3ClassifySphere3( const cPlane3 p, const cSphere3 sp )
  * p2 平面2
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalPlane3Intersects( const cPlane3 p1, const cPlane3 p2 )
+cBool magicalPlane3Intersects( const cPlane3* p1, const cPlane3* p2 )
 {
 	if( magicalVector3Equals( p1, p2 ) )
 	{
-		return magicalAlmostEqual( p1 _d, p2 _d, kEpsilon );
+		return magicalAlmostEqual( p1->d, p2->d, kVectorEpsilon );
 	}
 	else
 	{
@@ -344,7 +348,7 @@ cBool magicalPlane3Intersects( const cPlane3 p1, const cPlane3 p2 )
  * aabb 包围盒
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalPlane3IntersectsAABB3( const cPlane3 p, const cAABB3 aabb )
+cBool magicalPlane3IntersectsAABB3( const cPlane3* p, const cAABB3* aabb )
 {
 	return magicalPlane3ClassifyAABB3( p, aabb ) == 0;
 }
@@ -356,12 +360,12 @@ cBool magicalPlane3IntersectsAABB3( const cPlane3 p, const cAABB3 aabb )
  * sp 球体
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalPlane3IntersectsSphere3( const cPlane3 p, const cSphere3 sp )
+cBool magicalPlane3IntersectsSphere3( const cPlane3* p, const cSphere3* sp )
 {
 	return magicalPlane3ClassifySphere3( p, sp ) == 0;
 }
 
-void magicalPlane3IntersectsRay3( cRayIntersectResult out, const cPlane3 p, const cRay3 r3, const cBool discard_inside )
+void magicalPlane3IntersectsRay3( cRayIntersectResult* out, const cPlane3* p, const cRay3* r3, cBool discard_inside )
 {
 	magicalRay3IntersectsPlane3( out, r3, p, discard_inside );
 }
@@ -373,7 +377,7 @@ void magicalPlane3IntersectsRay3( cRayIntersectResult out, const cPlane3 p, cons
  * point 目标点
  * return 是否包含
  *-----------------------------------------------------------------------------*/
-cBool magicalPlane3ContainsPoint( const cPlane3 p, const cVector3 point )
+cBool magicalPlane3ContainsPoint( const cPlane3* p, const cVector3* point )
 {
-	return magicalAlmostZero( p _x * point _x + p _y * point _y + p _z * point _z - p _d, kEpsilon );
+	return magicalAlmostZero( p->x * point->x + p->y * point->y + p->z * point->z - p->d, kVectorEpsilon );
 }

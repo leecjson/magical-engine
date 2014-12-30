@@ -27,15 +27,13 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
-#define MAGICAL_CACHED_POOL_DEFAULT_CAPACITY 32
-
 template< class T >
 class CachedPool
 {
 public:
 	CachedPool( void )
 	{
-		grow_capacity( MAGICAL_CACHED_POOL_DEFAULT_CAPACITY );
+		grow_capacity( 32 );
 	}
 
 	CachedPool( size_t capacity )
@@ -43,10 +41,10 @@ public:
 		grow_capacity( capacity );
 	}
 
-	CachedPool( size_t capacity, size_t fill_size )
+	CachedPool( size_t capacity, size_t fsize )
 	{
 		grow_capacity( capacity );
-		fill( fill_size );
+		fill( fsize );
 	}
 
 	~CachedPool( void )
@@ -64,12 +62,12 @@ public:
 		for( size_t i = 0; i < size; ++i )
 		{
 			grow_capacity();
-			typename T* ptr = (T*)malloc( obj_size );
+			typename T* ptr = (T*) malloc( obj_size );
 
 			if( !ptr ) throw std::bad_alloc();
 
 			_objects[_size] = ptr;
-			++_size;
+			_size += 1;
 		}
 	}
 
@@ -77,8 +75,8 @@ public:
 	{
 		grow_capacity();
 
-		_objects[_size] = (T*)ptr;
-		++_size;
+		_objects[_size] = (T*) ptr;
+		_size += 1;
 	}
 
 	void* take( void )
@@ -87,20 +85,18 @@ public:
 		{
 			grow_capacity();
 			fill( _capacity );
-			
-			typename T* ptr = _objects[_size - 1];
 
+			typename T* ptr = _objects[_size - 1];
 			if( _size != 0 )
-				--_size;
+				_size --;
 
 			return ptr;
 		}
 		else
 		{
 			typename T* ptr = _objects[_size - 1];
-
 			if( _size != 0 )
-				--_size;
+				_size --;
 
 			return ptr;
 		}
@@ -117,7 +113,7 @@ public:
 		}
 		else
 		{
-			grow_capacity( MAGICAL_CACHED_POOL_DEFAULT_CAPACITY );
+			grow_capacity( 32 );
 		}
 	}
 
@@ -129,12 +125,12 @@ public:
 		if( _objects )
 		{
 			_capacity += size;
-			_objects = (T**)realloc( _objects, _capacity * sizeof( T* ) );
+			_objects = (T**) realloc( _objects, _capacity * sizeof( T* ) );
 		}
 		else
 		{
 			_capacity = size;
-			_objects = (T**)malloc( size * sizeof( T* ) );
+			_objects = (T**) malloc( size * sizeof( T* ) );
 		}
 
 		if( !_objects ) throw std::bad_alloc();
@@ -150,9 +146,9 @@ public:
 			}
 
 			free( _objects );
+			_objects = nullptr;
 			_size = 0;
 			_capacity = 0;
-			_objects = nullptr;
 		}
 	}
 

@@ -26,10 +26,9 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Reference.h"
-#include "Node.h"
+#include "Transform.h"
 
-class Camera : public Node
+class Camera : public Transform
 {
 public:
 	Camera( void );

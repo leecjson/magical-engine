@@ -26,7 +26,7 @@ SOFTWARE.
 
 #include "cUtility.h"
 
-typedef struct cMatrix3{
+typedef struct cMatrix3 {
 	float m11; float m12; float m13;
 	float m21; float m22; float m23;
 	float m31; float m32; float m33;
@@ -40,6 +40,17 @@ typedef struct cMatrix3{
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+MAGICALAPI_MATH cBool magicalMatrix3Equals( const cMatrix3* m1, const cMatrix3* m2 );
+MAGICALAPI_MATH cBool magicalMatrix3IsIdentity( const cMatrix3* m );
+MAGICALAPI_MATH cBool magicalMatrix3IsZero( const cMatrix3* m );
+
+MAGICALAPI_MATH void magicalMatrix3Fill( cMatrix3* out, float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33 );
+MAGICALAPI_MATH void magicalMatrix3Copy( cMatrix3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3SetIdentity( cMatrix3* out );
+MAGICALAPI_MATH void magicalMatrix3SetZero( cMatrix3* out );
+
+MAGICALAPI_MATH void magicalMatrix3SetLookAt( cMatrix3* out, const cVector3* eye, const cVector3* target, const cVector3* up );
 
 #ifdef __cplusplus
 }

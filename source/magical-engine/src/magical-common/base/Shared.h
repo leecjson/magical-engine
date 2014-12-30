@@ -34,11 +34,6 @@ template< class T >
 class Initializer
 {
 public:
-	Initializer( void )
-	{
-		
-	}
-
 	Initializer( T* ref )
 	{
 		_reference = ref;
@@ -80,7 +75,7 @@ public:
 	{
 		if( ref )
 		{
-			_reference = (T*)ref;
+			_reference = (T*) ref;
 			_reference->retain();
 		}
 	}
@@ -208,13 +203,36 @@ public:
 		return _reference;
 	}
 
-	T* take( void )
+	template< class T2 >
+	T2* get( void ) const
 	{
-		if( _reference )
-		{
-			_reference->retatin();
-		}
-		return _reference;
+		return (T2*) _reference
+	}
+
+	Shared<T> share( void ) const
+	{
+		return Shared<T>( _reference );
+	}
+
+	template< class T2 >
+	Shared<T2> share( void ) const
+	{
+		return Shared<T2>( (T2*) _reference );
+	}
+
+	T* take( void ) const
+	{
+		T* ret = _reference;
+		_reference = nullptr;
+		return ret;
+	}
+
+	template< class T2 >
+	T2* take( void ) const
+	{
+		T2* ret = (T2*) _reference;
+		_reference = nullptr;
+		return ret;
 	}
 
 public:

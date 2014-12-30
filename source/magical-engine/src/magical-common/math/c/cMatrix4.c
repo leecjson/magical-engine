@@ -32,14 +32,6 @@ static const float IDENTITY[] =
 	0.0f, 0.0f, 0.0f, 1.0f
 };
 
-static const float ZERO[] =
-{
-	0.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 0.0f
-};
-
 cBool magicalMatrix4Equals( const cMatrix4* m1, const cMatrix4* m2 )
 {
 	const float* v1 = (const float*) m1;
@@ -75,7 +67,7 @@ cBool magicalMatrix4IsZero( const cMatrix4* m )
 
 	for( int i = 0; i < 16; ++i )
 	{
-		if( magicalAlmostEqual( v[i], ZERO[i], kVectorEpsilon ) == cFalse )
+		if( magicalAlmostZero( v[i], kVectorEpsilon ) == cFalse )
 		{
 			return cFalse;
 		}
@@ -107,7 +99,7 @@ void magicalMatrix4SetIdentity( cMatrix4* out )
 
 void magicalMatrix4SetZero( cMatrix4* out )
 {
-	memcpy( out, ZERO, sizeof( cMatrix4 ) );
+	memset( out, 0, sizeof( cMatrix4 ) );
 }
 
 /*-----------------------------------------------------------------------------*\

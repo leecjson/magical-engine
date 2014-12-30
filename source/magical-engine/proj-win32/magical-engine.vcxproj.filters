@@ -357,6 +357,12 @@
     <ClCompile Include="..\src\magical-common\math\c\cMatrix4.c">
       <Filter>src\magical-common\math\c</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\magical-common\engine\Transform.cpp">
+      <Filter>src\magical-common\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\c\cPlane3.c">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\magical-common\assets\AssetsSystem.h">
@@ -624,6 +630,12 @@
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\magical-common\math\c\cMatrix4.h">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\engine\Transform.h">
+      <Filter>src\magical-common\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\c\cPlane3.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
   </ItemGroup>

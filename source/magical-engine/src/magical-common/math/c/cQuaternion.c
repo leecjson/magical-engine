@@ -61,6 +61,8 @@ void magicalQuaternionFill( cQuaternion* out, float x, float y, float z, float w
 	out->y = y;
 	out->z = z;
 	out->w = w;
+
+	magicalQuaternionNormalize( out, out );
 }
 
 void magicalQuaternionCopy( cQuaternion* out, const cQuaternion* q )
