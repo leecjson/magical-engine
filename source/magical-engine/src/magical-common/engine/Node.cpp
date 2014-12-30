@@ -23,6 +23,14 @@ SOFTWARE.
 *******************************************************************************/
 #include "Node.h"
 
+enum
+{
+	kHasNotChanged = 0x00,
+	kNeedToUpdateTranslation = 0x01,
+	kNeedToUpdateRotation = 0x02,
+	kNeedToUpdateScale = 0x04,
+};
+
 Node::Node( void )
 {
 	
@@ -40,39 +48,118 @@ Shared<Node> Node::create( void )
 	return Shared<Node>( Initializer<Node>( ret ) );
 }
 
-void Node::addChild( Shared<Node>& child )
+Shared<Node> Node::create( const char* name )
 {
-	
+	Shared<Node> ret = Node::create();
+	ret->setName( name );
+	return ret;
 }
 
-void Node::removeChild( Shared<Node>& child )
+Shared<Node> Node::create( const Vector3& t, const Quaternion& r, const Vector3& s )
 {
-
+	Shared<Node> ret = Node::create();
+	ret->setPosition( t );
+	ret->setRotation( r );
+	ret->setScale( s );
+	return ret;
 }
 
-void Node::setParent( Shared<Node>& parent )
+void Node::setName( const char* name )
 {
+	magicalAssert( name && strlen( name ) > 0, "Node::setName" );
 
+	if( _name == name )
+		return;
+
+	_name = name;
 }
 
-void Node::removeParent( Shared<Node>& parent )
+const std::string& Node::getName( void ) const
 {
-
+	return _name;
 }
 
-Node* Node::getChild( void ) const
+void Node::addChild( const Shared<Node>& child )
 {
+	Node* node = child.get();
+	magicalAssert( node && node != this && !node->getParent(), "Node::addChild" );
 
+	node->setParent( this );
+
+	node->retain();
+	_children.push_back( node );
+}
+
+void Node::removeChild( const Shared<Node>& child )
+{
+	Node* node = child.get();
+	magicalAssert( node && node->getParent() == this, "Node::removeChild" );
+
+	auto itr = std::find( _children.begin(), _children.end(), node );
+	magicalAssert( itr != _children.end(), "Node::removeChild" );
+
+	Node* target = *itr;
+
+	target->setParent( nullptr );
+	_children.erase( itr );
+	target->release();
+}
+
+void Node::removeAllChildren( void )
+{
+	if( _children.empty() )
+		return;
+
+	for( auto& child : _children )
+	{
+		child->setParent( nullptr );
+		child->release();
+	}
+	_children.clear();
+}
+
+void Node::removeFromParent( void )
+{
+	magicalAssert( getParent(), "Node::removeFromParent" );
+	getParent()->removeChild( this );
+}
+
+Node* Node::getChild( const char* name ) const
+{
+	magicalAssert( name && strlen( name ) > 0, "Node::getChild" );
+	for( auto& child : _children )
+	{
+		if( child->getName() == name )
+			return child;
+	}
+	return nullptr;
+}
+
+Node* Node::getChild( uint32_t index ) const
+{
+	magicalAssert( index < _children.size(), "Node::getChild" );
+	return _children[index];
+}
+
+uint32_t Node::childrenCount( void ) const
+{
+	return _children.size();
 }
 
 Node* Node::getParent( void ) const
 {
+	return _parent;
+}
 
+bool Node::isChildOf( const Shared<Node>& parent ) const
+{
+	Node* node = parent.get();
+	return _parent == node;
 }
 
 void Node::updateTransform( void )
 {
-	if( _ts_need_update != kHasNotChanged )
+	if( _ts_need_update == kHasNotChanged )
 		return;
 
 	const Vector3& t = getDerivedPosition();
@@ -83,13 +170,209 @@ void Node::updateTransform( void )
 	_ts_need_update = kHasNotChanged;
 }
 
+void Node::setPosition( const Vector2& t )
+{
+	setPosition( Vector3( t.x, t.y, _local_position.z ) );
+}
+
+void Node::setPosition( const Vector3& t )
+{
+	_local_position = t;
+	_ts_need_update |= kNeedToUpdateTranslation;
+}
+
+void Node::setPosition( float x, float y )
+{
+	setPosition( Vector3( x, y, _local_position.z ) );
+}
+
+void Node::setPosition( float x, float y, float z )
+{
+	setPosition( Vector3( x, y, z ) );
+}
+
+const Vector3& Node::getPosition( void ) const
+{
+	return _local_position;
+}
+
+void Node::translate( const Vector2& t, Space relative )
+{
+	translate( Vector3::createFromVector2( t ), relative );
+}
+
+void Node::translate( const Vector3& t, Space relative )
+{
+	switch( relative )
+	{
+	case Space::Self:
+		_local_position += _local_rotation * t;
+		break;
+	case Space::Parent:
+		_local_position += t;
+		break;
+	case Space::World:
+		if( _parent )
+		{
+			_local_position += ( _parent->getDerivedRotation().getInversed() * t ) / _parent->getDerivedScale();
+		}
+		else
+		{
+			_local_position += t;
+		}
+		break;
+	default:
+		break;
+	}
+
+	_ts_need_update |= kNeedToUpdateTranslation;
+}
+
+void Node::translate( float x, float y, Space relative )
+{
+	translate( Vector3( x, y, 0.0f ), relative );
+}
+
+void Node::translate( float x, float y, float z, Space relative )
+{
+	translate( Vector3( x, y, z ), relative );
+}
+
+void Node::setRotation( const EulerAngles& r )
+{
+	setRotation( r.toQuaternion() );
+}
+
+void Node::setRotation( const Quaternion& r )
+{
+	_local_rotation = r;
+	_ts_need_update |= kNeedToUpdateRotation;
+}
+
+void Node::setRotation( float yaw, float pitch, float roll )
+{
+	EulerAngles ea;
+	ea.setScalars( yaw, pitch, roll );
+	setRotation( ea.toQuaternion() );
+}
+
+const Quaternion& Node::getRotation( void ) const
+{
+	return _local_rotation;
+}
+
+void Node::rotate( const EulerAngles& r, Space relative )
+{
+	rotate( r.toQuaternion(), relative );
+}
+
+void Node::rotate( const Quaternion& r, Space relative )
+{
+	switch( relative )
+	{
+	case Space::Self:
+		_local_rotation = _local_rotation * r;
+		break;
+	case Space::Parent:
+		_local_rotation = r * _local_rotation;
+		break;
+	case Space::World:
+		_local_rotation = _local_rotation * getDerivedRotation().getInversed() * r * getDerivedRotation();
+		break;
+	default:
+		break;
+	}
+
+	_ts_need_update |= kNeedToUpdateRotation;
+}
+
+void Node::rotate( float yaw, float pitch, float roll, Space relative )
+{
+	EulerAngles ea;
+	ea.setScalars( yaw, pitch, roll );
+	rotate( ea.toQuaternion(), relative );
+}
+
+void Node::yaw( float yaw, Space relative )
+{
+	rotate( Quaternion::createRotationY( yaw ), relative );
+}
+
+void Node::pitch( float pitch, Space relative )
+{
+	rotate( Quaternion::createRotationX( pitch ), relative );
+}
+
+void Node::roll( float roll, Space relative )
+{
+	rotate( Quaternion::createRotationZ( roll ), relative );
+}
+
+void Node::setScale( const Vector2& s )
+{
+	setScale( Vector3( s.x, s.y, _local_scale.z ) );
+}
+
+void Node::setScale( const Vector3& s )
+{
+	_local_scale = s;
+	_ts_need_update |= kNeedToUpdateScale;
+}
+
+void Node::setScale( float x, float y )
+{
+	setScale( Vector3( x, y, _local_scale.z ) );
+}
+
+void Node::setScale( float x, float y, float z )
+{
+	setScale( Vector3( x, y, z ) );
+}
+
+const Vector3& Node::getScale( void ) const
+{
+	return _local_scale;
+}
+
+void Node::scale( const Vector2& s )
+{
+	scale( Vector3( s.x, s.y, 1.0f ) );
+}
+
+void Node::scale( const Vector3& s )
+{
+	_local_scale *= s;
+	_ts_need_update |= kNeedToUpdateScale;
+}
+
+void Node::scale( float x, float y )
+{
+	scale( Vector3( x, y, 1.0f ) );
+}
+
+void Node::scale( float x, float y, float z )
+{
+	scale( Vector3( x, y, z ) );
+}
+
+void Node::scale( float s )
+{
+	scale( Vector3( s, s, s ) );
+}
+
+void Node::lookAt( const Vector3& target, const Vector3& up )
+{
+
+}
+
 const Vector3& Node::getDerivedPosition( void ) const
 {
 	if( _ts_need_update & kNeedToUpdateTranslation || _ts_need_update & kNeedToUpdateRotation || _ts_need_update & kNeedToUpdateScale )
 	{
 		if( _parent )
 		{
-			_derived_position = _parent->getDerivedRotation() * _local_position * _parent->getDerivedScale();
+			_derived_position = _parent->getDerivedRotation() * 
+				( _parent->getDerivedScale() * _local_position ) + _parent->getDerivedPosition();
 		}
 		else
 		{
@@ -134,160 +417,8 @@ const Vector3& Node::getDerivedScale( void ) const
 	return _derived_scale;
 }
 
-void Node::setPosition( const Vector3& t )
+void Node::setParent( Node* parent )
 {
-	_local_position = t;
-	_ts_need_update |= kNeedToUpdateTranslation;
-}
-
-void Node::setPosition( const Vector2& t )
-{
-	_local_position.fromVector2( t );
-	_ts_need_update |= kNeedToUpdateTranslation;
-}
-
-void Node::setPosition( const float x, const float y, const float z )
-{
-	_local_position.setScalars( x, y, z );
-	_ts_need_update |= kNeedToUpdateTranslation;
-}
-
-const Vector3& Node::getPosition( void ) const
-{
-	return _local_position;
-}
-
-void Node::translate( const Vector2& t, Space relative )
-{
-	translate( Vector3::createFromVector2( t ), relative );
-}
-
-void Node::translate( const Vector3& t, Space relative )
-{
-	if( relative == Space::Self )
-	{
-		_local_position += t;
-	}
-	else if( relative == Space::World )
-	{
-		_local_position += ( _parent->getDerivedRotation().getInversed() * t )
-			/ _parent->getDerivedScale();
-	}
-}
-
-void Node::translate( float x, float y, Space relative )
-{
-	translate( Vector3( x, y, 0.0f ), relative );
-}
-
-void Node::translate( float x, float y, float z, Space relative )
-{
-	translate( Vector3( x, y, z ), relative );
-}
-
-void Node::setRotation( const EulerAngles& r )
-{
-	_local_rotation.fromEulerAngles( r );
-	_ts_need_update |= kNeedToUpdateRotation;
-}
-
-void Node::setRotation( const Quaternion& r )
-{
-	_local_rotation = r;
-	_ts_need_update |= kNeedToUpdateRotation;
-}
-
-void Node::setRotation( float yaw, float pitch, float roll )
-{
-	_local_rotation.fromEulerAngles( yaw, pitch, roll );
-	_ts_need_update |= kNeedToUpdateRotation;
-}
-
-const Quaternion& Node::getRotation( void ) const
-{
-	return _local_rotation;
-}
-
-void Node::rotate( const EulerAngles& r, Space relative )
-{
-	rotate( r.toQuaternion(), relative );
-}
-
-void Node::rotate( const Quaternion& r, Space relative )
-{
-	if( relative == Space::Self )
-	{
-		_local_rotation = _local_rotation * r;
-	}
-	else if( relative == Space::World )
-	{
-		_local_rotation = _local_rotation * getDerivedRotation().getInversed() * r * getDerivedRotation();
-	}
-
-	_ts_need_update |= kNeedToUpdateRotation;
-}
-
-void Node::rotate( float yaw, float pitch, float roll, Space relative )
-{
-	EulerAngles ea;
-	ea.setScalars( yaw, pitch, roll );
-	rotate( ea.toQuaternion(), relative );
-}
-
-void Node::yaw( float yaw, Space relative )
-{
-	rotate( Quaternion::createRotationY( yaw ), relative );
-}
-
-void Node::pitch( float pitch, Space relative )
-{
-	rotate( Quaternion::createRotationX( pitch ), relative );
-}
-
-void Node::roll( float roll, Space relative )
-{
-	rotate( Quaternion::createRotationZ( roll ), relative );
-}
-
-void Node::setScale( const Vector3& s )
-{
-	_local_scale = s;
-	_ts_need_update |= kNeedToUpdateScale;
-}
-
-void Node::setScale( float x, float y, float z )
-{
-	_local_scale.setScalars( x, y, z );
-	_ts_need_update |= kNeedToUpdateScale;
-}
-
-const Vector3& Node::getScale( void ) const
-{
-	return _local_scale;
-}
-
-void Node::scale( const Vector2& s )
-{
-	scale( Vector3( s.x, s.y, 1.0f ) );
-}
-
-void Node::scale( const Vector3& s )
-{
-	_local_scale *= s;
-	_ts_need_update |= kNeedToUpdateScale;
-}
-
-void Node::scale( float x, float y )
-{
-	scale( Vector3( x, y, 1.0f ) );
-}
-
-void Node::scale( float x, float y, float z )
-{
-	scale( Vector3( x, y, z ) );
-}
-
-void Node::scale( float s )
-{
-	scale( Vector3( s, s, s ) );
+	magicalAssert( parent && !getParent(), "Node::setParent" );
+	_parent = parent;
 }

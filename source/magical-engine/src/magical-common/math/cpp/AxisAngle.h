@@ -30,12 +30,6 @@ struct Quaternion;
 struct AxisAngle : public cAxisAngle
 {
 public:
-	float x;
-	float y;
-	float z;
-	float w;
-
-public:
 	static const AxisAngle Identity;
 	static const AxisAngle Zero;
 	static AxisAngle var;

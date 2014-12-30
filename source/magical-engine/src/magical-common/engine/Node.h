@@ -38,14 +38,6 @@ enum class Space
 	World,
 };
 
-enum
-{
-	kHasNotChanged = 0x00,
-	kNeedToUpdateTranslation = 0x01,
-	kNeedToUpdateRotation = 0x02,
-	kNeedToUpdateScale = 0x04,
-};
-
 class Node : public Reference
 {
 public:
@@ -54,16 +46,23 @@ public:
 
 public:
 	static Shared<Node> create( void );
+	static Shared<Node> create( const char* name );
+	static Shared<Node> create( const Vector3& t, const Quaternion& r, const Vector3& s );
 
 public:
-	void addChild( Shared<Node>& child );
-	void removeChild( Shared<Node>& child );
-	void setParent( Shared<Node>& parent );
-	void removeParent( Shared<Node>& parent );
-	Node* getChild( void ) const;
+	void setName( const char* name );
+	const std::string& getName( void ) const;
+	void addChild( const Shared<Node>& child );
+	void removeChild( const Shared<Node>& child );
+	void removeAllChildren( void );
+	void removeFromParent( void );
+	Node* getChild( const char* name ) const;
+	Node* getChild( uint32_t index ) const;
+	uint32_t childrenCount( void ) const;
 	Node* getParent( void ) const;
-
-public:
+	bool isChildOf( const Shared<Node>& parent ) const;
+	
+	void updateTransform( void );
 	void setPosition( const Vector2& t );
 	void setPosition( const Vector3& t );
 	void setPosition( float x, float y );
@@ -73,7 +72,6 @@ public:
 	void translate( const Vector3& t, Space relative );
 	void translate( float x, float y, Space relative );
 	void translate( float x, float y, float z, Space relative );
-	
 	void setRotation( const EulerAngles& r );
 	void setRotation( const Quaternion& r );
 	void setRotation( float yaw, float pitch, float roll );
@@ -84,8 +82,9 @@ public:
 	void yaw( float yaw, Space relative );
 	void pitch( float pitch, Space relative );
 	void roll( float roll, Space relative );
-
+	void setScale( const Vector2& s );
 	void setScale( const Vector3& s );
+	void setScale( float x, float y );
 	void setScale( float x, float y, float z );
 	const Vector3& getScale( void ) const;
 	void scale( const Vector2& s );
@@ -93,29 +92,29 @@ public:
 	void scale( float x, float y );
 	void scale( float x, float y, float z );
 	void scale( float s );
-
-	void updateTransform( void );
+	void lookAt( const Vector3& target, const Vector3& up );
 
 private:
+	void setParent( Node* parent );
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
 
 private:
+	std::string _name;
 	Node* _parent = nullptr;
-	std::unordered_map<int, Node*> _children;
+	std::vector<Node*> _children;
 
 	bool _inherit_scale = true;
 	bool _inherit_rotation = true;
-	int _ts_need_update = kHasNotChanged;
+	int _ts_need_update = 0;
 
-	Matrix4 _local_to_world_matrix = Matrix4::Identity;
-	Vector3 _local_position = Vector3::Zero;
-	Quaternion _local_rotation = Quaternion::Identity;
+	Matrix4 _local_to_world_matrix;
+	Vector3 _local_position;
+	Quaternion _local_rotation;
 	Vector3 _local_scale = Vector3::One;
-
-	mutable Vector3 _derived_position = Vector3::Zero;
-	mutable Quaternion _derived_rotation = Quaternion::Identity;
+	mutable Vector3 _derived_position;
+	mutable Quaternion _derived_rotation;
 	mutable Vector3 _derived_scale = Vector3::One;
 };
 

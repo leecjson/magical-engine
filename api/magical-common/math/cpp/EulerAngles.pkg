@@ -1,0 +1,41 @@
+struct EulerAngles
+{
+public:
+	float yaw, pitch, roll;
+
+public:
+	static const EulerAngles Zero;
+	static EulerAngles var;
+
+public:
+	EulerAngles( float yaw, float pitch, float roll );
+	EulerAngles( const EulerAngles& ea );
+	EulerAngles( void );
+
+public:
+	static inline EulerAngles createZero( void );
+	static inline EulerAngles createFromQuaternion( const Quaternion& q );
+
+	static inline void add( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
+	static inline void sub( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
+	static inline void mulScalar( EulerAngles& out, const EulerAngles& ea, float a );
+	static inline void mul( EulerAngles& out, const EulerAngles& ea1, const EulerAngles& ea2 );
+	static inline void limit( EulerAngles& out, const EulerAngles& ea );
+
+public:
+	inline bool equals( const EulerAngles& ea ) const;
+	inline bool isZero( void ) const;
+	inline bool operator==( const EulerAngles& ea ) const;
+	inline EulerAngles operator+( const EulerAngles& ea ) const;
+	inline EulerAngles operator-( const EulerAngles& ea ) const;
+	inline EulerAngles operator*( const EulerAngles& ea ) const;
+	inline EulerAngles operator*( float a ) const;
+	inline void set( const EulerAngles& ea );
+	inline void setZero( void );
+	inline void setScalars( float yaw, float pitch, float roll );
+	inline void fromQuaternion( const Quaternion& q );
+	inline Quaternion toQuaternion( void ) const;
+	inline void limit( void );
+	inline EulerAngles getLimited( void ) const;
+	
+};

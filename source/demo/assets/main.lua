@@ -2,38 +2,9 @@
 
 function onCreate() --> void
 
-	
+	local q = Quaternion:createIdentity();
     
 end
-
-function v( g )
-end
-
-function onCreate()
-
-end
-
-
-function onUpdate()
-
-end
-
-m:setTRS
-
-m:makeTranslation()
-
-m:setupTranslaition();
-
-
-m:setupRotationAxisAngle();
-
-m:makeRotationAxisAngle()
-
-function go()
-
-
-end
-
 
 
 

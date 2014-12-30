@@ -60,6 +60,11 @@ void magicalEulerAnglesSetZero( cEulerAngles* out )
 	out->roll = 0.0f;
 }
 
+void magicalEulerAnglesSetLookAt( cEulerAngles* out, const cVector3* eye, const cVector3* target, const cVector3* up )
+{
+	
+}
+
 /*-----------------------------------------------------------------------------*\
  * 从四元数转换为欧拉角表示 done
  *

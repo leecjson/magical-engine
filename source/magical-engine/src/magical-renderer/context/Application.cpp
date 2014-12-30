@@ -62,9 +62,9 @@ void Application::init( void )
 	msg += "<init>\n";
 
 #ifdef MAGICAL_DEBUG
-	msg += "  [debug model]: Yes\n";
+	msg += "  [debug model]: true\n";
 #else
-	msg += "  [debug model]: No\n";
+	msg += "  [debug model]: false\n";
 #endif
 
 	msg += "<init>\n";

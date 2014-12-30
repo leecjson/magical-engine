@@ -46,7 +46,7 @@ protected:
 	template< class T >
 	Shared<T> sharedFromThis( void ) const
 	{
-		return Shared<T>( this );
+		return Shared<T>( (T*)this );
 	}
 
 protected:

@@ -742,12 +742,12 @@ void magicalMatrix4GetTranslation( cVector3* out, const cMatrix4* m )
 
 void magicalMatrix4GetScale( cVector3* out, const cMatrix4* m )
 {
-	magicalMatrix4Decompose( NULL, out, NULL, m );
+	magicalMatrix4Decompose( NULL, NULL, out, m );
 }
 
 void magicalMatrix4GetRotationQuaternion( cQuaternion* out, const cMatrix4* m )
 {
-	magicalMatrix4Decompose( NULL, NULL, out, m );
+	magicalMatrix4Decompose( NULL, out, NULL, m );
 }
 
 /*-----------------------------------------------------------------------------*\

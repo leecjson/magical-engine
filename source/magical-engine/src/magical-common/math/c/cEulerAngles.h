@@ -44,6 +44,7 @@ MAGICALAPI_MATH cBool magicalEulerAnglesIsZero( const cEulerAngles* ea );
 MAGICALAPI_MATH void magicalEulerAnglesFill( cEulerAngles* out, float yaw, float pitch, float roll );
 MAGICALAPI_MATH void magicalEulerAnglesCopy( cEulerAngles* out, const cEulerAngles* ea );
 MAGICALAPI_MATH void magicalEulerAnglesSetZero( cEulerAngles* out );
+MAGICALAPI_MATH void magicalEulerAnglesSetLookAt( cEulerAngles* out, const cVector3* eye, const cVector3* target, const cVector3* up );
 
 MAGICALAPI_MATH void magicalEulerAnglesFromQuaternion( cEulerAngles* out, const cQuaternion* q );
 MAGICALAPI_MATH void magicalEulerAnglesToQuaternion( cQuaternion* out, const cEulerAngles* ea );

@@ -273,6 +273,7 @@ inline Vector4& Vector4::operator/=( const Vector4& v )
 inline Vector4& Vector4::operator=( const Vector4& v )
 {
 	x = v.x; y = v.y; z = v.z; w = v.w;
+	return *this;
 }
 
 inline void Vector4::set( const Vector4& v )

@@ -76,6 +76,15 @@ public:
 		}
 	}
 
+	Shared( const T* ref )
+	{
+		if( ref )
+		{
+			_reference = (T*)ref;
+			_reference->retain();
+		}
+	}
+
 	Shared( const Shared& other )
 	{
 		if( other._reference )
@@ -136,6 +145,21 @@ public:
 		if( ref )
 		{
 			_reference = ref;
+			_reference->retain()
+		}
+	}
+
+	void set( const T* ref )
+	{
+		if( _reference )
+		{
+			_reference->release();
+			_reference = nullptr;
+		}
+
+		if( ref )
+		{
+			_reference = (T*)ref;
 			_reference->retain()
 		}
 	}

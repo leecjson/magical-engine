@@ -74,6 +74,7 @@ inline bool AxisAngle::operator!=( const AxisAngle& aa ) const
 inline AxisAngle& AxisAngle::operator=( const AxisAngle& aa )
 {
 	magicalAxisAngleCopy( this, &aa );
+	return *this;
 }
 
 inline void AxisAngle::set( const AxisAngle& aa )

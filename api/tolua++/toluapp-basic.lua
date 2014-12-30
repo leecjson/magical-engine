@@ -89,9 +89,14 @@ function post_output_hook(package)
 		-- magical_reg_objs[i] .. [[* tolua_ret = (]] .. magical_reg_objs[i] .. [[*)  ]] .. magical_reg_objs[i] .. [[::create();]] .. "\n    " .. [[Shared<]] 
 		-- .. magical_reg_objs[i] .. [[> auto_release = ]] .. [[Initializer<]] .. magical_reg_objs[i] .. [[>(tolua_ret);]])
 		
+		-- replace(
+		-- magical_reg_objs[i] .. [[* tolua_ret = (]] ..  magical_reg_objs[i] .. [[*)]],
+		-- [[Shared<]] .. magical_reg_objs[i] .. [[> tolua_ret = (Shared<]] .. magical_reg_objs[i] .. [[>)]]
+		-- );
+
 		replace(
 		magical_reg_objs[i] .. [[* tolua_ret = (]] ..  magical_reg_objs[i] .. [[*)]],
-		[[Shared<]] .. magical_reg_objs[i] .. [[> tolua_ret = (Shared<]] .. magical_reg_objs[i] .. [[>)]]
+		[[Shared<]] .. magical_reg_objs[i] .. [[> tolua_ret = ]]
 		);
 
 		replace(
