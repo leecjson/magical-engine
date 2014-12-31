@@ -3,12 +3,8 @@
 function onCreate() --> void
 
 	local q = Quaternion:createIdentity();
-
-	local player = Sprite:create();
-	player:setCompe
-	player:setPostion( Vector3.Zero );
-
-	local cube = Cube:create();
+	magicalLog( string.format( "%f", q.w ) );
+	magicalDebugLog( string.format( "%d", kBufferLen ) );
     
 end
 

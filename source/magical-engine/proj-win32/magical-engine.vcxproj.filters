@@ -37,9 +37,6 @@
     <Filter Include="src\magical-common\math\cpp">
       <UniqueIdentifier>{8b6bb3fd-47fe-4313-90c8-df39da9d96f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-common\transform">
-      <UniqueIdentifier>{38a51747-5662-4704-8d44-78f50f96faf5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\magical-lua">
       <UniqueIdentifier>{e6d677cd-f609-4520-8b48-95af4dbaf467}</UniqueIdentifier>
     </Filter>
@@ -107,9 +104,6 @@
     </ClCompile>
     <ClCompile Include="..\src\magical-common\math\c\cQuaternion.c">
       <Filter>src\magical-common\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\magical-common\transform\Transform.cpp">
-      <Filter>src\magical-common\transform</Filter>
     </ClCompile>
     <ClCompile Include="..\src\magical-lua\binding\BindCommon.cpp">
       <Filter>src\magical-lua\binding</Filter>
@@ -363,6 +357,18 @@
     <ClCompile Include="..\src\magical-common\math\c\cPlane3.c">
       <Filter>src\magical-common\math\c</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\c\cAABB3.c">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\c\cSphere3.c">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\c\cRay3.c">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\cpp\AABB3.cpp">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\magical-common\assets\AssetsSystem.h">
@@ -382,9 +388,6 @@
     </ClInclude>
     <ClInclude Include="..\src\magical-common\math\c\cUtility.h">
       <Filter>src\magical-common\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-common\transform\Transform.h">
-      <Filter>src\magical-common\transform</Filter>
     </ClInclude>
     <ClInclude Include="..\src\magical-common\PlatformMacros.h">
       <Filter>src\magical-common</Filter>
@@ -638,6 +641,18 @@
     <ClInclude Include="..\src\magical-common\math\c\cPlane3.h">
       <Filter>src\magical-common\math\c</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\c\cAABB3.h">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\c\cSphere3.h">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\c\cRay3.h">
+      <Filter>src\magical-common\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\cpp\AABB3.h">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\magical-common\math\cpp\Vector2.inl">
@@ -659,6 +674,9 @@
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
     <None Include="..\src\magical-common\math\cpp\Matrix4.inl">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </None>
+    <None Include="..\src\magical-common\math\cpp\AABB3.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
   </ItemGroup>

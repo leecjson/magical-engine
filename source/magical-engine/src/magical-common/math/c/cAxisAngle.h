@@ -26,12 +26,15 @@ SOFTWARE.
 
 #include "cUtility.h"
 
+#pragma pack( push )
+#pragma pack( 4 )
 typedef struct cAxisAngle {
 	float x;
 	float y;
 	float z;
 	float w;
 } cAxisAngle;
+#pragma pack( pop )
 
 #include "cVector3.h"
 #include "cQuaternion.h"

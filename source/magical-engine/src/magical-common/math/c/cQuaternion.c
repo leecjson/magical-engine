@@ -61,8 +61,6 @@ void magicalQuaternionFill( cQuaternion* out, float x, float y, float z, float w
 	out->y = y;
 	out->z = z;
 	out->w = w;
-
-	magicalQuaternionNormalize( out, out );
 }
 
 void magicalQuaternionCopy( cQuaternion* out, const cQuaternion* q )
@@ -153,12 +151,9 @@ void magicalQuaternionSetRotationZ( cQuaternion* out, float angle )
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionFromAxisAngle( cQuaternion* out, const cAxisAngle* aa )
 {
-	cVector3 n, axis;
 	float half_angle, s;
-
-	axis.x = aa->x;
-	axis.y = aa->y;
-	axis.z = aa->z;
+	cVector3 n;
+	cVector3 axis = { aa->x, aa->y, aa->z };
 
 	half_angle = aa->w * 0.5f;
 	s = sinf( half_angle );
@@ -291,11 +286,8 @@ void magicalQuaternionMulVector3( cVector3* out, const cQuaternion* q, const cVe
 {
 	// nVidia SDK implementation
 
-	cVector3 uv, uuv, qvec;
-
-	qvec.x = q->x;
-	qvec.y = q->y;
-	qvec.z = q->z;
+	cVector3 uv, uuv;
+	cVector3 qvec = { q->x, q->y, q->z };
 
 	magicalVector3Cross( &uv, &qvec, v );
 	magicalVector3Cross( &uuv, &qvec, &uv );

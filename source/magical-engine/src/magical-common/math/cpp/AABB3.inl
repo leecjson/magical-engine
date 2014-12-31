@@ -22,236 +22,226 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline AABB3 AABB3::fromZero( void )
+inline AABB3 AABB3::createZero( void )
 {
 	return AABB3::Zero;
 }
 
-inline AABB3 AABB3::fromPoints( const Vector3& min, const Vector3& max )
+inline AABB3 AABB3::createFromPoints( const Vector3& min, const Vector3& max )
 {
 	AABB3 ret;
-	magicalAABB3SetPoints( tofpointer( &ret ), tofpointer( &min ), tofpointer( &max ) );
+	magicalAABB3SetPoints( &ret, &min, &max );
 	return ret;
 }
 
-inline AABB3 AABB3::fromCenterAround( const Vector3& center, float width, float height, float depth )
+inline AABB3 AABB3::createFromCenterAround( const Vector3& center, float width, float height, float depth )
 {
 	AABB3 ret;
-	magicalAABB3SetCenterAround( tofpointer( &ret ), tofpointer( &center ), width, height, depth );
+	magicalAABB3SetCenterAround( &ret, &center, width, height, depth );
 	return ret;
 }
 
 inline void AABB3::mul( AABB3& out, const AABB3& aabb, const Matrix4& m )
 {
-	magicalAABB3Transform( tofpointer( &out ), tofpointer( &aabb ), tofpointer( &m ) );
+	magicalAABB3Transform( &out, &aabb, &m );
 }
 
 inline void AABB3::getMin( Vector3& out, const AABB3& aabb )
 {
-	magicalAABB3GetMin( tofpointer( &out ), tofpointer( &aabb ) );
+	magicalAABB3GetMin( &out, &aabb );
 }
 
 inline void AABB3::getMax( Vector3& out, const AABB3& aabb )
 {
-	magicalAABB3GetMax( tofpointer( &out ), tofpointer( &aabb ) );
-}
-
-inline void AABB3::extend( Vector3& out, const AABB3& aabb, float x, float y, float z )
-{
-	magicalAABB3ExtendScalars( tofpointer( &out ), tofpointer( &aabb ), x, y, z );
-}
-
-inline void AABB3::extend( Vector3& out, const AABB3& aabb, const Vector3& v )
-{
-	magicalAABB3Extend( tofpointer( &out ), tofpointer( &aabb ), tofpointer( &v ) );
+	magicalAABB3GetMax( &out, &aabb );
 }
 
 inline void AABB3::merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 )
 {
-	magicalAABB3Merge( tofpointer( &out ), tofpointer( &aabb1 ), tofpointer( &aabb2 ) );
+	magicalAABB3Merge( &out, &aabb1, &aabb2 );
 }
 
 inline void AABB3::getCenter( Vector3& out, const AABB3& aabb )
 {
-	magicalAABB3Center( tofpointer( &out ), tofpointer( &aabb ) );
+	magicalAABB3Center( &out, &aabb );
 }
 
 inline void AABB3::nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point )
 {
-	magicalAABB3NearestPoint( tofpointer( &out ), tofpointer( &aabb ), tofpointer( &point ) );
+	magicalAABB3NearestPoint( &out, &aabb, &point );
 }
 
 inline bool AABB3::equals( const AABB3& aabb ) const
 {
-	return magicalAABB3Equals( tofpointer( this ), tofpointer( &aabb ) );
+	return magicalAABB3Equals( this, &aabb );
 }
 
 inline bool AABB3::isZero( void ) const
 {
-	return magicalAABB3IsZero( tofpointer( this ) );
-}
-
-inline void AABB3::set( const AABB3& aabb )
-{
-	magicalAABB3Set( tofpointer( this ), tofpointer( &aabb ) );
-}
-
-inline void AABB3::setZero( void )
-{
-	magicalAABB3SetZero( tofpointer( this ) );
-}
-
-inline void AABB3::setScalars( float min_x, float min_y, float min_z, float max_x, float max_y, float max_z )
-{
-	magicalAABB3SetScalars( tofpointer( this ), min_x, min_y, min_z, max_x, max_y, max_z );
-}
-
-inline void AABB3::setPoints( const Vector3& min, const Vector3& max )
-{
-	magicalAABB3SetPoints( tofpointer( this ), tofpointer( &min ), tofpointer( &max ) );
-}
-
-inline void AABB3::setCenterAround( const Vector3& center, float width, float height, float depth )
-{
-	magicalAABB3SetCenterAround( tofpointer( this ), tofpointer( &center ), width, height, depth );
+	return magicalAABB3IsZero( this );
 }
 
 inline bool AABB3::operator==( const AABB3& aabb ) const
 {
-	return magicalAABB3Equals( tofpointer( this ), tofpointer( &aabb ) );
+	return magicalAABB3Equals( this, &aabb );
 }
 
 inline bool AABB3::operator!=( const AABB3& aabb ) const
 {
-	return !magicalAABB3Equals( tofpointer( this ), tofpointer( &aabb ) );
+	return !magicalAABB3Equals( this, &aabb );
 }
 
 inline AABB3 AABB3::operator*( const Matrix4& m ) const
 {
 	AABB3 ret;
-	magicalAABB3Transform( tofpointer( &ret ), tofpointer( this ), tofpointer( &m ) );
+	magicalAABB3Transform( &ret, this, &m );
 	return ret;
 }
 
 inline AABB3& AABB3::operator*=( const Matrix4& m )
 {
-	magicalAABB3Transform( tofpointer( this ), tofpointer( this ), tofpointer( &m ) );
+	magicalAABB3Transform( this, this, &m );
 	return *this;
 }
 
 inline AABB3& AABB3::operator=( const AABB3& aabb )
 {
-	magicalAABB3Set( tofpointer( this ), tofpointer( &aabb ) );
+	magicalAABB3Copy( this, &aabb );
 	return *this;
+}
+
+inline void AABB3::set( const AABB3& aabb )
+{
+	magicalAABB3Copy( this, &aabb );
+}
+
+inline void AABB3::setZero( void )
+{
+	magicalAABB3SetZero( this );
+}
+
+inline void AABB3::setScalars( float min_x, float min_y, float min_z, float max_x, float max_y, float max_z )
+{
+	magicalAABB3Fill( this, min_x, min_y, min_z, max_x, max_y, max_z );
+}
+
+inline void AABB3::fromPoints( const Vector3& min, const Vector3& max )
+{
+	magicalAABB3SetPoints( this, &min, &max );
+}
+
+inline void AABB3::fromCenterAround( const Vector3& center, float width, float height, float depth )
+{
+	magicalAABB3SetCenterAround( this, &center, width, height, depth );
 }
 
 inline void AABB3::setMin( const Vector3& min )
 {
-	magicalAABB3SetMin( tofpointer( this ), tofpointer( &min ) );
+	magicalAABB3SetMin( this, &min );
 }
 
 inline void AABB3::setMax( const Vector3& max )
 {
-	magicalAABB3SetMax( tofpointer( this ), tofpointer( &max ) );
+	magicalAABB3SetMax( this, &max );
 }
 
-inline void AABB3::extend( float x, float y, float z )
+inline void AABB3::addPoint( float x, float y, float z )
 {
-	magicalAABB3ExtendScalars( tofpointer( this ), tofpointer( this ), x, y, z );
+	magicalAABB3AddPointScalars( this, this, x, y, z );
 }
 
-inline void AABB3::extend( const Vector3& v )
+inline void AABB3::addPoint( const Vector3& v )
 {
-	magicalAABB3Extend( tofpointer( this ), tofpointer( this ), tofpointer( &v ) );
+	magicalAABB3AddPoint( this, this, &v );
 }
 
 inline void AABB3::merge( const AABB3& aabb )
 {
-	magicalAABB3Merge( tofpointer( this ), tofpointer( this ), tofpointer( &aabb ) );
+	magicalAABB3Merge( this, this, &aabb );
 }
 
 inline float AABB3::size( void ) const
 {
-	return magicalAABB3Size( tofpointer( this ) );
+	return magicalAABB3Size( this );
 }
 
 inline float AABB3::diameterX( void ) const
 {
-	return magicalAABB3DiameterX( tofpointer( this ) );
+	return magicalAABB3DiameterX( this );
 }
 
 inline float AABB3::diameterY( void ) const
 {
-	return magicalAABB3DiameterY( tofpointer( this ) );
+	return magicalAABB3DiameterY( this );
 }
 
 inline float AABB3::diameterZ( void ) const
 {
-	return magicalAABB3DiameterZ( tofpointer( this ) );
+	return magicalAABB3DiameterZ( this );
 }
 
 inline Vector3 AABB3::center( void ) const
 {
 	Vector3 ret;
-	magicalAABB3Center( tofpointer( &ret ), tofpointer( this ) );
+	magicalAABB3Center( &ret, this );
 	return ret;
 }
 
 inline Vector3 AABB3::nearestPoint( const Vector3& point ) const
 {
 	Vector3 ret;
-	magicalAABB3NearestPoint( tofpointer( &ret ), tofpointer( this ), tofpointer( &point ) );
+	magicalAABB3NearestPoint( &ret, this, &point );
 	return ret;
 }
 
 inline Vector3 AABB3::getMin( void ) const
 {
-	return min;
+	return Vector3( min_x, min_y, min_z );
 }
 
 inline Vector3 AABB3::getMax( void ) const
 {
-	return max;
+	return Vector3( max_x, max_y, max_z );
 }
 
 inline AABB3 AABB3::getMerged( const AABB3& aabb ) const
 {
 	AABB3 ret;
-	magicalAABB3Merge( tofpointer( &ret ), tofpointer( this ), tofpointer( &aabb ) );
+	magicalAABB3Merge( &ret, this, &aabb );
 	return ret;
 }
 
 inline bool AABB3::intersects( const AABB3& aabb ) const
 {
-	return magicalAABB3Intersects( tofpointer( this ), tofpointer( &aabb ) );
+	return magicalAABB3Intersects( this, &aabb );
 }
 
 inline bool AABB3::intersectsPlane3( const Plane3& p ) const
 {
-	return magicalAABB3IntersectsPlane3( tofpointer( this ), tofpointer( &p ) );
+	return magicalAABB3IntersectsPlane3( this, ( &p ) );
 }
 
 inline bool AABB3::intersectsSphere3( const Sphere3& sp ) const
 {
-	return magicalAABB3IntersectsSphere3( tofpointer( this ), tofpointer( &sp ) );
+	return magicalAABB3IntersectsSphere3( this, ( &sp ) );
 }
 
 inline bool AABB3::intersectsRay3( const Ray3& r3, bool discard_inside ) const
 {
-	return magicalAABB3IntersectsRay3( tofpointer( this ), tofpointer( &r3 ), discard_inside );
+	return magicalAABB3IntersectsRay3( this, ( &r3 ), discard_inside );
 }
 
 inline bool AABB3::intersectsRay3Distance( float& distance, const Ray3& r3, bool discard_inside ) const
 {
-	return magicalAABB3IntersectsRay3Distance( &distance, tofpointer( this ), tofpointer( &r3 ), discard_inside );
+	return magicalAABB3IntersectsRay3Distance( &distance, this, ( &r3 ), discard_inside );
 }
 
 inline bool AABB3::intersectsPart( AABB3& out, const AABB3& aabb ) const
 {
-	return magicalAABB3IntersectsPart( tofpointer( &out ), tofpointer( this ), tofpointer( &aabb ) );
+	return magicalAABB3IntersectsPart( &out, this, &aabb );
 }
 
 inline bool AABB3::containsPoint( const Vector3& point ) const
 {
-	return magicalAABB3ContainsPoint( tofpointer( this ), tofpointer( &point ) );
+	return magicalAABB3ContainsPoint( this, ( &point ) );
 }

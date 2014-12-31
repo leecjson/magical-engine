@@ -26,11 +26,14 @@ SOFTWARE.
 
 #include "cUtility.h"
 
+#pragma pack( push )
+#pragma pack( 4 )
 typedef struct cEulerAngles {
 	float yaw;
 	float pitch;
 	float roll;
 } cEulerAngles;
+#pragma pack( pop )
 
 #include "cQuaternion.h"
 

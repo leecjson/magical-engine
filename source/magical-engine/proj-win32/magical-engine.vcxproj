@@ -76,6 +76,7 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\src\magical-common\engine\Transform.cpp" />
     <ClCompile Include="..\src\magical-common\engine\Viewport.cpp" />
     <ClCompile Include="..\src\magical-common\log\win32\LogSystem.cpp" />
+    <ClCompile Include="..\src\magical-common\math\cpp\AABB3.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\AxisAngle.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\EulerAngles.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\Matrix4.cpp" />
@@ -83,16 +84,18 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\src\magical-common\math\cpp\Vector2.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\Vector3.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\Vector4.cpp" />
+    <ClCompile Include="..\src\magical-common\math\c\cAABB3.c" />
     <ClCompile Include="..\src\magical-common\math\c\cAxisAngle.c" />
     <ClCompile Include="..\src\magical-common\math\c\cEulerAngles.c" />
     <ClCompile Include="..\src\magical-common\math\c\cMatrix3.c" />
     <ClCompile Include="..\src\magical-common\math\c\cMatrix4.c" />
     <ClCompile Include="..\src\magical-common\math\c\cPlane3.c" />
     <ClCompile Include="..\src\magical-common\math\c\cQuaternion.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cRay3.c" />
+    <ClCompile Include="..\src\magical-common\math\c\cSphere3.c" />
     <ClCompile Include="..\src\magical-common\math\c\cVector2.c" />
     <ClCompile Include="..\src\magical-common\math\c\cVector3.c" />
     <ClCompile Include="..\src\magical-common\math\c\cVector4.c" />
-    <ClCompile Include="..\src\magical-common\transform\Transform.cpp" />
     <ClCompile Include="..\src\magical-common\utils\Utils.cpp" />
     <ClCompile Include="..\src\magical-lua\binding\BindCommon.cpp" />
     <ClCompile Include="..\src\magical-lua\extensions\LuaExtensions.c" />
@@ -170,6 +173,7 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\src\magical-common\engine\Viewport.h" />
     <ClInclude Include="..\src\magical-common\include\magical-engine.h" />
     <ClInclude Include="..\src\magical-common\log\LogSystem.h" />
+    <ClInclude Include="..\src\magical-common\math\cpp\AABB3.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\AxisAngle.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\EulerAngles.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\Matrix4.h" />
@@ -177,19 +181,21 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\src\magical-common\math\cpp\Vector2.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\Vector3.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\Vector4.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cAABB3.h" />
     <ClInclude Include="..\src\magical-common\math\c\cAxisAngle.h" />
     <ClInclude Include="..\src\magical-common\math\c\cEulerAngles.h" />
     <ClInclude Include="..\src\magical-common\math\c\cMatrix3.h" />
     <ClInclude Include="..\src\magical-common\math\c\cMatrix4.h" />
     <ClInclude Include="..\src\magical-common\math\c\cPlane3.h" />
     <ClInclude Include="..\src\magical-common\math\c\cQuaternion.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cRay3.h" />
+    <ClInclude Include="..\src\magical-common\math\c\cSphere3.h" />
     <ClInclude Include="..\src\magical-common\math\c\cUtility.h" />
     <ClInclude Include="..\src\magical-common\math\c\cVector2.h" />
     <ClInclude Include="..\src\magical-common\math\c\cVector3.h" />
     <ClInclude Include="..\src\magical-common\math\c\cVector4.h" />
     <ClInclude Include="..\src\magical-common\math\magical-math.h" />
     <ClInclude Include="..\src\magical-common\PlatformMacros.h" />
-    <ClInclude Include="..\src\magical-common\transform\Transform.h" />
     <ClInclude Include="..\src\magical-common\utils\Utils.h" />
     <ClInclude Include="..\src\magical-lua\binding\BindCommon.h" />
     <ClInclude Include="..\src\magical-lua\extensions\LuaExtensions.h" />
@@ -249,6 +255,7 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\src\magical-renderer\support\ShaderProgramManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\src\magical-common\math\cpp\AABB3.inl" />
     <None Include="..\src\magical-common\math\cpp\AxisAngle.inl" />
     <None Include="..\src\magical-common\math\cpp\EulerAngles.inl" />
     <None Include="..\src\magical-common\math\cpp\Matrix4.inl" />

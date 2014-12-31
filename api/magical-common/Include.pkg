@@ -4,7 +4,9 @@ $#include "magical-engine.h"
 
 $pfile "toluapp-typedef.pkg"
 
+
 $pfile "../magical-common/base/Common.pkg"
+$pfile "../magical-common/log/LogSystem.pkg"
 
 $pfile "../magical-common/math/cpp/AxisAngle.pkg"
 $pfile "../magical-common/math/cpp/EulerAngles.pkg"

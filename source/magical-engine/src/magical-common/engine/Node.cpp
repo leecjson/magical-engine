@@ -23,6 +23,16 @@ SOFTWARE.
 *******************************************************************************/
 #include "Node.h"
 
+Node::Node( void )
+{
+
+}
+
+Node::~Node( void )
+{
+
+}
+
 Shared<Node> Node::create( void )
 {
 	Node* ret = new Node();

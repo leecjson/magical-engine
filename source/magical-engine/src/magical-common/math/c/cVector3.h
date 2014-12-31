@@ -26,11 +26,14 @@ SOFTWARE.
 
 #include "cUtility.h"
 
+#pragma pack( push )
+#pragma pack( 4 )
 typedef struct cVector3 {
 	float x;
 	float y;
 	float z;
 } cVector3;
+#pragma pack( pop )
 
 #include "cVector2.h"
 #include "cVector4.h"

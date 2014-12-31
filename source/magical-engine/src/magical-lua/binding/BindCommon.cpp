@@ -1,6 +1,6 @@
 /*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 12/30/14 17:32:18.
+** Generated automatically by tolua++-1.0.92 on 12/31/14 15:07:34.
 */
 
 #ifndef __cplusplus
@@ -74,11 +74,12 @@ static int tolua_collect_AxisAngle (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"Quaternion");
+ tolua_usertype(tolua_S,"Vector4");
+ tolua_usertype(tolua_S,"Log");
  tolua_usertype(tolua_S,"EulerAngles");
  tolua_usertype(tolua_S,"Vector2");
- tolua_usertype(tolua_S,"Vector4");
  tolua_usertype(tolua_S,"Vector3");
+ tolua_usertype(tolua_S,"Quaternion");
  tolua_usertype(tolua_S,"Matrix4");
  tolua_usertype(tolua_S,"AxisAngle");
 }
@@ -387,6 +388,117 @@ static int tolua_common_magicalEndTimer00(lua_State* tolua_S)
 #ifdef MAGICAL_DEBUG
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'magicalEndTimer'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: magicalLogLastError */
+#ifndef TOLUA_DISABLE_tolua_common_magicalLogLastError00
+static int tolua_common_magicalLogLastError00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   magicalLogLastError();
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'magicalLogLastError'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: magicalLog */
+#ifndef TOLUA_DISABLE_tolua_common_magicalLog00
+static int tolua_common_magicalLog00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isstring(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* __txt = ((const char*)  tolua_tostring(tolua_S,1,0));
+  {
+   magicalLog(__txt);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'magicalLog'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: magicalDebugLog */
+#ifndef TOLUA_DISABLE_tolua_common_magicalDebugLog00
+static int tolua_common_magicalDebugLog00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isstring(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* __txt = ((const char*)  tolua_tostring(tolua_S,1,0));
+  {
+   magicalDebugLog(__txt);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'magicalDebugLog'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: write of class  Log */
+#ifndef TOLUA_DISABLE_tolua_common_Log_write00
+static int tolua_common_Log_write00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Log",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* txt = ((const char*)  tolua_tostring(tolua_S,2,0));
+  {
+   Log::write(txt);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'write'.",&tolua_err);
  return 0;
 #endif
 }
@@ -14652,6 +14764,13 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
   tolua_function(tolua_S,"magicalIsTimerStarted",tolua_common_magicalIsTimerStarted00);
   tolua_function(tolua_S,"magicalStartTimer",tolua_common_magicalStartTimer00);
   tolua_function(tolua_S,"magicalEndTimer",tolua_common_magicalEndTimer00);
+  tolua_function(tolua_S,"magicalLogLastError",tolua_common_magicalLogLastError00);
+  tolua_function(tolua_S,"magicalLog",tolua_common_magicalLog00);
+  tolua_function(tolua_S,"magicalDebugLog",tolua_common_magicalDebugLog00);
+  tolua_cclass(tolua_S,"Log","Log","",NULL);
+  tolua_beginmodule(tolua_S,"Log");
+   tolua_function(tolua_S,"write",tolua_common_Log_write00);
+  tolua_endmodule(tolua_S);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"AxisAngle","AxisAngle","",tolua_collect_AxisAngle);
   #else

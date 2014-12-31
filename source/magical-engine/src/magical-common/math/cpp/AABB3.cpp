@@ -37,23 +37,26 @@ SOFTWARE.
 #include "MathMacros.h"
 
 const AABB3 AABB3::Zero = AABB3( Vector3::Zero, Vector3::Zero );
+AABB3 AABB3::var = AABB3::Zero;
 
-AABB3 AABB3::placeholder = AABB3::Zero;
-AABB3 AABB3::temp = AABB3::Zero;
+AABB3::AABB3( float min_x, float min_y, float min_z, float max_x, float max_y, float max_z )
+{
+	magicalAABB3Fill( this, min_x, min_y, min_z, max_x, max_y, max_z );
+}
 
 AABB3::AABB3( const Vector3& min, const Vector3& max )
 {
-	magicalAABB3SetPoints( tofpointer( this ), tofpointer( &min ), tofpointer( &max ) );
+	magicalAABB3SetPoints( this, &min, &max );
 }
 
 AABB3::AABB3( const AABB3& aabb )
 {
-	magicalAABB3Set( tofpointer( this ), tofpointer( &aabb ) );
+	magicalAABB3Copy( this, &aabb );
 }
 
 AABB3::AABB3( void )
 {
-
+	magicalAABB3SetZero( this );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
