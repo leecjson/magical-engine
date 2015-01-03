@@ -74,10 +74,10 @@ static CachedPool<Vector4> s_vector4_cached_pool( 32, 32 );
 
 void* Vector4::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Vector4 ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_vector4_cached_pool.take();
 #else
 	return ::operator new( s );

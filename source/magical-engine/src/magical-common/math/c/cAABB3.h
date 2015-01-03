@@ -60,19 +60,17 @@ MAGICALAPI_MATH void magicalAABB3GetMin( cVector3* out, const cAABB3* aabb );
 MAGICALAPI_MATH void magicalAABB3GetMax( cVector3* out, const cAABB3* aabb );
 MAGICALAPI_MATH void magicalAABB3SetMax( cAABB3* out, const cVector3* max );
 MAGICALAPI_MATH void magicalAABB3SetMin( cAABB3* out, const cVector3* min );
-
 MAGICALAPI_MATH void magicalAABB3AddPointScalars( cAABB3* out, const cAABB3* aabb, float x, float y, float z );
 MAGICALAPI_MATH void magicalAABB3AddPoint( cAABB3* out, const cAABB3* aabb, const cVector3* v );
 MAGICALAPI_MATH void magicalAABB3Merge( cAABB3* out, const cAABB3* aabb1, const cAABB3* aabb2 );
 MAGICALAPI_MATH void magicalAABB3Center( cVector3* out, const cAABB3* aabb );
+MAGICALAPI_MATH void magicalAABB3NearestPoint( cVector3* out, const cAABB3* aabb, const cVector3* point );
+MAGICALAPI_MATH void magicalAABB3Transform( cAABB3* out, const cAABB3* aabb, const cMatrix4* m );
 
 MAGICALAPI_MATH float magicalAABB3Size( const cAABB3* aabb );
 MAGICALAPI_MATH float magicalAABB3DiameterX( const cAABB3* aabb );
 MAGICALAPI_MATH float magicalAABB3DiameterY( const cAABB3* aabb );
 MAGICALAPI_MATH float magicalAABB3DiameterZ( const cAABB3* aabb );
-
-MAGICALAPI_MATH void magicalAABB3NearestPoint( cVector3* out, const cAABB3* aabb, const cVector3* point );
-MAGICALAPI_MATH void magicalAABB3Transform( cAABB3* out, const cAABB3* aabb, const cMatrix4* m );
 
 MAGICALAPI_MATH cBool magicalAABB3Intersects( const cAABB3* aabb1, const cAABB3* aabb2 );
 MAGICALAPI_MATH cBool magicalAABB3IntersectsPart( cAABB3* out, const cAABB3* aabb1, const cAABB3* aabb2 );

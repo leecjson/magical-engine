@@ -38,27 +38,21 @@ const Plane3 Plane3::Zero = Plane3( 0.0f, 0.0f, 0.0f, 0.0f );
 const Plane3 Plane3::NormalX = Plane3( 1.0f, 0.0f, 0.0f, 0.0f );
 const Plane3 Plane3::NormalY = Plane3( 0.0f, 1.0f, 0.0f, 0.0f );
 const Plane3 Plane3::NormalZ = Plane3( 0.0f, 0.0f, 1.0f, 0.0f );
-
-Plane3 Plane3::placeholder = Plane3::Zero;
-Plane3 Plane3::temp = Plane3::Zero;
+Plane3 Plane3::var = Plane3::Zero;
 
 Plane3::Plane3( float x, float y, float z, float d )
 {
-	magicalPlane3FillScalars( tofpointer( this ), x, y, z, d );
+	magicalPlane3Fill( this, x, y, z, d );
 }
 
 Plane3::Plane3( const Plane3& p )
 {
-	magicalPlane3Fill( tofpointer( this ), tofpointer( &p ) );
+	magicalPlane3Copy( this, &p );
 }
 
 Plane3::Plane3( void )
-: x( 0.0f )
-, y( 0.0f )
-, z( 0.0f )
-, d( 0.0f )
 {
-
+	magicalPlane3SetZero( this );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
@@ -68,10 +62,10 @@ static CachedPool<Plane3> s_plane3_cached_pool( 8, 8 );
 
 void* Plane3::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Plane3 ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_plane3_cached_pool.take();
 #else
 	return ::operator new( s );

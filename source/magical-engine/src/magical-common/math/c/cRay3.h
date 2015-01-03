@@ -38,13 +38,10 @@ typedef struct cRay3 {
 } cRay3;
 #pragma pack( pop )
 
-#pragma pack( push )
-#pragma pack( 4 )
 typedef struct cRayIntersectResult {
 	cBool b;
 	float t;
 } cRayIntersectResult;
-#pragma pack( pop )
 
 #include "cVector3.h"
 #include "cAABB3.h"

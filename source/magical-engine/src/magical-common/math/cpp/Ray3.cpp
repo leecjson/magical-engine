@@ -35,29 +35,21 @@ SOFTWARE.
 #include "MathMacros.h"
 
 const Ray3 Ray3::Zero = Ray3( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-
-Ray3 Ray3::placeholder = Ray3::Zero;
-Ray3 Ray3::temp = Ray3::Zero;
+Ray3 Ray3::var = Ray3::Zero;
 
 Ray3::Ray3( float ox, float oy, float oz, float dx, float dy, float dz )
 {
-	magicalRay3FillScalars( tofpointer( this ), ox, oy, oz, dx, dy, dz );
+	magicalRay3Fill( this, ox, oy, oz, dx, dy, dz );
 }
 
 Ray3::Ray3( const Ray3& r3 )
 {
-	magicalRay3Fill( tofpointer( this ), tofpointer( &r3 ) );
+	magicalRay3Copy( this, &r3 );
 }
 
 Ray3::Ray3( void )
-: ox( 0.0f )
-, oy( 0.0f )
-, oz( 0.0f )
-, dx( 0.0f )
-, dy( 0.0f )
-, dz( 0.0f )
 {
-
+	magicalRay3SetZero( this );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
@@ -67,10 +59,10 @@ static CachedPool<Ray3> s_ray3_cached_pool( 32, 32 );
 
 void* Ray3::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Ray3 ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_ray3_cached_pool.take();
 #else
 	return ::operator new( s );
@@ -84,6 +76,41 @@ void Ray3::operator delete( void* ptr )
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 	s_ray3_cached_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
+#endif
+}
+
+RayIntersectResult::RayIntersectResult( void )
+{
+	b = false;
+	t = 0.0f;
+}
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachedPool.h"
+static CachedPool<RayIntersectResult> s_ray_intersect_result_cached_pool( 32, 32 );
+#endif
+
+void* RayIntersectResult::operator new( size_t s )
+{
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	if( s != sizeof( RayIntersectResult ) )
+		return ::operator new( s );
+
+	return s_ray_intersect_result_cached_pool.take();
+#else
+	return ::operator new( s );
+#endif
+}
+
+void RayIntersectResult::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_ray_intersect_result_cached_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif

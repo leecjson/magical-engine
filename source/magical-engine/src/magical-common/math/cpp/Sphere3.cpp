@@ -36,31 +36,21 @@ SOFTWARE.
 
 const Sphere3 Sphere3::Zero = Sphere3( 0.0f, 0.0f, 0.0f, 0.0f );
 const Sphere3 Sphere3::One = Sphere3( 0.0f, 0.0f, 0.0f, 1.0f );
-
-Sphere3 Sphere3::placeholder = Sphere3::Zero;
-Sphere3 Sphere3::temp = Sphere3::Zero;
+Sphere3 Sphere3::var = Sphere3::Zero;
 
 Sphere3::Sphere3( float x, float y, float z, float r )
-: x( x )
-, y( y )
-, z( z )
-, r( r )
 {
-	
+	magicalSphere3Fill( this, x, y, z, r );
 }
 
 Sphere3::Sphere3( const Sphere3& sp )
-: x( sp.x )
-, y( sp.y )
-, z( sp.z )
-, r( sp.r )
 {
-
+	magicalSphere3Copy( this, &sp );
 }
 
 Sphere3::Sphere3( void )
 {
-
+	magicalSphere3SetZero( this );
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
@@ -70,10 +60,10 @@ static CachedPool<Sphere3> s_sphere3_cached_pool( 16, 16 );
 
 void* Sphere3::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Sphere3 ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_sphere3_cached_pool.take();
 #else
 	return ::operator new( s );

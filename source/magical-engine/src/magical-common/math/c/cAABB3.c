@@ -195,56 +195,6 @@ void magicalAABB3Center( cVector3* out, const cAABB3* aabb )
 }
 
 /*-----------------------------------------------------------------------------*\
- * 计算包围盒尺寸(大小) done
- *
- * aabb 目标包围盒
- * return 包围盒尺寸，对称顶点线段的长度
- *-----------------------------------------------------------------------------*/
-float magicalAABB3Size( const cAABB3* aabb )
-{
-	float x, y, z;
-	
-	x = aabb->max_x - aabb->min_x;
-	y = aabb->max_y - aabb->min_y;
-	z = aabb->max_z - aabb->min_z;
-
-	return sqrtf( x * x + y * y + z * z );
-}
-
-/*-----------------------------------------------------------------------------*\
- * 计算包围盒的长 done
- *
- * aabb 目标包围盒
- * return 包围盒的长，x轴
- *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterX( const cAABB3* aabb )
-{
-	return aabb->max_x - aabb->min_x;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 计算包围盒的高 done
- *
- * aabb 目标包围盒
- * return 包围盒的高，y轴
- *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterY( const cAABB3* aabb )
-{
-	return aabb->max_y - aabb->min_y;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 计算包围盒的宽 done
- *
- * aabb 目标包围盒
- * return 包围盒的宽，z轴
- *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterZ( const cAABB3* aabb )
-{
-	return aabb->max_z - aabb->min_z;
-}
-
-/*-----------------------------------------------------------------------------*\
  * 计算任意点到包围盒上的最近点 done
  *
  * 任意点到包围盒上的最近点 直线距离最短
@@ -347,6 +297,56 @@ void magicalAABB3Transform( cAABB3* out, const cAABB3* aabb, const cMatrix4* m )
 	magicalAABB3AddPoint( out, aabb, &left_bottom_back );
 	magicalAABB3AddPoint( out, aabb, &right_top_back );
 	magicalAABB3AddPoint( out, aabb, &right_bottom_back );
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 计算包围盒尺寸(大小) done
+ *
+ * aabb 目标包围盒
+ * return 包围盒尺寸，对称顶点线段的长度
+ *-----------------------------------------------------------------------------*/
+float magicalAABB3Size( const cAABB3* aabb )
+{
+	float x, y, z;
+	
+	x = aabb->max_x - aabb->min_x;
+	y = aabb->max_y - aabb->min_y;
+	z = aabb->max_z - aabb->min_z;
+
+	return sqrtf( x * x + y * y + z * z );
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 计算包围盒的长 done
+ *
+ * aabb 目标包围盒
+ * return 包围盒的长，x轴
+ *-----------------------------------------------------------------------------*/
+float magicalAABB3DiameterX( const cAABB3* aabb )
+{
+	return aabb->max_x - aabb->min_x;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 计算包围盒的高 done
+ *
+ * aabb 目标包围盒
+ * return 包围盒的高，y轴
+ *-----------------------------------------------------------------------------*/
+float magicalAABB3DiameterY( const cAABB3* aabb )
+{
+	return aabb->max_y - aabb->min_y;
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 计算包围盒的宽 done
+ *
+ * aabb 目标包围盒
+ * return 包围盒的宽，z轴
+ *-----------------------------------------------------------------------------*/
+float magicalAABB3DiameterZ( const cAABB3* aabb )
+{
+	return aabb->max_z - aabb->min_z;
 }
 
 /*-----------------------------------------------------------------------------*\

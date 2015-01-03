@@ -22,105 +22,100 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-inline Sphere3 Sphere3::fromZero( void )
+inline Sphere3 Sphere3::createZero( void )
 {
 	return Sphere3::Zero;
 }
 
-inline Sphere3 Sphere3::fromOne( void )
+inline Sphere3 Sphere3::createOne( void )
 {
 	return Sphere3::One;
 }
 
-inline Sphere3 Sphere3::fromCenterAndRadius( const Vector3& center, float r )
+inline Sphere3 Sphere3::createFromCenterAndRadius( const Vector3& center, float r )
 {
 	Sphere3 ret;
-	magicalSphere3FillCenterAndRadius( tofpointer( &ret ), tofpointer( &center ), r );
+	magicalSphere3SetCenterAndRadius( &ret, &center, r );
 	return ret;
 }
 
 inline bool Sphere3::equals( const Sphere3& sp ) const
 {
-	return magicalSphere3Equals( tofpointer( this ), tofpointer( &sp ) );
+	return magicalSphere3Equals( this, &sp );
 }
 
 inline bool Sphere3::isZero( void ) const
 {
-	return magicalSphere3IsZero( tofpointer( this ) );
+	return magicalSphere3IsZero( this );
 }
 
 inline bool Sphere3::isOne( void ) const
 {
-	return magicalSphere3IsOne( tofpointer( this ) );
+	return magicalSphere3IsOne( this );
 }
 
-inline void Sphere3::fill( const Sphere3& sp )
+inline void Sphere3::set( const Sphere3& sp )
 {
-	x = sp.x; y = sp.y; z = sp.z; r = sp.r;
+	magicalSphere3Copy( this, &sp );
 }
 
-inline void Sphere3::fillZero( void )
+inline void Sphere3::setZero( void )
 {
-	magicalSphere3FillZero( tofpointer( this ) );
+	magicalSphere3SetZero( this );
 }
 
-inline void Sphere3::fillOne( void )
+inline void Sphere3::setOne( void )
 {
-	magicalSphere3FillOne( tofpointer( this ) );
+	magicalSphere3SetOne( this );
 }
 
-inline void Sphere3::fillScalars( float x, float y, float z, float r )
+inline void Sphere3::setScalars( float x, float y, float z, float r )
 {
-	this->x = x; this->y = y; this->z = z; this->r = r;
+	magicalSphere3Fill( this, x, y, z, r );
 }
 
-inline void Sphere3::fillCenterAndRadius( const Vector3& center, float r )
+inline void Sphere3::setCenterAndRadius( const Vector3& center, float r )
 {
-	x = center.x; y = center.y; z = center.z; this->r = r;
+	magicalSphere3SetCenterAndRadius( this, &center, r );
 }
 
 inline bool Sphere3::operator==( const Sphere3& sp ) const
 {
-	return magicalSphere3Equals( tofpointer( this ), tofpointer( &sp ) );
+	return magicalSphere3Equals( this, &sp );
 }
 
 inline bool Sphere3::operator!=( const Sphere3& sp ) const
 {
-	return !magicalSphere3Equals( tofpointer( this ), tofpointer( &sp ) );
+	return !magicalSphere3Equals( this, &sp );
 }
 
 inline Sphere3& Sphere3::operator=( const Sphere3& sp )
 {
-	x = sp.x; y = sp.y; z = sp.z; r = sp.r;
+	magicalSphere3Copy( this, &sp );
 	return *this;
 }
 
 inline bool Sphere3::intersects( const Sphere3& sp ) const
 {
-	return magicalSphere3Intersects( tofpointer( this ), tofpointer( &sp ) );
+	return magicalSphere3Intersects( this, &sp );
 }
 
 inline bool Sphere3::intersectsAABB3( const AABB3& aabb ) const
 {
-	return magicalSphere3IntersectsAABB3( tofpointer( this ), tofpointer( &aabb ) );
+	return magicalSphere3IntersectsAABB3( this, &aabb );
 }
 
 inline bool Sphere3::intersectsPlane3( const Plane3& p ) const
 {
-	return magicalSphere3IntersectsPlane3( tofpointer( this ), tofpointer( &p ) );
+	return magicalSphere3IntersectsPlane3( this, &p );
 }
 
-inline bool Sphere3::intersectsRay3( const Ray3& r3, bool discard_inside ) const
+inline void Sphere3::intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside ) const
 {
-	return magicalSphere3IntersectsRay3( tofpointer( this ), tofpointer( &r3 ), discard_inside );
-}
-
-inline bool Sphere3::intersectsRay3Distance( float& distance, const Ray3& r3, bool discard_inside ) const
-{
-	return magicalSphere3IntersectsRay3Distance( &distance, tofpointer( this ), tofpointer( &r3 ), discard_inside );
+	magicalSphere3IntersectsRay3( &out, this, &r3, discard_inside );
 }
 
 inline bool Sphere3::containsPoint( const Vector3& point ) const
 {
-	return magicalSphere3ContainsPoint( tofpointer( this ), tofpointer( &point ) );
+	return magicalSphere3ContainsPoint( this, &point );
 }

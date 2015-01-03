@@ -61,10 +61,10 @@ static CachedPool<AxisAngle> s_axisag_cached_pool( 32, 32 );
 
 void* AxisAngle::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( AxisAngle ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_axisag_cached_pool.take();
 #else
 	return ::operator new( s );

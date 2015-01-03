@@ -82,10 +82,10 @@ static CachedPool<Matrix4> s_matrix4_cached_pool( 8, 8 );
 
 void* Matrix4::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Matrix4 ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_matrix4_cached_pool.take();
 #else
 	return ::operator new( s );

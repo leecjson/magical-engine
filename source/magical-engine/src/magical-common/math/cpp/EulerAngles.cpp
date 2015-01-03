@@ -63,10 +63,10 @@ static CachedPool<EulerAngles> s_eulerag_cached_pool( 64, 64 );
 
 void* EulerAngles::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( EulerAngles ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_eulerag_cached_pool.take();
 #else
 	return ::operator new( s );

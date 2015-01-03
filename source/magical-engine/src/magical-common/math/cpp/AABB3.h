@@ -24,13 +24,14 @@ SOFTWARE.
 #ifndef __AABB3_H__
 #define __AABB3_H__
 
-class Vector3;
-class Matrix4;
-class Ray3;
-class Plane3;
-class Sphere3;
+struct Vector3;
+struct Matrix4;
+struct Ray3;
+struct Plane3;
+struct Sphere3;
+struct RayIntersectResult;
 
-class AABB3 : public cAABB3
+struct AABB3 : public cAABB3
 {
 public:
 	static const AABB3 Zero;
@@ -47,12 +48,12 @@ public:
 	static inline AABB3 createFromPoints( const Vector3& min, const Vector3& max );
 	static inline AABB3 createFromCenterAround( const Vector3& center, float width, float height, float depth );
 
-	static inline void mul( AABB3& out, const AABB3& aabb, const Matrix4& m );
+	static inline void merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 );
+	static inline void transform( AABB3& out, const AABB3& aabb, const Matrix4& m );
+	static inline void center( Vector3& out, const AABB3& aabb );
+	static inline void nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point );
 	static inline void getMin( Vector3& out, const AABB3& aabb );
 	static inline void getMax( Vector3& out, const AABB3& aabb );
-	static inline void merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 );
-	static inline void getCenter( Vector3& out, const AABB3& aabb );
-	static inline void nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point );
 
 public:
 	static void* operator new( size_t s );
@@ -61,8 +62,6 @@ public:
 	inline bool isZero( void ) const;
 	inline bool operator==( const AABB3& aabb ) const;
 	inline bool operator!=( const AABB3& aabb ) const;
-	inline AABB3 operator*( const Matrix4& m ) const;
-	inline AABB3& operator*=( const Matrix4& m );
 	inline AABB3& operator=( const AABB3& m );
 
 public:
@@ -71,12 +70,13 @@ public:
 	inline void setScalars( float min_x, float min_y, float min_z, float max_x, float max_y, float max_z );
 	inline void fromPoints( const Vector3& min, const Vector3& max );
 	inline void fromCenterAround( const Vector3& center, float width, float height, float depth );
-
 	inline void setMin( const Vector3& min );
 	inline void setMax( const Vector3& max );
 	inline void addPoint( float x, float y, float z );
 	inline void addPoint( const Vector3& v );
 	inline void merge( const AABB3& aabb );
+	inline void transform( const Matrix4& m );
+	inline AABB3 getMerged( const AABB3& aabb ) const;
 	inline float size( void ) const;
 	inline float diameterX( void ) const;
 	inline float diameterY( void ) const;
@@ -85,15 +85,12 @@ public:
 	inline Vector3 nearestPoint( const Vector3& point ) const;
 	inline Vector3 getMin( void ) const;
 	inline Vector3 getMax( void ) const;
-	inline AABB3 getMerged( const AABB3& aabb ) const;
-	
+
 	inline bool intersects( const AABB3& aabb ) const;
+	inline bool intersectsPart( AABB3& out, const AABB3& aabb ) const;
 	inline bool intersectsPlane3( const Plane3& p ) const;
 	inline bool intersectsSphere3( const Sphere3& sp ) const;
-	inline bool intersectsRay3( const Ray3& r3, bool discard_inside = false ) const;
-	inline bool intersectsRay3Distance( float& distance, const Ray3& r3, bool discard_inside = false ) const;
-	inline bool intersectsPart( AABB3& out, const AABB3& aabb ) const;
-
+	inline void intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside = false ) const;
 	inline bool containsPoint( const Vector3& point ) const;
 };
 

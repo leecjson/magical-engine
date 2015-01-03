@@ -369,6 +369,15 @@
     <ClCompile Include="..\src\magical-common\math\cpp\AABB3.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\cpp\Plane3.cpp">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\cpp\Sphere3.cpp">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\math\cpp\Ray3.cpp">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\magical-common\assets\AssetsSystem.h">
@@ -653,6 +662,15 @@
     <ClInclude Include="..\src\magical-common\math\cpp\AABB3.h">
       <Filter>src\magical-common\math\cpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\cpp\Plane3.h">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\cpp\Sphere3.h">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\math\cpp\Ray3.h">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\magical-common\math\cpp\Vector2.inl">
@@ -677,6 +695,15 @@
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
     <None Include="..\src\magical-common\math\cpp\AABB3.inl">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </None>
+    <None Include="..\src\magical-common\math\cpp\Plane3.inl">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </None>
+    <None Include="..\src\magical-common\math\cpp\Sphere3.inl">
+      <Filter>src\magical-common\math\cpp</Filter>
+    </None>
+    <None Include="..\src\magical-common\math\cpp\Ray3.inl">
       <Filter>src\magical-common\math\cpp</Filter>
     </None>
   </ItemGroup>

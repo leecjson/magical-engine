@@ -61,10 +61,10 @@ static CachedPool<Quaternion> s_quaternion_cached_pool( 32, 32 );
 
 void* Quaternion::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Quaternion ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_quaternion_cached_pool.take();
 #else
 	return ::operator new( s );

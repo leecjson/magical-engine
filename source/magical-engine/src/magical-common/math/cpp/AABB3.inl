@@ -41,9 +41,24 @@ inline AABB3 AABB3::createFromCenterAround( const Vector3& center, float width, 
 	return ret;
 }
 
-inline void AABB3::mul( AABB3& out, const AABB3& aabb, const Matrix4& m )
+inline void AABB3::merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 )
+{
+	magicalAABB3Merge( &out, &aabb1, &aabb2 );
+}
+
+inline void AABB3::transform( AABB3& out, const AABB3& aabb, const Matrix4& m )
 {
 	magicalAABB3Transform( &out, &aabb, &m );
+}
+
+inline void AABB3::center( Vector3& out, const AABB3& aabb )
+{
+	magicalAABB3Center( &out, &aabb );
+}
+
+inline void AABB3::nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point )
+{
+	magicalAABB3NearestPoint( &out, &aabb, &point );
 }
 
 inline void AABB3::getMin( Vector3& out, const AABB3& aabb )
@@ -54,21 +69,6 @@ inline void AABB3::getMin( Vector3& out, const AABB3& aabb )
 inline void AABB3::getMax( Vector3& out, const AABB3& aabb )
 {
 	magicalAABB3GetMax( &out, &aabb );
-}
-
-inline void AABB3::merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 )
-{
-	magicalAABB3Merge( &out, &aabb1, &aabb2 );
-}
-
-inline void AABB3::getCenter( Vector3& out, const AABB3& aabb )
-{
-	magicalAABB3Center( &out, &aabb );
-}
-
-inline void AABB3::nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point )
-{
-	magicalAABB3NearestPoint( &out, &aabb, &point );
 }
 
 inline bool AABB3::equals( const AABB3& aabb ) const
@@ -89,19 +89,6 @@ inline bool AABB3::operator==( const AABB3& aabb ) const
 inline bool AABB3::operator!=( const AABB3& aabb ) const
 {
 	return !magicalAABB3Equals( this, &aabb );
-}
-
-inline AABB3 AABB3::operator*( const Matrix4& m ) const
-{
-	AABB3 ret;
-	magicalAABB3Transform( &ret, this, &m );
-	return ret;
-}
-
-inline AABB3& AABB3::operator*=( const Matrix4& m )
-{
-	magicalAABB3Transform( this, this, &m );
-	return *this;
 }
 
 inline AABB3& AABB3::operator=( const AABB3& aabb )
@@ -160,6 +147,18 @@ inline void AABB3::merge( const AABB3& aabb )
 	magicalAABB3Merge( this, this, &aabb );
 }
 
+inline void AABB3::transform( const Matrix4& m )
+{
+	magicalAABB3Transform( this, this, &m );
+}
+
+inline AABB3 AABB3::getMerged( const AABB3& aabb ) const
+{
+	AABB3 ret;
+	magicalAABB3Merge( &ret, this, &aabb );
+	return ret;
+}
+
 inline float AABB3::size( void ) const
 {
 	return magicalAABB3Size( this );
@@ -204,36 +203,9 @@ inline Vector3 AABB3::getMax( void ) const
 	return Vector3( max_x, max_y, max_z );
 }
 
-inline AABB3 AABB3::getMerged( const AABB3& aabb ) const
-{
-	AABB3 ret;
-	magicalAABB3Merge( &ret, this, &aabb );
-	return ret;
-}
-
 inline bool AABB3::intersects( const AABB3& aabb ) const
 {
 	return magicalAABB3Intersects( this, &aabb );
-}
-
-inline bool AABB3::intersectsPlane3( const Plane3& p ) const
-{
-	return magicalAABB3IntersectsPlane3( this, ( &p ) );
-}
-
-inline bool AABB3::intersectsSphere3( const Sphere3& sp ) const
-{
-	return magicalAABB3IntersectsSphere3( this, ( &sp ) );
-}
-
-inline bool AABB3::intersectsRay3( const Ray3& r3, bool discard_inside ) const
-{
-	return magicalAABB3IntersectsRay3( this, ( &r3 ), discard_inside );
-}
-
-inline bool AABB3::intersectsRay3Distance( float& distance, const Ray3& r3, bool discard_inside ) const
-{
-	return magicalAABB3IntersectsRay3Distance( &distance, this, ( &r3 ), discard_inside );
 }
 
 inline bool AABB3::intersectsPart( AABB3& out, const AABB3& aabb ) const
@@ -241,7 +213,22 @@ inline bool AABB3::intersectsPart( AABB3& out, const AABB3& aabb ) const
 	return magicalAABB3IntersectsPart( &out, this, &aabb );
 }
 
+inline bool AABB3::intersectsPlane3( const Plane3& p ) const
+{
+	return magicalAABB3IntersectsPlane3( this, &p );
+}
+
+inline bool AABB3::intersectsSphere3( const Sphere3& sp ) const
+{
+	return magicalAABB3IntersectsSphere3( this, &sp );
+}
+
+inline void AABB3::intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside ) const
+{
+	magicalAABB3IntersectsRay3( &out, this, &r3, discard_inside );
+}
+
 inline bool AABB3::containsPoint( const Vector3& point ) const
 {
-	return magicalAABB3ContainsPoint( this, ( &point ) );
+	return magicalAABB3ContainsPoint( this, &point );
 }

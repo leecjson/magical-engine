@@ -182,19 +182,11 @@ void magicalPlane3GetNormal( cVector3* out, const cPlane3* p )
 void magicalPlane3NearestPoint( cVector3* out, const cPlane3* p, const cVector3* point )
 {
 	cVector3 scale_n;
-	float distance = p->d - p->x * point->x + p->y * point->y + p->z * point->z;
 	cVector3 n = { p->x, p->y, p->z };
-
+	float distance = p->d - p->x * point->x + p->y * point->y + p->z * point->z;
+	
 	magicalVector3Scale( &scale_n, &n, distance );
 	magicalVector3Add( out, point, &scale_n );
-}
-
-/*-----------------------------------------------------------------------------*\
- * 计算一个点以正交投影的方式投影到平面P后的点
- *-----------------------------------------------------------------------------*/
-void magicalPlane3ProjectPoint( cVector3* out, const cPlane3* p, const cVector3* point )
-{
-	magicalPlane3NearestPoint( out, p , point );
 }
 
 /*-----------------------------------------------------------------------------*\

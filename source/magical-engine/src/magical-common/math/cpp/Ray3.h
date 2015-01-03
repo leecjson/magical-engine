@@ -24,25 +24,19 @@ SOFTWARE.
 #ifndef __RAY3_H__
 #define __RAY3_H__
 
-class Vector3;
-class AABB3;
-class Plane3;
-class Sphere3;
+#include <stdint.h>
 
-class Ray3
+struct Vector3;
+struct AABB3;
+struct Plane3;
+struct Sphere3;
+struct RayIntersectResult;
+
+struct Ray3 : public cRay3
 {
 public:
-	float ox;
-	float oy;
-	float oz;
-	float dx;
-	float dy;
-	float dz;
-
-public:
 	static const Ray3 Zero;
-	static Ray3 placeholder;
-	static Ray3 temp;
+	static Ray3 var;
 
 public:
 	Ray3( float ox, float oy, float oz, float dx, float dy, float dz );
@@ -50,42 +44,43 @@ public:
 	Ray3( void );
 
 public:
-	static inline Ray3 fromZero( void );
-	static inline Ray3 fromOriginToEnd( const Vector3& origin, const Vector3& end );
-	static inline Ray3 fromOriginAndDirection( const Vector3& origin, const Vector3& direction );
+	static inline Ray3 createZero( void );
+	static inline Ray3 createFromOriginToEnd( const Vector3& origin, const Vector3& end );
+	static inline Ray3 createFromOriginAndDirection( const Vector3& origin, const Vector3& direction );
 	static inline void getOrigin( Vector3& out, const Ray3& r3 );
 	static inline void getDirection( Vector3& out, const Ray3& r3 );
-	static inline void directionNormalize( Ray3& out, const Ray3& r3 );
-
-public:
-	inline bool equals( const Ray3& r3 ) const;
-	inline bool isZero( void ) const;
-	inline void fill( const Ray3& r3 );
-	inline void fillZero( void );
-	inline void fillScalars( float ox, float oy, float oz, float dx, float dy, float dz );
-	inline void fillOriginToEnd( const Vector3& origin, const Vector3& end );
-	inline void fillOriginAndDirection( const Vector3& origin, const Vector3& direction );
 
 public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
+	inline bool equals( const Ray3& r3 ) const;
+	inline bool isZero( void ) const;
 	inline bool operator==( const Ray3& r3 ) const;
 	inline bool operator!=( const Ray3& r3 ) const;
 	inline Ray3& operator=( const Ray3& r3 );
 
+public:
+	inline void set( const Ray3& r3 );
+	inline void setZero( void );
+	inline void setScalars( float ox, float oy, float oz, float dx, float dy, float dz );
+	inline void fromOriginToEnd( const Vector3& origin, const Vector3& end );
+	inline void fromOriginAndDirection( const Vector3& origin, const Vector3& direction );
 	inline Vector3 getOrigin( void ) const;
 	inline Vector3 getDirection( void ) const;
 	inline void setOrigin( const Vector3& origin );
 	inline void setDirection( const Vector3& direction );
-	inline void directionNormalize( void );
 
-	inline bool intersectsPlane3( const Plane3& p, bool discard_inside = false ) const;
-	inline bool intersectsAABB3( const AABB3& aabb, bool discard_inside = false ) const;
-	inline bool intersectsSphere3( const Sphere3& sp, bool discard_insid = false ) const;
+	inline void intersectsPlane3( RayIntersectResult& out, const Plane3& p, bool discard_inside = false ) const;
+	inline void intersectsAABB3( RayIntersectResult& out, const AABB3& aabb, bool discard_inside = false ) const;
+	inline void intersectsSphere3( RayIntersectResult& out, const Sphere3& sp, bool discard_insid = false ) const;
+};
 
-	inline bool intersectsPlane3Distance( float& distance, const Plane3& p, bool discard_inside = false ) const;
-	inline bool intersectsAABB3Distance( float& distance, const AABB3& aabb, bool discard_inside = false ) const;
-	inline bool intersectsSphere3Distance( float& distance, const Sphere3& sp, bool discard_inside = false ) const;
+struct RayIntersectResult : public cRayIntersectResult
+{
+public:
+	RayIntersectResult( void );
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
 };
 
 #endif //__RAY3_H__

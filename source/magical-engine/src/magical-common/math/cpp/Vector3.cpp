@@ -68,10 +68,10 @@ static CachedPool<Vector3> s_vector3_cached_pool( 128, 128 );
 
 void* Vector3::operator new( size_t s )
 {
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Vector3 ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_vector3_cached_pool.take();
 #else
 	return ::operator new( s );

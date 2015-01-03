@@ -24,10 +24,11 @@ SOFTWARE.
 #ifndef __PLANE3_H__
 #define __PLANE3_H__
 
-class Vector3;
-class Ray3;
-class AABB3;
-class Sphere3;
+struct Vector3;
+struct Ray3;
+struct AABB3;
+struct Sphere3;
+struct RayIntersectResult;
 
 enum class Plane3Classification
 {
@@ -36,7 +37,7 @@ enum class Plane3Classification
 	Behind = -1
 };
 
-class Plane3
+struct Plane3 : public cPlane3
 {
 public:
 	float x;
@@ -49,8 +50,7 @@ public:
 	static const Plane3 NormalX;
 	static const Plane3 NormalY;
 	static const Plane3 NormalZ;
-	static Plane3 placeholder;
-	static Plane3 temp;
+	static Plane3 var;
 
 public:
 	Plane3( float x, float y, float z, float d );
@@ -58,39 +58,34 @@ public:
 	Plane3( void );
 
 public:
-	static inline Plane3 fromZero( void );
-	static inline Plane3 fromNormalAndDistance( const Vector3& n, float d );
-	static inline Plane3 fromNormalAndPoint( const Vector3& n, const Vector3& a );
-	static inline Plane3 fromPoints( const Vector3& a, const Vector3& b, const Vector3& c );
-	
+	static inline Plane3 createZero( void );
+	static inline Plane3 createFromNormalAndDistance( const Vector3& n, float d );
+	static inline Plane3 createFromNormalAndPoint( const Vector3& n, const Vector3& a );
+	static inline Plane3 createFromPoints( const Vector3& a, const Vector3& b, const Vector3& c );
 	static inline void getNormal( Vector3& out, const Plane3& p );
 	static inline void nearestPoint( Vector3& out, const Plane3& p, const Vector3& point );
-	static inline void projectPoint( Vector3& out, const Plane3& p, const Vector3& point );
-
-public:
-	inline bool equals( const Plane3& p ) const;
-	inline bool isZero( void ) const;
-	inline void fill( const Plane3& p );
-	inline void fillZero( void );
-	inline void fillScalars( float x, float y, float z, float d );
-	inline void fillNormalAndDistance( const Vector3& n, float d );
-	inline void fillNormalAndPoint( const Vector3& n, const Vector3& a );
-	inline void fillPoints( const Vector3& a, const Vector3& b, const Vector3& c );
 
 public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
+	inline bool equals( const Plane3& p ) const;
+	inline bool isZero( void ) const;
 	inline bool operator==( const Plane3& p ) const;
 	inline bool operator!=( const Plane3& p ) const;
 	inline Plane3& operator=( const Plane3& p );
 
-public:	
+public:
+	inline void set( const Plane3& p );
+	inline void setZero( void );
+	inline void setScalars( float x, float y, float z, float d );
+	inline void fromNormalAndDistance( const Vector3& n, float d );
+	inline void fromNormalAndPoint( const Vector3& n, const Vector3& a );
+	inline void fromPoints( const Vector3& a, const Vector3& b, const Vector3& c );
 	inline void setNormal( const Vector3& n );
 	inline void setDistance( float d );
 	inline Vector3 getNormal( void ) const;
 	inline float getDistance( void ) const;
 	inline Vector3 nearestPoint( const Vector3& point ) const;
-	inline Vector3 projectPoint( const Vector3& point ) const;
 	inline float distanceToPoint( const Vector3& point ) const;
 
 	inline Plane3Classification classifyPoint( const Vector3& point ) const;
@@ -99,9 +94,7 @@ public:
 	inline bool intersects( const Plane3& p ) const;
 	inline bool intersectsAABB3( const AABB3& aabb ) const;
 	inline bool intersectsSphere3( const Sphere3& sp ) const;
-	inline bool intersectsRay3( const Ray3& r3, const bool discard_inside = false ) const;
-	inline bool intersectsRay3Distance( float& distance, const Ray3& r3, const bool discard_inside = false ) const;
-
+	inline void intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside = false ) const;
 	inline bool containsPoint( const Vector3& point ) const;
 };
 
