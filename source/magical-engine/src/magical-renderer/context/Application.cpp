@@ -27,6 +27,7 @@ SOFTWARE.
 #include "LuaSystem.h"
 #include "RendererSystem.h"
 #include "LogSystem.h"
+#include "InputSystem.h"
 
 void Application::init( void )
 {
@@ -35,6 +36,10 @@ void Application::init( void )
 	magicalReturnIfError();
 
 	Assets::init();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Input::init();
 	magicalShowLastError();
 	magicalReturnIfError();
 
@@ -90,6 +95,10 @@ void Application::delc( void )
 	magicalReturnIfError();
 
 	Lua::delc();
+	magicalShowLastError();
+	magicalReturnIfError();
+
+	Input::delc();
 	magicalShowLastError();
 	magicalReturnIfError();
 

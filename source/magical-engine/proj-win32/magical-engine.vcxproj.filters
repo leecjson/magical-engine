@@ -91,6 +91,9 @@
     <Filter Include="src\magical-common\utils">
       <UniqueIdentifier>{fe4ed621-ac43-46c9-a146-d58fae89a7ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\magical-common\input">
+      <UniqueIdentifier>{23363563-43e4-489d-8860-4d2a34f97ebc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\magical-common\assets\win32\AssetsSystem.cpp">
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="..\src\magical-common\math\cpp\Ray3.cpp">
       <Filter>src\magical-common\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-common\input\InputSystem.cpp">
+      <Filter>src\magical-common\input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -670,6 +676,9 @@
     </ClInclude>
     <ClInclude Include="..\src\magical-common\math\cpp\Ray3.h">
       <Filter>src\magical-common\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\input\InputSystem.h">
+      <Filter>src\magical-common\input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

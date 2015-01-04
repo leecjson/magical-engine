@@ -37,6 +37,12 @@ public:
 public:
 	static Shared<Camera> create( void );
 
+public:
+	void setPerspective( float fov, float aspect, float znear, float zfar );
+	const Matrix4& getProjectionMatrix( void ) const;
+
+private:
+	Matrix4 _projection_matrix;
 
 };
 

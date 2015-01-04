@@ -26,6 +26,8 @@ SOFTWARE.
 
 void mainDelegate( void )
 {
+	Input::addKeyEventDelegate(  )
+
 	if( Lua::state()->executeScriptFile( "main.lua" ) == 0 )
 		Lua::state()->executeGlobalFunction( kLuaOnCreate );
 

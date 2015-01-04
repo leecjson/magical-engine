@@ -75,6 +75,7 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\src\magical-common\engine\Scene.cpp" />
     <ClCompile Include="..\src\magical-common\engine\Transform.cpp" />
     <ClCompile Include="..\src\magical-common\engine\Viewport.cpp" />
+    <ClCompile Include="..\src\magical-common\input\InputSystem.cpp" />
     <ClCompile Include="..\src\magical-common\log\win32\LogSystem.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\AABB3.cpp" />
     <ClCompile Include="..\src\magical-common\math\cpp\AxisAngle.cpp" />
@@ -175,6 +176,7 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\src\magical-common\engine\Transform.h" />
     <ClInclude Include="..\src\magical-common\engine\Viewport.h" />
     <ClInclude Include="..\src\magical-common\include\magical-engine.h" />
+    <ClInclude Include="..\src\magical-common\input\InputSystem.h" />
     <ClInclude Include="..\src\magical-common\log\LogSystem.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\AABB3.h" />
     <ClInclude Include="..\src\magical-common\math\cpp\AxisAngle.h" />

@@ -26,6 +26,7 @@ SOFTWARE.
 #include "win32/gl/glew/glew.h"
 #include "win32/gl/glfw3/glfw3.h"
 #include "Engine.h"
+#include "InputSystem.h"
 
 static void win32ErrorCallBack( int err_id, const char* error_desc );
 static void win32MouseButtonCallBack( GLFWwindow* window, int button, int action, int modify );
@@ -162,7 +163,7 @@ void Application::initRenderContext( void )
 	GLenum result = glewInit();
 	if( result != GLEW_OK )
 	{
-		magicalFormat( "%s %s", "Init glew error.", (char*)glewGetErrorString( result ) );
+		magicalFormat( "%s %s", "Init glew failed.", (char*)glewGetErrorString( result ) );
 		magicalSetLastErrorInfoB( magicalBuffer );
 		magicalLogLastError();
 		return;
@@ -222,7 +223,8 @@ static void win32CharCallBack( GLFWwindow* window, unsigned int character )
 
 static void win32KeyCallBack( GLFWwindow* window, int key, int scancode, int action, int mods )
 {
-	//magicalLog( "win32KeyCallBack" );
+	Input::keyEvent( (KeyCode) key, (KeyAction) action );
+	magicalLog( "win32KeyCallBack" );
 }
 
 static void win32WindowPosCallBack( GLFWwindow* windows, int x, int y )

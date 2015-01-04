@@ -36,6 +36,7 @@ SOFTWARE.
 #include "Engine.h"
 #include "AssetsSystem.h"
 #include "LogSystem.h"
+#include "InputSystem.h"
 #include "Utils.h"
 
 #include "LuaState.h"

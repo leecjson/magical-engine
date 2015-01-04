@@ -21,31 +21,37 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Camera.h"
+#include "InputSystem.h"
 
-Camera::Camera( void )
+
+
+void Input::init( void )
 {
 
 }
 
-Camera::~Camera( void )
+void Input::delc( void )
 {
 
 }
 
-Shared<Camera> Camera::create( void )
+void Input::keyEvent( KeyCode key, KeyAction action )
 {
-	Camera* ret = new Camera();
-	magicalAssert( ret, "new Camera() failed" );
-	return Shared<Camera>( Initializer<Camera>( ret ) );
+	magicalFormat( "key = %d, action = %d", key, action );
+	magicalLog( magicalBuffer );
 }
 
-void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
+void Input::addKeyEventDelegate( const KeyEventDelegate& d )
 {
-	_projection_matrix.setPerspective( fov, aspect, znear, zfar );
+
 }
 
-const Matrix4& Camera::getProjectionMatrix( void ) const
+void Input::removeKeyEventDelegate( const KeyEventDelegate& d )
 {
-	return _projection_matrix;
+
+}
+
+void Input::removeAllKeyEventDelegates( void )
+{
+
 }
