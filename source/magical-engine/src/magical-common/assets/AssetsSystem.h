@@ -41,9 +41,6 @@ public:
 	static std::string getAssetsAbsoluteFilename( const char* file_name );
 	static bool isAssetsFileExist( const char* file_name );
 	static Shared<Data> getAssetsFileData( const char* file_name );
-
-private:
-	static std::string s_assets_path;
 };
 
 #endif //__ASSETS_SYSTEM_H__

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: common
-** Generated automatically by tolua++-1.0.92 on 12/31/14 15:07:34.
+** Generated automatically by tolua++-1.0.92 on 01/06/15 14:38:36.
 */
 
 #ifndef __cplusplus
@@ -27,6 +27,20 @@ static int tolua_collect_Quaternion (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_Data (lua_State* tolua_S)
+{
+ Data* self = (Data*) tolua_tousertype(tolua_S,1,0);
+	self->release();
+	return 0;
+}
+
+static int tolua_collect_Vector4 (lua_State* tolua_S)
+{
+ Vector4* self = (Vector4*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_EulerAngles (lua_State* tolua_S)
 {
  EulerAngles* self = (EulerAngles*) tolua_tousertype(tolua_S,1,0);
@@ -41,17 +55,17 @@ static int tolua_collect_Vector2 (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Vector4 (lua_State* tolua_S)
-{
- Vector4* self = (Vector4*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_Vector3 (lua_State* tolua_S)
 {
  Vector3* self = (Vector3*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_Transform (lua_State* tolua_S)
+{
+ Transform* self = (Transform*) tolua_tousertype(tolua_S,1,0);
+	self->release();
 	return 0;
 }
 
@@ -74,15 +88,195 @@ static int tolua_collect_AxisAngle (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
+ tolua_usertype(tolua_S,"Transform");
  tolua_usertype(tolua_S,"Vector4");
+ tolua_usertype(tolua_S,"Reference");
+ tolua_usertype(tolua_S,"Vector3");
  tolua_usertype(tolua_S,"Log");
+ tolua_usertype(tolua_S,"Quaternion");
  tolua_usertype(tolua_S,"EulerAngles");
  tolua_usertype(tolua_S,"Vector2");
- tolua_usertype(tolua_S,"Vector3");
- tolua_usertype(tolua_S,"Quaternion");
+ tolua_usertype(tolua_S,"Assets");
+ tolua_usertype(tolua_S,"Data");
  tolua_usertype(tolua_S,"Matrix4");
  tolua_usertype(tolua_S,"AxisAngle");
 }
+
+/* method: resetAssetsPath of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_resetAssetsPath00
+static int tolua_common_Assets_resetAssetsPath00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Assets::resetAssetsPath();
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'resetAssetsPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAssetsPath of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_setAssetsPath00
+static int tolua_common_Assets_setAssetsPath00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* path = ((const char*)  tolua_tostring(tolua_S,2,0));
+  {
+   Assets::setAssetsPath(path);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAssetsPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getAssetsPath of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_getAssetsPath00
+static int tolua_common_Assets_getAssetsPath00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   std::string tolua_ret = (std::string)  Assets::getAssetsPath();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAssetsPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getAssetsAbsoluteFilename of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_getAssetsAbsoluteFilename00
+static int tolua_common_Assets_getAssetsAbsoluteFilename00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* file_name = ((const char*)  tolua_tostring(tolua_S,2,0));
+  {
+   std::string tolua_ret = (std::string)  Assets::getAssetsAbsoluteFilename(file_name);
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAssetsAbsoluteFilename'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isAssetsFileExist of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_isAssetsFileExist00
+static int tolua_common_Assets_isAssetsFileExist00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* file_name = ((const char*)  tolua_tostring(tolua_S,2,0));
+  {
+   bool tolua_ret = (bool)  Assets::isAssetsFileExist(file_name);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isAssetsFileExist'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getAssetsFileData of class  Assets */
+#ifndef TOLUA_DISABLE_tolua_common_Assets_getAssetsFileData00
+static int tolua_common_Assets_getAssetsFileData00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Assets",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* file_name = ((const char*)  tolua_tostring(tolua_S,2,0));
+  {
+   Shared<Data> tolua_ret =   Assets::getAssetsFileData(file_name);
+    tolua_ret->retain();
+    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Data");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAssetsFileData'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
 
 /* function: magicalIsError */
 #ifndef TOLUA_DISABLE_tolua_common_magicalIsError00
@@ -388,6 +582,1767 @@ static int tolua_common_magicalEndTimer00(lua_State* tolua_S)
 #ifdef MAGICAL_DEBUG
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'magicalEndTimer'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_delete00
+static int tolua_common_Data_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Data",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Data* self = (Data*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_create00
+static int tolua_common_Data_create00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Data",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Shared<Data> tolua_ret =   Data::create();
+    tolua_ret->retain();
+    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Data");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: assign of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_assign00
+static int tolua_common_Data_assign00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Data",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Data* self = (Data*)  tolua_tousertype(tolua_S,1,0);
+  char* data = ((char*)  tolua_tostring(tolua_S,2,0));
+  unsigned int size = (( unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'assign'", NULL);
+#endif
+  {
+   self->assign(data,size);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'assign'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: malloc of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_malloc00
+static int tolua_common_Data_malloc00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Data",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Data* self = (Data*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int size = (( unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'malloc'", NULL);
+#endif
+  {
+   self->malloc(size);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'malloc'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: realloc of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_realloc00
+static int tolua_common_Data_realloc00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Data",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Data* self = (Data*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int size = (( unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'realloc'", NULL);
+#endif
+  {
+   self->realloc(size);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'realloc'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: empty of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_empty00
+static int tolua_common_Data_empty00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Data",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Data* self = (const Data*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'empty'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->empty();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'empty'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: size of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_size00
+static int tolua_common_Data_size00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Data",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Data* self = (const Data*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'size'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = ( unsigned int)  self->size();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'size'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: ptr of class  Data */
+#ifndef TOLUA_DISABLE_tolua_common_Data_ptr00
+static int tolua_common_Data_ptr00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Data",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Data* self = (Data*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'ptr'", NULL);
+#endif
+  {
+   char* tolua_ret = (char*)  self->ptr();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ptr'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: retain of class  Reference */
+#ifndef TOLUA_DISABLE_tolua_common_Reference_retain00
+static int tolua_common_Reference_retain00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Reference",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Reference* self = (Reference*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'retain'", NULL);
+#endif
+  {
+   self->retain();
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'retain'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: release of class  Reference */
+#ifndef TOLUA_DISABLE_tolua_common_Reference_release00
+static int tolua_common_Reference_release00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Reference",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Reference* self = (Reference*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'release'", NULL);
+#endif
+  {
+   self->release();
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'release'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: referenceCount of class  Reference */
+#ifndef TOLUA_DISABLE_tolua_common_Reference_referenceCount00
+static int tolua_common_Reference_referenceCount00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Reference",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Reference* self = (const Reference*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'referenceCount'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->referenceCount();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'referenceCount'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_delete00
+static int tolua_common_Transform_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_create00
+static int tolua_common_Transform_create00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Shared<Transform> tolua_ret =   Transform::create();
+    tolua_ret->retain();
+    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Transform");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setName of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setName00
+static int tolua_common_Transform_setName00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setName'", NULL);
+#endif
+  {
+   self->setName(name);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getName of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_getName00
+static int tolua_common_Transform_getName00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getName'", NULL);
+#endif
+  {
+   const std::string tolua_ret = (const std::string)  self->getName();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addChild of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_addChild00
+static int tolua_common_Transform_addChild00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Transform* child = ((const Transform*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
+#endif
+  {
+   self->addChild(child);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeChild of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_removeChild00
+static int tolua_common_Transform_removeChild00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Transform* child = ((const Transform*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'", NULL);
+#endif
+  {
+   self->removeChild(child);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeAllChildren of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_removeAllChildren00
+static int tolua_common_Transform_removeAllChildren00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAllChildren'", NULL);
+#endif
+  {
+   self->removeAllChildren();
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeAllChildren'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeFromParent of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_removeFromParent00
+static int tolua_common_Transform_removeFromParent00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeFromParent'", NULL);
+#endif
+  {
+   self->removeFromParent();
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeFromParent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: findChild of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_findChild00
+static int tolua_common_Transform_findChild00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'findChild'", NULL);
+#endif
+  {
+   Shared<Transform> tolua_ret =   self->findChild(name);
+    tolua_ret->retain();
+    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Transform");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'findChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getChild of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_getChild00
+static int tolua_common_Transform_getChild00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getChild'", NULL);
+#endif
+  {
+   Shared<Transform> tolua_ret =   self->getChild(index);
+    tolua_ret->retain();
+    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Transform");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: childrenCount of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_childrenCount00
+static int tolua_common_Transform_childrenCount00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'childrenCount'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->childrenCount();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'childrenCount'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getParent of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_getParent00
+static int tolua_common_Transform_getParent00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getParent'", NULL);
+#endif
+  {
+   Shared<Transform> tolua_ret =   self->getParent();
+    tolua_ret->retain();
+    tolua_pushusertype(tolua_S,(void*)(tolua_ret.get()),"Transform");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getParent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isChildOf of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_isChildOf00
+static int tolua_common_Transform_isChildOf00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Transform* parent = ((const Transform*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isChildOf'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isChildOf(parent);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isChildOf'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPosition of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setPosition00
+static int tolua_common_Transform_setPosition00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector2",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector2* t = ((const Vector2*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+  {
+   self->setPosition(*t);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setPosition'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPosition of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setPosition01
+static int tolua_common_Transform_setPosition01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector3* t = ((const Vector3*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+  {
+   self->setPosition(*t);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_setPosition00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPosition of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setPosition02
+static int tolua_common_Transform_setPosition02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+  {
+   self->setPosition(x,y);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_setPosition01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPosition of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setPosition03
+static int tolua_common_Transform_setPosition03(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+  float z = ((float)  tolua_tonumber(tolua_S,4,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+  {
+   self->setPosition(x,y,z);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_setPosition02(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: translate of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_translate00
+static int tolua_common_Transform_translate00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector2",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector2* t = ((const Vector2*)  tolua_tousertype(tolua_S,2,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'translate'", NULL);
+#endif
+  {
+   self->translate(*t,relative_to);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'translate'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: translate of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_translate01
+static int tolua_common_Transform_translate01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector3",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector3* t = ((const Vector3*)  tolua_tousertype(tolua_S,2,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'translate'", NULL);
+#endif
+  {
+   self->translate(*t,relative_to);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_translate00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: translate of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_translate02
+static int tolua_common_Transform_translate02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,4,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'translate'", NULL);
+#endif
+  {
+   self->translate(x,y,relative_to);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_translate01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: translate of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_translate03
+static int tolua_common_Transform_translate03(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+  float z = ((float)  tolua_tonumber(tolua_S,4,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,5,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'translate'", NULL);
+#endif
+  {
+   self->translate(x,y,z,relative_to);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_translate02(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPosition of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_getPosition00
+static int tolua_common_Transform_getPosition00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'", NULL);
+#endif
+  {
+   const Vector3& tolua_ret = (const Vector3&)  self->getPosition();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Vector3");
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPosition'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setRotation of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setRotation00
+static int tolua_common_Transform_setRotation00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const EulerAngles",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const EulerAngles* r = ((const EulerAngles*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRotation'", NULL);
+#endif
+  {
+   self->setRotation(*r);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setRotation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setRotation of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setRotation01
+static int tolua_common_Transform_setRotation01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Quaternion",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Quaternion* r = ((const Quaternion*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRotation'", NULL);
+#endif
+  {
+   self->setRotation(*r);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_setRotation00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setRotation of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setRotation02
+static int tolua_common_Transform_setRotation02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float yaw = ((float)  tolua_tonumber(tolua_S,2,0));
+  float pitch = ((float)  tolua_tonumber(tolua_S,3,0));
+  float roll = ((float)  tolua_tonumber(tolua_S,4,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRotation'", NULL);
+#endif
+  {
+   self->setRotation(yaw,pitch,roll);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_setRotation01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: rotate of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_rotate00
+static int tolua_common_Transform_rotate00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const EulerAngles",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const EulerAngles* r = ((const EulerAngles*)  tolua_tousertype(tolua_S,2,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotate'", NULL);
+#endif
+  {
+   self->rotate(*r,relative_to);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'rotate'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: rotate of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_rotate01
+static int tolua_common_Transform_rotate01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Quaternion",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Quaternion* r = ((const Quaternion*)  tolua_tousertype(tolua_S,2,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotate'", NULL);
+#endif
+  {
+   self->rotate(*r,relative_to);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_rotate00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: rotate of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_rotate02
+static int tolua_common_Transform_rotate02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float yaw = ((float)  tolua_tonumber(tolua_S,2,0));
+  float pitch = ((float)  tolua_tonumber(tolua_S,3,0));
+  float roll = ((float)  tolua_tonumber(tolua_S,4,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,5,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotate'", NULL);
+#endif
+  {
+   self->rotate(yaw,pitch,roll,relative_to);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_rotate01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: yaw of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_yaw00
+static int tolua_common_Transform_yaw00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float yaw = ((float)  tolua_tonumber(tolua_S,2,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'yaw'", NULL);
+#endif
+  {
+   self->yaw(yaw,relative_to);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'yaw'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: pitch of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_pitch00
+static int tolua_common_Transform_pitch00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float pitch = ((float)  tolua_tonumber(tolua_S,2,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pitch'", NULL);
+#endif
+  {
+   self->pitch(pitch,relative_to);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'pitch'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: roll of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_roll00
+static int tolua_common_Transform_roll00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float roll = ((float)  tolua_tonumber(tolua_S,2,0));
+  Space relative_to = ((Space) (int)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'roll'", NULL);
+#endif
+  {
+   self->roll(roll,relative_to);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'roll'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getRotation of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_getRotation00
+static int tolua_common_Transform_getRotation00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRotation'", NULL);
+#endif
+  {
+   const Quaternion& tolua_ret = (const Quaternion&)  self->getRotation();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Quaternion");
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getRotation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setScale00
+static int tolua_common_Transform_setScale00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector2",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector2* s = ((const Vector2*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
+#endif
+  {
+   self->setScale(*s);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setScale01
+static int tolua_common_Transform_setScale01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector3* s = ((const Vector3*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
+#endif
+  {
+   self->setScale(*s);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_setScale00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setScale02
+static int tolua_common_Transform_setScale02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
+#endif
+  {
+   self->setScale(x,y);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_setScale01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_setScale03
+static int tolua_common_Transform_setScale03(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+  float z = ((float)  tolua_tonumber(tolua_S,4,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
+#endif
+  {
+   self->setScale(x,y,z);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_setScale02(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: scale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_scale00
+static int tolua_common_Transform_scale00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector2",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector2* s = ((const Vector2*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scale'", NULL);
+#endif
+  {
+   self->scale(*s);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'scale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: scale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_scale01
+static int tolua_common_Transform_scale01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector3* s = ((const Vector3*)  tolua_tousertype(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scale'", NULL);
+#endif
+  {
+   self->scale(*s);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_scale00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: scale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_scale02
+static int tolua_common_Transform_scale02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scale'", NULL);
+#endif
+  {
+   self->scale(x,y);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_scale01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: scale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_scale03
+static int tolua_common_Transform_scale03(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+  float z = ((float)  tolua_tonumber(tolua_S,4,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scale'", NULL);
+#endif
+  {
+   self->scale(x,y,z);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_scale02(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: scale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_scale04
+static int tolua_common_Transform_scale04(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  float s = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scale'", NULL);
+#endif
+  {
+   self->scale(s);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_common_Transform_scale03(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getScale of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_getScale00
+static int tolua_common_Transform_getScale00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Transform* self = (const Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScale'", NULL);
+#endif
+  {
+   const Vector3& tolua_ret = (const Vector3&)  self->getScale();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Vector3");
+  }
+ }
+ return 1;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: lookAt of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_lookAt00
+static int tolua_common_Transform_lookAt00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Vector3",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const Vector3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+  const Vector3* target = ((const Vector3*)  tolua_tousertype(tolua_S,2,0));
+  const Vector3* up = ((const Vector3*)  tolua_tousertype(tolua_S,3,0));
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'", NULL);
+#endif
+  {
+   self->lookAt(*target,*up);
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'lookAt'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: resetTransform of class  Transform */
+#ifndef TOLUA_DISABLE_tolua_common_Transform_resetTransform00
+static int tolua_common_Transform_resetTransform00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Transform",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Transform* self = (Transform*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resetTransform'", NULL);
+#endif
+  {
+   self->resetTransform();
+  }
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'resetTransform'.",&tolua_err);
  return 0;
 #endif
 }
@@ -889,6 +2844,35 @@ static int tolua_common_AxisAngle_new03_local(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_common_AxisAngle_new02_local(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  AxisAngle */
+#ifndef TOLUA_DISABLE_tolua_common_AxisAngle_delete00
+static int tolua_common_AxisAngle_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"AxisAngle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  AxisAngle* self = (AxisAngle*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -1750,6 +3734,35 @@ static int tolua_common_EulerAngles_new02_local(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_common_EulerAngles_new01_local(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  EulerAngles */
+#ifndef TOLUA_DISABLE_tolua_common_EulerAngles_delete00
+static int tolua_common_EulerAngles_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"EulerAngles",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  EulerAngles* self = (EulerAngles*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -3247,6 +5260,35 @@ static int tolua_common_Matrix4_new02_local(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_common_Matrix4_new01_local(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  Matrix4 */
+#ifndef TOLUA_DISABLE_tolua_common_Matrix4_delete00
+static int tolua_common_Matrix4_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Matrix4",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Matrix4* self = (Matrix4*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -5654,6 +7696,35 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: delete of class  Quaternion */
+#ifndef TOLUA_DISABLE_tolua_common_Quaternion_delete00
+static int tolua_common_Quaternion_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Quaternion",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Quaternion* self = (Quaternion*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: createIdentity of class  Quaternion */
 #ifndef TOLUA_DISABLE_tolua_common_Quaternion_createIdentity00
 static int tolua_common_Quaternion_createIdentity00(lua_State* tolua_S)
@@ -7782,6 +9853,35 @@ static int tolua_common_Vector2_new02_local(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_common_Vector2_new01_local(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  Vector2 */
+#ifndef TOLUA_DISABLE_tolua_common_Vector2_delete00
+static int tolua_common_Vector2_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Vector2",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Vector2* self = (Vector2*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -10218,6 +12318,35 @@ static int tolua_common_Vector3_new02_local(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_common_Vector3_new01_local(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  Vector3 */
+#ifndef TOLUA_DISABLE_tolua_common_Vector3_delete00
+static int tolua_common_Vector3_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Vector3",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Vector3* self = (Vector3*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -12725,6 +14854,35 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: delete of class  Vector4 */
+#ifndef TOLUA_DISABLE_tolua_common_Vector4_delete00
+static int tolua_common_Vector4_delete00(lua_State* tolua_S)
+{
+#ifdef MAGICAL_DEBUG
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Vector4",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Vector4* self = (Vector4*)  tolua_tousertype(tolua_S,1,0);
+#ifdef MAGICAL_DEBUG
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifdef MAGICAL_DEBUG
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: createZero of class  Vector4 */
 #ifndef TOLUA_DISABLE_tolua_common_Vector4_createZero00
 static int tolua_common_Vector4_createZero00(lua_State* tolua_S)
@@ -14752,6 +16910,15 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
  tolua_reg_types(tolua_S);
  tolua_module(tolua_S,NULL,0);
  tolua_beginmodule(tolua_S,NULL);
+  tolua_cclass(tolua_S,"Assets","Assets","",NULL);
+  tolua_beginmodule(tolua_S,"Assets");
+   tolua_function(tolua_S,"resetAssetsPath",tolua_common_Assets_resetAssetsPath00);
+   tolua_function(tolua_S,"setAssetsPath",tolua_common_Assets_setAssetsPath00);
+   tolua_function(tolua_S,"getAssetsPath",tolua_common_Assets_getAssetsPath00);
+   tolua_function(tolua_S,"getAssetsAbsoluteFilename",tolua_common_Assets_getAssetsAbsoluteFilename00);
+   tolua_function(tolua_S,"isAssetsFileExist",tolua_common_Assets_isAssetsFileExist00);
+   tolua_function(tolua_S,"getAssetsFileData",tolua_common_Assets_getAssetsFileData00);
+  tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"kBufferLen",kBufferLen);
   tolua_function(tolua_S,"magicalIsError",tolua_common_magicalIsError00);
   tolua_function(tolua_S,"magicalIgnoreLastError",tolua_common_magicalIgnoreLastError00);
@@ -14764,6 +16931,84 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
   tolua_function(tolua_S,"magicalIsTimerStarted",tolua_common_magicalIsTimerStarted00);
   tolua_function(tolua_S,"magicalStartTimer",tolua_common_magicalStartTimer00);
   tolua_function(tolua_S,"magicalEndTimer",tolua_common_magicalEndTimer00);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"Data","Data","Reference",tolua_collect_Data);
+  #else
+  tolua_cclass(tolua_S,"Data","Data","Reference",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"Data");
+   tolua_function(tolua_S,"delete",tolua_common_Data_delete00);
+   tolua_function(tolua_S,"create",tolua_common_Data_create00);
+   tolua_function(tolua_S,"assign",tolua_common_Data_assign00);
+   tolua_function(tolua_S,"malloc",tolua_common_Data_malloc00);
+   tolua_function(tolua_S,"realloc",tolua_common_Data_realloc00);
+   tolua_function(tolua_S,"empty",tolua_common_Data_empty00);
+   tolua_function(tolua_S,"size",tolua_common_Data_size00);
+   tolua_function(tolua_S,"ptr",tolua_common_Data_ptr00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"Reference","Reference","",NULL);
+  tolua_beginmodule(tolua_S,"Reference");
+   tolua_function(tolua_S,"retain",tolua_common_Reference_retain00);
+   tolua_function(tolua_S,"release",tolua_common_Reference_release00);
+   tolua_function(tolua_S,"referenceCount",tolua_common_Reference_referenceCount00);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"Space",0);
+  tolua_beginmodule(tolua_S,"Space");
+   tolua_constant(tolua_S,"Self", (int)Space::Self);
+   tolua_constant(tolua_S,"Parent", (int)Space::Parent);
+   tolua_constant(tolua_S,"World", (int)Space::World);
+  tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"Transform","Transform","Reference",tolua_collect_Transform);
+  #else
+  tolua_cclass(tolua_S,"Transform","Transform","Reference",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"Transform");
+   tolua_function(tolua_S,"delete",tolua_common_Transform_delete00);
+   tolua_function(tolua_S,"create",tolua_common_Transform_create00);
+   tolua_function(tolua_S,"setName",tolua_common_Transform_setName00);
+   tolua_function(tolua_S,"getName",tolua_common_Transform_getName00);
+   tolua_function(tolua_S,"addChild",tolua_common_Transform_addChild00);
+   tolua_function(tolua_S,"removeChild",tolua_common_Transform_removeChild00);
+   tolua_function(tolua_S,"removeAllChildren",tolua_common_Transform_removeAllChildren00);
+   tolua_function(tolua_S,"removeFromParent",tolua_common_Transform_removeFromParent00);
+   tolua_function(tolua_S,"findChild",tolua_common_Transform_findChild00);
+   tolua_function(tolua_S,"getChild",tolua_common_Transform_getChild00);
+   tolua_function(tolua_S,"childrenCount",tolua_common_Transform_childrenCount00);
+   tolua_function(tolua_S,"getParent",tolua_common_Transform_getParent00);
+   tolua_function(tolua_S,"isChildOf",tolua_common_Transform_isChildOf00);
+   tolua_function(tolua_S,"setPosition",tolua_common_Transform_setPosition00);
+   tolua_function(tolua_S,"setPosition",tolua_common_Transform_setPosition01);
+   tolua_function(tolua_S,"setPosition",tolua_common_Transform_setPosition02);
+   tolua_function(tolua_S,"setPosition",tolua_common_Transform_setPosition03);
+   tolua_function(tolua_S,"translate",tolua_common_Transform_translate00);
+   tolua_function(tolua_S,"translate",tolua_common_Transform_translate01);
+   tolua_function(tolua_S,"translate",tolua_common_Transform_translate02);
+   tolua_function(tolua_S,"translate",tolua_common_Transform_translate03);
+   tolua_function(tolua_S,"getPosition",tolua_common_Transform_getPosition00);
+   tolua_function(tolua_S,"setRotation",tolua_common_Transform_setRotation00);
+   tolua_function(tolua_S,"setRotation",tolua_common_Transform_setRotation01);
+   tolua_function(tolua_S,"setRotation",tolua_common_Transform_setRotation02);
+   tolua_function(tolua_S,"rotate",tolua_common_Transform_rotate00);
+   tolua_function(tolua_S,"rotate",tolua_common_Transform_rotate01);
+   tolua_function(tolua_S,"rotate",tolua_common_Transform_rotate02);
+   tolua_function(tolua_S,"yaw",tolua_common_Transform_yaw00);
+   tolua_function(tolua_S,"pitch",tolua_common_Transform_pitch00);
+   tolua_function(tolua_S,"roll",tolua_common_Transform_roll00);
+   tolua_function(tolua_S,"getRotation",tolua_common_Transform_getRotation00);
+   tolua_function(tolua_S,"setScale",tolua_common_Transform_setScale00);
+   tolua_function(tolua_S,"setScale",tolua_common_Transform_setScale01);
+   tolua_function(tolua_S,"setScale",tolua_common_Transform_setScale02);
+   tolua_function(tolua_S,"setScale",tolua_common_Transform_setScale03);
+   tolua_function(tolua_S,"scale",tolua_common_Transform_scale00);
+   tolua_function(tolua_S,"scale",tolua_common_Transform_scale01);
+   tolua_function(tolua_S,"scale",tolua_common_Transform_scale02);
+   tolua_function(tolua_S,"scale",tolua_common_Transform_scale03);
+   tolua_function(tolua_S,"scale",tolua_common_Transform_scale04);
+   tolua_function(tolua_S,"getScale",tolua_common_Transform_getScale00);
+   tolua_function(tolua_S,"lookAt",tolua_common_Transform_lookAt00);
+   tolua_function(tolua_S,"resetTransform",tolua_common_Transform_resetTransform00);
+  tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"magicalLogLastError",tolua_common_magicalLogLastError00);
   tolua_function(tolua_S,"magicalLog",tolua_common_magicalLog00);
   tolua_function(tolua_S,"magicalDebugLog",tolua_common_magicalDebugLog00);
@@ -14796,6 +17041,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_common_AxisAngle_new03);
    tolua_function(tolua_S,"new_local",tolua_common_AxisAngle_new03_local);
    tolua_function(tolua_S,".call",tolua_common_AxisAngle_new03_local);
+   tolua_function(tolua_S,"delete",tolua_common_AxisAngle_delete00);
    tolua_function(tolua_S,"create",tolua_common_AxisAngle_create00);
    tolua_function(tolua_S,"createIdentity",tolua_common_AxisAngle_createIdentity00);
    tolua_function(tolua_S,"createZero",tolua_common_AxisAngle_createZero00);
@@ -14833,6 +17079,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_common_EulerAngles_new02);
    tolua_function(tolua_S,"new_local",tolua_common_EulerAngles_new02_local);
    tolua_function(tolua_S,".call",tolua_common_EulerAngles_new02_local);
+   tolua_function(tolua_S,"delete",tolua_common_EulerAngles_delete00);
    tolua_function(tolua_S,"createZero",tolua_common_EulerAngles_createZero00);
    tolua_function(tolua_S,"createFromQuaternion",tolua_common_EulerAngles_createFromQuaternion00);
    tolua_function(tolua_S,"add",tolua_common_EulerAngles_add00);
@@ -14889,6 +17136,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_common_Matrix4_new02);
    tolua_function(tolua_S,"new_local",tolua_common_Matrix4_new02_local);
    tolua_function(tolua_S,".call",tolua_common_Matrix4_new02_local);
+   tolua_function(tolua_S,"delete",tolua_common_Matrix4_delete00);
    tolua_function(tolua_S,"createIdentity",tolua_common_Matrix4_createIdentity00);
    tolua_function(tolua_S,"createZero",tolua_common_Matrix4_createZero00);
    tolua_function(tolua_S,"createTRS",tolua_common_Matrix4_createTRS00);
@@ -14973,6 +17221,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_common_Quaternion_new02);
    tolua_function(tolua_S,"new_local",tolua_common_Quaternion_new02_local);
    tolua_function(tolua_S,".call",tolua_common_Quaternion_new02_local);
+   tolua_function(tolua_S,"delete",tolua_common_Quaternion_delete00);
    tolua_function(tolua_S,"createIdentity",tolua_common_Quaternion_createIdentity00);
    tolua_function(tolua_S,"createZero",tolua_common_Quaternion_createZero00);
    tolua_function(tolua_S,"createRotationX",tolua_common_Quaternion_createRotationX00);
@@ -15050,6 +17299,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_common_Vector2_new02);
    tolua_function(tolua_S,"new_local",tolua_common_Vector2_new02_local);
    tolua_function(tolua_S,".call",tolua_common_Vector2_new02_local);
+   tolua_function(tolua_S,"delete",tolua_common_Vector2_delete00);
    tolua_function(tolua_S,"createZero",tolua_common_Vector2_createZero00);
    tolua_function(tolua_S,"createOne",tolua_common_Vector2_createOne00);
    tolua_function(tolua_S,"createFromVector3",tolua_common_Vector2_createFromVector300);
@@ -15137,6 +17387,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_common_Vector3_new02);
    tolua_function(tolua_S,"new_local",tolua_common_Vector3_new02_local);
    tolua_function(tolua_S,".call",tolua_common_Vector3_new02_local);
+   tolua_function(tolua_S,"delete",tolua_common_Vector3_delete00);
    tolua_function(tolua_S,"createZero",tolua_common_Vector3_createZero00);
    tolua_function(tolua_S,"createOne",tolua_common_Vector3_createOne00);
    tolua_function(tolua_S,"createFromVector2",tolua_common_Vector3_createFromVector200);
@@ -15228,6 +17479,7 @@ TOLUA_API int tolua_common_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_common_Vector4_new02);
    tolua_function(tolua_S,"new_local",tolua_common_Vector4_new02_local);
    tolua_function(tolua_S,".call",tolua_common_Vector4_new02_local);
+   tolua_function(tolua_S,"delete",tolua_common_Vector4_delete00);
    tolua_function(tolua_S,"createZero",tolua_common_Vector4_createZero00);
    tolua_function(tolua_S,"createOne",tolua_common_Vector4_createOne00);
    tolua_function(tolua_S,"createFromVector2",tolua_common_Vector4_createFromVector200);

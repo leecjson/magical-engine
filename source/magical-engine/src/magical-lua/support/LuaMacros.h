@@ -38,5 +38,7 @@ SOFTWARE.
 MAGICALAPI_USER void magicalLuaStateDump( lua_State* L );
 #endif
 
+MAGICALAPI void magicalHandleLuaError( lua_State* L );
+
 
 #endif //__LUA_MACROS_H__

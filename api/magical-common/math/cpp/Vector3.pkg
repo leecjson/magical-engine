@@ -18,6 +18,7 @@ public:
 	Vector3( float x, float y, float z );
 	Vector3( const Vector3& v );
 	Vector3( void );
+	~Vector3( void );
 
 public:
 	static inline Vector3 createZero( void );

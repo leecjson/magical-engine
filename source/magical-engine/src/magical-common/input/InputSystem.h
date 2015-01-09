@@ -26,6 +26,15 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "Reference.h"
+#include "Shared.h"
+#include "Behaviour.h"
+
+enum class DelegatePlatform
+{
+	Cpp         = 1,
+	Lua         = 2,
+};
 
 enum class InputDevice
 {
@@ -199,24 +208,30 @@ enum class KeyCode
 	/*
 	Ios系统按键
 	*/
-	Ios_Home       = 49999,      // 主屏 键
-	Ios_VolumeDown = 49995,      // 音量减小 键
-	Ios_VolumeUp   = 49994,      // 音量增大 键
-	Ios_Power      = 59993,      // 电源 键
+	Ios_Home              = 49999,     // 主屏 键
+	Ios_VolumeDown        = 49995,     // 音量减小 键
+	Ios_VolumeUp          = 49994,     // 音量增大 键
+	Ios_Power             = 59993,     // 电源 键
 
 	/*
 	Android系统按键
 	*/
-	Android_Home       = 59999,  // 主屏 键
-	Android_Back       = 59998,  // 返回 键
-	Android_Menu       = 59997,  // 菜单 键
-	Android_Search     = 59996,  // 搜索 键
-	Android_VolumeDown = 59995,  // 音量减小 键
-	Android_VolumeUp   = 59994,  // 音量增大 键
-	Android_Power      = 59993,  // 电源 键
+	Android_Home          = 59999,     // 主屏 键
+	Android_Back          = 59998,     // 返回 键
+	Android_Menu          = 59997,     // 菜单 键
+	Android_Search        = 59996,     // 搜索 键
+	Android_VolumeDown    = 59995,     // 音量减小 键
+	Android_VolumeUp      = 59994,     // 音量增大 键
+	Android_Power         = 59993,     // 电源 键
 };
 
-typedef std::function<void( KeyCode, KeyAction )> KeyEventDelegate;
+struct KeyEvent
+{
+	KeyCode key;
+	KeyAction action;
+};
+
+typedef std::function<void( KeyEvent* )> KeyEventDelegate;
 
 class Input
 {
@@ -226,10 +241,9 @@ public:
 
 public:
 	static void keyEvent( KeyCode key, KeyAction action );
-	static void addKeyEventDelegate( const KeyEventDelegate& d );
-	static void removeKeyEventDelegate( const KeyEventDelegate& d );
+	static void addKeyEventDelegate( Reference* reference, const KeyEventDelegate& eventdel );
+	static void removeKeyEventDelegate( Reference* reference );
 	static void removeAllKeyEventDelegates( void );
-
 };
 
-#endif  //__INPUT_SYSTEM_H__
+#endif //__INPUT_SYSTEM_H__

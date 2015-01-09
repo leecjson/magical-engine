@@ -7,9 +7,10 @@ public:
 	static Data* create( void );
 
 public:
-	void assign( char* data, const size_t size );
-	void malloc( const size_t size );
-	void realloc( const size_t size );
+	void assign( char* data, uint32_t size );
+	void malloc( uint32_t size );
+	void realloc( uint32_t size );
 	bool empty( void ) const;
-	size_t size( void ) const;
+	uint32_t size( void ) const;
+	char* ptr( void );
 };

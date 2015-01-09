@@ -24,28 +24,38 @@ SOFTWARE.
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+#include "PlatformMacros.h"
+
+///*
+//platform include
+//*/
+//#ifdef MAGICAL_WIN32
+//#include <Windows.h>
+//#endif
+
 /*
 c include
 */
-#include <cassert>
-#include <cstdlib>
-#include <cstdio>
-#include <ctime>
-#include <cmath>
-#include <cstdint>
-#include <cfloat>
-#include <cstdarg>
+#include <assert.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include <math.h>
+#include <stdint.h>
+#include <float.h>
+#include <stdarg.h>
 
 /*
 c++ include
 */
 #include <string>
+#include <iostream>
 #include <algorithm>
 #include <functional>
 #include <exception>
 
-#include "PlatformMacros.h"
 #include "LogSystem.h"
+
 
 #define kBufferLen 1024 * 100
 
@@ -55,13 +65,13 @@ buffer macros
 extern char g_buffer[];
 
 #define magicalBuffer g_buffer
-#define magicalFormat( __format, ... ) std::sprintf( magicalBuffer, __format, ##__VA_ARGS__ )
+#define magicalFormat( __format, ... ) sprintf( magicalBuffer, __format, ##__VA_ARGS__ )
 
 /*
 func macros
 */
-#define magicalSafeFree( __var ) do{ if( __var ) std::free( __var ); } while(0)
-#define magicalSafeFreeNull( __var ) do{ if( __var ) std::free( __var ); __var == nullptr; } while(0)
+#define magicalSafeFree( __var ) do{ if( __var ) free( __var ); } while(0)
+#define magicalSafeFreeNull( __var ) do{ if( __var ) free( __var ); __var == nullptr; } while(0)
 #define magicalSafeDelete( __var ) do{ if( __var ) delete __var; } while(0)
 #define magicalSafeDeleteNull( __var ) do{ if( __var ) delete __var; __var == nullptr; } while(0)
 #define magicalSafeDeleteArray( __var ) do{ if( __var ) delete[] __var; } while(0)
@@ -95,6 +105,8 @@ MAGICALAPI void magicalMessageBox( const char* msg, const char* title );
 /*
 asserts macros
 */
+MAGICALAPI void magicalLocalAssert( const char* exp, const char* msg, const char* file, int line );
+#define magicalLocalAssertB( __exp, __msg ) magicalLocalAssert( __exp, __msg, __FILE__, __LINE__ )
 #ifndef MAGICAL_DEBUG
 #define magicalAssert( __con, __msg )
 #else
@@ -102,7 +114,7 @@ asserts macros
 	if( !( __con ) ) {                                        \
 		magicalSetLastErrorInfoB( __msg );                    \
 		magicalLogLastError();                                \
-		assert( ( __con ) && __msg );                         \
+		magicalLocalAssertB( #__con, __msg );                 \
 	}                                                         \
 	} while(0)
 #endif

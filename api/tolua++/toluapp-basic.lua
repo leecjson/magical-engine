@@ -10,8 +10,15 @@
 local magical_reg_objs = {
 	"Reference",
 	"Data",
+	"Transform",
 	"Node",
-};
+}
+
+local magical_enum_class = {
+	{ "Space", "Self" },
+	{ "Space", "Parent" },
+	{ "Space", "World" },
+}
 
 ------------------------------------------------------------------
 ------------------------------------------------------------------
@@ -105,6 +112,13 @@ function post_output_hook(package)
 		magical_reg_objs[i] .. [[* self = (]] .. magical_reg_objs[i] .. [[*) tolua_tousertype(tolua_S,1,0);
 	self->release();]]
 		);
+	end
+
+	size = table.getn(magical_enum_class);
+	for i=1,size do
+		replace( 
+			[[tolua_constant(tolua_S,"]] .. magical_enum_class[i][2] .. [[",]] .. magical_enum_class[i][2] .. [[);]],
+		 	[[tolua_constant(tolua_S,"]] .. magical_enum_class[i][2] .. [[", (int)]] .. magical_enum_class[i][1] .. [[::]] .. magical_enum_class[i][2] .. [[);]] );
 	end
 	
     WRITE(result)

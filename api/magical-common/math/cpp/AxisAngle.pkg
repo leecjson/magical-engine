@@ -13,6 +13,7 @@ public:
 	AxisAngle( const Vector3& axis, float angle );
 	AxisAngle( const AxisAngle& aa );
 	AxisAngle( void );
+	~AxisAngle( void );
 
 public:
 	static inline AxisAngle create( const Vector3& axis, float angle );

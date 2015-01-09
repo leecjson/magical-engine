@@ -16,6 +16,7 @@ public:
 	Vector2( float x, float y );
 	Vector2( const Vector2& v );
 	Vector2( void );
+	~Vector2( void );
 	
 public:
 	static inline Vector2 createZero( void );

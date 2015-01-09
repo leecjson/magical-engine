@@ -26,10 +26,19 @@ SOFTWARE.
 
 void mainDelegate( void )
 {
-	Input::addKeyEventDelegate(  )
+	LuaState& L = Lua::shared();
 
-	if( Lua::state()->executeScriptFile( "main.lua" ) == 0 )
-		Lua::state()->executeGlobalFunction( kLuaOnCreate );
+	if( L.runScriptFile( "main.lua" ) == LuaCode::OK )
+	{
+		magicalLuaStateDump( L.cPointer() );
 
-	Lua::state()->clean();
+		std::string str = L["onCreate"][3]( "haha", 333 ).returnString();
+		int abc = L.returnInt();
+		double bbb = L.returnDouble();
+		magicalDebugLog( str.c_str() );
+
+		magicalLuaStateDump( L.cPointer() );
+	}
+
+	L.clean();
 }

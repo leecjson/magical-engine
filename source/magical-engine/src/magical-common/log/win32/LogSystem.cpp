@@ -74,7 +74,7 @@ void Log::write( const char* txt )
 	if( !txt ) return;
 #endif
 
-#if MAGICAL_DEBUG
+#ifdef MAGICAL_DEBUG
 	std::sprintf( s_buffer, "%s", txt );
 
 	OutputDebugStringA( s_buffer );

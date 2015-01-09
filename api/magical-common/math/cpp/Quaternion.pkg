@@ -12,6 +12,7 @@ public:
 	Quaternion( float x, float y, float z, float w );
 	Quaternion( const Quaternion& q );
 	Quaternion( void );
+	~Quaternion( void );
 
 public:
 	static inline Quaternion createIdentity( void );

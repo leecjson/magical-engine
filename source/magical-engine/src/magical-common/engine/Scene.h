@@ -29,17 +29,17 @@ SOFTWARE.
 #include "Reference.h"
 #include "Node.h"
 
-class Scene : public Node
-{
-public:
-	Scene( void );
-	virtual ~Scene( void );
-	
-public:
-	static Shared<Scene> create( void );
-
-
-}; 
+//class Scene : public Node
+//{
+//public:
+//	Scene( void );
+//	virtual ~Scene( void );
+//	
+//public:
+//	static Shared<Scene> create( void );
+//
+//
+//}; 
 
 
 

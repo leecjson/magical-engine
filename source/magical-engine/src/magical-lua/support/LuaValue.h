@@ -21,71 +21,62 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Data.h"
+#ifndef __LUA_VALUE_H__
+#define __LUA_VALUE_H__
 
-Data::Data( void )
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "LuaMacros.h"
+#include "LuaState.h"
+#include "Array.h"
+
+class LuaState;
+
+class LuaValue
 {
+public:
+	friend class LuaState;
 
-}
+public:
+	LuaValue( void );
+	~LuaValue( void );
 
-Data::~Data( void )
-{
-	magicalSafeFree( _data );
-}
+//public:
+//	void push( void );
+//	void pop( void );
+//
+//public:
+//	bool isNumber( void ) const;
+//	bool isString( void ) const;
+//	bool isUserData( void ) const;
+//	bool isTable( void ) const;
+//	bool isFunction( void ) const;
+//
+//public:
+//	void operator=( int n );
+//	void operator=( float n );
+//	void operator=( double n );
+//	void operator=( bool b );
+//	void operator=( const char* str );
+//	void operator=( const std::string& str );
+//
+//	int toInt( void );
+//	float toFloat( void );
+//	double toDouble( void );
+//	const char* toString( void );
+//	void* toUserData( void );
+//
+//	void operator()( ... );
 
-Shared<Data> Data::create( void )
-{
-	Data* ret = new Data();
-	magicalAssert( ret, "new Data() failed" );
-	return Shared<Data>( Initializer<Data>( ret ) );
-}
+private:
+	/*int _scope;
+	std::vector<std::string> _names;
+	bool _in_stack = false;
+	int _in_stack_num = 0;
+	LuaState* _cpp_L = nullptr;
+	lua_State* _L = nullptr;*/
 
-void Data::assign( char* data, uint32_t size )
-{
-	magicalAssert( data && size > 0, "data should not be nullptr and size should > 0" );
+	lua_State* _L = nullptr;
+};
 
-	magicalSafeFree( _data );
-	_data = data;
-	_size = size;
-}
-
-void Data::malloc( uint32_t size )
-{
-	magicalAssert( size > 0, "size should > 0" );
-
-	magicalSafeFree( _data );
-	_data = (char*) std::malloc( size );
-	magicalAssert( _data, "(char*) std::malloc( size );" );
-	_size = size;
-}
-
-void Data::realloc( uint32_t size )
-{
-	magicalAssert( size > 0, "size should > 0" );
-	magicalAssert( _data, "_data should not be nullptr." );
-
-	if( size > _size )
-	{
-		_data = (char*) std::realloc( _data, size );
-		magicalAssert( _data, "(char*) std::realloc( _data, size );" );
-	}
-	else
-	{
-		_size = size;
-	}
-}
-
-bool Data::empty( void ) const
-{
-	return _data == nullptr;
-}
-
-uint32_t Data::size( void ) const
-{
-	return _size;
-}
-
-char* Data::ptr( void )
-{
-	return _data;
-}
+#endif //__LUA_VALUE_H__

@@ -38,16 +38,16 @@ public:
 	static Shared<Data> create( void );
 
 public:
-	void assign( char* data, size_t size );
-	void malloc( size_t size );
-	void realloc( size_t size );
+	void assign( char* data, uint32_t size );
+	void malloc( uint32_t size );
+	void realloc( uint32_t size );
 	bool empty( void ) const;
-	size_t size( void ) const;
-	char* ptr( void ) const;
+	uint32_t size( void ) const;
+	char* ptr( void );
 
 private:
 	char* _data = nullptr;
-	size_t _size = 0;
+	uint32_t _size = 0;
 };
 
 #endif //__DATA_H__

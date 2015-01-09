@@ -27,6 +27,7 @@ SOFTWARE.
 #ifdef MAGICAL_DEBUG
 #include <mutex>
 #endif
+#include <sstream>
 
 /*
 platform include
@@ -95,18 +96,29 @@ const char* magicalGetLastErrorInfo( void )
 	}
 }
 
-#ifdef MAGICAL_WIN32
 void magicalMessageBox( const char* msg, const char* title )
 {
+#ifdef MAGICAL_WIN32
 	MessageBoxA( nullptr, msg, title, MB_OK );
-}
-#elif MAGICAL_MAC
-
-#elif MAGICAL_ANDROID
-
-#elif MAGICAL_IOS
-
 #endif
+}
+
+void magicalLocalAssert( const char* exp, const char* msg, const char* file, int line )
+{
+#ifdef MAGICAL_WIN32
+	std::stringstream stext;
+	stext << file << "\n\n" << "Line: " << line << "\n\n";
+	stext << "条件表达式：" << exp << " " << msg << "\n\n" << "是否跟进断点，查看运行时堆栈？";
+	if( MessageBoxA( nullptr, stext.str().c_str(), "Assertion failed! 魔幻引擎运行时库 \t", MB_ICONERROR | MB_YESNO ) == IDYES )
+	{
+		_CrtDbgBreak();
+	}
+	else
+	{
+		exit( -1 );
+	}
+#endif
+}
 
 bool magicalIsTimerStarted( void )
 {

@@ -28,6 +28,9 @@ SOFTWARE.
 #include "Common.h"
 #include "Transform.h"
 
+namespace magicalengine
+{
+
 class Node : public Transform
 {
 public:
@@ -38,5 +41,7 @@ public:
 	static Shared<Node> create( void );
 
 };
+
+}
 
 #endif //__NODE_H__

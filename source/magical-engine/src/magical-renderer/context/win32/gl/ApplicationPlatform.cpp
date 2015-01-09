@@ -44,9 +44,9 @@ static double s_interval;
 static bool s_window_resizable = true;
 static std::string s_window_title = "magical-engine";
 
-void Application::run( MainDelegate mainDelegate )
+void Application::run( MainDelegate maindel )
 {
-	mainDelegate();
+	maindel();
 	magicalShowLastError();
 	magicalReturnIfError();
 

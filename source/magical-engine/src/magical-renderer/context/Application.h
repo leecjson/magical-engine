@@ -34,7 +34,7 @@ class Application
 public:
 	static void init( void );
 	static void delc( void );
-	static void run( MainDelegate mainDelegate );
+	static void run( MainDelegate maindel );
 
 public:	
 	static void setInterval( double interval );

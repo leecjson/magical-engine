@@ -23,6 +23,9 @@ SOFTWARE.
 *******************************************************************************/
 #include "Node.h"
 
+namespace magicalengine
+{
+
 Node::Node( void )
 {
 
@@ -38,4 +41,6 @@ Shared<Node> Node::create( void )
 	Node* ret = new Node();
 	magicalAssert( ret, "new Node() failed" );
 	return Shared<Node>( Initializer<Node>( ret ) );
+}
+
 }

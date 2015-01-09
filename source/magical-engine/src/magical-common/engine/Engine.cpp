@@ -30,12 +30,12 @@ SOFTWARE.
 #include "Application.h"
 #include "Node.h"
 
-int64_t Engine::s_last_update_time = 0;
-double Engine::s_delta_time = 0.0;
+static int64_t _s_last_update_time = 0;
+static double _s_delta_time = 0.0;
 
 void Engine::init( void )
 {
-	s_last_update_time = TimeUtils::currentMicrosecondsTime();
+	_s_last_update_time = TimeUtils::currentMicrosecondsTime();
 }
 
 void Engine::delc( void )
@@ -43,17 +43,11 @@ void Engine::delc( void )
 	
 }
 
-
 void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
 	Renderer::render();
-
-
-	Shared<Node> node = Node::create();
-	node.reset();
-
 }
 
 void Engine::resize( int w, int h )
@@ -63,12 +57,12 @@ void Engine::resize( int w, int h )
 
 float Engine::getDeltaTime( void )
 {
-	return s_delta_time;
+	return _s_delta_time;
 }
 
 void Engine::calcDeltaTime( void )
 {
 	int64_t now = TimeUtils::currentMicrosecondsTime();
-	s_delta_time = std::max<double>( 0, ( now - s_last_update_time ) / 1000000.0 );
-	s_last_update_time = now;
+	_s_delta_time = std::max<double>( 0, ( now - _s_last_update_time ) / 1000000.0 );
+	_s_last_update_time = now;
 }

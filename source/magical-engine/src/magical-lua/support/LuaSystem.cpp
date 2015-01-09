@@ -22,20 +22,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "LuaSystem.h"
+#include "AssetsSystem.h"
 
-static Shared<LuaState> s_lua_state = nullptr;
+#include "lua.hpp"
+#include "tolua++.h"
+#include "tolua_ext.h"
+#include "LuaExtensions.h"
+
+#include "BindCommon.h"
+
+static LuaState* _s_lua_state = nullptr;
 
 void Lua::init( void )
 {
-	s_lua_state = LuaState::create();
+	_s_lua_state = new LuaState();
+	_s_lua_state->openLibs();
+
+	luaopen_tolua_ext( _s_lua_state->cPointer() );
+	luaopen_extensions( _s_lua_state->cPointer() );
+	luaopen_common( _s_lua_state->cPointer() );
+
+#ifdef MAGICAL_WIN32
+	std::string standard_path = Assets::getAssetsPath() + "standard/scripts";
+	_s_lua_state->attachPath( standard_path.c_str() );
+#endif
 }
 
 void Lua::delc( void )
 {
-	s_lua_state.reset();
+	delete _s_lua_state;
 }
 
-Shared<LuaState>& Lua::state( void )
+LuaState& Lua::shared( void )
 {
-	return s_lua_state;
+	return *_s_lua_state;
 }

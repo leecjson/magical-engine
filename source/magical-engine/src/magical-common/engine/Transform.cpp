@@ -141,8 +141,8 @@ Transform* Transform::getParent( void ) const
 
 bool Transform::isChildOf( const Shared<Transform>& parent ) const
 {
-	Transform* ts = parent.get();
-	return _parent == ts;
+	magicalAssert( parent != nullptr, "Transform::isChildOf" );
+	return _parent == parent.get();
 }
 
 void Transform::setPosition( const Vector2& t )
@@ -355,12 +355,13 @@ void Transform::setParent( Transform* parent )
 	_parent = parent;
 }
 
-void Transform::updateTransformTree( Transform* node )
+void Transform::updateTransformTree( Transform* ts )
 {
-	if( _children.empty() )
+	if( ts->_children.empty() )
 		return;
 
-	for( auto& child : _children )
+	auto& chilren = ts->_children;
+	for( auto& child : chilren )
 	{
 		child->needToUpdate( _ts_need_update );
 		updateTransformTree( child );

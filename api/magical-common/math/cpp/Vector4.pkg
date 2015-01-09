@@ -21,6 +21,7 @@ public:
 	Vector4( float x, float y, float z, float w );
 	Vector4( const Vector4& v );
 	Vector4( void );
+	~Vector4( void );
 
 public:
 	static inline Vector4 createZero( void );

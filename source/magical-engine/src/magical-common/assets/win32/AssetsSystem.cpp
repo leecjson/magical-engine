@@ -28,7 +28,7 @@ SOFTWARE.
 
 #include <windows.h>
 
-std::string Assets::s_assets_path;
+static std::string _s_assets_path;
 
 void Assets::init( void )
 {
@@ -52,8 +52,8 @@ void Assets::resetAssetsPath( void )
 		return;
 	}
 
-	s_assets_path = FileUtils::toUnixStylePath( magicalBuffer );
-	s_assets_path.append( "/" );
+	_s_assets_path = FileUtils::toUnixStylePath( magicalBuffer );
+	_s_assets_path.append( "/" );
 }
 
 void Assets::setAssetsPath( const char* path )
@@ -68,12 +68,12 @@ void Assets::setAssetsPath( const char* path )
 		unix_path += "/";
 	}
 
-	s_assets_path = unix_path;
+	_s_assets_path = unix_path;
 }
 
 std::string Assets::getAssetsPath( void )
 {
-	return s_assets_path;
+	return _s_assets_path;
 }
 
 std::string Assets::getAssetsAbsoluteFilename( const char* file_name )
@@ -86,7 +86,7 @@ std::string Assets::getAssetsAbsoluteFilename( const char* file_name )
 	}
 
 	std::string unix_path = FileUtils::toUnixStylePath( file_name );
-	std::string abs_path = s_assets_path + unix_path;
+	std::string abs_path = _s_assets_path + unix_path;
 
 	return abs_path;
 }
@@ -98,7 +98,7 @@ bool Assets::isAssetsFileExist( const char* file_name )
 	std::string file_path = FileUtils::toUnixStylePath( file_name );
 	if( FileUtils::isAbsolutePath( file_path.c_str() ) == false )
 	{
-		std::string abs_path = s_assets_path + file_path;
+		std::string abs_path = _s_assets_path + file_path;
 		int ret = GetFileAttributesA( abs_path.c_str() );
 		if( ret != -1 )
 		{

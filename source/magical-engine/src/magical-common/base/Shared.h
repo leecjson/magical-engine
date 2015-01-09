@@ -140,7 +140,7 @@ public:
 		if( ref )
 		{
 			_reference = ref;
-			_reference->retain()
+			_reference->retain();
 		}
 	}
 
@@ -155,7 +155,7 @@ public:
 		if( ref )
 		{
 			_reference = (T*)ref;
-			_reference->retain()
+			_reference->retain();
 		}
 	}
 
@@ -220,7 +220,7 @@ public:
 		return Shared<T2>( (T2*) _reference );
 	}
 
-	T* take( void ) const
+	T* take( void )
 	{
 		T* ret = _reference;
 		_reference = nullptr;
@@ -228,7 +228,7 @@ public:
 	}
 
 	template< class T2 >
-	T2* take( void ) const
+	T2* take( void )
 	{
 		T2* ret = (T2*) _reference;
 		_reference = nullptr;

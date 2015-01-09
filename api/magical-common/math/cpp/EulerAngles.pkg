@@ -11,6 +11,7 @@ public:
 	EulerAngles( float yaw, float pitch, float roll );
 	EulerAngles( const EulerAngles& ea );
 	EulerAngles( void );
+	~EulerAngles( void );
 
 public:
 	static inline EulerAngles createZero( void );

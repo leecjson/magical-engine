@@ -40,10 +40,6 @@ public:
 
 private:
 	static void calcDeltaTime( void );
-
-private:
-	static int64_t s_last_update_time;
-	static double s_delta_time;
 };
 
 

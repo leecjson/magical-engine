@@ -69,6 +69,7 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\src\magical-common\base\Common.cpp" />
     <ClCompile Include="..\src\magical-common\base\Data.cpp" />
     <ClCompile Include="..\src\magical-common\base\Reference.cpp" />
+    <ClCompile Include="..\src\magical-common\engine\Behaviour.cpp" />
     <ClCompile Include="..\src\magical-common\engine\Camera.cpp" />
     <ClCompile Include="..\src\magical-common\engine\Engine.cpp" />
     <ClCompile Include="..\src\magical-common\engine\Node.cpp" />
@@ -146,9 +147,12 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\src\magical-lua\lua\lvm.c" />
     <ClCompile Include="..\src\magical-lua\lua\lzio.c" />
     <ClCompile Include="..\src\magical-lua\lua\print.c" />
+    <ClCompile Include="..\src\magical-lua\support\LuaFunction.cpp" />
     <ClCompile Include="..\src\magical-lua\support\LuaMacros.cpp" />
     <ClCompile Include="..\src\magical-lua\support\LuaState.cpp" />
     <ClCompile Include="..\src\magical-lua\support\LuaSystem.cpp" />
+    <ClCompile Include="..\src\magical-lua\support\LuaTable.cpp" />
+    <ClCompile Include="..\src\magical-lua\support\LuaValue.cpp" />
     <ClCompile Include="..\src\magical-lua\tolua\tolua_event.c" />
     <ClCompile Include="..\src\magical-lua\tolua\tolua_ext.c" />
     <ClCompile Include="..\src\magical-lua\tolua\tolua_is.c" />
@@ -169,6 +173,7 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\src\magical-common\base\Data.h" />
     <ClInclude Include="..\src\magical-common\base\Reference.h" />
     <ClInclude Include="..\src\magical-common\base\Shared.h" />
+    <ClInclude Include="..\src\magical-common\engine\Behaviour.h" />
     <ClInclude Include="..\src\magical-common\engine\Camera.h" />
     <ClInclude Include="..\src\magical-common\engine\Engine.h" />
     <ClInclude Include="..\src\magical-common\engine\Node.h" />
@@ -245,9 +250,12 @@ xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\src\magical-lua\lua\lundump.h" />
     <ClInclude Include="..\src\magical-lua\lua\lvm.h" />
     <ClInclude Include="..\src\magical-lua\lua\lzio.h" />
+    <ClInclude Include="..\src\magical-lua\support\LuaFunction.h" />
     <ClInclude Include="..\src\magical-lua\support\LuaMacros.h" />
     <ClInclude Include="..\src\magical-lua\support\LuaState.h" />
     <ClInclude Include="..\src\magical-lua\support\LuaSystem.h" />
+    <ClInclude Include="..\src\magical-lua\support\LuaTable.h" />
+    <ClInclude Include="..\src\magical-lua\support\LuaValue.h" />
     <ClInclude Include="..\src\magical-lua\tolua\tolua++.h" />
     <ClInclude Include="..\src\magical-lua\tolua\tolua_event.h" />
     <ClInclude Include="..\src\magical-lua\tolua\tolua_ext.h" />

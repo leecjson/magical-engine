@@ -46,4 +46,4 @@ public:
 	static void write( const char* txt );
 };
 
-#endif  //__LOG_SYSTEM_H__
+#endif //__LOG_SYSTEM_H__

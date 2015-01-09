@@ -29,7 +29,7 @@ SOFTWARE.
 
 #ifdef MAGICAL_DEBUG
 
-MAGICALAPI_USER void magicalLuaStateDump( lua_State* L )
+void magicalLuaStateDump( lua_State* L )
 {
 	int i = 0;
 	int top = lua_gettop( L );
@@ -37,25 +37,38 @@ MAGICALAPI_USER void magicalLuaStateDump( lua_State* L )
 	magicalFormat( "Total [%d] in lua stack: ", top );
 	magicalLog( magicalBuffer );
 
-	for( i = -1; i >= -top; i -- )
+	for( i = -1; i >= -top; i-- )
 	{
 		int t = lua_type( L, i );
 		switch( t )
 		{
 		case LUA_TSTRING:
-			magicalFormat( "[%02d] string %s\n", i, lua_tostring( L, i ) );
+			magicalFormat( "[%02d] string %s", i, lua_tostring( L, i ) );
 			break;
 		case LUA_TBOOLEAN:
-			magicalFormat( "[%02d] boolean %s\n", i, lua_toboolean( L, i ) ? "true" : "false" );
+			magicalFormat( "[%02d] boolean %s", i, lua_toboolean( L, i ) ? "true" : "false" );
 			break;
 		case LUA_TNUMBER:
-			magicalFormat( "[%02d] number %g\n", i, lua_tonumber( L, i ) );
+			magicalFormat( "[%02d] number %g", i, lua_tonumber( L, i ) );
 			break;
 		default:
-			magicalFormat( "[%02d] %s\n", i, lua_typename( L, t ) );
+			magicalFormat( "[%02d] %s", i, lua_typename( L, t ) );
 		}
 		magicalLog( magicalBuffer );
 	}
+
+	magicalLog( "-----------------------" );
 }
 
 #endif
+
+void magicalHandleLuaError( lua_State* L )
+{
+	if( lua_type( L, -1 ) == LUA_TSTRING )
+	{
+		const char* info = lua_tostring( L, -1 );
+		magicalSetLastErrorInfo( info );
+		magicalLogLastError();
+		lua_pop( L, -1 );
+	}
+}

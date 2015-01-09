@@ -103,7 +103,7 @@ public:
 
 private:
 	void setParent( Transform* parent );
-	void updateTransformTree( Transform* node );
+	void updateTransformTree( Transform* ts );
 	void updateTransform( void );
 	void needToUpdate( int flag );
 	const Vector3& getDerivedPosition( void ) const;

@@ -384,6 +384,18 @@
     <ClCompile Include="..\src\magical-common\input\InputSystem.cpp">
       <Filter>src\magical-common\input</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\magical-common\engine\Behaviour.cpp">
+      <Filter>src\magical-common\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-lua\support\LuaFunction.cpp">
+      <Filter>src\magical-lua\support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-lua\support\LuaTable.cpp">
+      <Filter>src\magical-lua\support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-lua\support\LuaValue.cpp">
+      <Filter>src\magical-lua\support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\magical-common\assets\AssetsSystem.h">
@@ -679,6 +691,18 @@
     </ClInclude>
     <ClInclude Include="..\src\magical-common\input\InputSystem.h">
       <Filter>src\magical-common\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-common\engine\Behaviour.h">
+      <Filter>src\magical-common\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-lua\support\LuaFunction.h">
+      <Filter>src\magical-lua\support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-lua\support\LuaTable.h">
+      <Filter>src\magical-lua\support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-lua\support\LuaValue.h">
+      <Filter>src\magical-lua\support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
