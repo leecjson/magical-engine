@@ -31,29 +31,30 @@ SOFTWARE.
 
 #include "BindCommon.h"
 
-static LuaState* _s_lua_state = nullptr;
+static LuaState* _s_L = nullptr;
 
 void Lua::init( void )
 {
-	_s_lua_state = new LuaState();
-	_s_lua_state->openLibs();
+	_s_L = new LuaState();
+	_s_L->openLibs();
 
-	luaopen_tolua_ext( _s_lua_state->cPointer() );
-	luaopen_extensions( _s_lua_state->cPointer() );
-	luaopen_common( _s_lua_state->cPointer() );
+	luaopen_tolua_ext( _s_L->cPointer() );
+	luaopen_extensions( _s_L->cPointer() );
+	luaopen_common( _s_L->cPointer() );
 
 #ifdef MAGICAL_WIN32
 	std::string standard_path = Assets::getAssetsPath() + "standard/scripts";
-	_s_lua_state->attachPath( standard_path.c_str() );
+	_s_L->attachPath( standard_path.c_str() );
 #endif
 }
 
 void Lua::delc( void )
 {
-	delete _s_lua_state;
+	_s_L->release();
+	//_s_lua_state->release();
 }
 
-LuaState& Lua::shared( void )
+LuaState& Lua::sharedLuaState( void )
 {
-	return *_s_lua_state;
+	return *_s_L;
 }

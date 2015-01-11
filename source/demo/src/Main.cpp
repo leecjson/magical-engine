@@ -26,19 +26,32 @@ SOFTWARE.
 
 void mainDelegate( void )
 {
-	LuaState& L = Lua::shared();
+	LuaState& L = Lua::sharedLuaState();
+
+	//L["_G"] = 5;
 
 	if( L.runScriptFile( "main.lua" ) == LuaCode::OK )
 	{
 		magicalLuaStateDump( L.cPointer() );
 
-		std::string str = L["onCreate"][3]( "haha", 333 ).returnString();
-		int abc = L.returnInt();
-		double bbb = L.returnDouble();
-		magicalDebugLog( str.c_str() );
+		lua_getglobal( L.cPointer(), "onCreate" );
+		lua_pcall( L.cPointer(), 0, 0, 0 );
+
+		/*L["onCreate"]();*/
+
+		/*LuaFunction onCreate = L( "onCreate" );
+		onCreate( x, y, z );*/
+
+		//L >> "A";
+		//L["go"]();
+
+		//std::string str = L["onCreate"][3]( "haha", 333 ).returnString();
+		//int abc = L.returnInt();
+		//double bbb = L.returnDouble();
+		//magicalDebugLog( str.c_str() );
 
 		magicalLuaStateDump( L.cPointer() );
 	}
 
-	L.clean();
+	//L.clean();
 }

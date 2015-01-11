@@ -24,29 +24,29 @@ SOFTWARE.
 #ifndef __TOLUA_EXT_H__
 #define __TOLUA_EXT_H__
 
+#include "tolua++.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "tolua++.h"
-
-typedef int LuaFunctionRef;
-
-#ifndef TOLUA_REFID_FUNCTION_MAPPING
-#define TOLUA_REFID_FUNCTION_MAPPING "__trfm__"
-#endif
+#define TOLUA_MAPPING_TABLE_KEY "MAPPINGTABLE"
+#define TOLUA_MAPPING_FUNCTION_KEY "MAPPINGFUNCTION"
 
 TOLUA_API void luaopen_tolua_ext( lua_State* L );
 
+TOLUA_API int tolua_ext_istable( lua_State* L, int lo, const char* type, int def, tolua_Error* err );
+TOLUA_API int tolua_ext_totable( lua_State* L, int lo, int def );
 TOLUA_API int tolua_ext_isfunction( lua_State* L, int lo, const char* type, int def, tolua_Error* err );
 TOLUA_API int tolua_ext_tofunction( lua_State* L, int lo, int def );
 
-TOLUA_API void tolua_ext_get_function_by_refid( lua_State* L, int refid );
-TOLUA_API void tolua_ext_remove_function_by_refid( lua_State* L, int refid );
+TOLUA_API void tolua_ext_get_table_by_id( lua_State* L, int refid );
+TOLUA_API void tolua_ext_remove_table_by_id( lua_State* L, int refid );
+TOLUA_API void tolua_ext_get_function_by_id( lua_State* L, int refid );
+TOLUA_API void tolua_ext_remove_function_by_id( lua_State* L, int refid );
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif //__TOLUA_EXT_H__

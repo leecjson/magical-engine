@@ -26,11 +26,23 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "LuaMacros.h"
+#include "LuaState.h"
 
 class LuaTable
 {
-public:
-	LuaTable( void );
+//public:
+//	LuaTable( void );
+//	LuaTable( const LuaState* L, int id );
+//	LuaTable( const LuaTable& lt ) = delete;
+//	LuaTable( LuaTable&& lt );
+//	void operator=( const LuaTable& lt ) = delete;
+//	void operator=( LuaTable&& lt );
+//	~LuaTable( void );
+//
+//private:
+//	LuaState* _L = nullptr;
+//	int _id = 0;
 };
 
 #endif //__LUA_TABLE_H__

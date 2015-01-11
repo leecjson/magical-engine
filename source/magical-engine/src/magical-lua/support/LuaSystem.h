@@ -35,8 +35,7 @@ public:
 	static void delc( void );
 
 public:
-	static LuaState& shared( void );
+	static LuaState& sharedLuaState( void );
 };
-
 
 #endif //__LUA_SYSTEM_H__

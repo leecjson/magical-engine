@@ -4,30 +4,18 @@ A = {
 	a = "a field";
 }
 
-function A:go()
-	print( self.a );
-end
+B = { 
+	b = 5;
+	aref = nil;
+}
 
-GA = nil;
+function onCreate() --> void
 
+	B.aref = A.a
+	B.aref = "haha";
 
-function onCreate( a, b ) --> void
+	magicalLog( "onCreate" .. B.aref .. A.a );
 
-	magicalLog( "onCreate" .. a .. b );
-	local q = Quaternion:createIdentity();
-
-	local data = Data:create();
-
-	A:go();
-
-	--magicalLog( "GA: " .. GA );
-	--magicalLog( string.format("%d", g_A) );
-
-	--collectgarbage();
-
-
-	return "return value", 333, 77.777;
-    
 end
 
 

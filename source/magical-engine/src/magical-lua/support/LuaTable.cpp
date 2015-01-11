@@ -22,3 +22,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "LuaTable.h"
+
+//LuaTable::LuaTable( void )
+//{
+//
+//}
+//
+//LuaTable::LuaTable( const LuaState* L, int id )
+//{
+//	
+//}
+//
+//LuaTable::LuaTable( LuaTable&& lt )
+//{
+//
+//}
+//
+//void LuaTable::operator=( LuaTable&& lt )
+//{
+//
+//}
+//
+//LuaTable::~LuaTable( void )
+//{
+//	
+//}

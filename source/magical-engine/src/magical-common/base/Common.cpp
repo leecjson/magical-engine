@@ -108,7 +108,8 @@ void magicalLocalAssert( const char* exp, const char* msg, const char* file, int
 #ifdef MAGICAL_WIN32
 	std::stringstream stext;
 	stext << file << "\n\n" << "Line: " << line << "\n\n";
-	stext << "条件表达式：" << exp << " " << msg << "\n\n" << "是否跟进断点，查看运行时堆栈？";
+	stext << "条件表达式：" << exp << " " << msg << "\n\n";
+	stext << "是否跟进断点，查看运行时堆栈？";
 	if( MessageBoxA( nullptr, stext.str().c_str(), "Assertion failed! 魔幻引擎运行时库 \t", MB_ICONERROR | MB_YESNO ) == IDYES )
 	{
 		_CrtDbgBreak();
