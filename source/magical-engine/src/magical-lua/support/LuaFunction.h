@@ -27,11 +27,64 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
+#include "LuaMacros.h"
+//#include "LuaObject.h"
+
+class LuaState;
+class LuaObject;
+
 class LuaFunction
 {
 public:
 	LuaFunction( void );
+	LuaFunction( std::nullptr_t nt );
+	LuaFunction( LuaFunction&& lf );
+	LuaFunction( const LuaFunction& lf );
 	~LuaFunction( void );
+
+public:
+	LuaFunction& operator=( LuaFunction&& lf );
+	LuaFunction& operator=( const LuaFunction& lf );
+	LuaFunction& operator=( std::nullptr_t nt );
+	bool operator==( std::nullptr_t nt ) const;
+	bool operator!=( std::nullptr_t nt ) const;
+	void bind( LuaState* L, LuaFunctionHandler handler );
+	void release( void );
+
+public:
+	template< typename... Args >
+	auto operator()( const Args&... args ) const -> decltype( returnCall() )
+	{
+		if( !_L || !_handler ) 
+			return nullptr;
+
+		lua_State* L = _L->cPtr();
+		tolua_ext_get_function_by_handler( L, _handler );
+		pushArgs( args... );
+
+		int ret = lua_pcall( L, sizeof...( args ), 1, 0 );
+		if( ret == 0 )
+			return returnCall();
+
+		magicalSetLastErrorInfoB( lua_tostring( L, -1 ) );
+		magicalLogLastError();
+		lua_pop( L, 1 );
+		return nullptr;
+	}
+
+private:
+	inline void pushArgs( void ) const { };
+	template< typename T >
+	void pushArgs( const T& t ) const { _L->push( t ); }
+	template< typename T, typename... Args >
+	void pushArgs( const T& t, const Args&... args ) const { _L->push( t ); pushArgs( args... ); }
+	LuaObject returnCall( void ) const;
+
+private:
+	friend class LuaState;
+	LuaState* _L = nullptr;
+	LuaFunctionHandler _handler = 0;
+	int* _reference_count = nullptr;
 };
 
 #endif //__LUA_FUNCTION_H__

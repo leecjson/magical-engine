@@ -26,9 +26,11 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "Reference.h"
 
 template< class T >
 class Shared;
+class Reference;
 
 template< class T >
 class Initializer
@@ -233,6 +235,11 @@ public:
 		T2* ret = (T2*) _reference;
 		_reference = nullptr;
 		return ret;
+	}
+
+	Shared<Reference> shareReference( void ) const
+	{
+		return Shared<Reference>( _reference );
 	}
 
 public:

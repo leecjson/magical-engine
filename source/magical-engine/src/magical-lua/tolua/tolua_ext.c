@@ -26,8 +26,8 @@ SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 
-static int _s_growing_function_id = 0;
-static int _s_growing_table_id = 0;
+static LuaTableHandler _s_growing_table_handler = 0;
+static LuaFunctionHandler _s_growing_function_handler = 0;
 
 TOLUA_API void luaopen_tolua_ext( lua_State* L )
 {
@@ -56,15 +56,16 @@ TOLUA_API int tolua_ext_totable( lua_State* L, int lo, int def )
 	if( !lua_istable( L, lo ) )
 		return 0;
 
-	++ _s_growing_table_id;
+	++ _s_growing_table_handler;
 
 	lua_pushstring( L, TOLUA_MAPPING_TABLE_KEY );
 	lua_rawget( L, LUA_REGISTRYINDEX );
-	lua_pushinteger( L, _s_growing_table_id );
+	lua_pushinteger( L, _s_growing_table_handler );
 	lua_pushvalue( L, lo );
 	lua_rawset( L, -3 );
 	lua_pop( L, 1 );
-	return _s_growing_table_id;
+
+	return _s_growing_table_handler;
 }
 
 TOLUA_API int tolua_ext_isfunction( lua_State* L, int lo, const char* type, int def, tolua_Error* err )
@@ -83,50 +84,51 @@ TOLUA_API int tolua_ext_tofunction( lua_State* L, int lo, int def )
 	if( !lua_isfunction( L, lo ) )
 		return 0;
     
-	++ _s_growing_function_id;
+	++ _s_growing_function_handler;
     
 	lua_pushstring( L, TOLUA_MAPPING_FUNCTION_KEY );
 	lua_rawget( L, LUA_REGISTRYINDEX );
-	lua_pushinteger( L, _s_growing_function_id );
+	lua_pushinteger( L, _s_growing_function_handler );
 	lua_pushvalue( L, lo );
 	lua_rawset( L, -3 );
 	lua_pop( L, 1 );
-	return _s_growing_function_id;
+
+	return _s_growing_function_handler;
 }
 
-TOLUA_API void tolua_ext_get_table_by_id( lua_State* L, int refid )
+TOLUA_API void tolua_ext_get_table_by_handler( lua_State* L, LuaTableHandler handler )
 {
 	lua_pushstring( L, TOLUA_MAPPING_TABLE_KEY );
 	lua_rawget( L, LUA_REGISTRYINDEX );
-	lua_pushinteger( L, refid );
+	lua_pushinteger( L, handler );
 	lua_rawget( L, -2 );
 	lua_remove( L, -2 );
 }
 
-TOLUA_API void tolua_ext_remove_table_by_id( lua_State* L, int refid )
+TOLUA_API void tolua_ext_remove_table_by_handler( lua_State* L, LuaTableHandler handler )
 {
 	lua_pushstring( L, TOLUA_MAPPING_TABLE_KEY );
 	lua_rawget( L, LUA_REGISTRYINDEX );
-	lua_pushinteger( L, refid );
+	lua_pushinteger( L, handler );
 	lua_pushnil( L );
 	lua_rawset( L, -3 );
 	lua_pop( L, 1 );
 }
 
-TOLUA_API void tolua_ext_get_function_by_id( lua_State* L, int refid )
+TOLUA_API void tolua_ext_get_function_by_handler( lua_State* L, LuaFunctionHandler handler )
 {
 	lua_pushstring( L, TOLUA_MAPPING_FUNCTION_KEY );
 	lua_rawget( L, LUA_REGISTRYINDEX );
-	lua_pushinteger( L, refid );
+	lua_pushinteger( L, handler );
 	lua_rawget( L, -2 );
 	lua_remove( L, -2 );
 }
 
-TOLUA_API void tolua_ext_remove_function_by_id( lua_State* L, int refid )
+TOLUA_API void tolua_ext_remove_function_by_handler( lua_State* L, LuaFunctionHandler handler )
 {
 	lua_pushstring( L, TOLUA_MAPPING_FUNCTION_KEY );
 	lua_rawget( L, LUA_REGISTRYINDEX );
-	lua_pushinteger( L, refid );
+	lua_pushinteger( L, handler );
 	lua_pushnil( L );
 	lua_rawset( L, -3 );
 	lua_pop( L, 1 );

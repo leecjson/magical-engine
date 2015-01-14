@@ -1,21 +1,35 @@
 --require("debugger")("127.0.0.1", 10000, "luaidekey")
 
-A = {
-	a = "a field";
+gint = 5;
+gdouble = 5.5
+gstring = "gaaaafddsd";
+
+MainCamera = { 
+	x = 5.5,
+
+	onCreate = function( self )
+		magicalDebugLog( "MainCamera:onCreate " .. self.x );
+	end
 }
 
-B = { 
-	b = 5;
-	aref = nil;
-}
+-- function MainCamera:onCreate( )
+	
+-- 	magicalDebugLog( "MainCamera:onCreate " .. self.x );
+-- end
+
+function func2( str_cpp )
+	magicalDebugLog( str_cpp );
+end
+
+vec2 = nil;
 
 function onCreate() --> void
 
-	B.aref = A.a
-	B.aref = "haha";
+	magicalDebugLog( vec2.x .. "  " .. vec2.y );
+	--return func2;
 
-	magicalLog( "onCreate" .. B.aref .. A.a );
-
+	return true;
+	--collectgarbage();
 end
 
 

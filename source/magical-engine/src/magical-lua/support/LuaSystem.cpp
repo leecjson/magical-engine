@@ -38,9 +38,9 @@ void Lua::init( void )
 	_s_L = new LuaState();
 	_s_L->openLibs();
 
-	luaopen_tolua_ext( _s_L->cPointer() );
-	luaopen_extensions( _s_L->cPointer() );
-	luaopen_common( _s_L->cPointer() );
+	luaopen_tolua_ext( _s_L->cPtr() );
+	luaopen_extensions( _s_L->cPtr() );
+	luaopen_common( _s_L->cPtr() );
 
 #ifdef MAGICAL_WIN32
 	std::string standard_path = Assets::getAssetsPath() + "standard/scripts";
@@ -51,7 +51,6 @@ void Lua::init( void )
 void Lua::delc( void )
 {
 	_s_L->release();
-	//_s_lua_state->release();
 }
 
 LuaState& Lua::sharedLuaState( void )

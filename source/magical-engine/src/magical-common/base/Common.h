@@ -88,7 +88,8 @@ MAGICALAPI void magicalIgnoreLastError( void );
 MAGICALAPI void magicalSetLastErrorInfo( const char* info, const char* func = nullptr, int line = 0 );
 #define magicalSetLastErrorInfoB( __info ) magicalSetLastErrorInfo( __info, __FUNCTION__, __LINE__ )
 MAGICALAPI const char* magicalGetLastErrorInfo( void );
-#define magicalShowLastError() do { if( magicalIsError() ) magicalMessageBox( magicalGetLastErrorInfo(), "Error" ); } while(0)
+//#define magicalShowLastError() do { if( magicalIsError() ) magicalMessageBox( magicalGetLastErrorInfo(), "Error" ); } while(0)
+MAGICALAPI void magicalShowLastError( void );
 #define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
 #define magicalReturnVarIfError( __var ) do{ if( magicalIsError() ) return __var; } while(0)
 

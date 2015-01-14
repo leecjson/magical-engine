@@ -33,6 +33,9 @@ extern "C" {
 #define TOLUA_MAPPING_TABLE_KEY "MAPPINGTABLE"
 #define TOLUA_MAPPING_FUNCTION_KEY "MAPPINGFUNCTION"
 
+typedef int LuaTableHandler;
+typedef int LuaFunctionHandler;
+
 TOLUA_API void luaopen_tolua_ext( lua_State* L );
 
 TOLUA_API int tolua_ext_istable( lua_State* L, int lo, const char* type, int def, tolua_Error* err );
@@ -40,10 +43,10 @@ TOLUA_API int tolua_ext_totable( lua_State* L, int lo, int def );
 TOLUA_API int tolua_ext_isfunction( lua_State* L, int lo, const char* type, int def, tolua_Error* err );
 TOLUA_API int tolua_ext_tofunction( lua_State* L, int lo, int def );
 
-TOLUA_API void tolua_ext_get_table_by_id( lua_State* L, int refid );
-TOLUA_API void tolua_ext_remove_table_by_id( lua_State* L, int refid );
-TOLUA_API void tolua_ext_get_function_by_id( lua_State* L, int refid );
-TOLUA_API void tolua_ext_remove_function_by_id( lua_State* L, int refid );
+TOLUA_API void tolua_ext_get_table_by_handler( lua_State* L, LuaTableHandler handler );
+TOLUA_API void tolua_ext_remove_table_by_handler( lua_State* L, LuaTableHandler handler );
+TOLUA_API void tolua_ext_get_function_by_handler( lua_State* L, LuaFunctionHandler handler );
+TOLUA_API void tolua_ext_remove_function_by_handler( lua_State* L, LuaFunctionHandler handler );
 
 #ifdef __cplusplus
 }

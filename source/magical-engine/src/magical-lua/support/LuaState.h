@@ -29,11 +29,12 @@ SOFTWARE.
 #include "Reference.h"
 
 #include "LuaMacros.h"
-#include "LuaTable.h"
-#include "LuaFunction.h"
-#include "LuaValue.h"
+#include "LuaSelector.h"
 
-class LuaValue;
+class LuaTable;
+class LuaFunction;
+class LuaObject;
+class LuaGlobalSelector;
 
 enum class LuaCode
 {
@@ -46,19 +47,36 @@ public:
 	LuaState( void );
 	LuaState( LuaState&& ls ) = delete;
 	LuaState( const LuaState& ls ) = delete;
-	void operator=( LuaState&& ls ) = delete;
-	void operator=( const LuaState& ls ) = delete;
 	virtual ~LuaState( void );
+	LuaState& operator=( LuaState&& ls ) = delete;
+	LuaState& operator=( const LuaState& ls ) = delete;
 
 public:
 	void openLibs( void );
 	void attachPath( const char* path );
-	lua_State* cPointer( void ) const;
-	LuaCode runScript( const char* script );
-	LuaCode runScriptFile( const char* file );
+	inline lua_State* cPtr( void ) const { return _L; }
+	LuaCode runScript( const char* lscript );
+	LuaCode runScriptFile( const char* lfile );
+	LuaGlobalSelector& operator[]( const char* key );
 
+public:
+	void push( std::nullptr_t nil );
+	void push( bool b );
+	void push( int num );
+	void push( float num );
+	void push( double num );
+	void push( const char* str );
+	void push( const std::string& str );
+	void push( void* userdata, const char* type, bool gc = false );
+	void push( const LuaFunction& lf );
+	void push( const LuaTable& lt );
+	void push( const LuaObject& lobj );
+	
 private:
+	LuaGlobalSelector _selector;
 	lua_State* _L = nullptr;
 };
+
+
 
 #endif //__LUA_STATE_H__

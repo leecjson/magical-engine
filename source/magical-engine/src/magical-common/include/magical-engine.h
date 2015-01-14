@@ -39,8 +39,12 @@ SOFTWARE.
 #include "InputSystem.h"
 #include "Utils.h"
 
-#include "LuaState.h"
 #include "LuaMacros.h"
+#include "LuaSelector.h"
+#include "LuaObject.h"
+#include "LuaState.h"
+#include "LuaFunction.h"
+#include "LuaTable.h"
 #include "LuaSystem.h"
 
 #include "Application.h"

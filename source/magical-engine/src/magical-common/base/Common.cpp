@@ -96,6 +96,18 @@ const char* magicalGetLastErrorInfo( void )
 	}
 }
 
+void magicalShowLastError( void )
+{
+	if( !magicalIsError() ) return;
+
+#ifdef MAGICAL_WIN32
+	std::stringstream stext;
+	stext << magicalGetLastErrorInfo() << "\n\n";
+	stext << "请查看程序日志清单，追溯错误来源！";
+	MessageBoxA( nullptr, stext.str().c_str(), "运行时错误! 魔幻引擎 \t", MB_ICONERROR | MB_OK );
+#endif
+}
+
 void magicalMessageBox( const char* msg, const char* title )
 {
 #ifdef MAGICAL_WIN32
@@ -109,8 +121,8 @@ void magicalLocalAssert( const char* exp, const char* msg, const char* file, int
 	std::stringstream stext;
 	stext << file << "\n\n" << "Line: " << line << "\n\n";
 	stext << "条件表达式：" << exp << " " << msg << "\n\n";
-	stext << "是否跟进断点，查看运行时堆栈？";
-	if( MessageBoxA( nullptr, stext.str().c_str(), "Assertion failed! 魔幻引擎运行时库 \t", MB_ICONERROR | MB_YESNO ) == IDYES )
+	stext << "是否跟进断点，查看运行时调用堆栈？";
+	if( MessageBoxA( nullptr, stext.str().c_str(), "Assertion failed! 魔幻引擎 \t", MB_ICONERROR | MB_YESNO ) == IDYES )
 	{
 		_CrtDbgBreak();
 	}

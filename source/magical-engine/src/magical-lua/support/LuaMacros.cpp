@@ -25,7 +25,6 @@ SOFTWARE.
 #include "tolua++.h"
 #include "tolua_ext.h"
 #include "LogSystem.h"
-#include "LuaState.h"
 
 #ifdef MAGICAL_DEBUG
 
@@ -42,6 +41,9 @@ void magicalLuaStateDump( lua_State* L )
 		int t = lua_type( L, i );
 		switch( t )
 		{
+		case LUA_TNIL:
+			magicalFormat( "[%02d] nil", i );
+			break;
 		case LUA_TSTRING:
 			magicalFormat( "[%02d] string %s", i, lua_tostring( L, i ) );
 			break;

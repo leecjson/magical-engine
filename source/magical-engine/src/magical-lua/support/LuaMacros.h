@@ -27,10 +27,23 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "lua.hpp"
+#include "tolua++.h"
+#include "tolua_ext.h"
 
 #define kLuaOnCreate  "onCreate"
 #define kLuaOnUpdate  "onUpdate";
 #define kLuaOnDestroy "onDestroy"
+
+enum class LuaT
+{
+	Nil         = LUA_TNIL,
+	Boolean     = LUA_TBOOLEAN,
+	Number      = LUA_TNUMBER,
+	String      = LUA_TSTRING,
+	UserData    = LUA_TUSERDATA,
+	Function    = LUA_TFUNCTION,
+	Table       = LUA_TTABLE,
+};
 
 #ifndef MAGICAL_DEBUG
 #define magicalLuaStateDump( __L )

@@ -30,6 +30,9 @@ SOFTWARE.
 #include "Common.h"
 #include "Shared.h"
 
+template< class T >
+class Shared;
+
 class Reference
 {
 public:

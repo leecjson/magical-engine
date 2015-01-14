@@ -393,7 +393,10 @@
     <ClCompile Include="..\src\magical-lua\support\LuaTable.cpp">
       <Filter>src\magical-lua\support</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-lua\support\LuaValue.cpp">
+    <ClCompile Include="..\src\magical-lua\support\LuaSelector.cpp">
+      <Filter>src\magical-lua\support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\magical-lua\support\LuaObject.cpp">
       <Filter>src\magical-lua\support</Filter>
     </ClCompile>
   </ItemGroup>
@@ -701,7 +704,10 @@
     <ClInclude Include="..\src\magical-lua\support\LuaTable.h">
       <Filter>src\magical-lua\support</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-lua\support\LuaValue.h">
+    <ClInclude Include="..\src\magical-lua\support\LuaSelector.h">
+      <Filter>src\magical-lua\support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\magical-lua\support\LuaObject.h">
       <Filter>src\magical-lua\support</Filter>
     </ClInclude>
   </ItemGroup>

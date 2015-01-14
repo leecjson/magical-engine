@@ -26,23 +26,40 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
+
 #include "LuaMacros.h"
-#include "LuaState.h"
+#include "LuaSelector.h"
+
+class LuaState;
+class LuaTable;
+class LuaFunction;
+class LuaTableSelector;
 
 class LuaTable
 {
-//public:
-//	LuaTable( void );
-//	LuaTable( const LuaState* L, int id );
-//	LuaTable( const LuaTable& lt ) = delete;
-//	LuaTable( LuaTable&& lt );
-//	void operator=( const LuaTable& lt ) = delete;
-//	void operator=( LuaTable&& lt );
-//	~LuaTable( void );
-//
-//private:
-//	LuaState* _L = nullptr;
-//	int _id = 0;
+public:
+	LuaTable( void );
+	LuaTable( std::nullptr_t nt );
+	LuaTable( LuaTable&& lt );
+	LuaTable( const LuaTable& lt );
+	~LuaTable( void );
+
+public:
+	LuaTable& operator=( LuaTable&& lt );
+	LuaTable& operator=( const LuaTable& lt );
+	LuaTable& operator=( std::nullptr_t nt );
+	bool operator==( std::nullptr_t nt ) const;
+	bool operator!=( std::nullptr_t nt ) const;
+	LuaTableSelector& operator[]( const char* key );
+	void bind( LuaState* L, LuaTableHandler handler );
+	void release( void );
+
+private:
+	friend class LuaState;
+	LuaTableSelector _selector;
+	LuaState* _L = nullptr;
+	LuaTableHandler _handler = 0;
+	int* _reference_count = nullptr;
 };
 
 #endif //__LUA_TABLE_H__

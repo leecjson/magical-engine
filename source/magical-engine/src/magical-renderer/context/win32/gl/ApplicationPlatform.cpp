@@ -65,8 +65,10 @@ void Application::run( MainDelegate maindel )
 			last.QuadPart = now.QuadPart;
 
 			Engine::mainLoop();
+#ifdef MAGICAL_DEBUG
 			magicalShowLastError();
 			magicalReturnIfError();
+#endif
 
 			glfwPollEvents();
 		}
