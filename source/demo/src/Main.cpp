@@ -26,15 +26,5 @@ SOFTWARE.
 
 void mainDelegate( void )
 {
-	LuaState& L = Lua::sharedLuaState();
 	
-	if( L.runScriptFile( "main.lua" ) == LuaCode::OK )
-	{
-		magicalLuaStateDump( L.cPtr() );
-
-
-		magicalLuaStateDump( L.cPtr() );
-	}
-
-	//L.clean();
 }

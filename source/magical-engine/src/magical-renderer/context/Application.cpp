@@ -24,7 +24,7 @@ SOFTWARE.
 #include "Application.h"
 #include "Engine.h"
 #include "AssetsSystem.h"
-#include "LuaSystem.h"
+//#include "LuaSystem.h"
 #include "RendererSystem.h"
 #include "LogSystem.h"
 #include "InputSystem.h"
@@ -43,9 +43,9 @@ void Application::init( void )
 	magicalShowLastError();
 	magicalReturnIfError();
 
-	Lua::init();
+	/*Lua::init();
 	magicalShowLastError();
-	magicalReturnIfError();
+	magicalReturnIfError();*/
 
 	initWindow();
 	magicalShowLastError();
@@ -94,9 +94,9 @@ void Application::delc( void )
 	magicalShowLastError();
 	magicalReturnIfError();
 
-	Lua::delc();
+	/*Lua::delc();
 	magicalShowLastError();
-	magicalReturnIfError();
+	magicalReturnIfError();*/
 
 	Input::delc();
 	magicalShowLastError();
