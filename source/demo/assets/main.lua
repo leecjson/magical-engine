@@ -6,11 +6,11 @@ gstring = "gaaaafddsd";
 
 MainCamera = { 
 	x = 5.5,
-
-	onCreate = function( self )
-		magicalDebugLog( "MainCamera:onCreate " .. self.x );
-	end
 }
+
+function MainCamera:OnCreate()
+
+end
 
 -- function MainCamera:onCreate( )
 	
@@ -23,14 +23,133 @@ end
 
 vec2 = nil;
 
-function onCreate() --> void
+function OnCreate()
+
+end
+
+function OnUpdate()
+
+end
+
+function OnCreate() --> void
 
 	magicalDebugLog( vec2.x .. "  " .. vec2.y );
 	--return func2;
 
 	return true;
 	--collectgarbage();
+
+
+	--哈哈哈哈哈
+	Application:Exit();
+
+	if( r3:Equlas( o3 ) ) then
+		cw( haha );
+	end
+
+	Engine:getDeltaTime();
+
+	Quaternion:Identity();
+
+	Mat4:CreateIdentity();
+
+	Quaternion:CreateFromAxisA( s );
+
+	local a = Quaternion:createFromEulerAngles();
+	a:SetAxisAngle(  );
+	a:SetEulerAngles(  )
+	a:Set( b );
+	a:ToString();
+
+	TimeUtils:CurrentMicrosecondsTime();
+
+
+
+	Quaternion:SetAxisAngle(  )
+
+	local m4 = Matrix4:
+	m4:MakeTranslation( 5, 6, 7 );
+
+	m4
+
+	Vector2:CreateFromVector3();
+
+	Ray3:fromOriginAndDirection
+
+	Ray3:FromOriginAndDirection();
+
+	Ref<Node> node = Node::Create();
+
+
+	local b = Node:Create();
+	b:SetPostion( Vector2.Zero );
+	b:SetZOrder( 5 );
+	b:SetRenderer( this );
+	b:AddChild( a );
+	b:SetName( "haha" );
+	local str = b:GetName();
+	b:Translate( Vector2.One );
+	b:SetRotation( Quaternion:CreateIdentity() );
+	b:FindChild( v );
+	b:ChildrenCount();
+	b:IsChildOf( s );
+	b:ReferenceCount();
+	b:Retain();
+	b:Release();
+	b:AutoRelease();
+	b:Malloc( 5 );
+	b:Realloc( 1 );
+	b:Size();
+	b:GetID();
+	b:SetID()
+	mainCamera:SetPerspective( 5, 6, 7 );
+	mainCamera:SetOrth
+	local a = b:GetParent();
+	a:RemoveFromParent();
+	a:RemoveChild( s );
+
+	local b = Node:create();
+	b:setPostion( Vector2.Zero );
+	b:setZOrder( 5 );
+	b:setRenderer( this );
+	b:addChild( a );
+	b:setName( "haha" );
+	local str = b:getName();
+	b:translate( Vector2.One );
+	b:setRotation( Quaternion:CreateIdentity() );
+	b:findChild();
+	b.childrenCount();
+	b:isChildOf( a );
+	b:referencesCount();
+	b:retain();
+	b:release();
+	b:autorelease();
+	b:malloc( 5 );
+	b:realloc( 6 );
+	b:size();
+	b:getId();
+	b:setId(  )
+	mainCamera:setPerspective( 5, 6, 7 );
+	mainCamera:setOrth();
+	local a = b:getParent();
+	a:removeFromParent();
+	a:removeChild( v );
+
+	GetProjectionMatrix
+
+
+
+
+
+	Console.Write( "haha" );
+
+
+	Array a;
+	a.PushBack( s );
+	a.PopBack( a );
+
 end
+
 
 
 

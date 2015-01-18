@@ -21,19 +21,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __REFERENCE_H__
+#define __REFERENCE_H__
 
-int main( int argc, char* argv[] )
+#include "PlatformMacros.h"
+#include "Common.h"
+
+NS_MAGICAL_BEGIN
+
+class Object
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
+public:
+	Reference( void );
+	virtual ~Reference( void );
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+public:
+	void Retain( void );
+	void Release( void );
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
+	int ReferenceCount( void ) const;
 
-	return 0;
-}
+protected:
+	int _reference_count = 1;
+};
+
+NS_MAGICAL_END
+
+#endif //__REFERENCE_H__

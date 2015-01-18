@@ -21,19 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#include "Node.h"
 
-int main( int argc, char* argv[] )
-{
-	Application::Init();
-	magicalReturnVarIfError( -1 );
-
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
-
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
-
-	return 0;
-}
+//namespace magicalengine
+//{
+//
+//Node::Node( void )
+//{
+//
+//}
+//
+//Node::~Node( void )
+//{
+//
+//}
+//
+//Shared<Node> Node::create( void )
+//{
+//	Node* ret = new Node();
+//	magicalAssert( ret, "new Node() failed" );
+//	return Shared<Node>( Initializer<Node>( ret ) );
+//}
+//
+//}

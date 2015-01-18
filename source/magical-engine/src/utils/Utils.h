@@ -21,19 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __UTILS_H__
+#define __UTILS_H__
 
-int main( int argc, char* argv[] )
+#include "PlatformMacros.h"
+#include "Common.h"
+
+class StringUtils
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
+public:
+	template< int __size >
+	static inline std::string Format( const char* format, ... )
+	{
+		char buf[ __size ];
+		va_list args;
+		va_start( args, format );
+		vsnprintf( buf, __size, format, args );
+		va_end( args );
+		return std::string( buf );
+	}
+};
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+class TimeUtils
+{
+public:
+	static int64_t currentMicrosecondsTime( void );
+};
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
+class FileUtils
+{
+public:
+	static bool IsAbsPath( const char* path );
+	static std::string ToUnixPath( const char* path );
+};
 
-	return 0;
-}
+#endif //__UTILS_H__

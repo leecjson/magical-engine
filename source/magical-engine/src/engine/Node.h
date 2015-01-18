@@ -21,19 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __NODE_H__
+#define __NODE_H__
 
-int main( int argc, char* argv[] )
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "Transform.h"
+
+namespace magicalEngine
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+//class Node : public Transform
+//{
+//public:
+//	Node( void );
+//	virtual ~Node( void );
+//
+//public:
+//	static Shared<Node> create( void );
+//
+//};
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
-
-	return 0;
 }
+
+#endif //__NODE_H__

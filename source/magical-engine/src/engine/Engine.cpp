@@ -21,19 +21,75 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#include "Engine.h"
+#include "magical-math.h"
+#include "Utils.h"
+#include "AssetsSystem.h"
+#include "LuaSystem.h"
+#include "RendererSystem.h"
+#include "Application.h"
+#include "Node.h"
 
-int main( int argc, char* argv[] )
+static int64_t _s_last_update_time = 0;
+static double _s_delta_time = 0.0;
+
+void Engine::init( void )
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
+	_s_last_update_time = TimeUtils::currentMicrosecondsTime();
+}
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+void Engine::delc( void )
+{
+	Engine:GetDeltaTime();
+	Engine:SetDeltaTime( sd );
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
+	GameObject::Create();
 
-	return 0;
+	Ref<Node> node = Node::Create();
+	node.Get();
+	node.Take<Sprite>();
+
+	node.Take<Sprite>();
+	node.Get()
+
+	ref Node ts = Node::Create();
+	ts.Get();
+	ts.Share();
+	ts.ShareReference
+
+	ts->Retain();
+	ts->Release();
+
+
+	ts->childrenCount();
+
+
+	Camera camera;
+	camera->GetProjectionMatrix();
+}
+
+
+
+void Engine::MainLoop( void )
+{
+	CalcDeltaTime();
+
+	Renderer::Render();
+}
+
+void Engine::resize( int w, int h )
+{
+	Renderer::Resize( w, h );
+}
+
+float Engine::GetDeltaTime( void )
+{
+	return _s_delta_time;
+}
+
+void Engine::calcDeltaTime( void )
+{
+	int64_t now = TimeUtils::currentMicrosecondsTime();
+	_s_delta_time = std::max<double>( 0, ( now - _s_last_update_time ) / 1000000.0 );
+	_s_last_update_time = now;
 }

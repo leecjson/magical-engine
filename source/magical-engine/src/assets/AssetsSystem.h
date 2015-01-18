@@ -21,19 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __ASSETS_SYSTEM_H__
+#define __ASSETS_SYSTEM_H__
 
-int main( int argc, char* argv[] )
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "Data.h"
+
+NS_MAGICAL_BEGIN
+
+Assets:GetFileData();
+
+class Assets
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
+public:
+	static void init( void );
+	static void delc( void );
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+public:
+	static void setDefaultAssetsPath( void );
+	static void setAssetsPath( const char* path );
+	static std::string getAssetsPath( void );
+	static std::string getAssetsAbsFilename( const char* file );
+	static bool isFileExist( const char* file );
+	static Shared<Data> getFileData( const char* file );
+};
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
+NS_MAGICAL_END
 
-	return 0;
-}
+#endif //__ASSETS_SYSTEM_H__

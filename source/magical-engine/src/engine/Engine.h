@@ -21,19 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __ENGINE_H__
+#define __ENGINE_H__
 
-int main( int argc, char* argv[] )
+#include "PlatformMacros.h"
+#include "Common.h"
+
+class Engine
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
+public:
+	static void init( void );
+	static void delc( void );
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+public:
+	static void MainLoop( void );
+	static void Resize( int w, int h );
+	static float GetDeltaTime( void );
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
+private:
+	static void CalcDeltaTime( void );
+};
 
-	return 0;
-}
+
+
+#endif //__ENGINE_H__

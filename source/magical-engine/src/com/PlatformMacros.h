@@ -21,19 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __PLATFORM_MACROS_H__
+#define __PLATFORM_MACROS_H__
 
-int main( int argc, char* argv[] )
-{
-	Application::Init();
-	magicalReturnVarIfError( -1 );
+/*
+MAGICAL_WIN32
+MAG_ANDROID
+MAG_IOS
+MAG_LINUX
+MAG_MAC
+*/
+#ifdef _WIN32
+#define MAGICAL_WIN32
+#define MAGICAL_PLATFORM "Win32"
+#endif
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+#if !defined( MAGICALAPI )
+#define MAGICALAPI extern
+#endif
+#if !defined( MAGICALAPI_USER )
+#define MAGICALAPI_USER extern
+#endif
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
+#define NS_MAGICAL_BEGIN   namespace magical {
+#define NS_MAGICAL_END     }
 
-	return 0;
-}
+#define USING_NS_MAGICAL   using namespace magical
+
+typedef unsigned char cBool;
+#ifndef cTrue
+#define cTrue 1
+#endif
+#ifndef cFalse
+#define cFalse 0
+#endif
+
+#endif //__PLATFORM_MACROS_H__

@@ -21,19 +21,46 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#include "Reference.h"
 
-int main( int argc, char* argv[] )
+NS_MAGICAL_BEGIN
+
+Reference::Reference( void ) 
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
-
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
-
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
-
-	return 0;
+//#ifdef MAGICAL_DEBUG
+//	magicalObjectConstruct();
+//#endif
 }
+
+Reference::~Reference( void )
+{
+//#ifdef MAGICAL_DEBUG
+//	magicalObjectDestruct();
+//#endif
+}
+
+void Reference::Retain( void )
+{
+	magicalAssert( _reference_count > 0, "invalid _reference_count." );
+
+	++_reference_count;
+}
+
+void Reference::Release( void )
+{
+	magicalAssert( _reference_count > 0, "invalid _reference_count." );
+
+	--_reference_count;
+
+	if( _reference_count == 0 )
+	{
+		delete this;
+	}
+}
+
+int Reference::RefCount( void ) const
+{
+	return _reference_count;
+}
+
+NS_MAGICAL_END

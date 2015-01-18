@@ -21,19 +21,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __APPLICATION_H__
+#define __APPLICATION_H__
 
-int main( int argc, char* argv[] )
+#include "PlatformMacros.h"
+#include "Common.h"
+
+typedef std::function<void( void )> MainDelegate;
+
+class Application
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
+public:
+	static void Init( void );
+	static void Delc( void );
+	static void Run( MainDelegate maindel );
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+public:	
+	static void SetInterval( double interval );
+	static double GetInterval( void );
+	static void SetResizable( bool resizable );
+	static bool IsResizable( void );
+	static void SetWindowTitle( const char* title );
+	static void SwapBuffers( void );
+	static void Exit( void );
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
+private:
+	static void InitWindow( void );
+	static void DelcWindow( void );
+	static void InitRenderContext( void );
+	static void DelcRenderContext( void );
+};
 
-	return 0;
-}
+#endif //__APPLICATION_H__

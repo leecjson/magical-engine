@@ -4,419 +4,401 @@
     <Filter Include="src">
       <UniqueIdentifier>{3e8940b1-7373-4fca-a3cf-83d5e3954e5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine">
-      <UniqueIdentifier>{edd12f9b-80b6-4835-a857-381400973d06}</UniqueIdentifier>
+    <Filter Include="src\assets">
+      <UniqueIdentifier>{160c3853-c2d3-4c72-ad18-fde6dd6e959f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-renderer">
-      <UniqueIdentifier>{87f52554-93ce-49f2-8b82-3da9bd41952d}</UniqueIdentifier>
+    <Filter Include="src\assets\win32">
+      <UniqueIdentifier>{08f6e911-164f-4460-bcb7-ccba94fc4b75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-script">
-      <UniqueIdentifier>{a5eabc0b-5887-47f3-bbca-2ca83818c0f8}</UniqueIdentifier>
+    <Filter Include="src\base">
+      <UniqueIdentifier>{e532d74c-ee99-41b5-9335-49a784923dac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\assets">
-      <UniqueIdentifier>{29700df1-e485-4984-b5b8-0b3b6437c225}</UniqueIdentifier>
+    <Filter Include="src\context">
+      <UniqueIdentifier>{b7cf818d-1255-4a9c-b591-124b77cac777}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\base">
-      <UniqueIdentifier>{78560046-961b-4f89-b4f2-6cee24074639}</UniqueIdentifier>
+    <Filter Include="src\context\win32">
+      <UniqueIdentifier>{76f773ba-cf03-472a-ab6d-80a593813061}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\engine">
-      <UniqueIdentifier>{ee261fed-05d7-482a-9a0e-2de102b61980}</UniqueIdentifier>
+    <Filter Include="src\context\win32\gl">
+      <UniqueIdentifier>{54191025-5244-4036-92a5-e85bb9723eb0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\include">
-      <UniqueIdentifier>{0126e2c7-4166-4373-ac40-f0455fed553c}</UniqueIdentifier>
+    <Filter Include="src\context\win32\gl\glew">
+      <UniqueIdentifier>{d2a1ebfd-539f-495c-accf-38e2b1776be2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\input">
-      <UniqueIdentifier>{0490fe01-19a2-4204-b225-c50b5d5ee431}</UniqueIdentifier>
+    <Filter Include="src\context\win32\gl\glfw3">
+      <UniqueIdentifier>{23044c4f-a2e5-4bfc-8693-763a0b2de0de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\log">
-      <UniqueIdentifier>{786ac1fe-9090-4e1f-ac9b-f7cc53c01332}</UniqueIdentifier>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{77c6f0a7-1988-47f4-8da0-422992efc506}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\math">
-      <UniqueIdentifier>{ea0f9ed9-673d-4afe-be15-3775c4df4e01}</UniqueIdentifier>
+    <Filter Include="src\include">
+      <UniqueIdentifier>{f69aa027-317f-41d6-8cbd-794c55c193ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\utils">
-      <UniqueIdentifier>{dc22dbf8-c1aa-46af-b4cc-88d51fcbbf60}</UniqueIdentifier>
+    <Filter Include="src\input">
+      <UniqueIdentifier>{3e570580-404b-46f8-b594-4dd2880bbaa9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\assets\win32">
-      <UniqueIdentifier>{f6a80729-e643-402b-a6c7-a12c09afa40a}</UniqueIdentifier>
+    <Filter Include="src\log">
+      <UniqueIdentifier>{e88d87bd-5102-4da9-a6d9-59069500eb39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\log\win32">
-      <UniqueIdentifier>{834ed109-7ad6-4433-8fd2-887e58a63d91}</UniqueIdentifier>
+    <Filter Include="src\log\win32">
+      <UniqueIdentifier>{38e18a82-9ca5-4783-810e-5b99ed1e79b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\math\c">
-      <UniqueIdentifier>{d17fd266-e21f-4981-a1a4-f796530b1a13}</UniqueIdentifier>
+    <Filter Include="src\math">
+      <UniqueIdentifier>{d5333d97-9cf9-4e27-a914-e2318ab94d8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\math\cpp">
-      <UniqueIdentifier>{0612c5a0-3ef5-407a-90d7-925cc0858951}</UniqueIdentifier>
+    <Filter Include="src\math\c">
+      <UniqueIdentifier>{98e74837-4e4c-408d-bc02-676ba4d95b9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-engine\platform">
-      <UniqueIdentifier>{70d0e348-a348-4103-a7de-b0bfbee33774}</UniqueIdentifier>
+    <Filter Include="src\math\cpp">
+      <UniqueIdentifier>{89911c7e-3808-4920-a78a-527b0970c441}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-renderer\context">
-      <UniqueIdentifier>{60e262df-2d3e-4b80-b12d-1cc354df140f}</UniqueIdentifier>
+    <Filter Include="src\renderer">
+      <UniqueIdentifier>{6ecca55f-71b5-4bba-b1f4-1d3bfa215413}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-renderer\context\win32">
-      <UniqueIdentifier>{08902a53-925a-4cde-9d2a-80519f0ed65e}</UniqueIdentifier>
+    <Filter Include="src\renderer\gl">
+      <UniqueIdentifier>{090637e7-de2c-4401-903f-8498cc268cc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-renderer\context\win32\gl">
-      <UniqueIdentifier>{c9c772ca-5085-4d59-a298-babd6d67afde}</UniqueIdentifier>
+    <Filter Include="src\script">
+      <UniqueIdentifier>{e494120c-0685-42ff-8aed-6c360b5d89a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-renderer\context\win32\gl\glew">
-      <UniqueIdentifier>{8cf20946-2e65-4edf-a1be-950d42069ba8}</UniqueIdentifier>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{92f1709a-a55b-4f82-acc7-bbd3bb1db3bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\magical-renderer\context\win32\gl\glfw3">
-      <UniqueIdentifier>{637316f9-17ed-47b2-88c7-9e4d2884e5cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\magical-renderer\renderer">
-      <UniqueIdentifier>{5fe23b3b-d167-4049-8b07-90253cd5ac38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\magical-renderer\renderer\gl">
-      <UniqueIdentifier>{f34e3533-cd26-4815-864e-513ca6966ff0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\magical-renderer\support">
-      <UniqueIdentifier>{16ac3f7d-41c9-49a4-8e48-7808a0dba762}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\magical-renderer\support\gl">
-      <UniqueIdentifier>{106a06c0-d6ef-4d91-a74c-9a0cd94c80a1}</UniqueIdentifier>
+    <Filter Include="src\com">
+      <UniqueIdentifier>{be01a1b8-a551-4555-a2b2-122b7f80a226}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\magical-engine\PlatformMacros.h">
-      <Filter>src\magical-engine</Filter>
+    <ClInclude Include="..\src\assets\AssetsSystem.h">
+      <Filter>src\assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\assets\AssetsSystem.h">
-      <Filter>src\magical-engine\assets</Filter>
+    <ClInclude Include="..\src\base\Data.h">
+      <Filter>src\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\base\Array.h">
-      <Filter>src\magical-engine\base</Filter>
+    <ClInclude Include="..\src\context\Application.h">
+      <Filter>src\context</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\base\CachedPool.h">
-      <Filter>src\magical-engine\base</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3.h">
+      <Filter>src\context\win32\gl\glfw3</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\base\Data.h">
-      <Filter>src\magical-engine\base</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3native.h">
+      <Filter>src\context\win32\gl\glfw3</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\base\List.h">
-      <Filter>src\magical-engine\base</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glew\glew.h">
+      <Filter>src\context\win32\gl\glew</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\base\Map.h">
-      <Filter>src\magical-engine\base</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glew\glxew.h">
+      <Filter>src\context\win32\gl\glew</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\base\Reference.h">
-      <Filter>src\magical-engine\base</Filter>
+    <ClInclude Include="..\src\context\win32\gl\glew\wglew.h">
+      <Filter>src\context\win32\gl\glew</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\base\Shared.h">
-      <Filter>src\magical-engine\base</Filter>
+    <ClInclude Include="..\src\engine\Behaviour.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\engine\Behaviour.h">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClInclude Include="..\src\engine\Camera.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\engine\Camera.h">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClInclude Include="..\src\engine\Engine.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\engine\Engine.h">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClInclude Include="..\src\engine\Node.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\engine\Node.h">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClInclude Include="..\src\engine\Scene.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\engine\Scene.h">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClInclude Include="..\src\engine\Transform.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\engine\Transform.h">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClInclude Include="..\src\engine\Viewport.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\engine\Viewport.h">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClInclude Include="..\src\include\magical-engine.h">
+      <Filter>src\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\include\magical-engine.h">
-      <Filter>src\magical-engine\include</Filter>
+    <ClInclude Include="..\src\input\InputSystem.h">
+      <Filter>src\input</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\input\InputSystem.h">
-      <Filter>src\magical-engine\input</Filter>
+    <ClInclude Include="..\src\log\LogSystem.h">
+      <Filter>src\log</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\log\LogSystem.h">
-      <Filter>src\magical-engine\log</Filter>
+    <ClInclude Include="..\src\math\magical-math.h">
+      <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\magical-math.h">
-      <Filter>src\magical-engine\math</Filter>
+    <ClInclude Include="..\src\math\c\cAABB3.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cAABB3.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cAxisAngle.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cAxisAngle.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cEulerAngles.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cEulerAngles.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cMathMacros.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cMatrix3.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cMatrix3.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cMatrix4.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cMatrix4.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cPlane3.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cPlane3.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cQuaternion.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cQuaternion.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cRay3.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cRay3.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cSphere3.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cSphere3.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cUtility.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cUtility.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cVector2.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cVector2.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cVector3.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cVector3.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\c\cVector4.h">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClInclude Include="..\src\math\c\cVector4.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\AABB3.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\AABB3.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\AxisAngle.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\AxisAngle.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\EulerAngles.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\EulerAngles.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\MathMacros.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\MathMacros.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\Matrix4.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\Matrix4.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\Plane3.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\Plane3.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\Quaternion.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\Quaternion.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\Ray3.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\Ray3.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\Sphere3.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\Sphere3.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\Vector2.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\Vector2.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\Vector3.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\Vector3.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\math\cpp\Vector4.h">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClInclude Include="..\src\math\cpp\Vector4.h">
+      <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\utils\Utils.h">
-      <Filter>src\magical-engine\utils</Filter>
+    <ClInclude Include="..\src\renderer\RendererMacros.h">
+      <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-engine\platform\Common.h">
-      <Filter>src\magical-engine\platform</Filter>
+    <ClInclude Include="..\src\renderer\RendererSystem.h">
+      <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\context\Application.h">
-      <Filter>src\magical-renderer\context</Filter>
+    <ClInclude Include="..\src\renderer\ShaderProgram.h">
+      <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glew\glew.h">
-      <Filter>src\magical-renderer\context\win32\gl\glew</Filter>
+    <ClInclude Include="..\src\renderer\ShaderProgramManager.h">
+      <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glew\glxew.h">
-      <Filter>src\magical-renderer\context\win32\gl\glew</Filter>
+    <ClInclude Include="..\src\utils\Utils.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glew\wglew.h">
-      <Filter>src\magical-renderer\context\win32\gl\glew</Filter>
+    <ClInclude Include="..\src\PlatformMacros.h">
+      <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glfw3\glfw3.h">
-      <Filter>src\magical-renderer\context\win32\gl\glfw3</Filter>
+    <ClInclude Include="..\src\com\Common.h">
+      <Filter>src\com</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\context\win32\gl\glfw3\glfw3native.h">
-      <Filter>src\magical-renderer\context\win32\gl\glfw3</Filter>
+    <ClInclude Include="..\src\com\PlatformMacros.h">
+      <Filter>src\com</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\renderer\RendererSystem.h">
-      <Filter>src\magical-renderer\renderer</Filter>
+    <ClInclude Include="..\src\base\Ref.h">
+      <Filter>src\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\support\RendererMacros.h">
-      <Filter>src\magical-renderer\support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\support\ShaderProgram.h">
-      <Filter>src\magical-renderer\support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\magical-renderer\support\ShaderProgramManager.h">
-      <Filter>src\magical-renderer\support</Filter>
+    <ClInclude Include="..\src\base\RefObject.h">
+      <Filter>src\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\magical-engine\assets\win32\AssetsSystem.cpp">
-      <Filter>src\magical-engine\assets\win32</Filter>
+    <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp">
+      <Filter>src\assets\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\base\Data.cpp">
-      <Filter>src\magical-engine\base</Filter>
+    <ClCompile Include="..\src\base\Data.cpp">
+      <Filter>src\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\base\Reference.cpp">
-      <Filter>src\magical-engine\base</Filter>
+    <ClCompile Include="..\src\context\Application.cpp">
+      <Filter>src\context</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\engine\Behaviour.cpp">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClCompile Include="..\src\engine\Behaviour.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\engine\Camera.cpp">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClCompile Include="..\src\engine\Camera.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\engine\Engine.cpp">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClCompile Include="..\src\engine\Engine.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\engine\Node.cpp">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClCompile Include="..\src\engine\Node.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\engine\Scene.cpp">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClCompile Include="..\src\engine\Scene.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\engine\Transform.cpp">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClCompile Include="..\src\engine\Transform.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\engine\Viewport.cpp">
-      <Filter>src\magical-engine\engine</Filter>
+    <ClCompile Include="..\src\engine\Viewport.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\input\InputSystem.cpp">
-      <Filter>src\magical-engine\input</Filter>
+    <ClCompile Include="..\src\input\InputSystem.cpp">
+      <Filter>src\input</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\log\win32\LogSystem.cpp">
-      <Filter>src\magical-engine\log\win32</Filter>
+    <ClCompile Include="..\src\log\win32\LogSystem.cpp">
+      <Filter>src\log\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cAABB3.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cAABB3.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cAxisAngle.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cAxisAngle.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cEulerAngles.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cEulerAngles.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cMatrix3.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cMatrix3.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cMatrix4.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cMatrix4.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cPlane3.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cPlane3.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cQuaternion.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cQuaternion.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cRay3.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cRay3.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cSphere3.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cSphere3.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cVector2.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cVector2.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cVector3.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cVector3.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\c\cVector4.c">
-      <Filter>src\magical-engine\math\c</Filter>
+    <ClCompile Include="..\src\math\c\cVector4.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\AABB3.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\AABB3.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\AxisAngle.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\AxisAngle.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\EulerAngles.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\EulerAngles.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\Matrix4.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\Matrix4.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\Plane3.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\Plane3.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\Quaternion.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\Quaternion.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\Ray3.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\Ray3.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\Sphere3.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\Sphere3.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\Vector2.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\Vector2.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\Vector3.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\Vector3.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\math\cpp\Vector4.cpp">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <ClCompile Include="..\src\math\cpp\Vector4.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\utils\Utils.cpp">
-      <Filter>src\magical-engine\utils</Filter>
+    <ClCompile Include="..\src\renderer\gl\RendererMacros.cpp">
+      <Filter>src\renderer\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-engine\platform\Common.cpp">
-      <Filter>src\magical-engine\platform</Filter>
+    <ClCompile Include="..\src\renderer\gl\RendererSystem.cpp">
+      <Filter>src\renderer\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-renderer\context\Application.cpp">
-      <Filter>src\magical-renderer\context</Filter>
+    <ClCompile Include="..\src\renderer\gl\ShaderProgram.cpp">
+      <Filter>src\renderer\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-renderer\context\win32\gl\ApplicationPlatform.cpp">
-      <Filter>src\magical-renderer\context\win32\gl</Filter>
+    <ClCompile Include="..\src\renderer\gl\ShaderProgramManager.cpp">
+      <Filter>src\renderer\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-renderer\renderer\gl\RendererSystem.cpp">
-      <Filter>src\magical-renderer\renderer\gl</Filter>
+    <ClCompile Include="..\src\utils\Utils.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-renderer\support\gl\RendererMacros.cpp">
-      <Filter>src\magical-renderer\support\gl</Filter>
+    <ClCompile Include="..\src\context\win32\gl\ApplicationPlatform.cpp">
+      <Filter>src\context\win32\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-renderer\support\gl\ShaderProgram.cpp">
-      <Filter>src\magical-renderer\support\gl</Filter>
+    <ClCompile Include="..\src\com\Common.cpp">
+      <Filter>src\com</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\magical-renderer\support\gl\ShaderProgramManager.cpp">
-      <Filter>src\magical-renderer\support\gl</Filter>
+    <ClCompile Include="..\src\base\RefObject.cpp">
+      <Filter>src\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\magical-engine\math\cpp\AABB3.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\AABB3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\AxisAngle.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\AxisAngle.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\EulerAngles.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\EulerAngles.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\Matrix4.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\Matrix4.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\Plane3.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\Plane3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\Quaternion.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\Quaternion.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\Ray3.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\Ray3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\Sphere3.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\Sphere3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\Vector2.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\Vector2.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\Vector3.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\Vector3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
-    <None Include="..\src\magical-engine\math\cpp\Vector4.inl">
-      <Filter>src\magical-engine\math\cpp</Filter>
+    <None Include="..\src\math\cpp\Vector4.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
   </ItemGroup>
 </Project>

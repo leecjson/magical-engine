@@ -21,19 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __DATA_H__
+#define __DATA_H__
 
-int main( int argc, char* argv[] )
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "Referenceable.h"
+ 
+class Data : public Referenceable
 {
-	Application::Init();
-	magicalReturnVarIfError( -1 );
+public:
+	Data( void );
+	virtual ~Data( void );
 
-	Application::Run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+public:
+	static Ref<Data> Create( void );
 
-	Application::Delc();
-	magicalReturnVarIfError( -1 );
+public:
+	void Assign( char* data, uint32_t size );
+	void Malloc( uint32_t size );
+	void Realloc( uint32_t size );
+	bool Empty( void ) const;
+	uint32_t Size( void ) const;
+	char* Ptr( void );
 
-	return 0;
-}
+private:
+	char* _data = nullptr;
+	uint32_t _size = 0;
+};
+
+#endif //__DATA_H__
