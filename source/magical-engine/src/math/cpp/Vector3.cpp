@@ -23,12 +23,20 @@ SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector3.h"
 #include "../c/cMatrix4.h"
+
+#include "Utility.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Matrix4.h"
+
 #include "Vector3.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const Vector3 Vector3::Zero = Vector3( 0.0f, 0.0f, 0.0f );
 const Vector3 Vector3::One = Vector3( 1.0f, 1.0f, 1.0f );
@@ -62,8 +70,7 @@ Vector3::Vector3( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<Vector3> s_vector3_cached_pool( 128, 128 );
+static CachePool<Vector3> s_vector3_cache_pool( 128, 128 );
 #endif
 
 void* Vector3::operator new( size_t s )
@@ -72,7 +79,7 @@ void* Vector3::operator new( size_t s )
 	if( s != sizeof( Vector3 ) )
 		return ::operator new( s );
 
-	return s_vector3_cached_pool.take();
+	return s_vector3_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -84,8 +91,10 @@ void Vector3::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_vector3_cached_pool.push( ptr );
+	s_vector3_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

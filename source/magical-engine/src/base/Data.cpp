@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "Data.h"
 
+NS_MAGICAL_BEGIN
+
 Data::Data( void )
 {
 
@@ -33,14 +35,30 @@ Data::~Data( void )
 	magicalSafeFree( _data );
 }
 
-Shared<Data> Data::create( void )
+Ptr<Data> Data::create( void )
 {
 	Data* ret = new Data();
 	magicalAssert( ret, "new Data() failed" );
-	return Shared<Data>( Initializer<Data>( ret ) );
+	return Ptr<Data>( Initializer<Data>( ret ) );
 }
 
-void Data::assign( char* data, uint32_t size )
+Ptr<Data> Data::create( size_t size )
+{
+	Data* ret = new Data();
+	magicalAssert( ret, "new Data() failed" );
+	ret->malloc( size );
+	return Ptr<Data>( Initializer<Data>( ret ) );
+}
+
+Ptr<Data> Data::create( char* data, size_t size )
+{
+	Data* ret = new Data();
+	magicalAssert( ret, "new Data() failed" );
+	ret->assign( data, size );
+	return Ptr<Data>( Initializer<Data>( ret ) );
+}
+
+void Data::assign( char* data, size_t size )
 {
 	magicalAssert( data && size > 0, "data should not be nullptr and size should > 0" );
 
@@ -49,25 +67,25 @@ void Data::assign( char* data, uint32_t size )
 	_size = size;
 }
 
-void Data::malloc( uint32_t size )
+void Data::malloc( size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
 
 	magicalSafeFree( _data );
-	_data = (char*) std::malloc( size );
-	magicalAssert( _data, "(char*) std::malloc( size );" );
+	_data = (char*) ::malloc( size );
+	magicalAssert( _data, "(char*) ::malloc( size );" );
 	_size = size;
 }
 
-void Data::realloc( uint32_t size )
+void Data::realloc( size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
-	magicalAssert( _data, "_data should not be nullptr." );
+	magicalAssert( _data, "Invalid!" );
 
 	if( size > _size )
 	{
-		_data = (char*) std::realloc( _data, size );
-		magicalAssert( _data, "(char*) std::realloc( _data, size );" );
+		_data = (char*) ::realloc( _data, size );
+		magicalAssert( _data, "::realloc( _data, size );" );
 	}
 	else
 	{
@@ -75,17 +93,24 @@ void Data::realloc( uint32_t size )
 	}
 }
 
+void Data::free( void )
+{
+	magicalSafeFreeNull( _data );
+}
+
 bool Data::empty( void ) const
 {
 	return _data == nullptr;
 }
 
-uint32_t Data::size( void ) const
+size_t Data::size( void ) const
 {
 	return _size;
 }
 
-char* Data::ptr( void )
+char* Data::cPtr( void )
 {
 	return _data;
 }
+
+NS_MAGICAL_END

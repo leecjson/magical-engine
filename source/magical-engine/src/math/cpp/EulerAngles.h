@@ -24,8 +24,9 @@ SOFTWARE.
 #ifndef __EULER_ANGLES_H__
 #define __EULER_ANGLES_H__
 
-struct Vector3;
-struct Quaternion;
+NS_MAGICAL_BEGIN
+
+FORWARD_DECLARE
 
 struct EulerAngles : public cEulerAngles
 {
@@ -71,7 +72,8 @@ public:
 	inline Quaternion toQuaternion( void ) const;
 	inline void limit( void );
 	inline EulerAngles getLimited( void ) const;
-	
 };
 	
+NS_MAGICAL_END
+
 #endif //__EULER_ANGLES_H__

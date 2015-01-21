@@ -21,30 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __REFERENCE_H__
-#define __REFERENCE_H__
+#ifndef __SCENE_OBJECT_H__
+#define __SCENE_OBJECT_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "Transform.h"
 
 NS_MAGICAL_BEGIN
 
-class Object
+class SceneObject : public Transform
 {
 public:
-	Reference( void );
-	virtual ~Reference( void );
+	SceneObject( void );
+	virtual ~SceneObject( void );
 
 public:
-	void Retain( void );
-	void Release( void );
+	static Ptr<SceneObject> create( void );
 
-	int ReferenceCount( void ) const;
-
-protected:
-	int _reference_count = 1;
+public:
+	void visit( void );
 };
 
 NS_MAGICAL_END
 
-#endif //__REFERENCE_H__
+#endif //__SCENE_OBJECT_H__

@@ -24,20 +24,12 @@ SOFTWARE.
 #ifndef __SPHERE3_H__
 #define __SPHERE3_H__
 
-struct Vector3;
-struct Ray3;
-struct AABB3;
-struct Plane3;
-struct RayIntersectResult;
+NS_MAGICAL_BEGIN
+
+FORWARD_DECLARE
 
 struct Sphere3 : public cSphere3
 {
-public:
-	float x;
-	float y;
-	float z;
-	float r;
-
 public:
 	static const Sphere3 Zero;
 	static const Sphere3 One;
@@ -74,8 +66,9 @@ public:
 	inline bool intersectsAABB3( const AABB3& aabb ) const;
 	inline bool intersectsPlane3( const Plane3& p ) const;
 	inline void intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside = false ) const;
-
 	inline bool containsPoint( const Vector3& point ) const;
 };
+
+NS_MAGICAL_END
 
 #endif //__SPHERE3_H__

@@ -27,20 +27,39 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "Node.h"
+#include "Camera.h"
+#include "SceneObject.h"
 
-//class Scene : public Node
-//{
-//public:
-//	Scene( void );
-//	virtual ~Scene( void );
-//	
-//public:
-//	static Shared<Scene> create( void );
-//
-//
-//}; 
+#include <unordered_map>
 
+NS_MAGICAL_BEGIN
 
+class Scene : public Reference
+{
+public:
+	Scene( void );
+	virtual ~Scene( void );
+
+public:
+	static Ptr<Scene> create( void );
+
+public:
+	Camera* createCamera( const char* name = "" );
+	SceneObject* createSceneObject( const char* name = "" );
+
+public:
+	void visit( void );
+
+protected:
+	typedef std::vector< Camera* > CameraList;
+	typedef std::vector< SceneObject* > SceneObjectList;
+
+protected:
+	CameraList camera_list_;
+	SceneObjectList scene_object_list_;
+
+};
+
+NS_MAGICAL_END
 
 #endif //__SCENE_H__

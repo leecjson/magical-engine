@@ -36,24 +36,33 @@ MAG_MAC
 #define MAGICAL_PLATFORM "Win32"
 #endif
 
-#if !defined( MAGICALAPI )
+#ifndef MAGICALAPI
 #define MAGICALAPI extern
 #endif
-#if !defined( MAGICALAPI_USER )
+#ifndef MAGICALAPI_USER
 #define MAGICALAPI_USER extern
 #endif
 
+#ifndef NS_MAGICAL_BEGIN
 #define NS_MAGICAL_BEGIN   namespace magical {
+#endif
+#ifndef NS_MAGICAL_END
 #define NS_MAGICAL_END     }
+#endif
 
+#ifndef USING_NS_MAGICAL
 #define USING_NS_MAGICAL   using namespace magical
+#endif
+
+#ifdef cTrue
+#undef cTrue
+#endif
+#ifdef cFalse
+#undef cFalse
+#endif
 
 typedef unsigned char cBool;
-#ifndef cTrue
-#define cTrue 1
-#endif
-#ifndef cFalse
+#define cTrue  1
 #define cFalse 0
-#endif
 
 #endif //__PLATFORM_MACROS_H__

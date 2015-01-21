@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline EulerAngles EulerAngles::createZero( void )
 {
 	return EulerAngles::Zero;
@@ -167,3 +169,5 @@ inline EulerAngles EulerAngles::getLimited( void ) const
 	magicalEulerAnglesLimit( &ret, this );
 	return ret;
 }
+
+NS_MAGICAL_END

@@ -25,12 +25,20 @@ SOFTWARE.
 #include "../c/cAxisAngle.h"
 #include "../c/cEulerAngles.h"
 #include "../c/cQuaternion.h"
+
+#include "Utility.h"
 #include "Vector3.h"
 #include "AxisAngle.h"
 #include "EulerAngles.h"
 #include "Quaternion.h"
+
 #include "Quaternion.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const Quaternion Quaternion::Identity = Quaternion( 0.0f, 0.0f, 0.0f, 1.0f );
 const Quaternion Quaternion::Zero = Quaternion( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -55,8 +63,7 @@ Quaternion::Quaternion( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<Quaternion> s_quaternion_cached_pool( 32, 32 );
+static CachePool<Quaternion> s_quaternion_cache_pool( 32, 32 );
 #endif
 
 void* Quaternion::operator new( size_t s )
@@ -65,7 +72,7 @@ void* Quaternion::operator new( size_t s )
 	if( s != sizeof( Quaternion ) )
 		return ::operator new( s );
 
-	return s_quaternion_cached_pool.take();
+	return s_quaternion_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -77,8 +84,10 @@ void Quaternion::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_quaternion_cached_pool.push( ptr );
+	s_quaternion_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

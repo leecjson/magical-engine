@@ -24,9 +24,9 @@ SOFTWARE.
 #include "Common.h"
 #include "Utils.h"
 
-#ifdef MAGICAL_DEBUG
-#include <mutex>
-#endif
+//#ifdef MAGICAL_DEBUG
+//#include <mutex>
+//#endif
 #include <sstream>
 
 /*
@@ -36,7 +36,9 @@ platform include
 #include <windows.h>
 #endif
 
+NS_MAGICAL_BEGIN
 char g_buffer[ kBufferLen ];
+NS_MAGICAL_END
 
 static bool s_last_error = false;
 static char s_last_error_info[ kBufferLen ];
@@ -73,20 +75,16 @@ void magicalSetLastError( const char* info, const char* func, int line )
 		return;
 
 	if( func )
-	{
-		std::sprintf( s_last_error_info, "%s %s:%d", info, func, line );
-	}
+		sprintf( s_last_error_info, "%s %s:%d", info, func, line );
 	else
-	{
-		std::strcpy( s_last_error_info, info );
-	}
+		strcpy( s_last_error_info, info );
 
 	s_last_error = true;
 }
 
 const char* magicalGetLastErrorInfo( void )
 {
-	if( std::strlen( s_last_error_info ) > 0 )
+	if( strlen( s_last_error_info ) > 0 )
 	{
 		return s_last_error_info;
 	}

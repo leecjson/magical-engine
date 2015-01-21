@@ -353,7 +353,7 @@ void magicalQuaternionNormalize( cQuaternion* out, const cQuaternion* q )
 	n = sqrt( n );
 	if( magicalAlmostZero( n, kQuaternionEpsilon ) )
 	{
-		debugassert( cFalse, "if( magicalAlmostZero( n, kEpsilonQuaternion ) )" );
+		//debugassert( cFalse, "if( magicalAlmostZero( n, kEpsilonQuaternion ) )" );
 		return;
 	}
 
@@ -421,7 +421,7 @@ void magicalQuaternionInverse( cQuaternion* out, const cQuaternion* q )
 	n = sqrt( n );
 	if( magicalAlmostZero( n, kQuaternionEpsilon ) )
 	{
-		debugassert( cFalse, "if( magicalAlmostZero( n, kEpsilonQuaternion ) )" );
+		//debugassert( cFalse, "if( magicalAlmostZero( n, kEpsilonQuaternion ) )" );
 		return;
 	}
 		

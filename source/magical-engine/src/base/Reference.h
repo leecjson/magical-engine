@@ -21,59 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_MATH_MACROS_H__
-#define __C_MATH_MACROS_H__
+#ifndef __REFERENCE_H__
+#define __REFERENCE_H__
 
-#define _x [0x0]
-#define _y [0x1]
-#define _z [0x2]
-#define _w [0x3]
-#define _d [0x3]
-#define _r [0x3]
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "Ptr.h"
 
-#define _inst [0x0]
-#define _dist [0x1]
+NS_MAGICAL_BEGIN
 
-#define _o_x [0x0]
-#define _o_y [0x1]
-#define _o_z [0x2]
-#define _d_x [0x3]
-#define _d_y [0x4]
-#define _d_z [0x5]
+class Reference
+{
+public:
+	Reference( void );
+	virtual ~Reference( void );
 
-#define _m11 [0x0]
-#define _m12 [0x1]
-#define _m13 [0x2]
-#define _m14 [0x3]
-#define _m21 [0x4]
-#define _m22 [0x5]
-#define _m23 [0x6]
-#define _m24 [0x7]
-#define _m31 [0x8]
-#define _m32 [0x9]
-#define _m33 [0xA]
-#define _m34 [0xB]
-#define _m41 [0xC]
-#define _m42 [0xD]
-#define _m43 [0xE]
-#define _m44 [0xF]
+public:
+	void retain( void );
+	void release( void );
 
-#define _yaw [0x0]
-#define _pitch [0x1]
-#define _roll [0x2]
+	int referenceCount( void ) const;
 
-#define _min_x [0x0]
-#define _min_y [0x1]
-#define _min_z [0x2]
-#define _max_x [0x3]
-#define _max_y [0x4]
-#define _max_z [0x5]
+protected:
+	int _reference_count = 1;
+};
 
-#define _rect_x [0x0]
-#define _rect_y [0x1]
-#define _rect_w [0x2]
-#define _rect_h [0x3]
+NS_MAGICAL_END
 
-
-
-#endif //__C_MATH_MACROS_H__
+#endif //__REFERENCE_H__

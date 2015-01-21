@@ -205,9 +205,9 @@ void magicalMatrix4SetPerspective( cMatrix4* out, float fov, float aspect, float
  * [       0            0        -2/(f-n)    0   ]
  * [ -(r+l)/(r-l) -(t+b)/(t-b) -(f+n)/(f-n)  1   ]
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom, float top, float near, float far )
+void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom, float top, float znear, float zfar )
 {
-	debugassert( !magicalAlmostZero( right - left, kVectorEpsilon ) && !magicalAlmostZero( top - bottom, kVectorEpsilon ) && !magicalAlmostZero( far - near, kVectorEpsilon ), "division by 0.f" );
+	debugassert( !magicalAlmostZero( right - left, kVectorEpsilon ) && !magicalAlmostZero( top - bottom, kVectorEpsilon ) && !magicalAlmostZero( zfar - znear, kVectorEpsilon ), "division by 0.f" );
 
 	out->m11 = 2.0f / ( right - left );
 	out->m12 = 0.0f;
@@ -221,12 +221,12 @@ void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom
 
 	out->m31 = 0.0f;
 	out->m32 = 0.0f;
-	out->m33 = - 2.0f / ( far - near );
+	out->m33 = - 2.0f / ( zfar - znear );
 	out->m34 = 0.0f;
 
 	out->m41 = - ( right + left ) / ( right - left );
 	out->m42 = - ( top + bottom ) / ( top - bottom );
-	out->m43 = - ( far + near ) / ( far - near );
+	out->m43 = - ( zfar + znear ) / ( zfar - znear );
 	out->m44 = 1.0f;
 }
 
@@ -794,7 +794,7 @@ cBool magicalMatrix4Inverse( cMatrix4* out, const cMatrix4* m )
 
 	if( magicalAlmostZero( det, kVectorEpsilon ) )
 	{
-		debugassert( cFalse, "matrix4 can't be inversed" );
+		//debugassert( cFalse, "matrix4 can't be inversed" );
 		return cFalse;
 	}
 

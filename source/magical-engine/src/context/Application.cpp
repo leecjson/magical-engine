@@ -23,11 +23,13 @@ SOFTWARE.
 *******************************************************************************/
 #include "Application.h"
 #include "Engine.h"
-#include "AssetsSystem.h"
+//#include "AssetsSystem.h"
 //#include "LuaSystem.h"
-#include "RendererSystem.h"
+//#include "RendererSystem.h"
 #include "LogSystem.h"
-#include "InputSystem.h"
+//#include "InputSystem.h"
+
+NS_MAGICAL_BEGIN
 
 void Application::init( void )
 {
@@ -35,13 +37,13 @@ void Application::init( void )
 	magicalShowLastError();
 	magicalReturnIfError();
 
-	Assets::init();
+	/*Assets::Init();
 	magicalShowLastError();
-	magicalReturnIfError();
+	magicalReturnIfError();*/
 
-	Input::init();
+	/*Input::Init();
 	magicalShowLastError();
-	magicalReturnIfError();
+	magicalReturnIfError();*/
 
 	/*Lua::init();
 	magicalShowLastError();
@@ -59,9 +61,9 @@ void Application::init( void )
 	magicalShowLastError();
 	magicalReturnIfError();
 
-	Renderer::init();
+	/*Renderer::Init();
 	magicalShowLastError();
-	magicalReturnIfError();
+	magicalReturnIfError();*/
 
 	std::string msg;
 	msg += "<init>\n";
@@ -78,9 +80,9 @@ void Application::init( void )
 
 void Application::delc( void )
 {
-	Renderer::delc();
+	/*Renderer::Delc();
 	magicalShowLastError();
-	magicalReturnIfError();
+	magicalReturnIfError();*/
 
 	Engine::delc();
 	magicalShowLastError();
@@ -98,15 +100,17 @@ void Application::delc( void )
 	magicalShowLastError();
 	magicalReturnIfError();*/
 
-	Input::delc();
+	/*Input::Delc();
 	magicalShowLastError();
-	magicalReturnIfError();
+	magicalReturnIfError();*/
 
-	Assets::delc();
+	/*Assets::Delc();
 	magicalShowLastError();
-	magicalReturnIfError();
+	magicalReturnIfError();*/
 
 	Log::delc();
 	magicalShowLastError();
 	magicalReturnIfError();
 }
+
+NS_MAGICAL_END

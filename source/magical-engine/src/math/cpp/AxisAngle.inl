@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline AxisAngle AxisAngle::create( const Vector3& axis, float angle )
 {
 	AxisAngle ret;
@@ -118,3 +120,5 @@ inline Vector3 AxisAngle::axis( void ) const
 {
 	return Vector3( x, y, z );
 }
+
+NS_MAGICAL_END

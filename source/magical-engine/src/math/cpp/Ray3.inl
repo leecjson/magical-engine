@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline Ray3 Ray3::createZero( void )
 {
 	return Ray3::Zero;
@@ -136,3 +138,5 @@ inline void Ray3::intersectsSphere3( RayIntersectResult& out, const Sphere3& sp,
 {
 	return magicalRay3IntersectsSphere3( &out, this, &sp, discard_inside );
 }
+
+NS_MAGICAL_END

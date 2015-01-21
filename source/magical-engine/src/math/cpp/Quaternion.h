@@ -24,9 +24,9 @@ SOFTWARE.
 #ifndef __QUATERNION_H__
 #define __QUATERNION_H__
 
-struct Vector3;
-struct AxisAngle;
-struct EulerAngles;
+NS_MAGICAL_BEGIN
+
+FORWARD_DECLARE
 
 struct Quaternion : public cQuaternion
 {
@@ -113,4 +113,6 @@ public:
 	inline float lengthSq( void ) const;
 };
 	
+NS_MAGICAL_END
+
 #endif //__QUATERNION_H__

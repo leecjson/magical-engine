@@ -28,13 +28,15 @@ SOFTWARE.
 #include "Common.h"
 
 MAGICALAPI void magicalLogLastError( void ); 
-#define magicalLog( __txt ) Log::write( __txt )
+#define magicalLog( txt ) ::magical::Log::write( txt )
 
 #ifndef MAGICAL_DEBUG
-#define magicalDebugLog( __txt )
+#define magicalDebugLog( txt )
 #else
-#define magicalDebugLog( __txt ) magicalLog( __txt )
+#define magicalDebugLog( txt ) magicalLog( txt )
 #endif
+
+NS_MAGICAL_BEGIN
 
 class Log
 {
@@ -45,5 +47,7 @@ public:
 public:
 	static void write( const char* txt );
 };
+
+NS_MAGICAL_END
 
 #endif //__LOG_SYSTEM_H__

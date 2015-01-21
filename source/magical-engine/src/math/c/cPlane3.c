@@ -243,35 +243,35 @@ int magicalPlane3ClassifyAABB3( const cPlane3* p, const cAABB3* aabb )
 
 	if( p->x > 0.0f )
 	{
-		min_d = p->x * aabb->min_x;
-		max_d = p->x * aabb->max_x;
+		min_d = p->x * aabb->minx;
+		max_d = p->x * aabb->maxx;
 	}
 	else
 	{
-		min_d = p->x * aabb->max_x;
-		max_d = p->x * aabb->min_x;
+		min_d = p->x * aabb->maxx;
+		max_d = p->x * aabb->minx;
 	}
 
 	if( p->y > 0.0f )
 	{
-		min_d += p->y * aabb->min_y;
-		max_d += p->y * aabb->max_y;
+		min_d += p->y * aabb->miny;
+		max_d += p->y * aabb->maxy;
 	}
 	else
 	{
-		min_d += p->y * aabb->max_y;
-		max_d += p->y * aabb->min_y;
+		min_d += p->y * aabb->maxy;
+		max_d += p->y * aabb->miny;
 	}
 
 	if( p->z > 0.0f )
 	{
-		min_d += p->z * aabb->min_z;
-		max_d += p->z * aabb->max_z;
+		min_d += p->z * aabb->minz;
+		max_d += p->z * aabb->maxz;
 	}
 	else
 	{
-		min_d += p->z * aabb->max_z;
-		max_d += p->z * aabb->min_z;
+		min_d += p->z * aabb->maxz;
+		max_d += p->z * aabb->minz;
 	}
 
 	if( min_d >= p->d ) {

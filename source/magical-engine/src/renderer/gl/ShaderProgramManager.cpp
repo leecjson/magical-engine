@@ -24,6 +24,8 @@ SOFTWARE.
 #include "ShaderProgramManager.h"
 #include "AssetsSystem.h"
 
+NS_MAGICAL_BEGIN
+
 enum
 {
 	kAttribIndex_Vertex = 0,
@@ -93,7 +95,7 @@ void ShaderProgramManager::delcPrograms( void )
 	//}
 }
 
-const Shared<ShaderProgram> ShaderProgramManager::getProgram( ShaderProgramIndex index )
+const Ptr<ShaderProgram> ShaderProgramManager::getProgram( ShaderProgramIndex index )
 {
 	return s_programs[ index ];
 }
@@ -181,3 +183,5 @@ const Shared<ShaderProgram> ShaderProgramManager::getProgram( ShaderProgramIndex
 //{
 //
 //}
+
+NS_MAGICAL_END

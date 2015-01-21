@@ -26,13 +26,21 @@ SOFTWARE.
 #include "../c/cPlane3.h"
 #include "../c/cSphere3.h"
 #include "../c/cRay3.h"
+
+#include "Utility.h"
 #include "Vector3.h"
 #include "AABB3.h"
 #include "Plane3.h"
 #include "Sphere3.h"
 #include "Ray3.h"
+
 #include "Plane3.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const Plane3 Plane3::Zero = Plane3( 0.0f, 0.0f, 0.0f, 0.0f );
 const Plane3 Plane3::NormalX = Plane3( 1.0f, 0.0f, 0.0f, 0.0f );
@@ -56,8 +64,7 @@ Plane3::Plane3( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<Plane3> s_plane3_cached_pool( 8, 8 );
+static CachePool<Plane3> s_plane3_cache_pool( 8, 8 );
 #endif
 
 void* Plane3::operator new( size_t s )
@@ -66,7 +73,7 @@ void* Plane3::operator new( size_t s )
 	if( s != sizeof( Plane3 ) )
 		return ::operator new( s );
 
-	return s_plane3_cached_pool.take();
+	return s_plane3_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -78,8 +85,10 @@ void Plane3::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_plane3_cached_pool.push( ptr );
+	s_plane3_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

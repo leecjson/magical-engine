@@ -21,8 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SHARED_H__
-#define __SHARED_H__
+#ifndef __PTR_H__
+#define __PTR_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
@@ -31,7 +31,7 @@ SOFTWARE.
 NS_MAGICAL_BEGIN
 
 template< class T >
-class Ref;
+class Ptr;
 class Reference;
 
 template< class T >
@@ -45,20 +45,25 @@ public:
 
 private:
 	template< class T >
-	friend class Ref;
+	friend class Ptr;
 	T* _reference = nullptr;
 };
 
 template< class T >
-class Ref
+class Ptr
 {
 public:
-	Ref( void )
+	Ptr( void )
 	{
 
 	}
 
-	~Ref( void )
+	Ptr( std::nullptr_t nt )
+	{
+		_reference = nt;
+	}
+
+	~Ptr( void )
 	{
 		if( _reference )
 		{
@@ -66,34 +71,25 @@ public:
 		}
 	}
 
-	Ref( T* ref )
+	Ptr( T* other )
 	{
-		if( ref )
+		if( other )
 		{
-			_reference = ref;
-			_reference->retain();
+			other->retain();
+			_reference = other;
 		}
 	}
 
-	Ref( const T* ref )
-	{
-		if( ref )
-		{
-			_reference = (T*) ref;
-			_reference->retain();
-		}
-	}
-
-	Ref( const Ref& other )
+	Ptr( Ptr<T>& other )
 	{
 		if( other._reference )
 		{
+			other._reference->retain();
 			_reference = other._reference;
-			_reference->retain();
 		}
 	}
 
-	Ref( Ref&& other )
+	Ptr( Ptr<T>&& other )
 	{
 		if( other._reference )
 		{
@@ -101,21 +97,19 @@ public:
 			other._reference = nullptr;
 		}
 	}
-	
-	Ref( std::nullptr_t nil )
-	{
-		_reference = nil;
-	}
 
-	Ref( const Initializer<T>& ir )
+	template< class Tz >
+	Ptr( Ptr<Tz>& other )
 	{
-		if( ir._reference_ )
+		Tz* ref = other.get();
+		if( ref != nullptr )
 		{
-			reference_ = ir._reference_;
+			ref->retain();
+			_reference = static_cast<Tz*>( ref );
 		}
 	}
 
-	Ref( Initializer<T>&& ir )
+	Ptr( Initializer<T>& ir )
 	{
 		if( ir._reference )
 		{
@@ -124,7 +118,7 @@ public:
 	}
 
 public:
-	void Reset( void )
+	void reset( void )
 	{
 		if( _reference )
 		{
@@ -133,52 +127,46 @@ public:
 		}
 	}
 
-	void Set( T* ref )
+	void set( std::nullptr_t nt )
 	{
 		if( _reference )
 		{
 			_reference->release();
-			_reference = nullptr;
-		}
-
-		if( ref )
-		{
-			_reference = ref;
-			_reference->retain();
+			_reference = nt;
 		}
 	}
 
-	void Set( const T* ref )
+	void set( T* other )
 	{
+		if( other )
+		{
+			other->retain();
+		}
+
 		if( _reference )
 		{
 			_reference->release();
-			_reference = nullptr;
 		}
 
-		if( ref )
-		{
-			_reference = (T*)ref;
-			_reference->retain();
-		}
+		_reference = other;
 	}
 
-	void Set( const Shared& other )
+	void set( Ptr<T>& other )
 	{
-		if( _reference )
-		{
-			_reference->release();
-			_reference = nullptr;
-		}
-
 		if( other._reference )
 		{
-			_reference = other._reference;
-			_reference->retain();
+			other._reference->retain();
 		}
+
+		if( _reference )
+		{
+			_reference->release();
+		}
+
+		_reference = other._reference;
 	}
 
-	void Set( Shared&& other )
+	void set( Ptr<T>&& other )
 	{
 		if( _reference )
 		{
@@ -193,79 +181,106 @@ public:
 		}
 	}
 
-	void Set( std::nullptr_t nil )
+	template< class Tz >
+	void set( Ptr<Tz>& other )
+	{
+		Tz* ref = other.get();
+		if( ref != nullptr )
+		{
+			ref->retain();
+			if( _reference )
+				_reference->release();
+
+			_reference = static_cast< Tz* >( ref );
+		}
+		else
+		{
+			if( _reference )
+			{
+				_reference->release();
+				_reference = nullptr;
+			}
+		}
+	}
+
+	void set( Initializer<T>& ir )
 	{
 		if( _reference )
 		{
 			_reference->release();
-			_reference = nil;
+			_reference = nullptr;
+		}
+
+		if( ir._reference )
+		{
+			_reference = ir._reference;
 		}
 	}
 
-	T* Get( void ) const
+	T* get( void ) const
 	{
 		return _reference;
 	}
 
-	template< class T2 >
-	T2* Get( void ) const
+	template< class Tz >
+	Tz* get( void ) const
 	{
-		return (T2*) _reference
+		return static_cast< Tz* >( _reference );
 	}
 
-	Ref<T> Share( void ) const
+	T* take( void )
 	{
-		return Ref<T>( _reference );
-	}
-
-	template< class T2 >
-	Ref<T2> Share( void ) const
-	{
-		return Ref<T2>( (T2*) _reference );
-	}
-
-	T* Take( void )
-	{
-		T* ret = _reference;
+		T* ref = _reference;
 		_reference = nullptr;
-		return ret;
+		return ref;
 	}
 
-	template< class T2 >
-	T2* Take( void )
+	template< class Tz >
+	Tz* take( void )
 	{
-		T2* ret = (T2*) _reference;
+		Tz* ref = static_cast< Tz* >( _reference );
 		_reference = nullptr;
-		return ret;
+		return ref;
 	}
 
-	Ref<Reference> ShareReference( void ) const
+	Ptr<T> share( void ) const
 	{
-		return Ref<Reference>( _reference );
+		return Ptr<T>( _reference );
+	}
+
+	template< class Tz >
+	Ptr<Tz> share( void ) const
+	{
+		return Ptr<Tz>( static_cast< Tz* >( _reference ) );
+	}
+
+	Ptr<Reference> shareReference( void ) const
+	{
+		return Ptr<Reference>( _reference );
 	}
 
 public:
-	Ref& operator=( T* ref )
+	Ptr<T>& operator=( std::nullptr_t nt )
 	{
-		set( ref );
+		set( nt );
 		return *this;
 	}
 
-	Ref& operator=( const Ref& other )
+	Ptr<T>& operator=( T* other )
 	{
 		set( other );
 		return *this;
 	}
 
-	Ref& operator=( Ref&& other )
+	Ptr<T>& operator=( const Ptr<T>& other )
 	{
-		set( std::forward<Ref>( other ) );
+		set( other );
 		return *this;
 	}
 
-	Ref& operator=( std::nullptr_t nil )
+	Ptr<T>& operator=( Ptr<T>&& other )
 	{
-		set( nil );
+		set( std::forward< Ptr<T> >( other ) );
 		return *this;
 	}
 
@@ -274,25 +289,24 @@ public:
 		return _reference;
 	}
 
-public:
-	bool operator==( const Ref& other ) const
+	bool operator==( const Ptr<T>& other ) const
 	{
 		return _reference == other._reference;
 	}
 
-	bool operator!=( const Ref& other ) const
+	bool operator!=( const Ptr<T>& other ) const
 	{
 		return _reference != other._reference;
 	}
 
-	bool operator==( std::nullptr_t nil ) const
+	bool operator==( std::nullptr_t nt ) const
 	{
-		return _reference == nil;
+		return _reference == nt;
 	}
 
-	bool operator!=( std::nullptr_t nil ) const
+	bool operator!=( std::nullptr_t nt ) const
 	{
-		return _reference != nil;
+		return _reference != nt;
 	}
 
 private:
@@ -301,4 +315,4 @@ private:
 
 NS_MAGICAL_END
 
-#endif //__SHARED_H__
+#endif //__PTR_H__

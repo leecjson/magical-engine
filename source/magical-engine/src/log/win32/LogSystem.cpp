@@ -28,41 +28,33 @@ SOFTWARE.
 #define MAGICAL_LOG_DEBUG "DEBUG"
 #define MAGICAL_LOG_ERROR "ERROR"
 
+NS_MAGICAL_BEGIN
+
 static char s_buffer[ kBufferLen ];
 static FILE* s_output_file = nullptr;
-
-void magicalLogLastError( void )
-{
-	char temp[ kBufferLen ];
-	const char* last_error = magicalGetLastErrorInfo();
-	
-	std::sprintf( temp, "[%s]: %s", MAGICAL_LOG_ERROR, last_error );
-	magicalLog( temp );
-}
 
 void Log::init( void )
 {
 	std::string dir, name;
-	char buff[MAX_PATH];
+	char buff[ MAX_PATH ];
 	std::memset( buff, 0, MAX_PATH );
 
 	GetModuleFileNameA( NULL, buff, MAX_PATH );
-	dir = FileUtils::toUnixStylePath( buff );
+	dir = FileUtils::toUnixPath( buff );
 	dir = dir.substr( 0, dir.find_last_of( "/" ) );
 
 	name = dir + "/magical-log.log";
-	s_output_file = std::fopen( name.c_str(), "w" );
+	s_output_file = fopen( name.c_str(), "w" );
 	if( s_output_file == nullptr )
 	{
-		magicalSetLastErrorInfoB( "open file(debug.log) failed!" );
+		magicalSetLastErrorA( "open file(debug.log) failed!" );
 		magicalLogLastError();
-		return;
 	}
 }
 
 void Log::delc( void )
 {
-	std::fclose( s_output_file );
+	fclose( s_output_file );
 	s_output_file = nullptr;
 }
 
@@ -75,16 +67,27 @@ void Log::write( const char* txt )
 #endif
 
 #ifdef MAGICAL_DEBUG
-	std::sprintf( s_buffer, "%s", txt );
+	sprintf( s_buffer, "%s", txt );
 
 	OutputDebugStringA( s_buffer );
 	OutputDebugStringA( "\n" );
-	std::printf( "%s\n", s_buffer );
+	printf( "%s\n", s_buffer );
 #endif
 
 	if( s_output_file )
 	{
-		std::fprintf( s_output_file, "%s\n", txt );
-		std::fflush( s_output_file );
+		fprintf( s_output_file, "%s\n", txt );
+		fflush( s_output_file );
 	}
+}
+
+NS_MAGICAL_END
+
+void magicalLogLastError( void )
+{
+	char temp[ kBufferLen ];
+	const char* last_error = magicalGetLastErrorInfo();
+	
+	sprintf( temp, "[%s]: %s", MAGICAL_LOG_ERROR, last_error );
+	magicalLog( temp );
 }

@@ -30,21 +30,20 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-Assets:GetFileData();
-
-class Assets
+class AssetsSystem
 {
 public:
-	static void init( void );
-	static void delc( void );
+	static void Init( void );
+	static void Delc( void );
 
 public:
-	static void setDefaultAssetsPath( void );
-	static void setAssetsPath( const char* path );
-	static std::string getAssetsPath( void );
-	static std::string getAssetsAbsFilename( const char* file );
-	static bool isFileExist( const char* file );
-	static Shared<Data> getFileData( const char* file );
+	static void getFileData( void );
+	static void SetDefaultAssetsPath( void );
+	static void SetAssetsPath( const char* path );
+	static std::string GetAssetsPath( void );
+	static std::string GetAssetsAbsFilename( const char* file );
+	static bool IsFileExist( const char* file );
+	static Ptr<Data> GetFileData( const char* file );
 };
 
 NS_MAGICAL_END

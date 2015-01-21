@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "cRay3.h"
-#include "cMathMacros.h"
 
 cBool magicalRay3Equals( const cRay3* r31, const cRay3* r32 )
 {
@@ -192,12 +191,12 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 	float t;
 	cVector3 p;
 
-	if( r3->ox >= aabb->min_x &&
-		r3->oy >= aabb->min_y &&
-		r3->oz >= aabb->min_z &&
-		r3->ox <= aabb->max_x &&
-		r3->oy <= aabb->max_y &&
-		r3->oz <= aabb->max_z )
+	if( r3->ox >= aabb->minx &&
+		r3->oy >= aabb->miny &&
+		r3->oz >= aabb->minz &&
+		r3->ox <= aabb->maxx &&
+		r3->oy <= aabb->maxy &&
+		r3->oz <= aabb->maxz )
 	{
 		out->t = 0.0f;
 		out->b = !discard_inside;
@@ -208,11 +207,11 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 	{
 		if( r3->dx > 0.0f )
 		{
-			t = ( aabb->min_x - r3->ox ) / r3->dx;
+			t = ( aabb->minx - r3->ox ) / r3->dx;
 		}
 		else
 		{
-			t = ( aabb->max_x - r3->ox ) / r3->dx;
+			t = ( aabb->maxx - r3->ox ) / r3->dx;
 		}
 
 		if( t > 0.0f )
@@ -221,8 +220,8 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 			p.y = r3->oy + r3->dy * t;
 			p.z = r3->oz + r3->dz * t;
 
-			if( p.y >= aabb->min_y && p.y <= aabb->max_y &&
-				p.z >= aabb->min_z && p.z <= aabb->max_z )
+			if( p.y >= aabb->miny && p.y <= aabb->maxy &&
+				p.z >= aabb->minz && p.z <= aabb->maxz )
 			{
 				out->t = t;
 				out->b = cTrue;
@@ -235,11 +234,11 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 	{
 		if( r3->dy > 0.0f )
 		{
-			t = ( aabb->min_y - r3->oy ) / r3->dy;
+			t = ( aabb->miny - r3->oy ) / r3->dy;
 		}
 		else
 		{
-			t = ( aabb->max_y - r3->oy ) / r3->dy;
+			t = ( aabb->maxy - r3->oy ) / r3->dy;
 		}
 
 		if( t > 0.0f )
@@ -248,8 +247,8 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 			p.y = r3->oy + r3->dy * t;
 			p.z = r3->oz + r3->dz * t;
 
-			if( p.z >= aabb->min_z && p.z <= aabb->max_z &&
-				p.x >= aabb->min_x && p.x <= aabb->max_x )
+			if( p.z >= aabb->minz && p.z <= aabb->maxz &&
+				p.x >= aabb->minx && p.x <= aabb->maxx )
 			{
 				out->t = t;
 				out->b = cTrue;
@@ -262,11 +261,11 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 	{
 		if( r3->dz > 0.0f )
 		{
-			t = ( aabb->min_z - r3->oz ) / r3->dz;
+			t = ( aabb->minz - r3->oz ) / r3->dz;
 		}
 		else
 		{
-			t = ( aabb->max_z - r3->oz ) / r3->dz;
+			t = ( aabb->maxz - r3->oz ) / r3->dz;
 		}
 
 		if( t > 0.0f )
@@ -275,8 +274,8 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 			p.y = r3->oy + r3->dy * t;
 			p.z = r3->oz + r3->dz * t;
 
-			if( p.x >= aabb->min_x && p.x <= aabb->max_x &&
-				p.y >= aabb->min_y && p.y <= aabb->max_y )
+			if( p.x >= aabb->minx && p.x <= aabb->maxx &&
+				p.y >= aabb->miny && p.y <= aabb->maxy )
 			{
 				out->t = t;
 				out->b = cTrue;

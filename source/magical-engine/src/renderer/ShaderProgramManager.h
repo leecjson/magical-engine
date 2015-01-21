@@ -31,12 +31,13 @@ SOFTWARE.
 
 //class ShaderProgramColor;
 
+NS_MAGICAL_BEGIN
+
 enum ShaderProgramIndex
 {
 	kShaderProgram_Color = 0,
 	kShaderProgram_Count,
 };
-
 
 
 class ShaderProgramManager
@@ -47,8 +48,10 @@ public:
 	static void initPrograms( void );
 	static void delcPrograms( void );
 
-	static const Shared<ShaderProgram> getProgram( ShaderProgramIndex index );
+	static const Ptr<ShaderProgram> getProgram( ShaderProgramIndex index );
 };
+
+NS_MAGICAL_END
 
 //class ShaderProgramColor : public ShaderProgram
 //{

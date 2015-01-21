@@ -30,13 +30,13 @@ SOFTWARE.
 class StringUtils
 {
 public:
-	template< int __size >
-	static inline std::string Format( const char* format, ... )
+	template< int size >
+	static inline std::string format( const char* format, ... )
 	{
-		char buf[ __size ];
+		char buf[ size ];
 		va_list args;
 		va_start( args, format );
-		vsnprintf( buf, __size, format, args );
+		vsnprintf( buf, size, format, args );
 		va_end( args );
 		return std::string( buf );
 	}
@@ -51,8 +51,8 @@ public:
 class FileUtils
 {
 public:
-	static bool IsAbsPath( const char* path );
-	static std::string ToUnixPath( const char* path );
+	static bool isAbsPath( const char* path );
+	static std::string toUnixPath( const char* path );
 };
 
 #endif //__UTILS_H__

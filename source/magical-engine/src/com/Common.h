@@ -26,13 +26,6 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 
-///*
-//platform include
-//*/
-//#ifdef MAGICAL_WIN32
-//#include <Windows.h>
-//#endif
-
 /*
 c include
 */
@@ -62,23 +55,25 @@ c++ include
 /*
 buffer macros
 */
+NS_MAGICAL_BEGIN
 extern char g_buffer[];
-
-#define magicalBuffer ( g_buffer )
-#define magicalFormat( __format, ... ) sprintf( magicalBuffer, __format, ##__VA_ARGS__ )
+NS_MAGICAL_END
+#define magicalGetBuffer() ::magical::g_buffer
+#define magicalFormat( fmt, ... ) ::sprintf( ::magical::g_buffer, fmt, ##__VA_ARGS__ )
 
 /*
-func macros
+func macros 
 */
-#define magicalSafeFree( __var ) do{ if( __var ) free( __var ); } while(0)
-#define magicalSafeFreeNull( __var ) do{ if( __var ) free( __var ); __var == nullptr; } while(0)
-#define magicalSafeDelete( __var ) do{ if( __var ) delete __var; } while(0)
-#define magicalSafeDeleteNull( __var ) do{ if( __var ) delete __var; __var == nullptr; } while(0)
-#define magicalSafeDeleteArray( __var ) do{ if( __var ) delete[] __var; } while(0)
-#define magicalSafeDeleteArrayNull( __var ) do{ if( __var ) delete[] __var; __var = nullptr; } while(0)
-#define magicalSafeRetain( __var ) do{ if( __var ) __var->retain(); } while(0)
-#define magicalSafeRelease( __var ) do{ if( __var ) __var->release(); } while(0)
-#define magicalSafeReleaseNull( __var ) do{ if( __var ){ __var->release(); __var = nullptr; } } while(0)
+#define magicalSafeFree( var ) do{ if( var ) ::free( var ); } while(0)
+#define magicalSafeFreeNull( var ) do{ if( var ) ::free( var ); var = nullptr; } while(0)
+#define magicalSafeDelete( var ) do{ if( var ) delete var; } while(0)
+#define magicalSafeDeleteNull( var ) do{ if( var ) delete var; var = nullptr; } while(0)
+#define magicalSafeDeleteArray( var ) do{ if( var ) delete[] var; } while(0)
+#define magicalSafeDeleteArrayNull( var ) do{ if( var ) delete[] var; var = nullptr; } while(0)
+#define magicalSafeRetain( var ) do{ if( var ) var->retain(); } while(0)
+#define magicalSafeRelease( var ) { if( var ) var->release(); }
+#define magicalSafeReleaseNull( var ) { if( var ){ var->release(); var = nullptr; } }
+#define magicalSafeAssign( lvar, rvar ) { if( rvar ) rvar->retain(); if( lvar ) lvar->release(); lvar = rvar; }
 
 /*
 error macros
@@ -86,38 +81,37 @@ error macros
 MAGICALAPI bool magicalIsError( void );
 MAGICALAPI void magicalIgnoreLastError( void );
 MAGICALAPI void magicalSetLastError( const char* info, const char* func = nullptr, int line = 0 );
-#define magicalSetLastErrorB( __info ) magicalSetLastError( __info, __FUNCTION__, __LINE__ )
+#define magicalSetLastErrorA( info ) magicalSetLastError( info, __FUNCTION__, __LINE__ )
 MAGICALAPI const char* magicalGetLastErrorInfo( void );
-//#define magicalShowLastError() do { if( magicalIsError() ) magicalMessageBox( magicalGetLastErrorInfo(), "Error" ); } while(0)
 MAGICALAPI void magicalShowLastError( void );
 #define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
-#define magicalReturnVarIfError( __var ) do{ if( magicalIsError() ) return __var; } while(0)
+#define magicalReturnVarIfError( var ) do{ if( magicalIsError() ) return var; } while(0)
 
 /*
 messagebox macros, multi-platform implement
 */
 MAGICALAPI void magicalMessageBox( const char* msg, const char* title );
 #ifndef MAGICAL_DEBUG
-#define magicalDebugMessageBox( __msg, __title )
+	#define magicalDebugMessageBox( msg, title )
 #else
-#define magicalDebugMessageBox( __msg, __title ) magicalMessageBox( __msg, __title )
+	#define magicalDebugMessageBox( msg, title ) magicalMessageBox( msg, title )
 #endif
 
 /*
 asserts macros
 */
 MAGICALAPI void magicalLocalAssert( const char* exp, const char* msg, const char* file, int line );
-#define magicalLocalAssertB( __exp, __msg ) magicalLocalAssert( __exp, __msg, __FILE__, __LINE__ )
+#define magicalLocalAssertA( exp, msg ) magicalLocalAssert( exp, msg, __FILE__, __LINE__ )
 #ifndef MAGICAL_DEBUG
-#define magicalAssert( __con, __msg )
+	#define magicalAssert( exp, msg )
 #else
-#define magicalAssert( __con, __msg ) do{                     \
-	if( !( __con ) ) {                                        \
-		magicalSetLastErrorInfoB( __msg );                    \
-		magicalLogLastError();                                \
-		magicalLocalAssertB( #__con, __msg );                 \
-	}                                                         \
-	} while(0)
+	#define magicalAssert( exp, msg ) do{                     \
+		if( !( exp ) ) {                                      \
+			magicalSetLastErrorA( msg );                      \
+			magicalLogLastError();                            \
+			magicalLocalAssertA( #exp, msg );                 \
+		}                                                     \
+		} while(0)
 #endif
 
 /*

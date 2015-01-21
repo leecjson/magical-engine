@@ -29,14 +29,14 @@ SOFTWARE.
 #include "magical-math.h"
 
 #include "Common.h"
-#include "Shared.h"
+#include "Ptr.h"
 #include "Reference.h"
 #include "Data.h"
-#include "Node.h"
+#include "SceneObject.h"
 #include "Engine.h"
-#include "AssetsSystem.h"
+//#include "AssetsSystem.h"
 #include "LogSystem.h"
-#include "InputSystem.h"
+//#include "InputSystem.h"
 #include "Utils.h"
 
 //#include "LuaMacros.h"

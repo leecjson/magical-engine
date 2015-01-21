@@ -28,14 +28,22 @@ SOFTWARE.
 #include "../c/cQuaternion.h"
 #include "../c/cMatrix3.h"
 #include "../c/cMatrix4.h"
+
+#include "Utility.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include "AxisAngle.h"
 #include "EulerAngles.h"
 #include "Quaternion.h"
 #include "Matrix4.h"
+
 #include "Matrix4.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const Matrix4 Matrix4::Identity = Matrix4(
 	1.0f, 0.0f, 0.0f, 0.0f,
@@ -76,8 +84,7 @@ Matrix4::Matrix4( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<Matrix4> s_matrix4_cached_pool( 8, 8 );
+static CachePool<Matrix4> s_matrix4_cache_pool( 8, 8 );
 #endif
 
 void* Matrix4::operator new( size_t s )
@@ -86,7 +93,7 @@ void* Matrix4::operator new( size_t s )
 	if( s != sizeof( Matrix4 ) )
 		return ::operator new( s );
 
-	return s_matrix4_cached_pool.take();
+	return s_matrix4_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -98,8 +105,10 @@ void Matrix4::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_matrix4_cached_pool.push( ptr );
+	s_matrix4_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

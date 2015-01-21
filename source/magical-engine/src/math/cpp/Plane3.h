@@ -24,11 +24,9 @@ SOFTWARE.
 #ifndef __PLANE3_H__
 #define __PLANE3_H__
 
-struct Vector3;
-struct Ray3;
-struct AABB3;
-struct Sphere3;
-struct RayIntersectResult;
+NS_MAGICAL_BEGIN
+
+FORWARD_DECLARE
 
 enum class Plane3Classification
 {
@@ -39,12 +37,6 @@ enum class Plane3Classification
 
 struct Plane3 : public cPlane3
 {
-public:
-	float x;
-	float y;
-	float z;
-	float d;
-
 public:
 	static const Plane3 Zero;
 	static const Plane3 NormalX;
@@ -97,5 +89,7 @@ public:
 	inline void intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside = false ) const;
 	inline bool containsPoint( const Vector3& point ) const;
 };
+
+NS_MAGICAL_END
 
 #endif //__PLANE3_H__

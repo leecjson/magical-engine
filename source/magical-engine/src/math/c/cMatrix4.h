@@ -58,7 +58,7 @@ MAGICALAPI_MATH void magicalMatrix4SetZero( cMatrix4* out );
 
 MAGICALAPI_MATH void magicalMatrix4SetLookAt( cMatrix4* out, const cVector3* eye, const cVector3* target, const cVector3* up );
 MAGICALAPI_MATH void magicalMatrix4SetPerspective( cMatrix4* out, float fov, float aspect, float znear, float zfar );
-MAGICALAPI_MATH void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom, float top, float near, float far );
+MAGICALAPI_MATH void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom, float top, float znear, float zfar );
 MAGICALAPI_MATH void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* r, const cVector3* s );
 
 MAGICALAPI_MATH void magicalMatrix4MakeTranslationScalars( cMatrix4* out, float x, float y, float z );

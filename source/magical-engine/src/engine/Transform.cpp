@@ -23,6 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "Transform.h"
 
+NS_MAGICAL_BEGIN
 
 enum
 {
@@ -42,20 +43,16 @@ Transform::~Transform( void )
 	
 }
 
-Shared<Transform> Transform::create( void )
-{
-	Transform* ret = new Transform();
-	magicalAssert( ret, "new Transform() failed" );
-	return Shared<Transform>( Initializer<Transform>( ret ) );
-}
+//Ptr<Transform> Transform::create( void )
+//{
+//	Transform* ret = new Transform();
+//	magicalAssert( ret, "new Transform() failed" );
+//	return Ptr<Transform>( Initializer<Transform>( ret ) );
+//}
 
 void Transform::setName( const char* name )
 {
-	magicalAssert( name && strlen( name ) > 0, "Transform::setName" );
-
-	if( _name == name )
-		return;
-
+	magicalAssert( name && *name, "name should not be empty" );
 	_name = name;
 }
 
@@ -64,28 +61,28 @@ const std::string& Transform::getName( void ) const
 	return _name;
 }
 
-void Transform::addChild( const Shared<Transform>& child )
+void Transform::addChild( const Ptr<Transform>& child )
 {
-	Transform* ts = child.get();
-	magicalAssert( ts && ts != this && !ts->getParent(), "Transform::addChild" );
+	Transform* rchild = child.get();
+	magicalAssert( rchild && rchild != this && !rchild->getParent(), "Invaild!" );
 
-	ts->setParent( this );
+	rchild->_setParent( this );
 
-	ts->retain();
-	_children.push_back( ts );
+	rchild->retain();
+	_children.push_back( rchild );
 }
 
-void Transform::removeChild( const Shared<Transform>& child )
+void Transform::removeChild( const Ptr<Transform>& child )
 {
-	Transform* ts = child.get();
-	magicalAssert( ts && ts->getParent() == this, "Transform::removeChild" );
+	Transform* rchild = child.get();
+	magicalAssert( rchild && rchild->getParent() == this, "Invaild!" );
 
-	auto itr = std::find( _children.begin(), _children.end(), ts );
-	magicalAssert( itr != _children.end(), "Transform::removeChild" );
+	auto itr = std::find( _children.begin(), _children.end(), rchild );
+	magicalAssert( itr != _children.end(), "Invaild!" );
 
-	ts->setParent( nullptr );
+	rchild->setParent( nullptr );
 	_children.erase( itr );
-	ts->release();
+	rchild->release();
 }
 
 void Transform::removeAllChildren( void )
@@ -103,13 +100,13 @@ void Transform::removeAllChildren( void )
 
 void Transform::removeFromParent( void )
 {
-	magicalAssert( getParent(), "Transform::removeFromParent" );
+	magicalAssert( getParent(), "Invaild! has no parent transform" );
 	getParent()->removeChild( this );
 }
 
 Transform* Transform::findChild( const char* name ) const
 {
-	magicalAssert( name && strlen( name ) > 0, "Transform::getChild" );
+	magicalAssert( name && *name, "name should not be empty" );
 	
 	auto ritr = _children.rbegin();
 	for( ; ritr != _children.rend(); ++ritr )
@@ -125,7 +122,7 @@ Transform* Transform::findChild( const char* name ) const
 
 Transform* Transform::getChild( unsigned int index ) const
 {
-	magicalAssert( index < _children.size(), "Transform::getChild" );
+	magicalAssert( index < _children.size(), "Invaild index!" );
 	return _children[index];
 }
 
@@ -139,9 +136,9 @@ Transform* Transform::getParent( void ) const
 	return _parent;
 }
 
-bool Transform::isChildOf( const Shared<Transform>& parent ) const
+bool Transform::isChildOf( const Ptr<Transform>& parent ) const
 {
-	magicalAssert( parent != nullptr, "Transform::isChildOf" );
+	magicalAssert( parent != nullptr, "Invaild! should not be nullptr" );
 	return _parent == parent.get();
 }
 
@@ -153,7 +150,7 @@ void Transform::setPosition( const Vector2& t )
 void Transform::setPosition( const Vector3& t )
 {
 	_local_position = t;
-	_ts_need_update |= kNeedToUpdateTranslation;
+	transform( kNeedToUpdateTranslation );
 }
 
 void Transform::setPosition( float x, float y )
@@ -208,14 +205,14 @@ void Transform::translate( float x, float y, float z, Space relative_to )
 	translate( Vector3( x, y, z ), relative_to );
 }
 
-void Transform::setRotation( const EulerAngles& r )
-{
-	setRotation( r.toQuaternion() );
-}
-
 const Vector3& Transform::getPosition( void ) const
 {
 	return _local_position;
+}
+
+void Transform::setRotation( const EulerAngles& r )
+{
+	setRotation( r.toQuaternion() );
 }
 
 void Transform::setRotation( const Quaternion& r )
@@ -312,7 +309,7 @@ void Transform::scale( const Vector2& s )
 void Transform::scale( const Vector3& s )
 {
 	_local_scale *= s;
-	_ts_need_update |= kNeedToUpdateScale;
+	onTransform( kNeedToUpdateScale );
 }
 
 void Transform::scale( float x, float y )
@@ -337,7 +334,7 @@ const Vector3& Transform::getScale( void ) const
 
 void Transform::lookAt( const Vector3& target, const Vector3& up )
 {
-	
+
 }
 
 void Transform::resetTransform( void )
@@ -349,49 +346,9 @@ void Transform::resetTransform( void )
 	_ts_need_update = kNeedToUpdateTranslation | kNeedToUpdateRotation | kNeedToUpdateScale;
 }
 
-void Transform::setParent( Transform* parent )
-{
-	magicalAssert( parent && !getParent(), "Transform::setParent" );
-	_parent = parent;
-}
-
-void Transform::updateTransformTree( Transform* ts )
-{
-	if( ts->_children.empty() )
-		return;
-
-	auto& chilren = ts->_children;
-	for( auto& child : chilren )
-	{
-		child->needToUpdate( _ts_need_update );
-		updateTransformTree( child );
-	}
-}
-
-void Transform::updateTransform( void )
-{
-	if( !_ts_dirty )
-		return;
-
-	updateTransformTree( this );
-
-	const Quaternion& r = getDerivedRotation();
-	const Vector3& s = getDerivedScale();
-	const Vector3& t = getDerivedPosition();
-
-	_local_to_world_matrix.setTRS( t, r, s );
-	_ts_dirty = false;
-}
-
-void Transform::needToUpdate( int flag )
-{
-	_ts_need_update |= flag;
-	_ts_dirty = true;
-}
-
 const Vector3& Transform::getDerivedPosition( void ) const
 {
-	if( _ts_need_update & ( kNeedToUpdateTranslation | kNeedToUpdateRotation | kNeedToUpdateScale ) )
+	if( _ts_need_update & kNeedToUpdateTranslation )
 	{
 		if( _parent )
 		{
@@ -402,9 +359,10 @@ const Vector3& Transform::getDerivedPosition( void ) const
 		{
 			_derived_position = _local_position;
 		}
+
+		_ts_need_update = _ts_need_update & ( ~kNeedToUpdateTranslation );
 	}
 
-	_ts_need_update = _ts_need_update & ( kNeedToUpdateRotation | kNeedToUpdateScale );
 	return _derived_position;
 }
 
@@ -420,9 +378,10 @@ const Quaternion& Transform::getDerivedRotation( void ) const
 		{
 			_derived_rotation = _local_rotation;
 		}
+
+		_ts_need_update = _ts_need_update & ( ~kNeedToUpdateRotation );
 	}
 
-	_ts_need_update = _ts_need_update & ( kNeedToUpdateTranslation | kNeedToUpdateScale );
 	return _derived_rotation;
 }
 
@@ -438,8 +397,54 @@ const Vector3& Transform::getDerivedScale( void ) const
 		{
 			_derived_scale = _local_scale;
 		}
+
+		_ts_need_update = _ts_need_update & ( ~kNeedToUpdateScale );
 	}
 
-	_ts_need_update = _ts_need_update & ( kNeedToUpdateTranslation | kNeedToUpdateRotation );
 	return _derived_scale;
 }
+
+void Transform::setParent( Transform* parent )
+{
+	magicalAssert( parent, "should not be nullptr." );
+	magicalAssert( !getParent(), "Invaild! already has a parent transform." );
+	_parent = parent;
+}
+
+void Transform::updateChildrenTransform( Transform* ts )
+{
+	if( ts->_children.empty() )
+		return;
+
+	auto& chilren = ts->_children;
+	for( auto& child : chilren )
+	{
+		child->needToUpdate( ts->_ts_need_update );
+		child->updateTransform();
+		updateChildrenTransform( child );
+	}
+}
+
+void Transform::updateTransform( void )
+{
+	if( !_ts_dirty )
+		return;
+
+	updateChildrenTransform( this );
+
+	const Quaternion& r = getDerivedRotation();
+	const Vector3& s = getDerivedScale();
+	const Vector3& t = getDerivedPosition();
+
+	_local_to_world_matrix.setTRS( t, r, s );
+	_ts_dirty = false;
+}
+
+void Transform::onTransform( int f )
+{
+	_ts_need_update |= f;
+	_ts_dirty = true;
+}
+
+
+NS_MAGICAL_END

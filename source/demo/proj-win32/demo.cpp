@@ -26,13 +26,15 @@ SOFTWARE.
 
 int main( int argc, char* argv[] )
 {
-	Application::Init();
+	USING_NS_MAGICAL;
+
+	Application::init();
 	magicalReturnVarIfError( -1 );
 
-	Application::Run( mainDelegate );
+	Application::run( mainDelegate );
 	magicalReturnVarIfError( -1 );
 
-	Application::Delc();
+	Application::delc();
 	magicalReturnVarIfError( -1 );
 
 	return 0;

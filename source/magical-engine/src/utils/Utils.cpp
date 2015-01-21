@@ -31,7 +31,7 @@ int64_t TimeUtils::currentMicrosecondsTime( void )
 	return now;
 }
 
-bool FileUtils::isAbsolutePath( const char* path )
+bool FileUtils::isAbsPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr." );
 
@@ -47,7 +47,7 @@ bool FileUtils::isAbsolutePath( const char* path )
 #endif
 }
 
-std::string FileUtils::toUnixStylePath( const char* path )
+std::string FileUtils::toUnixPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr." );
 

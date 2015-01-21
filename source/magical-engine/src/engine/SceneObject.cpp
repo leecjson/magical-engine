@@ -21,19 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __MATH_MACROS_H__
-#define __MATH_MACROS_H__
+#include "SceneObject.h"
+#include "Data.h"
 
-#include <exception>
+NS_MAGICAL_BEGIN
 
-#if defined MAGICAL_ENGINE
-#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
-#define MAGICAL_MATH_CACHED_POOL_ENABLE 1
-#endif
-#else
-#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
-#define MAGICAL_MATH_CACHED_POOL_ENABLE 0
-#endif
-#endif
+SceneObject::SceneObject( void )
+{
+	
+}
 
-#endif //__MATH_MACROS_H__
+SceneObject::~SceneObject( void )
+{
+	
+}
+
+Ptr<SceneObject> SceneObject::create( void )
+{
+	SceneObject* ret = new SceneObject();
+	magicalAssert( ret, "new SceneObject() failed" );
+	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
+}
+
+void SceneObject::visit( void )
+{
+	updateTransform();
+
+
+}
+
+NS_MAGICAL_END

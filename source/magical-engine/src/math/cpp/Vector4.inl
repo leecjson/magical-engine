@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline Vector4 Vector4::createZero( void )
 {
 	return Vector4::Zero;
@@ -415,3 +417,5 @@ inline Vector4 Vector4::project( const Vector4& n ) const
 	magicalVector4Project( &ret, this, &n );
 	return ret;
 }
+
+NS_MAGICAL_END

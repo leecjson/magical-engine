@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline AABB3 AABB3::createZero( void )
 {
 	return AABB3::Zero;
@@ -34,10 +36,10 @@ inline AABB3 AABB3::createFromPoints( const Vector3& min, const Vector3& max )
 	return ret;
 }
 
-inline AABB3 AABB3::createFromCenterAround( const Vector3& center, float width, float height, float depth )
+inline AABB3 AABB3::createFromBox( const Vector3& center, float width, float height, float depth )
 {
 	AABB3 ret;
-	magicalAABB3SetCenterAround( &ret, &center, width, height, depth );
+	magicalAABB3SetBox( &ret, &center, width, height, depth );
 	return ret;
 }
 
@@ -51,24 +53,14 @@ inline void AABB3::transform( AABB3& out, const AABB3& aabb, const Matrix4& m )
 	magicalAABB3Transform( &out, &aabb, &m );
 }
 
-inline void AABB3::center( Vector3& out, const AABB3& aabb )
+inline void AABB3::centerPoint( Vector3& out, const AABB3& aabb )
 {
-	magicalAABB3Center( &out, &aabb );
+	magicalAABB3CenterPoint( &out, &aabb );
 }
 
 inline void AABB3::nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point )
 {
 	magicalAABB3NearestPoint( &out, &aabb, &point );
-}
-
-inline void AABB3::getMin( Vector3& out, const AABB3& aabb )
-{
-	magicalAABB3GetMin( &out, &aabb );
-}
-
-inline void AABB3::getMax( Vector3& out, const AABB3& aabb )
-{
-	magicalAABB3GetMax( &out, &aabb );
 }
 
 inline bool AABB3::equals( const AABB3& aabb ) const
@@ -107,9 +99,9 @@ inline void AABB3::setZero( void )
 	magicalAABB3SetZero( this );
 }
 
-inline void AABB3::setScalars( float min_x, float min_y, float min_z, float max_x, float max_y, float max_z )
+inline void AABB3::setScalars( float minx, float miny, float minz, float maxx, float maxy, float maxz )
 {
-	magicalAABB3Fill( this, min_x, min_y, min_z, max_x, max_y, max_z );
+	magicalAABB3Fill( this, minx, miny, minz, maxx, maxy, maxz );
 }
 
 inline void AABB3::fromPoints( const Vector3& min, const Vector3& max )
@@ -117,24 +109,14 @@ inline void AABB3::fromPoints( const Vector3& min, const Vector3& max )
 	magicalAABB3SetPoints( this, &min, &max );
 }
 
-inline void AABB3::fromCenterAround( const Vector3& center, float width, float height, float depth )
+inline void AABB3::fromBox( const Vector3& center, float width, float height, float depth )
 {
-	magicalAABB3SetCenterAround( this, &center, width, height, depth );
-}
-
-inline void AABB3::setMin( const Vector3& min )
-{
-	magicalAABB3SetMin( this, &min );
-}
-
-inline void AABB3::setMax( const Vector3& max )
-{
-	magicalAABB3SetMax( this, &max );
+	magicalAABB3SetBox( this, &center, width, height, depth );
 }
 
 inline void AABB3::addPoint( float x, float y, float z )
 {
-	magicalAABB3AddPointScalars( this, this, x, y, z );
+	magicalAABB3AddPoint( this, this, &Vector3( x, y, z ) );
 }
 
 inline void AABB3::addPoint( const Vector3& v )
@@ -179,10 +161,10 @@ inline float AABB3::diameterZ( void ) const
 	return magicalAABB3DiameterZ( this );
 }
 
-inline Vector3 AABB3::center( void ) const
+inline Vector3 AABB3::centerPoint( void ) const
 {
 	Vector3 ret;
-	magicalAABB3Center( &ret, this );
+	magicalAABB3CenterPoint( &ret, this );
 	return ret;
 }
 
@@ -193,14 +175,24 @@ inline Vector3 AABB3::nearestPoint( const Vector3& point ) const
 	return ret;
 }
 
-inline Vector3 AABB3::getMin( void ) const
+inline void AABB3::setMinPoint( const Vector3& min )
 {
-	return Vector3( min_x, min_y, min_z );
+	magicalAABB3SetMinPoint( this, &min );
 }
 
-inline Vector3 AABB3::getMax( void ) const
+inline Vector3 AABB3::getMinPoint( void ) const
 {
-	return Vector3( max_x, max_y, max_z );
+	return Vector3( minx, miny, minz );
+}
+
+inline void AABB3::setMaxPoint( const Vector3& max )
+{
+	magicalAABB3SetMaxPoint( this, &max );
+}
+
+inline Vector3 AABB3::getMaxPoint( void ) const
+{
+	return Vector3( maxx, maxy, maxz );
 }
 
 inline bool AABB3::intersects( const AABB3& aabb ) const
@@ -232,3 +224,5 @@ inline bool AABB3::containsPoint( const Vector3& point ) const
 {
 	return magicalAABB3ContainsPoint( this, &point );
 }
+
+NS_MAGICAL_END

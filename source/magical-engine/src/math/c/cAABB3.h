@@ -29,12 +29,12 @@ SOFTWARE.
 #pragma pack( push )
 #pragma pack( 4 )
 typedef struct cAABB3 {
-	float min_x;
-	float min_y;
-	float min_z;
-	float max_x;
-	float max_y;
-	float max_z;
+	float minx;
+	float miny;
+	float minz;
+	float maxx;
+	float maxy;
+	float maxz;
 } cAABB3;
 #pragma pack( pop )
 
@@ -50,20 +50,19 @@ extern "C" {
 MAGICALAPI_MATH cBool magicalAABB3Equals( const cAABB3* aabb1, const cAABB3* aabb2 );
 MAGICALAPI_MATH cBool magicalAABB3IsZero( const cAABB3* aabb );
 
-MAGICALAPI_MATH void magicalAABB3Fill( cAABB3* out, float min_x, float min_y, float min_z, float max_x, float max_y, float max_z );
+MAGICALAPI_MATH void magicalAABB3Fill( cAABB3* out, float minx, float miny, float minz, float maxx, float maxy, float maxz );
 MAGICALAPI_MATH void magicalAABB3Copy( cAABB3* out, const cAABB3* aabb );
-MAGICALAPI_MATH void magicalAABB3SetCenterAround( cAABB3* out, const cVector3* center, float width, float height, float depth );
+MAGICALAPI_MATH void magicalAABB3SetBox( cAABB3* out, const cVector3* center, float width, float height, float depth );
 MAGICALAPI_MATH void magicalAABB3SetPoints( cAABB3* out, const cVector3* min, const cVector3* max );
 MAGICALAPI_MATH void magicalAABB3SetZero( cAABB3* out );
 
-MAGICALAPI_MATH void magicalAABB3GetMin( cVector3* out, const cAABB3* aabb );
-MAGICALAPI_MATH void magicalAABB3GetMax( cVector3* out, const cAABB3* aabb );
-MAGICALAPI_MATH void magicalAABB3SetMax( cAABB3* out, const cVector3* max );
-MAGICALAPI_MATH void magicalAABB3SetMin( cAABB3* out, const cVector3* min );
-MAGICALAPI_MATH void magicalAABB3AddPointScalars( cAABB3* out, const cAABB3* aabb, float x, float y, float z );
+MAGICALAPI_MATH void magicalAABB3SetMinPoint( cAABB3* out, const cVector3* min );
+MAGICALAPI_MATH void magicalAABB3GetMinPoint( cVector3* out, const cAABB3* aabb );
+MAGICALAPI_MATH void magicalAABB3SetMaxPoint( cAABB3* out, const cVector3* max );
+MAGICALAPI_MATH void magicalAABB3GetMaxPoint( cVector3* out, const cAABB3* aabb );
 MAGICALAPI_MATH void magicalAABB3AddPoint( cAABB3* out, const cAABB3* aabb, const cVector3* v );
 MAGICALAPI_MATH void magicalAABB3Merge( cAABB3* out, const cAABB3* aabb1, const cAABB3* aabb2 );
-MAGICALAPI_MATH void magicalAABB3Center( cVector3* out, const cAABB3* aabb );
+MAGICALAPI_MATH void magicalAABB3CenterPoint( cVector3* out, const cAABB3* aabb );
 MAGICALAPI_MATH void magicalAABB3NearestPoint( cVector3* out, const cAABB3* aabb, const cVector3* point );
 MAGICALAPI_MATH void magicalAABB3Transform( cAABB3* out, const cAABB3* aabb, const cMatrix4* m );
 

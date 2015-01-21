@@ -24,11 +24,19 @@ SOFTWARE.
 #include "../c/cVector3.h"
 #include "../c/cAxisAngle.h"
 #include "../c/cQuaternion.h"
+
+#include "Utility.h"
 #include "Vector3.h"
 #include "AxisAngle.h"
 #include "Quaternion.h"
+
 #include "AxisAngle.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const AxisAngle AxisAngle::Identity = AxisAngle( 0.0f, 0.0f, 1.0f, 0.0f );
 const AxisAngle AxisAngle::Zero = AxisAngle( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -55,8 +63,7 @@ AxisAngle::AxisAngle( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<AxisAngle> s_axisag_cached_pool( 32, 32 );
+static CachePool<AxisAngle> s_axisangle_cache_pool( 32, 32 );
 #endif
 
 void* AxisAngle::operator new( size_t s )
@@ -65,7 +72,7 @@ void* AxisAngle::operator new( size_t s )
 	if( s != sizeof( AxisAngle ) )
 		return ::operator new( s );
 
-	return s_axisag_cached_pool.take();
+	return s_axisangle_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -77,8 +84,10 @@ void AxisAngle::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_axisag_cached_pool.push( ptr );
+	s_axisangle_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

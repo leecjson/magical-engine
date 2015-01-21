@@ -28,12 +28,14 @@ SOFTWARE.
 #include "Common.h"
 #include "Reference.h"
 
+NS_MAGICAL_BEGIN
+
 class ShaderProgram : public Reference
 {
 public:
 	ShaderProgram( void );
 	virtual ~ShaderProgram( void );
-	static Shared<ShaderProgram> create( void );
+	static Ptr<ShaderProgram> create( void );
 
 public:
 	void setVertexSource( const char* vertex_src );
@@ -55,5 +57,7 @@ protected:
 	bool _is_built = false;
 	bool _is_linked = false;
 };
+
+NS_MAGICAL_END
 
 #endif //__SHADER_PROGRAM_H__

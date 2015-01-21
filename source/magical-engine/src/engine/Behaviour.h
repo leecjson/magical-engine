@@ -29,14 +29,15 @@ SOFTWARE.
 #include "Reference.h"
 #include "InputSystem.h"
 
-struct KeyEvent;
+NS_MAGICAL_BEGIN
 
 class Behaviour : public Reference
 {
 public:
-	virtual void onCreate( void ){}
-	virtual void onUpdate( void ){}
-	virtual void onKeyEvent( const KeyEvent* evt ){};
+	virtual void OnCreate( void ){}
+	virtual void OnUpdate( void ){}
 };
+
+NS_MAGICAL_END
 
 #endif //__BEHAVIOUR_H__

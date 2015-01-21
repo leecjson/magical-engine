@@ -24,13 +24,9 @@ SOFTWARE.
 #ifndef __RAY3_H__
 #define __RAY3_H__
 
-#include <stdint.h>
+NS_MAGICAL_BEGIN
 
-struct Vector3;
-struct AABB3;
-struct Plane3;
-struct Sphere3;
-struct RayIntersectResult;
+FORWARD_DECLARE
 
 struct Ray3 : public cRay3
 {
@@ -53,8 +49,8 @@ public:
 public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
-	inline bool Equals( const Ray3& r3 ) const;
-	inline bool IsZero( void ) const;
+	inline bool equals( const Ray3& r3 ) const;
+	inline bool isZero( void ) const;
 	inline bool operator==( const Ray3& r3 ) const;
 	inline bool operator!=( const Ray3& r3 ) const;
 	inline Ray3& operator=( const Ray3& r3 );
@@ -82,5 +78,7 @@ public:
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
 };
+
+NS_MAGICAL_END
 
 #endif //__RAY3_H__

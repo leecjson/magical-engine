@@ -30,82 +30,66 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-static std::string _s_assetsPath;
+static std::string _s_assets_path;
 
-void Assets::init( void )
+void Assets::Init( void )
 {
-	Assets::setDefaultAssetsPath();
+	Assets::SetDefaultAssetsPath();
 	magicalReturnIfError();
 }
 
-void Assets::delc( void )
+void Assets::Delc( void )
 {
 	
 }
 
-void Assets::setDefaultAssetsPath( void )
+void Assets::SetDefaultAssetsPath( void )
 {
-	GetCurrentDirectoryA( kBufferLen, magicalBuffer );
-
-	if( strlen( magicalBuffer ) == 0 )
+	GetCurrentDirectoryA( kBufferLen, magicalGetBuffer() );
+	std::string current = magicalGetBuffer();
+	if( current.empty() )
 	{
-		magicalSetLastErrorInfoB( "result of GetCurrentDirectoryA is empty." );
+		magicalSetLastErrorA( "result of GetCurrentDirectoryA is empty." );
 		magicalLogLastError();
 		return;
 	}
-
-	default_Assets_Path = FileUtils::toUnixStylePath( magicalBuffer );
-	default_Assets_Path.append( "/" );
+	_s_assets_path = FileUtils::ToUnixPath( current.c_str() );
+	_s_assets_path += "/";
 }
 
-void Assets::setAssetsPath( const char* path )
+void Assets::SetAssetsPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr." );
+	std::string unix_path = FileUtils::ToUnixPath( path );
+	magicalAssert( FileUtils::IsAbsPath( unix_path.c_str() ), "should be absolute path." );
 
-	std::string unix_path = FileUtils::toUnixStylePath( path );
-	magicalAssert( FileUtils::isAbsolutePath( unix_path.c_str() ), "should be absolute path." );
-
-	if( unix_path.length() > 0 && unix_path[unix_path.length() - 1] != '/' )
-	{
+	if( unix_path.length() > 0 && unix_path.back() != '/' )
 		unix_path += "/";
-	}
 
 	_s_assets_path = unix_path;
 }
 
-std::string Assets::getAssetsPath( void )
+std::string Assets::GetAssetsPath( void )
 {
 	return _s_assets_path;
 }
 
-std::string Assets::getAssetsAbsFilename( const char* file_name )
+std::string Assets::GetAssetsAbsFilename( const char* file )
 {
-	magicalAssert( file_name, "should not be nullptr." );
+	magicalAssert( file, "should not be nullptr." );
+	if( FileUtils::IsAbsPath( file ) )
+		return file;
 
-	if( FileUtils::isAbsolutePath( file_name ) )
-	{
-		return file_name;
-	}
-
-	std::string unix_path = FileUtils::toUnixStylePath( file_name );
+	std::string unix_path = FileUtils::ToUnixPath( file );
 	std::string abs_path = _s_assets_path + unix_path;
-
 	return abs_path;
 }
 
-bool Assets::isFileExist( const char* file_name )
+bool Assets::IsFileExist( const char* file )
 {
-	Assets::isFileExist(  )  
+	magicalAssert( file, "should not be nullptr." );
 
-	oPlayer->AddChild( s )
-
-	AddChild( a );
-
-	Assets:getFileData();
-
-	magicalAssert( file_name, "should not be nullptr." );
-
-	std::string file_path = FileUtils::toUnixStylePath( file_name );
+	std::string file_path = FileUtils::ToUnixPath( file );
 	if( FileUtils::IsAbsPath( file_path.c_str() ) == false )
 	{
 		std::string abs_path = _s_assets_path + file_path;
@@ -123,17 +107,17 @@ bool Assets::isFileExist( const char* file_name )
 	return false;
 }
 
-Shared<Data> Assets::getFileData( const char* file_name )
+Ptr<Data> Assets::GetFileData( const char* file )
 {
-	magicalAssert( file_name, "should not be nullptr." );
+	magicalAssert( file, "should not be nullptr." );
 
-	std::string abs_path = GetAssetsAbsFilename( file_name );
-	magicalAssert( !abs_path.empty(), StringUtils::format<512>( "get assets file data failed! file(%s) doesn't exist.", file_name ).c_str() );
+	std::string abs_path = GetAssetsAbsFilename( file );
+	magicalAssert( !abs_path.empty(), StringUtils::Format<512>( "get assets file data failed! file(%s) doesn't exist.", file ).c_str() );
 
 	FILE* fp = fopen( abs_path.c_str(), "rb" );
 	if( fp == nullptr )
 	{
-		magicalSetLastErrorB( StringUtils::format<512>( "get assets file data failed! file(%s).", file_name ).c_str() );
+		magicalSetLastErrorA( StringUtils::Format<512>( "get assets file data failed! file(%s).", file ).c_str() );
 		magicalLogLastError();
 		return nullptr;
 	}
@@ -143,12 +127,10 @@ Shared<Data> Assets::getFileData( const char* file_name )
 	size = (size_t) ftell( fp );
 	fseek( fp, 0, SEEK_SET );
 
-	Shared<Data> data = Data::create();
-	data->malloc( size + 1 );
-
-	read_size = fread( data->ptr(), sizeof( char ), size, fp );
-	data->realloc( read_size + 1 );
-	data->ptr()[ read_size ] = 0;
+	Ptr<Data> data = Data::Create( size + 1 );
+	read_size = fread( data->cPtr(), sizeof( char ), size, fp );
+	data->Realloc( read_size + 1 );
+	data->cPtr()[ read_size ] = 0;
 	fclose( fp );
 
 	return data;

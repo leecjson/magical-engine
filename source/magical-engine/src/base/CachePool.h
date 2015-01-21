@@ -21,38 +21,40 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __CACHED_POOL_H__
-#define __CACHED_POOL_H__
+#ifndef __CACHE_POOL_H__
+#define __CACHE_POOL_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
 
+NS_MAGICAL_BEGIN
+
 template< class T >
-class CachedPool
+class CachePool
 {
 public:
-	CachedPool( void )
+	CachePool( void )
 	{
-		grow_capacity( 32 );
+		growCapacity( 32 );
 	}
 
-	CachedPool( size_t capacity )
+	CachePool( size_t capacity )
 	{
-		grow_capacity( capacity );
+		growCapacity( capacity );
 	}
 
-	CachedPool( size_t capacity, size_t fsize )
+	CachePool( size_t capacity, size_t fillsize )
 	{
-		grow_capacity( capacity );
-		fill( fsize );
+		growCapacity( capacity );
+		fill( fillsize );
 	}
 
-	~CachedPool( void )
+	~CachePool( void )
 	{
 		clear();
 	}
 
-	void Fill( size_t size )
+	void fill( size_t size )
 	{
 		size_t obj_size = sizeof( T );
 
@@ -61,111 +63,115 @@ public:
 
 		for( size_t i = 0; i < size; ++i )
 		{
-			grow_capacity();
+			growCapacity();
 			typename T* ptr = (T*) malloc( obj_size );
 
-			if( !ptr ) throw std::bad_alloc();
+			if( !ptr ) 
+				throw std::bad_alloc();
 
-			_objects[_size] = ptr;
-			_size += 1;
+			objects_[ size_ ] = ptr;
+			size_ += 1;
 		}
 	}
 
 	void push( void* ptr )
 	{
-		grow_capacity();
+		growCapacity();
 
-		_objects[_size] = (T*) ptr;
-		_size += 1;
+		objects_[ size_ ] = (T*) ptr;
+		size_ += 1;
 	}
 
 	void* take( void )
 	{
-		if( _size == 0 )
+		if( size_ == 0 )
 		{
-			grow_capacity();
-			fill( _capacity );
+			growCapacity();
+			fill( capacity_ );
 
-			typename T* ptr = _objects[_size - 1];
-			if( _size != 0 )
-				_size --;
+			typename T* ptr = objects_[ size_ - 1 ];
+			if( size_ != 0 )
+				-- size_;
 
 			return ptr;
 		}
 		else
 		{
-			typename T* ptr = _objects[_size - 1];
-			if( _size != 0 )
-				_size --;
+			typename T* ptr = objects_[ size_ - 1 ];
+			if( size_ != 0 )
+				-- size_;
 
 			return ptr;
 		}
 	}
 
-	void grow_capacity( void )
+	void growCapacity( void )
 	{
-		if( _objects )
+		if( objects_ )
 		{
-			if( _size == _capacity )
+			if( size_ == capacity_ )
 			{
-				grow_capacity( _capacity );
+				growCapacity( capacity_ );
 			}
 		}
 		else
 		{
-			grow_capacity( 32 );
+			growCapacity( 32 );
 		}
 	}
 
-	void grow_capacity( size_t size )
+	void growCapacity( size_t size )
 	{
 		if( size == 0 )
 			return;
 
-		if( _objects )
+		if( objects_ )
 		{
-			_capacity += size;
-			_objects = (T**) realloc( _objects, _capacity * sizeof( T* ) );
+			capacity_ += size;
+			objects_ = (T**) realloc( objects_, capacity_ * sizeof( T* ) );
 		}
 		else
 		{
-			_capacity = size;
-			_objects = (T**) malloc( size * sizeof( T* ) );
+			capacity_ = size;
+			objects_ = (T**) malloc( size * sizeof( T* ) );
 		}
 
-		if( !_objects ) throw std::bad_alloc();
+		if( !objects_ ) 
+			throw std::bad_alloc();
 	}
 
 	void clear( void )
 	{
-		if( _objects )
+		if( objects_ )
 		{
-			for( size_t i = 0; i < _size; ++i )
+			for( size_t i = 0; i < size_; ++i )
 			{
-				free( _objects[i] );
+				free( objects_[i] );
 			}
 
-			free( _objects );
-			_objects = nullptr;
-			_size = 0;
-			_capacity = 0;
+			free( objects_ );
+			objects_ = nullptr;
+			size_ = 0;
+			capacity_ = 0;
 		}
 	}
 
 	size_t size( void ) const
 	{
-		return _size;
+		return size_;
 	}
 
 	bool empty( void ) const
 	{
-		return _size == 0
+		return size_ == 0
 	}
 
 private:
-	size_t _size = 0;
-	size_t _capacity = 0;
-	typename T** _objects = nullptr;
+	size_t size_ = 0;
+	size_t capacity_ = 0;
+	typename T** objects_ = nullptr;
 };
 
-#endif //__CACHED_POOL_H__
+NS_MAGICAL_END
+
+#endif //__CACHE_POOL_H__

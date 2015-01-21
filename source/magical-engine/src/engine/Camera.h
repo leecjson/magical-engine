@@ -28,6 +28,8 @@ SOFTWARE.
 #include "Common.h"
 #include "Transform.h"
 
+NS_MAGICAL_BEGIN
+
 class Camera : public Transform
 {
 public:
@@ -35,16 +37,18 @@ public:
 	virtual ~Camera( void );
 	
 public:
-	static Shared<Camera> create( void );
+	static Ptr<Camera> create( void );
 
 public:
 	void setPerspective( float fov, float aspect, float znear, float zfar );
 	const Matrix4& getProjectionMatrix( void ) const;
 
 private:
-	Matrix4 _projection_matrix;
+	Matrix4 projection_matrix_;
 
 };
+
+NS_MAGICAL_END
 
 
 

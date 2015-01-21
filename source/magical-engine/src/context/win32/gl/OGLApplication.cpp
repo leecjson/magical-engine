@@ -26,7 +26,9 @@ SOFTWARE.
 #include "win32/gl/glew/glew.h"
 #include "win32/gl/glfw3/glfw3.h"
 #include "Engine.h"
-#include "InputSystem.h"
+//#include "InputSystem.h"
+
+NS_MAGICAL_BEGIN
 
 static void win32ErrorCallBack( int err_id, const char* error_desc );
 static void win32MouseButtonCallBack( GLFWwindow* window, int button, int action, int modify );
@@ -44,9 +46,9 @@ static double s_interval;
 static bool s_window_resizable = true;
 static std::string s_window_title = "magical-engine";
 
-void Application::Run( MainDelegate maindel )
+void Application::run( MainDelegate mainDelegate )
 {
-	maindel();
+	mainDelegate();
 	magicalShowLastError();
 	magicalReturnIfError();
 
@@ -64,12 +66,11 @@ void Application::Run( MainDelegate maindel )
 		{
 			last.QuadPart = now.QuadPart;
 
-			Engine::MainLoop();
+			Engine::mainLoop();
 #ifdef MAGICAL_DEBUG
 			magicalShowLastError();
 			magicalReturnIfError();
 #endif
-
 			glfwPollEvents();
 		}
 		else
@@ -79,7 +80,7 @@ void Application::Run( MainDelegate maindel )
 	}
 }
 
-void Application::SetInterval( double interval )
+void Application::setInterval( double interval )
 {
 	LARGE_INTEGER freq;
 	QueryPerformanceFrequency( &freq );
@@ -88,46 +89,46 @@ void Application::SetInterval( double interval )
 	s_interval = interval;
 }
 
-double Application::GetInterval( void )
+double Application::getInterval( void )
 {
 	return s_interval;
 }
 
-void Application::SetResizable( bool resizable )
+void Application::setResizable( bool resizable )
 {
 	s_window_resizable = resizable;
 	glfwWindowHint( GLFW_RESIZABLE, resizable );
 }
 
-bool Application::IsResizable( void )
+bool Application::isResizable( void )
 {
 	return s_window_resizable;
 }
 
-void Application::SetWindowTitle( const char* title )
+void Application::setWindowTitle( const char* title )
 {
 	s_window_title = title;
 	glfwSetWindowTitle( s_window, title );
 }
 
-void Application::SwapBuffers( void )
+void Application::swapBuffers( void )
 {
 	glfwSwapBuffers( s_window );
 }
 
-void Application::Exit( void )
+void Application::exit( void )
 {
 	glfwSetWindowShouldClose( s_window, 1 );
 }
 
-void Application::InitWindow( void )
+void Application::initWindow( void )
 {
 	glfwSetErrorCallback( win32ErrorCallBack );
 	glfwInit();
 	magicalReturnIfError();
 
-	SetInterval( 1.f / 60 );
-	SetResizable( true );
+	setInterval( 1.0 / 60 );
+	setResizable( true );
 	glfwDefaultWindowHints();
 
 	s_window = glfwCreateWindow( 960, 640, s_window_title.c_str(), nullptr, nullptr );
@@ -146,18 +147,18 @@ void Application::InitWindow( void )
 	glfwSetWindowSizeCallback( s_window, win32WindowSizeCallBack );
 }
 
-void Application::DelcWindow( void )
+void Application::delcWindow( void )
 {
 	glfwTerminate();
 }
 
-void Application::InitRenderContext( void )
+void Application::initRenderContext( void )
 {
 	const GLubyte* gl_version = glGetString( GL_VERSION );
 	if( atof( (const char*) gl_version ) < 1.5 )
 	{
 		magicalFormat( "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.", gl_version );
-		magicalSetLastErrorInfoB( magicalBuffer );
+		magicalSetLastErrorA( magicalGetBuffer() );
 		magicalLogLastError();
 		return;
 	}
@@ -166,7 +167,7 @@ void Application::InitRenderContext( void )
 	if( result != GLEW_OK )
 	{
 		magicalFormat( "%s %s", "Init glew failed.", (char*)glewGetErrorString( result ) );
-		magicalSetLastErrorInfoB( magicalBuffer );
+		magicalSetLastErrorA( magicalGetBuffer() );
 		magicalLogLastError();
 		return;
 	}
@@ -190,14 +191,14 @@ void Application::InitRenderContext( void )
 	}
 }
 
-void Application::DelcRenderContext( void )
+void Application::delcRenderContext( void )
 {
 
 }
 
 static void win32ErrorCallBack( int err_id, const char* error_desc )
 {
-	magicalSetLastErrorInfoB( error_desc );
+	magicalSetLastErrorA( error_desc );
 	magicalLogLastError();
 
 	magicalLog( "win32ErrorCallBack" );
@@ -225,7 +226,7 @@ static void win32CharCallBack( GLFWwindow* window, unsigned int character )
 
 static void win32KeyCallBack( GLFWwindow* window, int key, int scancode, int action, int mods )
 {
-	Input::keyEvent( (KeyCode) key, (KeyAction) action );
+	//Input::OnkeyEvent( (KeyCode) key, (KeyAction) action );
 	magicalLog( "win32KeyCallBack" );
 }
 
@@ -243,3 +244,5 @@ static void win32WindowSizeCallBack( GLFWwindow* window, int width, int height )
 {
 	//magicalLog( "win32WindowSizeCallBack" );
 }
+
+NS_MAGICAL_END

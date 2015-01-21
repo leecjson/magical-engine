@@ -26,40 +26,41 @@ SOFTWARE.
 #include "RendererMacros.h"
 #include "ShaderProgramManager.h"
 
-void Renderer::init( void )
+NS_MAGICAL_BEGIN
+
+void Renderer::Init( void )
 {
-	setDefault();
+	SetDefault();
 	magicalReturnIfError();
 
 	ShaderProgramManager::init();
 	magicalReturnIfError();
 }
 
-void Renderer::delc( void )
+void Renderer::Delc( void )
 {
 	ShaderProgramManager::delc();
 	magicalReturnIfError();
 }
 
-void Renderer::render( void )
+void Renderer::Render( void )
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	//Renderer::useProgram( kShaderProgramColor );
 
-
-	Application::swapBuffers();
+	Application::SwapBuffers();
 	magicalDebugCheckGLError();
 }
 
-void Renderer::resize( int w, int h )
+void Renderer::Resize( int w, int h )
 {
 	glViewport( 0, 0, w, h );
 
 	magicalCheckGLError();
 }
 
-void Renderer::setDefault( void )
+void Renderer::SetDefault( void )
 {
 	glClearColor( 0.3f, 0.3f, 0.3f, 1.0f );
 
@@ -69,7 +70,9 @@ void Renderer::setDefault( void )
 	magicalCheckGLError();
 }
 
-void Renderer::useProgram( uint32_t program_id )
+void Renderer::UseProgram( uint32_t program_id )
 {
 	glUseProgram( program_id );
 }
+
+NS_MAGICAL_END

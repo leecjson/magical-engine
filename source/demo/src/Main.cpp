@@ -24,7 +24,11 @@ SOFTWARE.
 #include "Main.h"
 #include "magical-engine.h"
 
+USING_NS_MAGICAL;
+
 void mainDelegate( void )
 {
+	Engine::runScene( Scene::create() );
 	
+	Ptr<Camera> main_camera = Engine::runningScene()->createCamera();
 }

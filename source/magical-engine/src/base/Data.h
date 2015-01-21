@@ -26,28 +26,35 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Referenceable.h"
+#include "Reference.h"
+
+NS_MAGICAL_BEGIN
  
-class Data : public Referenceable
+class Data : public Reference
 {
 public:
 	Data( void );
 	virtual ~Data( void );
 
 public:
-	static Ref<Data> Create( void );
+	static Ptr<Data> create( void );
+	static Ptr<Data> create( size_t size );
+	static Ptr<Data> create( char* data, size_t size );
 
 public:
-	void Assign( char* data, uint32_t size );
-	void Malloc( uint32_t size );
-	void Realloc( uint32_t size );
-	bool Empty( void ) const;
-	uint32_t Size( void ) const;
-	char* Ptr( void );
+	void assign( char* data, size_t size );
+	void malloc( size_t size );
+	void realloc( size_t size );
+	void free( void );
+	bool empty( void ) const;
+	size_t size( void ) const;
+	char* cPtr( void );
 
 private:
 	char* _data = nullptr;
 	uint32_t _size = 0;
 };
+
+NS_MAGICAL_END
 
 #endif //__DATA_H__

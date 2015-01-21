@@ -24,6 +24,8 @@ SOFTWARE.
 #ifndef __MAGICAL_MATH_H__
 #define __MAGICAL_MATH_H__
 
+#include "c/cUtility.h"
+
 #include "c/cVector2.h"
 #include "c/cVector3.h"
 #include "c/cVector4.h"
@@ -32,13 +34,15 @@ SOFTWARE.
 #include "c/cQuaternion.h"
 #include "c/cMatrix3.h"
 #include "c/cMatrix4.h"
-//#include "c/cAABB3.h"
-//#include "c/cPlane3.h"
-//#include "c/cSphere3.h"
+#include "c/cAABB3.h"
+#include "c/cPlane3.h"
+#include "c/cSphere3.h"
 //#include "c/cRay2.h"
-//#include "c/cRay3.h"
+#include "c/cRay3.h"
 //#include "c/cLine2.h"
 //#include "c/cRectangle2.h"
+
+#include "cpp/Utility.h"
 
 #include "cpp/Vector2.h"
 #include "cpp/Vector3.h"
@@ -47,11 +51,11 @@ SOFTWARE.
 #include "cpp/EulerAngles.h"
 #include "cpp/Quaternion.h"
 #include "cpp/Matrix4.h"
-//#include "cpp/AABB3.h"
-//#include "cpp/Plane3.h"
-//#include "cpp/Sphere3.h"
+#include "cpp/AABB3.h"
+#include "cpp/Plane3.h"
+#include "cpp/Sphere3.h"
 //#include "cpp/Ray2.h"
-//#include "cpp/Ray3.h"
+#include "cpp/Ray3.h"
 //#include "cpp/Line2.h"
 
 #include "cpp/Vector2.inl"
@@ -61,11 +65,11 @@ SOFTWARE.
 #include "cpp/EulerAngles.inl"
 #include "cpp/Quaternion.inl"
 #include "cpp/Matrix4.inl"
-//#include "cpp/AABB3.inl"
-//#include "cpp/Plane3.inl"
-//#include "cpp/Sphere3.inl"
+#include "cpp/AABB3.inl"
+#include "cpp/Plane3.inl"
+#include "cpp/Sphere3.inl"
 //#include "cpp/Ray2.inl"
-//#include "cpp/Ray3.inl"
+#include "cpp/Ray3.inl"
 //#include "cpp/Line2.inl"
 
 #endif //__MAGICAL_MATH_H__

@@ -39,6 +39,15 @@ function OnCreate() --> void
 	return true;
 	--collectgarbage();
 
+	local aabb3 = AABB3();
+	aabb3.minx = 5;
+	aabb3.miny = 5;
+	aabb3.minz = 5;
+	aabb3.maxx = 2;
+	aabb3.maxy = 
+
+	aabb3.min.x = 6;
+
 
 	--哈哈哈哈哈
 	Application:Exit();

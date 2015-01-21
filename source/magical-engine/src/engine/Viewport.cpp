@@ -23,67 +23,67 @@ SOFTWARE.
 *******************************************************************************/
 #include "Viewport.h"
 
-Viewport::Viewport( void )
-{
-
-}
-
-Viewport::~Viewport( void )
-{
-
-}
-
-Shared<Viewport> Viewport::create( void )
-{
-	Viewport* ret = new Viewport();
-	magicalAssert( ret, "new Viewport() failed" );
-	return Shared<Viewport>( Initializer<Viewport>( ret ) );
-}
-
-void Viewport::set( int x, int y, int width, int height )
-{
-	this->_x = x;
-	this->_y = y;
-	this->_width = width;
-	this->_height = height;
-}
-
-void Viewport::setX( int x )
-{
-	_x = x;
-}
-
-void Viewport::setY( int y )
-{
-	_y = y;
-}
-
-void Viewport::setWidth( int width )
-{
-	_width = width;
-}
-
-void Viewport::setHeight( int height )
-{
-	_height = height;
-}
-
-int Viewport::getX( void ) const
-{
-	return _x;
-}
-
-int Viewport::getY( void ) const
-{
-	return _y;
-}
-
-int Viewport::getWidth( void ) const
-{
-	return _width;
-}
-
-int Viewport::getHeight( void ) const
-{
-	return _height;
-}
+//Viewport::Viewport( void )
+//{
+//
+//}
+//
+//Viewport::~Viewport( void )
+//{
+//
+//}
+//
+//Shared<Viewport> Viewport::create( void )
+//{
+//	Viewport* ret = new Viewport();
+//	magicalAssert( ret, "new Viewport() failed" );
+//	return Shared<Viewport>( Initializer<Viewport>( ret ) );
+//}
+//
+//void Viewport::set( int x, int y, int width, int height )
+//{
+//	this->_x = x;
+//	this->_y = y;
+//	this->_width = width;
+//	this->_height = height;
+//}
+//
+//void Viewport::setX( int x )
+//{
+//	_x = x;
+//}
+//
+//void Viewport::setY( int y )
+//{
+//	_y = y;
+//}
+//
+//void Viewport::setWidth( int width )
+//{
+//	_width = width;
+//}
+//
+//void Viewport::setHeight( int height )
+//{
+//	_height = height;
+//}
+//
+//int Viewport::getX( void ) const
+//{
+//	return _x;
+//}
+//
+//int Viewport::getY( void ) const
+//{
+//	return _y;
+//}
+//
+//int Viewport::getWidth( void ) const
+//{
+//	return _width;
+//}
+//
+//int Viewport::getHeight( void ) const
+//{
+//	return _height;
+//}

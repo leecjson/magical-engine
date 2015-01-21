@@ -4,12 +4,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{3e8940b1-7373-4fca-a3cf-83d5e3954e5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\assets">
-      <UniqueIdentifier>{160c3853-c2d3-4c72-ad18-fde6dd6e959f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\assets\win32">
-      <UniqueIdentifier>{08f6e911-164f-4460-bcb7-ccba94fc4b75}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\base">
       <UniqueIdentifier>{e532d74c-ee99-41b5-9335-49a784923dac}</UniqueIdentifier>
     </Filter>
@@ -34,9 +28,6 @@
     <Filter Include="src\include">
       <UniqueIdentifier>{f69aa027-317f-41d6-8cbd-794c55c193ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\input">
-      <UniqueIdentifier>{3e570580-404b-46f8-b594-4dd2880bbaa9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\log">
       <UniqueIdentifier>{e88d87bd-5102-4da9-a6d9-59069500eb39}</UniqueIdentifier>
     </Filter>
@@ -46,17 +37,11 @@
     <Filter Include="src\math">
       <UniqueIdentifier>{d5333d97-9cf9-4e27-a914-e2318ab94d8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\math\c">
-      <UniqueIdentifier>{98e74837-4e4c-408d-bc02-676ba4d95b9e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\math\cpp">
       <UniqueIdentifier>{89911c7e-3808-4920-a78a-527b0970c441}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\renderer">
       <UniqueIdentifier>{6ecca55f-71b5-4bba-b1f4-1d3bfa215413}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\renderer\gl">
-      <UniqueIdentifier>{090637e7-de2c-4401-903f-8498cc268cc9}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\script">
       <UniqueIdentifier>{e494120c-0685-42ff-8aed-6c360b5d89a4}</UniqueIdentifier>
@@ -67,14 +52,11 @@
     <Filter Include="src\com">
       <UniqueIdentifier>{be01a1b8-a551-4555-a2b2-122b7f80a226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\math\c">
+      <UniqueIdentifier>{98e74837-4e4c-408d-bc02-676ba4d95b9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\assets\AssetsSystem.h">
-      <Filter>src\assets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\base\Data.h">
-      <Filter>src\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\context\Application.h">
       <Filter>src\context</Filter>
     </ClInclude>
@@ -93,16 +75,7 @@
     <ClInclude Include="..\src\context\win32\gl\glew\wglew.h">
       <Filter>src\context\win32\gl\glew</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\engine\Behaviour.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\engine\Camera.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\engine\Engine.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\engine\Node.h">
       <Filter>src\engine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\engine\Scene.h">
@@ -111,14 +84,8 @@
     <ClInclude Include="..\src\engine\Transform.h">
       <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\engine\Viewport.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\include\magical-engine.h">
       <Filter>src\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\input\InputSystem.h">
-      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\src\log\LogSystem.h">
       <Filter>src\log</Filter>
@@ -133,9 +100,6 @@
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cEulerAngles.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cMathMacros.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cMatrix3.h">
@@ -177,9 +141,6 @@
     <ClInclude Include="..\src\math\cpp\EulerAngles.h">
       <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\cpp\MathMacros.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\cpp\Matrix4.h">
       <Filter>src\math\cpp</Filter>
     </ClInclude>
@@ -204,23 +165,8 @@
     <ClInclude Include="..\src\math\cpp\Vector4.h">
       <Filter>src\math\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\renderer\RendererMacros.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\renderer\RendererSystem.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\renderer\ShaderProgram.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\renderer\ShaderProgramManager.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\utils\Utils.h">
       <Filter>src\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\PlatformMacros.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\com\Common.h">
       <Filter>src\com</Filter>
@@ -228,33 +174,33 @@
     <ClInclude Include="..\src\com\PlatformMacros.h">
       <Filter>src\com</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\base\Ref.h">
+    <ClInclude Include="..\src\base\Reference.h">
       <Filter>src\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\base\RefObject.h">
+    <ClInclude Include="..\src\base\Ptr.h">
       <Filter>src\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\base\CachePool.h">
+      <Filter>src\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\base\Data.h">
+      <Filter>src\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Utility.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\SceneObject.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\Camera.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\assets\win32\AssetsSystem.cpp">
-      <Filter>src\assets\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\base\Data.cpp">
-      <Filter>src\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\context\Application.cpp">
       <Filter>src\context</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\engine\Behaviour.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\engine\Camera.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\engine\Engine.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\engine\Node.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\engine\Scene.cpp">
@@ -262,12 +208,6 @@
     </ClCompile>
     <ClCompile Include="..\src\engine\Transform.cpp">
       <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\engine\Viewport.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\input\InputSystem.cpp">
-      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\src\log\win32\LogSystem.cpp">
       <Filter>src\log\win32</Filter>
@@ -341,29 +281,26 @@
     <ClCompile Include="..\src\math\cpp\Vector4.cpp">
       <Filter>src\math\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\RendererMacros.cpp">
-      <Filter>src\renderer\gl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\RendererSystem.cpp">
-      <Filter>src\renderer\gl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\ShaderProgram.cpp">
-      <Filter>src\renderer\gl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\ShaderProgramManager.cpp">
-      <Filter>src\renderer\gl</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\utils\Utils.cpp">
       <Filter>src\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\context\win32\gl\ApplicationPlatform.cpp">
-      <Filter>src\context\win32\gl</Filter>
     </ClCompile>
     <ClCompile Include="..\src\com\Common.cpp">
       <Filter>src\com</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\base\RefObject.cpp">
+    <ClCompile Include="..\src\base\Reference.cpp">
       <Filter>src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\base\Data.cpp">
+      <Filter>src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\context\win32\gl\OGLApplication.cpp">
+      <Filter>src\context\win32\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\SceneObject.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\Camera.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

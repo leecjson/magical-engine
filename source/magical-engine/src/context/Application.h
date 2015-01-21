@@ -27,29 +27,33 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
+NS_MAGICAL_BEGIN
+
 typedef std::function<void( void )> MainDelegate;
 
 class Application
 {
 public:
-	static void Init( void );
-	static void Delc( void );
-	static void Run( MainDelegate maindel );
+	static void init( void );
+	static void delc( void );
+	static void run( MainDelegate mainDelegate );
 
 public:	
-	static void SetInterval( double interval );
-	static double GetInterval( void );
-	static void SetResizable( bool resizable );
-	static bool IsResizable( void );
-	static void SetWindowTitle( const char* title );
-	static void SwapBuffers( void );
-	static void Exit( void );
+	static void setInterval( double interval );
+	static double getInterval( void );
+	static void setResizable( bool resizable );
+	static bool isResizable( void );
+	static void setWindowTitle( const char* title );
+	static void swapBuffers( void );
+	static void exit( void );
 
 private:
-	static void InitWindow( void );
-	static void DelcWindow( void );
-	static void InitRenderContext( void );
-	static void DelcRenderContext( void );
+	static void initWindow( void );
+	static void delcWindow( void );
+	static void initRenderContext( void );
+	static void delcRenderContext( void );
 };
+
+NS_MAGICAL_END
 
 #endif //__APPLICATION_H__

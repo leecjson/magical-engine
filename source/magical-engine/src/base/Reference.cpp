@@ -21,26 +21,46 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Node.h"
+#include "Reference.h"
 
-//namespace magicalengine
-//{
-//
-//Node::Node( void )
-//{
-//
-//}
-//
-//Node::~Node( void )
-//{
-//
-//}
-//
-//Shared<Node> Node::create( void )
-//{
-//	Node* ret = new Node();
-//	magicalAssert( ret, "new Node() failed" );
-//	return Shared<Node>( Initializer<Node>( ret ) );
-//}
-//
-//}
+NS_MAGICAL_BEGIN
+
+Reference::Reference( void ) 
+{
+//#ifdef MAGICAL_DEBUG
+//	magicalObjectConstruct();
+//#endif
+}
+
+Reference::~Reference( void )
+{
+//#ifdef MAGICAL_DEBUG
+//	magicalObjectDestruct();
+//#endif
+}
+
+void Reference::retain( void )
+{
+	magicalAssert( _reference_count > 0, "invalid reference count." );
+
+	++ _reference_count;
+}
+
+void Reference::release( void )
+{
+	magicalAssert( _reference_count > 0, "invalid reference count." );
+
+	-- _reference_count;
+
+	if( _reference_count == 0 )
+	{
+		delete this;
+	}
+}
+
+int Reference::referenceCount( void ) const
+{
+	return _reference_count;
+}
+
+NS_MAGICAL_END

@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline Quaternion Quaternion::createIdentity( void )
 {
 	return Quaternion::Identity;
@@ -354,3 +356,5 @@ inline float Quaternion::lengthSq( void ) const
 {
 	return magicalQuaternionLengthSq( this );
 }
+
+NS_MAGICAL_END

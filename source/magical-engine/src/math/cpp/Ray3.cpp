@@ -26,13 +26,21 @@ SOFTWARE.
 #include "../c/cPlane3.h"
 #include "../c/cSphere3.h"
 #include "../c/cRay3.h"
+
+#include "Utility.h"
 #include "Vector3.h"
 #include "AABB3.h"
 #include "Plane3.h"
 #include "Sphere3.h"
 #include "Ray3.h"
+
 #include "Ray3.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const Ray3 Ray3::Zero = Ray3( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 Ray3 Ray3::var = Ray3::Zero;
@@ -53,8 +61,7 @@ Ray3::Ray3( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<Ray3> s_ray3_cached_pool( 32, 32 );
+static CachePool<Ray3> s_ray3_cache_pool( 32, 32 );
 #endif
 
 void* Ray3::operator new( size_t s )
@@ -63,7 +70,7 @@ void* Ray3::operator new( size_t s )
 	if( s != sizeof( Ray3 ) )
 		return ::operator new( s );
 
-	return s_ray3_cached_pool.take();
+	return s_ray3_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -75,7 +82,7 @@ void Ray3::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_ray3_cached_pool.push( ptr );
+	s_ray3_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
@@ -88,8 +95,7 @@ RayIntersectResult::RayIntersectResult( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<RayIntersectResult> s_ray_intersect_result_cached_pool( 32, 32 );
+static CachePool<RayIntersectResult> s_ray_intersect_result_cache_pool( 32, 32 );
 #endif
 
 void* RayIntersectResult::operator new( size_t s )
@@ -98,7 +104,7 @@ void* RayIntersectResult::operator new( size_t s )
 	if( s != sizeof( RayIntersectResult ) )
 		return ::operator new( s );
 
-	return s_ray_intersect_result_cached_pool.take();
+	return s_ray_intersect_result_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -110,8 +116,10 @@ void RayIntersectResult::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_ray_intersect_result_cached_pool.push( ptr );
+	s_ray_intersect_result_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

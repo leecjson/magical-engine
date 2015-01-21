@@ -24,8 +24,9 @@ SOFTWARE.
 #ifndef __AXIS_ANGLE_H__
 #define __AXIS_ANGLE_H__
 
-struct Vector3;
-struct Quaternion;
+NS_MAGICAL_BEGIN
+
+FORWARD_DECLARE
 
 struct AxisAngle : public cAxisAngle
 {
@@ -64,5 +65,7 @@ public:
 	inline Quaternion toQuaternion( void ) const;
 	inline Vector3 axis( void ) const;
 };
+
+NS_MAGICAL_END
 
 #endif //__AXIS_ANGLE_H__

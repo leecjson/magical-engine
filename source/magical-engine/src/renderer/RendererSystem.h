@@ -27,11 +27,13 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
+NS_MAGICAL_BEGIN
+
 class Renderer
 {
 public:
-	static void init( void );
-	static void delc( void );
+	static void Init( void );
+	static void Delc( void );
 
 public:
 	static void Render( void );
@@ -42,5 +44,6 @@ public:
 	static void UseProgram( uint32_t program_id );
 };
 
+NS_MAGICAL_END
 
 #endif //__RENDERER_SYSTEM_H__

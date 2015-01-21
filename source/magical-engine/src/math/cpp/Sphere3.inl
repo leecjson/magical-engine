@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline Sphere3 Sphere3::createZero( void )
 {
 	return Sphere3::Zero;
@@ -119,3 +121,5 @@ inline bool Sphere3::containsPoint( const Vector3& point ) const
 {
 	return magicalSphere3ContainsPoint( this, &point );
 }
+
+NS_MAGICAL_END

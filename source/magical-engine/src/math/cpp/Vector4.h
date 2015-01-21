@@ -24,9 +24,9 @@ SOFTWARE.
 #ifndef __VECTOR4_H__
 #define __VECTOR4_H__
 
-struct Vector2;
-struct Vector3;
-struct Matrix4;
+NS_MAGICAL_BEGIN
+
+FORWARD_DECLARE
 
 struct Vector4 : public cVector4
 {
@@ -64,6 +64,7 @@ public:
 	static inline void mul( Vector4& out, const Vector4& v1, const Vector4& v2 );
 	static inline void divScalar( Vector4& out, const Vector4& v, float a );
 	static inline void div( Vector4& out, const Vector4& v1, const Vector4& v2 );
+
 	static inline void clamp( Vector4& out, const Vector4& v, const Vector4& min, const Vector4& max );
 	static inline void negate( Vector4& out, const Vector4& v );
 	static inline void normalize( Vector4& out, const Vector4& v );
@@ -129,5 +130,7 @@ public:
 	inline Vector4 midPointBetween( const Vector4& v ) const;
 	inline Vector4 project( const Vector4& n ) const;
 };
+
+NS_MAGICAL_END
 
 #endif //__VECTOR4_H__

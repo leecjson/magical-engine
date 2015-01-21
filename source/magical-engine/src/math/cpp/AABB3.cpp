@@ -27,26 +27,34 @@ SOFTWARE.
 #include "../c/cRay3.h"
 #include "../c/cPlane3.h"
 #include "../c/cSphere3.h"
+
+#include "Utility.h"
 #include "Vector3.h"
 #include "Matrix4.h"
 #include "AABB3.h"
 #include "Ray3.h"
 #include "Plane3.h"
 #include "Sphere3.h"
-#include "AABB3.inl"
-#include "MathMacros.h"
 
-const AABB3 AABB3::Zero = AABB3( Vector3::Zero, Vector3::Zero );
+#include "AABB3.inl"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
+
+const AABB3 AABB3::Zero = AABB3( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 AABB3 AABB3::var = AABB3::Zero;
 
-AABB3::AABB3( float min_x, float min_y, float min_z, float max_x, float max_y, float max_z )
+AABB3::AABB3( float minx, float miny, float minz, float maxx, float maxy, float maxz )
 {
-	magicalAABB3Fill( this, min_x, min_y, min_z, max_x, max_y, max_z );
+	magicalAABB3Fill( this, minx, miny, minz, maxx, maxy, maxz );
 }
 
 AABB3::AABB3( const Vector3& min, const Vector3& max )
 {
-	magicalAABB3SetPoints( this, &min, &max );
+	magicalAABB3Fill( this, min.x, min.y, min.z, max.x, max.y, max.z );
 }
 
 AABB3::AABB3( const AABB3& aabb )
@@ -60,8 +68,7 @@ AABB3::AABB3( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<AABB3> s_aabb3_cached_pool( 16, 16 );
+static CachePool<AABB3> s_aabb3_cache_pool( 16, 16 );
 #endif
 
 void* AABB3::operator new( size_t s )
@@ -70,7 +77,7 @@ void* AABB3::operator new( size_t s )
 		return ::operator new( s );
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	return s_aabb3_cached_pool.take();
+	return s_aabb3_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -82,8 +89,10 @@ void AABB3::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_aabb3_cached_pool.push( ptr );
+	s_aabb3_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

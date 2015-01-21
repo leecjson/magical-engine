@@ -56,7 +56,6 @@ MAGICALAPI_MATH void magicalPlane3SetZero( cPlane3* out );
 
 MAGICALAPI_MATH void magicalPlane3SetNormal( cPlane3* out, const cVector3* n );
 MAGICALAPI_MATH void magicalPlane3GetNormal( cVector3* out, const cPlane3* p );
-
 MAGICALAPI_MATH void magicalPlane3NearestPoint( cVector3* out, const cPlane3* p, const cVector3* point );
 MAGICALAPI_MATH float magicalPlane3DistanceToPoint( const cPlane3* p, const cVector3* point );
 

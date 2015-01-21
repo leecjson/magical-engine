@@ -27,8 +27,9 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "Shared.h"
 #include "Behaviour.h"
+
+NS_MAGICAL_BEGIN
 
 enum class DelegatePlatform
 {
@@ -225,27 +226,27 @@ enum class KeyCode
 	Android_Power       = 59993,     // 电源 键
 };
 
-struct KeyEvent
-{
-	KeyCode key;
-	KeyAction action;
-};
+//struct KeyEvent
+//{
+//	KeyCode key;
+//	KeyAction action;
+//};
 
-typedef std::function<void ( KeyEvent* )> KeyEventDelegate;
+//typedef std::function<void( KeyEvent* )> KeyEventDelegate;
 
 class Input
 {
 public:
-	static void init( void );
-	static void delc( void );
+	static void Init( void );
+	static void Delc( void );
 
 public:
-	static void OnKeyEvent( KeyCode key, KeyAction action );
-	static void AddKeyEventDelegate( Reference* reference, const KeyEventDelegate& eventdel );
-	static void RemoveKeyEventDelegate( Reference* reference );
-	static void RemoveAllKeyEventDelegates( void );
-
-	Input::removeKeyEventDelegate();
+	//static void OnKeyEvent( KeyCode key, KeyAction action );
+	//static void AddKeyEventDelegate( Reference* reference, const KeyEventDelegate& eventdel );
+	//static void RemoveKeyEventDelegate( Reference* reference );
+	//static void RemoveAllKeyEventDelegates( void );
 };
+
+NS_MAGICAL_END
 
 #endif //__INPUT_SYSTEM_H__

@@ -24,6 +24,8 @@ SOFTWARE.
 #include "ShaderProgram.h"
 #include "RendererMacros.h"
 
+NS_MAGICAL_BEGIN
+
 ShaderProgram::ShaderProgram( void )
 {
 
@@ -34,11 +36,11 @@ ShaderProgram::~ShaderProgram( void )
 	shutdown();
 }
 
-Shared<ShaderProgram> ShaderProgram::create( void )
+Ptr<ShaderProgram> ShaderProgram::create( void )
 {
 	ShaderProgram* ret = new ShaderProgram();
 	magicalAssert( ret, "New ShaderProgram() failed" );
-	return Shared<ShaderProgram>( Initializer<ShaderProgram>( ret ) );
+	return Ptr<ShaderProgram>( Initializer<ShaderProgram>( ret ) );
 }
 
 void ShaderProgram::setVertexSource( const char* vertex_src )
@@ -92,10 +94,10 @@ bool ShaderProgram::build( void )
 		return false;
 	}
 
-	buffer[0] = (GLchar*) _vertex_src.c_str();
-	glShaderSource( vertex_shader, 1, (const GLchar**) buffer, NULL );
-	buffer[0] = (GLchar*) _fragment_src.c_str();
-	glShaderSource( fragment_shader, 1, (const GLchar**) buffer, NULL );
+	buffer[0] = (GLchar*)_vertex_src.c_str();
+	glShaderSource( vertex_shader, 1, (const GLchar**)buffer, NULL );
+	buffer[0] = (GLchar*)_fragment_src.c_str();
+	glShaderSource( fragment_shader, 1, (const GLchar**)buffer, NULL );
 
 	glCompileShader( vertex_shader );
 	glCompileShader( fragment_shader );
@@ -105,7 +107,7 @@ bool ShaderProgram::build( void )
 	{
 		if( magicalGetShaderInfoLog( vertex_shader ) )
 		{
-			magicalSetLastErrorInfoB( magicalBuffer );
+			magicalSetLastErrorA( magicalBuffer );
 			magicalLogLastError();
 		}
 		else
@@ -123,7 +125,7 @@ bool ShaderProgram::build( void )
 	{
 		if( magicalGetShaderInfoLog( fragment_shader ) )
 		{
-			magicalSetLastErrorInfoB( magicalBuffer );
+			magicalSetLastErrorA( magicalBuffer );
 			magicalLogLastError();
 		}
 		else
@@ -177,7 +179,7 @@ bool ShaderProgram::link( void )
 	{
 		if( magicalGetProgramInfoLog( _program_id ) )
 		{
-			magicalSetLastErrorInfoB( magicalBuffer );
+			magicalSetLastErrorA( magicalBuffer );
 			magicalLogLastError();
 		}
 		else
@@ -195,7 +197,7 @@ bool ShaderProgram::link( void )
 	{
 		if( magicalGetProgramInfoLog( _program_id ) )
 		{
-			magicalSetLastErrorInfoB( magicalBuffer );
+			magicalSetLastErrorA( magicalBuffer );
 			magicalLogLastError();
 		}
 		else
@@ -228,3 +230,5 @@ int ShaderProgram::getUniformLocation( const char* name ) const
 	magicalDebugCheckGLError();
 	return location;
 }
+
+NS_MAGICAL_END

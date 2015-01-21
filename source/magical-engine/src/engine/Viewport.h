@@ -28,32 +28,32 @@ SOFTWARE.
 #include "Common.h"
 #include "Reference.h"
 
-class Viewport : public Reference
-{
-public:
-	Viewport( void );
-	virtual ~Viewport( void );
-
-public:
-	static Shared<Viewport> create( void );
-	
-public:
-	void set( int x, int y, int width, int height );
-	void setX( int x );
-	void setY( int y );
-	void setWidth( int width );
-	void setHeight( int height );
-	int getX( void ) const;
-	int getY( void ) const;
-	int getWidth( void ) const;
-	int getHeight( void ) const;
-
-private:
-	int _x = 0;
-	int _y = 0;
-	int _width = 0;
-	int _height = 0;
-};
+//class Viewport : public Reference
+//{
+//public:
+//	Viewport( void );
+//	virtual ~Viewport( void );
+//
+//public:
+//	static Shared<Viewport> create( void );
+//	
+//public:
+//	void set( int x, int y, int width, int height );
+//	void setX( int x );
+//	void setY( int y );
+//	void setWidth( int width );
+//	void setHeight( int height );
+//	int getX( void ) const;
+//	int getY( void ) const;
+//	int getWidth( void ) const;
+//	int getHeight( void ) const;
+//
+//private:
+//	int _x = 0;
+//	int _y = 0;
+//	int _width = 0;
+//	int _height = 0;
+//};
 
 
 

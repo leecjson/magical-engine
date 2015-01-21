@@ -23,19 +23,55 @@ SOFTWARE.
 *******************************************************************************/
 #include "Scene.h"
 
-//Scene::Scene( void )
-//{
-//
-//}
-//
-//Scene::~Scene( void )
-//{
-//
-//}
-//
-//Shared<Scene> Scene::create( void )
-//{
-//	Scene* ret = new Scene();
-//	magicalAssert( ret, "new Scene() failed" );
-//	return Shared<Scene>( Initializer<Scene>( ret ) );
-//}
+NS_MAGICAL_BEGIN
+
+Scene::Scene( void )
+{
+
+}
+
+Scene::~Scene( void )
+{
+
+}
+
+Ptr<Scene> Scene::create( void )
+{
+	Scene* ret = new Scene();
+	magicalAssert( ret, "new Scene() failed" );
+	return Ptr<Scene>( Initializer<Scene>( ret ) );
+}
+
+Camera* Scene::createCamera( const char* name )
+{
+	Camera* camera = new Camera();
+	if( name && *name )
+	{
+		camera->setName( name );
+	}
+
+	camera_list_.push_back( camera );
+	return camera;
+}
+
+SceneObject* Scene::createSceneObject( const char* name )
+{
+	SceneObject* scene_object = new SceneObject();
+	if( name && *name )
+	{
+		scene_object->setName( name );
+	}
+	
+	scene_object_list_.push_back( scene_object );
+	return scene_object;
+}
+
+void Scene::visit( void )
+{
+	for( auto itr : scene_object_list_ )
+	{
+		itr->visit();
+	}
+}
+
+NS_MAGICAL_END

@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "Camera.h"
 
+NS_MAGICAL_BEGIN
+
 Camera::Camera( void )
 {
 
@@ -33,19 +35,21 @@ Camera::~Camera( void )
 
 }
 
-Shared<Camera> Camera::create( void )
+Ptr<Camera> Camera::create( void )
 {
 	Camera* ret = new Camera();
 	magicalAssert( ret, "new Camera() failed" );
-	return Shared<Camera>( Initializer<Camera>( ret ) );
+	return Ptr<Camera>( Initializer<Camera>( ret ) );
 }
 
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 {
-	_projection_matrix.setPerspective( fov, aspect, znear, zfar );
+	projection_matrix_.setPerspective( fov, aspect, znear, zfar );
 }
 
 const Matrix4& Camera::getProjectionMatrix( void ) const
 {
-	return _projection_matrix;
+	return projection_matrix_;
 }
+
+NS_MAGICAL_END

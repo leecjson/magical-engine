@@ -22,11 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "../c/cVector2.h"
+
+#include "Utility.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
+
 #include "Vector2.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const Vector2 Vector2::Zero = Vector2( 0.0f, 0.0f );
 const Vector2 Vector2::One = Vector2( 1.0f, 1.0f );
@@ -55,8 +63,7 @@ Vector2::Vector2( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<Vector2> s_vector2_cached_pool( 128, 128 );
+static CachePool<Vector2> s_vector2_cache_pool( 128, 128 );
 #endif
 
 void* Vector2::operator new( size_t s )
@@ -65,7 +72,7 @@ void* Vector2::operator new( size_t s )
 	if( s != sizeof( Vector2 ) )
 		return ::operator new( s );
 
-	return s_vector2_cached_pool.take();
+	return s_vector2_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -77,9 +84,10 @@ void Vector2::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_vector2_cached_pool.push( ptr );
+	s_vector2_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
 
+NS_MAGICAL_END

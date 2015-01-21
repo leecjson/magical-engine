@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline Matrix4 Matrix4::createIdentity( void )
 {
 	return Matrix4::Identity;
@@ -204,9 +206,9 @@ inline void Matrix4::setPerspective( float fov, float aspect, float znear, float
 	magicalMatrix4SetPerspective( this, fov, aspect, znear, zfar );
 }
 
-inline void Matrix4::setOrth( float left, float right, float bottom, float top, float near, float far )
+inline void Matrix4::setOrth( float left, float right, float bottom, float top, float znear, float zfar )
 {
-	magicalMatrix4SetOrth( this, left, right, bottom, top, near, far );
+	magicalMatrix4SetOrth( this, left, right, bottom, top, znear, zfar );
 }
 
 inline void Matrix4::setTRS( const Vector3& t, const Quaternion& r, const Vector3& s )
@@ -307,12 +309,12 @@ inline Vector3 Matrix4::getBackVector( void ) const
 inline void Matrix4::setTranslation( float x, float y, float z )
 {
 	Vector3 t( x, y, z );
-	magicalMatrix4SetTranslation( this, ( &t ) );
+	magicalMatrix4SetTranslation( this, &t );
 }
 
 inline void Matrix4::setTranslation( const Vector3& t )
 {
-	magicalMatrix4SetTranslation( this, ( &t ) );
+	magicalMatrix4SetTranslation( this, &t );
 }
 
 inline Vector3 Matrix4::getTranslation( void ) const
@@ -374,3 +376,5 @@ inline float Matrix4::determinant( void ) const
 {
 	return magicalMatrix4Determinant( this );
 }
+
+NS_MAGICAL_END

@@ -26,6 +26,9 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
+#include "Scene.h"
+
+NS_MAGICAL_BEGIN
 
 class Engine
 {
@@ -34,14 +37,15 @@ public:
 	static void delc( void );
 
 public:
-	static void MainLoop( void );
-	static void Resize( int w, int h );
-	static float GetDeltaTime( void );
+	static void mainLoop( void );
+	static float deltaTime( void );
+	static void runScene( Ptr<Scene>& scene );
+	static Scene* runningScene( void );
 
 private:
-	static void CalcDeltaTime( void );
+	static void calcDeltaTime( void );
 };
 
-
+NS_MAGICAL_END
 
 #endif //__ENGINE_H__

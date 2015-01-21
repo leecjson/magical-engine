@@ -24,9 +24,9 @@ SOFTWARE.
 #ifndef __VECTOR3_H__
 #define __VECTOR3_H__
 
-struct Vector2;
-struct Vector4;
-struct Matrix4;
+NS_MAGICAL_BEGIN
+
+FORWARD_DECLARE
 
 struct Vector3 : public cVector3
 {
@@ -61,6 +61,7 @@ public:
 	static inline void mul( Vector3& out, const Vector3& v1, const Vector3& v2 );
 	static inline void divScalar( Vector3& out, const Vector3& v, float a );
 	static inline void div( Vector3& out, const Vector3& v1, const Vector3& v2 );
+
 	static inline void cross( Vector3& out, const Vector3& v1, const Vector3& v2 );
 	static inline void clamp( Vector3& out, const Vector3& v, const Vector3& min, const Vector3& max );
 	static inline void negate( Vector3& out, const Vector3& v );
@@ -128,5 +129,7 @@ public:
 	inline Vector3 midPointBetween( const Vector3& v ) const;
 	inline Vector3 project( const Vector3& n ) const;
 };
+
+NS_MAGICAL_END
 
 #endif //__VECTOR3_H__

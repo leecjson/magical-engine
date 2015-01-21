@@ -21,46 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Reference.h"
+#ifndef __UTILITY_H__
+#define __UTILITY_H__
 
-NS_MAGICAL_BEGIN
+#ifndef NS_MAGICAL_BEGIN
+#define NS_MAGICAL_BEGIN   namespace magical {
+#endif
+#ifndef NS_MAGICAL_END
+#define NS_MAGICAL_END     }
+#endif
 
-Reference::Reference( void ) 
-{
-//#ifdef MAGICAL_DEBUG
-//	magicalObjectConstruct();
-//#endif
-}
+#if defined MAGICAL_ENGINE
+#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
+#define MAGICAL_MATH_CACHED_POOL_ENABLE 1
+#endif
+#else
+#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
+#define MAGICAL_MATH_CACHED_POOL_ENABLE 0
+#endif
+#endif
 
-Reference::~Reference( void )
-{
-//#ifdef MAGICAL_DEBUG
-//	magicalObjectDestruct();
-//#endif
-}
+#define FORWARD_DECLARE  \
+	struct Vector2;      \
+	struct Vector3;      \
+	struct Vector4;      \
+	struct AxisAngle;    \
+	struct EulerAngles;  \
+	struct Quaternion;   \
+	struct Matrix3;      \
+	struct Matrix4;      \
+	struct Ray3;         \
+	struct AABB3;        \
+	struct Plane3;       \
+	struct Sphere3;      \
+	struct RayIntersectResult;
 
-void Reference::Retain( void )
-{
-	magicalAssert( _reference_count > 0, "invalid _reference_count." );
-
-	++_reference_count;
-}
-
-void Reference::Release( void )
-{
-	magicalAssert( _reference_count > 0, "invalid _reference_count." );
-
-	--_reference_count;
-
-	if( _reference_count == 0 )
-	{
-		delete this;
-	}
-}
-
-int Reference::RefCount( void ) const
-{
-	return _reference_count;
-}
-
-NS_MAGICAL_END
+#endif //__UTILITY_H__

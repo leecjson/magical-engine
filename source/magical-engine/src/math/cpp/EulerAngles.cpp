@@ -25,12 +25,20 @@ SOFTWARE.
 #include "../c/cEulerAngles.h"
 #include "../c/cQuaternion.h"
 #include "../c/cMatrix4.h"
+
+#include "Utility.h"
 #include "Vector3.h"
 #include "EulerAngles.h"
 #include "Quaternion.h"
 #include "Matrix4.h"
+
 #include "EulerAngles.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const EulerAngles EulerAngles::Zero = EulerAngles( 0.0f, 0.0f, 0.0f );
 EulerAngles EulerAngles::var = EulerAngles::Zero;
@@ -57,8 +65,7 @@ EulerAngles::EulerAngles( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<EulerAngles> s_eulerag_cached_pool( 64, 64 );
+static CachePool<EulerAngles> s_eulerangles_cache_pool( 64, 64 );
 #endif
 
 void* EulerAngles::operator new( size_t s )
@@ -67,7 +74,7 @@ void* EulerAngles::operator new( size_t s )
 	if( s != sizeof( EulerAngles ) )
 		return ::operator new( s );
 
-	return s_eulerag_cached_pool.take();
+	return s_eulerangles_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -79,8 +86,10 @@ void EulerAngles::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_eulerag_cached_pool.push( ptr );
+	s_eulerangles_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

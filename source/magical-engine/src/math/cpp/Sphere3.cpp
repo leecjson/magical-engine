@@ -26,13 +26,21 @@ SOFTWARE.
 #include "../c/cSphere3.h"
 #include "../c/cPlane3.h"
 #include "../c/cRay3.h"
+
+#include "Utility.h"
 #include "Vector3.h"
 #include "AABB3.h"
 #include "Sphere3.h"
 #include "Plane3.h"
 #include "Ray3.h"
+
 #include "Sphere3.inl"
-#include "MathMacros.h"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
 
 const Sphere3 Sphere3::Zero = Sphere3( 0.0f, 0.0f, 0.0f, 0.0f );
 const Sphere3 Sphere3::One = Sphere3( 0.0f, 0.0f, 0.0f, 1.0f );
@@ -54,8 +62,7 @@ Sphere3::Sphere3( void )
 }
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "CachedPool.h"
-static CachedPool<Sphere3> s_sphere3_cached_pool( 16, 16 );
+static CachePool<Sphere3> s_sphere3_cache_pool( 16, 16 );
 #endif
 
 void* Sphere3::operator new( size_t s )
@@ -64,7 +71,7 @@ void* Sphere3::operator new( size_t s )
 	if( s != sizeof( Sphere3 ) )
 		return ::operator new( s );
 
-	return s_sphere3_cached_pool.take();
+	return s_sphere3_cache_pool.take();
 #else
 	return ::operator new( s );
 #endif
@@ -76,8 +83,10 @@ void Sphere3::operator delete( void* ptr )
 		return;
 	
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_sphere3_cached_pool.push( ptr );
+	s_sphere3_cache_pool.push( ptr );
 #else
 	return ::operator delete( ptr );
 #endif
 }
+
+NS_MAGICAL_END

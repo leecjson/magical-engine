@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+NS_MAGICAL_BEGIN
+
 inline Plane3 Plane3::createZero( void )
 {
 	return Plane3::Zero;
@@ -185,3 +187,5 @@ inline bool Plane3::containsPoint( const Vector3& point ) const
 {
 	return magicalPlane3ContainsPoint( this, &point );
 }
+
+NS_MAGICAL_END

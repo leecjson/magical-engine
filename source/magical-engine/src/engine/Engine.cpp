@@ -25,71 +25,57 @@ SOFTWARE.
 #include "magical-math.h"
 #include "Utils.h"
 #include "AssetsSystem.h"
-#include "LuaSystem.h"
-#include "RendererSystem.h"
+//#include "LuaSystem.h"
+//#include "RendererSystem.h"
 #include "Application.h"
-#include "Node.h"
+#include "SceneObject.h"
 
-static int64_t _s_last_update_time = 0;
-static double _s_delta_time = 0.0;
+NS_MAGICAL_BEGIN
+
+static int64_t s_last_update_time = 0;
+static double s_delta_time = 0.0;
+static Scene* s_running_scene = nullptr;
 
 void Engine::init( void )
 {
-	_s_last_update_time = TimeUtils::currentMicrosecondsTime();
+	s_last_update_time = TimeUtils::currentMicrosecondsTime();
 }
 
 void Engine::delc( void )
 {
-	Engine:GetDeltaTime();
-	Engine:SetDeltaTime( sd );
-
-	GameObject::Create();
-
-	Ref<Node> node = Node::Create();
-	node.Get();
-	node.Take<Sprite>();
-
-	node.Take<Sprite>();
-	node.Get()
-
-	ref Node ts = Node::Create();
-	ts.Get();
-	ts.Share();
-	ts.ShareReference
-
-	ts->Retain();
-	ts->Release();
-
-
-	ts->childrenCount();
-
-
-	Camera camera;
-	camera->GetProjectionMatrix();
+	magicalSafeRelease( s_running_scene );
 }
 
-
-
-void Engine::MainLoop( void )
+void Engine::mainLoop( void )
 {
-	CalcDeltaTime();
+	calcDeltaTime();
 
-	Renderer::Render();
+	if( s_running_scene )
+		s_running_scene->visit();
 }
 
-void Engine::resize( int w, int h )
+float Engine::deltaTime( void )
 {
-	Renderer::Resize( w, h );
+	return s_delta_time;
 }
 
-float Engine::GetDeltaTime( void )
+void Engine::runScene( Ptr<Scene>& scene )
 {
-	return _s_delta_time;
+	Scene* rscene = scene.get();
+	magicalAssert( rscene, "should not be nullptr." );
+	magicalSafeAssign( s_running_scene, rscene );
+}
+
+Scene* Engine::runningScene( void )
+{
+	return s_running_scene;
 }
 
 void Engine::calcDeltaTime( void )
 {
 	int64_t now = TimeUtils::currentMicrosecondsTime();
-	_s_delta_time = std::max<double>( 0, ( now - _s_last_update_time ) / 1000000.0 );
-	_s_last_update_time = now;
+	s_delta_time = std::max<double>( 0, ( now - s_last_update_time ) / 1000000.0 );
+	s_last_update_time = now;
 }
+
+NS_MAGICAL_END
