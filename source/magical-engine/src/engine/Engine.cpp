@@ -51,7 +51,9 @@ void Engine::mainLoop( void )
 	calcDeltaTime();
 
 	if( s_running_scene )
+	{
 		s_running_scene->visit();
+	}
 }
 
 float Engine::deltaTime( void )

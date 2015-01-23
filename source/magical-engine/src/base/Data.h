@@ -51,8 +51,8 @@ public:
 	char* cPtr( void );
 
 private:
-	char* _data = nullptr;
-	uint32_t _size = 0;
+	char* m_data = nullptr;
+	uint32_t m_size = 0;
 };
 
 NS_MAGICAL_END

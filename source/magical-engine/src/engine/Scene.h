@@ -31,10 +31,11 @@ SOFTWARE.
 #include "SceneObject.h"
 
 #include <unordered_map>
+#include <vector>
 
 NS_MAGICAL_BEGIN
 
-class Scene : public Reference
+class Scene : public Transform
 {
 public:
 	Scene( void );
@@ -45,19 +46,18 @@ public:
 
 public:
 	Camera* createCamera( const char* name = "" );
+	void removeCamera( const Ptr<Camera>& camera );
+	void removeCamera( const char* name );
 	SceneObject* createSceneObject( const char* name = "" );
+	void removeSceneObject( const Ptr<SceneObject>& sceneobj );
+	void removeSceneObject( const char* name );
 
 public:
 	void visit( void );
 
 protected:
-	typedef std::vector< Camera* > CameraList;
-	typedef std::vector< SceneObject* > SceneObjectList;
-
-protected:
-	CameraList camera_list_;
-	SceneObjectList scene_object_list_;
-
+	std::vector<Camera*> m_cameras;
+	std::vector<SceneObject*> m_scene_objects;
 };
 
 NS_MAGICAL_END

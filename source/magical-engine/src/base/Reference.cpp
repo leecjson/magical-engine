@@ -41,18 +41,18 @@ Reference::~Reference( void )
 
 void Reference::retain( void )
 {
-	magicalAssert( _reference_count > 0, "invalid reference count." );
+	magicalAssert( m_reference_count > 0, "invalid reference count." );
 
-	++ _reference_count;
+	++ m_reference_count;
 }
 
 void Reference::release( void )
 {
-	magicalAssert( _reference_count > 0, "invalid reference count." );
+	magicalAssert( m_reference_count > 0, "invalid reference count." );
 
-	-- _reference_count;
+	-- m_reference_count;
 
-	if( _reference_count == 0 )
+	if( m_reference_count == 0 )
 	{
 		delete this;
 	}
@@ -60,7 +60,7 @@ void Reference::release( void )
 
 int Reference::referenceCount( void ) const
 {
-	return _reference_count;
+	return m_reference_count;
 }
 
 NS_MAGICAL_END

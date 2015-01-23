@@ -32,7 +32,7 @@ Data::Data( void )
 
 Data::~Data( void )
 {
-	magicalSafeFree( _data );
+	magicalSafeFree( m_data );
 }
 
 Ptr<Data> Data::create( void )
@@ -62,55 +62,55 @@ void Data::assign( char* data, size_t size )
 {
 	magicalAssert( data && size > 0, "data should not be nullptr and size should > 0" );
 
-	magicalSafeFree( _data );
-	_data = data;
-	_size = size;
+	magicalSafeFree( m_data );
+	m_data = data;
+	m_size = size;
 }
 
 void Data::malloc( size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
 
-	magicalSafeFree( _data );
-	_data = (char*) ::malloc( size );
-	magicalAssert( _data, "(char*) ::malloc( size );" );
-	_size = size;
+	magicalSafeFree( m_data );
+	m_data = (char*) ::malloc( size );
+	magicalAssert( m_data, "(char*) ::malloc( size );" );
+	m_size = size;
 }
 
 void Data::realloc( size_t size )
 {
 	magicalAssert( size > 0, "size should > 0" );
-	magicalAssert( _data, "Invalid!" );
+	magicalAssert( m_data, "Invalid!" );
 
-	if( size > _size )
+	if( size > m_size )
 	{
-		_data = (char*) ::realloc( _data, size );
-		magicalAssert( _data, "::realloc( _data, size );" );
+		m_data = (char*) ::realloc( m_data, size );
+		magicalAssert( m_data, "::realloc( _data, size );" );
 	}
 	else
 	{
-		_size = size;
+		m_size = size;
 	}
 }
 
 void Data::free( void )
 {
-	magicalSafeFreeNull( _data );
+	magicalSafeFreeNull( m_data );
 }
 
 bool Data::empty( void ) const
 {
-	return _data == nullptr;
+	return m_data == nullptr;
 }
 
 size_t Data::size( void ) const
 {
-	return _size;
+	return m_size;
 }
 
 char* Data::cPtr( void )
 {
-	return _data;
+	return m_data;
 }
 
 NS_MAGICAL_END

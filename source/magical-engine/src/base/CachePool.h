@@ -69,8 +69,8 @@ public:
 			if( !ptr ) 
 				throw std::bad_alloc();
 
-			objects_[ size_ ] = ptr;
-			size_ += 1;
+			m_objects[ m_size ] = ptr;
+			m_size += 1;
 		}
 	}
 
@@ -78,28 +78,28 @@ public:
 	{
 		growCapacity();
 
-		objects_[ size_ ] = (T*) ptr;
-		size_ += 1;
+		m_objects[ m_size ] = (T*) ptr;
+		m_size += 1;
 	}
 
 	void* take( void )
 	{
-		if( size_ == 0 )
+		if( m_size == 0 )
 		{
 			growCapacity();
-			fill( capacity_ );
+			fill( m_capacity );
 
-			typename T* ptr = objects_[ size_ - 1 ];
-			if( size_ != 0 )
-				-- size_;
+			typename T* ptr = m_objects[ m_size - 1 ];
+			if( m_size != 0 )
+				-- m_size;
 
 			return ptr;
 		}
 		else
 		{
-			typename T* ptr = objects_[ size_ - 1 ];
-			if( size_ != 0 )
-				-- size_;
+			typename T* ptr = m_objects[ m_size - 1 ];
+			if( m_size != 0 )
+				-- m_size;
 
 			return ptr;
 		}
@@ -107,11 +107,11 @@ public:
 
 	void growCapacity( void )
 	{
-		if( objects_ )
+		if( m_objects )
 		{
-			if( size_ == capacity_ )
+			if( m_size == m_capacity )
 			{
-				growCapacity( capacity_ );
+				growCapacity( m_capacity );
 			}
 		}
 		else
@@ -125,51 +125,51 @@ public:
 		if( size == 0 )
 			return;
 
-		if( objects_ )
+		if( m_objects )
 		{
-			capacity_ += size;
-			objects_ = (T**) realloc( objects_, capacity_ * sizeof( T* ) );
+			m_capacity += size;
+			m_objects = (T**) realloc( m_objects, m_capacity * sizeof( T* ) );
 		}
 		else
 		{
-			capacity_ = size;
-			objects_ = (T**) malloc( size * sizeof( T* ) );
+			m_capacity = size;
+			m_objects = (T**) malloc( size * sizeof( T* ) );
 		}
 
-		if( !objects_ ) 
+		if( !m_objects ) 
 			throw std::bad_alloc();
 	}
 
 	void clear( void )
 	{
-		if( objects_ )
+		if( m_objects )
 		{
-			for( size_t i = 0; i < size_; ++i )
+			for( size_t i = 0; i < m_size; ++i )
 			{
-				free( objects_[i] );
+				free( m_objects[i] );
 			}
 
-			free( objects_ );
-			objects_ = nullptr;
-			size_ = 0;
-			capacity_ = 0;
+			free( m_objects );
+			m_objects = nullptr;
+			m_size = 0;
+			m_capacity = 0;
 		}
 	}
 
 	size_t size( void ) const
 	{
-		return size_;
+		return m_size;
 	}
 
 	bool empty( void ) const
 	{
-		return size_ == 0
+		return m_size == 0
 	}
 
 private:
-	size_t size_ = 0;
-	size_t capacity_ = 0;
-	typename T** objects_ = nullptr;
+	size_t m_size = 0;
+	size_t m_capacity = 0;
+	typename T** m_objects = nullptr;
 };
 
 NS_MAGICAL_END

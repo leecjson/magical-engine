@@ -26,9 +26,13 @@ SOFTWARE.
 
 USING_NS_MAGICAL;
 
+Ptr<Camera> m_main_camera;
+
 void mainDelegate( void )
 {
-	Engine::runScene( Scene::create() );
-	
-	Ptr<Camera> main_camera = Engine::runningScene()->createCamera();
+	Ptr<Scene> scene = Scene::create();
+	Engine::runScene( scene );
+
+	m_main_camera = scene->createCamera();
+	scene->addChild( m_main_camera );
 }

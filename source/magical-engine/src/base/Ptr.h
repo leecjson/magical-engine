@@ -40,13 +40,13 @@ class Initializer
 public:
 	Initializer( T* ref )
 	{
-		_reference = ref;
+		m_reference = ref;
 	}
 
 private:
 	template< class T >
 	friend class Ptr;
-	T* _reference = nullptr;
+	T* m_reference = nullptr;
 };
 
 template< class T >
@@ -60,203 +60,203 @@ public:
 
 	Ptr( std::nullptr_t nt )
 	{
-		_reference = nt;
+		m_reference = nt;
 	}
 
 	~Ptr( void )
 	{
-		if( _reference )
+		if( m_reference )
 		{
-			_reference->release();
+			m_reference->release();
 		}
 	}
 
-	Ptr( T* other )
+	Ptr( T* rhs )
 	{
-		if( other )
+		if( rhs )
 		{
-			other->retain();
-			_reference = other;
+			rhs->retain();
+			m_reference = rhs;
 		}
 	}
 
-	Ptr( Ptr<T>& other )
+	Ptr( Ptr<T>& rhs )
 	{
-		if( other._reference )
+		if( rhs.m_reference )
 		{
-			other._reference->retain();
-			_reference = other._reference;
+			rhs.m_reference->retain();
+			m_reference = rhs.m_reference;
 		}
 	}
 
-	Ptr( Ptr<T>&& other )
+	Ptr( Ptr<T>&& rhs )
 	{
-		if( other._reference )
+		if( rhs.m_reference )
 		{
-			_reference = other._reference;
-			other._reference = nullptr;
+			m_reference = rhs.m_reference;
+			rhs.m_reference = nullptr;
 		}
 	}
 
 	template< class Tz >
-	Ptr( Ptr<Tz>& other )
+	Ptr( Ptr<Tz>& rhs )
 	{
-		Tz* ref = other.get();
+		Tz* ref = rhs.get();
 		if( ref != nullptr )
 		{
 			ref->retain();
-			_reference = static_cast<Tz*>( ref );
+			m_reference = static_cast<Tz*>( ref );
 		}
 	}
 
 	Ptr( Initializer<T>& ir )
 	{
-		if( ir._reference )
+		if( ir.m_reference )
 		{
-			_reference = ir._reference;
+			m_reference = ir.m_reference;
 		}
 	}
 
 public:
 	void reset( void )
 	{
-		if( _reference )
+		if( m_reference )
 		{
-			_reference->release();
-			_reference = nullptr;
+			m_reference->release();
+			m_reference = nullptr;
 		}
 	}
 
 	void set( std::nullptr_t nt )
 	{
-		if( _reference )
+		if( m_reference )
 		{
-			_reference->release();
-			_reference = nt;
+			m_reference->release();
+			m_reference = nt;
 		}
 	}
 
-	void set( T* other )
+	void set( T* rhs )
 	{
-		if( other )
+		if( rhs )
 		{
-			other->retain();
+			rhs->retain();
 		}
 
-		if( _reference )
+		if( m_reference )
 		{
-			_reference->release();
+			m_reference->release();
 		}
 
-		_reference = other;
+		m_reference = rhs;
 	}
 
-	void set( Ptr<T>& other )
+	void set( Ptr<T>& rhs )
 	{
-		if( other._reference )
+		if( rhs.m_reference )
 		{
-			other._reference->retain();
+			rhs.m_reference->retain();
 		}
 
-		if( _reference )
+		if( m_reference )
 		{
-			_reference->release();
+			m_reference->release();
 		}
 
-		_reference = other._reference;
+		m_reference = rhs.m_reference;
 	}
 
-	void set( Ptr<T>&& other )
+	void set( Ptr<T>&& rhs )
 	{
-		if( _reference )
+		if( m_reference )
 		{
-			_reference->release();
-			_reference = nullptr;
+			m_reference->release();
+			m_reference = nullptr;
 		}
 
-		if( other._reference )
+		if( rhs.m_reference )
 		{
-			_reference = other._reference;
-			other._reference = nullptr;
+			m_reference = rhs.m_reference;
+			rhs.m_reference = nullptr;
 		}
 	}
 
 	template< class Tz >
-	void set( Ptr<Tz>& other )
+	void set( Ptr<Tz>& rhs )
 	{
-		Tz* ref = other.get();
+		Tz* ref = rhs.get();
 		if( ref != nullptr )
 		{
 			ref->retain();
-			if( _reference )
-				_reference->release();
+			if( m_reference )
+				m_reference->release();
 
-			_reference = static_cast< Tz* >( ref );
+			m_reference = static_cast< Tz* >( ref );
 		}
 		else
 		{
-			if( _reference )
+			if( m_reference )
 			{
-				_reference->release();
-				_reference = nullptr;
+				m_reference->release();
+				m_reference = nullptr;
 			}
 		}
 	}
 
 	void set( Initializer<T>& ir )
 	{
-		if( _reference )
+		if( m_reference )
 		{
-			_reference->release();
-			_reference = nullptr;
+			m_reference->release();
+			m_reference = nullptr;
 		}
 
-		if( ir._reference )
+		if( ir.m_reference )
 		{
-			_reference = ir._reference;
+			m_reference = ir.m_reference;
 		}
 	}
 
 	T* get( void ) const
 	{
-		return _reference;
+		return m_reference;
 	}
 
 	template< class Tz >
 	Tz* get( void ) const
 	{
-		return static_cast< Tz* >( _reference );
+		return static_cast< Tz* >( m_reference );
 	}
 
 	T* take( void )
 	{
-		T* ref = _reference;
-		_reference = nullptr;
+		T* ref = m_reference;
+		m_reference = nullptr;
 		return ref;
 	}
 
 	template< class Tz >
 	Tz* take( void )
 	{
-		Tz* ref = static_cast< Tz* >( _reference );
-		_reference = nullptr;
+		Tz* ref = static_cast< Tz* >( m_reference );
+		m_reference = nullptr;
 		return ref;
 	}
 
 	Ptr<T> share( void ) const
 	{
-		return Ptr<T>( _reference );
+		return Ptr<T>( m_reference );
 	}
 
 	template< class Tz >
 	Ptr<Tz> share( void ) const
 	{
-		return Ptr<Tz>( static_cast< Tz* >( _reference ) );
+		return Ptr<Tz>( static_cast< Tz* >( m_reference ) );
 	}
 
 	Ptr<Reference> shareReference( void ) const
 	{
-		return Ptr<Reference>( _reference );
+		return Ptr<Reference>( m_reference );
 	}
 
 public:
@@ -266,51 +266,51 @@ public:
 		return *this;
 	}
 
-	Ptr<T>& operator=( T* other )
+	Ptr<T>& operator=( T* rhs )
 	{
-		set( other );
+		set( rhs );
 		return *this;
 	}
 
-	Ptr<T>& operator=( const Ptr<T>& other )
+	Ptr<T>& operator=( const Ptr<T>& rhs )
 	{
-		set( other );
+		set( rhs );
 		return *this;
 	}
 
-	Ptr<T>& operator=( Ptr<T>&& other )
+	Ptr<T>& operator=( Ptr<T>&& rhs )
 	{
-		set( std::forward< Ptr<T> >( other ) );
+		set( std::forward< Ptr<T> >( rhs ) );
 		return *this;
 	}
 
 	T* operator->( void ) const
 	{
-		return _reference;
+		return m_reference;
 	}
 
-	bool operator==( const Ptr<T>& other ) const
+	bool operator==( const Ptr<T>& rhs ) const
 	{
-		return _reference == other._reference;
+		return m_reference == rhs.m_reference;
 	}
 
-	bool operator!=( const Ptr<T>& other ) const
+	bool operator!=( const Ptr<T>& rhs ) const
 	{
-		return _reference != other._reference;
+		return m_reference != rhs.m_reference;
 	}
 
 	bool operator==( std::nullptr_t nt ) const
 	{
-		return _reference == nt;
+		return m_reference == nt;
 	}
 
 	bool operator!=( std::nullptr_t nt ) const
 	{
-		return _reference != nt;
+		return m_reference != nt;
 	}
 
 private:
-	T* _reference = nullptr;
+	T* m_reference = nullptr;
 };
 
 NS_MAGICAL_END

@@ -31,27 +31,30 @@ SOFTWARE.
 
 #ifndef MAGICAL_ENGINE
 	typedef unsigned char cBool;
-	#ifndef cTrue
-		#define cTrue 1
+	#ifdef cTrue
+		#undef cTrue
 	#endif
-	#ifndef cFalse
-		#define cFalse 0
+	#define cTrue  1
+	#ifdef cFalse
+		#undef cFalse
 	#endif
+	#define cFalse 0
+#endif
 #else
-	#include "PlatformMacros.h"
+#include "PlatformMacros.h"
 #endif
 
 #ifndef MAGICALAPI_MATH
-	#define MAGICALAPI_MATH
+#define MAGICALAPI_MATH
 #endif
 
 #ifndef MAGICAL_DEBUG
-	#define debugassert( con, msg )
+#define debugassert( con, msg )
 #else
-	#define debugassert( con, msg ) do{ \
-		if( !( con ) ) {                \
-			assert( ( con ) && msg );   \
-		}}  while( 0 )
+#define debugassert( con, msg ) do{ \
+	if( !( con ) ) {                \
+		assert( ( con ) && msg );   \
+	}}  while( 0 )
 #endif
 
 #define kPI 3.14159265358979323846f

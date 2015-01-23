@@ -43,7 +43,7 @@ public:
 	int referenceCount( void ) const;
 
 protected:
-	int _reference_count = 1;
+	int m_reference_count = 1;
 };
 
 NS_MAGICAL_END

@@ -27,12 +27,12 @@ NS_MAGICAL_BEGIN
 
 Scene::Scene( void )
 {
-
+	
 }
 
 Scene::~Scene( void )
 {
-
+	
 }
 
 Ptr<Scene> Scene::create( void )
@@ -50,8 +50,40 @@ Camera* Scene::createCamera( const char* name )
 		camera->setName( name );
 	}
 
-	camera_list_.push_back( camera );
+	m_cameras.push_back( camera );
 	return camera;
+}
+
+void Scene::removeCamera( const Ptr<Camera>& camera )
+{
+	Camera* rcamera = camera.get();
+	magicalAssert( rcamera, "should not be nullptr." );
+
+	auto itr = std::find( m_cameras.begin(), m_cameras.end(), rcamera );
+	if( itr != m_cameras.end() )
+	{
+		m_cameras.erase( itr );
+		rcamera->release();
+	}
+}
+
+void Scene::removeCamera( const char* name )
+{
+	magicalAssert( name && *name, "should not empty." );
+
+	Camera* camera;
+	auto itr = m_cameras.begin();
+	auto end = m_cameras.end();
+
+	for( ; itr != end; ++ itr )
+	{
+		camera = *itr;
+		if( camera->getName() == name )
+		{
+			m_cameras.erase( itr );
+			break;
+		}
+	}
 }
 
 SceneObject* Scene::createSceneObject( const char* name )
@@ -61,17 +93,25 @@ SceneObject* Scene::createSceneObject( const char* name )
 	{
 		scene_object->setName( name );
 	}
-	
-	scene_object_list_.push_back( scene_object );
+
+	m_scene_objects.push_back( scene_object );
 	return scene_object;
+}
+
+void Scene::removeSceneObject( const Ptr<SceneObject>& sceneobj )
+{
+
+}
+
+void Scene::removeSceneObject( const char* name )
+{
+
 }
 
 void Scene::visit( void )
 {
-	for( auto itr : scene_object_list_ )
-	{
-		itr->visit();
-	}
+	transform();
+
 }
 
 NS_MAGICAL_END

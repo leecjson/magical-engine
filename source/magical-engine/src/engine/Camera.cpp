@@ -35,13 +35,6 @@ Camera::~Camera( void )
 
 }
 
-Ptr<Camera> Camera::create( void )
-{
-	Camera* ret = new Camera();
-	magicalAssert( ret, "new Camera() failed" );
-	return Ptr<Camera>( Initializer<Camera>( ret ) );
-}
-
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 {
 	projection_matrix_.setPerspective( fov, aspect, znear, zfar );

@@ -45,9 +45,7 @@ Ptr<SceneObject> SceneObject::create( void )
 
 void SceneObject::visit( void )
 {
-	updateTransform();
-
-
+	
 }
 
 NS_MAGICAL_END

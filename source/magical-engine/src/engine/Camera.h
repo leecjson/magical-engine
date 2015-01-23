@@ -35,9 +35,6 @@ class Camera : public Transform
 public:
 	Camera( void );
 	virtual ~Camera( void );
-	
-public:
-	static Ptr<Camera> create( void );
 
 public:
 	void setPerspective( float fov, float aspect, float znear, float zfar );
