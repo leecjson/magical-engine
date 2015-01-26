@@ -46,9 +46,7 @@ Camera* Scene::createCamera( const char* name )
 {
 	Camera* camera = new Camera();
 	if( name && *name )
-	{
 		camera->setName( name );
-	}
 
 	m_cameras.push_back( camera );
 	return camera;
@@ -56,7 +54,7 @@ Camera* Scene::createCamera( const char* name )
 
 void Scene::removeCamera( const Ptr<Camera>& camera )
 {
-	Camera* rcamera = camera.get();
+	/*Camera* rcamera = camera.get();
 	magicalAssert( rcamera, "should not be nullptr." );
 
 	auto itr = std::find( m_cameras.begin(), m_cameras.end(), rcamera );
@@ -64,12 +62,12 @@ void Scene::removeCamera( const Ptr<Camera>& camera )
 	{
 		m_cameras.erase( itr );
 		rcamera->release();
-	}
+	}*/
 }
 
 void Scene::removeCamera( const char* name )
 {
-	magicalAssert( name && *name, "should not empty." );
+	/*magicalAssert( name && *name, "should not empty." );
 
 	Camera* camera;
 	auto itr = m_cameras.begin();
@@ -83,7 +81,7 @@ void Scene::removeCamera( const char* name )
 			m_cameras.erase( itr );
 			break;
 		}
-	}
+	}*/
 }
 
 SceneObject* Scene::createSceneObject( const char* name )
@@ -108,10 +106,31 @@ void Scene::removeSceneObject( const char* name )
 
 }
 
+void Scene::setActiveCamera( const char* name )
+{
+	for( auto itr : m_cameras )
+	{
+		if( itr->getName() == name )
+		{
+			itr->retain();
+			//m_active_camera = itr;
+		}
+	}
+}
+
+void Scene::setActiveCamera( const Ptr<Camera>& camera )
+{
+
+}
+
 void Scene::visit( void )
 {
 	transform();
 
+	for( auto itr : m_scene_objects )
+	{
+		itr->visit();
+	}
 }
 
 NS_MAGICAL_END

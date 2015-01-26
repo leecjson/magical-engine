@@ -47,15 +47,22 @@ public:
 public:
 	Camera* createCamera( const char* name = "" );
 	void removeCamera( const Ptr<Camera>& camera );
-	void removeCamera( const char* name );
+	Camera* cameraAtIndex( size_t i );
+	Camera* getCamera( const char* name );
+	void setActiveCamera( size_t i );
+	void setActiveCamera( const char* name );
+	void setActiveCamera( const Ptr<Camera>& camera );
+	Camera* getActiveCamera( void ) const;
+
 	SceneObject* createSceneObject( const char* name = "" );
-	void removeSceneObject( const Ptr<SceneObject>& sceneobj );
+	void removeSceneObject( const Ptr<SceneObject>& object );
 	void removeSceneObject( const char* name );
 
 public:
 	void visit( void );
 
 protected:
+	Camera* m_active_camera = nullptr;
 	std::vector<Camera*> m_cameras;
 	std::vector<SceneObject*> m_scene_objects;
 };

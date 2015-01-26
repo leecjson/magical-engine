@@ -30,9 +30,14 @@ Ptr<Camera> m_main_camera;
 
 void mainDelegate( void )
 {
+	string as;
+	as.
+
 	Ptr<Scene> scene = Scene::create();
 	Engine::runScene( scene );
 
 	m_main_camera = scene->createCamera();
 	scene->addChild( m_main_camera );
+
+	scene->chil(  )
 }

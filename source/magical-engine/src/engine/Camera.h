@@ -41,8 +41,8 @@ public:
 	const Matrix4& getProjectionMatrix( void ) const;
 
 private:
-	Matrix4 projection_matrix_;
-
+	bool m_is_active = false;
+	Matrix4 m_projection_matrix;
 };
 
 NS_MAGICAL_END

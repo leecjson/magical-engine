@@ -37,12 +37,12 @@ Camera::~Camera( void )
 
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 {
-	projection_matrix_.setPerspective( fov, aspect, znear, zfar );
+	m_projection_matrix.setPerspective( fov, aspect, znear, zfar );
 }
 
 const Matrix4& Camera::getProjectionMatrix( void ) const
 {
-	return projection_matrix_;
+	return m_projection_matrix;
 }
 
 NS_MAGICAL_END

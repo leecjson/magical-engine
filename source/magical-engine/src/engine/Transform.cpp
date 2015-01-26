@@ -57,7 +57,7 @@ void Transform::setName( const char* name )
 	m_name = name;
 }
 
-const std::string& Transform::getName( void ) const
+const string& Transform::getName( void ) const
 {
 	return m_name;
 }
@@ -373,30 +373,46 @@ void Transform::setParent( Transform* parent )
 
 void Transform::transform( void )
 {
-	if( m_ts_dirty == false )
-		return;
+	int dirty_info = kTsClean;
 
-	const Quaternion& r = getDerivedRotation();
-	const Vector3& s = getDerivedScale();
-	const Vector3& t = getDerivedPosition();
+	if( m_ts_dirty )
+	{
+		dirty_info = m_ts_dirty_info;
 
-	m_local_to_world_matrix.setTRS( t, r, s );
-	m_ts_dirty = false;
-}
+		const Quaternion& r = getDerivedRotation();
+		const Vector3& s = getDerivedScale();
+		const Vector3& t = getDerivedPosition();
 
-void Transform::transformAllChildren( void )
-{
-	if( m_children.empty() ) 
+		m_local_to_world_matrix.setTRS( t, r, s );
+		m_ts_dirty = false;
+	}
+
+	if( m_children.empty() )
 		return;
 
 	auto& chilren = m_children;
 	for( auto child : chilren )
 	{
-		child->transformDirty( m_ts_dirty_info );
-		child->transformAllChildren();
+		if( dirty_info != kTsClean )
+			child->transformDirty( dirty_info );
+
 		child->transform();
 	}
 }
+
+//void Transform::transformAllChildren( void )
+//{
+//	if( m_children.empty() ) 
+//		return;
+//
+//	auto& chilren = m_children;
+//	for( auto child : chilren )
+//	{
+//		child->transformDirty( m_ts_dirty_info );
+//		child->transformAllChildren();
+//		child->transform();
+//	}
+//}
 
 void Transform::transformDirty( int info )
 {

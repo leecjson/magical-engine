@@ -28,7 +28,7 @@ SOFTWARE.
 #include "Common.h"
 #include "magical-math.h"
 #include "Reference.h"
-#include <vector>
+#include <unordered_map>
 
 NS_MAGICAL_BEGIN
 
@@ -47,7 +47,7 @@ public:
 
 public:
 	void setName( const char* name );
-	const std::string& getName( void ) const;
+	const string& getName( void ) const;
 	void addChild( const Ptr<Transform>& child );
 	void removeChild( const Ptr<Transform>& child );
 	void removeAllChildren( void );
@@ -56,7 +56,7 @@ public:
 	Transform* getChild( unsigned int index ) const;
 	unsigned int childrenCount( void ) const;
 	Transform* getParent( void ) const;
-	bool isChildOf( const Ptr<Transform>& parent ) const;
+	bool isChildOf( const Transform& parent ) const;
 
 public:
 	void setPosition( const Vector2& t );
@@ -97,14 +97,14 @@ public:
 protected:
 	void setParent( Transform* parent );
 	void transform( void );
-	void transformAllChildren( void );
+	//void transformAllChildren( void );
 	void transformDirty( int info );
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
 
 protected:
-	std::string m_name;
+	string m_name;
 	Transform* m_parent = nullptr;
 	std::vector<Transform*> m_children;
 

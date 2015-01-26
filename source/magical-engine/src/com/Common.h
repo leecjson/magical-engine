@@ -46,15 +46,14 @@ c++ include
 #include <algorithm>
 #include <functional>
 #include <exception>
+using std::string;
 
 #include "LogSystem.h"
-
-
-#define kBufferLen 1024 * 100
 
 /*
 buffer macros
 */
+#define kBufferLen 1024 * 100
 NS_MAGICAL_BEGIN
 extern char g_buffer[];
 NS_MAGICAL_END
