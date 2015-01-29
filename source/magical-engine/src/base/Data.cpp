@@ -25,9 +25,11 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+define_class_hash_code( Data );
+
 Data::Data( void )
 {
-
+	assign_class_hash_code();
 }
 
 Data::~Data( void )

@@ -45,11 +45,11 @@ SOFTWARE.
 	struct Vector2;      \
 	struct Vector3;      \
 	struct Vector4;      \
-	struct AxisAngle;    \
-	struct EulerAngles;  \
-	struct Quaternion;   \
 	struct Matrix3;      \
 	struct Matrix4;      \
+	struct Quaternion;   \
+	struct AxisAngle;    \
+	struct EulerAngles;  \
 	struct Ray3;         \
 	struct AABB3;        \
 	struct Plane3;       \

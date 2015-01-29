@@ -21,9 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __TRANSFORM_H__
-#define __TRANSFORM_H__
-
+#ifndef __SCENE_NODE_H__
+#define __SCENE_NODE_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
@@ -33,93 +32,42 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-enum class Space
+using ::std::string;
+using ::std::vector;
+
+enum class Space 
 {
 	Self,
 	Parent,
 	World,
 };
 
-template< class T >
-class Transform : public Reference
+class SceneNode : public Reference
 {
 public:
-	Transform( void )
-	: m_ts_dirty_info( kTsClean )
-	{
-		
-	}
-
-	virtual ~Transform( void )
-	{
-		
-	}
+	declare_class_hash_code;
 
 public:
-	bool isChildOf( const Ptr<T>& parent ) const
-	{
-		magicalAssert( parent != nullptr, "Invaild! should not be nullptr" );
-		return m_parent == parent.get();
-	}
+	SceneNode( void );
+	virtual ~SceneNode( void );
 
-	size_t childrenCount( void ) const
-	{
-		return m_children.size();
-	}
+public:
+	void setName( const char* name );
+	const string& getName( void ) const;
+	void setVisible( bool visible );
+	bool isVisible( void ) const;
 
-	T* getParent( void ) const
-	{
-		return m_parent;
-	}
-
-	T* findChild( const char* name ) const
-	{
-		magicalAssert( name && *name, "name should not be empty" );
-	
-		auto ritr = m_children.rbegin();
-		for( ; ritr != m_children.rend(); ++ritr )
-		{
-			T* child = *ritr;
-			if( child->getName() == name )
-			{
-				return child;
-			}
-		}
-		return nullptr;
-	}
-
-	T* childAtIndex( size_t i ) const
-	{
-		magicalAssert( i < m_children.size(), "Invaild index!" );
-		return m_children[ i ];
-	}
-
-	void addChild( const Ptr<T>& child )
-	{
-		T* rchild = child.get();
-		magicalAssert( rchild && rchild != this && !rchild->getParent(), "Invaild!" );
-
-		rchild->setParent( this );
-
-		rchild->retain();
-		m_children.push_back( rchild );
-	}
-
-	void removeChild( const Ptr<T>& child )
-	{
-		T* rchild = child.get();
-		magicalAssert( rchild && rchild->getParent() == this, "Invaild!" );
-
-		auto itr = std::find( m_children.begin(), m_children.end(), rchild );
-		magicalAssert( itr != m_children.end(), "Invaild!" );
-
-		rchild->setParent( nullptr );
-		m_children.erase( itr );
-		rchild->release();
-	}
-
+public:
+	bool isChildOf( const Ptr<SceneNode>& parent ) const;
+	size_t childCount( void ) const;
+	SceneNode* getParent( void ) const;
+	SceneNode* findChild( const char* name ) const;
+	SceneNode* childAtIndex( size_t i ) const;
+	void addChild( const Ptr<SceneNode>& child );
+	void setParent( const Ptr<SceneNode>& parent );
+	void removeChild( const Ptr<SceneNode>& child );
 	void removeAllChildren( void );
-	void removeFromParent( void );
+	void removeSelf( void );
 
 public:
 	void translate( const Vector2& t, Space relative_to = Space::Parent );
@@ -158,7 +106,8 @@ public:
 	const Vector3& getScale( void ) const;
 	
 protected:
-	void setParent( Transform* parent );
+	//void addChild( SceneNode* child );
+	void setRoot( SceneNode* root );
 	void transform( void );
 	void transformDirty( int info );
 	const Vector3& getDerivedPosition( void ) const;
@@ -167,8 +116,13 @@ protected:
 
 protected:
 	friend class Scene;
-	T* m_parent = nullptr;
-	vector<T*> m_children;
+
+protected:
+	string m_name;
+	bool m_is_visible = false;
+	SceneNode* m_root = nullptr;
+	SceneNode* m_parent = nullptr;
+	vector<SceneNode*> m_children;
 	bool m_inherit_scale = true;
 	bool m_inherit_rotation = true;
 	mutable int m_ts_dirty_info;
@@ -184,4 +138,4 @@ protected:
 
 NS_MAGICAL_END
 
-#endif //__TRANSFORM_H__
+#endif //__SCENE_NODE_H__

@@ -21,31 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "SceneObject.h"
-#include "Data.h"
+#ifndef __SCENE_ROOT_H__
+#define __SCENE_ROOT_H__
 
-NS_MAGICAL_BEGIN
-
-SceneObject::SceneObject( void )
+class SceneRoot
 {
+public:
 	
-}
+};
 
-SceneObject::~SceneObject( void )
-{
-	
-}
-
-Ptr<SceneObject> SceneObject::create( void )
-{
-	SceneObject* ret = new SceneObject();
-	magicalAssert( ret, "new SceneObject() failed" );
-	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
-}
-
-void SceneObject::visit( void )
-{
-	
-}
-
-NS_MAGICAL_END
+#endif //__SCENE_ROOT_H__

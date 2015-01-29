@@ -30,16 +30,15 @@ SOFTWARE.
 #include <stdlib.h>
 
 #ifndef MAGICAL_ENGINE
-	typedef unsigned char cBool;
-	#ifdef cTrue
-		#undef cTrue
-	#endif
-	#define cTrue  1
-	#ifdef cFalse
-		#undef cFalse
-	#endif
-	#define cFalse 0
+typedef unsigned char cBool;
+#ifdef cTrue
+#undef cTrue
 #endif
+#ifdef cFalse
+#undef cFalse
+#endif
+#define cTrue       1
+#define cFalse      0
 #else
 #include "PlatformMacros.h"
 #endif

@@ -105,7 +105,7 @@ public:
 		if( ref != nullptr )
 		{
 			ref->retain();
-			m_reference = static_cast<Tz*>( ref );
+			m_reference = static_cast< Tz* >( ref );
 		}
 	}
 

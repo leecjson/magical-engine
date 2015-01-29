@@ -21,45 +21,29 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Utils.h"
-#include <chrono>
+#ifndef __ENTITY_H__
+#define __ENTITY_H__
 
-int64_t TimeUtils::currentMicrosecondsTime( void )
+#include "PlatformMacros.h"
+#include "Common.h"
+#include "SceneNode.h"
+
+NS_MAGICAL_BEGIN
+
+class Entity : public SceneNode
 {
-	using namespace ::std::chrono;
-	system_clock::duration scd = system_clock::now().time_since_epoch();
-	microseconds::rep now = duration_cast<microseconds>( scd ).count();
-	return now;
-}
+public:
+	declare_class_hash_code;
 
-bool FileUtils::isAbsPath( const char* path )
-{
-	magicalAssert( path, "should not be nullptr." );
+public:
+	Entity( void );
+	virtual ~Entity( void );
 
-#ifdef MAGICAL_WIN32
-	if( strlen( path ) > 2
-		&& ((path[0] >= 'a' && path[0] <= 'z') 
-		|| ( path[0] >= 'A' && path[0] <= 'Z'))
-		&& ( path[1] == ':') )
-	{
-		return true;
-	}
-	return false;
-#endif
-}
+public:
+	virtual void prepare( void );
+	virtual void draw( void );
+};
 
-std::string FileUtils::toUnixPath( const char* path )
-{
-	magicalAssert( path, "should not be nullptr." );
+NS_MAGICAL_END
 
-	std::string ret = path;
-	int len = ret.length();
-    for( int i = 0; i < len; ++i )
-    {
-        if( ret[i] == '\\' )
-        {
-            ret[i] = '/';
-        }
-    }
-    return ret;
-}
+#endif //__ENTITY_H__

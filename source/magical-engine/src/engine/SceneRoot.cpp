@@ -21,28 +21,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SCENE_OBJECT_H__
-#define __SCENE_OBJECT_H__
-
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "Transform.h"
-
-NS_MAGICAL_BEGIN
-
-class SceneObject : public Transform
-{
-public:
-	SceneObject( void );
-	virtual ~SceneObject( void );
-
-public:
-	static Ptr<SceneObject> create( void );
-
-public:
-	void visit( void );
-};
-
-NS_MAGICAL_END
-
-#endif //__SCENE_OBJECT_H__
+#include "SceneRoot.h"

@@ -39,11 +39,18 @@ public:
 public:
 	void retain( void );
 	void release( void );
-
-	int referenceCount( void ) const;
+	unsigned int retainCount( void ) const;
+	
+	size_t hashCodeClass( void ) const;
+	template< class Tz >
+	inline bool typeof( void ) const
+	{
+		return m_class_hash_code == Tz::HashCode;
+	}
 
 protected:
-	int m_reference_count = 1;
+	unsigned int m_reference = 1;
+	size_t m_class_hash_code = 0;
 };
 
 NS_MAGICAL_END

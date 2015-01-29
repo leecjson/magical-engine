@@ -41,26 +41,31 @@ Reference::~Reference( void )
 
 void Reference::retain( void )
 {
-	magicalAssert( m_reference_count > 0, "invalid reference count." );
+	magicalAssert( m_reference > 0, "invalid reference count." );
 
-	++ m_reference_count;
+	++ m_reference;
 }
 
 void Reference::release( void )
 {
-	magicalAssert( m_reference_count > 0, "invalid reference count." );
+	magicalAssert( m_reference > 0, "invalid reference count." );
 
-	-- m_reference_count;
+	-- m_reference;
 
-	if( m_reference_count == 0 )
+	if( m_reference == 0 )
 	{
 		delete this;
 	}
 }
 
-int Reference::referenceCount( void ) const
+unsigned int Reference::retainCount( void ) const
 {
-	return m_reference_count;
+	return m_reference;
+}
+
+size_t Reference::hashCodeClass( void ) const
+{
+	return m_class_hash_code;
 }
 
 NS_MAGICAL_END

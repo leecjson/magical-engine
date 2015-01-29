@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Transform.h"
+#include "SceneNode.h"
 
 NS_MAGICAL_BEGIN
 
@@ -33,30 +33,80 @@ enum
 	kTsScaleDirty = 0x04,
 };
 
-bool Transform::isChildOf( const Ptr<Transform>& parent ) const
+define_class_hash_code( SceneNode );
+
+SceneNode::SceneNode( void )
+: m_ts_dirty_info( kTsClean )
 {
-	magicalAssert( parent != nullptr, "Invaild! should not be nullptr" );
-	return m_parent == parent.get();
+	assign_class_hash_code();
 }
 
-size_t Transform::childrenCount( void ) const
+SceneNode::~SceneNode( void )
+{
+	magicalSafeRelease( m_root );
+	removeAllChildren();
+}
+
+void SceneNode::setName( const char* name )
+{
+	magicalAssert( name && *name, "name should not be empty" );
+	m_name = name;
+}
+
+const string& SceneNode::getName( void ) const
+{
+	return m_name;
+}
+
+void SceneNode::setVisible( bool visible )
+{
+	if( m_is_visible == visible )
+		return;
+
+	m_is_visible = visible;
+}
+
+bool SceneNode::isVisible( void ) const
+{
+	return m_is_visible;
+}
+
+bool SceneNode::isChildOf( const Ptr<SceneNode>& parent ) const
+{
+	SceneNode* rparent = parent.get();
+	magicalAssert( rparent, "Invaild! should not be nullptr" );
+
+	SceneNode* itr = m_parent;
+	while( itr )
+	{
+		if( itr == rparent )
+			return true;
+
+		itr = itr->m_parent;
+	}
+	return false;
+}
+
+size_t SceneNode::childCount( void ) const
 {
 	return m_children.size();
 }
 
-Transform* Transform::getParent( void ) const
+SceneNode* SceneNode::getParent( void ) const
 {
+	//if( m_parent == m_ro )
+
 	return m_parent;
 }
 
-Transform* Transform::findChild( const char* name ) const
+SceneNode* SceneNode::findChild( const char* name ) const
 {
 	magicalAssert( name && *name, "name should not be empty" );
 	
 	auto ritr = m_children.rbegin();
 	for( ; ritr != m_children.rend(); ++ritr )
 	{
-		Transform* child = *ritr;
+		SceneNode* child = *ritr;
 		if( child->getName() == name )
 		{
 			return child;
@@ -65,26 +115,35 @@ Transform* Transform::findChild( const char* name ) const
 	return nullptr;
 }
 
-Transform* Transform::childAtIndex( size_t i ) const
+SceneNode* SceneNode::childAtIndex( size_t i ) const
 {
 	magicalAssert( i < m_children.size(), "Invaild index!" );
 	return m_children[ i ];
 }
 
-void Transform::addChild( const Ptr<Transform>& child )
+void SceneNode::addChild( const Ptr<SceneNode>& child )
 {
-	Transform* rchild = child.get();
-	magicalAssert( rchild && rchild != this && !rchild->getParent(), "Invaild!" );
 
-	rchild->setParent( this );
-
-	rchild->retain();
-	m_children.push_back( rchild );
 }
 
-void Transform::removeChild( const Ptr<Transform>& child )
+void SceneNode::setParent( const Ptr<SceneNode>& parent )
 {
-	Transform* rchild = child.get();
+	SceneNode* rparent = parent.get();
+	magicalAssert( rparent, "Invaild! should not be nullptr" );
+	magicalAssert( rparent != this && rparent != m_parent, "Invaild!" );
+	magicalAssert( rparent->isChildOf( this ) == false, "Invaild! own child can't be parent" );
+
+	if( m_parent )
+	{
+		m_parent->removeChild( this );
+	}
+
+
+}
+
+void SceneNode::removeChild( const Ptr<SceneNode>& child )
+{
+	SceneNode* rchild = child.get();
 	magicalAssert( rchild && rchild->getParent() == this, "Invaild!" );
 
 	auto itr = std::find( m_children.begin(), m_children.end(), rchild );
@@ -95,7 +154,7 @@ void Transform::removeChild( const Ptr<Transform>& child )
 	rchild->release();
 }
 
-void Transform::removeAllChildren( void )
+void SceneNode::removeAllChildren( void )
 {
 	if( m_children.empty() )
 		return;
@@ -108,18 +167,18 @@ void Transform::removeAllChildren( void )
 	m_children.clear();
 }
 
-void Transform::removeFromParent( void )
+void SceneNode::removeParent( void )
 {
-	magicalAssert( getParent(), "Invaild! has no parent transform" );
+	magicalAssert( getParent(), "Invaild! can't remove from root" );
 	getParent()->removeChild( this );
 }
 
-void Transform::translate( const Vector2& t, Space relative_to )
+void SceneNode::translate( const Vector2& t, Space relative_to )
 {
 	translate( Vector3::createFromVector2( t ), relative_to );
 }
 
-void Transform::translate( const Vector3& t, Space relative_to )
+void SceneNode::translate( const Vector3& t, Space relative_to )
 {
 	switch( relative_to )
 	{
@@ -146,68 +205,68 @@ void Transform::translate( const Vector3& t, Space relative_to )
 	transformDirty( kTsTranslationDirty );
 }
 
-void Transform::translate( float x, float y, Space relative_to )
+void SceneNode::translate( float x, float y, Space relative_to )
 {
 	translate( Vector3( x, y, 0.0f ), relative_to );
 }
 
-void Transform::translate( float x, float y, float z, Space relative_to )
+void SceneNode::translate( float x, float y, float z, Space relative_to )
 {
 	translate( Vector3( x, y, z ), relative_to );
 }
 
-void Transform::setPosition( const Vector2& t )
+void SceneNode::setPosition( const Vector2& t )
 {
 	setPosition( Vector3( t.x, t.y, m_local_position.z ) );
 }
 
-void Transform::setPosition( const Vector3& t )
+void SceneNode::setPosition( const Vector3& t )
 {
 	m_local_position = t;
 	transformDirty( kTsTranslationDirty );
 }
 
-void Transform::setPosition( float x, float y )
+void SceneNode::setPosition( float x, float y )
 {
 	setPosition( Vector3( x, y, m_local_position.z ) );
 }
 
-void Transform::setPosition( float x, float y, float z )
+void SceneNode::setPosition( float x, float y, float z )
 {
 	setPosition( Vector3( x, y, z ) );
 }
 
-const Vector3& Transform::getPosition( void ) const
+const Vector3& SceneNode::getPosition( void ) const
 {
 	return m_local_position;
 }
 
-void Transform::yaw( float yaw, Space relative_to )
+void SceneNode::yaw( float yaw, Space relative_to )
 {
 	rotate( Quaternion::createRotationY( yaw ), relative_to );
 }
 
-void Transform::pitch( float pitch, Space relative_to )
+void SceneNode::pitch( float pitch, Space relative_to )
 {
 	rotate( Quaternion::createRotationX( pitch ), relative_to );
 }
 
-void Transform::roll( float roll, Space relative_to )
+void SceneNode::roll( float roll, Space relative_to )
 {
 	rotate( Quaternion::createRotationZ( roll ), relative_to );
 }
 
-void Transform::lookAt( const Vector3& target, const Vector3& up )
+void SceneNode::lookAt( const Vector3& target, const Vector3& up )
 {
 	
 }
 
-void Transform::rotate( const EulerAngles& r, Space relative_to )
+void SceneNode::rotate( const EulerAngles& r, Space relative_to )
 {
 	rotate( r.toQuaternion(), relative_to );
 }
 
-void Transform::rotate( const Quaternion& r, Space relative_to )
+void SceneNode::rotate( const Quaternion& r, Space relative_to )
 {
 	switch( relative_to )
 	{
@@ -227,78 +286,93 @@ void Transform::rotate( const Quaternion& r, Space relative_to )
 	transformDirty( kTsRotationDirty );
 }
 
-void Transform::rotate( float yaw, float pitch, float roll, Space relative_to )
+void SceneNode::rotate( float yaw, float pitch, float roll, Space relative_to )
 {
 	EulerAngles ea;
 	ea.setScalars( yaw, pitch, roll );
 	rotate( ea.toQuaternion(), relative_to );
 }
 
-const Quaternion& Transform::getRotation( void ) const
+const Quaternion& SceneNode::getRotation( void ) const
 {
 	return m_local_rotation;
 }
 
-void Transform::scale( const Vector2& s )
+void SceneNode::scale( const Vector2& s )
 {
 	scale( Vector3( s.x, s.y, 1.0f ) );
 }
 
-void Transform::scale( const Vector3& s )
+void SceneNode::scale( const Vector3& s )
 {
 	m_local_scale *= s;
 	transformDirty( kTsScaleDirty );
 }
 
-void Transform::scale( float x, float y )
+void SceneNode::scale( float x, float y )
 {
 	scale( Vector3( x, y, 1.0f ) );
 }
 
-void Transform::scale( float x, float y, float z )
+void SceneNode::scale( float x, float y, float z )
 {
 	scale( Vector3( x, y, z ) );
 }
 
-void Transform::scale( float s )
+void SceneNode::scale( float s )
 {
 	scale( Vector3( s, s, s ) );
 }
 
-void Transform::setScale( const Vector2& s )
+void SceneNode::setScale( const Vector2& s )
 {
 	setScale( Vector3( s.x, s.y, m_local_scale.z ) );
 }
 
-void Transform::setScale( const Vector3& s )
+void SceneNode::setScale( const Vector3& s )
 {
 	m_local_scale = s;
 	transformDirty( kTsScaleDirty );
 }
 
-void Transform::setScale( float x, float y )
+void SceneNode::setScale( float x, float y )
 {
 	setScale( Vector3( x, y, m_local_scale.z ) );
 }
 
-void Transform::setScale( float x, float y, float z )
+void SceneNode::setScale( float x, float y, float z )
 {
 	setScale( Vector3( x, y, z ) );
 }
 
-const Vector3& Transform::getScale( void ) const
+const Vector3& SceneNode::getScale( void ) const
 {
 	return m_local_scale;
 }
 
-void Transform::setParent( Transform* parent )
+//void SceneNode::setParent( SceneNode* parent )
+//{
+//	magicalAssert( parent, "should not be nullptr." );
+//	magicalAssert( !getParent(), "Invaild! already has a parent transform." );
+//	m_parent = parent;
+//}
+
+void SceneNode::addChild( SceneNode* child )
 {
-	magicalAssert( parent, "should not be nullptr." );
-	magicalAssert( !getParent(), "Invaild! already has a parent transform." );
-	m_parent = parent;
+	magicalAssert( child && child != this && !child->getParent(), "Invaild!" );
+
+	rchild->setParent( this );
+
+	rchild->retain();
+	m_children.push_back( rchild );
 }
 
-void Transform::transform( void )
+void SceneNode::setRoot( SceneNode* root )
+{
+	magicalSafeAssign( m_root, root );
+}
+
+void SceneNode::transform( void )
 {
 	int dirty_info = kTsClean;
 
@@ -326,13 +400,13 @@ void Transform::transform( void )
 	}
 }
 
-void Transform::transformDirty( int info )
+void SceneNode::transformDirty( int info )
 {
 	m_ts_dirty_info |= info;
 	m_ts_dirty = true;
 }
 
-const Vector3& Transform::getDerivedPosition( void ) const
+const Vector3& SceneNode::getDerivedPosition( void ) const
 {
 	if( m_ts_dirty_info & kTsTranslationDirty )
 	{
@@ -352,7 +426,7 @@ const Vector3& Transform::getDerivedPosition( void ) const
 	return m_derived_position;
 }
 
-const Quaternion& Transform::getDerivedRotation( void ) const
+const Quaternion& SceneNode::getDerivedRotation( void ) const
 {
 	if( m_ts_dirty_info & kTsRotationDirty )
 	{
@@ -371,7 +445,7 @@ const Quaternion& Transform::getDerivedRotation( void ) const
 	return m_derived_rotation;
 }
 
-const Vector3& Transform::getDerivedScale( void ) const
+const Vector3& SceneNode::getDerivedScale( void ) const
 {
 	if( m_ts_dirty_info & kTsScaleDirty )
 	{

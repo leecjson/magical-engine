@@ -50,15 +50,20 @@ function OnCreate() --> void
 
 
 	--哈哈哈哈哈
-	Application:Exit();
+	Application:exit();
 
-	if( r3:Equlas( o3 ) ) then
+	if( r3:equlas( o3 ) ) then
 		cw( haha );
 	end
 
+
+	Engine:deltaTime();
+
+	Vector2.Zero;
+
 	Engine:getDeltaTime();
 
-	Quaternion:Identity();
+	Quaternion.Identity;
 
 	Mat4:CreateIdentity();
 

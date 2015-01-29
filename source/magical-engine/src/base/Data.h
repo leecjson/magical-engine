@@ -33,10 +33,11 @@ NS_MAGICAL_BEGIN
 class Data : public Reference
 {
 public:
-	Data( void );
-	virtual ~Data( void );
+	declare_class_hash_code;
 
 public:
+	Data( void );
+	virtual ~Data( void );
 	static Ptr<Data> create( void );
 	static Ptr<Data> create( size_t size );
 	static Ptr<Data> create( char* data, size_t size );

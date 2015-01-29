@@ -27,44 +27,54 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
+#include "SceneNode.h"
 #include "Camera.h"
-#include "SceneObject.h"
+#include "Entity.h"
 
-#include <unordered_map>
 #include <vector>
+#include <unordered_set>
+#include <unordered_map>
 
 NS_MAGICAL_BEGIN
 
-class Scene : public Transform
+using ::std::string;
+using ::std::unordered_set;
+
+class Scene : public Reference
 {
+public:
+	declare_class_hash_code;
+
 public:
 	Scene( void );
 	virtual ~Scene( void );
-
-public:
 	static Ptr<Scene> create( void );
 
 public:
-	Camera* createCamera( const char* name = "" );
-	void removeCamera( const Ptr<Camera>& camera );
-	Camera* cameraAtIndex( size_t i );
-	Camera* getCamera( const char* name );
-	void setActiveCamera( size_t i );
-	void setActiveCamera( const char* name );
-	void setActiveCamera( const Ptr<Camera>& camera );
-	Camera* getActiveCamera( void ) const;
-
-	SceneObject* createSceneObject( const char* name = "" );
-	void removeSceneObject( const Ptr<SceneObject>& object );
-	void removeSceneObject( const char* name );
+	virtual void visit( void );
 
 public:
-	void visit( void );
+	Camera* createCamera( const char* name = nullptr );
+	Entity* createEntity( const char* name = nullptr );
+	void destory( const Ptr<SceneNode>& node );
+
+public:
+	SceneNode* getRoot( void ) const;
+	size_t childCount( void ) const;
+	SceneNode* findChild( const char* name ) const;
+	SceneNode* childAtIndex( size_t i ) const;
+	void addChild( const Ptr<SceneNode>& child );
+	void removeChild( const Ptr<SceneNode>& child );
+	void removeAllChildren( void );
+
+public:
+	void setActiveCamera( const Ptr<Camera>& camera );
 
 protected:
 	Camera* m_active_camera = nullptr;
-	std::vector<Camera*> m_cameras;
-	std::vector<SceneObject*> m_scene_objects;
+	SceneNode* m_root = nullptr;
+	unordered_set<Camera*> m_cameras;
+	unordered_set<Entity*> m_entities;
 };
 
 NS_MAGICAL_END

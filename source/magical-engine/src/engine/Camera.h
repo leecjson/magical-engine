@@ -26,12 +26,15 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Transform.h"
+#include "Entity.h"
 
 NS_MAGICAL_BEGIN
 
-class Camera : public Transform
+class Camera : public Entity
 {
+public:
+	declare_class_hash_code;
+
 public:
 	Camera( void );
 	virtual ~Camera( void );
@@ -40,7 +43,7 @@ public:
 	void setPerspective( float fov, float aspect, float znear, float zfar );
 	const Matrix4& getProjectionMatrix( void ) const;
 
-private:
+protected:
 	bool m_is_active = false;
 	Matrix4 m_projection_matrix;
 };

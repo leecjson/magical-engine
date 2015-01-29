@@ -32,23 +32,37 @@ c include
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
-#include <math.h>
 #include <stdint.h>
 #include <float.h>
-#include <stdarg.h>
 
 /*
 c++ include
 */
 #include <string>
+#include <typeinfo>
 #include <iostream>
-#include <algorithm>
-#include <functional>
-#include <exception>
-using std::string;
 
 #include "LogSystem.h"
+
+/*
+macros
+*/
+#ifndef MAX
+#define MAX( a, b ) ( (a) > (b) ? (a) : (b) )
+#endif
+#ifndef MIN
+#define MIN( a, b ) ( (a) < (b) ? (a) : (b) )
+#endif
+
+/*
+hash code macros
+*/
+#define define_class_hash_code( cls ) \
+	const size_t cls::HashCode = typeid( cls ).hash_code()
+#define declare_class_hash_code \
+	static const size_t HashCode
+#define assign_class_hash_code() \
+	m_class_hash_code = HashCode
 
 /*
 buffer macros
@@ -91,9 +105,9 @@ messagebox macros, multi-platform implement
 */
 MAGICALAPI void magicalMessageBox( const char* msg, const char* title );
 #ifndef MAGICAL_DEBUG
-	#define magicalDebugMessageBox( msg, title )
+#define magicalDebugMessageBox( msg, title )
 #else
-	#define magicalDebugMessageBox( msg, title ) magicalMessageBox( msg, title )
+#define magicalDebugMessageBox( msg, title ) magicalMessageBox( msg, title )
 #endif
 
 /*
@@ -102,15 +116,15 @@ asserts macros
 MAGICALAPI void magicalLocalAssert( const char* exp, const char* msg, const char* file, int line );
 #define magicalLocalAssertA( exp, msg ) magicalLocalAssert( exp, msg, __FILE__, __LINE__ )
 #ifndef MAGICAL_DEBUG
-	#define magicalAssert( exp, msg )
+#define magicalAssert( exp, msg )
 #else
-	#define magicalAssert( exp, msg ) do{                     \
-		if( !( exp ) ) {                                      \
-			magicalSetLastErrorA( msg );                      \
-			magicalLogLastError();                            \
-			magicalLocalAssertA( #exp, msg );                 \
-		}                                                     \
-		} while(0)
+#define magicalAssert( exp, msg ) do{                     \
+	if( !( exp ) ) {                                      \
+		magicalSetLastErrorA( msg );                      \
+		magicalLogLastError();                            \
+		magicalLocalAssertA( #exp, msg );                 \
+	}                                                     \
+	} while(0)
 #endif
 
 /*
@@ -168,7 +182,7 @@ objects lift listener macros, only work on debug protocol
 //Color kColorWhite = { 1.0f, 1.0f, 1.0f, 1.0f };                 // 白
 //Color kColorBlack = { 0.0f, 0.0f, 0.0f, 1.0f };                 // 黑
 //Color kColorYello = { 1.0f, 1.0f, 0.0f, 1.0f };                 // 黄
-//Color kColoMagenta = { 1.0f, 0.0f, 1.0f, 1.0f };                // 洋红
+//Color kColorMagenta = { 1.0f, 0.0f, 1.0f, 1.0f };                // 洋红
 //Color kColorCyan = { 0.0f, 1.0f, 1.0f, 1.0f };                  // 青
 //Color kColorDarkGray = { 0.25f, 0.25f, 0.25f, 1.0f };           // 深灰
 //Color kColorLightGray = { 0.75f, 0.75f, 0.75f, 1.0f };          // 浅灰

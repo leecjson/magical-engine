@@ -21,45 +21,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Utils.h"
-#include <chrono>
+#include "Entity.h"
 
-int64_t TimeUtils::currentMicrosecondsTime( void )
+NS_MAGICAL_BEGIN
+
+define_class_hash_code( Entity );
+
+Entity::Entity( void )
 {
-	using namespace ::std::chrono;
-	system_clock::duration scd = system_clock::now().time_since_epoch();
-	microseconds::rep now = duration_cast<microseconds>( scd ).count();
-	return now;
+	assign_class_hash_code();
 }
 
-bool FileUtils::isAbsPath( const char* path )
+Entity::~Entity( void )
 {
-	magicalAssert( path, "should not be nullptr." );
-
-#ifdef MAGICAL_WIN32
-	if( strlen( path ) > 2
-		&& ((path[0] >= 'a' && path[0] <= 'z') 
-		|| ( path[0] >= 'A' && path[0] <= 'Z'))
-		&& ( path[1] == ':') )
-	{
-		return true;
-	}
-	return false;
-#endif
+	
 }
 
-std::string FileUtils::toUnixPath( const char* path )
+void Entity::prepare( void )
 {
-	magicalAssert( path, "should not be nullptr." );
 
-	std::string ret = path;
-	int len = ret.length();
-    for( int i = 0; i < len; ++i )
-    {
-        if( ret[i] == '\\' )
-        {
-            ret[i] = '/';
-        }
-    }
-    return ret;
 }
+
+void Entity::draw( void )
+{
+
+}
+
+NS_MAGICAL_END

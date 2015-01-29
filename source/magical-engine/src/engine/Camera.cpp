@@ -25,9 +25,11 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+define_class_hash_code( Camera );
+
 Camera::Camera( void )
 {
-
+	assign_class_hash_code();
 }
 
 Camera::~Camera( void )
