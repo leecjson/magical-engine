@@ -43,7 +43,6 @@ SceneNode::SceneNode( void )
 
 SceneNode::~SceneNode( void )
 {
-	magicalSafeRelease( m_root );
 	removeAllChildren();
 }
 
@@ -60,9 +59,6 @@ const string& SceneNode::getName( void ) const
 
 void SceneNode::setVisible( bool visible )
 {
-	if( m_is_visible == visible )
-		return;
-
 	m_is_visible = visible;
 }
 
@@ -94,8 +90,6 @@ size_t SceneNode::childCount( void ) const
 
 SceneNode* SceneNode::getParent( void ) const
 {
-	//if( m_parent == m_ro )
-
 	return m_parent;
 }
 
@@ -123,7 +117,40 @@ SceneNode* SceneNode::childAtIndex( size_t i ) const
 
 void SceneNode::addChild( const Ptr<SceneNode>& child )
 {
+	SceneNode* rchild = child.get();
+	magicalAssert( rchild, "Invaild! should not be nullptr" );
+	magicalAssert( rchild != this, "Invaild! can't add self as a child" );
+	magicalAssert( rchild->m_parent == nullptr, "Invaild! already has a parent" );
 
+	rchild->m_parent = this;
+
+	rchild->retain();
+	m_children.push_back( rchild );
+
+	/*SceneNode* rchild = child.get();
+	magicalAssert( rchild, "Invaild! should not be nullptr" );
+	magicalAssert( rchild != this, "Invaild! can't add self as a child" );
+	magicalAssert( isChildOf( child ) == false, "Invaild! own parent can't be child" );
+
+	if( rchild->m_parent )
+	{
+		SceneNode* old_parent = rchild->m_parent;
+		auto itr = std::find( old_parent->m_children.begin(), old_parent->m_children.end(), rchild );
+		magicalAssert( itr != old_parent->m_children.end(), "Invaild!" );
+
+		rchild->m_parent = nullptr;
+		old_parent->m_children.erase( itr );
+
+		rchild->m_parent = this;
+		m_children.push_back( rchild );
+	}
+	else
+	{
+		rchild->m_parent = this;
+
+		rchild->retain();
+		m_children.push_back( rchild );
+	}*/
 }
 
 void SceneNode::setParent( const Ptr<SceneNode>& parent )
@@ -135,23 +162,34 @@ void SceneNode::setParent( const Ptr<SceneNode>& parent )
 
 	if( m_parent )
 	{
-		m_parent->removeChild( this );
+		auto itr = std::find( m_parent->m_children.begin(), m_parent->m_children.end(), this );
+		magicalAssert( itr != m_parent->m_children.end(), "Invaild!" );
+		m_parent->m_children.erase( itr );
+
+		m_parent = rparent;
+		rparent->m_children.push_back( this );
 	}
+	else
+	{
+		m_parent = rparent;
 
-
+		this->retain();
+		rparent->m_children.push_back( this );
+	}
 }
 
 void SceneNode::removeChild( const Ptr<SceneNode>& child )
 {
 	SceneNode* rchild = child.get();
-	magicalAssert( rchild && rchild->getParent() == this, "Invaild!" );
+	magicalAssert( rchild, "Invaild! should not be nullptr" );
 
 	auto itr = std::find( m_children.begin(), m_children.end(), rchild );
-	magicalAssert( itr != m_children.end(), "Invaild!" );
-
-	rchild->setParent( nullptr );
-	m_children.erase( itr );
-	rchild->release();
+	if( itr != m_children.end() )
+	{
+		rchild->m_parent = nullptr;
+		m_children.erase( itr );
+		rchild->release();
+	}
 }
 
 void SceneNode::removeAllChildren( void )
@@ -159,18 +197,25 @@ void SceneNode::removeAllChildren( void )
 	if( m_children.empty() )
 		return;
 
-	for( auto& child : m_children )
+	for( auto child : m_children )
 	{
-		child->setParent( nullptr );
+		child->m_parent = nullptr;
 		child->release();
 	}
 	m_children.clear();
 }
 
-void SceneNode::removeParent( void )
+void SceneNode::removeSelf( void )
 {
-	magicalAssert( getParent(), "Invaild! can't remove from root" );
-	getParent()->removeChild( this );
+	if( m_parent )
+	{
+		auto itr = std::find( m_parent->m_children.begin(), m_parent->m_children.end(), this );
+		magicalAssert( itr != m_parent->m_children.end(), "Invaild!" );
+
+		m_parent = nullptr;
+		m_parent->m_children.erase( itr );
+		release();
+	}
 }
 
 void SceneNode::translate( const Vector2& t, Space relative_to )
@@ -350,26 +395,22 @@ const Vector3& SceneNode::getScale( void ) const
 	return m_local_scale;
 }
 
-//void SceneNode::setParent( SceneNode* parent )
-//{
-//	magicalAssert( parent, "should not be nullptr." );
-//	magicalAssert( !getParent(), "Invaild! already has a parent transform." );
-//	m_parent = parent;
-//}
-
-void SceneNode::addChild( SceneNode* child )
+void SceneNode::onAdd( SceneNode* child )
 {
-	magicalAssert( child && child != this && !child->getParent(), "Invaild!" );
-
-	rchild->setParent( this );
-
-	rchild->retain();
-	m_children.push_back( rchild );
+	if( m_parent )
+		m_parent->onAdd( child );
 }
 
-void SceneNode::setRoot( SceneNode* root )
+void SceneNode::onRemove( const vector<SceneNode*>& children )
 {
-	magicalSafeAssign( m_root, root );
+	if( m_parent )
+		m_parent->onRemove( children );
+}
+
+void SceneNode::onRemove( SceneNode* child )
+{
+	if( m_parent )
+		m_parent->onRemove( child );
 }
 
 void SceneNode::transform( void )

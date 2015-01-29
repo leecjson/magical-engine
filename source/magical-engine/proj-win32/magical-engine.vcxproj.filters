@@ -195,9 +195,6 @@
     <ClInclude Include="..\src\engine\Entity.h">
       <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\engine\SceneRoot.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\context\Application.cpp">
@@ -303,9 +300,6 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\engine\Entity.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\engine\SceneRoot.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

@@ -40,7 +40,7 @@ NS_MAGICAL_BEGIN
 using ::std::string;
 using ::std::unordered_set;
 
-class Scene : public Reference
+class Scene : private SceneNode
 {
 public:
 	declare_class_hash_code;
@@ -56,23 +56,17 @@ public:
 public:
 	Camera* createCamera( const char* name = nullptr );
 	Entity* createEntity( const char* name = nullptr );
-	void destory( const Ptr<SceneNode>& node );
-
-public:
-	SceneNode* getRoot( void ) const;
-	size_t childCount( void ) const;
-	SceneNode* findChild( const char* name ) const;
-	SceneNode* childAtIndex( size_t i ) const;
-	void addChild( const Ptr<SceneNode>& child );
-	void removeChild( const Ptr<SceneNode>& child );
-	void removeAllChildren( void );
 
 public:
 	void setActiveCamera( const Ptr<Camera>& camera );
 
 protected:
+	virtual void onAdd( SceneNode* child );
+	virtual void onRemove( const vector<SceneNode*>& children );
+	virtual void onRemove( SceneNode* child );
+
+protected:
 	Camera* m_active_camera = nullptr;
-	SceneNode* m_root = nullptr;
 	unordered_set<Camera*> m_cameras;
 	unordered_set<Entity*> m_entities;
 };

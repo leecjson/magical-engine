@@ -67,7 +67,7 @@ hash code macros
 /*
 buffer macros
 */
-#define kBufferLen 1024 * 100
+#define kBufferLen 1024 * 128
 NS_MAGICAL_BEGIN
 extern char g_buffer[];
 NS_MAGICAL_END
@@ -84,9 +84,9 @@ func macros
 #define magicalSafeDeleteArray( var ) do{ if( var ) delete[] var; } while(0)
 #define magicalSafeDeleteArrayNull( var ) do{ if( var ) delete[] var; var = nullptr; } while(0)
 #define magicalSafeRetain( var ) do{ if( var ) var->retain(); } while(0)
-#define magicalSafeRelease( var ) { if( var ) var->release(); }
-#define magicalSafeReleaseNull( var ) { if( var ){ var->release(); var = nullptr; } }
-#define magicalSafeAssign( lvar, rvar ) { if( rvar ) rvar->retain(); if( lvar ) lvar->release(); lvar = rvar; }
+#define magicalSafeRelease( var ) do{ if( var ) var->release(); } while(0)
+#define magicalSafeReleaseNull( var ) do{ if( var ){ var->release(); var = nullptr; } } while(0)
+#define magicalSafeAssign( lvar, rvar ) do{ if( rvar ) rvar->retain(); if( lvar ) lvar->release(); lvar = rvar; } while(0)
 
 /*
 error macros
@@ -130,9 +130,9 @@ MAGICALAPI void magicalLocalAssert( const char* exp, const char* msg, const char
 /*
 timer macros
 */
-MAGICALAPI_USER bool magicalIsTimerStarted( void );
-MAGICALAPI_USER void magicalStartTimer( void );
-MAGICALAPI_USER double magicalEndTimer( void );
+MAGICALAPI bool magicalIsTimerStarted( void );
+MAGICALAPI void magicalStartTimer( void );
+MAGICALAPI double magicalEndTimer( void );
 
 /*
 objects lift listener macros, only work on debug protocol

@@ -28,7 +28,6 @@
     <ClInclude Include="..\src\engine\Entity.h" />
     <ClInclude Include="..\src\engine\Scene.h" />
     <ClInclude Include="..\src\engine\SceneNode.h" />
-    <ClInclude Include="..\src\engine\SceneRoot.h" />
     <ClInclude Include="..\src\include\magical-engine.h" />
     <ClInclude Include="..\src\log\LogSystem.h" />
     <ClInclude Include="..\src\math\cpp\AABB3.h" />
@@ -70,7 +69,6 @@
     <ClCompile Include="..\src\engine\Entity.cpp" />
     <ClCompile Include="..\src\engine\Scene.cpp" />
     <ClCompile Include="..\src\engine\SceneNode.cpp" />
-    <ClCompile Include="..\src\engine\SceneRoot.cpp" />
     <ClCompile Include="..\src\log\win32\LogSystem.cpp" />
     <ClCompile Include="..\src\math\cpp\AABB3.cpp" />
     <ClCompile Include="..\src\math\cpp\AxisAngle.cpp" />

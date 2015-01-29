@@ -134,4 +134,22 @@ void Scene::setActiveCamera( const Ptr<Camera>& camera )
 	
 }
 
+void Scene::onAdd( SceneNode* child )
+{
+	if( m_parent )
+		m_parent->onAdd( child );
+}
+
+void Scene::onRemove( const vector<SceneNode*>& children )
+{
+	if( m_parent )
+		m_parent->onRemove( children );
+}
+
+void Scene::onRemove( SceneNode* child )
+{
+	if( m_parent )
+		m_parent->onRemove( child );
+}
+
 NS_MAGICAL_END

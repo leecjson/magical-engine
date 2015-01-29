@@ -104,10 +104,13 @@ public:
 	void setScale( float x, float y );
 	void setScale( float x, float y, float z );
 	const Vector3& getScale( void ) const;
+
+protected:
+	virtual void onAdd( SceneNode* child );
+	virtual void onRemove( const vector<SceneNode*>& children );
+	virtual void onRemove( SceneNode* child );
 	
 protected:
-	//void addChild( SceneNode* child );
-	void setRoot( SceneNode* root );
 	void transform( void );
 	void transformDirty( int info );
 	const Vector3& getDerivedPosition( void ) const;
@@ -120,7 +123,6 @@ protected:
 protected:
 	string m_name;
 	bool m_is_visible = false;
-	SceneNode* m_root = nullptr;
 	SceneNode* m_parent = nullptr;
 	vector<SceneNode*> m_children;
 	bool m_inherit_scale = true;

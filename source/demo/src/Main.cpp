@@ -33,6 +33,12 @@ void mainDelegate( void )
 	Engine::runScene( Scene::create() );
 	Scene* scene = Engine::runningScene();
 
+	Ptr<SceneNode> btn = SceneNode::create();
+	
+
+	Ptr<Camera> camera = Camera::create();
+	scene->addChild( camera );
+
 	m_main_camera = scene->createCamera();
 	m_main_camera->setPosition( Vector3::Zero );
 	m_main_camera->setRotation( EulerAngles::Zero );
