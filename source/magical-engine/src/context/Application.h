@@ -27,6 +27,8 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
+#include <functional>
+
 NS_MAGICAL_BEGIN
 
 typedef std::function<void( void )> MainDelegate;

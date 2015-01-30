@@ -28,7 +28,7 @@ SOFTWARE.
 //#include "LuaSystem.h"
 //#include "RendererSystem.h"
 #include "Application.h"
-#include "SceneObject.h"
+#include "SceneNode.h"
 
 NS_MAGICAL_BEGIN
 
@@ -76,7 +76,7 @@ Scene* Engine::runningScene( void )
 void Engine::calcDeltaTime( void )
 {
 	int64_t now = TimeUtils::currentMicrosecondsTime();
-	s_delta_time = std::max<double>( 0, ( now - s_last_update_time ) / 1000000.0 );
+	s_delta_time = MAX( 0.0, ( now - s_last_update_time ) / 1000000.0 );
 	s_last_update_time = now;
 }
 

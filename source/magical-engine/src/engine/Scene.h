@@ -50,16 +50,23 @@ public:
 	virtual ~Scene( void );
 	static Ptr<Scene> create( void );
 
-//public:
-//	void setActiveCamera( const Ptr<Camera>& camera );
-
 public:
+	using Reference::retain;
+	using Reference::release;
+	using Reference::retainCount;
+	using Reference::hashCodeClass;
+	using Reference::typeof;
+	using SceneNode::visit;
+	using SceneNode::setVisible;
+	using SceneNode::isVisible;
+	using SceneNode::findChild;
+	using SceneNode::childAtIndex;
+	using SceneNode::childCount;
 	using SceneNode::addChild;
 	using SceneNode::removeChild;
 	using SceneNode::removeAllChildren;
 
 protected:
-	void destory( SceneNode* child );
 	virtual void onNodeEvent( NodeEvent evt, SceneNode* child );
 	virtual void onNodeEvent( NodeEvent evt, vector<SceneNode*> children );
 

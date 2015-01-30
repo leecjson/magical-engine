@@ -44,50 +44,6 @@ Ptr<Scene> Scene::create( void )
 	return Ptr<Scene>( Initializer<Scene>( ret ) );
 }
 
-//Camera* Scene::createCamera( const char* name )
-//{
-//	Camera* camera = new Camera();
-//	if( name && *name )
-//		camera->setName( name );
-//
-//	m_cameras.insert( camera );
-//	m_entities.insert( camera );
-//	return camera;
-//}
-//
-//Entity* Scene::createSceneNode( const char* name )
-//{
-//	Entity* entity = new Entity();
-//	if( name && *name )
-//		entity->setName( name );
-//
-//	m_entities.insert( entity );
-//	return entity;
-//}
-
-//void Scene::setActiveCamera( const Ptr<Camera>& camera )
-//{
-//	
-//}
-
-void Scene::destory( SceneNode* child )
-{
-	SceneNode* rnode = node.get();
-	magicalAssert( rnode, "should not be nullptr." );
-
-	if( rnode->typeof<Entity>() )
-	{
-		m_entities.erase( (Entity*) rnode );
-		rnode->release();
-	}
-	else if( node->typeof<Camera>() )
-	{
-		m_entities.erase( (Entity*) rnode );
-		m_cameras.erase( (Camera*) rnode );
-		rnode->release();
-	}
-}
-
 void Scene::onNodeEvent( NodeEvent evt, SceneNode* child )
 {
 	switch( evt )

@@ -33,8 +33,8 @@ void mainDelegate( void )
 	Ptr<Scene> scene = Scene::create();
 	Engine::runScene( scene );
 
-	Ptr<Camera> camera = Camera::create();
+	m_main_camera = Camera::create();
 	m_main_camera->setPosition( Vector3::Zero );
-	m_main_camera->setRotation( EulerAngles::Zero );
-	scene->addChild( camera );
+	m_main_camera->lookAt( 1, 1, 1 );
+	scene->addChild( m_main_camera );
 }

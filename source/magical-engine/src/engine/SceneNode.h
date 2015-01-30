@@ -60,6 +60,9 @@ public:
 	virtual ~SceneNode( void );
 
 public:
+	virtual void visit( void );
+
+public:
 	inline SceneElement getElementID( void ) const { return m_element; }
 	void setName( const char* name );
 	const string& getName( void ) const;
@@ -93,7 +96,8 @@ public:
 	void yaw( float yaw, Space relative_to = Space::Self );
 	void pitch( float pitch, Space relative_to = Space::Self );
 	void roll( float roll, Space relative_to = Space::Self );
-	void lookAt( const Vector3& target, const Vector3& up );
+	void lookAt( const Vector3& target, const Vector3& up = Vector3::Up );
+	void lookAt( float x, float y, float z, const Vector3& up = Vector3::Up );
 	void rotate( const EulerAngles& r, Space relative_to = Space::Self );
 	void rotate( const Quaternion& r, Space relative_to = Space::Self );
 	void rotate( float yaw, float pitch, float roll, Space relative_to = Space::Self );
@@ -113,21 +117,18 @@ public:
 	void setScale( float x, float y );
 	void setScale( float x, float y, float z );
 	const Vector3& getScale( void ) const;
-
-protected:
-	virtual void onNodeEvent( NodeEvent evt, SceneNode* child );
-	virtual void onNodeEvent( NodeEvent evt, vector<SceneNode*> children );
 	
 protected:
-	void transform( void );
 	void transformDirty( int info );
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
+	virtual void onNodeEvent( NodeEvent evt, SceneNode* child );
+	virtual void onNodeEvent( NodeEvent evt, vector<SceneNode*> children );
 
 protected:
 	friend class Scene;
-	bool m_started = false;
+	bool m_is_in_scene = false;
 	SceneElement m_element;
 	string m_name;
 	bool m_is_visible = false;
@@ -144,7 +145,6 @@ protected:
 	mutable Vector3 m_derived_position;
 	mutable Quaternion m_derived_rotation;
 	mutable Vector3 m_derived_scale = Vector3::One;
-	
 };
 
 NS_MAGICAL_END

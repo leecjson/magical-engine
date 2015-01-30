@@ -55,6 +55,38 @@ SceneNode::~SceneNode( void )
 	}
 }
 
+void SceneNode::visit( void )
+{
+	if( !m_is_visible )
+		return;
+
+	int dirty_info = kTsClean;
+
+	if( m_ts_dirty )
+	{
+		dirty_info = m_ts_dirty_info;
+
+		const Quaternion& r = getDerivedRotation();
+		const Vector3& s = getDerivedScale();
+		const Vector3& t = getDerivedPosition();
+
+		m_local_to_world_matrix.setTRS( t, r, s );
+		m_ts_dirty = false;
+	}
+
+	if( !m_children.empty() )
+	{
+		for( auto child : m_children )
+		{
+			if( dirty_info != kTsClean )
+			{
+				child->transformDirty( dirty_info );
+			}
+			child->visit();
+		}
+	}
+}
+
 void SceneNode::setName( const char* name )
 {
 	magicalAssert( name && *name, "name should not be empty" );
@@ -326,6 +358,11 @@ void SceneNode::lookAt( const Vector3& target, const Vector3& up )
 	
 }
 
+void SceneNode::lookAt( float x, float y, float z, const Vector3& up )
+{
+
+}
+
 void SceneNode::rotate( const EulerAngles& r, Space relative_to )
 {
 	rotate( r.toQuaternion(), relative_to );
@@ -415,46 +452,6 @@ const Vector3& SceneNode::getScale( void ) const
 	return m_local_scale;
 }
 
-void SceneNode::onNodeEvent( NodeEvent evt, SceneNode* child )
-{
-	if( m_parent )
-		m_parent->onNodeEvent( evt, child );
-}
-
-void SceneNode::onNodeEvent( NodeEvent evt, vector<SceneNode*> children )
-{
-	if( m_parent )
-		m_parent->onNodeEvent( evt, children );
-}
-
-void SceneNode::transform( void )
-{
-	int dirty_info = kTsClean;
-
-	if( m_ts_dirty && m_is_visible )
-	{
-		dirty_info = m_ts_dirty_info;
-
-		const Quaternion& r = getDerivedRotation();
-		const Vector3& s = getDerivedScale();
-		const Vector3& t = getDerivedPosition();
-
-		m_local_to_world_matrix.setTRS( t, r, s );
-		m_ts_dirty = false;
-	}
-
-	if( m_is_visible )
-	{
-		for( auto child : m_children )
-		{
-			if( dirty_info != kTsClean )
-				child->transformDirty( dirty_info );
-
-			child->transform();
-		}
-	}
-}
-
 void SceneNode::transformDirty( int info )
 {
 	m_ts_dirty_info |= info;
@@ -517,6 +514,18 @@ const Vector3& SceneNode::getDerivedScale( void ) const
 	}
 
 	return m_derived_scale;
+}
+
+void SceneNode::onNodeEvent( NodeEvent evt, SceneNode* child )
+{
+	if( m_parent )
+		m_parent->onNodeEvent( evt, child );
+}
+
+void SceneNode::onNodeEvent( NodeEvent evt, vector<SceneNode*> children )
+{
+	if( m_parent )
+		m_parent->onNodeEvent( evt, children );
 }
 
 NS_MAGICAL_END

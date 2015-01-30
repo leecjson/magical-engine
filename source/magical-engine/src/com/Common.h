@@ -39,6 +39,9 @@ c include
 c++ include
 */
 #include <string>
+NS_MAGICAL_BEGIN
+using ::std::string;
+NS_MAGICAL_END
 #include <typeinfo>
 #include <iostream>
 
@@ -47,12 +50,19 @@ c++ include
 /*
 macros
 */
-#ifndef MAX
-#define MAX( a, b ) ( (a) > (b) ? (a) : (b) )
+NS_MAGICAL_BEGIN
+#ifdef MAX
+#undef MAX
 #endif
-#ifndef MIN
-#define MIN( a, b ) ( (a) < (b) ? (a) : (b) )
+template< class T >
+inline T MAX( T a, T b ){ return a > b ? a : b; }
+
+#ifdef MIN
+#undef MIN
 #endif
+template< class T >
+inline T MIN( T a, T b ){ return a < b ? a : b; }
+NS_MAGICAL_END
 
 /*
 buffer macros

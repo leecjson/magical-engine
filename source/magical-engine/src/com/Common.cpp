@@ -143,12 +143,14 @@ void magicalStartTimer( void )
 
 double magicalEndTimer( void )
 {
+	USING_NS_MAGICAL;
+
 	if( s_timer_mark_var == 0 )
 		return 0.0;
 
 	double result;
 	int64_t now = TimeUtils::currentMicrosecondsTime();
-	result = std::max<double>( 0, ( now - s_timer_mark_var ) / 1000000.0 );
+	result = MAX( 0.0, ( now - s_timer_mark_var ) / 1000000.0 );
 	s_timer_mark_var = 0;
 	return result;
 }
