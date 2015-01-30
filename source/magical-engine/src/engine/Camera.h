@@ -26,11 +26,12 @@ SOFTWARE.
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Entity.h"
+#include "SceneElement.h"
+#include "SceneNode.h"
 
 NS_MAGICAL_BEGIN
 
-class Camera : public Entity
+class Camera : public SceneNode
 {
 public:
 	declare_class_hash_code;
@@ -38,6 +39,7 @@ public:
 public:
 	Camera( void );
 	virtual ~Camera( void );
+	static Ptr<Camera> create( void );
 
 public:
 	void setPerspective( float fov, float aspect, float znear, float zfar );

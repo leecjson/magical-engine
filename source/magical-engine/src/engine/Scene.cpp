@@ -28,14 +28,13 @@ NS_MAGICAL_BEGIN
 define_class_hash_code( Scene );
 
 Scene::Scene( void )
-: m_root( new SceneNode() )
 {
 	assign_class_hash_code();
 }
 
 Scene::~Scene( void )
 {
-	m_root->release();
+	
 }
 
 Ptr<Scene> Scene::create( void )
@@ -45,38 +44,33 @@ Ptr<Scene> Scene::create( void )
 	return Ptr<Scene>( Initializer<Scene>( ret ) );
 }
 
-void Scene::visit( void )
-{
-	m_root->transform();
+//Camera* Scene::createCamera( const char* name )
+//{
+//	Camera* camera = new Camera();
+//	if( name && *name )
+//		camera->setName( name );
+//
+//	m_cameras.insert( camera );
+//	m_entities.insert( camera );
+//	return camera;
+//}
+//
+//Entity* Scene::createSceneNode( const char* name )
+//{
+//	Entity* entity = new Entity();
+//	if( name && *name )
+//		entity->setName( name );
+//
+//	m_entities.insert( entity );
+//	return entity;
+//}
 
-	for( auto itr : m_entities )
-	{
-		itr->draw();
-	}
-}
+//void Scene::setActiveCamera( const Ptr<Camera>& camera )
+//{
+//	
+//}
 
-Camera* Scene::createCamera( const char* name )
-{
-	Camera* camera = new Camera();
-	if( name && *name )
-		camera->setName( name );
-
-	m_cameras.insert( camera );
-	m_entities.insert( camera );
-	return camera;
-}
-
-Entity* Scene::createEntity( const char* name )
-{
-	Entity* entity = new Entity();
-	if( name && *name )
-		entity->setName( name );
-
-	m_entities.insert( entity );
-	return entity;
-}
-
-void Scene::destory( const Ptr<SceneNode>& node )
+void Scene::destory( SceneNode* child )
 {
 	SceneNode* rnode = node.get();
 	magicalAssert( rnode, "should not be nullptr." );
@@ -94,62 +88,101 @@ void Scene::destory( const Ptr<SceneNode>& node )
 	}
 }
 
-SceneNode* Scene::getRoot( void ) const
+void Scene::onNodeEvent( NodeEvent evt, SceneNode* child )
 {
-	return m_root;
+	switch( evt )
+	{
+	case NodeEvent::Add:
+		switch( child->getElementID() )
+		{
+		case SceneElement::Node:
+			addSceneNode( child );
+			break;
+		case SceneElement::Camera:
+			addCamera( (Camera*) child );
+			addSceneNode( child );
+			break;
+		case SceneElement::Light:
+			break;
+		default:
+			magicalAssert( false, "Invaild!" );
+			break;
+		}
+		break;
+	case NodeEvent::Remove:
+		switch( child->getElementID() )
+		{
+		case SceneElement::Node:
+			removeSceneNode( child );
+			break;
+		case SceneElement::Camera:
+			removeCamera( (Camera*) child );
+			removeSceneNode( child );
+			break;
+		case SceneElement::Light:
+			break;
+		default:
+			magicalAssert( false, "Invaild!" );
+			break;
+		}
+		break;
+	default:
+		magicalAssert( false, "Invaild!" );
+		break;
+	}
+
+	for( auto itr : child->m_children )
+	{
+		onNodeEvent( evt, itr );
+	}
 }
 
-size_t Scene::childCount( void ) const
+void Scene::onNodeEvent( NodeEvent evt, vector<SceneNode*> children )
 {
-	return m_root->childCount();
+	for( auto itr : children )
+	{
+		onNodeEvent( evt, itr );
+	}
 }
 
-SceneNode* Scene::findChild( const char* name ) const
+void Scene::addSceneNode( SceneNode* node )
 {
-	return m_root->findChild( name );
+	auto itr = m_scene_nodes.find( node );
+	if( itr == m_scene_nodes.end() )
+	{
+		node->retain();
+		m_scene_nodes.insert( node );
+	}
 }
 
-SceneNode* Scene::childAtIndex( size_t i ) const
+void Scene::addCamera( Camera* camera )
 {
-	return m_root->childAtIndex( i );
+	auto itr = m_cameras.find( camera );
+	if( itr == m_cameras.end() )
+	{
+		camera->retain();
+		m_cameras.insert( camera );
+	}
 }
 
-void Scene::addChild( const Ptr<SceneNode>& child )
+void Scene::removeSceneNode( SceneNode* node )
 {
-	return m_root->addChild( child );
+	auto itr = m_scene_nodes.find( node );
+	if( itr == m_scene_nodes.end() )
+	{
+		m_scene_nodes.erase( itr );
+		node->release();
+	}
 }
 
-void Scene::removeChild( const Ptr<SceneNode>& child )
+void Scene::removeCamera( Camera* camera )
 {
-	return m_root->removeChild( child );
-}
-
-void Scene::removeAllChildren( void )
-{
-	return m_root->removeAllChildren();
-}
-
-void Scene::setActiveCamera( const Ptr<Camera>& camera )
-{
-	
-}
-
-void Scene::onAdd( SceneNode* child )
-{
-	if( m_parent )
-		m_parent->onAdd( child );
-}
-
-void Scene::onRemove( const vector<SceneNode*>& children )
-{
-	if( m_parent )
-		m_parent->onRemove( children );
-}
-
-void Scene::onRemove( SceneNode* child )
-{
-	if( m_parent )
-		m_parent->onRemove( child );
+	auto itr = m_cameras.find( camera );
+	if( itr == m_cameras.end() )
+	{
+		m_cameras.erase( itr );
+		camera->release();
+	}
 }
 
 NS_MAGICAL_END

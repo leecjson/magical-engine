@@ -28,6 +28,8 @@ SOFTWARE.
 #include "Common.h"
 #include "Reference.h"
 #include "magical-math.h"
+#include "SceneElement.h"
+
 #include <vector>
 
 NS_MAGICAL_BEGIN
@@ -42,6 +44,12 @@ enum class Space
 	World,
 };
 
+enum class NodeEvent
+{
+	Add,
+	Remove,
+};
+
 class SceneNode : public Reference
 {
 public:
@@ -52,6 +60,7 @@ public:
 	virtual ~SceneNode( void );
 
 public:
+	inline SceneElement getElementID( void ) const { return m_element; }
 	void setName( const char* name );
 	const string& getName( void ) const;
 	void setVisible( bool visible );
@@ -106,9 +115,8 @@ public:
 	const Vector3& getScale( void ) const;
 
 protected:
-	virtual void onAdd( SceneNode* child );
-	virtual void onRemove( const vector<SceneNode*>& children );
-	virtual void onRemove( SceneNode* child );
+	virtual void onNodeEvent( NodeEvent evt, SceneNode* child );
+	virtual void onNodeEvent( NodeEvent evt, vector<SceneNode*> children );
 	
 protected:
 	void transform( void );
@@ -119,8 +127,8 @@ protected:
 
 protected:
 	friend class Scene;
-
-protected:
+	bool m_started = false;
+	SceneElement m_element;
 	string m_name;
 	bool m_is_visible = false;
 	SceneNode* m_parent = nullptr;
@@ -136,6 +144,7 @@ protected:
 	mutable Vector3 m_derived_position;
 	mutable Quaternion m_derived_rotation;
 	mutable Vector3 m_derived_scale = Vector3::One;
+	
 };
 
 NS_MAGICAL_END

@@ -37,13 +37,22 @@ define_class_hash_code( SceneNode );
 
 SceneNode::SceneNode( void )
 : m_ts_dirty_info( kTsClean )
+, m_element( SceneElement::Node )
 {
 	assign_class_hash_code();
 }
 
 SceneNode::~SceneNode( void )
 {
-	removeAllChildren();
+	if( !m_children.empty() )
+	{
+		for( auto child : m_children )
+		{
+			child->m_parent = nullptr;
+			child->release();
+		}
+		m_children.clear();
+	}
 }
 
 void SceneNode::setName( const char* name )
@@ -127,6 +136,8 @@ void SceneNode::addChild( const Ptr<SceneNode>& child )
 	rchild->retain();
 	m_children.push_back( rchild );
 
+	onNodeEvent( NodeEvent::Add, rchild );
+
 	/*SceneNode* rchild = child.get();
 	magicalAssert( rchild, "Invaild! should not be nullptr" );
 	magicalAssert( rchild != this, "Invaild! can't add self as a child" );
@@ -168,6 +179,8 @@ void SceneNode::setParent( const Ptr<SceneNode>& parent )
 
 		m_parent = rparent;
 		rparent->m_children.push_back( this );
+
+		onNodeEvent( NodeEvent::Add, this );
 	}
 	else
 	{
@@ -175,6 +188,8 @@ void SceneNode::setParent( const Ptr<SceneNode>& parent )
 
 		this->retain();
 		rparent->m_children.push_back( this );
+
+		onNodeEvent( NodeEvent::Add, this );
 	}
 }
 
@@ -188,6 +203,8 @@ void SceneNode::removeChild( const Ptr<SceneNode>& child )
 	{
 		rchild->m_parent = nullptr;
 		m_children.erase( itr );
+		
+		onNodeEvent( NodeEvent::Remove, rchild );
 		rchild->release();
 	}
 }
@@ -197,6 +214,7 @@ void SceneNode::removeAllChildren( void )
 	if( m_children.empty() )
 		return;
 
+	onNodeEvent( NodeEvent::Remove, m_children );
 	for( auto child : m_children )
 	{
 		child->m_parent = nullptr;
@@ -214,6 +232,8 @@ void SceneNode::removeSelf( void )
 
 		m_parent = nullptr;
 		m_parent->m_children.erase( itr );
+
+		onNodeEvent( NodeEvent::Remove, this );
 		release();
 	}
 }
@@ -395,22 +415,16 @@ const Vector3& SceneNode::getScale( void ) const
 	return m_local_scale;
 }
 
-void SceneNode::onAdd( SceneNode* child )
+void SceneNode::onNodeEvent( NodeEvent evt, SceneNode* child )
 {
 	if( m_parent )
-		m_parent->onAdd( child );
+		m_parent->onNodeEvent( evt, child );
 }
 
-void SceneNode::onRemove( const vector<SceneNode*>& children )
+void SceneNode::onNodeEvent( NodeEvent evt, vector<SceneNode*> children )
 {
 	if( m_parent )
-		m_parent->onRemove( children );
-}
-
-void SceneNode::onRemove( SceneNode* child )
-{
-	if( m_parent )
-		m_parent->onRemove( child );
+		m_parent->onNodeEvent( evt, children );
 }
 
 void SceneNode::transform( void )

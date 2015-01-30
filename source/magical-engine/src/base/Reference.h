@@ -28,6 +28,16 @@ SOFTWARE.
 #include "Common.h"
 #include "Ptr.h"
 
+/*
+hash code macros
+*/
+#define define_class_hash_code( cls ) \
+	const size_t cls::HashCode = typeid( cls ).hash_code()
+#define declare_class_hash_code \
+	static const size_t HashCode
+#define assign_class_hash_code() \
+	m_class_hash_code = HashCode
+
 NS_MAGICAL_BEGIN
 
 class Reference

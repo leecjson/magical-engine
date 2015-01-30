@@ -30,11 +30,19 @@ define_class_hash_code( Camera );
 Camera::Camera( void )
 {
 	assign_class_hash_code();
+	m_element = SceneElement::Camera;
 }
 
 Camera::~Camera( void )
 {
 
+}
+
+Ptr<Camera> Camera::create( void )
+{
+	Camera* ret = new Camera();
+	magicalAssert( ret, "new Camera() failed" );
+	return Ptr<Camera>( Initializer<Camera>( ret ) );
 }
 
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )

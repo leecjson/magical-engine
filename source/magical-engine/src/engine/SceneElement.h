@@ -21,20 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __SCENE_ELEMENT_H__
+#define __SCENE_ELEMENT_H__
 
-USING_NS_MAGICAL;
+#include "PlatformMacros.h"
+#include "Common.h"
 
-Ptr<Camera> m_main_camera;
+NS_MAGICAL_BEGIN
 
-void mainDelegate( void )
+enum class SceneElement
 {
-	Ptr<Scene> scene = Scene::create();
-	Engine::runScene( scene );
+	Node,
+	Camera,
+	Light,
+};
 
-	Ptr<Camera> camera = Camera::create();
-	m_main_camera->setPosition( Vector3::Zero );
-	m_main_camera->setRotation( EulerAngles::Zero );
-	scene->addChild( camera );
-}
+NS_MAGICAL_END
+
+#endif //__SCENE_ELEMENT_H__

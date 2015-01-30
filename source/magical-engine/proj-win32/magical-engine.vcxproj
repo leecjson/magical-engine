@@ -25,8 +25,8 @@
     <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3native.h" />
     <ClInclude Include="..\src\engine\Camera.h" />
     <ClInclude Include="..\src\engine\Engine.h" />
-    <ClInclude Include="..\src\engine\Entity.h" />
     <ClInclude Include="..\src\engine\Scene.h" />
+    <ClInclude Include="..\src\engine\SceneElement.h" />
     <ClInclude Include="..\src\engine\SceneNode.h" />
     <ClInclude Include="..\src\include\magical-engine.h" />
     <ClInclude Include="..\src\log\LogSystem.h" />
@@ -66,7 +66,6 @@
     <ClCompile Include="..\src\context\win32\gl\OGLApplication.cpp" />
     <ClCompile Include="..\src\engine\Camera.cpp" />
     <ClCompile Include="..\src\engine\Engine.cpp" />
-    <ClCompile Include="..\src\engine\Entity.cpp" />
     <ClCompile Include="..\src\engine\Scene.cpp" />
     <ClCompile Include="..\src\engine\SceneNode.cpp" />
     <ClCompile Include="..\src\log\win32\LogSystem.cpp" />

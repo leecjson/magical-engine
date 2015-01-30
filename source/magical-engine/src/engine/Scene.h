@@ -27,9 +27,9 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
+#include "SceneElement.h"
 #include "SceneNode.h"
 #include "Camera.h"
-#include "Entity.h"
 
 #include <vector>
 #include <unordered_set>
@@ -40,7 +40,7 @@ NS_MAGICAL_BEGIN
 using ::std::string;
 using ::std::unordered_set;
 
-class Scene : private SceneNode
+class Scene : protected SceneNode
 {
 public:
 	declare_class_hash_code;
@@ -50,25 +50,30 @@ public:
 	virtual ~Scene( void );
 	static Ptr<Scene> create( void );
 
-public:
-	virtual void visit( void );
+//public:
+//	void setActiveCamera( const Ptr<Camera>& camera );
 
 public:
-	Camera* createCamera( const char* name = nullptr );
-	Entity* createEntity( const char* name = nullptr );
-
-public:
-	void setActiveCamera( const Ptr<Camera>& camera );
+	using SceneNode::addChild;
+	using SceneNode::removeChild;
+	using SceneNode::removeAllChildren;
 
 protected:
-	virtual void onAdd( SceneNode* child );
-	virtual void onRemove( const vector<SceneNode*>& children );
-	virtual void onRemove( SceneNode* child );
+	void destory( SceneNode* child );
+	virtual void onNodeEvent( NodeEvent evt, SceneNode* child );
+	virtual void onNodeEvent( NodeEvent evt, vector<SceneNode*> children );
 
 protected:
-	Camera* m_active_camera = nullptr;
+	void addSceneNode( SceneNode* node );
+	void addCamera( Camera* camera );
+	void removeSceneNode( SceneNode* node );
+	void removeCamera( Camera* camera );
+
+protected:
+	//Camera* m_active_camera = nullptr;
+	unordered_set<SceneNode*> m_scene_nodes;
 	unordered_set<Camera*> m_cameras;
-	unordered_set<Entity*> m_entities;
+	
 };
 
 NS_MAGICAL_END
