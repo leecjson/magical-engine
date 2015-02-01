@@ -36,6 +36,7 @@ SOFTWARE.
 #include "Camera.h"
 #include "SceneNode.h"
 #include "Engine.h"
+#include "Behaviour.h"
 //#include "AssetsSystem.h"
 #include "LogSystem.h"
 //#include "InputSystem.h"

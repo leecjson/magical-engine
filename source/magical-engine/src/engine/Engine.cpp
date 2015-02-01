@@ -66,6 +66,8 @@ void Engine::runScene( Ptr<Scene>& scene )
 	Scene* rscene = scene.get();
 	magicalAssert( rscene, "should not be nullptr." );
 	magicalSafeAssign( s_running_scene, rscene );
+
+	s_running_scene->nodeStart();
 }
 
 Scene* Engine::runningScene( void )

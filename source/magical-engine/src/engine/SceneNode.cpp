@@ -55,17 +55,22 @@ SceneNode::~SceneNode( void )
 	}
 }
 
+Ptr<SceneNode> SceneNode::create( void )
+{
+	SceneNode* ret = new SceneNode();
+	magicalAssert( ret, "new SceneNode() failed" );
+	return Ptr<SceneNode>( Initializer<SceneNode>( ret ) );
+}
+
 void SceneNode::visit( void )
 {
-	if( !m_is_visible )
+	if( m_is_visible == false )
 		return;
 
-	int dirty_info = kTsClean;
+	int parent_ts_dirty_info = m_ts_dirty_info;
 
 	if( m_ts_dirty )
 	{
-		dirty_info = m_ts_dirty_info;
-
 		const Quaternion& r = getDerivedRotation();
 		const Vector3& s = getDerivedScale();
 		const Vector3& t = getDerivedPosition();
@@ -74,16 +79,15 @@ void SceneNode::visit( void )
 		m_ts_dirty = false;
 	}
 
-	if( !m_children.empty() )
+	if( m_children.empty() )
+		return;
+
+	for( auto child : m_children )
 	{
-		for( auto child : m_children )
-		{
-			if( dirty_info != kTsClean )
-			{
-				child->transformDirty( dirty_info );
-			}
-			child->visit();
-		}
+		if( parent_ts_dirty_info != kTsClean )
+			child->transformDirty( parent_ts_dirty_info );
+
+		child->visit();
 	}
 }
 
@@ -93,19 +97,9 @@ void SceneNode::setName( const char* name )
 	m_name = name;
 }
 
-const string& SceneNode::getName( void ) const
-{
-	return m_name;
-}
-
 void SceneNode::setVisible( bool visible )
 {
 	m_is_visible = visible;
-}
-
-bool SceneNode::isVisible( void ) const
-{
-	return m_is_visible;
 }
 
 bool SceneNode::isChildOf( const Ptr<SceneNode>& parent ) const
@@ -122,16 +116,6 @@ bool SceneNode::isChildOf( const Ptr<SceneNode>& parent ) const
 		itr = itr->m_parent;
 	}
 	return false;
-}
-
-size_t SceneNode::childCount( void ) const
-{
-	return m_children.size();
-}
-
-SceneNode* SceneNode::getParent( void ) const
-{
-	return m_parent;
 }
 
 SceneNode* SceneNode::findChild( const char* name ) const
@@ -168,32 +152,11 @@ void SceneNode::addChild( const Ptr<SceneNode>& child )
 	rchild->retain();
 	m_children.push_back( rchild );
 
-	onNodeEvent( NodeEvent::Add, rchild );
-
-	/*SceneNode* rchild = child.get();
-	magicalAssert( rchild, "Invaild! should not be nullptr" );
-	magicalAssert( rchild != this, "Invaild! can't add self as a child" );
-	magicalAssert( isChildOf( child ) == false, "Invaild! own parent can't be child" );
-
-	if( rchild->m_parent )
+	if( m_is_running )
 	{
-		SceneNode* old_parent = rchild->m_parent;
-		auto itr = std::find( old_parent->m_children.begin(), old_parent->m_children.end(), rchild );
-		magicalAssert( itr != old_parent->m_children.end(), "Invaild!" );
-
-		rchild->m_parent = nullptr;
-		old_parent->m_children.erase( itr );
-
-		rchild->m_parent = this;
-		m_children.push_back( rchild );
+		rchild->nodeStart();
 	}
-	else
-	{
-		rchild->m_parent = this;
-
-		rchild->retain();
-		m_children.push_back( rchild );
-	}*/
+	nodeEvent( NodeEvent::Add, rchild );
 }
 
 void SceneNode::setParent( const Ptr<SceneNode>& parent )
@@ -207,12 +170,25 @@ void SceneNode::setParent( const Ptr<SceneNode>& parent )
 	{
 		auto itr = std::find( m_parent->m_children.begin(), m_parent->m_children.end(), this );
 		magicalAssert( itr != m_parent->m_children.end(), "Invaild!" );
+
+		SceneNode* old_parent = m_parent;
 		m_parent->m_children.erase( itr );
+		m_parent = nullptr;
+		old_parent->nodeEvent( NodeEvent::Remove, this );
 
 		m_parent = rparent;
 		rparent->m_children.push_back( this );
-
-		onNodeEvent( NodeEvent::Add, this );
+		if( rparent->m_is_running )
+		{
+			if( m_is_running == false )
+				nodeStart();
+		}
+		else
+		{
+			if( m_is_running )
+				nodeStop();
+		}
+		rparent->nodeEvent( NodeEvent::Add, this );
 	}
 	else
 	{
@@ -221,7 +197,11 @@ void SceneNode::setParent( const Ptr<SceneNode>& parent )
 		this->retain();
 		rparent->m_children.push_back( this );
 
-		onNodeEvent( NodeEvent::Add, this );
+		if( rparent->m_is_running )
+		{
+			nodeStart();
+		}
+		rparent->nodeEvent( NodeEvent::Add, this );
 	}
 }
 
@@ -235,24 +215,38 @@ void SceneNode::removeChild( const Ptr<SceneNode>& child )
 	{
 		rchild->m_parent = nullptr;
 		m_children.erase( itr );
-		
-		onNodeEvent( NodeEvent::Remove, rchild );
+
+		if( m_is_running )
+		{
+			rchild->nodeStop();
+		}
+		nodeEvent( NodeEvent::Remove, rchild );
 		rchild->release();
 	}
 }
 
 void SceneNode::removeAllChildren( void )
 {
-	if( m_children.empty() )
-		return;
-
-	onNodeEvent( NodeEvent::Remove, m_children );
-	for( auto child : m_children )
+	if( !m_children.empty() )
 	{
-		child->m_parent = nullptr;
-		child->release();
+		vector<SceneNode*> children = m_children;
+		m_children.clear();
+
+		for( auto child : children )
+		{
+			child->m_parent = nullptr;
+			if( m_is_running )
+			{
+				child->nodeStop();
+			}
+		}
+
+		nodeEvent( NodeEvent::Remove, children );
+		for( auto child : children )
+		{
+			child->release();
+		}
 	}
-	m_children.clear();
 }
 
 void SceneNode::removeSelf( void )
@@ -262,10 +256,15 @@ void SceneNode::removeSelf( void )
 		auto itr = std::find( m_parent->m_children.begin(), m_parent->m_children.end(), this );
 		magicalAssert( itr != m_parent->m_children.end(), "Invaild!" );
 
-		m_parent = nullptr;
+		SceneNode* parent = m_parent;
 		m_parent->m_children.erase( itr );
+		m_parent = nullptr;
 
-		onNodeEvent( NodeEvent::Remove, this );
+		if( parent->m_is_running )
+		{
+			nodeStop();
+		}
+		parent->nodeEvent( NodeEvent::Remove, this );
 		release();
 	}
 }
@@ -452,6 +451,48 @@ const Vector3& SceneNode::getScale( void ) const
 	return m_local_scale;
 }
 
+void SceneNode::nodeStart( void )
+{
+	magicalAssert( m_is_running == false, "Invaild!" );
+	if( m_is_running == false )
+	{
+		m_is_running = true;
+		for( auto child : m_children )
+		{
+			child->nodeStart();
+		}
+	}
+}
+
+void SceneNode::nodeStop( void )
+{
+	magicalAssert( m_is_running == true, "Invaild!" );
+	if( m_is_running == true )
+	{
+		m_is_running = false;
+		for( auto child : m_children )
+		{
+			child->nodeStop();
+		}
+	}
+}
+
+void SceneNode::nodeEvent( NodeEvent evt, SceneNode* child )
+{
+	if( m_parent )
+	{
+		m_parent->nodeEvent( evt, child );
+	}
+}
+
+void SceneNode::nodeEvent( NodeEvent evt, const vector<SceneNode*>& children )
+{
+	if( m_parent )
+	{
+		m_parent->nodeEvent( evt, children );
+	}
+}
+
 void SceneNode::transformDirty( int info )
 {
 	m_ts_dirty_info |= info;
@@ -514,18 +555,6 @@ const Vector3& SceneNode::getDerivedScale( void ) const
 	}
 
 	return m_derived_scale;
-}
-
-void SceneNode::onNodeEvent( NodeEvent evt, SceneNode* child )
-{
-	if( m_parent )
-		m_parent->onNodeEvent( evt, child );
-}
-
-void SceneNode::onNodeEvent( NodeEvent evt, vector<SceneNode*> children )
-{
-	if( m_parent )
-		m_parent->onNodeEvent( evt, children );
 }
 
 NS_MAGICAL_END

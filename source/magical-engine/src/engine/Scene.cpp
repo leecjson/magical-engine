@@ -44,7 +44,7 @@ Ptr<Scene> Scene::create( void )
 	return Ptr<Scene>( Initializer<Scene>( ret ) );
 }
 
-void Scene::onNodeEvent( NodeEvent evt, SceneNode* child )
+void Scene::nodeEvent( NodeEvent evt, SceneNode* child )
 {
 	switch( evt )
 	{
@@ -89,15 +89,15 @@ void Scene::onNodeEvent( NodeEvent evt, SceneNode* child )
 
 	for( auto itr : child->m_children )
 	{
-		onNodeEvent( evt, itr );
+		nodeEvent( evt, itr );
 	}
 }
 
-void Scene::onNodeEvent( NodeEvent evt, vector<SceneNode*> children )
+void Scene::nodeEvent( NodeEvent evt, const vector<SceneNode*>& children )
 {
 	for( auto itr : children )
 	{
-		onNodeEvent( evt, itr );
+		nodeEvent( evt, itr );
 	}
 }
 

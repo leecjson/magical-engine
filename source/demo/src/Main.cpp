@@ -26,15 +26,50 @@ SOFTWARE.
 
 USING_NS_MAGICAL;
 
+void MainCameraScript::onCreate( void )
+{
+	magicalFormat( "%u", hashCodeClass() );
+	magicalLog( magicalGetBuffer() );
+}
+
+void MainCameraScript::onStart( void )
+{
+
+}
+
+void MainCameraScript::onUpdate( void )
+{
+
+}
+
+void MainCameraScript::onStop( void )
+{
+
+}
+
+void MainCameraScript::onDestroy( void )
+{
+
+}
+
 Ptr<Camera> m_main_camera;
 
 void mainDelegate( void )
 {
+	MainCameraScript* s = new MainCameraScript();
+	s->onCreate();
+
+	MainCameraScript2* s2 = new MainCameraScript2();
+	s2->onCreate();
+
 	Ptr<Scene> scene = Scene::create();
 	Engine::runScene( scene );
-
+	
 	m_main_camera = Camera::create();
 	m_main_camera->setPosition( Vector3::Zero );
 	m_main_camera->lookAt( 1, 1, 1 );
+
+	//m_main_camera->addComponent<>(  );
+
 	scene->addChild( m_main_camera );
 }

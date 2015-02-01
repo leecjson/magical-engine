@@ -24,6 +24,18 @@ SOFTWARE.
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
+#include "magical-engine.h"
+
+class MainCameraScript : public Behaviour<SceneNode>
+{
+public:
+	virtual void onCreate( void );
+	virtual void onStart( void );
+	virtual void onUpdate( void );
+	virtual void onStop( void );
+	virtual void onDestroy( void );
+};
+
 extern void mainDelegate( void );
 
 #endif //__MAIN_H__

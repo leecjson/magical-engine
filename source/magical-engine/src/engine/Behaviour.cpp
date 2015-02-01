@@ -22,3 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Behaviour.h"
+
+NS_MAGICAL_BEGIN
+
+//define_class_hash_code( Behaviour );
+//
+//Behaviour::Behaviour( void )
+//{
+//	assign_class_hash_code( Behaviour );
+//}
+
+NS_MAGICAL_END

@@ -37,7 +37,7 @@ NS_MAGICAL_BEGIN
 using ::std::string;
 using ::std::vector;
 
-enum class Space 
+enum class Space
 {
 	Self,
 	Parent,
@@ -58,21 +58,23 @@ public:
 public:
 	SceneNode( void );
 	virtual ~SceneNode( void );
+	static Ptr<SceneNode> create( void );
 
 public:
 	virtual void visit( void );
 
 public:
-	inline SceneElement getElementID( void ) const { return m_element; }
 	void setName( const char* name );
-	const string& getName( void ) const;
+	const string& getName( void ) const { return m_name; }
 	void setVisible( bool visible );
-	bool isVisible( void ) const;
+	bool isVisible( void ) const { return m_is_visible; }
+	bool isRunning( void ) const { return m_is_running; }
+	SceneElement getElementID( void ) const { return m_element; }
 
 public:
 	bool isChildOf( const Ptr<SceneNode>& parent ) const;
-	size_t childCount( void ) const;
-	SceneNode* getParent( void ) const;
+	size_t childCount( void ) const { return m_children.size(); }
+	SceneNode* getParent( void ) const { return m_parent; }
 	SceneNode* findChild( const char* name ) const;
 	SceneNode* childAtIndex( size_t i ) const;
 	void addChild( const Ptr<SceneNode>& child );
@@ -117,18 +119,23 @@ public:
 	void setScale( float x, float y );
 	void setScale( float x, float y, float z );
 	const Vector3& getScale( void ) const;
+
+protected:
+	virtual void nodeStart( void );
+	virtual void nodeStop( void );
+	virtual void nodeEvent( NodeEvent evt, SceneNode* child );
+	virtual void nodeEvent( NodeEvent evt, const vector<SceneNode*>& children );
 	
 protected:
 	void transformDirty( int info );
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
-	virtual void onNodeEvent( NodeEvent evt, SceneNode* child );
-	virtual void onNodeEvent( NodeEvent evt, vector<SceneNode*> children );
 
 protected:
 	friend class Scene;
-	bool m_is_in_scene = false;
+	friend class Engine;
+	bool m_is_running = false;
 	SceneElement m_element;
 	string m_name;
 	bool m_is_visible = false;

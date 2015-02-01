@@ -27,16 +27,30 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "InputSystem.h"
+#include "SceneNode.h"
 
 NS_MAGICAL_BEGIN
 
+template< class T >
 class Behaviour : public Reference
 {
 public:
-	virtual void OnCreate( void ){}
-	virtual void OnUpdate( void ){}
+	declare_class_hash_code;
+	
+public:
+	Behaviour( void ){ assign_class_hash_code(); };
+	virtual void onCreate( void ){}
+	virtual void onStart( void ){}
+	virtual void onUpdate( void ){}
+	virtual void onStop( void ){}
+	virtual void onDestroy( void ){}
+
+protected:
+	T* self;
 };
+
+template< class T >
+define_class_hash_code( Behaviour<T> );
 
 NS_MAGICAL_END
 

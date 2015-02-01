@@ -27,6 +27,8 @@ SOFTWARE.
 #include "PlatformMacros.h"
 #include "Common.h"
 
+#include <stdarg.h>
+
 class StringUtils
 {
 public:

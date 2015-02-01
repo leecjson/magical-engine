@@ -67,8 +67,8 @@ public:
 	using SceneNode::removeAllChildren;
 
 protected:
-	virtual void onNodeEvent( NodeEvent evt, SceneNode* child );
-	virtual void onNodeEvent( NodeEvent evt, vector<SceneNode*> children );
+	virtual void nodeEvent( NodeEvent evt, SceneNode* child );
+	virtual void nodeEvent( NodeEvent evt, const vector<SceneNode*>& children );
 
 protected:
 	void addSceneNode( SceneNode* node );
@@ -77,6 +77,7 @@ protected:
 	void removeCamera( Camera* camera );
 
 protected:
+	friend class Engine;
 	//Camera* m_active_camera = nullptr;
 	unordered_set<SceneNode*> m_scene_nodes;
 	unordered_set<Camera*> m_cameras;
