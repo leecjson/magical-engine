@@ -44,19 +44,21 @@ Ptr<Scene> Scene::create( void )
 	return Ptr<Scene>( Initializer<Scene>( ret ) );
 }
 
-void Scene::nodeEvent( NodeEvent evt, SceneNode* child )
+void Scene::childEvent( NodeEvent evt, SceneNode* child )
 {
 	switch( evt )
 	{
 	case NodeEvent::Add:
-		switch( child->getElementID() )
+		switch( child->getElementId() )
 		{
 		case SceneElement::Node:
-			addSceneNode( child );
+			break;
+		case SceneElement::Object:
+			addSceneObject( (SceneObject*) child );
 			break;
 		case SceneElement::Camera:
 			addCamera( (Camera*) child );
-			addSceneNode( child );
+			addSceneObject( (SceneObject*) child );
 			break;
 		case SceneElement::Light:
 			break;
@@ -66,14 +68,16 @@ void Scene::nodeEvent( NodeEvent evt, SceneNode* child )
 		}
 		break;
 	case NodeEvent::Remove:
-		switch( child->getElementID() )
+		switch( child->getElementId() )
 		{
 		case SceneElement::Node:
-			removeSceneNode( child );
+			break;
+		case SceneElement::Object:
+			removeSceneObject( (SceneObject*) child );
 			break;
 		case SceneElement::Camera:
+			removeSceneObject( (SceneObject*) child );
 			removeCamera( (Camera*) child );
-			removeSceneNode( child );
 			break;
 		case SceneElement::Light:
 			break;
@@ -89,27 +93,37 @@ void Scene::nodeEvent( NodeEvent evt, SceneNode* child )
 
 	for( auto itr : child->m_children )
 	{
-		nodeEvent( evt, itr );
+		childEvent( evt, itr );
 	}
 }
 
-void Scene::nodeEvent( NodeEvent evt, const Children& children )
+void Scene::childEvent( NodeEvent evt, const Children& children )
 {
 	for( auto itr : children )
 	{
-		nodeEvent( evt, itr );
+		childEvent( evt, itr );
 	}
 }
 
-void Scene::addSceneNode( SceneNode* node )
-{
-	auto itr = m_scene_nodes.find( node );
-	if( itr == m_scene_nodes.end() )
-	{
-		node->retain();
-		m_scene_nodes.insert( node );
-	}
-}
+//void Scene::addSceneNode( SceneNode* node )
+//{
+//	auto itr = m_scene_nodes.find( node );
+//	if( itr == m_scene_nodes.end() )
+//	{
+//		node->retain();
+//		m_scene_nodes.insert( node );
+//	}
+//}
+//
+//void Scene::removeSceneNode( SceneNode* node )
+//{
+//	auto itr = m_scene_nodes.find( node );
+//	if( itr == m_scene_nodes.end() )
+//	{
+//		m_scene_nodes.erase( itr );
+//		node->release();
+//	}
+//}
 
 void Scene::addCamera( Camera* camera )
 {
@@ -121,23 +135,33 @@ void Scene::addCamera( Camera* camera )
 	}
 }
 
-void Scene::removeSceneNode( SceneNode* node )
-{
-	auto itr = m_scene_nodes.find( node );
-	if( itr == m_scene_nodes.end() )
-	{
-		m_scene_nodes.erase( itr );
-		node->release();
-	}
-}
-
 void Scene::removeCamera( Camera* camera )
 {
 	auto itr = m_cameras.find( camera );
-	if( itr == m_cameras.end() )
+	if( itr != m_cameras.end() )
 	{
 		m_cameras.erase( itr );
 		camera->release();
+	}
+}
+
+void Scene::addSceneObject( SceneObject* object )
+{
+	auto itr = m_scene_objects.find( object );
+	if( itr == m_scene_objects.end() )
+	{
+		object->retain();
+		m_scene_objects.insert( object );
+	}
+}
+
+void Scene::removeSceneObject( SceneObject* object )
+{
+	auto itr = m_scene_objects.find( object );
+	if( itr != m_scene_objects.end() )
+	{
+		m_scene_objects.erase( itr );
+		object->release();
 	}
 }
 

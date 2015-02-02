@@ -29,6 +29,7 @@ SOFTWARE.
 #include "Reference.h"
 #include "SceneElement.h"
 #include "SceneNode.h"
+#include "SceneObject.h"
 #include "Camera.h"
 
 #include <vector>
@@ -40,7 +41,7 @@ NS_MAGICAL_BEGIN
 using ::std::string;
 using ::std::unordered_set;
 
-class Scene : protected SceneNode
+class Scene : public SceneNode
 {
 public:
 	friend class Engine;
@@ -51,37 +52,19 @@ public:
 	virtual ~Scene( void );
 	static Ptr<Scene> create( void );
 
-public:
-	using Reference::retain;
-	using Reference::release;
-	using Reference::retainCount;
-	using Reference::hashCodeClass;
-	using Reference::typeof;
-	using SceneNode::visit;
-	using SceneNode::setVisible;
-	using SceneNode::isVisible;
-	using SceneNode::findChild;
-	using SceneNode::childAtIndex;
-	using SceneNode::childCount;
-	using SceneNode::addChild;
-	using SceneNode::removeChild;
-	using SceneNode::removeAllChildren;
+protected:
+	virtual void childEvent( NodeEvent evt, SceneNode* child );
+	virtual void childEvent( NodeEvent evt, const Children& children );
 
 protected:
-	virtual void nodeEvent( NodeEvent evt, SceneNode* child );
-	virtual void nodeEvent( NodeEvent evt, const Children& children );
-
-protected:
-	void addSceneNode( SceneNode* node );
 	void addCamera( Camera* camera );
-	void removeSceneNode( SceneNode* node );
 	void removeCamera( Camera* camera );
-
-protected:
-	//Camera* m_active_camera = nullptr;
-	unordered_set<SceneNode*> m_scene_nodes;
-	unordered_set<Camera*> m_cameras;
+	void addSceneObject( SceneObject* object );
+	void removeSceneObject( SceneObject* object );
 	
+protected:
+	unordered_set<SceneObject*> m_scene_objects;
+	unordered_set<Camera*> m_cameras;
 };
 
 NS_MAGICAL_END

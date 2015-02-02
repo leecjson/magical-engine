@@ -32,6 +32,7 @@ NS_MAGICAL_BEGIN
 enum class SceneElement
 {
 	Node,
+	Object,
 	Camera,
 	Light,
 };

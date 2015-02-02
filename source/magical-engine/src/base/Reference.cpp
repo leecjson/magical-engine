@@ -63,7 +63,7 @@ unsigned int Reference::retainCount( void ) const
 	return m_reference;
 }
 
-size_t Reference::hashCodeClass( void ) const
+size_t Reference::hashCodeOfClass( void ) const
 {
 	return m_class_hash_code;
 }

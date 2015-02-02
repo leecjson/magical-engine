@@ -31,24 +31,34 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-template< class T >
-class Behaviour : public Reference
+class BehaviourBase : public Reference
 {
 public:
-	declare_class_hash_code;
-	
-public:
-	Behaviour( void ){ assign_class_hash_code(); };
-
+	friend class SceneObject;
 	virtual void onCreate( void ){}
 	virtual void onStart( void ){}
-	virtual void onUpdate( void ){}
 	virtual void onStop( void ){}
 	virtual void onDestroy( void ){}
+	virtual void onUpdate( void ){}
+};
+
+template< class T >
+class Behaviour : public BehaviourBase
+{
+public:
+	friend class SceneObject;
+	declare_class_hash_code;
+	Behaviour( void );
 
 protected:
-	T* self;
+	T* that = nullptr;
 };
+
+template< class T >
+Behaviour<T>::Behaviour( void )
+{
+	assign_class_hash_code();
+}
 
 template< class T >
 define_class_hash_code( Behaviour<T> );

@@ -188,6 +188,7 @@ public:
 		if( ref != nullptr )
 		{
 			ref->retain();
+
 			if( m_reference )
 				m_reference->release();
 

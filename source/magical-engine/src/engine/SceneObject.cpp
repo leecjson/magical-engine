@@ -25,16 +25,33 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+define_class_hash_code( SceneObject );
+
 SceneObject::SceneObject( void )
 {
-
+	assign_class_hash_code();
+	m_element_id = SceneElement::Object;
 }
 
 SceneObject::~SceneObject( void )
 {
-
+	
 }
 
+Ptr<SceneObject> SceneObject::create( void )
+{
+	SceneObject* ret = new SceneObject();
+	magicalAssert( ret, "new SceneObject() failed" );
+	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
+}
+
+Ptr<SceneObject> SceneObject::create( const char* name )
+{
+	SceneObject* ret = new SceneObject();
+	magicalAssert( ret, "new SceneObject() failed" );
+	ret->setName( name );
+	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
+}
 
 
 NS_MAGICAL_END

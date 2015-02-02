@@ -26,28 +26,13 @@ SOFTWARE.
 
 USING_NS_MAGICAL;
 
-#define dcast( cls, exp ) dynamic_cast< cls >( exp )
-#define scast( cls, exp ) static_cast< cls >( exp )
-
 void MainCameraScript::onCreate( void )
 {
-	/*Object* player = dynamic_cast<Object*>( self->findChild( "haha" ) );
-	
-	Entity* player = self->findChild<Button>( "haha" )
-		
-	Article* article = 
-
-	SceneArticle*/
+	that->setPosition( Vector2::Zero );
+	that->lookAt( 1, 1, 1 );
 }
 
 void MainCameraScript::onStart( void )
-{
-	SceneObject* player = dynamic_cast< SceneObject* >( self->findChild( "haha" ) );
-
-	SceneObject* pl2 = (SceneObject*) self->findChild( "haha" );
-}
-
-void MainCameraScript::onUpdate( void )
 {
 	
 }
@@ -62,20 +47,23 @@ void MainCameraScript::onDestroy( void )
 
 }
 
-Ptr<Camera> m_main_camera;
+void MainCameraScript::onUpdate( void )
+{
+	
+}
 
 void mainDelegate( void )
 {
 	Ptr<Scene> scene = Scene::create();
-	scene->addComponent<MainCameraScript>();
 	Engine::runScene( scene );
 
-	m_main_camera = Camera::create();
-	m_main_camera->setPosition( Vector3::Zero );
-	m_main_camera->lookAt( 1, 1, 1 );
-	m_main_camera->addComponent<MainCameraScript>();
-	scene->addChild( m_main_camera );
+	Ptr<Camera> main_camera = Camera::create( "Main Camera" );
+	main_camera->setPosition( Vector3::Zero );
+	main_camera->lookAt( 1, 1, 1 );
+	main_camera->addComponent<MainCameraScript>();
+	scene->addChild( main_camera );
 
-	m_main_camera2 = Camera::create();
-	scene->addChild( m_main_camera2 );
+	Ptr<SceneObject> cube = SceneObject::create( "Cube" );
+	cube->setPosition( Vector3::Zero );
+	scene->addChild( cube );
 }

@@ -51,7 +51,7 @@ public:
 	void release( void );
 	unsigned int retainCount( void ) const;
 	
-	size_t hashCodeClass( void ) const;
+	size_t hashCodeOfClass( void ) const;
 	template< class Tz >
 	inline bool typeof( void ) const
 	{

@@ -26,7 +26,9 @@ SOFTWARE.
 
 #include "magical-engine.h"
 
-class MainCameraScript : public Behaviour<SceneNode>
+USING_NS_MAGICAL;
+
+class MainCameraScript : public Behaviour<Camera>
 {
 public:
 	virtual void onCreate( void );

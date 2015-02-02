@@ -62,9 +62,12 @@ public:
 	SceneNode( void );
 	virtual ~SceneNode( void );
 	static Ptr<SceneNode> create( void );
+	static Ptr<SceneNode> create( const char* name );
 
-public:
+protected:
 	virtual void visit( void );
+	virtual void start( void );
+	virtual void stop( void );
 
 public:
 	void setName( const char* name );
@@ -72,7 +75,7 @@ public:
 	void setVisible( bool visible );
 	bool isVisible( void ) const { return m_is_visible; }
 	bool isRunning( void ) const { return m_is_running; }
-	SceneElement getElementID( void ) const { return m_element_id; }
+	SceneElement getElementId( void ) const { return m_element_id; }
 
 public:
 	bool isChildOf( const Ptr<SceneNode>& parent ) const;
@@ -85,6 +88,7 @@ public:
 	void removeChild( const Ptr<SceneNode>& child );
 	void removeAllChildren( void );
 	void removeSelf( void );
+	
 
 public:
 	void translate( const Vector2& t, Space relative_to = Space::Parent );
@@ -124,16 +128,12 @@ public:
 	const Vector3& getScale( void ) const;
 
 protected:
-	virtual void nodeStart( void );
-	virtual void nodeStop( void );
-	virtual void nodeEvent( NodeEvent evt, SceneNode* child );
-	virtual void nodeEvent( NodeEvent evt, const Children& children );
-	
-protected:
 	void transformDirty( int info );
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
+	virtual void childEvent( NodeEvent evt, SceneNode* child );
+	virtual void childEvent( NodeEvent evt, const Children& children );
 
 protected:
 	string m_name;

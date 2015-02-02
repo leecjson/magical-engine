@@ -34,6 +34,8 @@ NS_MAGICAL_BEGIN
 
 static int64_t s_last_update_time = 0;
 static double s_delta_time = 0.0;
+
+static Scene* s_next_scene = nullptr;
 static Scene* s_running_scene = nullptr;
 
 void Engine::init( void )
@@ -50,6 +52,16 @@ void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
+	if( s_next_scene )
+	{
+		if( s_running_scene )
+			s_running_scene->stop();
+
+		magicalSafeAssign( s_running_scene, s_next_scene );
+		s_next_scene = nullptr;
+		s_running_scene->start();
+	}
+
 	if( s_running_scene )
 	{
 		s_running_scene->visit();
@@ -65,9 +77,9 @@ void Engine::runScene( Ptr<Scene>& scene )
 {
 	Scene* rscene = scene.get();
 	magicalAssert( rscene, "should not be nullptr." );
-	magicalSafeAssign( s_running_scene, rscene );
+	magicalAssert( rscene != s_running_scene, "Invaild!" );
 
-	s_running_scene->nodeStart();
+	magicalSafeAssign( s_next_scene, rscene );
 }
 
 Scene* Engine::runningScene( void )

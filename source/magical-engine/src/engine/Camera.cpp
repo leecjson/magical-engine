@@ -45,6 +45,14 @@ Ptr<Camera> Camera::create( void )
 	return Ptr<Camera>( Initializer<Camera>( ret ) );
 }
 
+Ptr<Camera> Camera::create( const char* name )
+{
+	Camera* ret = new Camera();
+	magicalAssert( ret, "new Camera() failed" );
+	ret->setName( name );
+	return Ptr<Camera>( Initializer<Camera>( ret ) );
+}
+
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 {
 	m_projection_matrix.setPerspective( fov, aspect, znear, zfar );
