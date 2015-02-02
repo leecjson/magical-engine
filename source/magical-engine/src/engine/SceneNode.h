@@ -53,8 +53,11 @@ enum class NodeEvent
 class SceneNode : public Reference
 {
 public:
+	friend class Scene;
+	friend class Engine;
+	typedef vector<SceneNode*> Children;
 	declare_class_hash_code;
-
+	
 public:
 	SceneNode( void );
 	virtual ~SceneNode( void );
@@ -69,7 +72,7 @@ public:
 	void setVisible( bool visible );
 	bool isVisible( void ) const { return m_is_visible; }
 	bool isRunning( void ) const { return m_is_running; }
-	SceneElement getElementID( void ) const { return m_element; }
+	SceneElement getElementID( void ) const { return m_element_id; }
 
 public:
 	bool isChildOf( const Ptr<SceneNode>& parent ) const;
@@ -124,7 +127,7 @@ protected:
 	virtual void nodeStart( void );
 	virtual void nodeStop( void );
 	virtual void nodeEvent( NodeEvent evt, SceneNode* child );
-	virtual void nodeEvent( NodeEvent evt, const vector<SceneNode*>& children );
+	virtual void nodeEvent( NodeEvent evt, const Children& children );
 	
 protected:
 	void transformDirty( int info );
@@ -133,14 +136,12 @@ protected:
 	const Vector3& getDerivedScale( void ) const;
 
 protected:
-	friend class Scene;
-	friend class Engine;
-	bool m_is_running = false;
-	SceneElement m_element;
 	string m_name;
+	SceneElement m_element_id;
 	bool m_is_visible = false;
+	bool m_is_running = false;
 	SceneNode* m_parent = nullptr;
-	vector<SceneNode*> m_children;
+	Children m_children;
 	bool m_inherit_scale = true;
 	bool m_inherit_rotation = true;
 	mutable int m_ts_dirty_info;

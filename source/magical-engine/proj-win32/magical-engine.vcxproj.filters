@@ -198,6 +198,9 @@
     <ClInclude Include="..\src\engine\Behaviour.h">
       <Filter>src\engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\engine\SceneObject.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\context\Application.cpp">
@@ -303,6 +306,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\engine\Behaviour.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\SceneObject.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

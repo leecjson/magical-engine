@@ -30,7 +30,7 @@ define_class_hash_code( Camera );
 Camera::Camera( void )
 {
 	assign_class_hash_code();
-	m_element = SceneElement::Camera;
+	m_element_id = SceneElement::Camera;
 }
 
 Camera::~Camera( void )

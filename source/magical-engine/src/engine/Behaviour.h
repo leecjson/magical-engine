@@ -39,6 +39,7 @@ public:
 	
 public:
 	Behaviour( void ){ assign_class_hash_code(); };
+
 	virtual void onCreate( void ){}
 	virtual void onStart( void ){}
 	virtual void onUpdate( void ){}

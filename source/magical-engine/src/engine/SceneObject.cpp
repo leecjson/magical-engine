@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
@@ -21,36 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __MAGICAL_ENGINE_H__
-#define __MAGICAL_ENGINE_H__
-
-#include "PlatformMacros.h"
-
-#include "magical-math.h"
-
-#include "Common.h"
-#include "Ptr.h"
-#include "Reference.h"
-#include "Data.h"
-#include "SceneElement.h"
-#include "SceneNode.h"
-#include "Camera.h"
 #include "SceneObject.h"
-#include "Engine.h"
-#include "Behaviour.h"
-//#include "AssetsSystem.h"
-#include "LogSystem.h"
-//#include "InputSystem.h"
-#include "Utils.h"
 
-//#include "LuaMacros.h"
-//#include "LuaSelector.h"
-//#include "LuaObject.h"
-//#include "LuaState.h"
-//#include "LuaFunction.h"
-//#include "LuaTable.h"
-//#include "LuaSystem.h"
+NS_MAGICAL_BEGIN
 
-#include "Application.h"
+SceneObject::SceneObject( void )
+{
 
-#endif //__MAGICAL_ENGINE_H__
+}
+
+SceneObject::~SceneObject( void )
+{
+
+}
+
+
+
+NS_MAGICAL_END

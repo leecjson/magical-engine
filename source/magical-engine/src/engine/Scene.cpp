@@ -93,7 +93,7 @@ void Scene::nodeEvent( NodeEvent evt, SceneNode* child )
 	}
 }
 
-void Scene::nodeEvent( NodeEvent evt, const vector<SceneNode*>& children )
+void Scene::nodeEvent( NodeEvent evt, const Children& children )
 {
 	for( auto itr : children )
 	{

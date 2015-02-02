@@ -21,69 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENE_OBJECT_H__
+#define __SCENE_OBJECT_H__
 
 #include "PlatformMacros.h"
 #include "Common.h"
-#include "Reference.h"
-#include "SceneElement.h"
 #include "SceneNode.h"
-#include "Camera.h"
-
-#include <vector>
-#include <unordered_set>
-#include <unordered_map>
 
 NS_MAGICAL_BEGIN
 
-using ::std::string;
-using ::std::unordered_set;
-
-class Scene : protected SceneNode
+class SceneObject : public SceneNode
 {
 public:
-	friend class Engine;
-	declare_class_hash_code;
-
-public:
-	Scene( void );
-	virtual ~Scene( void );
-	static Ptr<Scene> create( void );
-
-public:
-	using Reference::retain;
-	using Reference::release;
-	using Reference::retainCount;
-	using Reference::hashCodeClass;
-	using Reference::typeof;
-	using SceneNode::visit;
-	using SceneNode::setVisible;
-	using SceneNode::isVisible;
-	using SceneNode::findChild;
-	using SceneNode::childAtIndex;
-	using SceneNode::childCount;
-	using SceneNode::addChild;
-	using SceneNode::removeChild;
-	using SceneNode::removeAllChildren;
-
-protected:
-	virtual void nodeEvent( NodeEvent evt, SceneNode* child );
-	virtual void nodeEvent( NodeEvent evt, const Children& children );
-
-protected:
-	void addSceneNode( SceneNode* node );
-	void addCamera( Camera* camera );
-	void removeSceneNode( SceneNode* node );
-	void removeCamera( Camera* camera );
-
-protected:
-	//Camera* m_active_camera = nullptr;
-	unordered_set<SceneNode*> m_scene_nodes;
-	unordered_set<Camera*> m_cameras;
-	
+	SceneObject( void );
+	virtual ~SceneObject( void );
 };
 
 NS_MAGICAL_END
 
-#endif //__SCENE_H__
+#endif //__SCENE_OBJECT_H__

@@ -37,7 +37,7 @@ define_class_hash_code( SceneNode );
 
 SceneNode::SceneNode( void )
 : m_ts_dirty_info( kTsClean )
-, m_element( SceneElement::Node )
+, m_element_id( SceneElement::Node )
 {
 	assign_class_hash_code();
 }
@@ -153,9 +153,8 @@ void SceneNode::addChild( const Ptr<SceneNode>& child )
 	m_children.push_back( rchild );
 
 	if( m_is_running )
-	{
 		rchild->nodeStart();
-	}
+
 	nodeEvent( NodeEvent::Add, rchild );
 }
 
@@ -229,7 +228,7 @@ void SceneNode::removeAllChildren( void )
 {
 	if( !m_children.empty() )
 	{
-		vector<SceneNode*> children = m_children;
+		Children children = m_children;
 		m_children.clear();
 
 		for( auto child : children )
@@ -339,17 +338,17 @@ const Vector3& SceneNode::getPosition( void ) const
 
 void SceneNode::yaw( float yaw, Space relative_to )
 {
-	rotate( Quaternion::createRotationY( yaw ), relative_to );
+	rotate( Quaternion::createRotationY( magicalDegToRad( yaw ) ), relative_to );
 }
 
 void SceneNode::pitch( float pitch, Space relative_to )
 {
-	rotate( Quaternion::createRotationX( pitch ), relative_to );
+	rotate( Quaternion::createRotationX( magicalDegToRad( pitch ) ), relative_to );
 }
 
 void SceneNode::roll( float roll, Space relative_to )
 {
-	rotate( Quaternion::createRotationZ( roll ), relative_to );
+	rotate( Quaternion::createRotationZ( magicalDegToRad( roll ) ), relative_to );
 }
 
 void SceneNode::lookAt( const Vector3& target, const Vector3& up )
@@ -392,6 +391,22 @@ void SceneNode::rotate( float yaw, float pitch, float roll, Space relative_to )
 	EulerAngles ea;
 	ea.setScalars( yaw, pitch, roll );
 	rotate( ea.toQuaternion(), relative_to );
+}
+
+void SceneNode::setRotation( const EulerAngles& r )
+{
+	setRotation( r.toQuaternion() );
+}
+
+void SceneNode::setRotation( const Quaternion& r )
+{
+	m_local_rotation = r;
+	transformDirty( kTsRotationDirty );
+}
+
+void SceneNode::setRotation( float yaw, float pitch, float roll )
+{
+	setRotation( EulerAngles( yaw, pitch, roll ).toQuaternion() );
 }
 
 const Quaternion& SceneNode::getRotation( void ) const
@@ -485,7 +500,7 @@ void SceneNode::nodeEvent( NodeEvent evt, SceneNode* child )
 	}
 }
 
-void SceneNode::nodeEvent( NodeEvent evt, const vector<SceneNode*>& children )
+void SceneNode::nodeEvent( NodeEvent evt, const Children& children )
 {
 	if( m_parent )
 	{
