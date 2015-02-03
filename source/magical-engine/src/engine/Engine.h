@@ -44,6 +44,7 @@ public:
 
 private:
 	static void calcDeltaTime( void );
+	static void setNextScene( void );
 };
 
 NS_MAGICAL_END

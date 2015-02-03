@@ -21,55 +21,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#include "cFrustum.h"
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "Reference.h"
-#include "SceneElement.h"
-#include "SceneNode.h"
-#include "SceneObject.h"
-#include "Camera.h"
-
-#include <vector>
-#include <unordered_set>
-#include <unordered_map>
-
-NS_MAGICAL_BEGIN
-
-using ::std::string;
-using ::std::unordered_set;
-
-class Scene : public SceneNode
+void magicalFrustumFill( cFrustum* out, const cMatrix4* m )
 {
-public:
-	friend class Engine;
-	declare_class_hash_code;
+	cPlane3 setter;
 
-public:
-	Scene( void );
-	virtual ~Scene( void );
-	static Ptr<Scene> create( void );
+	// left
+	setter.x = m->m14 + m->m11;
+	setter.y = m->m24 + m->m21;
+	setter.z = m->m34 + m->m31;
+	setter.d = m->m44 + m->m41;
+	magicalPlane3Nor
 
-protected:
-	virtual void update( void );
-	
-protected:
-	virtual void childEvent( NodeEvent evt, SceneNode* child );
-	virtual void childEvent( NodeEvent evt, const Children& children );
-	void addCamera( Camera* camera );
-	void removeCamera( Camera* camera );
-	void addSceneObject( SceneObject* object );
-	void removeSceneObject( SceneObject* object );
-	
-protected:
-	unordered_set<SceneObject*> m_scene_objects;
-	unordered_set<Camera*> m_cameras;
+	AABBFill(  )
 
-	unordered_set<SceneObject*> m_update_queue;
-};
+	_plane[0].initPlane(-C3DVector3(mat.m[3] + mat.m[0], mat.m[7] + mat.m[4], mat.m[11] + mat.m[8]), (mat.m[15] + mat.m[12]));//left
 
-NS_MAGICAL_END
+	magicalFrustumSetPlane( out, &setter, cFrustumLeft );
+}
 
-#endif //__SCENE_H__
+void magicalFrustumSetPlane( cFrustum* out, const cPlane3* p, int which )
+{
+	out->frustum[which + 0] = p->x;
+	out->frustum[which + 1] = p->y;
+	out->frustum[which + 2] = p->z;
+	out->frustum[which + 3] = p->d;
+}

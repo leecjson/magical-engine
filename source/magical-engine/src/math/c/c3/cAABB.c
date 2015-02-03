@@ -21,9 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cAABB3.h"
+#include "cAABB.h"
 
-cBool magicalAABB3Equals( const cAABB3* aabb1, const cAABB3* aabb2 )
+cBool magicalAABBEquals( const cAABB* aabb1, const cAABB* aabb2 )
 {
 	return
 		magicalAlmostEqual( aabb1->minx, aabb2->minx, kVectorEpsilon ) &&
@@ -34,7 +34,7 @@ cBool magicalAABB3Equals( const cAABB3* aabb1, const cAABB3* aabb2 )
 		magicalAlmostEqual( aabb1->maxz, aabb2->maxz, kVectorEpsilon );
 }
 
-cBool magicalAABB3IsZero( const cAABB3* aabb )
+cBool magicalAABBIsZero( const cAABB* aabb )
 {
 	return
 		magicalAlmostZero( aabb->minx, kVectorEpsilon ) &&
@@ -45,7 +45,7 @@ cBool magicalAABB3IsZero( const cAABB3* aabb )
 		magicalAlmostZero( aabb->maxz, kVectorEpsilon );
 }
 
-void magicalAABB3Fill( cAABB3* out, float minx, float miny, float minz, float maxx, float maxy, float maxz )
+void magicalAABBFill( cAABB* out, float minx, float miny, float minz, float maxx, float maxy, float maxz )
 {
 	out->minx = minx;
 	out->miny = miny;
@@ -55,7 +55,7 @@ void magicalAABB3Fill( cAABB3* out, float minx, float miny, float minz, float ma
 	out->maxz = maxz;
 }
 
-void magicalAABB3Copy( cAABB3* out, const cAABB3* aabb )
+void magicalAABBCopy( cAABB* out, const cAABB* aabb )
 {
 	out->minx = aabb->minx;
 	out->miny = aabb->miny;
@@ -65,7 +65,7 @@ void magicalAABB3Copy( cAABB3* out, const cAABB3* aabb )
 	out->maxz = aabb->maxz;
 }
 
-void magicalAABB3SetBox( cAABB3* out, const cVector3* center, float width, float height, float depth )
+void magicalAABBSetBox( cAABB* out, const cVector3* center, float width, float height, float depth )
 {
 	float half_width = width / 2;
 	float half_height = height / 2;
@@ -79,7 +79,7 @@ void magicalAABB3SetBox( cAABB3* out, const cVector3* center, float width, float
 	out->maxz = center->z + half_depth;
 }
 
-void magicalAABB3SetPoints( cAABB3* out, const cVector3* min, const cVector3* max )
+void magicalAABBSetPoints( cAABB* out, const cVector3* min, const cVector3* max )
 {
 	out->minx = min->x;
 	out->miny = min->y;
@@ -89,7 +89,7 @@ void magicalAABB3SetPoints( cAABB3* out, const cVector3* min, const cVector3* ma
 	out->maxz = max->z;
 }
 
-void magicalAABB3SetZero( cAABB3* out )
+void magicalAABBSetZero( cAABB* out )
 {
 	out->minx = 0.0f;
 	out->miny = 0.0f;
@@ -99,28 +99,28 @@ void magicalAABB3SetZero( cAABB3* out )
 	out->maxz = 0.0f;
 }
 
-void magicalAABB3SetMinPoint( cAABB3* out, const cVector3* min )
+void magicalAABBSetMinPoint( cAABB* out, const cVector3* min )
 {
 	out->minx = min->x;
 	out->miny = min->y;
 	out->minz = min->z;
 }
 
-void magicalAABB3GetMinPoint( cVector3* out, const cAABB3* aabb )
+void magicalAABBGetMinPoint( cVector3* out, const cAABB* aabb )
 {
 	out->x = aabb->minx;
 	out->y = aabb->miny;
 	out->z = aabb->minz;
 }
 
-void magicalAABB3SetMaxPoint( cAABB3* out, const cVector3* max )
+void magicalAABBSetMaxPoint( cAABB* out, const cVector3* max )
 {
 	out->maxx = max->x;
 	out->maxy = max->y;
 	out->maxz = max->z;
 }
 
-void magicalAABB3GetMaxPoint( cVector3* out, const cAABB3* aabb )
+void magicalAABBGetMaxPoint( cVector3* out, const cAABB* aabb )
 {
 	out->x = aabb->maxx;
 	out->y = aabb->maxy;
@@ -136,7 +136,7 @@ void magicalAABB3GetMaxPoint( cVector3* out, const cAABB3* aabb )
  * aabb 展开前的包围盒
  * v 目标点
  *-----------------------------------------------------------------------------*/
-void magicalAABB3AddPoint( cAABB3* out, const cAABB3* aabb, const cVector3* v )
+void magicalAABBAddPoint( cAABB* out, const cAABB* aabb, const cVector3* v )
 {
 	if( v->x < aabb->minx ) out->minx = v->x;
 	if( v->y < aabb->miny ) out->miny = v->y;
@@ -152,7 +152,7 @@ void magicalAABB3AddPoint( cAABB3* out, const cAABB3* aabb, const cVector3* v )
  * out 合并后的包围盒
  * aabb1 aabb2 合并前的盒子
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Merge( cAABB3* out, const cAABB3* aabb1, const cAABB3* aabb2 )
+void magicalAABBMerge( cAABB* out, const cAABB* aabb1, const cAABB* aabb2 )
 {
 	out->minx = min( aabb1->minx, aabb2->minx );
 	out->miny = min( aabb1->miny, aabb2->miny );
@@ -168,7 +168,7 @@ void magicalAABB3Merge( cAABB3* out, const cAABB3* aabb1, const cAABB3* aabb2 )
  * out 中心点
  * aabb 目标包围盒
  *-----------------------------------------------------------------------------*/
-void magicalAABB3CenterPoint( cVector3* out, const cAABB3* aabb )
+void magicalAABBCenterPoint( cVector3* out, const cAABB* aabb )
 {
 	out->x = 0.5f * ( aabb->minx + aabb->maxx );
 	out->y = 0.5f * ( aabb->miny + aabb->maxy );
@@ -184,7 +184,7 @@ void magicalAABB3CenterPoint( cVector3* out, const cAABB3* aabb )
  * aabb 包围盒
  * point 任意点
  *-----------------------------------------------------------------------------*/
-void magicalAABB3NearestPoint( cVector3* out, const cAABB3* aabb, const cVector3* point )
+void magicalAABBNearestPoint( cVector3* out, const cAABB* aabb, const cVector3* point )
 {
 	cVector3 dst;
 
@@ -239,7 +239,7 @@ void magicalAABB3NearestPoint( cVector3* out, const cAABB3* aabb, const cVector3
  * aabb 源包围盒
  * m 变换矩阵
  *-----------------------------------------------------------------------------*/
-void magicalAABB3Transform( cAABB3* out, const cAABB3* aabb, const cMatrix4* m )
+void magicalAABBTransform( cAABB* out, const cAABB* aabb, const cMatrix4* m )
 {
 	cVector3 left_top_front;
 	cVector3 left_bottom_front;
@@ -268,16 +268,16 @@ void magicalAABB3Transform( cAABB3* out, const cAABB3* aabb, const cMatrix4* m )
 	magicalVector3MulMatrix4( &right_top_back, &right_top_back, m );
 	magicalVector3MulMatrix4( &right_bottom_back, &right_bottom_back, m );
 
-	magicalAABB3SetZero( out );
+	magicalAABBSetZero( out );
 
-	magicalAABB3AddPoint( out, aabb, &left_top_front );
-	magicalAABB3AddPoint( out, aabb, &left_bottom_front );
-	magicalAABB3AddPoint( out, aabb, &right_top_front );
-	magicalAABB3AddPoint( out, aabb, &right_bottom_front );
-	magicalAABB3AddPoint( out, aabb, &left_top_back );
-	magicalAABB3AddPoint( out, aabb, &left_bottom_back );
-	magicalAABB3AddPoint( out, aabb, &right_top_back );
-	magicalAABB3AddPoint( out, aabb, &right_bottom_back );
+	magicalAABBAddPoint( out, aabb, &left_top_front );
+	magicalAABBAddPoint( out, aabb, &left_bottom_front );
+	magicalAABBAddPoint( out, aabb, &right_top_front );
+	magicalAABBAddPoint( out, aabb, &right_bottom_front );
+	magicalAABBAddPoint( out, aabb, &left_top_back );
+	magicalAABBAddPoint( out, aabb, &left_bottom_back );
+	magicalAABBAddPoint( out, aabb, &right_top_back );
+	magicalAABBAddPoint( out, aabb, &right_bottom_back );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -286,7 +286,7 @@ void magicalAABB3Transform( cAABB3* out, const cAABB3* aabb, const cMatrix4* m )
  * aabb 目标包围盒
  * return 包围盒尺寸，对称顶点线段的长度
  *-----------------------------------------------------------------------------*/
-float magicalAABB3Size( const cAABB3* aabb )
+float magicalAABBSize( const cAABB* aabb )
 {
 	float x, y, z;
 	
@@ -303,7 +303,7 @@ float magicalAABB3Size( const cAABB3* aabb )
  * aabb 目标包围盒
  * return 包围盒的长，x轴
  *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterX( const cAABB3* aabb )
+float magicalAABBDiameterX( const cAABB* aabb )
 {
 	return aabb->maxx - aabb->minx;
 }
@@ -314,7 +314,7 @@ float magicalAABB3DiameterX( const cAABB3* aabb )
  * aabb 目标包围盒
  * return 包围盒的高，y轴
  *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterY( const cAABB3* aabb )
+float magicalAABBDiameterY( const cAABB* aabb )
 {
 	return aabb->maxy - aabb->miny;
 }
@@ -325,7 +325,7 @@ float magicalAABB3DiameterY( const cAABB3* aabb )
  * aabb 目标包围盒
  * return 包围盒的深，z轴
  *-----------------------------------------------------------------------------*/
-float magicalAABB3DiameterZ( const cAABB3* aabb )
+float magicalAABBDiameterZ( const cAABB* aabb )
 {
 	return aabb->maxz - aabb->minz;
 }
@@ -336,7 +336,7 @@ float magicalAABB3DiameterZ( const cAABB3* aabb )
  * aabb1 aabb2 目标包围盒
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3Intersects( const cAABB3* aabb1, const cAABB3* aabb2 )
+cBool magicalAABBIntersects( const cAABB* aabb1, const cAABB* aabb2 )
 {
 	if( aabb1->minx > aabb2->maxx ) return cFalse;
 	if( aabb1->maxx < aabb2->minx ) return cFalse;
@@ -355,7 +355,7 @@ cBool magicalAABB3Intersects( const cAABB3* aabb1, const cAABB3* aabb2 )
  * aabb1 aabb2 目标包围盒
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3IntersectsPart( cAABB3* out, const cAABB3* aabb1, const cAABB3* aabb2 )
+cBool magicalAABBIntersectsPart( cAABB* out, const cAABB* aabb1, const cAABB* aabb2 )
 {
 	if( aabb1->minx > aabb2->maxx ) return cFalse;
 	if( aabb1->maxx < aabb2->minx ) return cFalse;
@@ -381,9 +381,9 @@ cBool magicalAABB3IntersectsPart( cAABB3* out, const cAABB3* aabb1, const cAABB3
  * p 平面
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3IntersectsPlane3( const cAABB3* aabb, const cPlane3* p )
+cBool magicalAABBIntersectsPlane( const cAABB* aabb, const cPlane* p )
 {
-	return magicalPlane3ClassifyAABB3( p, aabb ) == 0;
+	return magicalPlaneClassifyAABB( p, aabb ) == 0;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -393,21 +393,21 @@ cBool magicalAABB3IntersectsPlane3( const cAABB3* aabb, const cPlane3* p )
  * sp 球体
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3IntersectsSphere3( const cAABB3* aabb, const cSphere3* sp )
+cBool magicalAABBIntersectsSphere( const cAABB* aabb, const cSphere* sp )
 {
 	float distance;
 	cVector3 nearest;
 	cVector3 center = { sp->x, sp->y, sp->z };
 
-	magicalAABB3NearestPoint( &nearest, aabb, &center );
+	magicalAABBNearestPoint( &nearest, aabb, &center );
 	distance = magicalVector3DistanceBetweenSq( &nearest, &center );
 
 	return distance <= ( sp->r * sp->r );
 }
 
-void magicalAABB3IntersectsRay3( cRayIntersectResult* out, const cAABB3* aabb, const cRay3* r3, cBool discard_inside )
+void magicalAABBIntersectsRay3( cRayIntersectResult* out, const cAABB* aabb, const cRay3* r3, cBool discard_inside )
 {
-	magicalRay3IntersectsAABB3( out, r3, aabb, discard_inside );
+	magicalRay3IntersectsAABB( out, r3, aabb, discard_inside );
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -417,7 +417,7 @@ void magicalAABB3IntersectsRay3( cRayIntersectResult* out, const cAABB3* aabb, c
  * point 目标点
  * return 是否包含
  *-----------------------------------------------------------------------------*/
-cBool magicalAABB3ContainsPoint( const cAABB3* aabb, const cVector3* point )
+cBool magicalAABBContainsPoint( const cAABB* aabb, const cVector3* point )
 {
 	return 
 		point->x >= aabb->minx &&

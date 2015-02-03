@@ -30,26 +30,28 @@ void MainCameraScript::onCreate( void )
 {
 	that->setPosition( Vector2::Zero );
 	that->lookAt( 1, 1, 1 );
+
+	magicalLog( "onCreate" );
 }
 
 void MainCameraScript::onStart( void )
 {
-	
+	magicalLog( "onStart" );
 }
 
 void MainCameraScript::onStop( void )
 {
-
+	magicalLog( "onStop" );
 }
 
 void MainCameraScript::onDestroy( void )
 {
-
+	magicalLog( "onDestroy" );
 }
 
 void MainCameraScript::onUpdate( void )
 {
-	
+	magicalLog( "onUpdate" );
 }
 
 void mainDelegate( void )
@@ -63,7 +65,7 @@ void mainDelegate( void )
 	main_camera->addComponent<MainCameraScript>();
 	scene->addChild( main_camera );
 
-	Ptr<SceneObject> cube = SceneObject::create( "Cube" );
+	/*Ptr<SceneObject> cube = SceneObject::create( "Cube" );
 	cube->setPosition( Vector3::Zero );
-	scene->addChild( cube );
+	scene->addChild( cube );*/
 }

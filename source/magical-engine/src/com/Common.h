@@ -87,6 +87,8 @@ func macros
 #define magicalSafeRelease( var ) do{ if( var ) var->release(); } while(0)
 #define magicalSafeReleaseNull( var ) do{ if( var ){ var->release(); var = nullptr; } } while(0)
 #define magicalSafeAssign( lvar, rvar ) do{ if( rvar ) rvar->retain(); if( lvar ) lvar->release(); lvar = rvar; } while(0)
+#define magicalSafeMove( lvar, rvar ) do{ magicalAssert( lvar != rvar, "Invaild move operate" ); if( lvar ) lvar->release(); lvar = rvar; } while(0)
+#define magicalSafeMoveNull( lvar, rvar ) do{ magicalAssert( lvar != rvar, "Invaild move operate" ); if( lvar ) lvar->release(); lvar = rvar; rvar = nullptr; } while(0)
 
 /*
 error macros

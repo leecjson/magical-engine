@@ -45,25 +45,22 @@ void Engine::init( void )
 
 void Engine::delc( void )
 {
-	magicalSafeRelease( s_running_scene );
+	if( s_running_scene )
+	{
+		s_running_scene->stop();
+		s_running_scene->release();
+	}
 }
 
 void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
-	if( s_next_scene )
-	{
-		if( s_running_scene )
-			s_running_scene->stop();
-
-		magicalSafeAssign( s_running_scene, s_next_scene );
-		s_next_scene = nullptr;
-		s_running_scene->start();
-	}
+	setNextScene();
 
 	if( s_running_scene )
 	{
+		s_running_scene->update();
 		s_running_scene->visit();
 	}
 }
@@ -92,6 +89,18 @@ void Engine::calcDeltaTime( void )
 	int64_t now = TimeUtils::currentMicrosecondsTime();
 	s_delta_time = MAX( 0.0, ( now - s_last_update_time ) / 1000000.0 );
 	s_last_update_time = now;
+}
+
+void Engine::setNextScene( void )
+{
+	if( s_next_scene )
+	{
+		if( s_running_scene )
+			s_running_scene->stop();
+
+		magicalSafeMoveNull( s_running_scene, s_next_scene );
+		s_running_scene->start();
+	}
 }
 
 NS_MAGICAL_END

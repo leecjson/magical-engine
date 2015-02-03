@@ -34,7 +34,15 @@ Scene::Scene( void )
 
 Scene::~Scene( void )
 {
-	
+	for( auto itr : m_scene_objects )
+	{
+		itr->release();
+	}
+
+	for( auto itr : m_cameras )
+	{
+		itr->release();
+	}
 }
 
 Ptr<Scene> Scene::create( void )
@@ -42,6 +50,15 @@ Ptr<Scene> Scene::create( void )
 	Scene* ret = new Scene();
 	magicalAssert( ret, "new Scene() failed" );
 	return Ptr<Scene>( Initializer<Scene>( ret ) );
+}
+
+void Scene::update( void )
+{
+	m_update_queue = m_scene_objects;
+	for( auto itr : m_update_queue )
+	{
+		itr->update();
+	}
 }
 
 void Scene::childEvent( NodeEvent evt, SceneNode* child )

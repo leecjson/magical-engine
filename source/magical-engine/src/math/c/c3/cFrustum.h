@@ -21,55 +21,41 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __C_FRUSTUM_H__
+#define __C_FRUSTUM_H__
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "Reference.h"
-#include "SceneElement.h"
-#include "SceneNode.h"
-#include "SceneObject.h"
-#include "Camera.h"
+#include "../cUtility.h"
 
-#include <vector>
-#include <unordered_set>
-#include <unordered_map>
 
-NS_MAGICAL_BEGIN
+#define cFrustumLeft        0
+#define cFrustumRight       4
+#define cFrustumTop         8
+#define cFrustumBottom     12
+#define cFrustumNear       16
+#define cFrustumFar        20
 
-using ::std::string;
-using ::std::unordered_set;
+#pragma pack( push )
+#pragma pack( 4 )
+typedef struct cFrustum {
+	float frustum[24];
+} cFrustum;
+#pragma pack( pop )
 
-class Scene : public SceneNode
-{
-public:
-	friend class Engine;
-	declare_class_hash_code;
+#include "../c1/cVector3.h"
+#include "../c1/cMatrix4.h"
+#include "cPlane.h"
 
-public:
-	Scene( void );
-	virtual ~Scene( void );
-	static Ptr<Scene> create( void );
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-protected:
-	virtual void update( void );
-	
-protected:
-	virtual void childEvent( NodeEvent evt, SceneNode* child );
-	virtual void childEvent( NodeEvent evt, const Children& children );
-	void addCamera( Camera* camera );
-	void removeCamera( Camera* camera );
-	void addSceneObject( SceneObject* object );
-	void removeSceneObject( SceneObject* object );
-	
-protected:
-	unordered_set<SceneObject*> m_scene_objects;
-	unordered_set<Camera*> m_cameras;
+MAGICALAPI_MATH void magicalFrustumFill( cFrustum* out, const cMatrix4* m );
 
-	unordered_set<SceneObject*> m_update_queue;
-};
+MAGICALAPI_MATH void magicalFrustumSetPlane( cFrustum* out, const cPlane* p, int which );
 
-NS_MAGICAL_END
 
-#endif //__SCENE_H__
+#ifdef __cplusplus
+}
+#endif
+
+#endif //__C_FRUSTUM_H__

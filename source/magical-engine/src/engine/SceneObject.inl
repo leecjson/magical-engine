@@ -21,55 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SCENE_H__
-#define __SCENE_H__
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "Reference.h"
-#include "SceneElement.h"
-#include "SceneNode.h"
-#include "SceneObject.h"
-#include "Camera.h"
-
-#include <vector>
-#include <unordered_set>
-#include <unordered_map>
-
-NS_MAGICAL_BEGIN
-
-using ::std::string;
-using ::std::unordered_set;
-
-class Scene : public SceneNode
+template< class TBehaviour >
+void SceneObject::addComponent( void )
 {
-public:
-	friend class Engine;
-	declare_class_hash_code;
+	size_t key = typeid( TBehaviour ).hash_code();
+	magicalAssert( m_behaviours.find( key ) == m_behaviours.end(), "Invaild, can't add the same one." );
 
-public:
-	Scene( void );
-	virtual ~Scene( void );
-	static Ptr<Scene> create( void );
+	TBehaviour* behaviour = new TBehaviour();
+	m_behaviours.insert( std::make_pair( key, behaviour ) );
 
-protected:
-	virtual void update( void );
-	
-protected:
-	virtual void childEvent( NodeEvent evt, SceneNode* child );
-	virtual void childEvent( NodeEvent evt, const Children& children );
-	void addCamera( Camera* camera );
-	void removeCamera( Camera* camera );
-	void addSceneObject( SceneObject* object );
-	void removeSceneObject( SceneObject* object );
-	
-protected:
-	unordered_set<SceneObject*> m_scene_objects;
-	unordered_set<Camera*> m_cameras;
+	behaviour->that = dynamic_cast< decltype( behaviour->that ) >( this );
+	magicalAssert( behaviour->that, "Invaild, dose not match target type!" );
+	behaviour->onCreate();
 
-	unordered_set<SceneObject*> m_update_queue;
-};
+	if( m_is_running )
+	{
+		behaviour->onStart();
+	}
+}
 
-NS_MAGICAL_END
+template< class TBehaviour >
+void SceneObject::removeComponent( void )
+{
+	size_t key = typeid( TBehaviour ).hash_code();
 
-#endif //__SCENE_H__
+	auto itr = m_behaviours.find( key );
+	if( itr != m_behaviours.end() )
+	{
+		m_behaviours.erase( itr );
+		itr->second->onDestroy();
+		itr->second->release();
+	}
+}

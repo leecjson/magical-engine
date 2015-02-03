@@ -24,43 +24,43 @@ SOFTWARE.
 #ifndef __C_SPHERE_H__
 #define __C_SPHERE_H__
 
-#include "cUtility.h"
+#include "../cUtility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
-typedef struct cSphere3 {
+typedef struct cSphere {
 	float x;
 	float y;
 	float z;
 	float r;
-} cSphere3;
+} cSphere;
 #pragma pack( pop )
 
+#include "../c1/cVector3.h"
 #include "cRay3.h"
-#include "cAABB3.h"
-#include "cPlane3.h"
-#include "cVector3.h"
+#include "cAABB.h"
+#include "cPlane.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBool magicalSphere3Equals( const cSphere3* sp1, const cSphere3* sp2 );
-MAGICALAPI_MATH cBool magicalSphere3IsZero( const cSphere3* sp );
-MAGICALAPI_MATH cBool magicalSphere3IsOne( const cSphere3* sp );
+MAGICALAPI_MATH cBool magicalSphereEquals( const cSphere* sp1, const cSphere* sp2 );
+MAGICALAPI_MATH cBool magicalSphereIsZero( const cSphere* sp );
+MAGICALAPI_MATH cBool magicalSphereIsOne( const cSphere* sp );
 
-MAGICALAPI_MATH void magicalSphere3Fill( cSphere3* out, float x, float y, float z, float r );
-MAGICALAPI_MATH void magicalSphere3Copy( cSphere3* out, const cSphere3* sp );
-MAGICALAPI_MATH void magicalSphere3SetCenterAndRadius( cSphere3* out, const cVector3* center, float r );
-MAGICALAPI_MATH void magicalSphere3SetZero( cSphere3* out );
-MAGICALAPI_MATH void magicalSphere3SetOne( cSphere3* out );
+MAGICALAPI_MATH void magicalSphereFill( cSphere* out, float x, float y, float z, float r );
+MAGICALAPI_MATH void magicalSphereCopy( cSphere* out, const cSphere* sp );
+MAGICALAPI_MATH void magicalSphereSetCenterAndRadius( cSphere* out, const cVector3* center, float r );
+MAGICALAPI_MATH void magicalSphereSetZero( cSphere* out );
+MAGICALAPI_MATH void magicalSphereSetOne( cSphere* out );
 
-MAGICALAPI_MATH cBool magicalSphere3Intersects( const cSphere3* sp1, const cSphere3* sp2 );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsAABB3( const cSphere3* sp, const cAABB3* aabb );
-MAGICALAPI_MATH cBool magicalSphere3IntersectsPlane3( const cSphere3* sp, const cPlane3* p );
-MAGICALAPI_MATH void magicalSphere3IntersectsRay3( cRayIntersectResult* out, const cSphere3* sp, const cRay3* r3, cBool discard_inside );
+MAGICALAPI_MATH cBool magicalSphereIntersects( const cSphere* sp1, const cSphere* sp2 );
+MAGICALAPI_MATH cBool magicalSphereIntersectsAABB( const cSphere* sp, const cAABB* aabb );
+MAGICALAPI_MATH cBool magicalSphereIntersectsPlane( const cSphere* sp, const cPlane* p );
+MAGICALAPI_MATH void magicalSphereIntersectsRay3( cRayIntersectResult* out, const cSphere* sp, const cRay3* r3, cBool discard_inside );
 
-MAGICALAPI_MATH cBool magicalSphere3ContainsPoint( const cSphere3* sp, const cVector3* point );
+MAGICALAPI_MATH cBool magicalSphereContainsPoint( const cSphere* sp, const cVector3* point );
 
 #ifdef __cplusplus
 }

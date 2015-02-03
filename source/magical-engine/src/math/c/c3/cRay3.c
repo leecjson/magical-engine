@@ -141,7 +141,7 @@ void magicalRay3SetDirection( cRay3* out, const cVector3* direction )
  * discard_inside 是否忽略原点在平面内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-void magicalRay3IntersectsPlane3( cRayIntersectResult* out, const cRay3* r3, const cPlane3* p, cBool discard_inside )
+void magicalRay3IntersectsPlane( cRayIntersectResult* out, const cRay3* r3, const cPlane* p, cBool discard_inside )
 {
 	int cp;
 	float dn;
@@ -150,7 +150,7 @@ void magicalRay3IntersectsPlane3( cRayIntersectResult* out, const cRay3* r3, con
 	cVector3 o = { r3->ox, r3->oy, r3->oz };
 	cVector3 d = { r3->dx, r3->dy, r3->dz };
 
-	cp = magicalPlane3ClassifyPoint( p, &o );
+	cp = magicalPlaneClassifyPoint( p, &o );
 	if( cp == 0 )
 	{
 		out->t = 0.0f;
@@ -186,7 +186,7 @@ void magicalRay3IntersectsPlane3( cRayIntersectResult* out, const cRay3* r3, con
  * discard_inside 是否忽略原点在包围盒内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, const cAABB3* aabb, cBool discard_inside )
+void magicalRay3IntersectsAABB( cRayIntersectResult* out, const cRay3* r3, const cAABB* aabb, cBool discard_inside )
 {
 	float t;
 	cVector3 p;
@@ -299,7 +299,7 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
  * discard_inside 是否忽略原点在球体内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-void magicalRay3IntersectsSphere3( cRayIntersectResult* out, const cRay3* r3, const cSphere3* sp, cBool discard_inside )
+void magicalRay3IntersectsSphere( cRayIntersectResult* out, const cRay3* r3, const cSphere* sp, cBool discard_inside )
 {
 	float a, esq, f, fsq, rsq;
 	cVector3 e;

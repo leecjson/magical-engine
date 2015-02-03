@@ -21,9 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cSphere3.h"
+#include "cSphere.h"
 
-cBool magicalSphere3Equals( const cSphere3* sp1, const cSphere3* sp2 )
+cBool magicalSphereEquals( const cSphere* sp1, const cSphere* sp2 )
 {
 	return
 		magicalAlmostEqual( sp1->x, sp2->x, kVectorEpsilon ) &&
@@ -32,7 +32,7 @@ cBool magicalSphere3Equals( const cSphere3* sp1, const cSphere3* sp2 )
 		magicalAlmostEqual( sp1->r, sp2->r, kVectorEpsilon );
 }
 
-cBool magicalSphere3IsZero( const cSphere3* sp )
+cBool magicalSphereIsZero( const cSphere* sp )
 {
 	return
 		magicalAlmostZero( sp->x, kVectorEpsilon ) &&
@@ -41,7 +41,7 @@ cBool magicalSphere3IsZero( const cSphere3* sp )
 		magicalAlmostZero( sp->r, kVectorEpsilon );
 }
 
-cBool magicalSphere3IsOne( const cSphere3* sp )
+cBool magicalSphereIsOne( const cSphere* sp )
 {
 	return
 		magicalAlmostZero( sp->x, kVectorEpsilon ) &&
@@ -50,7 +50,7 @@ cBool magicalSphere3IsOne( const cSphere3* sp )
 		magicalAlmostEqual( sp->r, 1.0f, kVectorEpsilon );
 }
 
-void magicalSphere3Fill( cSphere3* out, float x, float y, float z, float r )
+void magicalSphereFill( cSphere* out, float x, float y, float z, float r )
 {
 	out->x = x;
 	out->y = y;
@@ -58,7 +58,7 @@ void magicalSphere3Fill( cSphere3* out, float x, float y, float z, float r )
 	out->r = r;
 }
 
-void magicalSphere3Copy( cSphere3* out, const cSphere3* sp )
+void magicalSphereCopy( cSphere* out, const cSphere* sp )
 {
 	out->x = sp->x;
 	out->y = sp->y;
@@ -66,7 +66,7 @@ void magicalSphere3Copy( cSphere3* out, const cSphere3* sp )
 	out->r = sp->r;
 }
 
-void magicalSphere3SetCenterAndRadius( cSphere3* out, const cVector3* center, float r )
+void magicalSphereSetCenterAndRadius( cSphere* out, const cVector3* center, float r )
 {
 	out->x = center->x;
 	out->y = center->y;
@@ -74,7 +74,7 @@ void magicalSphere3SetCenterAndRadius( cSphere3* out, const cVector3* center, fl
 	out->r = r;
 }
 
-void magicalSphere3SetZero( cSphere3* out )
+void magicalSphereSetZero( cSphere* out )
 {
 	out->x = 0.0f;
 	out->y = 0.0f;
@@ -82,7 +82,7 @@ void magicalSphere3SetZero( cSphere3* out )
 	out->r = 0.0f;
 }
 
-void magicalSphere3SetOne( cSphere3* out )
+void magicalSphereSetOne( cSphere* out )
 {
 	out->x = 0.0f;
 	out->y = 0.0f;
@@ -90,7 +90,7 @@ void magicalSphere3SetOne( cSphere3* out )
 	out->r = 1.0f;
 }
 
-cBool magicalSphere3Intersects( const cSphere3* sp1, const cSphere3* sp2 )
+cBool magicalSphereIntersects( const cSphere* sp1, const cSphere* sp2 )
 {
 	cVector3 c1 = { sp1->x, sp1->y, sp1->z };
 	cVector3 c2 = { sp2->x, sp2->y, sp2->z };
@@ -98,22 +98,22 @@ cBool magicalSphere3Intersects( const cSphere3* sp1, const cSphere3* sp2 )
 	return magicalVector3DistanceBetweenSq( &c1, &c2 ) <= ( sp1->r + sp2->r ) * ( sp1->r + sp2->r );
 }
 
-cBool magicalSphere3IntersectsAABB3( const cSphere3* sp, const cAABB3* aabb )
+cBool magicalSphereIntersectsAABB( const cSphere* sp, const cAABB* aabb )
 {
-	return magicalAABB3IntersectsSphere3( aabb, sp );
+	return magicalAABBIntersectsSphere( aabb, sp );
 }
 
-cBool magicalSphere3IntersectsPlane3( const cSphere3* sp, const cPlane3* p )
+cBool magicalSphereIntersectsPlane( const cSphere* sp, const cPlane* p )
 {
-	return magicalPlane3IntersectsSphere3( p, sp );
+	return magicalPlaneIntersectsSphere( p, sp );
 }
 
-void magicalSphere3IntersectsRay3( cRayIntersectResult* out, const cSphere3* sp, const cRay3* r3, cBool discard_inside )
+void magicalSphereIntersectsRay3( cRayIntersectResult* out, const cSphere* sp, const cRay3* r3, cBool discard_inside )
 {
-	magicalRay3IntersectsSphere3( out, r3, sp, discard_inside );
+	magicalRay3IntersectsSphere( out, r3, sp, discard_inside );
 }
 
-cBool magicalSphere3ContainsPoint( const cSphere3* sp, const cVector3* point )
+cBool magicalSphereContainsPoint( const cSphere* sp, const cVector3* point )
 {
 	float dx = point->x - sp->x;
 	float dy = point->y - sp->y;

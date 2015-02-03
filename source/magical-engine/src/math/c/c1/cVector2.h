@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_VECTOR2_H__
 #define __C_VECTOR2_H__
 
-#include "cUtility.h"
+#include "../cUtility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )

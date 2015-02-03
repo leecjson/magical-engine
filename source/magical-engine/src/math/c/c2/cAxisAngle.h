@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_AXIS_ANGLE_H__
 #define __C_AXIS_ANGLE_H__
 
-#include "cUtility.h"
+#include "../cUtility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -36,7 +36,6 @@ typedef struct cAxisAngle {
 } cAxisAngle;
 #pragma pack( pop )
 
-#include "cVector3.h"
 #include "cQuaternion.h"
 
 #ifdef __cplusplus

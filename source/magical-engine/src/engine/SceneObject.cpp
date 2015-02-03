@@ -35,7 +35,11 @@ SceneObject::SceneObject( void )
 
 SceneObject::~SceneObject( void )
 {
-	
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onDestroy();
+		itr.second->release();
+	}
 }
 
 Ptr<SceneObject> SceneObject::create( void )
@@ -51,6 +55,37 @@ Ptr<SceneObject> SceneObject::create( const char* name )
 	magicalAssert( ret, "new SceneObject() failed" );
 	ret->setName( name );
 	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
+}
+
+void SceneObject::visit( void )
+{
+	SceneNode::visit();
+}
+
+void SceneObject::start( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onStart();
+	}
+	SceneNode::start();
+}
+
+void SceneObject::stop( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onStop();
+	}
+	SceneNode::stop();
+}
+
+void SceneObject::update( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onUpdate();
+	}
 }
 
 

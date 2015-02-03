@@ -15,6 +15,10 @@ end
 -- function MainCamera:onCreate( )
 	
 -- 	magicalDebugLog( "MainCamera:onCreate " .. self.x );
+
+local q = Quaternion::createIdentity();
+q:setRotationX( 5 );
+
 -- end
 
 function func2( str_cpp )

@@ -55,6 +55,24 @@
     <Filter Include="src\math\c">
       <UniqueIdentifier>{98e74837-4e4c-408d-bc02-676ba4d95b9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\math\c\c1">
+      <UniqueIdentifier>{5a46c6bf-a32b-4f74-950a-fa6f83c9dc57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\c\c2">
+      <UniqueIdentifier>{686e47e5-538f-43a3-b2e1-dc59dd705839}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\c\c3">
+      <UniqueIdentifier>{ff6171b3-6fc3-4ef5-97ce-91c01ac4ef86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\cpp\cpp1">
+      <UniqueIdentifier>{863904ec-14e0-4bd4-a201-dd62e4ebf9b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\cpp\cpp2">
+      <UniqueIdentifier>{b52b68bc-f184-4afd-a5a5-65b73debabc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\cpp\cpp3">
+      <UniqueIdentifier>{d965968c-cffb-4ba9-b012-97c61f47d11f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\context\Application.h">
@@ -90,78 +108,6 @@
     <ClInclude Include="..\src\math\magical-math.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\c\cAABB3.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cAxisAngle.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cEulerAngles.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cMatrix3.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cMatrix4.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cPlane3.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cQuaternion.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cRay3.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cSphere3.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cUtility.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cVector2.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cVector3.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cVector4.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\AABB3.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\AxisAngle.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\EulerAngles.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Matrix4.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Plane3.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Quaternion.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Ray3.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Sphere3.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Vector2.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Vector3.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Vector4.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\utils\Utils.h">
       <Filter>src\utils</Filter>
     </ClInclude>
@@ -183,9 +129,6 @@
     <ClInclude Include="..\src\base\Data.h">
       <Filter>src\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\cpp\Utility.h">
-      <Filter>src\math\cpp</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\engine\Camera.h">
       <Filter>src\engine</Filter>
     </ClInclude>
@@ -201,6 +144,84 @@
     <ClInclude Include="..\src\engine\SceneElement.h">
       <Filter>src\engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\math\c\cUtility.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c1\cMatrix3.h">
+      <Filter>src\math\c\c1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c1\cMatrix4.h">
+      <Filter>src\math\c\c1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c1\cVector2.h">
+      <Filter>src\math\c\c1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c1\cVector3.h">
+      <Filter>src\math\c\c1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c1\cVector4.h">
+      <Filter>src\math\c\c1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c2\cAxisAngle.h">
+      <Filter>src\math\c\c2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c2\cEulerAngles.h">
+      <Filter>src\math\c\c2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c2\cQuaternion.h">
+      <Filter>src\math\c\c2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c3\cAABB.h">
+      <Filter>src\math\c\c3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c3\cFrustum.h">
+      <Filter>src\math\c\c3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c3\cPlane.h">
+      <Filter>src\math\c\c3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c3\cRay3.h">
+      <Filter>src\math\c\c3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c3\cSphere.h">
+      <Filter>src\math\c\c3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp1\Matrix4.h">
+      <Filter>src\math\cpp\cpp1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp1\Vector2.h">
+      <Filter>src\math\cpp\cpp1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp1\Vector3.h">
+      <Filter>src\math\cpp\cpp1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp1\Vector4.h">
+      <Filter>src\math\cpp\cpp1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp2\AxisAngle.h">
+      <Filter>src\math\cpp\cpp2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp2\EulerAngles.h">
+      <Filter>src\math\cpp\cpp2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp2\Quaternion.h">
+      <Filter>src\math\cpp\cpp2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp3\Plane.h">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp3\Ray3.h">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp3\Sphere.h">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\cpp3\AABB.h">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Utility.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\context\Application.cpp">
@@ -214,75 +235,6 @@
     </ClCompile>
     <ClCompile Include="..\src\log\win32\LogSystem.cpp">
       <Filter>src\log\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cAABB3.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cAxisAngle.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cEulerAngles.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cMatrix3.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cMatrix4.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cPlane3.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cQuaternion.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cRay3.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cSphere3.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cVector2.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cVector3.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cVector4.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\AABB3.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\AxisAngle.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\EulerAngles.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\Matrix4.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\Plane3.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\Quaternion.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\Ray3.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\Sphere3.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\Vector2.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\Vector3.cpp">
-      <Filter>src\math\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\cpp\Vector4.cpp">
-      <Filter>src\math\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\src\utils\Utils.cpp">
       <Filter>src\utils</Filter>
@@ -311,40 +263,124 @@
     <ClCompile Include="..\src\engine\Behaviour.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\c\c1\cMatrix3.c">
+      <Filter>src\math\c\c1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c1\cMatrix4.c">
+      <Filter>src\math\c\c1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c1\cVector2.c">
+      <Filter>src\math\c\c1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c1\cVector3.c">
+      <Filter>src\math\c\c1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c1\cVector4.c">
+      <Filter>src\math\c\c1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c2\cAxisAngle.c">
+      <Filter>src\math\c\c2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c2\cEulerAngles.c">
+      <Filter>src\math\c\c2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c2\cQuaternion.c">
+      <Filter>src\math\c\c2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c3\cAABB.c">
+      <Filter>src\math\c\c3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c3\cFrustum.c">
+      <Filter>src\math\c\c3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c3\cPlane.c">
+      <Filter>src\math\c\c3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c3\cRay3.c">
+      <Filter>src\math\c\c3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c3\cSphere.c">
+      <Filter>src\math\c\c3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp1\Matrix4.cpp">
+      <Filter>src\math\cpp\cpp1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp1\Vector2.cpp">
+      <Filter>src\math\cpp\cpp1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp1\Vector3.cpp">
+      <Filter>src\math\cpp\cpp1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp1\Vector4.cpp">
+      <Filter>src\math\cpp\cpp1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp2\AxisAngle.cpp">
+      <Filter>src\math\cpp\cpp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp2\EulerAngles.cpp">
+      <Filter>src\math\cpp\cpp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp2\Quaternion.cpp">
+      <Filter>src\math\cpp\cpp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp3\Plane.cpp">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp3\Ray3.cpp">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp3\Sphere.cpp">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\cpp3\AABB.cpp">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Utility.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\math\cpp\AABB3.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\base\CachePool.inl">
+      <Filter>src\base</Filter>
     </None>
-    <None Include="..\src\math\cpp\AxisAngle.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\base\Ptr.inl">
+      <Filter>src\base</Filter>
     </None>
-    <None Include="..\src\math\cpp\EulerAngles.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\engine\SceneObject.inl">
+      <Filter>src\engine</Filter>
     </None>
-    <None Include="..\src\math\cpp\Matrix4.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\math\cpp\cpp1\Matrix4.inl">
+      <Filter>src\math\cpp\cpp1</Filter>
     </None>
-    <None Include="..\src\math\cpp\Plane3.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\math\cpp\cpp1\Vector2.inl">
+      <Filter>src\math\cpp\cpp1</Filter>
     </None>
-    <None Include="..\src\math\cpp\Quaternion.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\math\cpp\cpp1\Vector3.inl">
+      <Filter>src\math\cpp\cpp1</Filter>
     </None>
-    <None Include="..\src\math\cpp\Ray3.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\math\cpp\cpp1\Vector4.inl">
+      <Filter>src\math\cpp\cpp1</Filter>
     </None>
-    <None Include="..\src\math\cpp\Sphere3.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\math\cpp\cpp2\AxisAngle.inl">
+      <Filter>src\math\cpp\cpp2</Filter>
     </None>
-    <None Include="..\src\math\cpp\Vector2.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\math\cpp\cpp2\EulerAngles.inl">
+      <Filter>src\math\cpp\cpp2</Filter>
     </None>
-    <None Include="..\src\math\cpp\Vector3.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\math\cpp\cpp2\Quaternion.inl">
+      <Filter>src\math\cpp\cpp2</Filter>
     </None>
-    <None Include="..\src\math\cpp\Vector4.inl">
-      <Filter>src\math\cpp</Filter>
+    <None Include="..\src\math\cpp\cpp3\Plane.inl">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </None>
+    <None Include="..\src\math\cpp\cpp3\Ray3.inl">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </None>
+    <None Include="..\src\math\cpp\cpp3\Sphere.inl">
+      <Filter>src\math\cpp\cpp3</Filter>
+    </None>
+    <None Include="..\src\math\cpp\cpp3\AABB.inl">
+      <Filter>src\math\cpp\cpp3</Filter>
     </None>
   </ItemGroup>
 </Project>

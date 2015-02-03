@@ -30,6 +30,8 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+using ::std::nullptr_t;
+
 template< class T >
 class Ptr;
 class Reference;
@@ -38,10 +40,7 @@ template< class T >
 class Initializer
 {
 public:
-	Initializer( T* ref )
-	{
-		m_reference = ref;
-	}
+	Initializer( T* ref );
 
 private:
 	template< class T >
@@ -53,266 +52,57 @@ template< class T >
 class Ptr
 {
 public:
-	Ptr( void )
-	{
-
-	}
-
-	Ptr( std::nullptr_t nt )
-	{
-		m_reference = nt;
-	}
-
-	~Ptr( void )
-	{
-		if( m_reference )
-		{
-			m_reference->release();
-		}
-	}
-
-	Ptr( T* rhs )
-	{
-		if( rhs )
-		{
-			rhs->retain();
-			m_reference = rhs;
-		}
-	}
-
-	Ptr( Ptr<T>& rhs )
-	{
-		if( rhs.m_reference )
-		{
-			rhs.m_reference->retain();
-			m_reference = rhs.m_reference;
-		}
-	}
-
-	Ptr( Ptr<T>&& rhs )
-	{
-		if( rhs.m_reference )
-		{
-			m_reference = rhs.m_reference;
-			rhs.m_reference = nullptr;
-		}
-	}
+	Ptr( void );
+	Ptr( nullptr_t nt );
+	Ptr( T* rhs );
+	Ptr( Ptr<T>& rhs );
+	Ptr( Ptr<T>&& rhs );
+	Ptr( Initializer<T>& ir );
+	~Ptr( void );
 
 	template< class Tz >
-	Ptr( Ptr<Tz>& rhs )
-	{
-		Tz* ref = rhs.get();
-		if( ref != nullptr )
-		{
-			ref->retain();
-			m_reference = static_cast< Tz* >( ref );
-		}
-	}
-
-	Ptr( Initializer<T>& ir )
-	{
-		if( ir.m_reference )
-		{
-			m_reference = ir.m_reference;
-		}
-	}
+	Ptr( Ptr<Tz>& rhs );
+	template< class Tz >
+	Ptr( Ptr<Tz>&& rhs );
 
 public:
-	void reset( void )
-	{
-		if( m_reference )
-		{
-			m_reference->release();
-			m_reference = nullptr;
-		}
-	}
-
-	void set( std::nullptr_t nt )
-	{
-		if( m_reference )
-		{
-			m_reference->release();
-			m_reference = nt;
-		}
-	}
-
-	void set( T* rhs )
-	{
-		if( rhs )
-		{
-			rhs->retain();
-		}
-
-		if( m_reference )
-		{
-			m_reference->release();
-		}
-
-		m_reference = rhs;
-	}
-
-	void set( Ptr<T>& rhs )
-	{
-		if( rhs.m_reference )
-		{
-			rhs.m_reference->retain();
-		}
-
-		if( m_reference )
-		{
-			m_reference->release();
-		}
-
-		m_reference = rhs.m_reference;
-	}
-
-	void set( Ptr<T>&& rhs )
-	{
-		if( m_reference )
-		{
-			m_reference->release();
-			m_reference = nullptr;
-		}
-
-		if( rhs.m_reference )
-		{
-			m_reference = rhs.m_reference;
-			rhs.m_reference = nullptr;
-		}
-	}
-
+	void reset( void );
+	void set( nullptr_t nt );
+	void set( T* rhs );
+	void set( Ptr<T>& rhs );
+	void set( Ptr<T>&& rhs );
+	void set( Initializer<T>& ir );
+	T* get( void ) const;
+	T* take( void );
+	Ptr<T> share( void ) const;
+	
+	template< class Tz > 
+	void set( Ptr<Tz>& rhs );
+	template< class Tz > 
+	void set( Ptr<Tz>&& rhs );
+	template< class Tz > 
+	Tz* get( void ) const;
+	template< class Tz > 
+	Tz* take( void );
 	template< class Tz >
-	void set( Ptr<Tz>& rhs )
-	{
-		Tz* ref = rhs.get();
-		if( ref != nullptr )
-		{
-			ref->retain();
-
-			if( m_reference )
-				m_reference->release();
-
-			m_reference = static_cast< Tz* >( ref );
-		}
-		else
-		{
-			if( m_reference )
-			{
-				m_reference->release();
-				m_reference = nullptr;
-			}
-		}
-	}
-
-	void set( Initializer<T>& ir )
-	{
-		if( m_reference )
-		{
-			m_reference->release();
-			m_reference = nullptr;
-		}
-
-		if( ir.m_reference )
-		{
-			m_reference = ir.m_reference;
-		}
-	}
-
-	T* get( void ) const
-	{
-		return m_reference;
-	}
-
-	template< class Tz >
-	Tz* get( void ) const
-	{
-		return static_cast< Tz* >( m_reference );
-	}
-
-	T* take( void )
-	{
-		T* ref = m_reference;
-		m_reference = nullptr;
-		return ref;
-	}
-
-	template< class Tz >
-	Tz* take( void )
-	{
-		Tz* ref = static_cast< Tz* >( m_reference );
-		m_reference = nullptr;
-		return ref;
-	}
-
-	Ptr<T> share( void ) const
-	{
-		return Ptr<T>( m_reference );
-	}
-
-	template< class Tz >
-	Ptr<Tz> share( void ) const
-	{
-		return Ptr<Tz>( static_cast< Tz* >( m_reference ) );
-	}
-
-	Ptr<Reference> shareReference( void ) const
-	{
-		return Ptr<Reference>( m_reference );
-	}
+	Ptr<Tz> share( void ) const;
 
 public:
-	Ptr<T>& operator=( std::nullptr_t nt )
-	{
-		set( nt );
-		return *this;
-	}
+	Ptr<T>& operator=( nullptr_t nt );
+	Ptr<T>& operator=( T* rhs );
+	Ptr<T>& operator=( Ptr<T>& rhs );
+	Ptr<T>& operator=( Ptr<T>&& rhs );
+	T* operator->( void ) const;
+	bool operator==( const Ptr<T>& rhs ) const;
+	bool operator!=( const Ptr<T>& rhs ) const;
+	bool operator==( nullptr_t nt ) const;
+	bool operator!=( nullptr_t nt ) const;
 
-	Ptr<T>& operator=( T* rhs )
-	{
-		set( rhs );
-		return *this;
-	}
-
-	Ptr<T>& operator=( const Ptr<T>& rhs )
-	{
-		set( rhs );
-		return *this;
-	}
-
-	Ptr<T>& operator=( Ptr<T>&& rhs )
-	{
-		set( std::forward< Ptr<T> >( rhs ) );
-		return *this;
-	}
-
-	T* operator->( void ) const
-	{
-		return m_reference;
-	}
-
-	bool operator==( const Ptr<T>& rhs ) const
-	{
-		return m_reference == rhs.m_reference;
-	}
-
-	bool operator!=( const Ptr<T>& rhs ) const
-	{
-		return m_reference != rhs.m_reference;
-	}
-
-	bool operator==( std::nullptr_t nt ) const
-	{
-		return m_reference == nt;
-	}
-
-	bool operator!=( std::nullptr_t nt ) const
-	{
-		return m_reference != nt;
-	}
-
-private:
+protected:
 	T* m_reference = nullptr;
 };
+
+#include "Ptr.inl"
 
 NS_MAGICAL_END
 

@@ -88,7 +88,6 @@ public:
 	void removeChild( const Ptr<SceneNode>& child );
 	void removeAllChildren( void );
 	void removeSelf( void );
-	
 
 public:
 	void translate( const Vector2& t, Space relative_to = Space::Parent );

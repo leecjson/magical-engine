@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_EULER_ANGLES_H__
 #define __C_EULER_ANGLES_H__
 
-#include "cUtility.h"
+#include "../cUtility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )

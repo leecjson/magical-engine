@@ -55,39 +55,16 @@ public:
 	void removeComponent( void );
 
 protected:
-	void update( void );
+	virtual void visit( void );
+	virtual void start( void );
+	virtual void stop( void );
+	virtual void update( void );
 
 protected:
 	unordered_map<size_t, BehaviourBase*> m_behaviours;
 };
 
-template< class TBehaviour >
-void SceneObject::addComponent( void )
-{
-	size_t key = typeid( TBehaviour ).hash_code();
-	magicalAssert( m_behaviours.find( key ) == m_behaviours.end(), "Invaild, can't add the same one." );
-
-	TBehaviour* behaviour = new TBehaviour();
-	m_behaviours.insert( std::make_pair( key, behaviour ) );
-
-	behaviour->that = dynamic_cast< decltype( behaviour->that ) >( this );
-	magicalAssert( behaviour->that, "Invaild, dose not match target type!" );
-	behaviour->onCreate();
-}
-
-template< class TBehaviour >
-void SceneObject::removeComponent( void )
-{
-	size_t key = typeid( TBehaviour ).hash_code();
-
-	auto itr = m_behaviours.find( key );
-	if( itr != m_behaviours.end() )
-	{
-		m_behaviours.erase( itr );
-		itr->second->onDestroy();
-		itr->second->release();
-	}
-}
+#include "SceneObject.inl"
 
 NS_MAGICAL_END
 
