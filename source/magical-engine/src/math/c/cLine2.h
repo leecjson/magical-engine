@@ -21,42 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_MATRIX3_H__
-#define __C_MATRIX3_H__
+#ifndef __C_LINE2_H__
+#define __C_LINE2_H__
 
-#include "../cUtility.h"
+#include "cUtility.h"
 
-#pragma pack( push )
-#pragma pack( 4 )
-typedef struct cMatrix3 {
-	float m11; float m12; float m13;
-	float m21; float m22; float m23;
-	float m31; float m32; float m33;
-} cMatrix3;
-#pragma pack( pop )
+typedef float cLine2[3];
 
-#include "cVector3.h"
-#include "../c2/cAxisAngle.h"
-#include "../c2/cEulerAngles.h"
-#include "../c2/cQuaternion.h"
+#include "cVector2.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGICALAPI_MATH cBool magicalMatrix3Equals( const cMatrix3* m1, const cMatrix3* m2 );
-MAGICALAPI_MATH cBool magicalMatrix3IsIdentity( const cMatrix3* m );
-MAGICALAPI_MATH cBool magicalMatrix3IsZero( const cMatrix3* m );
+//MAGICALAPI_MATH cBool magicalLine2Equals( const cLine2 l1, const cLine2 l2 );
+//MAGICALAPI_MATH cBool magicalLine2IsZero( const cLine2 l );
+//
+//MAGICALAPI_MATH void magicalLine2FillNormalAndDistance( cLine2 out, const cVector2 n, const float d );
+//MAGICALAPI_MATH void magicalLine2FillNormalAndPoint( cLine2 out, const cVector2 n, const cVector2 p );
+//MAGICALAPI_MATH void magicalLine2FillScalars( cLine2 out, const float x, const float y, const float d );
+//MAGICALAPI_MATH void magicalLine2FillZero( cLine2 out );
+//MAGICALAPI_MATH void magicalLine2Fill( cLine2 out, const cLine2 l );
+//
+//MAGICALAPI_MATH int magicalLine2ClassifyPoint( const cLine2 l, const cVector3 point );
+//MAGICALAPI_MATH int magicalLine2ClassifyLine2( const cLine2 l1, const cLine2 l2 );
+//
+//MAGICALAPI_MATH cBool magicalLine2Intersects( const cLine2 l1, const cLine2 l2 );
+//
+//MAGICALAPI_MATH cBool magicalLine2ContainsPoint( const cLine2 l, const cVector3 point );
 
-MAGICALAPI_MATH void magicalMatrix3Fill( cMatrix3* out, float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33 );
-MAGICALAPI_MATH void magicalMatrix3Copy( cMatrix3* out, const cMatrix3* m );
-MAGICALAPI_MATH void magicalMatrix3SetIdentity( cMatrix3* out );
-MAGICALAPI_MATH void magicalMatrix3SetZero( cMatrix3* out );
-
-MAGICALAPI_MATH void magicalMatrix3SetLookAt( cMatrix3* out, const cVector3* eye, const cVector3* target, const cVector3* up );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //__C_MATRIX3_H__
+#endif //__C_LINE2_H__

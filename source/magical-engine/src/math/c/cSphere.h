@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_SPHERE_H__
 #define __C_SPHERE_H__
 
-#include "../cUtility.h"
+#include "cUtility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -36,7 +36,7 @@ typedef struct cSphere {
 } cSphere;
 #pragma pack( pop )
 
-#include "../c1/cVector3.h"
+#include "cVector3.h"
 #include "cRay3.h"
 #include "cAABB.h"
 #include "cPlane.h"

@@ -21,5 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cRay2.h"
-#include "cMathMacros.h"
+#include "cRect.h"
+
+//void magicalRectangle2FillBox( cRectangle2 out, const cVector2 center, const float w, const float h )
+//{
+//	float hw = w / 2;
+//	float hh = h / 2;
+//
+//	out _rect_x = center _x - hw;
+//	out _rect_y = center _y - hh;
+//	out _rect_w = w;
+//	out _rect_h = h;
+//}
+//
+//void magicalRectangle2Fill( cRectangle2 out, const cRectangle2 rect )
+//{
+//	out _rect_x = rect _rect_x;
+//	out _rect_y = rect _rect_y;
+//	out _rect_w = rect _rect_w;
+//	out _rect_h = rect _rect_h;
+//}

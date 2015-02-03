@@ -21,41 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_FRUSTUM_H__
-#define __C_FRUSTUM_H__
-
-#include "../cUtility.h"
+#ifndef __C_OBB_H__
+#define __C_OBB_H__
 
 
-#define cFrustumLeft        0
-#define cFrustumRight       4
-#define cFrustumTop         8
-#define cFrustumBottom     12
-#define cFrustumNear       16
-#define cFrustumFar        20
 
-#pragma pack( push )
-#pragma pack( 4 )
-typedef struct cFrustum {
-	float frustum[24];
-} cFrustum;
-#pragma pack( pop )
-
-#include "../c1/cVector3.h"
-#include "../c1/cMatrix4.h"
-#include "cPlane.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-MAGICALAPI_MATH void magicalFrustumFill( cFrustum* out, const cMatrix4* m );
-
-MAGICALAPI_MATH void magicalFrustumSetPlane( cFrustum* out, const cPlane* p, int which );
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif //__C_FRUSTUM_H__
+#endif //__C_OBB_H__

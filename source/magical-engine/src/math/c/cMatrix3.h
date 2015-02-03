@@ -21,24 +21,42 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_RECTANGLE2_H__
-#define __C_RECTANGLE2_H__
+#ifndef __C_MATRIX3_H__
+#define __C_MATRIX3_H__
 
 #include "cUtility.h"
 
-typedef float cRectangle2[4];
+#pragma pack( push )
+#pragma pack( 4 )
+typedef struct cMatrix3 {
+	float m11; float m12; float m13;
+	float m21; float m22; float m23;
+	float m31; float m32; float m33;
+} cMatrix3;
+#pragma pack( pop )
 
-#include "cVector2.h"
+#include "cVector3.h"
+#include "cAxisAngle.h"
+#include "cEulerAngles.h"
+#include "cQuaternion.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-MAGICALAPI_MATH void magicalRectangle2FillBox( cRectangle2 out, const cVector2 center, const float w, const float h );
-MAGICALAPI_MATH void magicalRectangle2Fill( cRectangle2 out, const cRectangle2 rect );
+MAGICALAPI_MATH cBool magicalMatrix3Equals( const cMatrix3* m1, const cMatrix3* m2 );
+MAGICALAPI_MATH cBool magicalMatrix3IsIdentity( const cMatrix3* m );
+MAGICALAPI_MATH cBool magicalMatrix3IsZero( const cMatrix3* m );
+
+MAGICALAPI_MATH void magicalMatrix3Fill( cMatrix3* out, float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33 );
+MAGICALAPI_MATH void magicalMatrix3Copy( cMatrix3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3SetIdentity( cMatrix3* out );
+MAGICALAPI_MATH void magicalMatrix3SetZero( cMatrix3* out );
+
+MAGICALAPI_MATH void magicalMatrix3SetLookAt( cMatrix3* out, const cVector3* eye, const cVector3* target, const cVector3* up );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //__C_RECTANGLE2_H__
+#endif //__C_MATRIX3_H__

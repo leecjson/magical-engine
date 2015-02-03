@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_PLANE_H__
 #define __C_PLANE_H__
 
-#include "../cUtility.h"
+#include "cUtility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -36,7 +36,7 @@ typedef struct cPlane {
 } cPlane;
 #pragma pack( pop )
 
-#include "../c1/cVector3.h"
+#include "cVector3.h"
 #include "cAABB.h"
 #include "cSphere.h"
 

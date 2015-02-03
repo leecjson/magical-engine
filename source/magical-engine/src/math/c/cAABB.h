@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_AABB_H__
 #define __C_AABB_H__
 
-#include "../cUtility.h"
+#include "cUtility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -38,8 +38,8 @@ typedef struct cAABB {
 } cAABB;
 #pragma pack( pop )
 
-#include "../c1/cVector3.h"
-#include "../c1/cMatrix4.h"
+#include "cVector3.h"
+#include "cMatrix4.h"
 #include "cRay3.h"
 #include "cPlane.h"
 

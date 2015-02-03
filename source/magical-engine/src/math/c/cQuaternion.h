@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_QUATERNION_H__
 #define __C_QUATERNION_H__
 
-#include "../cUtility.h"
+#include "cUtility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -36,7 +36,7 @@ typedef struct cQuaternion {
 } cQuaternion;
 #pragma pack( pop )
 
-#include "../c1/cVector3.h"
+#include "cVector3.h"
 #include "cAxisAngle.h"
 #include "cEulerAngles.h"
 
