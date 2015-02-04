@@ -21,39 +21,184 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __UTILITY_H__
-#define __UTILITY_H__
+#include "Utility.h"
 
-#ifndef NS_MAGICAL_BEGIN
-#define NS_MAGICAL_BEGIN   namespace magical {
-#endif
-#ifndef NS_MAGICAL_END
-#define NS_MAGICAL_END     }
+#include "c/cAABB.h"
+#include "c/cAxisAngle.h"
+#include "c/cEulerAngles.h"
+#include "c/cFrustum.h"
+#include "c/cLine2.h"
+#include "c/cMatrix3.h"
+#include "c/cMatrix4.h"
+#include "c/cOBB.h"
+#include "c/cPlane.h"
+#include "c/cQuaternion.h"
+#include "c/cRay2.h"
+#include "c/cRay3.h"
+#include "c/cRect.h"
+#include "c/cSphere.h"
+#include "c/cVector2.h"
+#include "c/cVector3.h"
+#include "c/cVector4.h"
+
+#include "Matrix3.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+
+#include "Matrix3.inl"
+#include "Vector2.inl"
+#include "Vector3.inl"
+#include "Vector4.inl"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
 #endif
 
-#if defined MAGICAL_ENGINE
-#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
-#define MAGICAL_MATH_CACHED_POOL_ENABLE 1
+NS_MAGICAL_BEGIN
+
+const Matrix3 Matrix3::Identity = Matrix3(1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f );
+const Matrix3 Matrix3::Zero = Matrix3( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+Matrix3 Matrix3::var = Matrix3::Identity;
+
+const Vector2 Vector2::Zero = Vector2( 0.0f, 0.0f );
+const Vector2 Vector2::One = Vector2( 1.0f, 1.0f );
+const Vector2 Vector2::Right = Vector2( 1.0f, 0.0f );
+const Vector2 Vector2::Left = Vector2( -1.0f, 0.0f );
+const Vector2 Vector2::Up = Vector2( 0.0f, 1.0f );
+const Vector2 Vector2::Down = Vector2( 0.0f, -1.0f );
+Vector2 Vector2::var = Vector2::Zero;
+
+const Vector3 Vector3::Zero = Vector3( 0.0f, 0.0f, 0.0f );
+const Vector3 Vector3::One = Vector3( 1.0f, 1.0f, 1.0f );
+const Vector3 Vector3::Up = Vector3( 0.0f, 1.0f, 0.0f );
+const Vector3 Vector3::Down = Vector3( 0.0f, -1.0f, 0.0f );
+const Vector3 Vector3::Right = Vector3( 1.0f, 0.0f, 0.0f );
+const Vector3 Vector3::Left = Vector3( -1.0f, 0.0f, 0.0f );
+const Vector3 Vector3::Forward = Vector3( 0.0f, 0.0f, 1.0f );
+const Vector3 Vector3::Back = Vector3( 0.0f, 0.0f, -1.0f );
+Vector3 Vector3::var = Vector3::Zero;
+
+const Vector4 Vector4::Zero = Vector4( 0.0f, 0.0f, 0.0f, 0.0f );
+const Vector4 Vector4::One = Vector4( 1.0f, 1.0f, 1.0f, 1.0f );
+const Vector4 Vector4::Up = Vector4( 0.0f, 1.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Down = Vector4( 0.0f, -1.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Right = Vector4( 1.0f, 0.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Left = Vector4( -1.0f, 0.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Forward = Vector4( 0.0f, 0.0f, 1.0f, 0.0f );
+const Vector4 Vector4::Back = Vector4( 0.0f, 0.0f, -1.0f, 0.0f );
+const Vector4 Vector4::Space0 = Vector4( 0.0f, 0.0f, 0.0f, 0.0f );
+const Vector4 Vector4::Space1 = Vector4( 0.0f, 0.0f, 0.0f, 1.0f );
+const Vector4 Vector4::Space2 = Vector4( 0.0f, 0.0f, 0.0f, 2.0f );
+Vector4 Vector4::var = Vector4::Zero;
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+static CachePool<Matrix3> s_matrix3_cache_pool( 8, 8 );
+static CachePool<Vector2> s_vector2_cache_pool( 128, 128 );
+static CachePool<Vector3> s_vector3_cache_pool( 128, 128 );
+static CachePool<Vector4> s_vector4_cache_pool( 32, 32 );
 #endif
+
+void* Matrix3::operator new( size_t s )
+{
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	if( s != sizeof( Matrix3 ) )
+		return ::operator new( s );
+
+	return s_matrix3_cache_pool.take();
 #else
-#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
-#define MAGICAL_MATH_CACHED_POOL_ENABLE 0
+	return ::operator new( s );
 #endif
+}
+
+void Matrix3::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_matrix3_cache_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
 #endif
+}
 
-#define FORWARD_DECLARE  \
-	struct Vector2;      \
-	struct Vector3;      \
-	struct Vector4;      \
-	struct Matrix3;      \
-	struct Matrix4;      \
-	struct Quaternion;   \
-	struct AxisAngle;    \
-	struct EulerAngles;  \
-	struct Ray3;         \
-	struct AABB3;        \
-	struct Plane3;       \
-	struct Sphere3;      \
-	struct RayIntersectResult;
+void* Vector2::operator new( size_t s )
+{
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	if( s != sizeof( Vector2 ) )
+		return ::operator new( s );
 
-#endif //__UTILITY_H__
+	return s_vector2_cache_pool.take();
+#else
+	return ::operator new( s );
+#endif
+}
+
+void Vector2::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_vector2_cache_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
+#endif
+}
+
+void* Vector3::operator new( size_t s )
+{
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	if( s != sizeof( Vector3 ) )
+		return ::operator new( s );
+
+	return s_vector3_cache_pool.take();
+#else
+	return ::operator new( s );
+#endif
+}
+
+void Vector3::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_vector3_cache_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
+#endif
+}
+
+void* Vector4::operator new( size_t s )
+{
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	if( s != sizeof( Vector4 ) )
+		return ::operator new( s );
+
+	return s_vector4_cache_pool.take();
+#else
+	return ::operator new( s );
+#endif
+}
+
+void Vector4::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_vector4_cache_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
+#endif
+}
+
+NS_MAGICAL_END
+
+
+
+
+
+

@@ -24,6 +24,8 @@ SOFTWARE.
 #ifndef __UTILITY_H__
 #define __UTILITY_H__
 
+#include "c/cUtility.h"
+
 #ifndef NS_MAGICAL_BEGIN
 #define NS_MAGICAL_BEGIN   namespace magical {
 #endif
@@ -41,19 +43,24 @@ SOFTWARE.
 #endif
 #endif
 
-#define FORWARD_DECLARE  \
-	struct Vector2;      \
-	struct Vector3;      \
-	struct Vector4;      \
-	struct Matrix3;      \
-	struct Matrix4;      \
-	struct Quaternion;   \
-	struct AxisAngle;    \
-	struct EulerAngles;  \
-	struct Ray3;         \
-	struct AABB3;        \
-	struct Plane3;       \
-	struct Sphere3;      \
-	struct RayIntersectResult;
+#define FORWARD_DECLARE            \
+	struct AABB;                   \
+	struct AxisAngle;              \
+	struct EulerAngles;            \
+	struct Frustum;                \
+	struct Line2;                  \
+	struct Matrix3;                \
+	struct Matrix4;                \
+	struct OBB;                    \
+	struct Plane;                  \
+	struct Quaternion;             \
+	struct Ray2;                   \
+	struct Ray3;                   \
+	struct RayIntersectResult;     \
+	struct Rect;                   \
+	struct Sphere;                 \
+	struct Vector2;                \
+	struct Vector3;                \
+	struct Vector4;
 
 #endif //__UTILITY_H__

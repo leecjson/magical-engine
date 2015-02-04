@@ -56,6 +56,7 @@ public:
 	static inline void add( Vector3& out, const Vector3& v1, const Vector3& v2 );
 	static inline void subScalar( Vector3& out, const Vector3& v, float a );
 	static inline void sub( Vector3& out, const Vector3& v1, const Vector3& v2 );
+	static inline void mulMatrix3( Vector3& out, const Vector3& v, const Matrix3& m );
 	static inline void mulMatrix4( Vector3& out, const Vector3& v, const Matrix4& m );
 	static inline void mulScalar( Vector3& out, const Vector3& v, float a );
 	static inline void mul( Vector3& out, const Vector3& v1, const Vector3& v2 );
@@ -86,6 +87,7 @@ public:
 	inline Vector3 operator-( void ) const;
 	inline Vector3 operator-( float a ) const;
 	inline Vector3 operator-( const Vector3& v ) const;
+	inline Vector3 operator*( const Matrix3& m ) const;
 	inline Vector3 operator*( const Matrix4& m ) const;
 	inline Vector3 operator*( float a ) const;
 	inline Vector3 operator*( const Vector3& v ) const;

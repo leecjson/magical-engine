@@ -78,20 +78,25 @@ void magicalEulerAnglesFromQuaternion( cEulerAngles* out, const cQuaternion* q )
 	if( fabsf( sp ) > 0.9999f )
 	{
 		out->pitch = kPIOver2 * sp;
-		out->yaw   = atan2f( -q->x * q->z - q->w * q->y, 0.5f - q->y * q->y - q->z * q->z );
-		out->roll  = 0.0f;
+		out->yaw = atan2f( -q->x * q->z - q->w * q->y, 0.5f - q->y * q->y - q->z * q->z );
+		out->roll = 0.0f;
 	}
 	else
 	{
 		out->pitch = asinf( sp );
-		out->yaw   = atan2f( q->x * q->z - q->w * q->y, 0.5f - q->x * q->x - q->y * q->y );
-		out->roll  = atan2f( q->x * q->y - q->w * q->z, 0.5f - q->x * q->x - q->z * q->z );
+		out->yaw = atan2f( q->x * q->z - q->w * q->y, 0.5f - q->x * q->x - q->y * q->y );
+		out->roll = atan2f( q->x * q->y - q->w * q->z, 0.5f - q->x * q->x - q->z * q->z );
 	}
 }
 
 void magicalEulerAnglesToQuaternion( cQuaternion* out, const cEulerAngles* ea )
 {
 	magicalQuaternionFromEulerAngles( out, ea );
+}
+
+void magicalEulerAnglesToMatrix3( cMatrix3* out, const cEulerAngles* ea )
+{
+	magicalMatrix3FromEulerAngles( out, ea );
 }
 
 void magicalEulerAnglesAdd( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 )
@@ -137,16 +142,16 @@ void magicalEulerAnglesMulScalar( cEulerAngles* out, const cEulerAngles* ea, flo
  *-----------------------------------------------------------------------------*/
 void magicalEulerAnglesLimit( cEulerAngles* out, const cEulerAngles* ea )
 {
-	float yaw   = magicalDegToRad( ea->yaw );
-	float pitch = magicalDegToRad( ea->pitch );
-	float roll  = magicalDegToRad( ea->roll );
+	float yaw = ea->yaw;
+	float pitch = ea->pitch;
+	float roll = ea->roll;
 
 	pitch = magicalCorrectToPI( pitch );
 	if( pitch < - kPIOver2 )
 	{
 		pitch = - kPI - pitch;
-		yaw  +=   kPI;
-		roll +=   kPI;
+		yaw  += kPI;
+		roll += kPI;
 	}
 	else if( pitch > kPIOver2 )
 	{
@@ -165,7 +170,7 @@ void magicalEulerAnglesLimit( cEulerAngles* out, const cEulerAngles* ea )
 		roll = magicalCorrectToPI( roll );
 	}
 	
-	out->yaw   = magicalRadToDeg( magicalCorrectToPI( yaw ) );
-	out->pitch = magicalRadToDeg( pitch );
-	out->roll  = magicalRadToDeg( roll );
+	out->yaw = magicalCorrectToPI( yaw );
+	out->pitch = pitch;
+	out->roll = roll;
 }

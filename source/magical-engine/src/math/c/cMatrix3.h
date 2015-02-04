@@ -52,8 +52,31 @@ MAGICALAPI_MATH void magicalMatrix3Fill( cMatrix3* out, float m11, float m12, fl
 MAGICALAPI_MATH void magicalMatrix3Copy( cMatrix3* out, const cMatrix3* m );
 MAGICALAPI_MATH void magicalMatrix3SetIdentity( cMatrix3* out );
 MAGICALAPI_MATH void magicalMatrix3SetZero( cMatrix3* out );
-
 MAGICALAPI_MATH void magicalMatrix3SetLookAt( cMatrix3* out, const cVector3* eye, const cVector3* target, const cVector3* up );
+
+MAGICALAPI_MATH void magicalMatrix3FromRotationX( cMatrix3* out, float angle );
+MAGICALAPI_MATH void magicalMatrix3FromRotationY( cMatrix3* out, float angle );
+MAGICALAPI_MATH void magicalMatrix3FromRotationZ( cMatrix3* out, float angle );
+MAGICALAPI_MATH void magicalMatrix3FromQuaternion( cMatrix3* out, const cQuaternion* q );
+MAGICALAPI_MATH void magicalMatrix3FromAxisAngle( cMatrix3* out, const cAxisAngle* aa );
+MAGICALAPI_MATH void magicalMatrix3FromEulerAngles( cMatrix3* out, const cEulerAngles* ea );
+MAGICALAPI_MATH void magicalMatrix3ToQuaternion( cQuaternion* out, const cMatrix3* m );
+
+MAGICALAPI_MATH void magicalMatrix3MulScalar( cMatrix3* out, const cMatrix3* m, float a );
+MAGICALAPI_MATH void magicalMatrix3Mul( cMatrix3* out, const cMatrix3* m1, const cMatrix3* m2 );
+MAGICALAPI_MATH void magicalVector3MulMatrix3( cVector3* out, const cVector3* v, const cMatrix3* m );
+
+MAGICALAPI_MATH void magicalMatrix3GetUpVector( cVector3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3GetDownVector( cVector3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3GetLeftVector( cVector3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3GetRightVector( cVector3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3GetForwardVector( cVector3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3GetBackVector( cVector3* out, const cMatrix3* m );
+
+MAGICALAPI_MATH void magicalMatrix3Transpose( cMatrix3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3Negate( cMatrix3* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalMatrix3Inverse( cMatrix3* out, const cMatrix3* m );
+MAGICALAPI_MATH float magicalMatrix3Determinant( const cMatrix3* m );
 
 #ifdef __cplusplus
 }

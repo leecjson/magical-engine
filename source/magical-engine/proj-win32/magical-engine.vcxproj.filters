@@ -183,6 +183,21 @@
     <ClInclude Include="..\src\math\c\cRect.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Quaternion.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Vector2.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Vector3.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Vector4.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Matrix3.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\context\Application.cpp">
@@ -288,6 +303,21 @@
     </None>
     <None Include="..\src\engine\SceneObject.inl">
       <Filter>src\engine</Filter>
+    </None>
+    <None Include="..\src\math\cpp\Quaternion.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\Vector2.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\Vector3.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\Vector4.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\Matrix3.inl">
+      <Filter>src\math\cpp</Filter>
     </None>
   </ItemGroup>
 </Project>

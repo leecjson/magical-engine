@@ -24,6 +24,24 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+Vector2::Vector2( float x, float y )
+{
+	this->x = x;
+	this->y = y;
+}
+
+Vector2::Vector2( const Vector2& v )
+{
+	x = v.x;
+	y = v.y;
+}
+
+Vector2::Vector2( void )
+{
+	x = 0.0f;
+	y = 0.0f;
+}
+
 inline Vector2 Vector2::createZero( void )
 {
 	return Vector2::Zero;

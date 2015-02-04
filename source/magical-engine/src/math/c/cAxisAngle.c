@@ -113,3 +113,8 @@ void magicalAxisAngleToQuaternion( cQuaternion* out, const cAxisAngle* aa )
 {
 	magicalQuaternionFromAxisAngle( out, aa );
 }
+
+void magicalAxisAngleToMatrix3( cMatrix3* out, const cAxisAngle* aa )
+{
+	magicalMatrix3FromAxisAngle( out, aa );
+}

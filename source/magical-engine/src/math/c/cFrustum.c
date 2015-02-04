@@ -25,23 +25,23 @@ SOFTWARE.
 
 void magicalFrustumFill( cFrustum* out, const cMatrix4* m )
 {
-	cPlane3 setter;
+	//cPlane3 setter;
 
-	// left
-	setter.x = m->m14 + m->m11;
-	setter.y = m->m24 + m->m21;
-	setter.z = m->m34 + m->m31;
-	setter.d = m->m44 + m->m41;
-	magicalPlane3Nor
+	//// left
+	//setter.x = m->m14 + m->m11;
+	//setter.y = m->m24 + m->m21;
+	//setter.z = m->m34 + m->m31;
+	//setter.d = m->m44 + m->m41;
+	//magicalPlane3Nor
 
-	AABBFill(  )
+	//AABBFill(  )
 
-	_plane[0].initPlane(-C3DVector3(mat.m[3] + mat.m[0], mat.m[7] + mat.m[4], mat.m[11] + mat.m[8]), (mat.m[15] + mat.m[12]));//left
+	//_plane[0].initPlane(-C3DVector3(mat.m[3] + mat.m[0], mat.m[7] + mat.m[4], mat.m[11] + mat.m[8]), (mat.m[15] + mat.m[12]));//left
 
-	magicalFrustumSetPlane( out, &setter, cFrustumLeft );
+	//magicalFrustumSetPlane( out, &setter, cFrustumLeft );
 }
 
-void magicalFrustumSetPlane( cFrustum* out, const cPlane3* p, int which )
+void magicalFrustumSetPlane( cFrustum* out, const cPlane* p, int which )
 {
 	out->frustum[which + 0] = p->x;
 	out->frustum[which + 1] = p->y;

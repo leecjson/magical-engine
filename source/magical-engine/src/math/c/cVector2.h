@@ -50,7 +50,6 @@ MAGICALAPI_MATH void magicalVector2Fill( cVector2* out, float x, float y );
 MAGICALAPI_MATH void magicalVector2Copy( cVector2* out, const cVector2* v );
 MAGICALAPI_MATH void magicalVector2SetZero( cVector2* out );
 MAGICALAPI_MATH void magicalVector2SetOne( cVector2* out );
-
 MAGICALAPI_MATH void magicalVector2FromVector3( cVector2* out, const cVector3* v );
 MAGICALAPI_MATH void magicalVector2FromVector4( cVector2* out, const cVector4* v );
 

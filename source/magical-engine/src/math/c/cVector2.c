@@ -323,13 +323,11 @@ void magicalVector2Normalize( cVector2* out, const cVector2* v )
  *-----------------------------------------------------------------------------*/
 void magicalVector2Rotate( cVector2* out, const cVector2* v, float a )
 {
-	float rx, ry, s, c;
+	float s = sinf( a );
+	float c = cosf( a );
 
-	s = sinf( a );
-	c = cosf( a );
-
-	rx = v->x * c - v->y * s;
-	ry = v->x * s + v->y * c;
+	float rx = v->x * c - v->y * s;
+	float ry = v->x * s + v->y * c;
 
 	out->x = rx;
 	out->y = ry;
@@ -380,13 +378,11 @@ void magicalVector2MidPointBetween( cVector2* out, const cVector2* v1, const cVe
  *-----------------------------------------------------------------------------*/
 void magicalVector2Project( cVector2* out, const cVector2* p, const cVector2* n )
 {
-	float d;
 	cVector2 normalize;
-
 	debugassert( !magicalVector2IsZero( n ), "invaild operate!" );
 	
 	magicalVector2Normalize( &normalize, n );
-	d = magicalVector2Dot( p, &normalize );
+	float d = magicalVector2Dot( p, &normalize );
 
 	out->x = normalize.x * d;
 	out->y = normalize.y * d;

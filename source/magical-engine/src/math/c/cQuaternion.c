@@ -151,9 +151,12 @@ void magicalQuaternionSetRotationZ( cQuaternion* out, float angle )
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionFromAxisAngle( cQuaternion* out, const cAxisAngle* aa )
 {
+	cVector3 n, axis;
 	float half_angle, s;
-	cVector3 n;
-	cVector3 axis = { aa->x, aa->y, aa->z };
+
+	axis.x = aa->x;
+	axis.y = aa->y;
+	axis.z = aa->z;
 
 	half_angle = aa->w * 0.5f;
 	s = sinf( half_angle );
@@ -174,25 +177,15 @@ void magicalQuaternionFromAxisAngle( cQuaternion* out, const cAxisAngle* aa )
  *-----------------------------------------------------------------------------*/
 void magicalQuaternionFromEulerAngles( cQuaternion* out, const cEulerAngles* ea )
 {
-	float yaw, pitch, roll;
+	cEulerAngles dst;
+	magicalEulerAnglesLimit( &dst, ea );
+
 	float sp, sr, sy;
 	float cp, cr, cy;
 
-#if 1
-	cEulerAngles dst;
-	magicalEulerAnglesLimit( &dst, ea );
-	yaw   = magicalDegToRad( dst.yaw );
-	pitch = magicalDegToRad( dst.pitch );
-	roll  = magicalDegToRad( dst.roll );
-#else
-	yaw   = ea.yaw;
-	pitch = ea.pitch;
-	roll  = ea.roll;
-#endif
-
-	magicalSinCos( &sp, &cp, pitch * 0.5f );
-	magicalSinCos( &sr, &cr, roll * 0.5f );
-	magicalSinCos( &sy, &cy, yaw * 0.5f );
+	magicalSinCos( &sp, &cp, dst.pitch * 0.5f );
+	magicalSinCos( &sr, &cr, dst.roll * 0.5f );
+	magicalSinCos( &sy, &cy, dst.yaw * 0.5f );
 
 	out->w =   cy * cp * cr + sy * sp * sr;
 	out->x = - cy * sp * cr - sy * cp * sr;
@@ -200,6 +193,48 @@ void magicalQuaternionFromEulerAngles( cQuaternion* out, const cEulerAngles* ea 
 	out->z =   sy * sp * cr - cy * cp * sr;
 
 	magicalQuaternionNormalize( out, out );
+}
+
+void magicalQuaternionFromMatrix3( cQuaternion* out, const cMatrix3* m )
+{
+	float s, t;
+	t = m->m11 + m->m22 + m->m33 + 1.0f;
+
+	if( t > kVectorEpsilon )
+	{
+		s = 0.5f / sqrtf( t );
+		out->w = 0.25f / s;
+		out->x = ( m->m23 - m->m32 ) * s;
+		out->y = ( m->m31 - m->m13 ) * s;
+		out->z = ( m->m12 - m->m21 ) * s;
+	}
+	else
+	{
+		if( m->m11 > m->m21 && m->m11 > m->m33 )
+		{
+			s = 2.0f * sqrtf( 1.0f + m->m11 - m->m22 - m->m33 );
+			out->w = ( m->m23 - m->m32 ) / s;
+			out->x = 0.25f * s;
+			out->y = ( m->m21 + m->m12 ) / s;
+			out->z = ( m->m31 + m->m13 ) / s;
+		}
+		else if( m->m22 > m->m33 )
+		{
+			s = 2.0f * sqrtf( 1.0f + m->m22 - m->m11 - m->m33 );
+			out->w = ( m->m31 - m->m13 ) / s;
+			out->x = ( m->m21 + m->m12 ) / s;
+			out->y = 0.25f * s;
+			out->z = ( m->m32 + m->m23 ) / s;
+		}
+		else
+		{
+			s = 2.0f * sqrtf( 1.0f + m->m33 - m->m11 - m->m22 );
+			out->w = ( m->m12 - m->m21 ) / s;
+			out->x = ( m->m31 + m->m13 ) / s;
+			out->y = ( m->m32 + m->m23 ) / s;
+			out->z = 0.25f * s;
+		}
+	}
 }
 
 void magicalQuaternionToAxisAngle( cAxisAngle* out, const cQuaternion* q )
@@ -210,6 +245,11 @@ void magicalQuaternionToAxisAngle( cAxisAngle* out, const cQuaternion* q )
 void magicalQuaternionToEulerAngles( cEulerAngles* out, const cQuaternion* q )
 {
 	magicalEulerAnglesFromQuaternion( out, q );
+}
+
+void magicalQuaternionToMatrix3( cQuaternion* out, const cMatrix3* m )
+{
+	magicalMatrix3FromQuaternion( out, m );
 }
 
 void magicalQuaternionAdd( cQuaternion* out, const cQuaternion* q1, const cQuaternion* q2 )
@@ -350,7 +390,7 @@ void magicalQuaternionNormalize( cQuaternion* out, const cQuaternion* q )
 	if( magicalAlmostEqual( n, 1.0f, kQuaternionEpsilon ) )
 		return;
 
-	n = sqrt( n );
+	n = sqrtf( n );
 	if( magicalAlmostZero( n, kQuaternionEpsilon ) )
 	{
 		//debugassert( cFalse, "if( magicalAlmostZero( n, kEpsilonQuaternion ) )" );
@@ -418,7 +458,7 @@ void magicalQuaternionInverse( cQuaternion* out, const cQuaternion* q )
 		return;
 	}
 
-	n = sqrt( n );
+	n = sqrtf( n );
 	if( magicalAlmostZero( n, kQuaternionEpsilon ) )
 	{
 		//debugassert( cFalse, "if( magicalAlmostZero( n, kEpsilonQuaternion ) )" );
@@ -435,63 +475,63 @@ void magicalQuaternionInverse( cQuaternion* out, const cQuaternion* q )
 /*-----------------------------------------------------------------------------*\
  * 四元数差值
  *-----------------------------------------------------------------------------*/
-void magicalQuaternionSlerp( cQuaternion* out, const cQuaternion* q1, const cQuaternion* q2, float t )
-{
-	float cos_omega;
-	float sin_omega;
-	float omega;
-	float one_over_sin_omega;
-	float q2w;
-	float q2x;
-	float q2y;
-	float q2z;
-	float k1, k2;
-
-	if( t <= kNumberEpsilon ) 
-	{
-		magicalQuaternionCopy( out, q1 );
-		return;
-	}
-	else if( t >= 1.0f ) 
-	{
-		magicalQuaternionCopy( out, q2 );
-		return;
-	}
-
-	cos_omega = magicalQuaternionDot( q1, q2 );
-
-	q2w = q2->w;
-	q2x = q2->x;
-	q2y = q2->y;
-	q2z = q2->z;
-	if( cos_omega < 0.0f ) 
-	{
-		q2w = -q2w;
-		q2x = -q2x;
-		q2y = -q2y;
-		q2z = -q2z;
-		cos_omega = -cos_omega;
-	}
-
-	assert( cos_omega < 1.1f );
-
-	if( cos_omega > 0.9999f )
-	{
-		k1 = 1.0f - t;
-		k2 = t;
-	}
-	else
-	{
-		sin_omega = sqrt( 1.0f - cos_omega * cos_omega );
-		omega = atan2( sin_omega, cos_omega );
-		one_over_sin_omega = 1.0f / sin_omega;
-
-		k1 = sin( ( 1.0f - t ) * omega ) * one_over_sin_omega;
-		k2 = sin( t * omega ) * one_over_sin_omega;
-	}
-
-	out->x = k1 * q1->x + k2 * q2x;
-	out->y = k1 * q1->y + k2 * q2y;
-	out->z = k1 * q1->z + k2 * q2z;
-	out->w = k1 * q1->w + k2 * q2w;
-}
+//void magicalQuaternionSlerp( cQuaternion* out, const cQuaternion* q1, const cQuaternion* q2, float t )
+//{
+//	float cos_omega;
+//	float sin_omega;
+//	float omega;
+//	float one_over_sin_omega;
+//	float q2w;
+//	float q2x;
+//	float q2y;
+//	float q2z;
+//	float k1, k2;
+//
+//	if( t <= kNumberEpsilon ) 
+//	{
+//		magicalQuaternionCopy( out, q1 );
+//		return;
+//	}
+//	else if( t >= 1.0f ) 
+//	{
+//		magicalQuaternionCopy( out, q2 );
+//		return;
+//	}
+//
+//	cos_omega = magicalQuaternionDot( q1, q2 );
+//
+//	q2w = q2->w;
+//	q2x = q2->x;
+//	q2y = q2->y;
+//	q2z = q2->z;
+//	if( cos_omega < 0.0f ) 
+//	{
+//		q2w = -q2w;
+//		q2x = -q2x;
+//		q2y = -q2y;
+//		q2z = -q2z;
+//		cos_omega = -cos_omega;
+//	}
+//
+//	assert( cos_omega < 1.1f );
+//
+//	if( cos_omega > 0.9999f )
+//	{
+//		k1 = 1.0f - t;
+//		k2 = t;
+//	}
+//	else
+//	{
+//		sin_omega = sqrtf( 1.0f - cos_omega * cos_omega );
+//		omega = atan2f( sin_omega, cos_omega );
+//		one_over_sin_omega = 1.0f / sin_omega;
+//
+//		k1 = sinf( ( 1.0f - t ) * omega ) * one_over_sin_omega;
+//		k2 = sinf( t * omega ) * one_over_sin_omega;
+//	}
+//
+//	out->x = k1 * q1->x + k2 * q2x;
+//	out->y = k1 * q1->y + k2 * q2y;
+//	out->z = k1 * q1->z + k2 * q2z;
+//	out->w = k1 * q1->w + k2 * q2w;
+//}

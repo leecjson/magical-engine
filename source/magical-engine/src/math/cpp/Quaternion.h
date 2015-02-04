@@ -40,7 +40,6 @@ public:
 	Quaternion( const Quaternion& q );
 	Quaternion( void );
 
-
 public:
 	static inline Quaternion createIdentity( void );
 	static inline Quaternion createZero( void );

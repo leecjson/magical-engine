@@ -34,52 +34,68 @@ static const float IDENTITY[] =
 
 cBool magicalMatrix4Equals( const cMatrix4* m1, const cMatrix4* m2 )
 {
-	const float* v1 = (const float*) m1;
-	const float* v2 = (const float*) m2;
-
-	for( int i = 0; i < 16; ++i )
-	{
-		if( magicalAlmostEqual( v1[i], v2[i], kVectorEpsilon ) == cFalse )
-		{
-			return cFalse;
-		}
-	}
+	if( !magicalAlmostEqual( m1->m11, m2->m11, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m12, m2->m12, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m13, m2->m13, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m14, m2->m14, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m21, m2->m21, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m22, m2->m22, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m23, m2->m23, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m24, m2->m24, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m31, m2->m31, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m32, m2->m32, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m33, m2->m33, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m34, m2->m34, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m41, m2->m41, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m42, m2->m42, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m43, m2->m43, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m1->m44, m2->m44, kVectorEpsilon ) ) return cFalse;
 	return cTrue;
 }
 
 cBool magicalMatrix4IsIdentity( const cMatrix4* m )
 {
-	const float* v = (const float*) m;
-
-	for( int i = 0; i < 16; ++i )
-	{
-		if( magicalAlmostEqual( v[i], IDENTITY[i], kVectorEpsilon ) == cFalse )
-		{
-			return cFalse;
-		}
-	}
+	if( !magicalAlmostEqual( m->m11, 1.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m12, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m13, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m14, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m21, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m22, 1.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m23, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m24, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m31, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m32, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m33, 1.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m34, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m41, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m42, 0.0f, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostEqual( m->m43, 0.0f, kVectorEpsilon ) ) return cFalse;   
+	if( !magicalAlmostEqual( m->m44, 1.0f, kVectorEpsilon ) ) return cFalse;
 	return cTrue;
 }
 
 cBool magicalMatrix4IsZero( const cMatrix4* m )
 {
-	const float* v = (const float*) m;
-
-	for( int i = 0; i < 16; ++i )
-	{
-		if( magicalAlmostZero( v[i], kVectorEpsilon ) == cFalse )
-		{
-			return cFalse;
-		}
-	}
+	if( !magicalAlmostZero( m->m11, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m12, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m13, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m14, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m21, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m22, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m23, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m24, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m31, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m32, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m33, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m34, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m41, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m42, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m43, kVectorEpsilon ) ) return cFalse;
+	if( !magicalAlmostZero( m->m44, kVectorEpsilon ) ) return cFalse;
 	return cTrue;
 }
 
-void magicalMatrix4Fill( cMatrix4* out,
-	float m11, float m12, float m13, float m14,
-	float m21, float m22, float m23, float m24,
-	float m31, float m32, float m33, float m34,
-	float m41, float m42, float m43, float m44 )
+void magicalMatrix4Fill( cMatrix4* out, float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44 )
 {
 	out->m11 = m11; out->m12 = m12; out->m13 = m13; out->m14 = m14;
 	out->m21 = m21; out->m22 = m22; out->m23 = m23; out->m24 = m24;
@@ -260,12 +276,12 @@ void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* 
  * [ 0   0   1   0 ]
  * [ x   y   z   1 ]
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeTranslationScalars( cMatrix4* out, float x, float y, float z )
+void magicalMatrix4FromTranslation( cMatrix4* out, const cVector3* t )
 {
 	out->m11 = 1.0f; out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
 	out->m21 = 0.0f; out->m22 = 1.0f; out->m23 = 0.0f; out->m24 = 0.0f;
 	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = 1.0f; out->m34 = 0.0f;
-	out->m41 = x;    out->m42 = y;    out->m43 = z;    out->m44 = 1.0f;
+	out->m41 = t->x; out->m42 = t->y; out->m43 = t->z; out->m44 = 1.0f;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -276,12 +292,12 @@ void magicalMatrix4MakeTranslationScalars( cMatrix4* out, float x, float y, floa
  * [ 0   0   1   0 ]
  * [ x   y   z   1 ]
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeTranslation( cMatrix4* out, const cVector3* t )
+void magicalMatrix4FromTranslationScalars( cMatrix4* out, float x, float y, float z )
 {
 	out->m11 = 1.0f; out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
 	out->m21 = 0.0f; out->m22 = 1.0f; out->m23 = 0.0f; out->m24 = 0.0f;
 	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = 1.0f; out->m34 = 0.0f;
-	out->m41 = t->x; out->m42 = t->y; out->m43 = t->z; out->m44 = 1.0f;
+	out->m41 = x;    out->m42 = y;    out->m43 = z;    out->m44 = 1.0f;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -292,11 +308,11 @@ void magicalMatrix4MakeTranslation( cMatrix4* out, const cVector3* t )
  * [ 0   0   z   0 ]
  * [ 0   0   0   1 ]
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeScaleScalars( cMatrix4* out, float x, float y, float z )
+void magicalMatrix4FromScale( cMatrix4* out, const cVector3* s )
 {
-	out->m11 = x;    out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
-	out->m21 = 0.0f; out->m22 = y;    out->m23 = 0.0f; out->m24 = 0.0f;
-	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = z;    out->m34 = 0.0f;
+	out->m11 = s->x; out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
+	out->m21 = 0.0f; out->m22 = s->y; out->m23 = 0.0f; out->m24 = 0.0f;
+	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = s->z; out->m34 = 0.0f;
 	out->m41 = 0.0f; out->m42 = 0.0f; out->m43 = 0.0f; out->m44 = 1.0f;
 }
 
@@ -308,11 +324,11 @@ void magicalMatrix4MakeScaleScalars( cMatrix4* out, float x, float y, float z )
  * [ 0   0   z   0 ]
  * [ 0   0   0   1 ]
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeScale( cMatrix4* out, const cVector3* s )
+void magicalMatrix4FromScaleScalars( cMatrix4* out, float x, float y, float z )
 {
-	out->m11 = s->x; out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
-	out->m21 = 0.0f; out->m22 = s->y; out->m23 = 0.0f; out->m24 = 0.0f;
-	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = s->z; out->m34 = 0.0f;
+	out->m11 = x;    out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
+	out->m21 = 0.0f; out->m22 = y;    out->m23 = 0.0f; out->m24 = 0.0f;
+	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = z;    out->m34 = 0.0f;
 	out->m41 = 0.0f; out->m42 = 0.0f; out->m43 = 0.0f; out->m44 = 1.0f;
 }
 
@@ -327,7 +343,7 @@ void magicalMatrix4MakeScale( cMatrix4* out, const cVector3* s )
  * out 结果
  * angle 旋转弧度
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeRotationX( cMatrix4* out, float angle )
+void magicalMatrix4FromRotationX( cMatrix4* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -349,7 +365,7 @@ void magicalMatrix4MakeRotationX( cMatrix4* out, float angle )
  * out 结果
  * angle 旋转弧度
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeRotationY( cMatrix4* out, float angle )
+void magicalMatrix4FromRotationY( cMatrix4* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -371,7 +387,7 @@ void magicalMatrix4MakeRotationY( cMatrix4* out, float angle )
  * out 结果
  * angle 旋转弧度
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeRotationZ( cMatrix4* out, float angle )
+void magicalMatrix4FromRotationZ( cMatrix4* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -383,12 +399,41 @@ void magicalMatrix4MakeRotationZ( cMatrix4* out, float angle )
 }
 
 /*-----------------------------------------------------------------------------*\
+ * 填充为四元数旋转矩阵 done
+ *
+ * out 结果
+ * q 旋转四元数
+ *-----------------------------------------------------------------------------*/
+void magicalMatrix4MakeRotationQuaternion( cMatrix4* out, const cQuaternion* q )
+{
+	out->m11 = 1.0f - 2.0f * ( q->y * q->y + q->z * q->z );
+	out->m12 = 2.0f * ( q->x * q->y + q->z * q->w );
+	out->m13 = 2.0f * ( q->x * q->z - q->y * q->w );
+	out->m14 = 0.0f;
+
+	out->m21 = 2.0f * ( q->x * q->y - q->z * q->w );
+	out->m22 = 1.0f - 2.0f * ( q->x * q->x + q->z * q->z );
+	out->m23 = 2.0f * ( q->z * q->y + q->x * q->w );
+	out->m24 = 0.0f;
+
+	out->m31 = 2.0f * ( q->x * q->z + q->y * q->w );
+	out->m32 = 2.0f * ( q->y * q->z - q->x * q->w );
+	out->m33 = 1.0f - 2.0f * ( q->x * q->x + q->y * q->y );
+	out->m34 = 0.0f;
+
+	out->m41 = 0.0f;
+	out->m42 = 0.0f;
+	out->m43 = 0.0f;
+	out->m44 = 1.0f;
+}
+
+/*-----------------------------------------------------------------------------*\
  * 填充为任意旋转轴旋转矩阵 done
  *
  * out 结果
  * aa 任意轴
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeRotationAxisAngle( cMatrix4* out, const cAxisAngle* aa )
+void magicalMatrix4FromAxisAngle( cMatrix4* out, const cAxisAngle* aa )
 {
 	float s, c;
 	magicalSinCos( &s, &c, aa->w );
@@ -425,20 +470,20 @@ void magicalMatrix4MakeRotationAxisAngle( cMatrix4* out, const cAxisAngle* aa )
  * out 结果
  * ea 欧拉角
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeRotationEulerAngles( cMatrix4* out, const cEulerAngles* ea )
+void magicalMatrix4FromEulerAngles( cMatrix4* out, const cEulerAngles* ea )
 {
 	float yaw, pitch, roll;
 
-#if 1
 	cEulerAngles dst;
 	magicalEulerAnglesLimit( &dst, ea );
-	yaw   = magicalDegToRad( dst.yaw );
+#if 1
+	yaw = magicalDegToRad( dst.yaw );
 	pitch = magicalDegToRad( dst.pitch );
-	roll  = magicalDegToRad( dst.roll );
+	roll = magicalDegToRad( dst.roll );
 #else
-	yaw   = ea.yaw;
+	yaw = ea.yaw;
 	pitch = ea.pitch;
-	roll  = ea.roll;
+	roll = ea.roll;
 #endif
 
 	float cr = cosf( dst.pitch );
@@ -452,7 +497,7 @@ void magicalMatrix4MakeRotationEulerAngles( cMatrix4* out, const cEulerAngles* e
 
     out->m11 = cp * cy;
     out->m21 = cp * sy;
-    out->m31 = -    sp;
+    out->m31 = - sp;
 	out->m41 = 0.0f;
 
 	out->m12 = srsp * cy - cr * sy;
@@ -468,35 +513,6 @@ void magicalMatrix4MakeRotationEulerAngles( cMatrix4* out, const cEulerAngles* e
 	out->m14 = 0.0f;
 	out->m24 = 0.0f;
 	out->m34 = 0.0f;
-	out->m44 = 1.0f;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 填充为四元数旋转矩阵 done
- *
- * out 结果
- * q 旋转四元数
- *-----------------------------------------------------------------------------*/
-void magicalMatrix4MakeRotationQuaternion( cMatrix4* out, const cQuaternion* q )
-{
-	out->m11 = 1.0f - 2.0f * ( q->y * q->y + q->z * q->z );
-	out->m12 = 2.0f * ( q->x * q->y + q->z * q->w );
-	out->m13 = 2.0f * ( q->x * q->z - q->y * q->w );
-	out->m14 = 0.0f;
-
-	out->m21 = 2.0f * ( q->x * q->y - q->z * q->w );
-	out->m22 = 1.0f - 2.0f * ( q->x * q->x + q->z * q->z );
-	out->m23 = 2.0f * ( q->z * q->y + q->x * q->w );
-	out->m24 = 0.0f;
-
-	out->m31 = 2.0f * ( q->x * q->z + q->y * q->w );
-	out->m32 = 2.0f * ( q->y * q->z - q->x * q->w );
-	out->m33 = 1.0f - 2.0f * ( q->x * q->x + q->y * q->y );
-	out->m34 = 0.0f;
-
-	out->m41 = 0.0f;
-	out->m42 = 0.0f;
-	out->m43 = 0.0f;
 	out->m44 = 1.0f;
 }
 
@@ -645,37 +661,6 @@ void magicalVector4MulMatrix4( cVector4* out, const cVector4* v, const cMatrix4*
 	out->w = dst.w;
 }
 
-/*-----------------------------------------------------------------------------*\
- * 求矩阵的转置，正交矩阵的转置等于逆 done
- *
- * out m的转置
- * m 源矩阵
- *-----------------------------------------------------------------------------*/
-void magicalMatrix4Transpose( cMatrix4* out, const cMatrix4* m )
-{
-	float t[16] = {
-		m->m11, m->m21, m->m31, m->m41,
-		m->m12, m->m22, m->m32, m->m42,
-		m->m13, m->m23, m->m33, m->m43,
-		m->m14, m->m24, m->m34, m->m44
-	};
-	memcpy( out, t, sizeof( cMatrix4 ) );
-}
-
-/*-----------------------------------------------------------------------------*\
- * 求矩阵的倒数 done
- *
- * out m的倒数
- * m 源矩阵
- *-----------------------------------------------------------------------------*/
-void magicalMatrix4Negate( cMatrix4* out, const cMatrix4* m )
-{
-	out->m11 = -m->m11; out->m12 = -m->m12; out->m13 = -m->m13; out->m14 = -m->m14;
-	out->m21 = -m->m21; out->m22 = -m->m22; out->m23 = -m->m23; out->m24 = -m->m24;
-	out->m31 = -m->m31; out->m32 = -m->m32; out->m33 = -m->m33; out->m34 = -m->m34;
-	out->m41 = -m->m41; out->m42 = -m->m42; out->m43 = -m->m43; out->m44 = -m->m44;
-}
-
 void magicalMatrix4GetUpVector( cVector3* out, const cMatrix4* m )
 {
 	out->x = m->m21;
@@ -737,9 +722,40 @@ void magicalMatrix4GetScale( cVector3* out, const cMatrix4* m )
 	magicalMatrix4Decompose( NULL, NULL, out, m );
 }
 
-void magicalMatrix4GetRotationQuaternion( cQuaternion* out, const cMatrix4* m )
+void magicalMatrix4GetQuaternion( cQuaternion* out, const cMatrix4* m )
 {
 	magicalMatrix4Decompose( NULL, out, NULL, m );
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 求矩阵的转置，正交矩阵的转置等于逆 done
+ *
+ * out m的转置
+ * m 源矩阵
+ *-----------------------------------------------------------------------------*/
+void magicalMatrix4Transpose( cMatrix4* out, const cMatrix4* m )
+{
+	float t[16] = {
+		m->m11, m->m21, m->m31, m->m41,
+		m->m12, m->m22, m->m32, m->m42,
+		m->m13, m->m23, m->m33, m->m43,
+		m->m14, m->m24, m->m34, m->m44
+	};
+	memcpy( out, t, sizeof( cMatrix4 ) );
+}
+
+/*-----------------------------------------------------------------------------*\
+ * 求矩阵的倒数 done
+ *
+ * out m的倒数
+ * m 源矩阵
+ *-----------------------------------------------------------------------------*/
+void magicalMatrix4Negate( cMatrix4* out, const cMatrix4* m )
+{
+	out->m11 = -m->m11; out->m12 = -m->m12; out->m13 = -m->m13; out->m14 = -m->m14;
+	out->m21 = -m->m21; out->m22 = -m->m22; out->m23 = -m->m23; out->m24 = -m->m24;
+	out->m31 = -m->m31; out->m32 = -m->m32; out->m33 = -m->m33; out->m34 = -m->m34;
+	out->m41 = -m->m41; out->m42 = -m->m42; out->m43 = -m->m43; out->m44 = -m->m44;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -775,7 +791,6 @@ float magicalMatrix4Determinant( const cMatrix4* m )
 cBool magicalMatrix4Inverse( cMatrix4* out, const cMatrix4* m )
 {
 	float det;
-	cMatrix4 adj;
 
 	float a0 = m->m11 * m->m22 - m->m12 * m->m21;
     float a1 = m->m11 * m->m23 - m->m13 * m->m21;
@@ -794,9 +809,10 @@ cBool magicalMatrix4Inverse( cMatrix4* out, const cMatrix4* m )
 
 	if( magicalAlmostZero( det, kVectorEpsilon ) )
 	{
-		//debugassert( cFalse, "matrix4 can't be inversed" );
 		return cFalse;
 	}
+
+	cMatrix4 adj;
 
 	adj.m11 =   m->m22 * b5 - m->m23 * b4 + m->m24 * b3;
     adj.m12 = - m->m12 * b5 + m->m13 * b4 - m->m14 * b3;
@@ -897,7 +913,7 @@ cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_r, cVector3* ou
 
 	if( trace > kVectorEpsilon )
 	{
-		s = 0.5f / sqrt( trace );
+		s = 0.5f / sqrtf( trace );
 		out_r->w = 0.25f / s;
 		out_r->x = ( yaxis.z - zaxis.y ) * s;
 		out_r->y = ( zaxis.x - xaxis.z ) * s;
@@ -907,7 +923,7 @@ cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_r, cVector3* ou
 	{
 		if( xaxis.x > yaxis.x && xaxis.x > zaxis.z )
 		{
-			s = 2.0f * sqrt( 1.0f + xaxis.x - yaxis.y - zaxis.z );
+			s = 2.0f * sqrtf( 1.0f + xaxis.x - yaxis.y - zaxis.z );
 			out_r->w = ( yaxis.z - zaxis.y ) / s;
 			out_r->x = 0.25f * s;
 			out_r->y = ( yaxis.x + xaxis.y ) / s;
@@ -915,7 +931,7 @@ cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_r, cVector3* ou
 		}
 		else if( yaxis.y > zaxis.z )
 		{
-			s = 2.0f * sqrt( 1.0f + yaxis.y - xaxis.x - zaxis.z );
+			s = 2.0f * sqrtf( 1.0f + yaxis.y - xaxis.x - zaxis.z );
 			out_r->w = ( zaxis.x - xaxis.z ) / s;
 			out_r->x = ( yaxis.x + xaxis.y ) / s;
 			out_r->y = 0.25f * s;
@@ -923,7 +939,7 @@ cBool magicalMatrix4Decompose( cVector3* out_t, cQuaternion* out_r, cVector3* ou
 		}
 		else
 		{
-			s = 2.0f * sqrt( 1.0f + zaxis.z - xaxis.x - yaxis.y );
+			s = 2.0f * sqrtf( 1.0f + zaxis.z - xaxis.x - yaxis.y );
 			out_r->w = ( xaxis.y - yaxis.x ) / s;
 			out_r->x = ( zaxis.x + xaxis.z ) / s;
 			out_r->y = ( zaxis.y + yaxis.z ) / s;

@@ -24,6 +24,30 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+Vector4::Vector4( float x, float y, float z, float w )
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
+}
+
+Vector4::Vector4( const Vector4& v )
+{
+	x = v.x;
+	y = v.y;
+	z = v.z;
+	w = v.w;
+}
+
+Vector4::Vector4( void )
+{
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
+	w = 0.0f;
+}
+
 inline Vector4 Vector4::createZero( void )
 {
 	return Vector4::Zero;

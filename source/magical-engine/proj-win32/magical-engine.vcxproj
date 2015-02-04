@@ -32,7 +32,12 @@
     <ClInclude Include="..\src\engine\SceneObject.h" />
     <ClInclude Include="..\src\include\magical-engine.h" />
     <ClInclude Include="..\src\log\LogSystem.h" />
+    <ClInclude Include="..\src\math\cpp\Matrix3.h" />
+    <ClInclude Include="..\src\math\cpp\Quaternion.h" />
     <ClInclude Include="..\src\math\cpp\Utility.h" />
+    <ClInclude Include="..\src\math\cpp\Vector2.h" />
+    <ClInclude Include="..\src\math\cpp\Vector3.h" />
+    <ClInclude Include="..\src\math\cpp\Vector4.h" />
     <ClInclude Include="..\src\math\c\cAABB.h" />
     <ClInclude Include="..\src\math\c\cAxisAngle.h" />
     <ClInclude Include="..\src\math\c\cEulerAngles.h" />
@@ -91,6 +96,11 @@
     <None Include="..\src\base\CachePool.inl" />
     <None Include="..\src\base\Ptr.inl" />
     <None Include="..\src\engine\SceneObject.inl" />
+    <None Include="..\src\math\cpp\Matrix3.inl" />
+    <None Include="..\src\math\cpp\Quaternion.inl" />
+    <None Include="..\src\math\cpp\Vector2.inl" />
+    <None Include="..\src\math\cpp\Vector3.inl" />
+    <None Include="..\src\math\cpp\Vector4.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB56813F-8606-453E-A972-09246B0ADDE8}</ProjectGuid>

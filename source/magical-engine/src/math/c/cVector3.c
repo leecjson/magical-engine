@@ -408,13 +408,11 @@ void magicalVector3MidPointBetween( cVector3* out, const cVector3* v1, const cVe
  *-----------------------------------------------------------------------------*/
 void magicalVector3Project( cVector3* out, const cVector3* p, const cVector3* n )
 {
-	float d;
 	cVector3 normalize;
-
 	debugassert( !magicalVector3IsZero( n ), "invaild operate!" );
 	
 	magicalVector3Normalize( &normalize, n );
-	d = magicalVector3Dot( p, &normalize );
+	float d = magicalVector3Dot( p, &normalize );
 
 	out->x = normalize.x * d;
 	out->y = normalize.y * d;

@@ -36,6 +36,7 @@ typedef struct cAxisAngle {
 } cAxisAngle;
 #pragma pack( pop )
 
+#include "cMatrix3.h"
 #include "cQuaternion.h"
 
 #ifdef __cplusplus
@@ -53,6 +54,7 @@ MAGICALAPI_MATH void magicalAxisAngleSetZero( cAxisAngle* out );
 
 MAGICALAPI_MATH void magicalAxisAngleFromQuaternion( cAxisAngle* out, const cQuaternion* q );
 MAGICALAPI_MATH void magicalAxisAngleToQuaternion( cQuaternion* out, const cAxisAngle* aa );
+MAGICALAPI_MATH void magicalAxisAngleToMatrix3( cMatrix3* out, const cAxisAngle* aa );
 
 #ifdef __cplusplus
 }

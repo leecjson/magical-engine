@@ -35,6 +35,7 @@ typedef struct cEulerAngles {
 } cEulerAngles;
 #pragma pack( pop )
 
+#include "cMatrix3.h"
 #include "cQuaternion.h"
 
 #ifdef __cplusplus
@@ -51,6 +52,7 @@ MAGICALAPI_MATH void magicalEulerAnglesSetLookAt( cEulerAngles* out, const cVect
 
 MAGICALAPI_MATH void magicalEulerAnglesFromQuaternion( cEulerAngles* out, const cQuaternion* q );
 MAGICALAPI_MATH void magicalEulerAnglesToQuaternion( cQuaternion* out, const cEulerAngles* ea );
+MAGICALAPI_MATH void magicalEulerAnglesToMatrix3( cMatrix3* out, const cEulerAngles* ea );
 
 MAGICALAPI_MATH void magicalEulerAnglesAdd( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 );
 MAGICALAPI_MATH void magicalEulerAnglesSub( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 );

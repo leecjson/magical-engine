@@ -24,6 +24,27 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+Vector3::Vector3( float x, float y, float z )
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+}
+
+Vector3::Vector3( const Vector3& v )
+{
+	x = v.x;
+	y = v.y;
+	z = v.z;
+}
+
+Vector3::Vector3( void )
+{
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
+}
+
 inline Vector3 Vector3::createZero( void )
 {
 	return Vector3::Zero;
@@ -62,6 +83,11 @@ inline void Vector3::subScalar( Vector3& out, const Vector3& v, float a )
 inline void Vector3::sub( Vector3& out, const Vector3& v1, const Vector3& v2 )
 {
 	magicalVector3Sub( &out, &v1, &v2 );
+}
+
+inline void Vector3::mulMatrix3( Vector3& out, const Vector3& v, const Matrix3& m )
+{
+	magicalVector3MulMatrix3( &out, &v, &m );
 }
 
 inline void Vector3::mulMatrix4( Vector3& out, const Vector3& v, const Matrix4& m )
@@ -190,6 +216,13 @@ inline Vector3 Vector3::operator-( float a ) const
 inline Vector3 Vector3::operator-( const Vector3& v ) const
 {
 	return Vector3( x - v.x, y - v.y, z - v.z );
+}
+
+inline Vector3 Vector3::operator*( const Matrix3& m ) const
+{
+	Vector3 ret;
+	magicalVector3MulMatrix3( &ret, this, &m );
+	return ret;
 }
 
 inline Vector3 Vector3::operator*( const Matrix4& m ) const

@@ -401,13 +401,11 @@ void magicalVector4MidPointBetween( cVector4* out, const cVector4* v1, const cVe
  *-----------------------------------------------------------------------------*/
 void magicalVector4Project( cVector4* out, const cVector4* p, const cVector4* n )
 {
-	float d;
 	cVector4 normalize;
-
 	debugassert( !magicalVector4IsZero( n ), "invaild operate!" );
 	
 	magicalVector4Normalize( &normalize, n );
-	d = magicalVector4Dot( p, &normalize );
+	float d = magicalVector4Dot( p, &normalize );
 
 	out->x = normalize.x * d;
 	out->y = normalize.y * d;
