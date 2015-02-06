@@ -24,27 +24,6 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-Vector3::Vector3( float x, float y, float z )
-{
-	this->x = x;
-	this->y = y;
-	this->z = z;
-}
-
-Vector3::Vector3( const Vector3& v )
-{
-	x = v.x;
-	y = v.y;
-	z = v.z;
-}
-
-Vector3::Vector3( void )
-{
-	x = 0.0f;
-	y = 0.0f;
-	z = 0.0f;
-}
-
 inline Vector3 Vector3::createZero( void )
 {
 	return Vector3::Zero;
@@ -180,7 +159,7 @@ inline bool Vector3::operator!=( const Vector3& v ) const
 	return !magicalVector3Equals( this, &v );
 }
 
-inline float& Vector3::operator[]( const unsigned int i ) const
+inline float& Vector3::operator[]( size_t i ) const
 {
 #ifdef MAGICAL_DEBUG
 	assert( 0 <= i && i <= 2 && "index out of range" );

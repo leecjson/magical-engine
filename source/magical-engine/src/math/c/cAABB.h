@@ -53,7 +53,7 @@ MAGICALAPI_MATH cBool magicalAABBIsZero( const cAABB* aabb );
 MAGICALAPI_MATH void magicalAABBFill( cAABB* out, float minx, float miny, float minz, float maxx, float maxy, float maxz );
 MAGICALAPI_MATH void magicalAABBCopy( cAABB* out, const cAABB* aabb );
 MAGICALAPI_MATH void magicalAABBSetBox( cAABB* out, const cVector3* center, float width, float height, float depth );
-MAGICALAPI_MATH void magicalAABBSetPoints( cAABB* out, const cVector3* min, const cVector3* max );
+MAGICALAPI_MATH void magicalAABBPoints( cAABB* out, const cVector3* min, const cVector3* max );
 MAGICALAPI_MATH void magicalAABBSetZero( cAABB* out );
 
 MAGICALAPI_MATH void magicalAABBSetMinPoint( cAABB* out, const cVector3* min );

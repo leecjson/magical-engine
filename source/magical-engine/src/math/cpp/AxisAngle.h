@@ -63,6 +63,7 @@ public:
 	inline void setScalaas( float x, float y, float z, float w );
 	inline void fromQuaternion( const Quaternion& q );
 	inline Quaternion toQuaternion( void ) const;
+	inline Matrix3 toMatrix3( void ) const;
 	inline Vector3 axis( void ) const;
 };
 

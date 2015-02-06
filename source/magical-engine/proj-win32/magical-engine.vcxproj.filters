@@ -165,12 +165,6 @@
     <ClInclude Include="..\src\math\c\cLine2.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\c\cMatrix3.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cMatrix4.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\c\cPlane.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
@@ -197,6 +191,21 @@
     </ClInclude>
     <ClInclude Include="..\src\math\cpp\Matrix3.h">
       <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\Matrix4.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\EulerAngles.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\AxisAngle.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cMatrix3.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cMatrix4.h">
+      <Filter>src\math\c</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,12 +281,6 @@
     <ClCompile Include="..\src\math\c\cLine2.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\c\cMatrix3.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\c\cMatrix4.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\math\c\cPlane.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
@@ -292,6 +295,21 @@
     </ClCompile>
     <ClCompile Include="..\src\math\c\cRect.c">
       <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cMatrix4.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cMatrix3.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Vector2.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Vector3.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Vector4.cpp">
+      <Filter>src\math\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,6 +335,15 @@
       <Filter>src\math\cpp</Filter>
     </None>
     <None Include="..\src\math\cpp\Matrix3.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\Matrix4.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\EulerAngles.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\AxisAngle.inl">
       <Filter>src\math\cpp</Filter>
     </None>
   </ItemGroup>

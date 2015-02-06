@@ -46,6 +46,22 @@ SOFTWARE.
 
 #include "cpp/Utility.h"
 
+#include "cpp/AxisAngle.h"
+#include "cpp/EulerAngles.h"
+#include "cpp/Matrix3.h"
+#include "cpp/Matrix4.h"
+#include "cpp/Quaternion.h"
 #include "cpp/Vector2.h"
+#include "cpp/Vector3.h"
+#include "cpp/Vector4.h"
+
+#include "cpp/AxisAngle.inl"
+#include "cpp/EulerAngles.inl"
+#include "cpp/Matrix3.inl"
+#include "cpp/Matrix4.inl"
+#include "cpp/Quaternion.inl"
+#include "cpp/Vector2.inl"
+#include "cpp/Vector3.inl"
+#include "cpp/Vector4.inl"
 
 #endif //__MAGICAL_MATH_H__

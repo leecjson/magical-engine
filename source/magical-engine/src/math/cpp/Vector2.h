@@ -43,7 +43,7 @@ public:
 	Vector2( float x, float y );
 	Vector2( const Vector2& v );
 	Vector2( void );
-	
+
 public:
 	static inline Vector2 createZero( void );
 	static inline Vector2 createOne( void );
@@ -76,7 +76,7 @@ public:
 	inline bool isNormalized( void ) const;
 	inline bool operator==( const Vector2& v ) const;
 	inline bool operator!=( const Vector2& v ) const;
-	inline float& operator[]( const unsigned int i ) const;
+	inline float& operator[]( size_t i ) const;
 	inline Vector2 operator+( void ) const;
 	inline Vector2 operator+( float a ) const;
 	inline Vector2 operator+( const Vector2& v ) const;

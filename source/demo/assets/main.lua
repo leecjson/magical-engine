@@ -98,6 +98,42 @@ function OnCreate() --> void
 
 	Ref<Node> node = Node::Create();
 
+	local m = Matrix4();
+	m:makeRotation(  )
+
+	m:makeRotationQuaternion();
+
+	m:makeRotationAxisAngle();
+
+	m:zero();
+
+	m:setZero()
+
+	m:setIdentity();
+
+	m:identity();
+
+
+
+
+	local vc3 = Vector3();
+	local vc2 = Vector2();
+	vc2:setupVector3( vc3 );
+
+	vc2:zero();
+	vc2:identity();
+	vc2:threePoint();
+	vc2:rotationAxisAngle();
+	vc2:rotationEulerAnlges(  )
+	vc2:translation(  )
+
+	vc2:makeVector2(  )
+
+	local q = Quaternion();
+	q:set( EulerAngles:create() );
+
+
+
 
 	local b = Node:Create();
 	b:SetPostion( Vector2.Zero );

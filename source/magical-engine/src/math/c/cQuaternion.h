@@ -63,7 +63,7 @@ MAGICALAPI_MATH void magicalQuaternionFromEulerAngles( cQuaternion* out, const c
 MAGICALAPI_MATH void magicalQuaternionFromMatrix3( cQuaternion* out, const cMatrix3* m );
 MAGICALAPI_MATH void magicalQuaternionToAxisAngle( cAxisAngle* out, const cQuaternion* q );
 MAGICALAPI_MATH void magicalQuaternionToEulerAngles( cEulerAngles* out, const cQuaternion* q );
-MAGICALAPI_MATH void magicalQuaternionToMatrix3( cQuaternion* out, const cMatrix3* m );
+MAGICALAPI_MATH void magicalQuaternionToMatrix3( cMatrix3* out, const cQuaternion* q );
 
 MAGICALAPI_MATH void magicalQuaternionAdd( cQuaternion* out, const cQuaternion* q1, const cQuaternion* q2 );
 MAGICALAPI_MATH void magicalQuaternionSub( cQuaternion* out, const cQuaternion* q1, const cQuaternion* q2 );

@@ -83,6 +83,13 @@ inline Quaternion Quaternion::createFromEulerAngles( float yaw, float pitch, flo
 	return ret;
 }
 
+inline Quaternion Quaternion::createFromMatrix3( const Matrix3& m )
+{
+	Quaternion ret;
+	magicalQuaternionFromMatrix3( &ret, &m );
+	return ret;
+}
+
 inline void Quaternion::add( Quaternion& out, const Quaternion& q1, const Quaternion& q2 )
 {
 	magicalQuaternionAdd( &out, &q1, &q2 );
@@ -158,7 +165,7 @@ inline bool Quaternion::operator!=( const Quaternion& q ) const
 	return !magicalQuaternionEquals( this, &q );
 }
 
-inline float& Quaternion::operator[]( const unsigned int i ) const
+inline float& Quaternion::operator[]( size_t i ) const
 {
 #ifdef MAGICAL_DEBUG
 	assert( 0 <= i && i <= 3 && "index out of range" );
@@ -292,6 +299,18 @@ inline EulerAngles Quaternion::toEulerAngles( void ) const
 	EulerAngles ea;
 	magicalQuaternionToEulerAngles( &ea, this );
 	return ea;
+}
+
+inline void Quaternion::fromMatrix3( const Matrix3& m )
+{
+	magicalQuaternionFromMatrix3( this, &m );
+}
+
+inline Matrix3 Quaternion::toMatrix3( void ) const
+{
+	Matrix3 ret;
+	magicalQuaternionToMatrix3( &ret, this );
+	return ret;
 }
 
 inline void Quaternion::normalize( void )

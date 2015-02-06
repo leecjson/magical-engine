@@ -21,46 +21,71 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Camera.h"
+#include "../c/cMatrix3.h"
+
+#include "Utility.h"
+#include "Vector3.h"
+#include "Matrix3.h"
+
+#include "Matrix3.inl"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
 
 NS_MAGICAL_BEGIN
 
-define_class_hash_code( Camera );
+const Matrix3 Matrix3::Identity = Matrix3(
+	1.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 1.0f );
+const Matrix3 Matrix3::Zero = Matrix3(
+	0.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 0.0f );
+Matrix3 Matrix3::var = Matrix3::Identity;
 
-Camera::Camera( void )
+Matrix3::Matrix3( float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33 )
 {
-	assign_class_hash_code();
-	m_element_id = SceneElement::Camera;
+	magicalMatrix3Fill( this, m11, m12, m13, m21, m22, m23, m31, m32, m33 );
 }
 
-Camera::~Camera( void )
+Matrix3::Matrix3( const Matrix3& m )
 {
-
+	magicalMatrix3Copy( this, &m );
 }
 
-Ptr<Camera> Camera::create( void )
+Matrix3::Matrix3( void )
 {
-	Camera* ret = new Camera();
-	magicalAssert( ret, "new Camera() failed" );
-	return Ptr<Camera>( Initializer<Camera>( ret ) );
+	magicalMatrix3SetIdentity( this );
 }
 
-Ptr<Camera> Camera::create( const char* name )
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+static CachePool<Matrix3> s_matrix3_cache_pool( 8, 8 );
+#endif
+
+void* Matrix3::operator new( size_t s )
 {
-	Camera* ret = new Camera();
-	magicalAssert( ret, "new Camera() failed" );
-	ret->setName( name );
-	return Ptr<Camera>( Initializer<Camera>( ret ) );
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	if( s != sizeof( Matrix3 ) )
+		return ::operator new( s );
+
+	return s_matrix3_cache_pool.take();
+#else
+	return ::operator new( s );
+#endif
 }
 
-void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
+void Matrix3::operator delete( void* ptr )
 {
-	m_projection_matrix.perspective( fov, aspect, znear, zfar );
-}
+	if( ptr == nullptr )
+		return;
 
-const Matrix4& Camera::getProjectionMatrix( void ) const
-{
-	return m_projection_matrix;
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	s_matrix3_cache_pool.push( ptr );
+#else
+	return ::operator delete( ptr );
+#endif
 }
 
 NS_MAGICAL_END

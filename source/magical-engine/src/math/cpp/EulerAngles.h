@@ -70,6 +70,7 @@ public:
 	inline void setScalars( float yaw, float pitch, float roll );
 	inline void fromQuaternion( const Quaternion& q );
 	inline Quaternion toQuaternion( void ) const;
+	inline Matrix3 toMatrix3( void ) const;
 	inline void limit( void );
 	inline EulerAngles getLimited( void ) const;
 };

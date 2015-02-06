@@ -80,7 +80,7 @@ public:
 	inline bool isNormalized( void ) const;
 	inline bool operator==( const Vector3& v ) const;
 	inline bool operator!=( const Vector3& v ) const;
-	inline float& operator[]( const unsigned int i ) const;
+	inline float& operator[]( size_t i ) const;
 	inline Vector3 operator+( void ) const;
 	inline Vector3 operator+( float a ) const;
 	inline Vector3 operator+( const Vector3& v ) const;

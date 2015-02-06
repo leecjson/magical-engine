@@ -56,6 +56,15 @@ void MainCameraScript::onUpdate( void )
 
 void mainDelegate( void )
 {
+	Matrix3 m;
+	m.fromQuaternion(  );
+	m.fromEulerAngles(  );
+
+	EulerAngles ea;
+	ea.toMatrix3();
+
+
+
 	Ptr<Scene> scene = Scene::create();
 	Engine::runScene( scene );
 

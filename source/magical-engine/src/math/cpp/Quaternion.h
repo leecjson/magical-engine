@@ -50,6 +50,7 @@ public:
 	static inline Quaternion createFromAxisAngle( const Vector3& axis, float angle );
 	static inline Quaternion createFromEulerAngles( const EulerAngles& ea );
 	static inline Quaternion createFromEulerAngles( float yaw, float pitch, float roll );
+	static inline Quaternion createFromMatrix3( const Matrix3& m );
 
 	static inline void add( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
 	static inline void sub( Quaternion& out, const Quaternion& q1, const Quaternion& q2 );
@@ -70,7 +71,7 @@ public:
 	inline bool isNormalized( void ) const;
 	inline bool operator==( const Quaternion& q ) const;
 	inline bool operator!=( const Quaternion& q ) const;
-	inline float& operator[]( const unsigned int i ) const;
+	inline float& operator[]( size_t i ) const;
 	inline Quaternion operator+( const Quaternion& q ) const;
 	inline Quaternion operator-( const Quaternion& q ) const;
 	inline Quaternion operator*( float a ) const;
@@ -98,6 +99,8 @@ public:
 	inline void fromEulerAngles( const EulerAngles& ea );
 	inline void fromEulerAngles( float yaw, float pitch, float roll );
 	inline EulerAngles toEulerAngles( void ) const;
+	inline void fromMatrix3( const Matrix3& m );
+	inline Matrix3 toMatrix3( void ) const;
 	
 public:
 	inline void normalize( void );

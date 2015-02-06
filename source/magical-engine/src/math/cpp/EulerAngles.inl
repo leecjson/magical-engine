@@ -158,6 +158,13 @@ inline Quaternion EulerAngles::toQuaternion( void ) const
 	return ret;
 }
 
+inline Matrix3 EulerAngles::toMatrix3( void ) const
+{
+	Matrix3 ret;
+	magicalEulerAnglesToMatrix3( &ret, this );
+	return ret;
+}
+
 inline void EulerAngles::limit( void )
 {
 	magicalEulerAnglesLimit( this, this );

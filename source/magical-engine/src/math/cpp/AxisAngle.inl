@@ -116,6 +116,13 @@ inline Quaternion AxisAngle::toQuaternion( void ) const
 	return ret;
 }
 
+inline Matrix3 AxisAngle::toMatrix3( void ) const
+{
+	Matrix3 ret;
+	magicalAxisAngleToMatrix3( &ret, this );
+	return ret;
+}
+
 inline Vector3 AxisAngle::axis( void ) const
 {
 	return Vector3( x, y, z );

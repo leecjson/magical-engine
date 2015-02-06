@@ -100,7 +100,7 @@ void magicalMatrix3SetZero( cMatrix3* out )
 	memset( out, 0, sizeof( cMatrix3 ) );
 }
 
-void magicalMatrix3SetLookAt( cMatrix3* out, const cVector3* eye, const cVector3* target, const cVector3* up )
+void magicalMatrix3LookAt( cMatrix3* out, const cVector3* eye, const cVector3* target, const cVector3* up )
 {
 	cVector3 up_v, x_axis, y_axis, z_axis;
 
@@ -118,7 +118,7 @@ void magicalMatrix3SetLookAt( cMatrix3* out, const cVector3* eye, const cVector3
 	out->m31 = x_axis.z; out->m32 = y_axis.z; out->m33 = z_axis.z;
 }
 
-void magicalMatrix3FromRotationX( cMatrix3* out, float angle )
+void magicalMatrix3RotationX( cMatrix3* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -128,7 +128,7 @@ void magicalMatrix3FromRotationX( cMatrix3* out, float angle )
 	out->m31 = 0.0f; out->m32 =  - s; out->m33 =    c;
 }
 
-void magicalMatrix3FromRotationY( cMatrix3* out, float angle )
+void magicalMatrix3RotationY( cMatrix3* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -138,7 +138,7 @@ void magicalMatrix3FromRotationY( cMatrix3* out, float angle )
 	out->m31 =    s; out->m32 = 0.0f; out->m33 =    c;
 }
 
-void magicalMatrix3FromRotationZ( cMatrix3* out, float angle )
+void magicalMatrix3RotationZ( cMatrix3* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -148,7 +148,7 @@ void magicalMatrix3FromRotationZ( cMatrix3* out, float angle )
 	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = 1.0f;
 }
 
-void magicalMatrix3FromQuaternion( cMatrix3* out, const cQuaternion* q )
+void magicalMatrix3RotationQuaternion( cMatrix3* out, const cQuaternion* q )
 {
 	out->m11 = 1.0f - 2.0f * ( q->y * q->y + q->z * q->z );
 	out->m12 = 2.0f * ( q->x * q->y + q->z * q->w );
@@ -161,7 +161,7 @@ void magicalMatrix3FromQuaternion( cMatrix3* out, const cQuaternion* q )
 	out->m33 = 1.0f - 2.0f * ( q->x * q->x + q->y * q->y );
 }
 
-void magicalMatrix3FromAxisAngle( cMatrix3* out, const cAxisAngle* aa )
+void magicalMatrix3RotationAxisAngle( cMatrix3* out, const cAxisAngle* aa )
 {
 	float s, c;
 	magicalSinCos( &s, &c, aa->w );
@@ -182,7 +182,7 @@ void magicalMatrix3FromAxisAngle( cMatrix3* out, const cAxisAngle* aa )
 	out->m33 = az * aa->z + c;
 }
 
-void magicalMatrix3FromEulerAngles( cMatrix3* out, const cEulerAngles* ea )
+void magicalMatrix3RotationEulerAngles( cMatrix3* out, const cEulerAngles* ea )
 {
 	cEulerAngles dst;
 	magicalEulerAnglesLimit( &dst, ea );
@@ -365,6 +365,9 @@ void magicalMatrix3Inverse( cMatrix3* out, const cMatrix3* m )
 	
 	if( magicalAlmostZero( det, kVectorEpsilon ) )
 	{
+		if( m != out )
+			memcpy( out, m, sizeof( cMatrix3 ) );
+
 		return;
 	}
 		

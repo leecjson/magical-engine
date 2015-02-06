@@ -24,21 +24,6 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-Matrix3::Matrix3( float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33 )
-{
-	magicalMatrix3Fill( this, m11, m12, m13, m21, m22, m23, m31, m32, m33 );
-}
-
-Matrix3::Matrix3( const Matrix3& m )
-{
-	magicalMatrix3Copy( this, &m );
-}
-
-Matrix3::Matrix3( void )
-{
-	magicalMatrix3SetIdentity( this );
-}
-
 inline Matrix3 Matrix3::createIdentity( void )
 {
 	return Matrix3::Identity;
@@ -47,6 +32,62 @@ inline Matrix3 Matrix3::createIdentity( void )
 inline Matrix3 Matrix3::createZero( void )
 {
 	return Matrix3::Zero;
+}
+
+inline Matrix3 Matrix3::createRotationX( float angle )
+{
+	Matrix3 ret;
+	magicalMatrix3RotationX( &ret, angle );
+	return ret;
+}
+
+inline Matrix3 Matrix3::createRotationY( float angle )
+{
+	Matrix3 ret;
+	magicalMatrix3RotationY( &ret, angle );
+	return ret;
+}
+
+inline Matrix3 Matrix3::createRotationZ( float angle )
+{
+	Matrix3 ret;
+	magicalMatrix3RotationZ( &ret, angle );
+	return ret;
+}
+
+inline Matrix3 Matrix3::createRotationQuaternion( const Quaternion& q )
+{
+	Matrix3 ret;
+	magicalMatrix3RotationQuaternion( &ret, &q );
+	return ret;
+}
+
+inline Matrix3 Matrix3::createRotationAxisAngle( const Vector3& axis, float angle )
+{
+	Matrix3 ret;
+	magicalMatrix3RotationAxisAngle( &ret, &AxisAngle( axis, angle ) );
+	return ret;
+}
+
+inline Matrix3 Matrix3::createRotationAxisAngle( const AxisAngle& aa )
+{
+	Matrix3 ret;
+	magicalMatrix3RotationAxisAngle( &ret, &aa );
+	return ret;
+}
+
+inline Matrix3 Matrix3::createRotationEulerAngles( float yaw, float pitch, float roll )
+{
+	Matrix3 ret;
+	magicalMatrix3RotationEulerAngles( &ret, &EulerAngles( yaw, pitch, roll ) );
+	return ret;
+}
+
+inline Matrix3 Matrix3::createRotationEulerAngles( const EulerAngles& ea )
+{
+	Matrix3 ret;
+	magicalMatrix3RotationEulerAngles( &ret, &ea );
+	return ret;
 }
 
 inline void Matrix3::mulScalar( Matrix3& out, const Matrix3& m, float a )
@@ -89,6 +130,21 @@ inline void Matrix3::getBackVector( Vector3& out, const Matrix3& m )
 	magicalMatrix3GetBackVector( &out, &m );
 }
 
+inline void Matrix3::inverse( Matrix3& out, const Matrix3& m )
+{
+	magicalMatrix3Inverse( &out, &m );
+}
+
+inline void Matrix3::transpose( Matrix3& out, const Matrix3& m )
+{
+	magicalMatrix3Transpose( &out, &m );
+}
+
+inline void Matrix3::negate( Matrix3& out, const Matrix3& m )
+{
+	magicalMatrix3Negate( &out, &m );
+}
+
 inline bool Matrix3::equals( const Matrix3& m ) const
 {
 	return magicalMatrix3Equals( this, &m );
@@ -114,7 +170,7 @@ inline bool Matrix3::operator!=( const Matrix3& m ) const
 	return !magicalMatrix3Equals( this, &m );
 }
 
-inline float& Matrix3::operator[]( const unsigned int i ) const
+inline float& Matrix3::operator[]( size_t i ) const
 {
 #ifdef MAGICAL_DEBUG
 	assert( 0 <= i && i <= 8 && "index out of range" );
@@ -169,49 +225,49 @@ inline void Matrix3::setZero( void )
 	magicalMatrix3SetZero( this );
 }
 
-inline void Matrix3::setLookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
+inline void Matrix3::lookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
 {
-	magicalMatrix3SetLookAt( this, &eye, &target, &up );
+	magicalMatrix3LookAt( this, &eye, &target, &up );
 }
 
-inline void Matrix3::fromRotationX( float angle )
+inline void Matrix3::rotationX( float angle )
 {
-	magicalMatrix3FromRotationX( this, angle );
+	magicalMatrix3RotationX( this, angle );
 }
 
-inline void Matrix3::fromRotationY( float angle )
+inline void Matrix3::rotationY( float angle )
 {
-	magicalMatrix3FromRotationY( this, angle );
+	magicalMatrix3RotationY( this, angle );
 }
 
-inline void Matrix3::fromRotationZ( float angle )
+inline void Matrix3::rotationZ( float angle )
 {
-	magicalMatrix3FromRotationZ( this, angle );
+	magicalMatrix3RotationZ( this, angle );
 }
 
-inline void Matrix3::fromAxisAngle( const Vector3& axis, float angle )
+inline void Matrix3::rotationQuaternion( const Quaternion& q )
 {
-	magicalMatrix3FromAxisAngle( this, &AxisAngle( axis, angle ) );
+	magicalMatrix3RotationQuaternion( this, &q );
 }
 
-inline void Matrix3::fromAxisAngle( const AxisAngle& aa )
+inline void Matrix3::rotationAxisAngle( const Vector3& axis, float angle )
 {
-	magicalMatrix3FromAxisAngle( this, &aa );
+	magicalMatrix3RotationAxisAngle( this, &AxisAngle( axis, angle ) );
 }
 
-inline void Matrix3::fromEulerAngles( float yaw, float pitch, float roll )
+inline void Matrix3::rotationAxisAngle( const AxisAngle& aa )
 {
-	magicalMatrix3FromEulerAngles( this, &EulerAngles( yaw, pitch, roll ) );
+	magicalMatrix3RotationAxisAngle( this, &aa );
 }
 
-inline void Matrix3::fromEulerAngles( const EulerAngles& ea )
+inline void Matrix3::rotationEulerAngles( float yaw, float pitch, float roll )
 {
-	magicalMatrix3FromEulerAngles( this, &ea );
+	magicalMatrix3RotationEulerAngles( this, &EulerAngles( yaw, pitch, roll ) );
 }
 
-inline void Matrix3::fromQuaternion( const Quaternion& q )
+inline void Matrix3::rotationEulerAngles( const EulerAngles& ea )
 {
-	magicalMatrix3FromQuaternion( this, &q );
+	magicalMatrix3RotationEulerAngles( this, &ea );
 }
 
 inline Quaternion Matrix3::toQuaternion( void )
@@ -219,6 +275,89 @@ inline Quaternion Matrix3::toQuaternion( void )
 	Quaternion ret;
 	magicalMatrix3ToQuaternion( &ret, this );
 	return ret;
+}
+
+inline Vector3 Matrix3::getUpVector( void ) const
+{
+	Vector3 ret;
+	magicalMatrix3GetUpVector( &ret, this );
+	return ret;
+}
+
+inline Vector3 Matrix3::getDownVector( void ) const
+{
+	Vector3 ret;
+	magicalMatrix3GetDownVector( &ret, this );
+	return ret;
+}
+
+inline Vector3 Matrix3::getLeftVector( void ) const
+{
+	Vector3 ret;
+	magicalMatrix3GetLeftVector( &ret, this );
+	return ret;
+}
+
+inline Vector3 Matrix3::getRightVector( void ) const
+{
+	Vector3 ret;
+	magicalMatrix3GetRightVector( &ret, this );
+	return ret;
+}
+
+inline Vector3 Matrix3::getForwardVector( void ) const
+{
+	Vector3 ret;
+	magicalMatrix3GetForwardVector( &ret, this );
+	return ret;
+}
+
+inline Vector3 Matrix3::getBackVector( void ) const
+{
+	Vector3 ret;
+	magicalMatrix3GetBackVector( &ret, this );
+	return ret;
+}
+
+inline void Matrix3::inverse( void )
+{
+	magicalMatrix3Inverse( this, this );
+}
+
+inline void Matrix3::transpose( void )
+{
+	magicalMatrix3Transpose( this, this );
+}
+
+inline void Matrix3::negate( void )
+{
+	magicalMatrix3Negate( this, this );
+}
+
+inline Matrix3 Matrix3::getInversed( void ) const
+{
+	Matrix3 ret;
+	magicalMatrix3Inverse( &ret, this );
+	return ret;
+}
+
+inline Matrix3 Matrix3::getTransposed( void ) const
+{
+	Matrix3 ret;
+	magicalMatrix3Transpose( &ret, this );
+	return ret;
+}
+
+inline Matrix3 Matrix3::getNegated( void ) const
+{
+	Matrix3 ret;
+	magicalMatrix3Negate( &ret, this );
+	return ret;
+}
+
+inline float Matrix3::determinant( void ) const
+{
+	return magicalMatrix3Determinant( this );
 }
 
 NS_MAGICAL_END
