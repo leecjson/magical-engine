@@ -40,11 +40,6 @@ public:
 	static Vector2 var;
 
 public:
-	Vector2( float x, float y );
-	Vector2( const Vector2& v );
-	Vector2( void );
-
-public:
 	static inline Vector2 createZero( void );
 	static inline Vector2 createOne( void );
 	static inline Vector2 createFromVector3( const Vector3& v );
@@ -66,6 +61,11 @@ public:
 	static inline void scale( Vector2& out, const Vector2& v, float s );
 	static inline void midPointBetween( Vector2& out, const Vector2& v1, const Vector2& v2 );
 	static inline void project( Vector2& out, const Vector2& v, const Vector2& n );
+
+public:
+	Vector2( float x, float y );
+	Vector2( const Vector2& v );
+	Vector2( void );
 
 public:
 	static void* operator new( size_t s );

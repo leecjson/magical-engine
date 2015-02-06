@@ -36,11 +36,6 @@ public:
 	static Quaternion var;
 
 public:
-	Quaternion( float x, float y, float z, float w );
-	Quaternion( const Quaternion& q );
-	Quaternion( void );
-
-public:
 	static inline Quaternion createIdentity( void );
 	static inline Quaternion createZero( void );
 	static inline Quaternion createRotationX( float angle );
@@ -61,6 +56,11 @@ public:
 	static inline void conjugate( Quaternion& out, const Quaternion& q );
 	static inline void negate( Quaternion& out, const Quaternion& q );
 	static inline void inverse( Quaternion& out, const Quaternion& q );
+
+public:
+	Quaternion( float x, float y, float z, float w );
+	Quaternion( const Quaternion& q );
+	Quaternion( void );
 
 public:
 	static void* operator new( size_t s );

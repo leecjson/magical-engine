@@ -34,59 +34,66 @@ inline Matrix3 Matrix3::createZero( void )
 	return Matrix3::Zero;
 }
 
+inline Matrix3 Matrix3::createLookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
+{
+	Matrix3 ret;
+	magicalMatrix3SetLookAt( &ret, &eye, &target, &up );
+	return ret;
+}
+
 inline Matrix3 Matrix3::createRotationX( float angle )
 {
 	Matrix3 ret;
-	magicalMatrix3RotationX( &ret, angle );
+	magicalMatrix3SetRotationX( &ret, angle );
 	return ret;
 }
 
 inline Matrix3 Matrix3::createRotationY( float angle )
 {
 	Matrix3 ret;
-	magicalMatrix3RotationY( &ret, angle );
+	magicalMatrix3SetRotationY( &ret, angle );
 	return ret;
 }
 
 inline Matrix3 Matrix3::createRotationZ( float angle )
 {
 	Matrix3 ret;
-	magicalMatrix3RotationZ( &ret, angle );
+	magicalMatrix3SetRotationZ( &ret, angle );
 	return ret;
 }
 
-inline Matrix3 Matrix3::createRotationQuaternion( const Quaternion& q )
+inline Matrix3 Matrix3::createFromQuaternion( const Quaternion& q )
 {
 	Matrix3 ret;
-	magicalMatrix3RotationQuaternion( &ret, &q );
+	magicalMatrix3FromQuaternion( &ret, &q );
 	return ret;
 }
 
-inline Matrix3 Matrix3::createRotationAxisAngle( const Vector3& axis, float angle )
+inline Matrix3 Matrix3::createFromAxisAngle( const Vector3& axis, float angle )
 {
 	Matrix3 ret;
-	magicalMatrix3RotationAxisAngle( &ret, &AxisAngle( axis, angle ) );
+	magicalMatrix3FromAxisAngle( &ret, &AxisAngle( axis, angle ) );
 	return ret;
 }
 
-inline Matrix3 Matrix3::createRotationAxisAngle( const AxisAngle& aa )
+inline Matrix3 Matrix3::createFromAxisAngle( const AxisAngle& aa )
 {
 	Matrix3 ret;
-	magicalMatrix3RotationAxisAngle( &ret, &aa );
+	magicalMatrix3FromAxisAngle( &ret, &aa );
 	return ret;
 }
 
-inline Matrix3 Matrix3::createRotationEulerAngles( float yaw, float pitch, float roll )
+inline Matrix3 Matrix3::createFromEulerAngles( float yaw, float pitch, float roll )
 {
 	Matrix3 ret;
-	magicalMatrix3RotationEulerAngles( &ret, &EulerAngles( yaw, pitch, roll ) );
+	magicalMatrix3FromEulerAngles( &ret, &EulerAngles( yaw, pitch, roll ) );
 	return ret;
 }
 
-inline Matrix3 Matrix3::createRotationEulerAngles( const EulerAngles& ea )
+inline Matrix3 Matrix3::createFromEulerAngles( const EulerAngles& ea )
 {
 	Matrix3 ret;
-	magicalMatrix3RotationEulerAngles( &ret, &ea );
+	magicalMatrix3FromEulerAngles( &ret, &ea );
 	return ret;
 }
 
@@ -225,49 +232,51 @@ inline void Matrix3::setZero( void )
 	magicalMatrix3SetZero( this );
 }
 
-inline void Matrix3::lookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
+inline void Matrix3::setLookAt( const Vector3& eye, const Vector3& target, const Vector3& up )
 {
-	magicalMatrix3LookAt( this, &eye, &target, &up );
+	magicalMatrix3SetLookAt( this, &eye, &target, &up );
 }
 
-inline void Matrix3::rotationX( float angle )
+inline void Matrix3::setRotationX( float angle )
 {
-	magicalMatrix3RotationX( this, angle );
+	magicalMatrix3SetRotationX( this, angle );
 }
 
-inline void Matrix3::rotationY( float angle )
+inline void Matrix3::setRotationY( float angle )
 {
-	magicalMatrix3RotationY( this, angle );
+	magicalMatrix3SetRotationY( this, angle );
 }
 
-inline void Matrix3::rotationZ( float angle )
+inline void Matrix3::setRotationZ( float angle )
 {
-	magicalMatrix3RotationZ( this, angle );
+	magicalMatrix3SetRotationZ( this, angle );
 }
 
-inline void Matrix3::rotationQuaternion( const Quaternion& q )
+inline void Matrix3::fromQuaternion( const Quaternion& q )
 {
-	magicalMatrix3RotationQuaternion( this, &q );
+	magicalMatrix3FromQuaternion( this, &q );
 }
 
-inline void Matrix3::rotationAxisAngle( const Vector3& axis, float angle )
+inline void Matrix3::fromAxisAngle( const Vector3& axis, float angle )
 {
-	magicalMatrix3RotationAxisAngle( this, &AxisAngle( axis, angle ) );
+	AxisAngle aa( axis, angle );
+	magicalMatrix3FromAxisAngle( this, &aa );
 }
 
-inline void Matrix3::rotationAxisAngle( const AxisAngle& aa )
+inline void Matrix3::fromAxisAngle( const AxisAngle& aa )
 {
-	magicalMatrix3RotationAxisAngle( this, &aa );
+	magicalMatrix3FromAxisAngle( this, &aa );
 }
 
-inline void Matrix3::rotationEulerAngles( float yaw, float pitch, float roll )
+inline void Matrix3::fromEulerAngles( float yaw, float pitch, float roll )
 {
-	magicalMatrix3RotationEulerAngles( this, &EulerAngles( yaw, pitch, roll ) );
+	EulerAngles ea( yaw, pitch, roll );
+	magicalMatrix3FromEulerAngles( this, &ea );
 }
 
-inline void Matrix3::rotationEulerAngles( const EulerAngles& ea )
+inline void Matrix3::fromEulerAngles( const EulerAngles& ea )
 {
-	magicalMatrix3RotationEulerAngles( this, &ea );
+	magicalMatrix3FromEulerAngles( this, &ea );
 }
 
 inline Quaternion Matrix3::toQuaternion( void )

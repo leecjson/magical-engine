@@ -249,7 +249,7 @@ void magicalQuaternionToEulerAngles( cEulerAngles* out, const cQuaternion* q )
 
 void magicalQuaternionToMatrix3( cMatrix3* out, const cQuaternion* q )
 {
-	magicalMatrix3RotationQuaternion( out, q );
+	magicalMatrix3FromQuaternion( out, q );
 }
 
 void magicalQuaternionAdd( cQuaternion* out, const cQuaternion* q1, const cQuaternion* q2 )

@@ -150,9 +150,6 @@
     <ClInclude Include="..\src\math\c\cVector4.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\c\cAABB.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\c\cAxisAngle.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
@@ -169,9 +166,6 @@
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cQuaternion.h">
-      <Filter>src\math\c</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\c\cOBB.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cRect.h">
@@ -205,6 +199,21 @@
       <Filter>src\math\c</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\c\cMatrix4.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cOBB3.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cAABB3.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\AABB3.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cAABB2.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\cOBB2.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
   </ItemGroup>
@@ -266,9 +275,6 @@
     <ClCompile Include="..\src\math\c\cVector4.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\c\cAABB.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\math\c\cAxisAngle.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
@@ -290,9 +296,6 @@
     <ClCompile Include="..\src\math\c\cRay2.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\c\cOBB.c">
-      <Filter>src\math\c</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\math\c\cRect.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
@@ -310,6 +313,36 @@
     </ClCompile>
     <ClCompile Include="..\src\math\cpp\Vector4.cpp">
       <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Quaternion.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\EulerAngles.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\AxisAngle.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Matrix4.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\Matrix3.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cOBB3.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cAABB3.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\AABB3.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cAABB2.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\cOBB2.c">
+      <Filter>src\math\c</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +377,9 @@
       <Filter>src\math\cpp</Filter>
     </None>
     <None Include="..\src\math\cpp\AxisAngle.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\AABB3.inl">
       <Filter>src\math\cpp</Filter>
     </None>
   </ItemGroup>

@@ -21,9 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_OBB_H__
-#define __C_OBB_H__
+#ifndef __C_OBB2_H__
+#define __C_OBB2_H__
 
 
 
-#endif //__C_OBB_H__
+#endif //__C_OBB2_H__

@@ -129,7 +129,7 @@ void magicalMatrix4SetZero( cMatrix4* out )
  * target 观察目标点
  * up 倾斜方向
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4LookAt( cMatrix4* out, const cVector3* eye, const cVector3* target, const cVector3* up )
+void magicalMatrix4SetLookAt( cMatrix4* out, const cVector3* eye, const cVector3* target, const cVector3* up )
 {
 	cVector3 up_v;
 	cVector3 x_axis;
@@ -182,7 +182,7 @@ void magicalMatrix4LookAt( cMatrix4* out, const cVector3* eye, const cVector3* t
  * znear 近处裁剪范围
  * zfar 远处裁剪范围
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4Perspective( cMatrix4* out, float fov, float aspect, float znear, float zfar )
+void magicalMatrix4SetPerspective( cMatrix4* out, float fov, float aspect, float znear, float zfar )
 {
 	float zoom_x;
 	float zoom_y;
@@ -224,7 +224,7 @@ void magicalMatrix4Perspective( cMatrix4* out, float fov, float aspect, float zn
  * [       0            0        -2/(f-n)    0   ]
  * [ -(r+l)/(r-l) -(t+b)/(t-b) -(f+n)/(f-n)  1   ]
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4Orth( cMatrix4* out, float left, float right, float bottom, float top, float znear, float zfar )
+void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom, float top, float znear, float zfar )
 {
 	debugassert( !magicalAlmostZero( right - left, kVectorEpsilon ) && !magicalAlmostZero( top - bottom, kVectorEpsilon ) && !magicalAlmostZero( zfar - znear, kVectorEpsilon ), "division by 0.f" );
 
@@ -249,7 +249,7 @@ void magicalMatrix4Orth( cMatrix4* out, float left, float right, float bottom, f
 	out->m44 = 1.0f;
 }
 
-void magicalMatrix4TRS( cMatrix4* out, const cVector3* t, const cQuaternion* r, const cVector3* s )
+void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* r, const cVector3* s )
 {
 	cMatrix3 rm3;
 

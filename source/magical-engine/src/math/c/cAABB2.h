@@ -21,48 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __UTILITY_H__
-#define __UTILITY_H__
+#ifndef __C_AABB2_H__
+#define __C_AABB2_H__
 
-#include "c/cUtility.h"
+#include "cUtility.h"
 
-#ifndef NS_MAGICAL_BEGIN
-#define NS_MAGICAL_BEGIN   namespace magical {
-#endif
-#ifndef NS_MAGICAL_END
-#define NS_MAGICAL_END     }
-#endif
+#pragma pack( push )
+#pragma pack( 4 )
+typedef struct cAABB2 {
+	float minx;
+	float miny;
+	float maxx;
+	float maxy;
+} cAABB2;
+#pragma pack( pop )
 
-#if defined MAGICAL_ENGINE
-#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
-#define MAGICAL_MATH_CACHED_POOL_ENABLE 1
-#endif
-#else
-#ifndef MAGICAL_MATH_CACHED_POOL_ENABLE
-#define MAGICAL_MATH_CACHED_POOL_ENABLE 0
-#endif
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#define FORWARD_DECLARE            \
-	struct AABB2;                  \
-	struct AABB3;                  \
-	struct AxisAngle;              \
-	struct EulerAngles;            \
-	struct Frustum;                \
-	struct Line2;                  \
-	struct Matrix3;                \
-	struct Matrix4;                \
-	struct OBB2;                   \
-	struct OBB3;                   \
-	struct Plane;                  \
-	struct Quaternion;             \
-	struct Ray2;                   \
-	struct Ray3;                   \
-	struct RayIntersectResult;     \
-	struct Rect;                   \
-	struct Sphere;                 \
-	struct Vector2;                \
-	struct Vector3;                \
-	struct Vector4;
+#ifdef __cplusplus
+}
+#endif
 
-#endif //__UTILITY_H__
+#endif //__C_AABB2_H__

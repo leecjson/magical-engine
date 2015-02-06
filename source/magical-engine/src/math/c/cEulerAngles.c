@@ -96,7 +96,7 @@ void magicalEulerAnglesToQuaternion( cQuaternion* out, const cEulerAngles* ea )
 
 void magicalEulerAnglesToMatrix3( cMatrix3* out, const cEulerAngles* ea )
 {
-	magicalMatrix3RotationEulerAngles( out, ea );
+	magicalMatrix3FromEulerAngles( out, ea );
 }
 
 void magicalEulerAnglesAdd( cEulerAngles* out, const cEulerAngles* ea1, const cEulerAngles* ea2 )

@@ -26,14 +26,14 @@ SOFTWARE.
 
 #include "c/cUtility.h"
 
-#include "c/cAABB.h"
+#include "c/cAABB3.h"
 #include "c/cAxisAngle.h"
 #include "c/cEulerAngles.h"
 #include "c/cFrustum.h"
 #include "c/cLine2.h"
 #include "c/cMatrix3.h"
 #include "c/cMatrix4.h"
-#include "c/cOBB.h"
+#include "c/cOBB3.h"
 #include "c/cPlane.h"
 #include "c/cQuaternion.h"
 #include "c/cRay2.h"

@@ -52,14 +52,14 @@ MAGICALAPI_MATH void magicalMatrix3Fill( cMatrix3* out, float m11, float m12, fl
 MAGICALAPI_MATH void magicalMatrix3Copy( cMatrix3* out, const cMatrix3* m );
 MAGICALAPI_MATH void magicalMatrix3SetIdentity( cMatrix3* out );
 MAGICALAPI_MATH void magicalMatrix3SetZero( cMatrix3* out );
+MAGICALAPI_MATH void magicalMatrix3SetLookAt( cMatrix3* out, const cVector3* eye, const cVector3* target, const cVector3* up );
+MAGICALAPI_MATH void magicalMatrix3SetRotationX( cMatrix3* out, float angle );
+MAGICALAPI_MATH void magicalMatrix3SetRotationY( cMatrix3* out, float angle );
+MAGICALAPI_MATH void magicalMatrix3SetRotationZ( cMatrix3* out, float angle );
 
-MAGICALAPI_MATH void magicalMatrix3LookAt( cMatrix3* out, const cVector3* eye, const cVector3* target, const cVector3* up );
-MAGICALAPI_MATH void magicalMatrix3RotationX( cMatrix3* out, float angle );
-MAGICALAPI_MATH void magicalMatrix3RotationY( cMatrix3* out, float angle );
-MAGICALAPI_MATH void magicalMatrix3RotationZ( cMatrix3* out, float angle );
-MAGICALAPI_MATH void magicalMatrix3RotationQuaternion( cMatrix3* out, const cQuaternion* q );
-MAGICALAPI_MATH void magicalMatrix3RotationAxisAngle( cMatrix3* out, const cAxisAngle* aa );
-MAGICALAPI_MATH void magicalMatrix3RotationEulerAngles( cMatrix3* out, const cEulerAngles* ea );
+MAGICALAPI_MATH void magicalMatrix3FromQuaternion( cMatrix3* out, const cQuaternion* q );
+MAGICALAPI_MATH void magicalMatrix3FromAxisAngle( cMatrix3* out, const cAxisAngle* aa );
+MAGICALAPI_MATH void magicalMatrix3FromEulerAngles( cMatrix3* out, const cEulerAngles* ea );
 MAGICALAPI_MATH void magicalMatrix3ToQuaternion( cQuaternion* out, const cMatrix3* m );
 
 MAGICALAPI_MATH void magicalMatrix3MulScalar( cMatrix3* out, const cMatrix3* m, float a );

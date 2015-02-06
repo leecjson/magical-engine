@@ -36,21 +36,17 @@ public:
 	static Matrix3 var;
 
 public:
-	Matrix3( float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33 );
-	Matrix3( const Matrix3& m );
-	Matrix3( void );
-
-public:
 	static inline Matrix3 createIdentity( void );
 	static inline Matrix3 createZero( void );
+	static inline Matrix3 createLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
 	static inline Matrix3 createRotationX( float angle );
 	static inline Matrix3 createRotationY( float angle );
 	static inline Matrix3 createRotationZ( float angle );
-	static inline Matrix3 createRotationQuaternion( const Quaternion& q );
-	static inline Matrix3 createRotationAxisAngle( const Vector3& axis, float angle );
-	static inline Matrix3 createRotationAxisAngle( const AxisAngle& aa );
-	static inline Matrix3 createRotationEulerAngles( float yaw, float pitch, float roll );
-	static inline Matrix3 createRotationEulerAngles( const EulerAngles& ea );
+	static inline Matrix3 createFromQuaternion( const Quaternion& q );
+	static inline Matrix3 createFromAxisAngle( const Vector3& axis, float angle );
+	static inline Matrix3 createFromAxisAngle( const AxisAngle& aa );
+	static inline Matrix3 createFromEulerAngles( float yaw, float pitch, float roll );
+	static inline Matrix3 createFromEulerAngles( const EulerAngles& ea );
 
 	static inline void mulScalar( Matrix3& out, const Matrix3& m, float a );
 	static inline void mul( Matrix3& out, const Matrix3& m1, const Matrix3& m2 );
@@ -63,6 +59,11 @@ public:
 	static inline void inverse( Matrix3& out, const Matrix3& m );
 	static inline void transpose( Matrix3& out, const Matrix3& m );
 	static inline void negate( Matrix3& out, const Matrix3& m );
+
+public:
+	Matrix3( float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33 );
+	Matrix3( const Matrix3& m );
+	Matrix3( void );
 
 public:
 	static void* operator new( size_t s );
@@ -83,15 +84,15 @@ public:
 	inline void set( const Matrix3& m );
 	inline void setIdentity( void );
 	inline void setZero( void );
-	inline void lookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
-	inline void rotationX( float angle );
-	inline void rotationY( float angle );
-	inline void rotationZ( float angle );
-	inline void rotationQuaternion( const Quaternion& q );
-	inline void rotationAxisAngle( const Vector3& axis, float angle );
-	inline void rotationAxisAngle( const AxisAngle& aa );
-	inline void rotationEulerAngles( float yaw, float pitch, float roll );
-	inline void rotationEulerAngles( const EulerAngles& ea );
+	inline void setLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
+	inline void setRotationX( float angle );
+	inline void setRotationY( float angle );
+	inline void setRotationZ( float angle );
+	inline void fromQuaternion( const Quaternion& q );
+	inline void fromAxisAngle( const Vector3& axis, float angle );
+	inline void fromAxisAngle( const AxisAngle& aa );
+	inline void fromEulerAngles( float yaw, float pitch, float roll );
+	inline void fromEulerAngles( const EulerAngles& ea );
 	inline Quaternion toQuaternion( void );
 
 public:
