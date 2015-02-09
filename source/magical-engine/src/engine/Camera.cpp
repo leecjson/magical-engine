@@ -55,7 +55,7 @@ Ptr<Camera> Camera::create( const char* name )
 
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 {
-	m_projection_matrix.perspective( fov, aspect, znear, zfar );
+	m_projection_matrix.setPerspective( fov, aspect, znear, zfar );
 }
 
 const Matrix4& Camera::getProjectionMatrix( void ) const

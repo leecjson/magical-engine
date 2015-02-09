@@ -38,7 +38,6 @@ SOFTWARE.
 #include "c/cQuaternion.h"
 #include "c/cRay2.h"
 #include "c/cRay3.h"
-#include "c/cRect.h"
 #include "c/cSphere.h"
 #include "c/cVector2.h"
 #include "c/cVector3.h"

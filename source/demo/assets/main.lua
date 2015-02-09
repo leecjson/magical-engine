@@ -10,6 +10,17 @@ MainCamera = {
 
 function MainCamera:OnCreate()
 
+cAABB2
+cAABB3
+ray2
+ray3
+plane
+line2
+line3
+obb2
+obb3
+sphere
+
 end
 
 -- function MainCamera:onCreate( )

@@ -55,7 +55,7 @@ void MainCameraScript::onUpdate( void )
 }
 
 void mainDelegate( void )
-{
+{ 
 	Matrix3 m;
 	m.fromQuaternion(  );
 	m.fromEulerAngles(  );

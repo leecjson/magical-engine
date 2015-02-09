@@ -83,7 +83,7 @@ void SceneNode::visit( void )
 		const Vector3& s = getDerivedScale();
 		const Vector3& t = getDerivedPosition();
 
-		m_local_to_world_matrix.trs( t, r, s );
+		m_local_to_world_matrix.setTRS( t, r, s );
 		m_ts_dirty = false;
 	}
 

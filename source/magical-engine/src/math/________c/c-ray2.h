@@ -21,24 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_RECTANGLE2_H__
-#define __C_RECTANGLE2_H__
+#ifndef __C_RAY2_H__
+#define __C_RAY2_H__
 
 #include "cUtility.h"
 
-//typedef float cRectangle2[4];
-
-#include "cVector2.h"
+typedef float cRay2[4];
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-//MAGICALAPI_MATH void magicalRectangle2FillBox( cRectangle2 out, const cVector2 center, const float w, const float h );
-//MAGICALAPI_MATH void magicalRectangle2Fill( cRectangle2 out, const cRectangle2 rect );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //__C_RECTANGLE2_H__
+#endif //__C_RAY2_H__
