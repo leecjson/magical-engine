@@ -24,8 +24,8 @@ SOFTWARE.
 #ifndef __ASSETS_SYSTEM_H__
 #define __ASSETS_SYSTEM_H__
 
-#include "PlatformMacros.h"
-#include "Common.h"
+#include "platform-macros.h"
+#include "common.h"
 #include "Data.h"
 
 NS_MAGICAL_BEGIN

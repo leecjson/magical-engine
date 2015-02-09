@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#include "PlatformMacros.h"
+#include "platform-macros.h"
 
 /*
 c include
@@ -45,7 +45,7 @@ NS_MAGICAL_END
 #include <typeinfo>
 #include <iostream>
 
-#include "LogSystem.h"
+#include "log-system.h"
 
 /*
 macros

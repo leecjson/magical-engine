@@ -21,11 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Application.h"
+#include "application.h"
 #include <windows.h>
 #include "win32/gl/glew/glew.h"
 #include "win32/gl/glfw3/glfw3.h"
-#include "Engine.h"
+#include "engine.h"
 //#include "InputSystem.h"
 
 NS_MAGICAL_BEGIN

@@ -56,14 +56,14 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="demo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Main.h" />
+    <None Include="..\assets\main.lua" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\assets\main.lua" />
+    <ClInclude Include="..\src\main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

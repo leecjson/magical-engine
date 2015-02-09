@@ -24,8 +24,8 @@ SOFTWARE.
 #ifndef __SCENE_NODE_H__
 #define __SCENE_NODE_H__
 
-#include "PlatformMacros.h"
-#include "Common.h"
+#include "platform-macros.h"
+#include "common.h"
 #include "Reference.h"
 #include "magical-math.h"
 #include "SceneElement.h"

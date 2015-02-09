@@ -24,24 +24,24 @@ SOFTWARE.
 #ifndef __MAGICAL_ENGINE_H__
 #define __MAGICAL_ENGINE_H__
 
-#include "PlatformMacros.h"
+#include "platform-macros.h"
 
 #include "magical-math.h"
 
-#include "Common.h"
-#include "Ptr.h"
-#include "Reference.h"
-#include "Data.h"
-#include "SceneElement.h"
-#include "SceneNode.h"
-#include "Camera.h"
-#include "SceneObject.h"
-#include "Engine.h"
-#include "Behaviour.h"
+#include "common.h"
+#include "ptr.h"
+#include "reference.h"
+#include "data.h"
+#include "scene-element.h"
+#include "scene-node.h"
+#include "camera.h"
+#include "scene-object.h"
+#include "engine.h"
+#include "behaviour.h"
 //#include "AssetsSystem.h"
-#include "LogSystem.h"
+#include "log-system.h"
 //#include "InputSystem.h"
-#include "Utils.h"
+#include "utils.h"
 
 //#include "LuaMacros.h"
 //#include "LuaSelector.h"
@@ -51,6 +51,6 @@ SOFTWARE.
 //#include "LuaTable.h"
 //#include "LuaSystem.h"
 
-#include "Application.h"
+#include "application.h"
 
 #endif //__MAGICAL_ENGINE_H__

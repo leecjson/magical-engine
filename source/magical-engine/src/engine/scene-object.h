@@ -21,38 +21,51 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_LINE2_H__
-#define __C_LINE2_H__
+#ifndef __SCENE_OBJECT_H__
+#define __SCENE_OBJECT_H__
 
-#include "cUtility.h"
+#include "platform-macros.h"
+#include "common.h"
+#include "scene-node.h"
+#include "behaviour.h"
 
-typedef float cLine2[3];
+#include <unordered_map>
 
-#include "cVector2.h"
+NS_MAGICAL_BEGIN
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+using ::std::unordered_map;
 
-//MAGICALAPI_MATH cBool magicalLine2Equals( const cLine2 l1, const cLine2 l2 );
-//MAGICALAPI_MATH cBool magicalLine2IsZero( const cLine2 l );
-//
-//MAGICALAPI_MATH void magicalLine2FillNormalAndDistance( cLine2 out, const cVector2 n, const float d );
-//MAGICALAPI_MATH void magicalLine2FillNormalAndPoint( cLine2 out, const cVector2 n, const cVector2 p );
-//MAGICALAPI_MATH void magicalLine2FillScalars( cLine2 out, const float x, const float y, const float d );
-//MAGICALAPI_MATH void magicalLine2FillZero( cLine2 out );
-//MAGICALAPI_MATH void magicalLine2Fill( cLine2 out, const cLine2 l );
-//
-//MAGICALAPI_MATH int magicalLine2ClassifyPoint( const cLine2 l, const cVector3 point );
-//MAGICALAPI_MATH int magicalLine2ClassifyLine2( const cLine2 l1, const cLine2 l2 );
-//
-//MAGICALAPI_MATH cBool magicalLine2Intersects( const cLine2 l1, const cLine2 l2 );
-//
-//MAGICALAPI_MATH cBool magicalLine2ContainsPoint( const cLine2 l, const cVector3 point );
+class SceneObject : public SceneNode
+{
+public:
+	friend class Engine;
+	friend class Scene;
+	declare_class_hash_code;
 
+public:
+	SceneObject( void );
+	virtual ~SceneObject( void );
+	static Ptr<SceneObject> create( void );
+	static Ptr<SceneObject> create( const char* name );
 
-#ifdef __cplusplus
-}
-#endif
+public:
+	template< class TBehaviour >
+	void addComponent( void );
+	template< class TBehaviour >
+	void removeComponent( void );
 
-#endif //__C_LINE2_H__
+protected:
+	virtual void visit( void );
+	virtual void start( void );
+	virtual void stop( void );
+	virtual void update( void );
+
+protected:
+	unordered_map<size_t, BehaviourBase*> m_behaviours;
+};
+
+#include "SceneObject.inl"
+
+NS_MAGICAL_END
+
+#endif //__SCENE_OBJECT_H__

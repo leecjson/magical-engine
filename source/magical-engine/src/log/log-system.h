@@ -3,15 +3,15 @@ The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
 
-Permission is hereby granted, free of chaage, to any person obtaining a copy
-of this softwaae and associated documentation files (the "Softwaae"), to deal
-in the Softwaae without restriction, including without limitation the rights
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Softwaae, and to permit persons to whom the Softwaae is
+copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Softwaae.
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -21,17 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#ifndef __LOG_SYSTEM_H__
+#define __LOG_SYSTEM_H__
+
+#include "platform-macros.h"
+#include "common.h"
+
+MAGICALAPI void magicalLogLastError( void ); 
+#define magicalLog( txt ) ::magical::Log::write( txt )
+
+#ifndef MAGICAL_DEBUG
+#define magicalDebugLog( txt )
+#else
+#define magicalDebugLog( txt ) magicalLog( txt )
+#endif
 
 NS_MAGICAL_BEGIN
 
-void Frustum::fromMatrix4( const Matrix4& m )
+class Log
 {
-	magicalFrustumFill( this, &m );
-}
+public:
+	static void init( void );
+	static void delc( void );
 
-void Frustum::setPlane( const Plane& p, int which )
-{
-	magicalFrustumSetPlane( this, &p, which );
-}
+public:
+	static void write( const char* txt );
+};
 
 NS_MAGICAL_END
+
+#endif //__LOG_SYSTEM_H__

@@ -21,14 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Engine.h"
+#include "engine.h"
 #include "magical-math.h"
-#include "Utils.h"
-#include "AssetsSystem.h"
+#include "utils.h"
+//#include "assetsSystem.h"
 //#include "LuaSystem.h"
 //#include "RendererSystem.h"
-#include "Application.h"
-#include "SceneNode.h"
+#include "application.h"
+#include "scene-node.h"
 
 NS_MAGICAL_BEGIN
 

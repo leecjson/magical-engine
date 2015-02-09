@@ -21,20 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_RAY2_H__
-#define __C_RAY2_H__
+#ifndef __SCENE_ELEMENT_H__
+#define __SCENE_ELEMENT_H__
 
-#include "cUtility.h"
+#include "platform-macros.h"
+#include "common.h"
 
-typedef float cRay2[4];
+NS_MAGICAL_BEGIN
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+enum class SceneElement
+{
+	Node,
+	Object,
+	Camera,
+	Light,
+};
 
+NS_MAGICAL_END
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif //__C_RAY2_H__
+#endif //__SCENE_ELEMENT_H__

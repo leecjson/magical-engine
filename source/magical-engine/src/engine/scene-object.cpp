@@ -21,9 +21,72 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __C_OBB2_H__
-#define __C_OBB2_H__
+#include "scene-object.h"
+
+NS_MAGICAL_BEGIN
+
+define_class_hash_code( SceneObject );
+
+SceneObject::SceneObject( void )
+{
+	assign_class_hash_code();
+	m_element_id = SceneElement::Object;
+}
+
+SceneObject::~SceneObject( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onDestroy();
+		itr.second->release();
+	}
+}
+
+Ptr<SceneObject> SceneObject::create( void )
+{
+	SceneObject* ret = new SceneObject();
+	magicalAssert( ret, "new SceneObject() failed" );
+	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
+}
+
+Ptr<SceneObject> SceneObject::create( const char* name )
+{
+	SceneObject* ret = new SceneObject();
+	magicalAssert( ret, "new SceneObject() failed" );
+	ret->setName( name );
+	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
+}
+
+void SceneObject::visit( void )
+{
+	SceneNode::visit();
+}
+
+void SceneObject::start( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onStart();
+	}
+	SceneNode::start();
+}
+
+void SceneObject::stop( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onStop();
+	}
+	SceneNode::stop();
+}
+
+void SceneObject::update( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onUpdate();
+	}
+}
 
 
-
-#endif //__C_OBB2_H__
+NS_MAGICAL_END

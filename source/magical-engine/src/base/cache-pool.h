@@ -21,4 +21,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cOBB3.h"
+#ifndef __CACHE_POOL_H__
+#define __CACHE_POOL_H__
+
+#include "platform-macros.h"
+#include "common.h"
+
+NS_MAGICAL_BEGIN
+
+template< class T >
+class CachePool
+{
+public:
+	CachePool( void );
+	CachePool( size_t capacity );
+	CachePool( size_t capacity, size_t fillsize );
+	~CachePool( void );
+
+public:
+	void fill( size_t size );
+	void push( void* ptr );
+	void* take( void );
+	void clear( void );
+	size_t size( void ) const;
+	bool empty( void ) const;
+
+protected:
+	void growCapacity( void );
+	void growCapacity( size_t size );
+
+protected:
+	size_t m_size = 0;
+	size_t m_capacity = 0;
+	T** m_objects = nullptr;
+};
+
+#include "cache-pool.inl"
+
+NS_MAGICAL_END
+
+#endif //__CACHE_POOL_H__

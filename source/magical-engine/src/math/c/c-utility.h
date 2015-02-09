@@ -40,7 +40,7 @@ typedef unsigned char cBool;
 #define cTrue       1
 #define cFalse      0
 #else
-#include "PlatformMacros.h"
+#include "platform-macros.h"
 #endif
 
 #ifndef MAGICALAPI_MATH

@@ -24,9 +24,9 @@ SOFTWARE.
 #ifndef __PTR_H__
 #define __PTR_H__
 
-#include "PlatformMacros.h"
-#include "Common.h"
-#include "Reference.h"
+#include "platform-macros.h"
+#include "common.h"
+#include "reference.h"
 
 NS_MAGICAL_BEGIN
 
