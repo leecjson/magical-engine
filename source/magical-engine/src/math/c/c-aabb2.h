@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_AABB2_H__
 #define __C_AABB2_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )

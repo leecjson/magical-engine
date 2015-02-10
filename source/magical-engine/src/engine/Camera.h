@@ -24,10 +24,10 @@ SOFTWARE.
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
 
-#include "platform-macros.h"
-#include "common.h"
-#include "scene-element.h"
-#include "scene-object.h"
+#include "magical-macros.h"
+#include "Common.h"
+#include "SceneElement.h"
+#include "SceneObject.h"
 
 NS_MAGICAL_BEGIN
 

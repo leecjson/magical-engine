@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_RAY3_H__
 #define __C_RAY3_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -38,14 +38,9 @@ typedef struct cRay3 {
 } cRay3;
 #pragma pack( pop )
 
-typedef struct cRayIntersectResult {
-	cBool b;
-	float t;
-} cRayIntersectResult;
-
-#include "cVector3.h"
-#include "cAABB3.h"
-#include "cSphere.h"
+#include "c-vector3.h"
+#include "c-aabb3.h"
+#include "c-sphere.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,9 +60,9 @@ MAGICALAPI_MATH void magicalRay3GetDirection( cVector3* out, const cRay3* r3 );
 MAGICALAPI_MATH void magicalRay3SetOrigin( cRay3* out, const cVector3* origin );
 MAGICALAPI_MATH void magicalRay3SetDirection( cRay3* out, const cVector3* direction );
 
-MAGICALAPI_MATH void magicalRay3IntersectsPlane( cRayIntersectResult* out, const cRay3* r3, const cPlane* p, cBool discard_inside );
-MAGICALAPI_MATH void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, const cAABB3* aabb, cBool discard_inside );
-MAGICALAPI_MATH void magicalRay3IntersectsSphere( cRayIntersectResult* out, const cRay3* r3, const cSphere* sp, cBool discard_inside );
+MAGICALAPI_MATH cBool magicalRay3IntersectsPlane( float* outt, const cRay3* r3, const cPlane* p, cBool discard_inside );
+MAGICALAPI_MATH cBool magicalRay3IntersectsAABB3( float* outt, const cRay3* r3, const cAABB3* aabb, cBool discard_inside );
+MAGICALAPI_MATH cBool magicalRay3IntersectsSphere( float* outt, const cRay3* r3, const cSphere* sp, cBool discard_inside );
 
 #ifdef __cplusplus
 }

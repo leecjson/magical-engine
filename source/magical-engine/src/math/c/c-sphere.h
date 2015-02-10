@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_SPHERE_H__
 #define __C_SPHERE_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -36,10 +36,10 @@ typedef struct cSphere {
 } cSphere;
 #pragma pack( pop )
 
-#include "cVector3.h"
-#include "cRay3.h"
-#include "cAABB3.h"
-#include "cPlane.h"
+#include "c-vector3.h"
+#include "c-ray3.h"
+#include "c-aabb3.h"
+#include "c-plane.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,7 +58,7 @@ MAGICALAPI_MATH void magicalSphereSetOne( cSphere* out );
 MAGICALAPI_MATH cBool magicalSphereIntersects( const cSphere* sp1, const cSphere* sp2 );
 MAGICALAPI_MATH cBool magicalSphereIntersectsAABB3( const cSphere* sp, const cAABB3* aabb );
 MAGICALAPI_MATH cBool magicalSphereIntersectsPlane( const cSphere* sp, const cPlane* p );
-MAGICALAPI_MATH void magicalSphereIntersectsRay3( cRayIntersectResult* out, const cSphere* sp, const cRay3* r3, cBool discard_inside );
+MAGICALAPI_MATH cBool magicalSphereIntersectsRay3( float* outt, const cSphere* sp, const cRay3* r3, cBool discard_inside );
 
 MAGICALAPI_MATH cBool magicalSphereContainsPoint( const cSphere* sp, const cVector3* point );
 

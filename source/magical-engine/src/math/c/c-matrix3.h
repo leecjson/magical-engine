@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_MATRIX3_H__
 #define __C_MATRIX3_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -35,10 +35,10 @@ typedef struct cMatrix3 {
 } cMatrix3;
 #pragma pack( pop )
 
-#include "cVector3.h"
-#include "cAxisAngle.h"
-#include "cEulerAngles.h"
-#include "cQuaternion.h"
+#include "c-vector3.h"
+#include "c-axis-angle.h"
+#include "c-euler-angles.h"
+#include "c-quaternion.h"
 
 #ifdef __cplusplus
 extern "C" {

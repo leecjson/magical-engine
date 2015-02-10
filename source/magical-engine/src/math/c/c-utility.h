@@ -29,18 +29,16 @@ SOFTWARE.
 #include <assert.h>
 #include <stdlib.h>
 
-#ifndef MAGICAL_ENGINE
+#ifdef MAGICAL_ENGINE
+#include "magical-macros.h"
+#elif
 typedef unsigned char cBool;
-#ifdef cTrue
-#undef cTrue
+#ifndef cTrue
+#define cTrue  1
 #endif
-#ifdef cFalse
-#undef cFalse
+#ifndef cFalse
+#define cFalse 0
 #endif
-#define cTrue       1
-#define cFalse      0
-#else
-#include "platform-macros.h"
 #endif
 
 #ifndef MAGICALAPI_MATH

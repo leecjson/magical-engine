@@ -21,12 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "application.h"
-#include "engine.h"
+#include "Application.h"
+#include "Engine.h"
 //#include "AssetsSystem.h"
 //#include "LuaSystem.h"
 //#include "RendererSystem.h"
-#include "log-system.h"
+#include "LogSystem.h"
 //#include "InputSystem.h"
 
 NS_MAGICAL_BEGIN

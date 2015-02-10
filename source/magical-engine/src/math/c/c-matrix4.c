@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cMatrix4.h"
+#include "c-matrix4.h"
 #include <memory.h>
 
 static const float IDENTITY[] =
@@ -132,9 +132,7 @@ void magicalMatrix4SetZero( cMatrix4* out )
 void magicalMatrix4SetLookAt( cMatrix4* out, const cVector3* eye, const cVector3* target, const cVector3* up )
 {
 	cVector3 up_v;
-	cVector3 x_axis;
-	cVector3 y_axis;
-	cVector3 z_axis;
+	cVector3 x_axis, y_axis, z_axis;
 
 	magicalVector3Copy( &up_v, up );
 	magicalVector3Normalize( &up_v, &up_v );
@@ -148,20 +146,9 @@ void magicalMatrix4SetLookAt( cMatrix4* out, const cVector3* eye, const cVector3
 	magicalVector3Cross( &y_axis, &z_axis, &x_axis );
 	magicalVector3Normalize( &y_axis, &y_axis );
 
-	out->m11 = x_axis.x;
-	out->m12 = y_axis.x;
-	out->m13 = z_axis.x;
-	out->m14 = 0.0f;
-
-	out->m21 = x_axis.y;
-	out->m22 = y_axis.y;
-	out->m23 = z_axis.y;
-	out->m24 = 0.0f;
-
-	out->m31 = x_axis.z;
-	out->m32 = y_axis.z;
-	out->m33 = z_axis.z;
-	out->m34 = 0.0f;
+	out->m11 = x_axis.x; out->m12 = y_axis.x; out->m13 = z_axis.x; out->m14 = 0.0f;
+	out->m21 = x_axis.y; out->m22 = y_axis.y; out->m23 = z_axis.y; out->m24 = 0.0f;
+	out->m31 = x_axis.z; out->m32 = y_axis.z; out->m33 = z_axis.z; out->m34 = 0.0f;
 
 	out->m41 = - magicalVector3Dot( &x_axis, eye );
 	out->m42 = - magicalVector3Dot( &y_axis, eye );
@@ -279,7 +266,7 @@ void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* 
  * [ 0   0   1   0 ]
  * [ x   y   z   1 ]
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4Translation( cMatrix4* out, const cVector3* t )
+void magicalMatrix4SetTranslation( cMatrix4* out, const cVector3* t )
 {
 	out->m11 = 1.0f; out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
 	out->m21 = 0.0f; out->m22 = 1.0f; out->m23 = 0.0f; out->m24 = 0.0f;
@@ -288,22 +275,6 @@ void magicalMatrix4Translation( cMatrix4* out, const cVector3* t )
 }
 
 /*-----------------------------------------------------------------------------*\
- * 填充为位移矩阵 done
- *
- * [ 1   0   0   0 ]
- * [ 0   1   0   0 ]
- * [ 0   0   1   0 ]
- * [ x   y   z   1 ]
- *-----------------------------------------------------------------------------*/
-void magicalMatrix4TranslationScalars( cMatrix4* out, float x, float y, float z )
-{
-	out->m11 = 1.0f; out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
-	out->m21 = 0.0f; out->m22 = 1.0f; out->m23 = 0.0f; out->m24 = 0.0f;
-	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = 1.0f; out->m34 = 0.0f;
-	out->m41 = x;    out->m42 = y;    out->m43 = z;    out->m44 = 1.0f;
-}
-
-/*-----------------------------------------------------------------------------*\
  * 填充为轴缩放矩阵 done
  *
  * [ x   0   0   0 ]
@@ -311,27 +282,11 @@ void magicalMatrix4TranslationScalars( cMatrix4* out, float x, float y, float z 
  * [ 0   0   z   0 ]
  * [ 0   0   0   1 ]
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4Scale( cMatrix4* out, const cVector3* s )
+void magicalMatrix4SetScale( cMatrix4* out, const cVector3* s )
 {
 	out->m11 = s->x; out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
 	out->m21 = 0.0f; out->m22 = s->y; out->m23 = 0.0f; out->m24 = 0.0f;
 	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = s->z; out->m34 = 0.0f;
-	out->m41 = 0.0f; out->m42 = 0.0f; out->m43 = 0.0f; out->m44 = 1.0f;
-}
-
-/*-----------------------------------------------------------------------------*\
- * 填充为轴缩放矩阵 done
- *
- * [ x   0   0   0 ]
- * [ 0   y   0   0 ]
- * [ 0   0   z   0 ]
- * [ 0   0   0   1 ]
- *-----------------------------------------------------------------------------*/
-void magicalMatrix4ScaleScalars( cMatrix4* out, float x, float y, float z )
-{
-	out->m11 = x;    out->m12 = 0.0f; out->m13 = 0.0f; out->m14 = 0.0f;
-	out->m21 = 0.0f; out->m22 = y;    out->m23 = 0.0f; out->m24 = 0.0f;
-	out->m31 = 0.0f; out->m32 = 0.0f; out->m33 = z;    out->m34 = 0.0f;
 	out->m41 = 0.0f; out->m42 = 0.0f; out->m43 = 0.0f; out->m44 = 1.0f;
 }
 
@@ -346,7 +301,7 @@ void magicalMatrix4ScaleScalars( cMatrix4* out, float x, float y, float z )
  * out 结果
  * angle 旋转弧度
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4RotationX( cMatrix4* out, float angle )
+void magicalMatrix4SetRotationX( cMatrix4* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -368,7 +323,7 @@ void magicalMatrix4RotationX( cMatrix4* out, float angle )
  * out 结果
  * angle 旋转弧度
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4RotationY( cMatrix4* out, float angle )
+void magicalMatrix4SetRotationY( cMatrix4* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -390,7 +345,7 @@ void magicalMatrix4RotationY( cMatrix4* out, float angle )
  * out 结果
  * angle 旋转弧度
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4RotationZ( cMatrix4* out, float angle )
+void magicalMatrix4SetRotationZ( cMatrix4* out, float angle )
 {
 	float c = cosf( angle );
 	float s = sinf( angle );
@@ -407,7 +362,7 @@ void magicalMatrix4RotationZ( cMatrix4* out, float angle )
  * out 结果
  * q 旋转四元数
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4RotationQuaternion( cMatrix4* out, const cQuaternion* q )
+void magicalMatrix4SetRotationQuaternion( cMatrix4* out, const cQuaternion* q )
 {
 	out->m11 = 1.0f - 2.0f * ( q->y * q->y + q->z * q->z );
 	out->m12 = 2.0f * ( q->x * q->y + q->z * q->w );
@@ -436,7 +391,7 @@ void magicalMatrix4RotationQuaternion( cMatrix4* out, const cQuaternion* q )
  * out 结果
  * aa 任意轴
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4RotationAxisAngle( cMatrix4* out, const cAxisAngle* aa )
+void magicalMatrix4SetRotationAxisAngle( cMatrix4* out, const cAxisAngle* aa )
 {
 	float s, c;
 	magicalSinCos( &s, &c, aa->w );
@@ -473,50 +428,34 @@ void magicalMatrix4RotationAxisAngle( cMatrix4* out, const cAxisAngle* aa )
  * out 结果
  * ea 欧拉角
  *-----------------------------------------------------------------------------*/
-void magicalMatrix4RotationEulerAngles( cMatrix4* out, const cEulerAngles* ea )
+void magicalMatrix4SetRotationEulerAngles( cMatrix4* out, const cEulerAngles* ea )
 {
-	float yaw, pitch, roll;
-
 	cEulerAngles dst;
 	magicalEulerAnglesLimit( &dst, ea );
-#if 1
-	yaw = magicalDegToRad( dst.yaw );
-	pitch = magicalDegToRad( dst.pitch );
-	roll = magicalDegToRad( dst.roll );
-#else
-	yaw = ea.yaw;
-	pitch = ea.pitch;
-	roll = ea.roll;
-#endif
 
-	float cr = cosf( dst.pitch );
-	float sr = sinf( dst.pitch );
-	float cp = cosf( dst.yaw );
-	float sp = sinf( dst.yaw );
-	float cy = cosf( dst.roll );
-	float sy = sinf( dst.roll );
-	float srsp = sr * sp;
-	float crsp = cr * sp;
+	float sp, sr, sy;
+	float cp, cr, cy;
 
-    out->m11 = cp * cy;
-    out->m21 = cp * sy;
-    out->m31 = - sp;
-	out->m41 = 0.0f;
+	magicalSinCos( &sy, &cy, dst.yaw );
+	magicalSinCos( &sp, &cp, dst.pitch );
+	magicalSinCos( &sr, &cr, dst.roll );
 
-	out->m12 = srsp * cy - cr * sy;
-	out->m22 = srsp * sy + cr * cy;
-	out->m32 = sr * cp;
-	out->m42 = 0.0f;
-
-	out->m13 = crsp * cy + sr * sy;
-	out->m23 = crsp * sy - sr * cy;
-	out->m33 = cr * cp;
-	out->m43 = 0.0f;
-
-	out->m14 = 0.0f;
-	out->m24 = 0.0f;
-	out->m34 = 0.0f;
-	out->m44 = 1.0f;
+	out->m11 =   cy * cr + sy * sp * sr;
+	out->m12 = - cy * sr + sy * sp * cr;
+	out->m13 =   sy * cp;
+	out->m14 =   0.0f;
+	out->m21 =   sr * cp;
+	out->m22 =   cr * cp;
+	out->m23 = - sp;
+	out->m24 =   0.0f;
+	out->m31 = - sy * cr + cy * sp * sr;
+	out->m32 =   sr * sy + cy * sp * cr;
+	out->m33 =   cy * cp;
+	out->m34 =   0.0f;
+	out->m41 =   0.0f;
+	out->m42 =   0.0f;
+	out->m43 =   0.0f;
+	out->m44 =   1.0f;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -714,12 +653,13 @@ void magicalMatrix4GetBackVector( cVector3* out, const cMatrix4* m )
  *-----------------------------------------------------------------------------*/
 void magicalMatrix4Transpose( cMatrix4* out, const cMatrix4* m )
 {
-	float t[16] = {
-		m->m11, m->m21, m->m31, m->m41,
-		m->m12, m->m22, m->m32, m->m42,
-		m->m13, m->m23, m->m33, m->m43,
-		m->m14, m->m24, m->m34, m->m44
-	};
+	float t[16];
+
+	t[0]  = m->m11; t[1]  = m->m21; t[2]  = m->m31; t[3]  = m->m41;
+	t[4]  = m->m12; t[5]  = m->m22; t[6]  = m->m32; t[7]  = m->m42;
+	t[8]  = m->m13; t[9]  = m->m23; t[10] = m->m33; t[11] = m->m43;
+	t[12] = m->m14; t[13] = m->m24; t[14] = m->m34; t[15] = m->m44;
+
 	memcpy( out, t, sizeof( cMatrix4 ) );
 }
 

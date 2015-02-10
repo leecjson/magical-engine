@@ -24,10 +24,10 @@ SOFTWARE.
 #ifndef __BEHAVIOUR_H__
 #define __BEHAVIOUR_H__
 
-#include "platform-macros.h"
-#include "common.h"
-#include "reference.h"
-#include "scene-node.h"
+#include "magical-macros.h"
+#include "Common.h"
+#include "Reference.h"
+#include "SceneNode.h"
 
 NS_MAGICAL_BEGIN
 

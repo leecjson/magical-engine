@@ -24,9 +24,9 @@ SOFTWARE.
 #ifndef __DATA_H__
 #define __DATA_H__
 
-#include "platform-macros.h"
-#include "common.h"
-#include "reference.h"
+#include "magical-macros.h"
+#include "Common.h"
+#include "Reference.h"
 
 NS_MAGICAL_BEGIN
  

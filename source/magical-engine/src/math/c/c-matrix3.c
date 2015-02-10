@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cMatrix3.h"
+#include "c-matrix3.h"
 #include <memory.h>
 
 static const float IDENTITY[] =
@@ -107,10 +107,13 @@ void magicalMatrix3SetLookAt( cMatrix3* out, const cVector3* eye, const cVector3
 
 	magicalVector3Copy( &up_v, up );
 	magicalVector3Normalize( &up_v, &up_v );
+
 	magicalVector3Sub( &z_axis, eye, target );
 	magicalVector3Normalize( &z_axis, &z_axis );
+
 	magicalVector3Cross( &x_axis, &up_v, &z_axis );
 	magicalVector3Normalize( &x_axis, &x_axis );
+
 	magicalVector3Cross( &y_axis, &z_axis, &x_axis );
 	magicalVector3Normalize( &y_axis, &y_axis );
 
@@ -337,11 +340,11 @@ void magicalMatrix3GetBackVector( cVector3* out, const cMatrix3* m )
 
 void magicalMatrix3Transpose( cMatrix3* out, const cMatrix3* m )
 {
-	float t[9] = {
-		m->m11, m->m21, m->m31,
-		m->m12, m->m22, m->m32,
-		m->m13, m->m23, m->m33
-	};
+	float t[9];
+
+	t[0] = m->m11; t[1] = m->m21; t[2] = m->m31;
+	t[3] = m->m12; t[4] = m->m22; t[5] = m->m32;
+	t[6] = m->m13; t[7] = m->m23; t[8] = m->m33;
 
 	out->m11 = t[0]; out->m12 = t[1]; out->m13 = t[2];
 	out->m21 = t[2]; out->m22 = t[3]; out->m23 = t[4];

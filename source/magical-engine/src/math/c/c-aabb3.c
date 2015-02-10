@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cAABB3.h"
+#include "c-aabb3.h"
 
 cBool magicalAABB3Equals( const cAABB3* aabb1, const cAABB3* aabb2 )
 {
@@ -405,9 +405,9 @@ cBool magicalAABB3IntersectsSphere( const cAABB3* aabb, const cSphere* sp )
 	return distance <= ( sp->r * sp->r );
 }
 
-void magicalAABB3IntersectsRay3( cRayIntersectResult* out, const cAABB3* aabb, const cRay3* r3, cBool discard_inside )
+cBool magicalAABB3IntersectsRay3( float* outt, const cAABB3* aabb, const cRay3* r3, cBool discard_inside )
 {
-	magicalRay3IntersectsAABB3( out, r3, aabb, discard_inside );
+	return magicalRay3IntersectsAABB3( outt, r3, aabb, discard_inside );
 }
 
 /*-----------------------------------------------------------------------------*\

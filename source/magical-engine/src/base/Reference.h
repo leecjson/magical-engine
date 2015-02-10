@@ -24,9 +24,9 @@ SOFTWARE.
 #ifndef __REFERENCE_H__
 #define __REFERENCE_H__
 
-#include "platform-macros.h"
-#include "common.h"
-#include "ptr.h"
+#include "magical-macros.h"
+#include "Common.h"
+#include "Ptr.h"
 
 /*
 hash code macros

@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_EULER_ANGLES_H__
 #define __C_EULER_ANGLES_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -35,8 +35,8 @@ typedef struct cEulerAngles {
 } cEulerAngles;
 #pragma pack( pop )
 
-#include "cMatrix3.h"
-#include "cQuaternion.h"
+#include "c-matrix3.h"
+#include "c-quaternion.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,7 +48,7 @@ MAGICALAPI_MATH cBool magicalEulerAnglesIsZero( const cEulerAngles* ea );
 MAGICALAPI_MATH void magicalEulerAnglesFill( cEulerAngles* out, float yaw, float pitch, float roll );
 MAGICALAPI_MATH void magicalEulerAnglesCopy( cEulerAngles* out, const cEulerAngles* ea );
 MAGICALAPI_MATH void magicalEulerAnglesSetZero( cEulerAngles* out );
-MAGICALAPI_MATH void magicalEulerAnglesSetLookAt( cEulerAngles* out, const cVector3* eye, const cVector3* target, const cVector3* up );
+//MAGICALAPI_MATH void magicalEulerAnglesSetLookAt( cEulerAngles* out, const cVector3* eye, const cVector3* target, const cVector3* up );
 
 MAGICALAPI_MATH void magicalEulerAnglesFromQuaternion( cEulerAngles* out, const cQuaternion* q );
 MAGICALAPI_MATH void magicalEulerAnglesToQuaternion( cQuaternion* out, const cEulerAngles* ea );

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cQuaternion.h"
+#include "c-quaternion.h"
 
 cBool magicalQuaternionEquals( const cQuaternion* q1, const cQuaternion* q2 )
 {
@@ -326,8 +326,11 @@ void magicalQuaternionMulVector3( cVector3* out, const cQuaternion* q, const cVe
 {
 	// nVidia SDK implementation
 
-	cVector3 uv, uuv;
-	cVector3 qvec = { q->x, q->y, q->z };
+	cVector3 qvec, uv, uuv;
+
+	qvec.x = q->x;
+	qvec.y = q->y;
+	qvec.z = q->z;
 
 	magicalVector3Cross( &uv, &qvec, v );
 	magicalVector3Cross( &uuv, &qvec, &uv );

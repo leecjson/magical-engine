@@ -24,9 +24,9 @@ SOFTWARE.
 #ifndef __PTR_H__
 #define __PTR_H__
 
-#include "platform-macros.h"
-#include "common.h"
-#include "reference.h"
+#include "magical-macros.h"
+#include "Common.h"
+#include "Reference.h"
 
 NS_MAGICAL_BEGIN
 
@@ -58,6 +58,7 @@ public:
 	Ptr( Ptr<T>& rhs );
 	Ptr( Ptr<T>&& rhs );
 	Ptr( Initializer<T>& ir );
+	Ptr( Initializer<T>&& ir );
 	~Ptr( void );
 
 	template< class Tz >

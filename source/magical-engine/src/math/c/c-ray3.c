@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cRay3.h"
+#include "c-ray3.h"
 
 cBool magicalRay3Equals( const cRay3* r31, const cRay3* r32 )
 {
@@ -67,7 +67,11 @@ void magicalRay3Copy( cRay3* out, const cRay3* r3 )
 
 void magicalRay3SetOriginToEnd( cRay3* out, const cVector3* origin, const cVector3* end )
 {
-	cVector3 nd = { end->x - origin->x, end->y - origin->y, end->z - origin->z };
+	cVector3 nd;
+	nd.x = end->x - origin->x;
+	nd.y = end->y - origin->y;
+	nd.z = end->z - origin->z;
+
 	magicalVector3Normalize( &nd, &nd );
 
 	out->ox = origin->x;
@@ -141,21 +145,27 @@ void magicalRay3SetDirection( cRay3* out, const cVector3* direction )
  * discard_inside 是否忽略原点在平面内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-void magicalRay3IntersectsPlane( cRayIntersectResult* out, const cRay3* r3, const cPlane* p, cBool discard_inside )
+cBool magicalRay3IntersectsPlane( float* outt, const cRay3* r3, const cPlane* p, cBool discard_inside )
 {
 	int cp;
 	float dn;
 
 	cVector3 pn;
-	cVector3 o = { r3->ox, r3->oy, r3->oz };
-	cVector3 d = { r3->dx, r3->dy, r3->dz };
+	cVector3 o;
+	o.x = r3->ox;
+	o.y = r3->oy;
+	o.z = r3->oz;
+
+	cVector3 d;
+	d.x = r3->dx;
+	d.y = r3->dy;
+	d.z = r3->dz;
 
 	cp = magicalPlaneClassifyPoint( p, &o );
 	if( cp == 0 )
 	{
-		out->t = 0.0f;
-		out->b = !discard_inside;
-		return;
+		*outt = 0.0f;
+		return !discard_inside;
 	}
 
 	pn.x = p->x;
@@ -167,14 +177,13 @@ void magicalRay3IntersectsPlane( cRayIntersectResult* out, const cRay3* r3, cons
 	{
 		if( ( cp == 1 && dn < -kVectorEpsilon ) || ( cp == -1 && dn > kVectorEpsilon ) )
 		{
-			out->t = ( p->d - magicalVector3Dot( &o, &pn ) ) / dn; 
-			out->b = cTrue;
-			return;
+			*outt = ( p->d - magicalVector3Dot( &o, &pn ) ) / dn; 
+			return cTrue;
 		}
 	}
 
-	out->t = 0.0f;
-	out->b = cFalse;
+	*outt = 0.0f;
+	return cFalse;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -186,7 +195,7 @@ void magicalRay3IntersectsPlane( cRayIntersectResult* out, const cRay3* r3, cons
  * discard_inside 是否忽略原点在包围盒内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, const cAABB3* aabb, cBool discard_inside )
+cBool magicalRay3IntersectsAABB3( float* outt, const cRay3* r3, const cAABB3* aabb, cBool discard_inside )
 {
 	float t;
 	cVector3 p;
@@ -198,9 +207,8 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 		r3->oy <= aabb->maxy &&
 		r3->oz <= aabb->maxz )
 	{
-		out->t = 0.0f;
-		out->b = !discard_inside;
-		return;
+		*outt = 0.0f;
+		return !discard_inside;
 	}
 
 	if( magicalAlmostZero( r3->dx, kVectorEpsilon ) == cFalse )
@@ -223,9 +231,8 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 			if( p.y >= aabb->miny && p.y <= aabb->maxy &&
 				p.z >= aabb->minz && p.z <= aabb->maxz )
 			{
-				out->t = t;
-				out->b = cTrue;
-				return;
+				*outt = t;
+				return cTrue;
 			}
 		}
 	}
@@ -250,9 +257,8 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 			if( p.z >= aabb->minz && p.z <= aabb->maxz &&
 				p.x >= aabb->minx && p.x <= aabb->maxx )
 			{
-				out->t = t;
-				out->b = cTrue;
-				return;
+				*outt = t;
+				return cTrue;
 			}
 		}
 	}
@@ -277,16 +283,15 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
 			if( p.x >= aabb->minx && p.x <= aabb->maxx &&
 				p.y >= aabb->miny && p.y <= aabb->maxy )
 			{
-				out->t = t;
-				out->b = cTrue;
-				return;
+				*outt = t;
+				return cTrue;
 			}
 				
 		}
 	}
 	
-	out->t = 0.0f;
-	out->b = cFalse;
+	*outt = 0.0f;
+	return cFalse;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -299,13 +304,24 @@ void magicalRay3IntersectsAABB3( cRayIntersectResult* out, const cRay3* r3, cons
  * discard_inside 是否忽略原点在球体内的相交检测
  * return 是否相交
  *-----------------------------------------------------------------------------*/
-void magicalRay3IntersectsSphere( cRayIntersectResult* out, const cRay3* r3, const cSphere* sp, cBool discard_inside )
+cBool magicalRay3IntersectsSphere( float* outt, const cRay3* r3, const cSphere* sp, cBool discard_inside )
 {
 	float a, esq, f, fsq, rsq;
 	cVector3 e;
-	cVector3 o = { r3->ox, r3->oy, r3->oz };
-	cVector3 d = { r3->dx, r3->dy, r3->dz };
-	cVector3 c = { sp->x, sp->y, sp->z };
+	cVector3 o;
+	o.x = r3->ox;
+	o.y = r3->oy;
+	o.z = r3->oz;
+
+	cVector3 d;
+	d.x = r3->dx;
+	d.y = r3->dy;
+	d.z = r3->dz;
+
+	cVector3 c;
+	c.x = sp->x;
+	c.y = sp->y;
+	c.z = sp->z;
 
 	magicalVector3Sub( &e, &c, &o );
 
@@ -313,21 +329,19 @@ void magicalRay3IntersectsSphere( cRayIntersectResult* out, const cRay3* r3, con
 	esq = magicalVector3LengthSq( &e );
 	if( esq < rsq )
 	{
-		out->t = 0.0f;
-		out->b = !discard_inside;
-		return;
+		*outt = 0.0f;
+		return !discard_inside;
 	}
 
 	a = magicalVector3Dot( &e, &d );
 	fsq = rsq - esq + a * a;
 	if( fsq <= 0.0f )
 	{
-		out->t = 0.0f;
-		out->b = cFalse;
-		return;
+		*outt = 0.0f;
+		return cFalse;
 	}
 
 	f = sqrtf( fsq );
-	out->t = a - f;
-	out->b = cTrue;
+	*outt = a - f;
+	return cTrue;
 }

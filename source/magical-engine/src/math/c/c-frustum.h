@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_FRUSTUM_H__
 #define __C_FRUSTUM_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #define kFrustumLeft        0
 #define kFrustumRight       1
@@ -40,10 +40,10 @@ typedef struct cFrustum {
 } cFrustum;
 #pragma pack( pop )
 
-#include "cVector3.h"
-#include "cMatrix4.h"
-#include "cAABB3.h"
-#include "cPlane.h"
+#include "c-vector3.h"
+#include "c-matrix4.h"
+#include "c-aabb3.h"
+#include "c-plane.h"
 
 #ifdef __cplusplus
 extern "C" {

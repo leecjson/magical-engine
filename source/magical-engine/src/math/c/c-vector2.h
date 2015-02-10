@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_VECTOR2_H__
 #define __C_VECTOR2_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -34,8 +34,8 @@ typedef struct cVector2 {
 } cVector2;
 #pragma pack( pop )
 
-#include "cVector3.h"
-#include "cVector4.h"
+#include "c-vector3.h"
+#include "c-vector4.h"
 
 #ifdef __cplusplus
 extern "C" {

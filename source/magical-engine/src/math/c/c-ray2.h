@@ -24,9 +24,17 @@ SOFTWARE.
 #ifndef __C_RAY2_H__
 #define __C_RAY2_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
-typedef float cRay2[4];
+#pragma pack( push )
+#pragma pack( 4 )
+typedef struct cRay2 {
+	float ox;
+	float oy;
+	float dx;
+	float dy;
+} cRay2;
+#pragma pack( pop )
 
 #ifdef __cplusplus
 extern "C" {

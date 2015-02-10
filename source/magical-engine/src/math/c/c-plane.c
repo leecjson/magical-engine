@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cPlane.h"
+#include "c-plane.h"
 
 cBool magicalPlaneEquals( const cPlane* p1, const cPlane* p2 )
 {
@@ -204,7 +204,12 @@ void magicalPlaneNormalize( cPlane* out, const cPlane* p )
 void magicalPlaneNearestPoint( cVector3* out, const cPlane* p, const cVector3* point )
 {
 	cVector3 scale_n;
-	cVector3 n = { p->x, p->y, p->z };
+	cVector3 n;
+
+	n.x = p->x;
+	n.y = p->y;
+	n.z = p->z;
+
 	float distance = p->d - p->x * point->x + p->y * point->y + p->z * point->z;
 	
 	magicalVector3Scale( &scale_n, &n, distance );
@@ -241,12 +246,12 @@ int magicalPlaneClassifyPoint( const cPlane* p, const cVector3* point )
 	float distance = p->x * point->x + p->y * point->y + p->z * point->z - p->d;
 
 	if( distance > kVectorEpsilon )
-		return +1;
+		return kPlaneFront;
 
 	if( distance < -kVectorEpsilon )
-		return -1;
+		return kPlaneBehind;
 
-	return 0;
+	return kPlaneOnPlane;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -297,14 +302,14 @@ int magicalPlaneClassifyAABB3( const cPlane* p, const cAABB3* aabb )
 	}
 
 	if( min_d >= p->d ) {
-		return +1;
+		return kPlaneFront;
 	}
 
 	if( max_d <= p->d ) {
-		return -1;
+		return kPlaneBehind;
 	}
 
-	return 0;
+	return kPlaneOnPlane;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -322,12 +327,12 @@ int magicalPlaneClassifySphere( const cPlane* p, const cSphere* sp )
 	float distance = p->x * sp->x + p->y * sp->y + p->z * sp->z - p->d;
 
 	if( distance >= sp->r )
-		return +1;
+		return kPlaneFront;
 
 	if( distance <= -sp->r )
-		return -1;
+		return kPlaneBehind;
 
-	return 0;
+	return kPlaneOnPlane;
 }
 
 /*-----------------------------------------------------------------------------*\
@@ -339,8 +344,15 @@ int magicalPlaneClassifySphere( const cPlane* p, const cSphere* sp )
  *-----------------------------------------------------------------------------*/
 cBool magicalPlaneIntersects( const cPlane* p1, const cPlane* p2 )
 {
-	cVector3 n1 = { p1->x, p1->y, p1->z };
-	cVector3 n2 = { p2->x, p2->y, p2->z };
+	cVector3 n1;
+	n1.x = p1->x;
+	n1.y = p1->y;
+	n1.z = p1->z;
+
+	cVector3 n2;
+	n2.x = p2->x;
+	n2.y = p2->y;
+	n2.z = p2->z;
 
 	if( magicalVector3Equals( &n1, &n2 ) )
 	{
@@ -376,9 +388,9 @@ cBool magicalPlaneIntersectsSphere( const cPlane* p, const cSphere* sp )
 	return magicalPlaneClassifySphere( p, sp ) == 0;
 }
 
-void magicalPlaneIntersectsRay3( cRayIntersectResult* out, const cPlane* p, const cRay3* r3, cBool discard_inside )
+cBool magicalPlaneIntersectsRay3( float* outt, const cPlane* p, const cRay3* r3, cBool discard_inside )
 {
-	magicalRay3IntersectsPlane( out, r3, p, discard_inside );
+	return magicalRay3IntersectsPlane( outt, r3, p, discard_inside );
 }
 
 /*-----------------------------------------------------------------------------*\

@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="demo.cpp" />
-    <ClCompile Include="..\src\main.cpp">
+    <ClCompile Include="..\src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -20,7 +20,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\main.h">
+    <ClInclude Include="..\src\Main.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

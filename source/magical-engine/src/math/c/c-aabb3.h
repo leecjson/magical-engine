@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_AABB3_H__
 #define __C_AABB3_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -38,10 +38,10 @@ typedef struct cAABB3 {
 } cAABB3;
 #pragma pack( pop )
 
-#include "cVector3.h"
-#include "cMatrix4.h"
-#include "cRay3.h"
-#include "cPlane.h"
+#include "c-vector3.h"
+#include "c-matrix4.h"
+#include "c-ray3.h"
+#include "c-plane.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -75,7 +75,7 @@ MAGICALAPI_MATH cBool magicalAABB3Intersects( const cAABB3* aabb1, const cAABB3*
 MAGICALAPI_MATH cBool magicalAABB3IntersectsPart( cAABB3* out, const cAABB3* aabb1, const cAABB3* aabb2 );
 MAGICALAPI_MATH cBool magicalAABB3IntersectsPlane( const cAABB3* aabb, const cPlane* p );
 MAGICALAPI_MATH cBool magicalAABB3IntersectsSphere( const cAABB3* aabb, const cSphere* sp );
-MAGICALAPI_MATH void magicalAABB3IntersectsRay3( cRayIntersectResult* out, const cAABB3* aabb, const cRay3* r3, cBool discard_inside );
+MAGICALAPI_MATH cBool magicalAABB3IntersectsRay3( float* outt, const cAABB3* aabb, const cRay3* r3, cBool discard_inside );
 
 MAGICALAPI_MATH cBool magicalAABB3ContainsPoint( const cAABB3* aabb, const cVector3* point );
 

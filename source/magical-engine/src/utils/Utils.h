@@ -24,8 +24,8 @@ SOFTWARE.
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
-#include "platform-macros.h"
-#include "common.h"
+#include "magical-macros.h"
+#include "Common.h"
 
 #include <stdarg.h>
 

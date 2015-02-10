@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_LINE2_H__
 #define __C_LINE2_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 typedef float cLine2[3];
 

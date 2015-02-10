@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cSphere.h"
+#include "c-sphere.h"
 
 cBool magicalSphereEquals( const cSphere* sp1, const cSphere* sp2 )
 {
@@ -92,8 +92,15 @@ void magicalSphereSetOne( cSphere* out )
 
 cBool magicalSphereIntersects( const cSphere* sp1, const cSphere* sp2 )
 {
-	cVector3 c1 = { sp1->x, sp1->y, sp1->z };
-	cVector3 c2 = { sp2->x, sp2->y, sp2->z };
+	cVector3 c1;
+	c1.x = sp1->x;
+	c1.y = sp1->y;
+	c1.z = sp1->z;
+
+	cVector3 c2;
+	c2.x = sp2->x;
+	c2.y = sp2->y;
+	c2.z = sp2->z;
 
 	return magicalVector3DistanceBetweenSq( &c1, &c2 ) <= ( sp1->r + sp2->r ) * ( sp1->r + sp2->r );
 }
@@ -108,9 +115,9 @@ cBool magicalSphereIntersectsPlane( const cSphere* sp, const cPlane* p )
 	return magicalPlaneIntersectsSphere( p, sp );
 }
 
-void magicalSphereIntersectsRay3( cRayIntersectResult* out, const cSphere* sp, const cRay3* r3, cBool discard_inside )
+cBool magicalSphereIntersectsRay3( float* outt, const cSphere* sp, const cRay3* r3, cBool discard_inside )
 {
-	magicalRay3IntersectsSphere( out, r3, sp, discard_inside );
+	return magicalRay3IntersectsSphere( outt, r3, sp, discard_inside );
 }
 
 cBool magicalSphereContainsPoint( const cSphere* sp, const cVector3* point )

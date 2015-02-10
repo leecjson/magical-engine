@@ -24,9 +24,9 @@ SOFTWARE.
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
-#include "platform-macros.h"
-#include "common.h"
-#include "scene.h"
+#include "magical-macros.h"
+#include "Common.h"
+#include "Scene.h"
 
 NS_MAGICAL_BEGIN
 

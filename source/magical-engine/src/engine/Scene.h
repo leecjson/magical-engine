@@ -24,13 +24,13 @@ SOFTWARE.
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#include "platform-macros.h"
-#include "common.h"
-#include "reference.h"
-#include "scene-element.h"
-#include "scene-node.h"
-#include "scene-object.h"
-#include "camera.h"
+#include "magical-macros.h"
+#include "Common.h"
+#include "Reference.h"
+#include "SceneElement.h"
+#include "SceneNode.h"
+#include "SceneObject.h"
+#include "Camera.h"
 
 #include <vector>
 #include <unordered_set>

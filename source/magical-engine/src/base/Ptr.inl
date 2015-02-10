@@ -80,6 +80,24 @@ Ptr<T>::Ptr( Initializer<T>& ir )
 }
 
 template< class T >
+Ptr<T>::Ptr( Initializer<T>&& ir )
+{
+	if( ir.m_reference )
+	{
+		m_reference = ir.m_reference;
+	}
+}
+
+template< class T >
+Ptr<T>::~Ptr( void )
+{
+	if( m_reference )
+	{
+		m_reference->release();
+	}
+}
+
+template< class T >
 template< class Tz >
 Ptr<T>::Ptr( Ptr<Tz>& rhs )
 {
@@ -100,15 +118,6 @@ Ptr<T>::Ptr( Ptr<Tz>&& rhs )
 	{
 		m_reference = static_cast< Tz* >( ref );
 		rhs.m_reference = nullptr;
-	}
-}
-
-template< class T >
-Ptr<T>::~Ptr( void )
-{
-	if( m_reference )
-	{
-		m_reference->release();
 	}
 }
 

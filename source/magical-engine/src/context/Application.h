@@ -24,8 +24,8 @@ SOFTWARE.
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
-#include "platform-macros.h"
-#include "common.h"
+#include "magical-macros.h"
+#include "Common.h"
 
 #include <functional>
 

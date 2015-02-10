@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __C_MATRIX4_H__
 #define __C_MATRIX4_H__
 
-#include "cUtility.h"
+#include "c-utility.h"
 
 #pragma pack( push )
 #pragma pack( 4 )
@@ -36,12 +36,12 @@ typedef struct cMatrix4 {
 } cMatrix4;
 #pragma pack( pop )
 
-#include "cVector3.h"
-#include "cVector4.h"
-#include "cMatrix3.h"
-#include "cAxisAngle.h"
-#include "cEulerAngles.h"
-#include "cQuaternion.h"
+#include "c-vector3.h"
+#include "c-vector4.h"
+#include "c-matrix3.h"
+#include "c-axis-angle.h"
+#include "c-euler-angles.h"
+#include "c-quaternion.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,17 +59,14 @@ MAGICALAPI_MATH void magicalMatrix4SetLookAt( cMatrix4* out, const cVector3* eye
 MAGICALAPI_MATH void magicalMatrix4SetPerspective( cMatrix4* out, float fov, float aspect, float znear, float zfar );
 MAGICALAPI_MATH void magicalMatrix4SetOrth( cMatrix4* out, float left, float right, float bottom, float top, float znear, float zfar );
 MAGICALAPI_MATH void magicalMatrix4SetTRS( cMatrix4* out, const cVector3* t, const cQuaternion* r, const cVector3* s );
-
-MAGICALAPI_MATH void magicalMatrix4Translation( cMatrix4* out, const cVector3* t );
-MAGICALAPI_MATH void magicalMatrix4TranslationScalars( cMatrix4* out, float x, float y, float z );
-MAGICALAPI_MATH void magicalMatrix4Scale( cMatrix4* out, const cVector3* s );
-MAGICALAPI_MATH void magicalMatrix4ScaleScalars( cMatrix4* out, float x, float y, float z );
-MAGICALAPI_MATH void magicalMatrix4RotationX( cMatrix4* out, float angle );
-MAGICALAPI_MATH void magicalMatrix4RotationY( cMatrix4* out, float angle );
-MAGICALAPI_MATH void magicalMatrix4RotationZ( cMatrix4* out, float angle );
-MAGICALAPI_MATH void magicalMatrix4RotationQuaternion( cMatrix4* out, const cQuaternion* q );
-MAGICALAPI_MATH void magicalMatrix4RotationAxisAngle( cMatrix4* out, const cAxisAngle* aa );
-MAGICALAPI_MATH void magicalMatrix4RotationEulerAngles( cMatrix4* out, const cEulerAngles* ea );
+MAGICALAPI_MATH void magicalMatrix4SetTranslation( cMatrix4* out, const cVector3* t );
+MAGICALAPI_MATH void magicalMatrix4SetScale( cMatrix4* out, const cVector3* s );
+MAGICALAPI_MATH void magicalMatrix4SetRotationX( cMatrix4* out, float angle );
+MAGICALAPI_MATH void magicalMatrix4SetRotationY( cMatrix4* out, float angle );
+MAGICALAPI_MATH void magicalMatrix4SetRotationZ( cMatrix4* out, float angle );
+MAGICALAPI_MATH void magicalMatrix4SetRotationQuaternion( cMatrix4* out, const cQuaternion* q );
+MAGICALAPI_MATH void magicalMatrix4SetRotationAxisAngle( cMatrix4* out, const cAxisAngle* aa );
+MAGICALAPI_MATH void magicalMatrix4SetRotationEulerAngles( cMatrix4* out, const cEulerAngles* ea );
 
 MAGICALAPI_MATH void magicalMatrix4MulScalar( cMatrix4* out, const cMatrix4* m, float a );
 MAGICALAPI_MATH void magicalMatrix4Mul( cMatrix4* out, const cMatrix4* m1, const cMatrix4* m2 );
