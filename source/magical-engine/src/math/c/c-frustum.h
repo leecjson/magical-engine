@@ -49,12 +49,14 @@ typedef struct cFrustum {
 extern "C" {
 #endif
 
-MAGICALAPI_MATH void magicalFrustumFill( cFrustum* out, const cMatrix4* m );
 MAGICALAPI_MATH void magicalFrustumCopy( cFrustum* out, const cFrustum* frustum );
+MAGICALAPI_MATH void magicalFrustumSetZero( cFrustum* out );
 
+MAGICALAPI_MATH void magicalFrustumExtractFromMatrix( cFrustum* out, const cMatrix4* m );
 MAGICALAPI_MATH void magicalFrustumSetPlane( cFrustum* out, const cPlane* p, int which );
+MAGICALAPI_MATH void magicalFrustumGetPlane( cPlane* out, const cFrustum* frustum, int which );
 
-MAGICALAPI_MATH cBool magicalAABB3InsideFrustum( const cAABB3* aabb, const cFrustum* frustum );
+MAGICALAPI_MATH cBool magicalFrustumContainsAABB3( const cFrustum* frustum, const cAABB3* aabb );
 
 
 #ifdef __cplusplus

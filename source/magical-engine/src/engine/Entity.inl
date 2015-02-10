@@ -21,72 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "SceneObject.h"
 
-NS_MAGICAL_BEGIN
-
-define_class_hash_code( SceneObject );
-
-SceneObject::SceneObject( void )
+template< class TBehaviour >
+void Entity::addComponent( void )
 {
-	assign_class_hash_code();
-	m_element_id = SceneElement::Object;
-}
+	size_t key = typeid( TBehaviour ).hash_code();
+	magicalAssert( m_behaviours.find( key ) == m_behaviours.end(), "Invaild, can't add the same one." );
 
-SceneObject::~SceneObject( void )
-{
-	for( const auto& itr : m_behaviours )
+	TBehaviour* behaviour = new TBehaviour();
+	m_behaviours.insert( std::make_pair( key, behaviour ) );
+
+	behaviour->that = dynamic_cast< decltype( behaviour->that ) >( this );
+	magicalAssert( behaviour->that, "Invaild, dose not match target type!" );
+	behaviour->onCreate();
+
+	if( m_is_running )
 	{
-		itr.second->onDestroy();
-		itr.second->release();
+		behaviour->onStart();
 	}
 }
 
-Ptr<SceneObject> SceneObject::create( void )
+template< class TBehaviour >
+void Entity::removeComponent( void )
 {
-	SceneObject* ret = new SceneObject();
-	magicalAssert( ret, "new SceneObject() failed" );
-	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
-}
+	size_t key = typeid( TBehaviour ).hash_code();
 
-Ptr<SceneObject> SceneObject::create( const char* name )
-{
-	SceneObject* ret = new SceneObject();
-	magicalAssert( ret, "new SceneObject() failed" );
-	ret->setName( name );
-	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
-}
-
-void SceneObject::visit( void )
-{
-	SceneNode::visit();
-}
-
-void SceneObject::start( void )
-{
-	for( const auto& itr : m_behaviours )
+	auto itr = m_behaviours.find( key );
+	if( itr != m_behaviours.end() )
 	{
-		itr.second->onStart();
-	}
-	SceneNode::start();
-}
-
-void SceneObject::stop( void )
-{
-	for( const auto& itr : m_behaviours )
-	{
-		itr.second->onStop();
-	}
-	SceneNode::stop();
-}
-
-void SceneObject::update( void )
-{
-	for( const auto& itr : m_behaviours )
-	{
-		itr.second->onUpdate();
+		m_behaviours.erase( itr );
+		itr->second->onDestroy();
+		itr->second->release();
 	}
 }
-
-
-NS_MAGICAL_END

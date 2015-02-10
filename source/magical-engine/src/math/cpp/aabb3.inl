@@ -43,26 +43,6 @@ inline AABB3 AABB3::createFromBox( const Vector3& center, float width, float hei
 	return ret;
 }
 
-inline void AABB3::merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 )
-{
-	magicalAABB3Merge( &out, &aabb1, &aabb2 );
-}
-
-inline void AABB3::transform( AABB3& out, const AABB3& aabb, const Matrix4& m )
-{
-	magicalAABB3Transform( &out, &aabb, &m );
-}
-
-inline void AABB3::centerPoint( Vector3& out, const AABB3& aabb )
-{
-	magicalAABB3CenterPoint( &out, &aabb );
-}
-
-inline void AABB3::nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point )
-{
-	magicalAABB3NearestPoint( &out, &aabb, &point );
-}
-
 inline bool AABB3::equals( const AABB3& aabb ) const
 {
 	return magicalAABB3Equals( this, &aabb );
@@ -116,7 +96,8 @@ inline void AABB3::fromBox( const Vector3& center, float width, float height, fl
 
 inline void AABB3::addPoint( float x, float y, float z )
 {
-	magicalAABB3AddPoint( this, this, &Vector3( x, y, z ) );
+	Vector3 v( x, y, z );
+	magicalAABB3AddPoint( this, this, &v );
 }
 
 inline void AABB3::addPoint( const Vector3& v )
@@ -215,9 +196,9 @@ inline bool AABB3::intersectsSphere( const Sphere& sp ) const
 	return magicalAABB3IntersectsSphere( this, &sp );
 }
 
-inline void AABB3::intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside ) const
+inline bool AABB3::intersectsRay3( float& outt, const Ray3& r3, bool discard_inside ) const
 {
-	magicalAABB3IntersectsRay3( &out, this, &r3, discard_inside );
+	return magicalAABB3IntersectsRay3( &outt, this, &r3, discard_inside );
 }
 
 inline bool AABB3::containsPoint( const Vector3& point ) const
@@ -225,9 +206,30 @@ inline bool AABB3::containsPoint( const Vector3& point ) const
 	return magicalAABB3ContainsPoint( this, &point );
 }
 
-inline bool AABB3::insideFrustum( const Frustum& frustum ) const
+//inline bool AABB3::insideFrustum( const Frustum& frustum ) const
+//{
+//	return magicalAABB3InsideFrustum( this, &frustum );
+//}
+
+
+inline void MathAABB3::merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 )
 {
-	return magicalAABB3InsideFrustum( this, &frustum );
+	magicalAABB3Merge( &out, &aabb1, &aabb2 );
+}
+
+inline void MathAABB3::transform( AABB3& out, const AABB3& aabb, const Matrix4& m )
+{
+	magicalAABB3Transform( &out, &aabb, &m );
+}
+
+inline void MathAABB3::centerPoint( Vector3& out, const AABB3& aabb )
+{
+	magicalAABB3CenterPoint( &out, &aabb );
+}
+
+inline void MathAABB3::nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point )
+{
+	magicalAABB3NearestPoint( &out, &aabb, &point );
 }
 
 NS_MAGICAL_END

@@ -44,14 +44,12 @@ public:
 	static inline AABB3 createZero( void );
 	static inline AABB3 createFromPoints( const Vector3& min, const Vector3& max );
 	static inline AABB3 createFromBox( const Vector3& center, float width, float height, float depth );
-	static inline void merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 );
-	static inline void transform( AABB3& out, const AABB3& aabb, const Matrix4& m );
-	static inline void centerPoint( Vector3& out, const AABB3& aabb );
-	static inline void nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point );
 
 public:
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
+#endif
 	inline bool equals( const AABB3& aabb ) const;
 	inline bool isZero( void ) const;
 	inline bool operator==( const AABB3& aabb ) const;
@@ -84,9 +82,19 @@ public:
 	inline bool intersectsPart( AABB3& out, const AABB3& aabb ) const;
 	inline bool intersectsPlane( const Plane& p ) const;
 	inline bool intersectsSphere( const Sphere& sp ) const;
-	inline void intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside = false ) const;
+	inline bool intersectsRay3( float& outt, const Ray3& r3, bool discard_inside = false ) const;
 	inline bool containsPoint( const Vector3& point ) const;
-	inline bool insideFrustum( const Frustum& frustum ) const;
+
+	//inline bool insideFrustum( const Frustum& frustum ) const;
+};
+
+struct MathAABB3
+{
+public:
+	static inline void merge( AABB3& out, const AABB3& aabb1, const AABB3& aabb2 );
+	static inline void transform( AABB3& out, const AABB3& aabb, const Matrix4& m );
+	static inline void centerPoint( Vector3& out, const AABB3& aabb );
+	static inline void nearestPoint( Vector3& out, const AABB3& aabb, const Vector3& point );
 };
 
 NS_MAGICAL_END

@@ -43,12 +43,12 @@ public:
 	static inline Ray3 createZero( void );
 	static inline Ray3 createFromOriginToEnd( const Vector3& origin, const Vector3& end );
 	static inline Ray3 createFromOriginAndDirection( const Vector3& origin, const Vector3& direction );
-	static inline void getOrigin( Vector3& out, const Ray3& r3 );
-	static inline void getDirection( Vector3& out, const Ray3& r3 );
 
 public:
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
+#endif
 	inline bool equals( const Ray3& r3 ) const;
 	inline bool isZero( void ) const;
 	inline bool operator==( const Ray3& r3 ) const;
@@ -66,18 +66,18 @@ public:
 	inline void setOrigin( const Vector3& origin );
 	inline void setDirection( const Vector3& direction );
 
-	inline void intersectsPlane( RayIntersectResult& out, const Plane& p, bool discard_inside = false ) const;
-	inline void intersectsAABB3( RayIntersectResult& out, const AABB3& aabb, bool discard_inside = false ) const;
-	inline void intersectsSphere( RayIntersectResult& out, const Sphere& sp, bool discard_insid = false ) const;
+	inline bool intersectsPlane( float& outt, const Plane& p, bool discard_inside = false ) const;
+	inline bool intersectsAABB3( float& outt, const AABB3& aabb, bool discard_inside = false ) const;
+	inline bool intersectsSphere( float& outt, const Sphere& sp, bool discard_insid = false ) const;
 };
 
-struct RayIntersectResult : public cRayIntersectResult
+struct MathRay3
 {
 public:
-	RayIntersectResult( void );
-	static void* operator new( size_t s );
-	static void operator delete( void* ptr );
+	static inline void getOrigin( Vector3& out, const Ray3& r3 );
+	static inline void getDirection( Vector3& out, const Ray3& r3 );
 };
+
 
 NS_MAGICAL_END
 

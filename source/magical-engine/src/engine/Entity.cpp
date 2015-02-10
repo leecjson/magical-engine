@@ -30,11 +30,36 @@ define_class_hash_code( Entity );
 Entity::Entity( void )
 {
 	assign_class_hash_code();
+	m_element_id = SceneElement::Entity;
 }
 
 Entity::~Entity( void )
 {
-	
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onDestroy();
+		itr.second->release();
+	}
+}
+
+Ptr<Entity> Entity::create( void )
+{
+	Entity* ret = new Entity();
+	magicalAssert( ret, "new Entity() failed" );
+	return Ptr<Entity>( Initializer<Entity>( ret ) );
+}
+
+Ptr<Entity> Entity::create( const char* name )
+{
+	Entity* ret = new Entity();
+	magicalAssert( ret, "new Entity() failed" );
+	ret->setName( name );
+	return Ptr<Entity>( Initializer<Entity>( ret ) );
+}
+
+void Entity::visit( void )
+{
+	SceneNode::visit();
 }
 
 void Entity::prepare( void )
@@ -42,9 +67,31 @@ void Entity::prepare( void )
 
 }
 
-void Entity::draw( void )
+void Entity::start( void )
 {
-
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onStart();
+	}
+	SceneNode::start();
 }
+
+void Entity::stop( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onStop();
+	}
+	SceneNode::stop();
+}
+
+void Entity::update( void )
+{
+	for( const auto& itr : m_behaviours )
+	{
+		itr.second->onUpdate();
+	}
+}
+
 
 NS_MAGICAL_END

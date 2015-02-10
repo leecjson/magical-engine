@@ -112,9 +112,9 @@ inline bool Sphere::intersectsPlane( const Plane& p ) const
 	return magicalSphereIntersectsPlane( this, &p );
 }
 
-inline void Sphere::intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside ) const
+inline bool Sphere::intersectsRay3( float& outt, const Ray3& r3, bool discard_inside ) const
 {
-	magicalSphereIntersectsRay3( &out, this, &r3, discard_inside );
+	return magicalSphereIntersectsRay3( &outt, this, &r3, discard_inside );
 }
 
 inline bool Sphere::containsPoint( const Vector3& point ) const

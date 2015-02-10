@@ -55,8 +55,7 @@ void MainCameraScript::onUpdate( void )
 }
 
 void mainDelegate( void )
-{ 
-
+{
 	Ptr<Scene> scene = Scene::create();
 	Engine::runScene( scene );
 

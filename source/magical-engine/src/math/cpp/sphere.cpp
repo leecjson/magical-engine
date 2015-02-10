@@ -21,36 +21,64 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+#include "../c/c-vector3.h"
+#include "../c/c-aabb3.h"
+#include "../c/c-sphere.h"
+#include "../c/c-plane.h"
+#include "../c/c-ray3.h"
 
-template< class TBehaviour >
-void SceneObject::addComponent( void )
+#include "utility.h"
+#include "vector3.h"
+#include "aabb3.h"
+#include "sphere.h"
+#include "plane.h"
+#include "ray3.h"
+
+#include "sphere.inl"
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+#include "CachePool.h"
+#endif
+
+NS_MAGICAL_BEGIN
+
+const Sphere Sphere::Zero = Sphere( 0.0f, 0.0f, 0.0f, 0.0f );
+const Sphere Sphere::One = Sphere( 0.0f, 0.0f, 0.0f, 1.0f );
+Sphere Sphere::var = Sphere::Zero;
+
+Sphere::Sphere( float x, float y, float z, float r )
 {
-	size_t key = typeid( TBehaviour ).hash_code();
-	magicalAssert( m_behaviours.find( key ) == m_behaviours.end(), "Invaild, can't add the same one." );
-
-	TBehaviour* behaviour = new TBehaviour();
-	m_behaviours.insert( std::make_pair( key, behaviour ) );
-
-	behaviour->that = dynamic_cast< decltype( behaviour->that ) >( this );
-	magicalAssert( behaviour->that, "Invaild, dose not match target type!" );
-	behaviour->onCreate();
-
-	if( m_is_running )
-	{
-		behaviour->onStart();
-	}
+	magicalSphereFill( this, x, y, z, r );
 }
 
-template< class TBehaviour >
-void SceneObject::removeComponent( void )
+Sphere::Sphere( const Sphere& sp )
 {
-	size_t key = typeid( TBehaviour ).hash_code();
-
-	auto itr = m_behaviours.find( key );
-	if( itr != m_behaviours.end() )
-	{
-		m_behaviours.erase( itr );
-		itr->second->onDestroy();
-		itr->second->release();
-	}
+	magicalSphereCopy( this, &sp );
 }
+
+Sphere::Sphere( void )
+{
+	magicalSphereSetZero( this );
+}
+
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+static CachePool<Sphere> s_sphere_cache_pool( 16, 16 );
+
+void* Sphere::operator new( size_t s )
+{
+	if( s != sizeof( Sphere ) )
+		return ::operator new( s );
+
+	return s_sphere_cache_pool.take();
+}
+
+void Sphere::operator delete( void* ptr )
+{
+	if( ptr == nullptr )
+		return;
+	
+	s_sphere_cache_pool.push( ptr );
+}
+#endif
+
+NS_MAGICAL_END

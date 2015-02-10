@@ -24,25 +24,47 @@ SOFTWARE.
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "PlatformMacros.h"
+#include "magical-macros.h"
 #include "Common.h"
 #include "SceneNode.h"
+#include "Behaviour.h"
+#include <unordered_map>
 
 NS_MAGICAL_BEGIN
+
+using ::std::unordered_map;
 
 class Entity : public SceneNode
 {
 public:
+	friend class Engine;
+	friend class Scene;
 	declare_class_hash_code;
 
 public:
 	Entity( void );
 	virtual ~Entity( void );
+	static Ptr<Entity> create( void );
+	static Ptr<Entity> create( const char* name );
 
 public:
+	template< class TBehaviour >
+	void addComponent( void );
+	template< class TBehaviour >
+	void removeComponent( void );
+
+protected:
+	virtual void visit( void );
 	virtual void prepare( void );
-	virtual void draw( void );
+	virtual void start( void );
+	virtual void stop( void );
+	virtual void update( void );
+
+protected:
+	unordered_map<size_t, BehaviourBase*> m_behaviours;
 };
+
+#include "Entity.inl"
 
 NS_MAGICAL_END
 

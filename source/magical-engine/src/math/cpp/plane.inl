@@ -50,16 +50,6 @@ inline Plane Plane::createFromPoints( const Vector3& a, const Vector3& b, const 
 	return ret;
 }
 
-inline void Plane::getNormal( Vector3& out, const Plane& p )
-{
-	magicalPlaneGetNormal( &out, &p );
-}
-
-inline void Plane::nearestPoint( Vector3& out, const Plane& p, const Vector3& point )
-{
-	magicalPlaneNearestPoint( &out, &p, &point );
-}
-
 inline bool Plane::equals( const Plane& p ) const
 {
 	return magicalPlaneEquals( this, &p );
@@ -136,6 +126,18 @@ inline float Plane::getDistance( void ) const
 	return d;
 }
 
+inline void Plane::normalize( void )
+{
+	magicalPlaneNormalize( this, this );
+}
+
+inline Plane Plane::getNormalized( void ) const
+{
+	Plane ret;
+	magicalPlaneNormalize( &ret, this );
+	return ret;
+}
+
 inline Vector3 Plane::nearestPoint( const Vector3& point ) const
 {
 	Vector3 ret;
@@ -178,14 +180,26 @@ inline bool Plane::intersectsSphere( const Sphere& sp ) const
 	return magicalPlaneIntersectsSphere( this, &sp );
 }
 
-inline void Plane::intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside ) const
+inline bool Plane::intersectsRay3( float& outt, const Ray3& r3, bool discard_inside ) const
 {
-	magicalPlaneIntersectsRay3( &out, this, &r3, discard_inside );
+	return magicalPlaneIntersectsRay3( &outt, this, &r3, discard_inside );
 }
 
 inline bool Plane::containsPoint( const Vector3& point ) const
 {
 	return magicalPlaneContainsPoint( this, &point );
+}
+
+
+
+inline void MathPlane::getNormal( Vector3& out, const Plane& p )
+{
+	magicalPlaneGetNormal( &out, &p );
+}
+
+inline void MathPlane::nearestPoint( Vector3& out, const Plane& p, const Vector3& point )
+{
+	magicalPlaneNearestPoint( &out, &p, &point );
 }
 
 NS_MAGICAL_END

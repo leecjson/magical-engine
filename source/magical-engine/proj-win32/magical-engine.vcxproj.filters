@@ -159,9 +159,6 @@
     <ClInclude Include="..\src\engine\SceneNode.h">
       <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\engine\SceneObject.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\engine\Behaviour.h">
       <Filter>src\engine</Filter>
     </ClInclude>
@@ -197,6 +194,27 @@
     </ClInclude>
     <ClInclude Include="..\src\math\c\c-ray2.h">
       <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\aabb3.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\plane.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\sphere.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\ray3.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\c\c-frustum.h">
+      <Filter>src\math\c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\cpp\frustum.h">
+      <Filter>src\math\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\Entity.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -269,9 +287,6 @@
     <ClCompile Include="..\src\engine\SceneNode.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\engine\SceneObject.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\engine\Behaviour.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
@@ -305,6 +320,27 @@
     <ClCompile Include="..\src\math\c\c-ray2.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\cpp\aabb3.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\plane.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\sphere.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\ray3.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\c\c-frustum.c">
+      <Filter>src\math\c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\cpp\frustum.cpp">
+      <Filter>src\math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\Entity.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\math\cpp\axis-angle.inl">
@@ -337,7 +373,22 @@
     <None Include="..\src\base\Ptr.inl">
       <Filter>src\base</Filter>
     </None>
-    <None Include="..\src\engine\SceneObject.inl">
+    <None Include="..\src\math\cpp\aabb3.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\plane.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\sphere.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\ray3.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\math\cpp\frustum.inl">
+      <Filter>src\math\cpp</Filter>
+    </None>
+    <None Include="..\src\engine\Entity.inl">
       <Filter>src\engine</Filter>
     </None>
   </ItemGroup>

@@ -54,12 +54,12 @@ public:
 	static inline Plane createFromNormalAndDistance( const Vector3& n, float d );
 	static inline Plane createFromNormalAndPoint( const Vector3& n, const Vector3& a );
 	static inline Plane createFromPoints( const Vector3& a, const Vector3& b, const Vector3& c );
-	static inline void getNormal( Vector3& out, const Plane& p );
-	static inline void nearestPoint( Vector3& out, const Plane& p, const Vector3& point );
 
 public:
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
+#endif
 	inline bool equals( const Plane& p ) const;
 	inline bool isZero( void ) const;
 	inline bool operator==( const Plane& p ) const;
@@ -77,6 +77,8 @@ public:
 	inline void setDistance( float d );
 	inline Vector3 getNormal( void ) const;
 	inline float getDistance( void ) const;
+	inline void normalize( void );
+	inline Plane getNormalized( void ) const;
 	inline Vector3 nearestPoint( const Vector3& point ) const;
 	inline float distanceToPoint( const Vector3& point ) const;
 
@@ -86,8 +88,15 @@ public:
 	inline bool intersects( const Plane& p ) const;
 	inline bool intersectsAABB3( const AABB3& aabb ) const;
 	inline bool intersectsSphere( const Sphere& sp ) const;
-	inline void intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside = false ) const;
+	inline bool intersectsRay3( float& outt, const Ray3& r3, bool discard_inside = false ) const;
 	inline bool containsPoint( const Vector3& point ) const;
+};
+
+struct MathPlane
+{
+public:
+	static inline void getNormal( Vector3& out, const Plane& p );
+	static inline void nearestPoint( Vector3& out, const Plane& p, const Vector3& point );
 };
 
 NS_MAGICAL_END

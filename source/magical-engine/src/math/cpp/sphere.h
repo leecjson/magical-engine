@@ -46,8 +46,10 @@ public:
 	static inline Sphere createFromCenterAndRadius( const Vector3& center, float r );
 
 public:
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	static void* operator new( size_t s );
 	static void operator delete( void* ptr );
+#endif
 	inline bool equals( const Sphere& sp ) const;
 	inline bool isZero( void ) const;
 	inline bool isOne( void ) const;
@@ -65,7 +67,7 @@ public:
 	inline bool intersects( const Sphere& sp ) const;
 	inline bool intersectsAABB3( const AABB3& aabb ) const;
 	inline bool intersectsPlane( const Plane& p ) const;
-	inline void intersectsRay3( RayIntersectResult& out, const Ray3& r3, bool discard_inside = false ) const;
+	inline bool intersectsRay3( float& outt, const Ray3& r3, bool discard_inside = false ) const;
 	inline bool containsPoint( const Vector3& point ) const;
 };
 

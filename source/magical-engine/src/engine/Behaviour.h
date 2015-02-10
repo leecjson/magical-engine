@@ -34,7 +34,7 @@ NS_MAGICAL_BEGIN
 class BehaviourBase : public Reference
 {
 public:
-	friend class SceneObject;
+	friend class Entity;
 	virtual void onCreate( void ){}
 	virtual void onStart( void ){}
 	virtual void onStop( void ){}
@@ -46,7 +46,7 @@ template< class T >
 class Behaviour : public BehaviourBase
 {
 public:
-	friend class SceneObject;
+	friend class Entity;
 	declare_class_hash_code;
 	Behaviour( void );
 

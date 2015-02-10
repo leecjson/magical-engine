@@ -24,14 +24,33 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-void Frustum::fromMatrix4( const Matrix4& m )
+inline Frustum Frustum::createFromMatrix4( const Matrix4& m )
 {
-	magicalFrustumFill( this, &m );
+	Frustum f;
+	magicalFrustumExtractFromMatrix( &f, &m );
+	return f;
 }
 
-void Frustum::setPlane( const Plane& p, int which )
+inline void Frustum::extractFromMatrix4( const Matrix4& m )
+{
+	magicalFrustumExtractFromMatrix( this, &m );
+}
+
+inline void Frustum::setPlane( const Plane& p, int which )
 {
 	magicalFrustumSetPlane( this, &p, which );
+}
+
+inline Plane Frustum::getPlane( FrustumPlane which ) const
+{
+	Plane ret;
+	magicalFrustumGetPlane( &ret, this, (int) which );
+	return ret;
+}
+
+inline bool Frustum::containsAABB3( const AABB3& aabb )
+{
+	return magicalFrustumContainsAABB3( this, &aabb );
 }
 
 NS_MAGICAL_END

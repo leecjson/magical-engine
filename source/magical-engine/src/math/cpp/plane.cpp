@@ -21,20 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "../c/cVector3.h"
-#include "../c/cAABB3.h"
-#include "../c/cPlane.h"
-#include "../c/cSphere.h"
-#include "../c/cRay3.h"
+#include "../c/c-vector3.h"
+#include "../c/c-aabb3.h"
+#include "../c/c-plane.h"
+#include "../c/c-sphere.h"
+#include "../c/c-ray3.h"
 
-#include "Utility.h"
-#include "Vector3.h"
-#include "AABB3.h"
-#include "Plane.h"
-#include "Sphere.h"
-#include "Ray3.h"
+#include "utility.h"
+#include "vector3.h"
+#include "aabb3.h"
+#include "plane.h"
+#include "sphere.h"
+#include "ray3.h"
 
-#include "Plane.inl"
+#include "plane.inl"
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachePool.h"
@@ -65,18 +65,13 @@ Plane::Plane( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 static CachePool<Plane> s_plane_cache_pool( 8, 8 );
-#endif
 
 void* Plane::operator new( size_t s )
 {
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Plane ) )
 		return ::operator new( s );
 
 	return s_plane_cache_pool.take();
-#else
-	return ::operator new( s );
-#endif
 }
 
 void Plane::operator delete( void* ptr )
@@ -84,11 +79,8 @@ void Plane::operator delete( void* ptr )
 	if( ptr == nullptr )
 		return;
 	
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	s_plane_cache_pool.push( ptr );
-#else
-	return ::operator delete( ptr );
-#endif
 }
+#endif
 
 NS_MAGICAL_END

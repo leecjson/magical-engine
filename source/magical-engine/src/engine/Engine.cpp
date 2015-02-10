@@ -61,6 +61,10 @@ void Engine::mainLoop( void )
 	if( s_running_scene )
 	{
 		s_running_scene->update();
+	}
+
+	if( s_running_scene )
+	{
 		s_running_scene->visit();
 	}
 }

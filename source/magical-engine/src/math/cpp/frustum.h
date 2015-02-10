@@ -21,27 +21,46 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "../c/cFrustum.h"
-#include "../c/cMatrix4.h"
-#include "../c/cPlane.h"
-
-#include "Utility.h"
-#include "Frustum.h"
-#include "Matrix4.h"
-#include "Plane.h"
-
-#include "Frustum.inl"
+#ifndef __FRUSTUM_H__
+#define __FRUSTUM_H__
 
 NS_MAGICAL_BEGIN
 
-Frustum::Frustum( const Frustum& frustum )
-{
-	magicalFrustumCopy( this, &frustum );
-}
+FORWARD_DECLARE
 
-Frustum::Frustum( void )
+enum class FrustumPlane
 {
+	Left = 0,
+	Right = 1,
+	Top = 2,
+	Bottom = 3,
+	Near = 4,
+	Far = 5
+};
 
-}
+struct Frustum : public cFrustum 
+{
+public:
+	static inline Frustum createFromMatrix4( const Matrix4& m );
+
+public:
+	Frustum( const Frustum& frustum );
+	Frustum( void );
+
+public:
+#if MAGICAL_MATH_CACHED_POOL_ENABLE
+	static void* operator new( size_t s );
+	static void operator delete( void* ptr );
+#endif
+
+public:
+	inline void extractFromMatrix4( const Matrix4& m );
+	inline void setPlane( const Plane& p, int which );
+	inline Plane getPlane( FrustumPlane which ) const;
+
+	inline bool containsAABB3( const AABB3& aabb );
+};
 
 NS_MAGICAL_END
+
+#endif //__FRUSTUM_H__

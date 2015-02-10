@@ -34,7 +34,7 @@ Scene::Scene( void )
 
 Scene::~Scene( void )
 {
-	for( auto itr : m_scene_objects )
+	for( auto itr : m_entities )
 	{
 		itr->release();
 	}
@@ -54,7 +54,7 @@ Ptr<Scene> Scene::create( void )
 
 void Scene::update( void )
 {
-	m_update_queue = m_scene_objects;
+	m_update_queue = m_entities;
 	for( auto itr : m_update_queue )
 	{
 		itr->update();
@@ -70,12 +70,12 @@ void Scene::childEvent( NodeEvent evt, SceneNode* child )
 		{
 		case SceneElement::Node:
 			break;
-		case SceneElement::Object:
-			addSceneObject( (SceneObject*) child );
+		case SceneElement::Entity:
+			addEntity( (Entity*) child );
 			break;
 		case SceneElement::Camera:
 			addCamera( (Camera*) child );
-			addSceneObject( (SceneObject*) child );
+			addEntity( (Entity*) child );
 			break;
 		case SceneElement::Light:
 			break;
@@ -89,11 +89,11 @@ void Scene::childEvent( NodeEvent evt, SceneNode* child )
 		{
 		case SceneElement::Node:
 			break;
-		case SceneElement::Object:
-			removeSceneObject( (SceneObject*) child );
+		case SceneElement::Entity:
+			removeEntity( (Entity*) child );
 			break;
 		case SceneElement::Camera:
-			removeSceneObject( (SceneObject*) child );
+			removeEntity( (Entity*) child );
 			removeCamera( (Camera*) child );
 			break;
 		case SceneElement::Light:
@@ -162,22 +162,22 @@ void Scene::removeCamera( Camera* camera )
 	}
 }
 
-void Scene::addSceneObject( SceneObject* object )
+void Scene::addEntity( Entity* object )
 {
-	auto itr = m_scene_objects.find( object );
-	if( itr == m_scene_objects.end() )
+	auto itr = m_entities.find( object );
+	if( itr == m_entities.end() )
 	{
 		object->retain();
-		m_scene_objects.insert( object );
+		m_entities.insert( object );
 	}
 }
 
-void Scene::removeSceneObject( SceneObject* object )
+void Scene::removeEntity( Entity* object )
 {
-	auto itr = m_scene_objects.find( object );
-	if( itr != m_scene_objects.end() )
+	auto itr = m_entities.find( object );
+	if( itr != m_entities.end() )
 	{
-		m_scene_objects.erase( itr );
+		m_entities.erase( itr );
 		object->release();
 	}
 }

@@ -27,11 +27,11 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "SceneElement.h"
-#include "SceneObject.h"
+#include "Entity.h"
 
 NS_MAGICAL_BEGIN
 
-class Camera : public SceneObject
+class Camera : public Entity
 {
 public:
 	declare_class_hash_code;

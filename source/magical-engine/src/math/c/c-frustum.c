@@ -21,10 +21,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "cFrustum.h"
-#include <memory.h>
+#include "c-frustum.h"
 
-void magicalFrustumFill( cFrustum* out, const cMatrix4* m )
+void magicalFrustumCopy( cFrustum* out, const cFrustum* frustum )
+{
+	for( int i = 0; i < 24; ++ i )
+	{
+		out->frustum[i] = frustum->frustum[i];
+	}
+}
+
+void magicalFrustumSetZero( cFrustum* out )
+{
+	for( int i = 0; i < 24; ++ i )
+	{
+		out->frustum[i] = 0.0f;
+	}
+}
+
+void magicalFrustumExtractFromMatrix( cFrustum* out, const cMatrix4* m )
 {
 	cPlane p;
 
@@ -58,7 +73,7 @@ void magicalFrustumFill( cFrustum* out, const cMatrix4* m )
 	p.z = m->m34 - m->m32;
 	p.d = m->m44 - m->m42;
 	magicalPlaneNormalize( &p, &p );
-	magicalFrustumSetPlane( out, &p, kFrustumBottom );
+	magicalFrustumSetPlane( out, &p, kFrustumTop );
 
 	// near
 	p.x = m->m14 + m->m13;
@@ -77,11 +92,6 @@ void magicalFrustumFill( cFrustum* out, const cMatrix4* m )
 	magicalFrustumSetPlane( out, &p, kFrustumFar );
 }
 
-void magicalFrustumCopy( cFrustum* out, const cFrustum* frustum )
-{
-	memcpy( out, frustum, sizeof( cFrustum ) );
-}
-
 void magicalFrustumSetPlane( cFrustum* out, const cPlane* p, int which )
 {
 	out->frustum[which * 4 + 0] = p->x;
@@ -90,7 +100,15 @@ void magicalFrustumSetPlane( cFrustum* out, const cPlane* p, int which )
 	out->frustum[which * 4 + 3] = p->d;
 }
 
-cBool magicalAABB3InsideFrustum( const cAABB3* aabb, const cFrustum* frustum )
+void magicalFrustumGetPlane( cPlane* out, const cFrustum* frustum, int which )
+{
+	out->x = frustum->frustum[which * 4 + 0];
+	out->y = frustum->frustum[which * 4 + 1];
+	out->z = frustum->frustum[which * 4 + 2];
+	out->d = frustum->frustum[which * 4 + 3];
+}
+
+cBool magicalFrustumContainsAABB3( const cFrustum* frustum, const cAABB3* aabb )
 {
 	cPlane plane;
 	cVector3 nearpoint;
@@ -106,7 +124,7 @@ cBool magicalAABB3InsideFrustum( const cAABB3* aabb, const cFrustum* frustum )
 		nearpoint.y = plane.y < 0 ? aabb->maxy : aabb->miny;
 		nearpoint.z = plane.z < 0 ? aabb->maxz : aabb->minz;
 
-		if( magicalPlaneClassifyPoint( &plane, &nearpoint ) == 1 )
+		if( magicalPlaneClassifyPoint( &plane, &nearpoint ) == kPlaneFront )
 		{
 			return cFalse;
 		}

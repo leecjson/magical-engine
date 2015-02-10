@@ -29,7 +29,6 @@ SOFTWARE.
 #include "Reference.h"
 #include "magical-math.h"
 #include "SceneElement.h"
-
 #include <vector>
 
 NS_MAGICAL_BEGIN

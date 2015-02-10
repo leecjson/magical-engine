@@ -21,20 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "../c/cVector3.h"
-#include "../c/cAABB3.h"
-#include "../c/cPlane.h"
-#include "../c/cSphere.h"
-#include "../c/cRay3.h"
+#include "../c/c-vector3.h"
+#include "../c/c-aabb3.h"
+#include "../c/c-plane.h"
+#include "../c/c-sphere.h"
+#include "../c/c-ray3.h"
 
-#include "Utility.h"
-#include "Vector3.h"
-#include "AABB3.h"
-#include "Plane.h"
-#include "Sphere.h"
-#include "Ray3.h"
+#include "utility.h"
+#include "vector3.h"
+#include "aabb3.h"
+#include "plane.h"
+#include "sphere.h"
+#include "ray3.h"
 
-#include "Ray3.inl"
+#include "ray3.inl"
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 #include "CachePool.h"
@@ -62,18 +62,13 @@ Ray3::Ray3( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 static CachePool<Ray3> s_ray3_cache_pool( 32, 32 );
-#endif
 
 void* Ray3::operator new( size_t s )
 {
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	if( s != sizeof( Ray3 ) )
 		return ::operator new( s );
 
 	return s_ray3_cache_pool.take();
-#else
-	return ::operator new( s );
-#endif
 }
 
 void Ray3::operator delete( void* ptr )
@@ -81,45 +76,8 @@ void Ray3::operator delete( void* ptr )
 	if( ptr == nullptr )
 		return;
 	
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	s_ray3_cache_pool.push( ptr );
-#else
-	return ::operator delete( ptr );
-#endif
 }
-
-RayIntersectResult::RayIntersectResult( void )
-{
-	b = false;
-	t = 0.0f;
-}
-
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
-static CachePool<RayIntersectResult> s_ray_intersect_result_cache_pool( 32, 32 );
 #endif
-
-void* RayIntersectResult::operator new( size_t s )
-{
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
-	if( s != sizeof( RayIntersectResult ) )
-		return ::operator new( s );
-
-	return s_ray_intersect_result_cache_pool.take();
-#else
-	return ::operator new( s );
-#endif
-}
-
-void RayIntersectResult::operator delete( void* ptr )
-{
-	if( ptr == nullptr )
-		return;
-	
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
-	s_ray_intersect_result_cache_pool.push( ptr );
-#else
-	return ::operator delete( ptr );
-#endif
-}
 
 NS_MAGICAL_END

@@ -35,7 +35,7 @@ SOFTWARE.
 #include "vector3.inl"
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
-#include "cache-pool.h"
+#include "CachePool.h"
 #endif
 
 NS_MAGICAL_BEGIN

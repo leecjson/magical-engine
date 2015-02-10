@@ -21,22 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "../c/cVector3.h"
-#include "../c/cMatrix4.h"
-#include "../c/cAABB3.h"
-#include "../c/cRay3.h"
-#include "../c/cPlane.h"
-#include "../c/cSphere.h"
-#include "../c/cFrustum.h"
+#include "../c/c-vector3.h"
+#include "../c/c-matrix4.h"
+#include "../c/c-aabb3.h"
+#include "../c/c-ray3.h"
+#include "../c/c-plane.h"
+#include "../c/c-sphere.h"
+#include "../c/c-frustum.h"
 
-#include "Utility.h"
-#include "Vector3.h"
-#include "Matrix4.h"
-#include "AABB3.h"
-#include "Ray3.h"
-#include "Plane.h"
-#include "Sphere.h"
-#include "Frustum.h"
+#include "utility.h"
+#include "vector3.h"
+#include "matrix4.h"
+#include "aabb3.h"
+#include "ray3.h"
+#include "plane.h"
+#include "sphere.h"
+//#include "frustum.h"
 
 #include "AABB3.inl"
 
@@ -71,18 +71,13 @@ AABB3::AABB3( void )
 
 #if MAGICAL_MATH_CACHED_POOL_ENABLE
 static CachePool<AABB3> s_aabb3_cache_pool( 16, 16 );
-#endif
 
 void* AABB3::operator new( size_t s )
 {
 	if( s != sizeof( AABB3 ) )
 		return ::operator new( s );
 
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	return s_aabb3_cache_pool.take();
-#else
-	return ::operator new( s );
-#endif
 }
 
 void AABB3::operator delete( void* ptr )
@@ -90,11 +85,10 @@ void AABB3::operator delete( void* ptr )
 	if( ptr == nullptr )
 		return;
 	
-#if MAGICAL_MATH_CACHED_POOL_ENABLE
 	s_aabb3_cache_pool.push( ptr );
-#else
-	return ::operator delete( ptr );
-#endif
 }
+#endif
+
+
 
 NS_MAGICAL_END

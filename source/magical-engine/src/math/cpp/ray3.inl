@@ -43,16 +43,6 @@ inline Ray3 Ray3::createFromOriginAndDirection( const Vector3& origin, const Vec
 	return ret;
 }
 
-inline void Ray3::getOrigin( Vector3& out, const Ray3& r3 )
-{
-	magicalRay3GetOrigin( &out, &r3 );
-}
-
-inline void Ray3::getDirection( Vector3& out, const Ray3& r3 )
-{
-	magicalRay3GetDirection( &out, &r3 );
-}
-
 inline bool Ray3::equals( const Ray3& r3 ) const
 {
 	return magicalRay3Equals( this, &r3 );
@@ -124,19 +114,30 @@ inline void Ray3::setDirection( const Vector3& direction )
 	magicalRay3SetDirection( this, &direction );
 }
 
-inline void Ray3::intersectsPlane( RayIntersectResult& out, const Plane& p, bool discard_inside ) const
+inline bool Ray3::intersectsPlane( float& outt, const Plane& p, bool discard_inside ) const
 {
-	return magicalRay3IntersectsPlane( &out, this, &p, discard_inside );
+	return magicalRay3IntersectsPlane( &outt, this, &p, discard_inside );
 }
 
-inline void Ray3::intersectsAABB3( RayIntersectResult& out, const AABB3& aabb, bool discard_inside ) const
+inline bool Ray3::intersectsAABB3( float& outt, const AABB3& aabb, bool discard_inside ) const
 {
-	return magicalRay3IntersectsAABB3( &out, this, &aabb, discard_inside );
+	return magicalRay3IntersectsAABB3( &outt, this, &aabb, discard_inside );
 }
 
-inline void Ray3::intersectsSphere( RayIntersectResult& out, const Sphere& sp, bool discard_inside ) const
+inline bool Ray3::intersectsSphere( float& outt, const Sphere& sp, bool discard_inside ) const
 {
-	return magicalRay3IntersectsSphere( &out, this, &sp, discard_inside );
+	return magicalRay3IntersectsSphere( &outt, this, &sp, discard_inside );
+}
+
+
+inline void MathRay3::getOrigin( Vector3& out, const Ray3& r3 )
+{
+	magicalRay3GetOrigin( &out, &r3 );
+}
+
+inline void MathRay3::getDirection( Vector3& out, const Ray3& r3 )
+{
+	magicalRay3GetDirection( &out, &r3 );
 }
 
 NS_MAGICAL_END

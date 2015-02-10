@@ -29,7 +29,7 @@ SOFTWARE.
 #include "Reference.h"
 #include "SceneElement.h"
 #include "SceneNode.h"
-#include "SceneObject.h"
+#include "Entity.h"
 #include "Camera.h"
 
 #include <vector>
@@ -54,20 +54,21 @@ public:
 
 protected:
 	virtual void update( void );
-	
-protected:
 	virtual void childEvent( NodeEvent evt, SceneNode* child );
 	virtual void childEvent( NodeEvent evt, const Children& children );
+
+protected:	
 	void addCamera( Camera* camera );
 	void removeCamera( Camera* camera );
-	void addSceneObject( SceneObject* object );
-	void removeSceneObject( SceneObject* object );
+	void addEntity( Entity* entity );
+	void removeEntity( Entity* entity );
 	
 protected:
-	unordered_set<SceneObject*> m_scene_objects;
+	unordered_set<Entity*> m_entities;
 	unordered_set<Camera*> m_cameras;
 
-	unordered_set<SceneObject*> m_update_queue;
+protected:
+	unordered_set<Entity*> m_update_queue;
 };
 
 NS_MAGICAL_END

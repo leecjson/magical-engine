@@ -397,7 +397,11 @@ cBool magicalAABB3IntersectsSphere( const cAABB3* aabb, const cSphere* sp )
 {
 	float distance;
 	cVector3 nearest;
-	cVector3 center = { sp->x, sp->y, sp->z };
+	cVector3 center;
+
+	center.x = sp->x;
+	center.y = sp->y;
+	center.z = sp->z;
 
 	magicalAABB3NearestPoint( &nearest, aabb, &center );
 	distance = magicalVector3DistanceBetweenSq( &nearest, &center );
