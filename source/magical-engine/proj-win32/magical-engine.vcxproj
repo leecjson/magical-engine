@@ -28,7 +28,6 @@
     <ClInclude Include="..\src\engine\Engine.h" />
     <ClInclude Include="..\src\engine\Entity.h" />
     <ClInclude Include="..\src\engine\Scene.h" />
-    <ClInclude Include="..\src\engine\SceneElement.h" />
     <ClInclude Include="..\src\engine\SceneObject.h" />
     <ClInclude Include="..\src\engine\Viewport.h" />
     <ClInclude Include="..\src\include\magical-engine.h" />

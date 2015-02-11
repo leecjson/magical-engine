@@ -38,6 +38,14 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+enum class SceneElement
+{
+	Node,
+	Entity,
+	Camera,
+	Light,
+};
+
 using ::std::string;
 using ::std::unordered_set;
 

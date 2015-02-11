@@ -21,14 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SCENE_OBJECT_H__
-#define __SCENE_OBJECT_H__
+#ifndef __OBJECT_H__
+#define __OBJECT_H__
 
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
 #include "magical-math.h"
-#include "SceneElement.h"
+//#include "SceneElement.h"
 #include <vector>
 
 NS_MAGICAL_BEGIN
@@ -52,10 +52,8 @@ enum class NodeEvent
 class SceneObject : public Reference
 {
 public:
-	friend class Scene;
-	friend class Engine;
-	typedef vector<SceneObject*> Children;
 	declare_class_hash_code;
+	typedef vector<SceneObject*> Children;
 	
 public:
 	SceneObject( void );
@@ -63,7 +61,7 @@ public:
 	static Ptr<SceneObject> create( void );
 	static Ptr<SceneObject> create( const char* name );
 
-protected:
+public:
 	virtual void visit( void );
 	virtual void start( void );
 	virtual void stop( void );
@@ -135,7 +133,7 @@ protected:
 
 protected:
 	string m_name;
-	SceneElement m_element_id;
+	//SceneElement m_element_id;
 	bool m_is_visible = false;
 	bool m_is_running = false;
 	Children m_children;
@@ -155,4 +153,4 @@ protected:
 
 NS_MAGICAL_END
 
-#endif //__SCENE_OBJECT_H__
+#endif //__OBJECT_H__
