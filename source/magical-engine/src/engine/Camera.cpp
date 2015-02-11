@@ -25,6 +25,11 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+enum
+{
+	kTsScaleDirty
+};
+
 define_class_hash_code( Camera );
 
 Camera::Camera( void )
@@ -53,9 +58,35 @@ Ptr<Camera> Camera::create( const char* name )
 	return Ptr<Camera>( Initializer<Camera>( ret ) );
 }
 
+void Camera::setOrth( float left, float right, float bottom, float top, float znear, float zfar )
+{
+	m_left = left;
+	m_right = right;
+	m_bottom = bottom;
+	m_top = top;
+	m_znear = znear;
+	m_zfar = zfar;
+
+	m_projection = Projection::Orth;
+
+	//m_projection_matrix.setOrth( left, right, bottom, top, znear, zfar );
+}
+
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 {
-	m_projection_matrix.setPerspective( fov, aspect, znear, zfar );
+	m_fov = fov;
+	m_aspect = aspect;
+	m_znear = znear;
+	m_zfar = zfar;
+
+	m_projection = Projection::Perspective;
+
+	//m_projection_matrix.setPerspective( fov, aspect, znear, zfar );
+}
+
+const Matrix4& Camera::getViewMatrix( void ) const
+{
+	return Matrix4();
 }
 
 const Matrix4& Camera::getProjectionMatrix( void ) const

@@ -53,7 +53,7 @@ public:
 
 private:
 	char* m_data = nullptr;
-	uint32_t m_size = 0;
+	size_t m_size = 0;
 };
 
 NS_MAGICAL_END

@@ -24,37 +24,32 @@ SOFTWARE.
 #ifndef __VIEWPORT_H__
 #define __VIEWPORT_H__
 
-#include "PlatformMacros.h"
+#include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
 
-//class Viewport : public Reference
-//{
-//public:
-//	Viewport( void );
-//	virtual ~Viewport( void );
-//
-//public:
-//	static Shared<Viewport> create( void );
-//	
-//public:
-//	void set( int x, int y, int width, int height );
-//	void setX( int x );
-//	void setY( int y );
-//	void setWidth( int width );
-//	void setHeight( int height );
-//	int getX( void ) const;
-//	int getY( void ) const;
-//	int getWidth( void ) const;
-//	int getHeight( void ) const;
-//
-//private:
-//	int _x = 0;
-//	int _y = 0;
-//	int _width = 0;
-//	int _height = 0;
-//};
+NS_MAGICAL_BEGIN
 
+class Viewport : public Reference
+{
+public:
+	Viewport( void );
+	virtual ~Viewport( void );
 
+public:
+	static Ptr<Viewport> create( void );
+	static Ptr<Viewport> create( float x, float y, float w, float h );
+
+public:
+	void set( int x, int y, int w, int h );
+
+public:
+	int x = 0;
+	int y = 0;
+	int h = 0;
+	int w = 0;
+};
+
+NS_MAGICAL_END
 
 #endif //__VIEWPORT_H__

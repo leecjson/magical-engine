@@ -26,15 +26,15 @@ SOFTWARE.
 
 #include "magical-macros.h"
 #include "Common.h"
-#include "SceneNode.h"
 #include "Behaviour.h"
+#include "SceneObject.h"
 #include <unordered_map>
 
 NS_MAGICAL_BEGIN
 
 using ::std::unordered_map;
 
-class Entity : public SceneNode
+class Entity : public SceneObject
 {
 public:
 	friend class Engine;

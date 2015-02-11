@@ -31,6 +31,13 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
+enum class Projection
+{
+	None,
+	Orth,
+	Perspective
+};
+
 class Camera : public Entity
 {
 public:
@@ -43,16 +50,32 @@ public:
 	static Ptr<Camera> create( const char* name );
 
 public:
+	void setOrth( float left, float right, float bottom, float top, float znear, float zfar );
 	void setPerspective( float fov, float aspect, float znear, float zfar );
+
+	const Matrix4& getViewMatrix( void ) const;
 	const Matrix4& getProjectionMatrix( void ) const;
 
 protected:
 	bool m_is_active = false;
+	bool m_is_frustum_cull_enalbed = true;
+
+	float m_left = 0.0f;
+	float m_right = 0.0f;
+	float m_bottom = 0.0f;
+	float m_top = 0.0f;
+	float m_fov = 60.0f;
+	float m_aspect = 0.0f;
+	float m_znear = 0.3f;
+	float m_zfar = 1000.0f;
+	Projection m_projection = Projection::Perspective;
+
+	Matrix4 m_view_matrix;
 	Matrix4 m_projection_matrix;
+	Matrix4 m_view_projection_matrix;
+	Frustum m_frustum;
 };
 
 NS_MAGICAL_END
-
-
 
 #endif //__CAMERA_H__

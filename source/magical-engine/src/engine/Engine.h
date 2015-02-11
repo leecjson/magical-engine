@@ -39,12 +39,11 @@ public:
 public:
 	static void mainLoop( void );
 	static float deltaTime( void );
-	static void runScene( Ptr<Scene>& scene );
+	static void runScene( const Ptr<Scene>& scene );
 	static Scene* runningScene( void );
 
 private:
 	static void calcDeltaTime( void );
-	static void setNextScene( void );
 };
 
 NS_MAGICAL_END

@@ -21,8 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SCENE_NODE_H__
-#define __SCENE_NODE_H__
+#ifndef __SCENE_OBJECT_H__
+#define __SCENE_OBJECT_H__
 
 #include "magical-macros.h"
 #include "Common.h"
@@ -49,19 +49,19 @@ enum class NodeEvent
 	Remove,
 };
 
-class SceneNode : public Reference
+class SceneObject : public Reference
 {
 public:
 	friend class Scene;
 	friend class Engine;
-	typedef vector<SceneNode*> Children;
+	typedef vector<SceneObject*> Children;
 	declare_class_hash_code;
 	
 public:
-	SceneNode( void );
-	virtual ~SceneNode( void );
-	static Ptr<SceneNode> create( void );
-	static Ptr<SceneNode> create( const char* name );
+	SceneObject( void );
+	virtual ~SceneObject( void );
+	static Ptr<SceneObject> create( void );
+	static Ptr<SceneObject> create( const char* name );
 
 protected:
 	virtual void visit( void );
@@ -77,14 +77,14 @@ public:
 	SceneElement getElementId( void ) const { return m_element_id; }
 
 public:
-	bool isChildOf( const Ptr<SceneNode>& parent ) const;
+	bool isChildOf( const Ptr<SceneObject>& parent ) const;
 	size_t childCount( void ) const { return m_children.size(); }
-	SceneNode* getParent( void ) const { return m_parent; }
-	SceneNode* findChild( const char* name ) const;
-	SceneNode* childAtIndex( size_t i ) const;
-	void addChild( const Ptr<SceneNode>& child );
-	void setParent( const Ptr<SceneNode>& parent );
-	void removeChild( const Ptr<SceneNode>& child );
+	SceneObject* getParent( void ) const { return m_parent; }
+	SceneObject* findChild( const char* name ) const;
+	SceneObject* childAtIndex( size_t i ) const;
+	void addChild( const Ptr<SceneObject>& child );
+	void setParent( const Ptr<SceneObject>& parent );
+	void removeChild( const Ptr<SceneObject>& child );
 	void removeAllChildren( void );
 	void removeSelf( void );
 
@@ -130,7 +130,7 @@ protected:
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
-	virtual void childEvent( NodeEvent evt, SceneNode* child );
+	virtual void childEvent( NodeEvent evt, SceneObject* child );
 	virtual void childEvent( NodeEvent evt, const Children& children );
 
 protected:
@@ -138,8 +138,8 @@ protected:
 	SceneElement m_element_id;
 	bool m_is_visible = false;
 	bool m_is_running = false;
-	SceneNode* m_parent = nullptr;
 	Children m_children;
+	SceneObject* m_parent = nullptr;
 	bool m_inherit_scale = true;
 	bool m_inherit_rotation = true;
 	mutable int m_ts_dirty_info;
@@ -155,4 +155,4 @@ protected:
 
 NS_MAGICAL_END
 
-#endif //__SCENE_NODE_H__
+#endif //__SCENE_OBJECT_H__

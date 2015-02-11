@@ -56,7 +56,14 @@ void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
-	setNextScene();
+	if( s_next_scene )
+	{
+		if( s_running_scene )
+			s_running_scene->stop();
+
+		magicalSafeMoveNull( s_running_scene, s_next_scene );
+		s_running_scene->start();
+	}
 
 	if( s_running_scene )
 	{
@@ -74,7 +81,7 @@ float Engine::deltaTime( void )
 	return s_delta_time;
 }
 
-void Engine::runScene( Ptr<Scene>& scene )
+void Engine::runScene( const Ptr<Scene>& scene )
 {
 	Scene* rscene = scene.get();
 	magicalAssert( rscene, "should not be nullptr." );
@@ -93,18 +100,6 @@ void Engine::calcDeltaTime( void )
 	int64_t now = TimeUtils::currentMicrosecondsTime();
 	s_delta_time = MAX( 0.0, ( now - s_last_update_time ) / 1000000.0 );
 	s_last_update_time = now;
-}
-
-void Engine::setNextScene( void )
-{
-	if( s_next_scene )
-	{
-		if( s_running_scene )
-			s_running_scene->stop();
-
-		magicalSafeMoveNull( s_running_scene, s_next_scene );
-		s_running_scene->start();
-	}
 }
 
 NS_MAGICAL_END
