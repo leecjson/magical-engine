@@ -52,6 +52,41 @@ Ptr<Scene> Scene::create( void )
 	return Ptr<Scene>( Initializer<Scene>( ret ) );
 }
 
+void Scene::addChild( const Ptr<SceneObject>& child )
+{
+	SceneObject* rchild = child.get();
+	magicalAssert( rchild, "Invaild! should not be nullptr" );
+	magicalAssert( rchild != this, "Invaild! can't add self as a child" );
+	magicalAssert( rchild->m_parent == nullptr, "Invaild! already has a parent" );
+
+	rchild->m_parent = this;
+
+	rchild->retain();
+	m_children.push_back( rchild );
+	rchild->setRootScene( this );
+
+	rchild->start();
+	link( rchild );
+}
+
+void Scene::visit( void )
+{
+	if( !m_is_visible )
+		return;
+
+	if( m_children.empty() )
+		return;
+
+	for( int i = 0; i < 1; ++i )
+	{
+		// setviewport
+		for( auto child : m_children )
+		{
+			child->visit( camera );
+		}
+	}
+}
+
 void Scene::update( void )
 {
 	m_update_queue = m_entities;
@@ -61,47 +96,20 @@ void Scene::update( void )
 	}
 }
 
-void Scene::childEvent( NodeEvent evt, SceneNode* child )
+void Scene::link( SceneObject* child )
 {
-	switch( evt )
+	switch( child->elementEnum() )
 	{
-	case NodeEvent::Add:
-		switch( child->getElementId() )
-		{
-		case SceneElement::Node:
-			break;
-		case SceneElement::Entity:
-			addEntity( (Entity*) child );
-			break;
-		case SceneElement::Camera:
-			addCamera( (Camera*) child );
-			addEntity( (Entity*) child );
-			break;
-		case SceneElement::Light:
-			break;
-		default:
-			magicalAssert( false, "Invaild!" );
-			break;
-		}
+	case Element::Object:
 		break;
-	case NodeEvent::Remove:
-		switch( child->getElementId() )
-		{
-		case SceneElement::Node:
-			break;
-		case SceneElement::Entity:
-			removeEntity( (Entity*) child );
-			break;
-		case SceneElement::Camera:
-			removeEntity( (Entity*) child );
-			removeCamera( (Camera*) child );
-			break;
-		case SceneElement::Light:
-			break;
-		default:
-			magicalAssert( false, "Invaild!" );
-			break;
-		}
+	case Element::Entity:
+		addEntity( (Entity*)child );
+		break;
+	case Element::Camera:
+		addCamera( (Camera*)child );
+		addEntity( (Entity*)child );
+		break;
+	case Element::Light:
 		break;
 	default:
 		magicalAssert( false, "Invaild!" );
@@ -110,15 +118,33 @@ void Scene::childEvent( NodeEvent evt, SceneNode* child )
 
 	for( auto itr : child->m_children )
 	{
-		childEvent( evt, itr );
+		link( itr );
 	}
 }
 
-void Scene::childEvent( NodeEvent evt, const Children& children )
+void Scene::unlink( SceneObject* child )
 {
-	for( auto itr : children )
+	switch( child->elementEnum() )
 	{
-		childEvent( evt, itr );
+	case Element::Object:
+		break;
+	case Element::Entity:
+		removeEntity( (Entity*)child );
+		break;
+	case Element::Camera:
+		removeEntity( (Entity*)child );
+		removeCamera( (Camera*)child );
+		break;
+	case Element::Light:
+		break;
+	default:
+		magicalAssert( false, "Invaild!" );
+		break;
+	}
+
+	for( auto itr : child->m_children )
+	{
+		unlink( itr );
 	}
 }
 

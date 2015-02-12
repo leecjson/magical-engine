@@ -28,7 +28,7 @@ SOFTWARE.
 //#include "LuaSystem.h"
 //#include "RendererSystem.h"
 #include "Application.h"
-#include "SceneNode.h"
+#include "SceneObject.h"
 
 NS_MAGICAL_BEGIN
 
@@ -67,12 +67,10 @@ void Engine::mainLoop( void )
 
 	if( s_running_scene )
 	{
-		s_running_scene->update();
-	}
-
-	if( s_running_scene )
-	{
-		s_running_scene->visit();
+		Scene* scene = s_running_scene;
+		scene->update();
+		scene->transform();
+		scene->visit();
 	}
 }
 

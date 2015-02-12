@@ -27,7 +27,6 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "SceneNode.h"
 
 NS_MAGICAL_BEGIN
 
@@ -37,9 +36,9 @@ public:
 	friend class Entity;
 	virtual void onCreate( void ){}
 	virtual void onStart( void ){}
+	virtual void onUpdate( void ){}
 	virtual void onStop( void ){}
 	virtual void onDestroy( void ){}
-	virtual void onUpdate( void ){}
 };
 
 template< class T >

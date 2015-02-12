@@ -216,6 +216,9 @@
     <ClInclude Include="..\src\engine\SceneObject.h">
       <Filter>src\engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\engine\Element.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\math\c\c-vector2.c">

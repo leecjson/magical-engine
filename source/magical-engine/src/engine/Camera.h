@@ -26,7 +26,6 @@ SOFTWARE.
 
 #include "magical-macros.h"
 #include "Common.h"
-#include "SceneElement.h"
 #include "Entity.h"
 
 NS_MAGICAL_BEGIN
@@ -50,11 +49,18 @@ public:
 	static Ptr<Camera> create( const char* name );
 
 public:
+	void setActive( bool active, bool others_inactive = true );
+	bool isActived( void ) const { return m_is_active; }
+
+public:
 	void setOrth( float left, float right, float bottom, float top, float znear, float zfar );
 	void setPerspective( float fov, float aspect, float znear, float zfar );
 
 	const Matrix4& getViewMatrix( void ) const;
 	const Matrix4& getProjectionMatrix( void ) const;
+
+public:
+	virtual void transform( void );
 
 protected:
 	bool m_is_active = false;
@@ -68,12 +74,23 @@ protected:
 	float m_aspect = 0.0f;
 	float m_znear = 0.3f;
 	float m_zfar = 1000.0f;
-	Projection m_projection = Projection::Perspective;
-
+	
 	Matrix4 m_view_matrix;
 	Matrix4 m_projection_matrix;
 	Matrix4 m_view_projection_matrix;
 	Frustum m_frustum;
+	Projection m_projection = Projection::Perspective;
+
+public:
+	void setViewport( int x, int y, int w, int h );
+	void setViewport( const Rect& rect );
+
+protected:
+	int m_viewport_zorder = 0;
+	int m_viewport_x = 0.0f;
+	int m_viewport_y = 0.0f;
+	int m_viewport_w = 0.0f;
+	int m_viewport_h = 0.0f;
 };
 
 NS_MAGICAL_END

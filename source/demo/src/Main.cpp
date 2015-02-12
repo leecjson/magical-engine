@@ -28,6 +28,7 @@ USING_NS_MAGICAL;
 
 void MainCameraScript::onCreate( void )
 {
+	that->setViewport( Rect{ 0, 0, 960, 640 } );
 	that->setPosition( Vector2::Zero );
 	that->lookAt( 1, 1, 1 );
 
@@ -60,9 +61,8 @@ void mainDelegate( void )
 	Engine::runScene( scene );
 
 	Ptr<Camera> main_camera = Camera::create( "Main Camera" );
-	main_camera->setPosition( Vector3::Zero );
-	main_camera->lookAt( 1, 1, 1 );
 	main_camera->addComponent<MainCameraScript>();
+	main_camera->setVisible( true );
 	scene->addChild( main_camera );
 
 	/*Ptr<SceneObject> cube = SceneObject::create( "Cube" );

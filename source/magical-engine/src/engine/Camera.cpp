@@ -25,17 +25,12 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-enum
-{
-	kTsScaleDirty
-};
-
 define_class_hash_code( Camera );
 
 Camera::Camera( void )
 {
 	assign_class_hash_code();
-	m_element_id = SceneElement::Camera;
+	m_element_enum = Element::Camera;
 }
 
 Camera::~Camera( void )
@@ -56,6 +51,11 @@ Ptr<Camera> Camera::create( const char* name )
 	magicalAssert( ret, "new Camera() failed" );
 	ret->setName( name );
 	return Ptr<Camera>( Initializer<Camera>( ret ) );
+}
+
+void Camera::setActive( bool active, bool others_inactive )
+{
+	if( m_is_active == active )
 }
 
 void Camera::setOrth( float left, float right, float bottom, float top, float znear, float zfar )
@@ -92,6 +92,51 @@ const Matrix4& Camera::getViewMatrix( void ) const
 const Matrix4& Camera::getProjectionMatrix( void ) const
 {
 	return m_projection_matrix;
+}
+
+void Camera::transform( void )
+{
+	if( !m_is_visible )
+		return;
+
+	int info = m_ts_dirty_info;
+
+	if( m_ts_dirty != kTsClean )
+	{
+		const Quaternion& r = getDerivedRotation();
+		const Vector3& s = getDerivedScale();
+		const Vector3& t = getDerivedPosition();
+
+		m_local_to_world_matrix.setTRS( t, r, s );
+		m_ts_dirty = false;
+	}
+
+	if( !m_children.empty() )
+	{
+		for( auto child : m_children )
+		{
+			if( info != kTsClean )
+				child->transformDirty( info );
+
+			child->transform();
+		}
+	}
+}
+
+void Camera::setViewport( int x, int y, int w, int h )
+{
+	m_viewport_x = x;
+	m_viewport_y = y;
+	m_viewport_w = w;
+	m_viewport_h = h;
+}
+
+void Camera::setViewport( const Rect& rect )
+{
+	m_viewport_x = rect.x;
+	m_viewport_y = rect.y;
+	m_viewport_w = rect.w;
+	m_viewport_h = rect.h;
 }
 
 NS_MAGICAL_END

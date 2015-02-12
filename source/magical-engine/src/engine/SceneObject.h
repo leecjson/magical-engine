@@ -27,14 +27,16 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
+#include "Element.h"
 #include "magical-math.h"
-//#include "SceneElement.h"
 #include <vector>
 
 NS_MAGICAL_BEGIN
 
 using ::std::string;
 using ::std::vector;
+class Scene;
+class Camera;
 
 enum class Space
 {
@@ -43,17 +45,20 @@ enum class Space
 	World,
 };
 
-enum class NodeEvent
+enum
 {
-	Add,
-	Remove,
+	kTsClean = 0x00,
+	kTsTranslationDirty = 0x01,
+	kTsRotationDirty = 0x02,
+	kTsScaleDirty = 0x04,
 };
 
 class SceneObject : public Reference
 {
 public:
-	declare_class_hash_code;
+	friend class Scene;
 	typedef vector<SceneObject*> Children;
+	declare_class_hash_code;
 	
 public:
 	SceneObject( void );
@@ -62,17 +67,12 @@ public:
 	static Ptr<SceneObject> create( const char* name );
 
 public:
-	virtual void visit( void );
-	virtual void start( void );
-	virtual void stop( void );
-
-public:
 	void setName( const char* name );
 	const string& getName( void ) const { return m_name; }
 	void setVisible( bool visible );
 	bool isVisible( void ) const { return m_is_visible; }
 	bool isRunning( void ) const { return m_is_running; }
-	SceneElement getElementId( void ) const { return m_element_id; }
+	Element elementEnum( void ) const { return m_element_enum; }
 
 public:
 	bool isChildOf( const Ptr<SceneObject>& parent ) const;
@@ -123,17 +123,25 @@ public:
 	void setScale( float x, float y, float z );
 	const Vector3& getScale( void ) const;
 
-protected:
+public:
+	virtual void link( SceneObject* child );
+	virtual void unlink( SceneObject* child );
+	virtual void visit( Camera* camera );
+	virtual void start( void );
+	virtual void stop( void );
+	virtual void transform( void );
+
+public:
+	void setRootScene( Scene* scene );
 	void transformDirty( int info );
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
-	virtual void childEvent( NodeEvent evt, SceneObject* child );
-	virtual void childEvent( NodeEvent evt, const Children& children );
 
 protected:
 	string m_name;
-	//SceneElement m_element_id;
+	Scene* m_root_scene = nullptr;
+	Element m_element_enum;
 	bool m_is_visible = false;
 	bool m_is_running = false;
 	Children m_children;

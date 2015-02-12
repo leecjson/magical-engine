@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Entity.h"
+#include "Scene.h"
 
 NS_MAGICAL_BEGIN
 
@@ -30,7 +31,7 @@ define_class_hash_code( Entity );
 Entity::Entity( void )
 {
 	assign_class_hash_code();
-	m_element_id = SceneElement::Entity;
+	m_element_enum = Element::Entity;
 }
 
 Entity::~Entity( void )
@@ -57,9 +58,18 @@ Ptr<Entity> Entity::create( const char* name )
 	return Ptr<Entity>( Initializer<Entity>( ret ) );
 }
 
-void Entity::visit( void )
+void Entity::visit( Camera* camera )
 {
-	SceneNode::visit();
+	if( !m_is_visible )
+		return;
+
+	if( !m_children.empty() )
+	{
+		for( auto child : m_children )
+		{
+			child->visit( camera );
+		}
+	}
 }
 
 void Entity::prepare( void )
@@ -73,7 +83,7 @@ void Entity::start( void )
 	{
 		itr.second->onStart();
 	}
-	SceneNode::start();
+	SceneObject::start();
 }
 
 void Entity::stop( void )
@@ -82,7 +92,7 @@ void Entity::stop( void )
 	{
 		itr.second->onStop();
 	}
-	SceneNode::stop();
+	SceneObject::stop();
 }
 
 void Entity::update( void )

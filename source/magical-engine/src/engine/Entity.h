@@ -53,15 +53,18 @@ public:
 	template< class TBehaviour >
 	void removeComponent( void );
 
-protected:
-	virtual void visit( void );
+public:
+	virtual void visit( Camera* camera ) override;
 	virtual void prepare( void );
-	virtual void start( void );
-	virtual void stop( void );
+	virtual void start( void ) override;
+	virtual void stop( void ) override;
 	virtual void update( void );
 
 protected:
 	unordered_map<size_t, BehaviourBase*> m_behaviours;
+
+protected:
+	AABB3 m_aabb;
 };
 
 #include "Entity.inl"

@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
@@ -21,35 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __MAGICAL_ENGINE_H__
-#define __MAGICAL_ENGINE_H__
+#ifndef __ELEMENT_H__
+#define __ELEMENT_H__
 
 #include "magical-macros.h"
-#include "magical-math.h"
-
 #include "Common.h"
-#include "Ptr.h"
 #include "Reference.h"
-#include "Data.h"
-#include "Element.h"
-#include "SceneObject.h"
-#include "Entity.h"
-#include "Camera.h"
-#include "Engine.h"
-#include "Behaviour.h"
-//#include "AssetsSystem.h"
-#include "LogSystem.h"
-//#include "InputSystem.h"
-#include "Utils.h"
 
-//#include "LuaMacros.h"
-//#include "LuaSelector.h"
-//#include "LuaObject.h"
-//#include "LuaState.h"
-//#include "LuaFunction.h"
-//#include "LuaTable.h"
-//#include "LuaSystem.h"
+NS_MAGICAL_BEGIN
 
-#include "Application.h"
+enum class Element
+{
+	Object,
+	Entity,
+	Camera,
+	Light,
+};
 
-#endif //__MAGICAL_ENGINE_H__
+NS_MAGICAL_END
+
+#endif //__VIEWPORT_H__

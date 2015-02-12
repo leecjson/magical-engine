@@ -27,8 +27,7 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "SceneElement.h"
-#include "SceneNode.h"
+#include "SceneObject.h"
 #include "Entity.h"
 #include "Camera.h"
 
@@ -38,21 +37,18 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-enum class SceneElement
-{
-	Node,
-	Entity,
-	Camera,
-	Light,
-};
-
 using ::std::string;
 using ::std::unordered_set;
 
-class Scene : public SceneNode
+class SceneObject;
+class Camera;
+class Entity;
+
+class Scene : public SceneObject
 {
 public:
 	friend class Engine;
+	friend class SceneObject;
 	declare_class_hash_code;
 
 public:
@@ -60,10 +56,14 @@ public:
 	virtual ~Scene( void );
 	static Ptr<Scene> create( void );
 
+public:
+	void addChild( const Ptr<SceneObject>& child );
+
 protected:
+	virtual void visit( void );
 	virtual void update( void );
-	virtual void childEvent( NodeEvent evt, SceneNode* child );
-	virtual void childEvent( NodeEvent evt, const Children& children );
+	virtual void link( SceneObject* child ) override;
+	virtual void unlink( SceneObject* child ) override;
 
 protected:	
 	void addCamera( Camera* camera );
@@ -74,6 +74,7 @@ protected:
 protected:
 	unordered_set<Entity*> m_entities;
 	unordered_set<Camera*> m_cameras;
+	unordered_set<Camera*> m_actived_cameras;
 
 protected:
 	unordered_set<Entity*> m_update_queue;

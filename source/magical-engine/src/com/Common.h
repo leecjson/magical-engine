@@ -136,6 +136,17 @@ MAGICALAPI bool magicalIsTimerStarted( void );
 MAGICALAPI void magicalStartTimer( void );
 MAGICALAPI double magicalEndTimer( void );
 
+
+/*
+size and rect
+*/
+NS_MAGICAL_BEGIN
+
+struct Size { float w, h; };
+struct Rect { float x, y, w, h; };
+
+NS_MAGICAL_END
+
 /*
 objects lift listener macros, only work on debug protocol
 */

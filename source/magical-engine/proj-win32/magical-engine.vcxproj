@@ -25,6 +25,7 @@
     <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3native.h" />
     <ClInclude Include="..\src\engine\Behaviour.h" />
     <ClInclude Include="..\src\engine\Camera.h" />
+    <ClInclude Include="..\src\engine\Element.h" />
     <ClInclude Include="..\src\engine\Engine.h" />
     <ClInclude Include="..\src\engine\Entity.h" />
     <ClInclude Include="..\src\engine\Scene.h" />

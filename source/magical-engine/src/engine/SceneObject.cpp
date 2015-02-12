@@ -22,22 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "SceneObject.h"
+#include "Scene.h"
+#include "Camera.h"
 
 NS_MAGICAL_BEGIN
-
-enum
-{
-	kTsClean = 0x00,
-	kTsTranslationDirty = 0x01,
-	kTsRotationDirty = 0x02,
-	kTsScaleDirty = 0x04,
-};
 
 define_class_hash_code( SceneObject );
 
 SceneObject::SceneObject( void )
 : m_ts_dirty_info( kTsClean )
-, m_element_id( SceneElement::Node )
+, m_element_enum( Element::Object )
 {
 	assign_class_hash_code();
 }
@@ -68,61 +62,6 @@ Ptr<SceneObject> SceneObject::create( const char* name )
 	magicalAssert( ret, "new SceneObject() failed" );
 	ret->setName( name );
 	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
-}
-
-void SceneObject::visit( void )
-{
-	if( m_is_visible == false )
-		return;
-
-	int parent_ts_dirty_info = m_ts_dirty_info;
-
-	if( m_ts_dirty )
-	{
-		const Quaternion& r = getDerivedRotation();
-		const Vector3& s = getDerivedScale();
-		const Vector3& t = getDerivedPosition();
-
-		m_local_to_world_matrix.setTRS( t, r, s );
-		m_ts_dirty = false;
-	}
-
-	if( m_children.empty() )
-		return;
-
-	for( auto child : m_children )
-	{
-		if( parent_ts_dirty_info != kTsClean )
-			child->transformDirty( parent_ts_dirty_info );
-
-		child->visit();
-	}
-}
-
-void SceneObject::start( void )
-{
-	magicalAssert( m_is_running == false, "Invaild!" );
-	if( m_is_running == false )
-	{
-		m_is_running = true;
-		for( auto child : m_children )
-		{
-			child->start();
-		}
-	}
-}
-
-void SceneObject::stop( void )
-{
-	magicalAssert( m_is_running == true, "Invaild!" );
-	if( m_is_running == true )
-	{
-		m_is_running = false;
-		for( auto child : m_children )
-		{
-			child->stop();
-		}
-	}
 }
 
 void SceneObject::setName( const char* name )
@@ -185,11 +124,10 @@ void SceneObject::addChild( const Ptr<SceneObject>& child )
 
 	rchild->retain();
 	m_children.push_back( rchild );
+	rchild->setRootScene( m_root_scene );
 
-	if( m_is_running )
-		rchild->start();
-
-	childEvent( NodeEvent::Add, rchild );
+	rchild->start();
+	link( rchild );
 }
 
 void SceneObject::setParent( const Ptr<SceneObject>& parent )
@@ -207,27 +145,22 @@ void SceneObject::setParent( const Ptr<SceneObject>& parent )
 		SceneObject* lparent = m_parent;
 		m_parent = nullptr;
 		lparent->m_children.erase( itr );
-
-		lparent->childEvent( NodeEvent::Remove, this );
+		lparent->unlink( this );
 
 		m_parent = rparent;
 		rparent->m_children.push_back( this );
+		setRootScene( rparent->m_root_scene );
 
 		if( rparent->m_is_running )
 		{
-			if( false == m_is_running )
-			{
-				start();
-			}
+			this->start();
 		}
 		else
 		{
-			if( m_is_running )
-			{
-				stop();
-			}
+			this->stop();
 		}
-		rparent->childEvent( NodeEvent::Add, this );
+
+		rparent->link( this );
 	}
 	else
 	{
@@ -235,11 +168,12 @@ void SceneObject::setParent( const Ptr<SceneObject>& parent )
 
 		this->retain();
 		rparent->m_children.push_back( this );
+		setRootScene( rparent->m_root_scene );
 
 		if( rparent->m_is_running )
 			start();
 
-		rparent->childEvent( NodeEvent::Add, this );
+		rparent->link( this );
 	}
 }
 
@@ -253,11 +187,11 @@ void SceneObject::removeChild( const Ptr<SceneObject>& child )
 	{
 		rchild->m_parent = nullptr;
 		m_children.erase( itr );
+		rchild->setRootScene( nullptr );
 
-		if( m_is_running )
-			rchild->stop();
+		rchild->stop();
+		unlink( rchild );
 
-		childEvent( NodeEvent::Remove, rchild );
 		rchild->release();
 	}
 }
@@ -272,13 +206,11 @@ void SceneObject::removeAllChildren( void )
 		for( auto child : children )
 		{
 			child->m_parent = nullptr;
-			if( m_is_running )
-			{
-				child->stop();
-			}
+			child->setRootScene( nullptr );
+			child->stop();
+			unlink( child );
 		}
 
-		childEvent( NodeEvent::Remove, children );
 		for( auto child : children )
 		{
 			child->release();
@@ -296,11 +228,11 @@ void SceneObject::removeSelf( void )
 		SceneObject* parent = m_parent;
 		m_parent = nullptr;
 		parent->m_children.erase( itr );
+		setRootScene( nullptr );
 
-		if( parent->m_is_running )
-			stop();
-		
-		parent->childEvent( NodeEvent::Remove, this );
+		this->stop();
+		parent->unlink( this );
+
 		this->release();
 	}
 }
@@ -504,6 +436,99 @@ const Vector3& SceneObject::getScale( void ) const
 	return m_local_scale;
 }
 
+void SceneObject::link( SceneObject* child )
+{
+	if( m_parent )
+	{
+		m_parent->link( child );
+	}
+}
+
+void SceneObject::unlink( SceneObject* child )
+{
+	if( m_parent )
+	{
+		m_parent->unlink( child );
+	}
+}
+
+void SceneObject::visit( Camera* camera )
+{
+	if( !m_is_visible )
+		return;
+
+	if( !m_children.empty() )
+	{
+		for( auto child : m_children )
+		{
+			child->visit( camera );
+		}
+	}
+}
+
+void SceneObject::start( void )
+{
+	if( m_is_running == false )
+	{
+		m_is_running = true;
+		for( auto child : m_children )
+		{
+			child->start();
+		}
+	}
+}
+
+void SceneObject::stop( void )
+{
+	if( m_is_running == true )
+	{
+		m_is_running = false;
+		for( auto child : m_children )
+		{
+			child->stop();
+		}
+	}
+}
+
+void SceneObject::transform( void )
+{
+	if( !m_is_visible )
+		return;
+
+	int info = m_ts_dirty_info;
+
+	if( m_ts_dirty != kTsClean )
+	{
+		const Quaternion& r = getDerivedRotation();
+		const Vector3& s = getDerivedScale();
+		const Vector3& t = getDerivedPosition();
+
+		m_local_to_world_matrix.setTRS( t, r, s );
+		m_ts_dirty = false;
+	}
+
+	if( !m_children.empty() )
+	{
+		for( auto child : m_children )
+		{
+			if( info != kTsClean )
+				child->transformDirty( info );
+
+			child->transform();
+		}
+	}
+}
+
+void SceneObject::setRootScene( Scene* scene )
+{
+	m_root_scene = scene;
+
+	for( auto itr : m_children )
+	{
+		itr->setRootScene( scene );
+	}
+}
+
 void SceneObject::transformDirty( int info )
 {
 	m_ts_dirty_info |= info;
@@ -566,22 +591,6 @@ const Vector3& SceneObject::getDerivedScale( void ) const
 	}
 
 	return m_derived_scale;
-}
-
-void SceneObject::childEvent( NodeEvent evt, SceneObject* child )
-{
-	if( m_parent )
-	{
-		m_parent->childEvent( evt, child );
-	}
-}
-
-void SceneObject::childEvent( NodeEvent evt, const Children& children )
-{
-	if( m_parent )
-	{
-		m_parent->childEvent( evt, children );
-	}
 }
 
 NS_MAGICAL_END
