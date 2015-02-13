@@ -69,8 +69,10 @@ public:
 public:
 	void setName( const char* name );
 	const string& getName( void ) const { return m_name; }
-	void setVisible( bool visible );
+	virtual void setVisible( bool visible );
 	bool isVisible( void ) const { return m_is_visible; }
+	void setPause( bool pause );
+	bool isPause( void ) const { return m_is_pause; }
 	bool isRunning( void ) const { return m_is_running; }
 	Element elementEnum( void ) const { return m_element_enum; }
 
@@ -80,11 +82,12 @@ public:
 	SceneObject* getParent( void ) const { return m_parent; }
 	SceneObject* findChild( const char* name ) const;
 	SceneObject* childAtIndex( size_t i ) const;
-	void addChild( const Ptr<SceneObject>& child );
-	void setParent( const Ptr<SceneObject>& parent );
-	void removeChild( const Ptr<SceneObject>& child );
-	void removeAllChildren( void );
-	void removeSelf( void );
+	virtual void addChild( const Ptr<SceneObject>& child );
+	virtual void setParent( const Ptr<SceneObject>& parent );
+	virtual void removeChild( const Ptr<SceneObject>& child );
+	virtual void removeChild( const char* name );
+	virtual void removeAllChildren( void );
+	virtual void removeSelf( void );
 
 public:
 	void translate( const Vector2& t, Space relative_to = Space::Parent );
@@ -137,11 +140,12 @@ public:
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
-
+	
 protected:
 	string m_name;
 	Scene* m_root_scene = nullptr;
 	Element m_element_enum;
+	bool m_is_pause = false;
 	bool m_is_visible = false;
 	bool m_is_running = false;
 	Children m_children;

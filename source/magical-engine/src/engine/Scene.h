@@ -57,7 +57,7 @@ public:
 	static Ptr<Scene> create( void );
 
 public:
-	void addChild( const Ptr<SceneObject>& child );
+	virtual void addChild( const Ptr<SceneObject>& child ) override;
 
 protected:
 	virtual void visit( void );
@@ -74,7 +74,7 @@ protected:
 protected:
 	unordered_set<Entity*> m_entities;
 	unordered_set<Camera*> m_cameras;
-	unordered_set<Camera*> m_actived_cameras;
+	vector<Camera*> m_actived_cameras;
 
 protected:
 	unordered_set<Entity*> m_update_queue;

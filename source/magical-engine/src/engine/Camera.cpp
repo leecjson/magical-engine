@@ -53,9 +53,22 @@ Ptr<Camera> Camera::create( const char* name )
 	return Ptr<Camera>( Initializer<Camera>( ret ) );
 }
 
+void Camera::setVisible( bool visible ) 
+{
+	if( visible == false && m_is_visible != visible )
+	{
+		setActive( false );
+	}
+
+	Entity::setVisible( visible );
+}
+
 void Camera::setActive( bool active, bool others_inactive )
 {
 	if( m_is_active == active )
+	{
+		
+	}
 }
 
 void Camera::setOrth( float left, float right, float bottom, float top, float znear, float zfar )
@@ -96,22 +109,24 @@ const Matrix4& Camera::getProjectionMatrix( void ) const
 
 void Camera::transform( void )
 {
-	if( !m_is_visible )
-		return;
+	SceneObject::transform();
 
-	int info = m_ts_dirty_info;
-
-	if( m_ts_dirty != kTsClean )
+	/*if( m_is_visible || m_is_active )
 	{
-		const Quaternion& r = getDerivedRotation();
-		const Vector3& s = getDerivedScale();
-		const Vector3& t = getDerivedPosition();
+		int info = m_ts_dirty_info;
 
-		m_local_to_world_matrix.setTRS( t, r, s );
-		m_ts_dirty = false;
+		if( m_ts_dirty != kTsClean )
+		{
+			const Quaternion& r = getDerivedRotation();
+			const Vector3& s = getDerivedScale();
+			const Vector3& t = getDerivedPosition();
+
+			m_local_to_world_matrix.setTRS( t, r, s );
+			m_ts_dirty = false;
+		}
 	}
 
-	if( !m_children.empty() )
+	if( m_is_visible && !m_children.empty() )
 	{
 		for( auto child : m_children )
 		{
@@ -120,7 +135,7 @@ void Camera::transform( void )
 
 			child->transform();
 		}
-	}
+	}*/
 }
 
 void Camera::setViewport( int x, int y, int w, int h )

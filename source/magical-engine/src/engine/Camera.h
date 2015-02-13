@@ -49,6 +49,7 @@ public:
 	static Ptr<Camera> create( const char* name );
 
 public:
+	virtual void setVisible( bool visible ) override;
 	void setActive( bool active, bool others_inactive = true );
 	bool isActived( void ) const { return m_is_active; }
 

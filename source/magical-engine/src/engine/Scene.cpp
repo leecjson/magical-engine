@@ -98,7 +98,7 @@ void Scene::update( void )
 
 void Scene::link( SceneObject* child )
 {
-	switch( child->elementEnum() )
+	switch( child->m_element_enum )
 	{
 	case Element::Object:
 		break;
@@ -124,7 +124,7 @@ void Scene::link( SceneObject* child )
 
 void Scene::unlink( SceneObject* child )
 {
-	switch( child->elementEnum() )
+	switch( child->m_element_enum )
 	{
 	case Element::Object:
 		break;

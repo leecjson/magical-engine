@@ -75,6 +75,11 @@ void SceneObject::setVisible( bool visible )
 	m_is_visible = visible;
 }
 
+void SceneObject::setPause( bool pause )
+{
+
+}
+
 bool SceneObject::isChildOf( const Ptr<SceneObject>& parent ) const
 {
 	SceneObject* rparent = parent.get();
@@ -193,6 +198,29 @@ void SceneObject::removeChild( const Ptr<SceneObject>& child )
 		unlink( rchild );
 
 		rchild->release();
+	}
+}
+
+void SceneObject::removeChild( const char* name )
+{
+	magicalAssert( name && *name, "Invaild! should not be nullptr" );
+
+	auto ritr = m_children.begin();
+	for( ; ritr != m_children.end(); ++ritr )
+	{
+		SceneObject* child = *ritr;
+		if( child->getName() == name )
+		{
+			child->m_parent = nullptr;
+			m_children.erase( ritr );
+			child->setRootScene( nullptr );
+
+			child->stop();
+			unlink( child );
+
+			child->release();
+			break;
+		}
 	}
 }
 
