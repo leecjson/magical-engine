@@ -37,8 +37,6 @@ using ::std::unordered_map;
 class Entity : public SceneObject
 {
 public:
-	friend class Engine;
-	friend class Scene;
 	declare_class_hash_code;
 
 public:

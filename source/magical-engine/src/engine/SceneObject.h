@@ -70,9 +70,7 @@ public:
 	void setName( const char* name );
 	const string& getName( void ) const { return m_name; }
 	virtual void setVisible( bool visible );
-	bool isVisible( void ) const { return m_is_visible; }
-	void setPause( bool pause );
-	bool isPause( void ) const { return m_is_pause; }
+	bool isVisiable( void ) const { return m_is_visible; }
 	bool isRunning( void ) const { return m_is_running; }
 	Element elementEnum( void ) const { return m_element_enum; }
 
@@ -145,7 +143,6 @@ protected:
 	string m_name;
 	Scene* m_root_scene = nullptr;
 	Element m_element_enum;
-	bool m_is_pause = false;
 	bool m_is_visible = false;
 	bool m_is_running = false;
 	Children m_children;

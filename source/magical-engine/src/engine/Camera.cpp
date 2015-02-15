@@ -53,22 +53,27 @@ Ptr<Camera> Camera::create( const char* name )
 	return Ptr<Camera>( Initializer<Camera>( ret ) );
 }
 
-void Camera::setVisible( bool visible ) 
+void Camera::setVisible( bool visible )
 {
-	if( visible == false && m_is_visible != visible )
+	if( visible != m_is_active )
 	{
-		setActive( false );
+		
 	}
 
 	Entity::setVisible( visible );
 }
 
-void Camera::setActive( bool active, bool others_inactive )
+void Camera::setActive( bool active ) 
 {
-	if( m_is_active == active )
+	if( active != m_is_active )
 	{
 		
 	}
+}
+
+void Camera::setViewChannel( ViewChannel view_channel )
+{
+	m_view_channel = view_channel;
 }
 
 void Camera::setOrth( float left, float right, float bottom, float top, float znear, float zfar )
@@ -79,10 +84,7 @@ void Camera::setOrth( float left, float right, float bottom, float top, float zn
 	m_top = top;
 	m_znear = znear;
 	m_zfar = zfar;
-
 	m_projection = Projection::Orth;
-
-	//m_projection_matrix.setOrth( left, right, bottom, top, znear, zfar );
 }
 
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
@@ -91,10 +93,7 @@ void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 	m_aspect = aspect;
 	m_znear = znear;
 	m_zfar = zfar;
-
 	m_projection = Projection::Perspective;
-
-	//m_projection_matrix.setPerspective( fov, aspect, znear, zfar );
 }
 
 const Matrix4& Camera::getViewMatrix( void ) const
@@ -110,32 +109,6 @@ const Matrix4& Camera::getProjectionMatrix( void ) const
 void Camera::transform( void )
 {
 	SceneObject::transform();
-
-	/*if( m_is_visible || m_is_active )
-	{
-		int info = m_ts_dirty_info;
-
-		if( m_ts_dirty != kTsClean )
-		{
-			const Quaternion& r = getDerivedRotation();
-			const Vector3& s = getDerivedScale();
-			const Vector3& t = getDerivedPosition();
-
-			m_local_to_world_matrix.setTRS( t, r, s );
-			m_ts_dirty = false;
-		}
-	}
-
-	if( m_is_visible && !m_children.empty() )
-	{
-		for( auto child : m_children )
-		{
-			if( info != kTsClean )
-				child->transformDirty( info );
-
-			child->transform();
-		}
-	}*/
 }
 
 void Camera::setViewport( int x, int y, int w, int h )

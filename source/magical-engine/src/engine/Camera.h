@@ -32,16 +32,31 @@ NS_MAGICAL_BEGIN
 
 enum class Projection
 {
-	None,
 	Orth,
 	Perspective
 };
+
+//enum class ViewChannel
+//{
+//	C0 = 0,
+//	C1 = 1,
+//	C2 = 2,
+//	C3 = 3,
+//	C4 = 4,
+//	Count ,
+//	Default = C0,
+//};
+
+//enum
+//{
+//	kViewChannelCount = ViewChannel::Count
+//};
 
 class Camera : public Entity
 {
 public:
 	declare_class_hash_code;
-
+	
 public:
 	Camera( void );
 	virtual ~Camera( void );
@@ -50,8 +65,9 @@ public:
 
 public:
 	virtual void setVisible( bool visible ) override;
-	void setActive( bool active, bool others_inactive = true );
-	bool isActived( void ) const { return m_is_active; }
+	void setActive( bool active );
+	void setViewChannel( ViewChannel view_channel );
+	ViewChannel getViewChannel( void ) const { return m_view_channel; }
 
 public:
 	void setOrth( float left, float right, float bottom, float top, float znear, float zfar );
@@ -61,9 +77,10 @@ public:
 	const Matrix4& getProjectionMatrix( void ) const;
 
 public:
-	virtual void transform( void );
+	virtual void transform( void ) override;
 
 protected:
+	ViewChannel m_view_channel = ViewChannel::Default;
 	bool m_is_active = false;
 	bool m_is_frustum_cull_enalbed = true;
 

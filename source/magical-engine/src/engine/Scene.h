@@ -30,6 +30,7 @@ SOFTWARE.
 #include "SceneObject.h"
 #include "Entity.h"
 #include "Camera.h"
+#include "ViewChannel.h"
 
 #include <vector>
 #include <unordered_set>
@@ -47,8 +48,6 @@ class Entity;
 class Scene : public SceneObject
 {
 public:
-	friend class Engine;
-	friend class SceneObject;
 	declare_class_hash_code;
 
 public:
@@ -57,15 +56,15 @@ public:
 	static Ptr<Scene> create( void );
 
 public:
-	virtual void addChild( const Ptr<SceneObject>& child ) override;
-
-protected:
 	virtual void visit( void );
 	virtual void update( void );
 	virtual void link( SceneObject* child ) override;
 	virtual void unlink( SceneObject* child ) override;
 
-protected:	
+public:
+	void setActiveCamera( Camera* camera );
+
+protected:
 	void addCamera( Camera* camera );
 	void removeCamera( Camera* camera );
 	void addEntity( Entity* entity );
@@ -74,7 +73,7 @@ protected:
 protected:
 	unordered_set<Entity*> m_entities;
 	unordered_set<Camera*> m_cameras;
-	vector<Camera*> m_actived_cameras;
+	ViewChannel* m_active_cameras[ kViewChannelCount ];
 
 protected:
 	unordered_set<Entity*> m_update_queue;

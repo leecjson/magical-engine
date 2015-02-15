@@ -219,6 +219,9 @@
     <ClInclude Include="..\src\engine\Element.h">
       <Filter>src\engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\engine\ViewChannel.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\math\c\c-vector2.c">
@@ -345,6 +348,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\engine\SceneObject.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\ViewChannel.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

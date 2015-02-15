@@ -21,54 +21,56 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#ifndef __VIEW_CHANNEL_H__
+#define __VIEW_CHANNEL_H__
 
-USING_NS_MAGICAL;
+#include "magical-macros.h"
+#include "Common.h"
+#include "Reference.h"
+#include "Camera.h"
 
-void MainCameraScript::onCreate( void )
+NS_MAGICAL_BEGIN
+
+class ViewChannel : public Reference
 {
-	that->setViewport( Rect{ 0, 0, 960, 640 } );
-	that->setPosition( Vector2::Zero );
-	that->lookAt( 1, 1, 1 );
+public:
+	declare_class_hash_code;
+	enum Instance {
+		C0 = 0,
+		Default = C0,
+		C1 = 1,
+		C2 = 2,
+		C3 = 3,
+		C4 = 4,
+		Count,
+		All = Count,
+	};
 
-	magicalLog( "onCreate" );
-}
+public:
+	ViewChannel( void );
+	virtual ~ViewChannel( void );
+	static Ptr<ViewChannel> create( void );
+	static Ptr<ViewChannel> create( float x, float y, float w, float h );
 
-void MainCameraScript::onStart( void )
-{
-	magicalLog( "onStart" );
-}
+public:
+	void setVisible( bool visible );
+	bool isVisible( void ) const;
+	void setActiveCamera( const Ptr<Camera>& camera );
+	Camera* getActiveCamera( void ) const { return m_camera; }
+	void removeActiveCamera( void );
 
-void MainCameraScript::onUpdate( void )
-{
-	magicalLog( "onUpdate" );
-}
+public:
+	void set( float x, float y, float w, float h );
 
-void MainCameraScript::onStop( void )
-{
-	magicalLog( "onStop" );
-}
+protected:
+	bool m_is_visible = false;
+	Camera* m_camera = nullptr;
+	float x = 0.0f;
+	float y = 0.0f;
+	float h = 0.0f;
+	float w = 0.0f;
+};
 
-void MainCameraScript::onDestroy( void )
-{
-	magicalLog( "onDestroy" );
-}
+NS_MAGICAL_END
 
-void mainDelegate( void )
-{
-	Ptr<Scene> scene = Scene::create();
-	Engine::runScene( scene );
-
-	Ptr<Camera> camera = Camera::create( "Main Camera" );
-	camera->setActive( true );
-	camera->addComponent<MainCameraScript>();
-	camera->setParent( scene );
-
-	scene->getViewChannel( ViewChannel::C0 )->setCamera( camera );
-
-
-	/*Ptr<SceneObject> cube = SceneObject::create( "Cube" );
-	cube->setPosition( Vector3::Zero );
-	scene->addChild( cube );*/
-}
+#endif //__VIEW_CHANNEL_H__

@@ -50,7 +50,7 @@ SceneObject::~SceneObject( void )
 }
 
 Ptr<SceneObject> SceneObject::create( void )
-{
+{ 
 	SceneObject* ret = new SceneObject();
 	magicalAssert( ret, "new SceneObject() failed" );
 	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
@@ -72,12 +72,14 @@ void SceneObject::setName( const char* name )
 
 void SceneObject::setVisible( bool visible )
 {
-	m_is_visible = visible;
-}
-
-void SceneObject::setPause( bool pause )
-{
-
+	if( visible != m_is_visible )
+	{
+		m_is_visible = visible;
+		for( auto child : m_children )
+		{
+			child->setVisible( visible );
+		}
+	}
 }
 
 bool SceneObject::isChildOf( const Ptr<SceneObject>& parent ) const

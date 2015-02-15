@@ -21,54 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Main.h"
-#include "magical-engine.h"
+#include "ViewChannel.h"
 
-USING_NS_MAGICAL;
+NS_MAGICAL_BEGIN
 
-void MainCameraScript::onCreate( void )
+define_class_hash_code( ViewChannel );
+
+ViewChannel::ViewChannel( void )
 {
-	that->setViewport( Rect{ 0, 0, 960, 640 } );
-	that->setPosition( Vector2::Zero );
-	that->lookAt( 1, 1, 1 );
-
-	magicalLog( "onCreate" );
+	assign_class_hash_code();
 }
 
-void MainCameraScript::onStart( void )
+ViewChannel::~ViewChannel( void )
 {
-	magicalLog( "onStart" );
+	magicalSafeRelease( m_camera );
 }
 
-void MainCameraScript::onUpdate( void )
+void ViewChannel::setActiveCamera( const Ptr<Camera>& camera )
 {
-	magicalLog( "onUpdate" );
+	Camera* rcamera = camera.get();
+	magicalSafeAssign( m_camera, rcamera );
 }
 
-void MainCameraScript::onStop( void )
+void ViewChannel::removeActiveCamera( void )
 {
-	magicalLog( "onStop" );
+	magicalSafeReleaseNull( m_camera );
 }
 
-void MainCameraScript::onDestroy( void )
+void ViewChannel::set( float x, float y, float w, float h )
 {
-	magicalLog( "onDestroy" );
+	this->x = x;
+	this->y = y;
+	this->w = w;
+	this->h = h;
 }
 
-void mainDelegate( void )
-{
-	Ptr<Scene> scene = Scene::create();
-	Engine::runScene( scene );
-
-	Ptr<Camera> camera = Camera::create( "Main Camera" );
-	camera->setActive( true );
-	camera->addComponent<MainCameraScript>();
-	camera->setParent( scene );
-
-	scene->getViewChannel( ViewChannel::C0 )->setCamera( camera );
-
-
-	/*Ptr<SceneObject> cube = SceneObject::create( "Cube" );
-	cube->setPosition( Vector3::Zero );
-	scene->addChild( cube );*/
-}
+NS_MAGICAL_END
