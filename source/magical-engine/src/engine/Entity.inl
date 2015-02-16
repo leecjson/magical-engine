@@ -35,7 +35,7 @@ void Entity::addComponent( void )
 	magicalAssert( behaviour->that, "Invaild, dose not match target type!" );
 	behaviour->onCreate();
 
-	if( m_is_running )
+	if( m_running )
 	{
 		behaviour->onStart();
 	}

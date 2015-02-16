@@ -55,13 +55,13 @@ NS_MAGICAL_BEGIN
 #undef MAX
 #endif
 template< class T >
-inline T MAX( T a, T b ){ return a > b ? a : b; }
+inline T MAX( const T& a, const T& b ){ return a > b ? a : b; }
 
 #ifdef MIN
 #undef MIN
 #endif
 template< class T >
-inline T MIN( T a, T b ){ return a < b ? a : b; }
+inline T MIN( const T& a, const T& b ){ return a < b ? a : b; }
 NS_MAGICAL_END
 
 /*
@@ -136,6 +136,29 @@ MAGICALAPI bool magicalIsTimerStarted( void );
 MAGICALAPI void magicalStartTimer( void );
 MAGICALAPI double magicalEndTimer( void );
 
+/*
+objects lift listener macros, only work on debug protocol
+*/
+#define kEngineObjectsListener 1
+#define kCustomObjectsListener 2
+
+#ifndef MAGICAL_DEBUG
+#define magicalStartObjectsListener( listener )
+#define magicalEndObjectsListener( listener )
+#define magicalIsObjectsListenerStarted( listener ) false
+#define magicalObjectConstruct()
+#define magicalObjectDestruct()
+#define magicalGetObjectsConstructCount( listener ) 0
+#define magicalGetObjectsDestructCount( listener ) 0
+#else
+MAGICALAPI void magicalStartObjectsListener( int listener );
+MAGICALAPI void magicalEndObjectsListener( int listener );
+MAGICALAPI bool magicalIsObjectsListenerStarted( int listener );
+MAGICALAPI void magicalObjectConstruct( void );
+MAGICALAPI void magicalObjectDestruct( void );
+MAGICALAPI int magicalGetObjectsConstructCount( int listener );
+MAGICALAPI int magicalGetObjectsDestructCount( int listener );
+#endif
 
 /*
 size and rect
@@ -147,29 +170,7 @@ struct Rect { float x, y, w, h; };
 
 NS_MAGICAL_END
 
-/*
-objects lift listener macros, only work on debug protocol
-*/
-//#define kEngineObjectsListener 1
-//#define kCustomObjectsListener 2
-//
-//#ifndef MAGICAL_DEBUG
-//#define magicalStartObjectsListener( listener )
-//#define magicalEndObjectsListener( listener )
-//#define magicalIsObjectsListenerStarted( listener ) false
-//#define magicalObjectConstruct()
-//#define magicalObjectDestruct()
-//#define magicalGetObjectsConstructCount( listener ) 0
-//#define magicalGetObjectsDestructCount( listener ) 0
-//#else
-//MAGICALAPI void magicalStartObjectsListener( int listener );
-//MAGICALAPI void magicalEndObjectsListener( int listener );
-//MAGICALAPI bool magicalIsObjectsListenerStarted( int listener );
-//MAGICALAPI void magicalObjectConstruct( void );
-//MAGICALAPI void magicalObjectDestruct( void );
-//MAGICALAPI int magicalGetObjectsConstructCount( int listener );
-//MAGICALAPI int magicalGetObjectsDestructCount( int listener );
-//#endif
+
 
 //struct Color4F
 //{

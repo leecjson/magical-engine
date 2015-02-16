@@ -56,13 +56,18 @@ public:
 	static Ptr<Scene> create( void );
 
 public:
+	ViewChannel* getViewChannel( ViewChannel::Index index ) const;
+
+
+public:
 	virtual void visit( void );
 	virtual void update( void );
 	virtual void link( SceneObject* child ) override;
 	virtual void unlink( SceneObject* child ) override;
 
 public:
-	void setActiveCamera( Camera* camera );
+	void bindCameraToViewChannel( Camera* camera );
+	void unbindCameraFromViewChannel( Camera* camera );
 
 protected:
 	void addCamera( Camera* camera );
@@ -73,10 +78,10 @@ protected:
 protected:
 	unordered_set<Entity*> m_entities;
 	unordered_set<Camera*> m_cameras;
-	ViewChannel* m_active_cameras[ kViewChannelCount ];
+	unordered_set<Entity*> m_update_queue;
 
 protected:
-	unordered_set<Entity*> m_update_queue;
+	ViewChannel* m_view_channels[ ViewChannel::Count ];
 };
 
 NS_MAGICAL_END

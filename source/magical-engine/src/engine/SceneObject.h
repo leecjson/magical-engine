@@ -38,14 +38,14 @@ using ::std::vector;
 class Scene;
 class Camera;
 
-enum class Space
+enum class Space : int
 {
 	Self,
 	Parent,
 	World,
 };
 
-enum
+enum : int
 {
 	kTsClean = 0x00,
 	kTsTranslationDirty = 0x01,
@@ -70,8 +70,8 @@ public:
 	void setName( const char* name );
 	const string& getName( void ) const { return m_name; }
 	virtual void setVisible( bool visible );
-	bool isVisiable( void ) const { return m_is_visible; }
-	bool isRunning( void ) const { return m_is_running; }
+	bool isVisiable( void ) const { return m_visible; }
+	bool isRunning( void ) const { return m_running; }
 	Element elementEnum( void ) const { return m_element_enum; }
 
 public:
@@ -134,17 +134,18 @@ public:
 
 public:
 	void setRootScene( Scene* scene );
-	void transformDirty( int info );
+	virtual void transformDirty( int info );
 	const Vector3& getDerivedPosition( void ) const;
 	const Quaternion& getDerivedRotation( void ) const;
 	const Vector3& getDerivedScale( void ) const;
+	const Matrix4& getLocalToWorldMatrix( void ) const;
 	
 protected:
 	string m_name;
 	Scene* m_root_scene = nullptr;
 	Element m_element_enum;
-	bool m_is_visible = false;
-	bool m_is_running = false;
+	bool m_visible = false;
+	bool m_running = false;
 	Children m_children;
 	SceneObject* m_parent = nullptr;
 	bool m_inherit_scale = true;

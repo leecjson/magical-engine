@@ -28,7 +28,6 @@ USING_NS_MAGICAL;
 
 void MainCameraScript::onCreate( void )
 {
-	that->setViewport( Rect{ 0, 0, 960, 640 } );
 	that->setPosition( Vector2::Zero );
 	that->lookAt( 1, 1, 1 );
 
@@ -58,15 +57,15 @@ void MainCameraScript::onDestroy( void )
 void mainDelegate( void )
 {
 	Ptr<Scene> scene = Scene::create();
+	scene->getViewChannel( ViewChannel::Default )->setEnabled( true );
+	scene->getViewChannel( ViewChannel::Default )->setViewRect( 0, 0, 1, 1 );
 	Engine::runScene( scene );
 
 	Ptr<Camera> camera = Camera::create( "Main Camera" );
-	camera->setActive( true );
+	camera->bindViewChannel( ViewChannel::Default );
+	camera->setNearClipDistance( 0.3f );
 	camera->addComponent<MainCameraScript>();
 	camera->setParent( scene );
-
-	scene->getViewChannel( ViewChannel::C0 )->setCamera( camera );
-
 
 	/*Ptr<SceneObject> cube = SceneObject::create( "Cube" );
 	cube->setPosition( Vector3::Zero );

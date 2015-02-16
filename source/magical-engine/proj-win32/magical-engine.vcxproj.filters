@@ -210,9 +210,6 @@
     <ClInclude Include="..\src\engine\Entity.h">
       <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\engine\Viewport.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\engine\SceneObject.h">
       <Filter>src\engine</Filter>
     </ClInclude>
@@ -342,9 +339,6 @@
       <Filter>src\math\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\src\engine\Entity.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\engine\Viewport.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\engine\SceneObject.cpp">

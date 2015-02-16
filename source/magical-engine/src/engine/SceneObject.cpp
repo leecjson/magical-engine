@@ -72,9 +72,9 @@ void SceneObject::setName( const char* name )
 
 void SceneObject::setVisible( bool visible )
 {
-	if( visible != m_is_visible )
+	if( visible != m_visible )
 	{
-		m_is_visible = visible;
+		m_visible = visible;
 		for( auto child : m_children )
 		{
 			child->setVisible( visible );
@@ -158,7 +158,7 @@ void SceneObject::setParent( const Ptr<SceneObject>& parent )
 		rparent->m_children.push_back( this );
 		setRootScene( rparent->m_root_scene );
 
-		if( rparent->m_is_running )
+		if( rparent->m_running )
 		{
 			this->start();
 		}
@@ -177,7 +177,7 @@ void SceneObject::setParent( const Ptr<SceneObject>& parent )
 		rparent->m_children.push_back( this );
 		setRootScene( rparent->m_root_scene );
 
-		if( rparent->m_is_running )
+		if( rparent->m_running )
 			start();
 
 		rparent->link( this );
@@ -484,7 +484,7 @@ void SceneObject::unlink( SceneObject* child )
 
 void SceneObject::visit( Camera* camera )
 {
-	if( !m_is_visible )
+	if( !m_visible )
 		return;
 
 	if( !m_children.empty() )
@@ -498,9 +498,9 @@ void SceneObject::visit( Camera* camera )
 
 void SceneObject::start( void )
 {
-	if( m_is_running == false )
+	if( m_running == false )
 	{
-		m_is_running = true;
+		m_running = true;
 		for( auto child : m_children )
 		{
 			child->start();
@@ -510,9 +510,9 @@ void SceneObject::start( void )
 
 void SceneObject::stop( void )
 {
-	if( m_is_running == true )
+	if( m_running == true )
 	{
-		m_is_running = false;
+		m_running = false;
 		for( auto child : m_children )
 		{
 			child->stop();
@@ -522,7 +522,7 @@ void SceneObject::stop( void )
 
 void SceneObject::transform( void )
 {
-	if( !m_is_visible )
+	if( !m_visible )
 		return;
 
 	int info = m_ts_dirty_info;
@@ -621,6 +621,11 @@ const Vector3& SceneObject::getDerivedScale( void ) const
 	}
 
 	return m_derived_scale;
+}
+
+const Matrix4& SceneObject::getLocalToWorldMatrix( void ) const
+{
+	return m_local_to_world_matrix;
 }
 
 NS_MAGICAL_END

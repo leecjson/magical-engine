@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "ViewChannel.h"
+#include "Camera.h"
 
 NS_MAGICAL_BEGIN
 
@@ -37,23 +38,33 @@ ViewChannel::~ViewChannel( void )
 	magicalSafeRelease( m_camera );
 }
 
-void ViewChannel::setActiveCamera( const Ptr<Camera>& camera )
+void ViewChannel::setViewRect( float x, float y, float w, float h )
 {
-	Camera* rcamera = camera.get();
-	magicalSafeAssign( m_camera, rcamera );
+	m_view_rect.x = x;
+	m_view_rect.y = y;
+	m_view_rect.w = w;
+	m_view_rect.h = h;
 }
 
-void ViewChannel::removeActiveCamera( void )
+void ViewChannel::setViewRect( const Rect& rect )
+{
+	m_view_rect = rect;
+}
+
+void ViewChannel::setEnabled( bool enabled )
+{
+	m_is_enabled = enabled;
+}
+
+void ViewChannel::removeCamera( void )
 {
 	magicalSafeReleaseNull( m_camera );
 }
 
-void ViewChannel::set( float x, float y, float w, float h )
+void ViewChannel::setCamera( const Ptr<Camera>& camera )
 {
-	this->x = x;
-	this->y = y;
-	this->w = w;
-	this->h = h;
+	Camera* rcamera = camera.get();
+	magicalSafeAssign( m_camera, rcamera );
 }
 
 NS_MAGICAL_END

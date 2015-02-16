@@ -29,10 +29,14 @@ SOFTWARE.
 #include "LogSystem.h"
 //#include "InputSystem.h"
 
+#include <sstream>
+
 NS_MAGICAL_BEGIN
 
 void Application::init( void )
 {
+	magicalStartObjectsListener( kEngineObjectsListener );
+
 	Log::init();
 	magicalShowLastError();
 	magicalReturnIfError();
@@ -107,6 +111,13 @@ void Application::delc( void )
 	/*Assets::Delc();
 	magicalShowLastError();
 	magicalReturnIfError();*/
+
+	std::stringstream ss;
+	ss << "C: " << magicalGetObjectsConstructCount( kEngineObjectsListener ) << "  ";
+	ss << "D: " << magicalGetObjectsDestructCount( kEngineObjectsListener ) << "\n";
+	magicalLog( ss.str().c_str() );
+
+	magicalEndObjectsListener( kEngineObjectsListener );
 
 	Log::delc();
 	magicalShowLastError();

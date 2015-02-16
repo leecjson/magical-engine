@@ -27,34 +27,31 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Entity.h"
+#include "ViewChannel.h"
 
 NS_MAGICAL_BEGIN
 
-enum class Projection
+class Entity;
+class ViewChannel;
+
+enum class Projection : int
 {
 	Orth,
 	Perspective
 };
 
-//enum class ViewChannel
-//{
-//	C0 = 0,
-//	C1 = 1,
-//	C2 = 2,
-//	C3 = 3,
-//	C4 = 4,
-//	Count ,
-//	Default = C0,
-//};
-
-//enum
-//{
-//	kViewChannelCount = ViewChannel::Count
-//};
+enum : int
+{
+	kCameraClean = 0x00,
+	kCameraViewDirty = 0x01,
+	kCameraProjectionDirty = 0x02,
+	kCameraViewProjectionDirty = 0x04,
+};
 
 class Camera : public Entity
 {
 public:
+	friend class ViewChannel;
 	declare_class_hash_code;
 	
 public:
@@ -66,24 +63,31 @@ public:
 public:
 	virtual void setVisible( bool visible ) override;
 	void setActive( bool active );
-	void setViewChannel( ViewChannel view_channel );
-	ViewChannel getViewChannel( void ) const { return m_view_channel; }
+	bool isActive( void ) const { return m_active; }
+	void bindViewChannel( ViewChannel::Index index );
+	ViewChannel::Index getBoundViewChannelIndex( void ) const { return m_view_channel_index; }
 
 public:
+	void setAspectRatio( bool aspect );
+	void setNearClipDistance( float znear );
+	void setFarClipDistance( float zfar );
 	void setOrth( float left, float right, float bottom, float top, float znear, float zfar );
 	void setPerspective( float fov, float aspect, float znear, float zfar );
-
 	const Matrix4& getViewMatrix( void ) const;
 	const Matrix4& getProjectionMatrix( void ) const;
+	const Matrix4& getViewProjectionMatrix( void ) const;
 
 public:
 	virtual void transform( void ) override;
+	virtual void transformDirty( int info ) override;
 
 protected:
-	ViewChannel m_view_channel = ViewChannel::Default;
-	bool m_is_active = false;
-	bool m_is_frustum_cull_enalbed = true;
+	bool m_active = true;
+	bool m_frustum_cull_enabled = true;
+	Projection m_projection = Projection::Perspective;
+	ViewChannel::Index m_view_channel_index;
 
+protected:
 	float m_left = 0.0f;
 	float m_right = 0.0f;
 	float m_bottom = 0.0f;
@@ -92,23 +96,11 @@ protected:
 	float m_aspect = 0.0f;
 	float m_znear = 0.3f;
 	float m_zfar = 1000.0f;
-	
-	Matrix4 m_view_matrix;
-	Matrix4 m_projection_matrix;
-	Matrix4 m_view_projection_matrix;
+	mutable bool m_camera_dirty_info;
+	mutable Matrix4 m_view_matrix;
+	mutable Matrix4 m_projection_matrix;
+	mutable Matrix4 m_view_projection_matrix;
 	Frustum m_frustum;
-	Projection m_projection = Projection::Perspective;
-
-public:
-	void setViewport( int x, int y, int w, int h );
-	void setViewport( const Rect& rect );
-
-protected:
-	int m_viewport_zorder = 0;
-	int m_viewport_x = 0.0f;
-	int m_viewport_y = 0.0f;
-	int m_viewport_w = 0.0f;
-	int m_viewport_h = 0.0f;
 };
 
 NS_MAGICAL_END

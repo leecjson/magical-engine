@@ -22,12 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Camera.h"
+#include "Scene.h"
 
 NS_MAGICAL_BEGIN
 
 define_class_hash_code( Camera );
 
 Camera::Camera( void )
+: m_view_channel_index( ViewChannel::Default )
 {
 	assign_class_hash_code();
 	m_element_enum = Element::Camera;
@@ -55,25 +57,62 @@ Ptr<Camera> Camera::create( const char* name )
 
 void Camera::setVisible( bool visible )
 {
-	if( visible != m_is_active )
+	if( visible != m_visible )
 	{
-		
-	}
+		if( visible == false ) 
+			setActive( false );
 
-	Entity::setVisible( visible );
+		Entity::setVisible( visible );
+	}
 }
 
 void Camera::setActive( bool active ) 
 {
-	if( active != m_is_active )
+	if( m_visible == false )
+		return;
+	if( active == m_active )
+		return;
+
+	m_active = active;
+	if( m_running && m_root_scene )
 	{
-		
+		if( active )
+		{
+			m_root_scene->bindCameraToViewChannel( this );
+		}
+		else
+		{
+			m_root_scene->unbindCameraFromViewChannel( this );
+		}
 	}
 }
 
-void Camera::setViewChannel( ViewChannel view_channel )
+void Camera::bindViewChannel( ViewChannel::Index index )
 {
-	m_view_channel = view_channel;
+	magicalAssert( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
+	if( index == m_view_channel_index  )
+		return;
+
+	m_view_channel_index = index;
+	if( m_active && m_running && m_root_scene )
+	{
+		m_root_scene->bindCameraToViewChannel( this );
+	}
+}
+
+void Camera::setAspectRatio( bool aspect )
+{
+	
+}
+
+void Camera::setNearClipDistance( float znear )
+{
+	m_znear = znear;
+}
+
+void Camera::setFarClipDistance( float zfar )
+{
+	m_zfar = zfar;
 }
 
 void Camera::setOrth( float left, float right, float bottom, float top, float znear, float zfar )
@@ -98,7 +137,13 @@ void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 
 const Matrix4& Camera::getViewMatrix( void ) const
 {
-	return Matrix4();
+	if( m_camera_dirty_info & kCameraViewDirty )
+	{
+		m_view_matrix = getLocalToWorldMatrix().getInversed();
+		m_camera_dirty_info = m_camera_dirty_info & ( ~kCameraViewDirty );
+	}
+
+	return m_view_matrix;
 }
 
 const Matrix4& Camera::getProjectionMatrix( void ) const
@@ -106,25 +151,47 @@ const Matrix4& Camera::getProjectionMatrix( void ) const
 	return m_projection_matrix;
 }
 
+const Matrix4& Camera::getViewProjectionMatrix( void ) const
+{
+	m_view_projection_matrix = getViewMatrix() * getProjectionMatrix();
+}
+
 void Camera::transform( void )
 {
-	SceneObject::transform();
+	if( !m_visible )
+		return;
+
+	int info = m_ts_dirty_info;
+
+	if( m_ts_dirty != kTsClean )
+	{
+		const Quaternion& r = getDerivedRotation();
+		const Vector3& s = getDerivedScale();
+		const Vector3& t = getDerivedPosition();
+
+		m_local_to_world_matrix.setTRS( t, r, s );
+		m_view_matrix = m_local_to_world_matrix.getInversed();
+		m_ts_dirty = false;
+	}
+
+	if( !m_children.empty() )
+	{
+		for( auto child : m_children )
+		{
+			if( info != kTsClean )
+				child->transformDirty( info );
+
+			child->transform();
+		}
+	}
 }
 
-void Camera::setViewport( int x, int y, int w, int h )
+void Camera::transformDirty( int info )
 {
-	m_viewport_x = x;
-	m_viewport_y = y;
-	m_viewport_w = w;
-	m_viewport_h = h;
-}
+	SceneObject::transformDirty( info );
 
-void Camera::setViewport( const Rect& rect )
-{
-	m_viewport_x = rect.x;
-	m_viewport_y = rect.y;
-	m_viewport_w = rect.w;
-	m_viewport_h = rect.h;
+	m_camera_dirty_info |= kCameraViewDirty;
+	m_camera_dirty_info |= kCameraViewProjectionDirty;
 }
 
 NS_MAGICAL_END

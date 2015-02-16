@@ -32,14 +32,19 @@ Scene::Scene( void )
 	assign_class_hash_code();
 	m_root_scene = this;
 
-	for( int i = 0; i < kViewChannelCount; ++ i )
-	{
-		m_active_cameras[i] = nullptr;
-	}
+	for( int i = 0; i < ViewChannel::Count; i ++ )
+		m_view_channels[i] = new ViewChannel();
+
+	m_view_channels[0]->setEnabled( true );
 }
 
 Scene::~Scene( void )
 {
+	for( int i = 0; i < ViewChannel::Count; i ++ )
+	{
+		m_view_channels[i]->release();
+	}
+
 	for( auto itr : m_cameras )
 	{
 		itr->release();
@@ -58,20 +63,29 @@ Ptr<Scene> Scene::create( void )
 	return Ptr<Scene>( Initializer<Scene>( ret ) );
 }
 
+ViewChannel* Scene::getViewChannel( ViewChannel::Index index ) const
+{
+	magicalAssert( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
+	return m_view_channels[ index ];
+}
+
 void Scene::visit( void )
 {
-	if( !m_is_active )
+	if( !m_visible )
 		return;
 
 	if( m_children.empty() )
 		return;
 
-	for( int i = 0; i < 1; ++i )
+	for( int i = 0; i < ViewChannel::Count; i ++ )
 	{
-		// setviewport
-		for( auto child : m_children )
+		if( m_view_channels[i]->isChannelOpened() )
 		{
-			child->visit( camera );
+			Camera* camera = m_view_channels[i]->getCamera();
+			for( auto child : m_children )
+			{
+				child->visit( camera );
+			}
 		}
 	}
 }
@@ -101,7 +115,7 @@ void Scene::link( SceneObject* child )
 	case Element::Light:
 		break;
 	default:
-		magicalAssert( false, "Invaild!" );
+		magicalAssert( false, "Invalid!" );
 		break;
 	}
 
@@ -127,7 +141,7 @@ void Scene::unlink( SceneObject* child )
 	case Element::Light:
 		break;
 	default:
-		magicalAssert( false, "Invaild!" );
+		magicalAssert( false, "Invalid!" );
 		break;
 	}
 
@@ -137,66 +151,75 @@ void Scene::unlink( SceneObject* child )
 	}
 }
 
-void Scene::setActiveCamera( Camera* camera )
+void Scene::bindCameraToViewChannel( Camera* camera )
 {
-	if( camera->isActive() )
+	ViewChannel* channel = m_view_channels[ camera->getBoundViewChannelIndex() ];
+
+	Camera* lcamera = channel->getCamera();
+	magicalAssert( lcamera != camera, "Invalid!" );
+	if( lcamera != nullptr )
 	{
-		Camera* lcamera = m_active_cameras[ (int)camera->getViewChannel() ];
-		if( lcamera )
-		{
-			
-		}
+		magicalAssert( lcamera->isActive(), "Invalid!" );
+		lcamera->setActive( false );
 	}
-	else
-	{
-		
-	}
+
+	channel->setCamera( camera );
+}
+
+void Scene::unbindCameraFromViewChannel( Camera* camera )
+{
+	ViewChannel* channel = m_view_channels[ camera->getBoundViewChannelIndex() ];
+
+	Camera* lcamera = channel->getCamera();
+	magicalAssert( lcamera == camera, "Invalid!" );
+
+	channel->removeCamera();
 }
 
 void Scene::addCamera( Camera* camera )
 {
 	auto itr = m_cameras.find( camera );
-	magicalAssert( itr == m_cameras.end(), "Invaild! already in scene" );
-	if( itr == m_cameras.end() )
-	{
-		camera->retain();
-		m_cameras.insert( camera );
+	magicalAssert( itr == m_cameras.end(), "Invalid! already in scene" );
 
-		setActiveCamera( camera );
+	camera->retain();
+	m_cameras.insert( camera );
+
+	if( camera->isActive() )
+	{
+		bindCameraToViewChannel( camera );
 	}
 }
 
 void Scene::removeCamera( Camera* camera )
 {
 	auto itr = m_cameras.find( camera );
-	magicalAssert( itr != m_cameras.end(), "Invaild! isn't exists in scene" );
-	if( itr != m_cameras.end() )
+	magicalAssert( itr != m_cameras.end(), "Invalid! isn't exists in scene" );
+
+	m_cameras.erase( itr );
+	camera->release();
+
+	if( camera->isActive() )
 	{
-		m_cameras.erase( itr );
-		camera->release();
+		unbindCameraFromViewChannel( camera );
 	}
 }
 
 void Scene::addEntity( Entity* object )
 {
 	auto itr = m_entities.find( object );
-	magicalAssert( itr == m_entities.end(), "Invaild! already in scene" );
-	if( itr == m_entities.end() )
-	{
-		object->retain();
-		m_entities.insert( object );
-	}
+	magicalAssert( itr == m_entities.end(), "Invalid! already in scene" );
+
+	object->retain();
+	m_entities.insert( object );
 }
 
 void Scene::removeEntity( Entity* object )
 {
 	auto itr = m_entities.find( object );
-	magicalAssert( itr != m_entities.end(), "Invaild! isn't exists in scene" );
-	if( itr != m_entities.end() )
-	{
-		m_entities.erase( itr );
-		object->release();
-	}
+	magicalAssert( itr != m_entities.end(), "Invalid! isn't exists in scene" );
+
+	m_entities.erase( itr );
+	object->release();
 }
 
 NS_MAGICAL_END

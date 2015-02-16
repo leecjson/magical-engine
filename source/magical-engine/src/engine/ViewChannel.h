@@ -27,49 +27,50 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "Camera.h"
 
 NS_MAGICAL_BEGIN
+
+class Camera;
 
 class ViewChannel : public Reference
 {
 public:
 	declare_class_hash_code;
-	enum Instance {
+
+	enum Index : int {
 		C0 = 0,
-		Default = C0,
 		C1 = 1,
 		C2 = 2,
 		C3 = 3,
 		C4 = 4,
 		Count,
-		All = Count,
+		Default = C0,
 	};
 
 public:
 	ViewChannel( void );
 	virtual ~ViewChannel( void );
-	static Ptr<ViewChannel> create( void );
-	static Ptr<ViewChannel> create( float x, float y, float w, float h );
 
 public:
-	void setVisible( bool visible );
-	bool isVisible( void ) const;
-	void setActiveCamera( const Ptr<Camera>& camera );
-	Camera* getActiveCamera( void ) const { return m_camera; }
-	void removeActiveCamera( void );
+	void setViewRect( float x, float y, float w, float h );
+	void setViewRect( const Rect& rect );
+	const Rect& getViewRect( void ) const { return m_view_rect; }
+	void setEnabled( bool enabled );
+	bool isEnabled( void ) const { return m_is_enabled; }
+	bool isChannelOpened( void ) const { return isEnabled() && m_camera; }
+	Camera* getCamera( void ) const { return m_camera; }
+	void removeCamera( void );
 
 public:
-	void set( float x, float y, float w, float h );
+	void setCamera( const Ptr<Camera>& camera );
 
 protected:
-	bool m_is_visible = false;
+	Rect m_view_rect = Rect{ 0.0f, 0.0f, 1.0f, 1.0f };
+	bool m_is_enabled = false;
 	Camera* m_camera = nullptr;
-	float x = 0.0f;
-	float y = 0.0f;
-	float h = 0.0f;
-	float w = 0.0f;
 };
+
+//typedef ViewChannel::Index ViewChannelIndex;
 
 NS_MAGICAL_END
 

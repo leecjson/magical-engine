@@ -60,7 +60,7 @@ Ptr<Entity> Entity::create( const char* name )
 
 void Entity::visit( Camera* camera )
 {
-	if( !m_is_visible )
+	if( !m_visible )
 		return;
 
 	if( !m_children.empty() )

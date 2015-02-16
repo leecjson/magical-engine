@@ -46,10 +46,10 @@ void Engine::init( void )
 void Engine::delc( void )
 {
 	if( s_running_scene )
-	{
 		s_running_scene->stop();
-		s_running_scene->release();
-	}
+
+	magicalSafeRelease( s_running_scene );
+	magicalSafeRelease( s_next_scene );
 }
 
 void Engine::mainLoop( void )
