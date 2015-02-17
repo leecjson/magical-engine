@@ -44,6 +44,7 @@ static GLFWwindow* s_window = nullptr;
 static LARGE_INTEGER s_interval_win32;
 static double s_interval;
 static bool s_window_resizable = true;
+static Size s_window_size;
 static std::string s_window_title = "magical-engine";
 
 void Application::run( MainDelegate mainDelegate )
@@ -105,6 +106,24 @@ bool Application::isResizable( void )
 	return s_window_resizable;
 }
 
+void Application::setWindowSize( int width, int height )
+{
+	s_window_size.w = width;
+	s_window_size.h = height;
+	glfwSetWindowSize( s_window, s_window_size.w, s_window_size.h );
+}
+
+void Application::setWindowSize( const Size& size )
+{
+	s_window_size = size;
+	glfwSetWindowSize( s_window, s_window_size.w, s_window_size.h );
+}
+
+const Size& Application::getWindowSize( void )
+{
+	return s_window_size;
+}
+
 void Application::setWindowTitle( const char* title )
 {
 	s_window_title = title;
@@ -131,7 +150,10 @@ void Application::initWindow( void )
 	setResizable( true );
 	glfwDefaultWindowHints();
 
-	s_window = glfwCreateWindow( 960, 640, s_window_title.c_str(), nullptr, nullptr );
+	s_window_size.w = 960;
+	s_window_size.h = 640;
+
+	s_window = glfwCreateWindow( s_window_size.w, s_window_size.h, s_window_title.c_str(), nullptr, nullptr );
 	magicalReturnIfError();
 
 	glfwMakeContextCurrent( s_window );
@@ -242,7 +264,11 @@ static void win32FrameBufferSizeCallBack( GLFWwindow* window, int w, int h )
 
 static void win32WindowSizeCallBack( GLFWwindow* window, int width, int height )
 {
-	//magicalLog( "win32WindowSizeCallBack" );
+	s_window_size.w = width;
+	s_window_size.h = height;
+
+	Engine::resize( width, height );
+	magicalLog( "win32WindowSizeCallBack" );
 }
 
 NS_MAGICAL_END

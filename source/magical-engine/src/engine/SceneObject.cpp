@@ -337,17 +337,17 @@ const Vector3& SceneObject::getPosition( void ) const
 
 void SceneObject::yaw( float yaw, Space relative_to )
 {
-	rotate( Quaternion::createRotationY( magicalDegToRad( yaw ) ), relative_to );
+	rotate( Quaternion::createRotationY( yaw ), relative_to );
 }
 
 void SceneObject::pitch( float pitch, Space relative_to )
 {
-	rotate( Quaternion::createRotationX( magicalDegToRad( pitch ) ), relative_to );
+	rotate( Quaternion::createRotationX( pitch ), relative_to );
 }
 
 void SceneObject::roll( float roll, Space relative_to )
 {
-	rotate( Quaternion::createRotationZ( magicalDegToRad( roll ) ), relative_to );
+	rotate( Quaternion::createRotationZ( roll ), relative_to );
 }
 
 void SceneObject::lookAt( const Vector3& target, const Vector3& up )

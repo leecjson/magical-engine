@@ -33,6 +33,11 @@ NS_MAGICAL_BEGIN
 
 typedef std::function<void( void )> MainDelegate;
 
+class Screen
+{
+public:
+};
+
 class Application
 {
 public:
@@ -45,6 +50,9 @@ public:
 	static double getInterval( void );
 	static void setResizable( bool resizable );
 	static bool isResizable( void );
+	static void setWindowSize( int width, int height );
+	static void setWindowSize( const Size& size );
+	static const Size& getWindowSize( void );
 	static void setWindowTitle( const char* title );
 	static void swapBuffers( void );
 	static void exit( void );

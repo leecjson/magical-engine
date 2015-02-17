@@ -36,7 +36,7 @@ Entity::Entity( void )
 
 Entity::~Entity( void )
 {
-	for( const auto& itr : m_behaviours )
+	for( auto& itr : m_behaviours )
 	{
 		itr.second->onDestroy();
 		itr.second->release();

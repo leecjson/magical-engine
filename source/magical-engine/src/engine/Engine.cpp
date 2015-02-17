@@ -74,6 +74,12 @@ void Engine::mainLoop( void )
 	}
 }
 
+void Engine::resize( int width, int height )
+{
+	if( s_running_scene )
+		s_running_scene->resize( width, height );
+}
+
 float Engine::deltaTime( void )
 {
 	return s_delta_time;

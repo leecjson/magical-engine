@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Scene.h"
+#include "Application.h"
 
 NS_MAGICAL_BEGIN
 
@@ -67,6 +68,14 @@ ViewChannel* Scene::getViewChannel( ViewChannel::Index index ) const
 {
 	magicalAssert( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
 	return m_view_channels[ index ];
+}
+
+void Scene::resize( int width, int height )
+{
+	for( auto camera : m_cameras )
+	{
+		camera->setAspectRatio( (float)width / (float)height );
+	}
 }
 
 void Scene::visit( void )
@@ -187,6 +196,12 @@ void Scene::addCamera( Camera* camera )
 	if( camera->isActive() )
 	{
 		bindCameraToViewChannel( camera );
+	}
+
+	if( camera->isAutoAspectRatio() )
+	{
+		const Size& size = Application::getWindowSize();
+		camera->setAspectRatio( (float)size.w / (float)size.h );
 	}
 }
 

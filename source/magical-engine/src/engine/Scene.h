@@ -60,6 +60,7 @@ public:
 
 
 public:
+	void resize( int width, int height );
 	virtual void visit( void );
 	virtual void update( void );
 	virtual void link( SceneObject* child ) override;

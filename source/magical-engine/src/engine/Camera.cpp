@@ -30,6 +30,7 @@ define_class_hash_code( Camera );
 
 Camera::Camera( void )
 : m_view_channel_index( ViewChannel::Default )
+, m_camera_dirty_info( kCameraClean )
 {
 	assign_class_hash_code();
 	m_element_enum = Element::Camera;
@@ -100,19 +101,9 @@ void Camera::bindViewChannel( ViewChannel::Index index )
 	}
 }
 
-void Camera::setAspectRatio( bool aspect )
+void Camera::setOrthWindow( float width, float height )
 {
-	
-}
 
-void Camera::setNearClipDistance( float znear )
-{
-	m_znear = znear;
-}
-
-void Camera::setFarClipDistance( float zfar )
-{
-	m_zfar = zfar;
 }
 
 void Camera::setOrth( float left, float right, float bottom, float top, float znear, float zfar )
@@ -123,7 +114,38 @@ void Camera::setOrth( float left, float right, float bottom, float top, float zn
 	m_top = top;
 	m_znear = znear;
 	m_zfar = zfar;
+
 	m_projection = Projection::Orth;
+	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty );
+}
+
+void Camera::setFieldOfView( float fov )
+{
+	m_fov = fov;
+	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty );
+}
+
+void Camera::setAutoAspectRatio( bool auto_aspect_ratio )
+{
+	m_auto_aspect_ratio = auto_aspect_ratio;
+}
+
+void Camera::setAspectRatio( float aspect )
+{
+	m_aspect = aspect;
+	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty );
+}
+
+void Camera::setNearClipDistance( float znear )
+{
+	m_znear = znear;
+	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty );
+}
+
+void Camera::setFarClipDistance( float zfar )
+{
+	m_zfar = zfar;
+	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty);
 }
 
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
@@ -132,7 +154,9 @@ void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 	m_aspect = aspect;
 	m_znear = znear;
 	m_zfar = zfar;
+
 	m_projection = Projection::Perspective;
+	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty );
 }
 
 const Matrix4& Camera::getViewMatrix( void ) const
@@ -140,7 +164,7 @@ const Matrix4& Camera::getViewMatrix( void ) const
 	if( m_camera_dirty_info & kCameraViewDirty )
 	{
 		m_view_matrix = getLocalToWorldMatrix().getInversed();
-		m_camera_dirty_info = m_camera_dirty_info & ( ~kCameraViewDirty );
+		m_camera_dirty_info &= ~kCameraViewDirty;
 	}
 
 	return m_view_matrix;
@@ -148,42 +172,40 @@ const Matrix4& Camera::getViewMatrix( void ) const
 
 const Matrix4& Camera::getProjectionMatrix( void ) const
 {
+	if( m_camera_dirty_info & kCameraProjectionDirty )
+	{
+		switch( m_projection )
+		{
+		case Projection::Orth:
+			m_projection_matrix.setOrth( m_left, m_right, m_bottom, m_top, m_znear, m_zfar );
+			break;
+		case Projection::Perspective:
+			m_projection_matrix.setPerspective( m_fov, m_aspect, m_znear, m_zfar );
+			break;
+		default:
+			magicalAssert( false, "Invalid!" );
+			break;
+		}
+		m_camera_dirty_info &= ~kCameraProjectionDirty;
+	}
+
 	return m_projection_matrix;
 }
 
 const Matrix4& Camera::getViewProjectionMatrix( void ) const
 {
-	m_view_projection_matrix = getViewMatrix() * getProjectionMatrix();
+	if( m_camera_dirty_info & kCameraViewProjectionDirty )
+	{
+		m_view_projection_matrix = getViewMatrix() * getProjectionMatrix();
+		m_camera_dirty_info &= ~kCameraViewProjectionDirty;
+	}
+
+	return m_view_projection_matrix;
 }
 
 void Camera::transform( void )
 {
-	if( !m_visible )
-		return;
-
-	int info = m_ts_dirty_info;
-
-	if( m_ts_dirty != kTsClean )
-	{
-		const Quaternion& r = getDerivedRotation();
-		const Vector3& s = getDerivedScale();
-		const Vector3& t = getDerivedPosition();
-
-		m_local_to_world_matrix.setTRS( t, r, s );
-		m_view_matrix = m_local_to_world_matrix.getInversed();
-		m_ts_dirty = false;
-	}
-
-	if( !m_children.empty() )
-	{
-		for( auto child : m_children )
-		{
-			if( info != kTsClean )
-				child->transformDirty( info );
-
-			child->transform();
-		}
-	}
+	Entity::transform();
 }
 
 void Camera::transformDirty( int info )

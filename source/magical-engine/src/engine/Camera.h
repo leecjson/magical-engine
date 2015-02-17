@@ -68,16 +68,26 @@ public:
 	ViewChannel::Index getBoundViewChannelIndex( void ) const { return m_view_channel_index; }
 
 public:
-	void setAspectRatio( bool aspect );
-	void setNearClipDistance( float znear );
-	void setFarClipDistance( float zfar );
+	void setOrthWindow( float width, float height );
+	float getOrthWindowWidth( void ) const { return m_right - m_left; }
+	float getOrthWindowHeight( void ) const { return m_top - m_bottom; }
 	void setOrth( float left, float right, float bottom, float top, float znear, float zfar );
+	void setFieldOfView( float fov );
+	float getFieldOfView( void ) const { return m_fov; }
+	void setAutoAspectRatio( bool auto_aspect_ratio );
+	bool isAutoAspectRatio( void ) const { return m_auto_aspect_ratio; }
+	void setAspectRatio( float aspect );
+	float getAspectRatio( void ) const { return m_aspect; }
+	void setNearClipDistance( float znear );
+	float getNearClipDistance( void ) const { return m_znear; }
+	void setFarClipDistance( float zfar );
+	float getFarClipDistance( void ) const { return m_zfar; }
 	void setPerspective( float fov, float aspect, float znear, float zfar );
+
+public:
 	const Matrix4& getViewMatrix( void ) const;
 	const Matrix4& getProjectionMatrix( void ) const;
 	const Matrix4& getViewProjectionMatrix( void ) const;
-
-public:
 	virtual void transform( void ) override;
 	virtual void transformDirty( int info ) override;
 
@@ -93,10 +103,11 @@ protected:
 	float m_bottom = 0.0f;
 	float m_top = 0.0f;
 	float m_fov = 60.0f;
-	float m_aspect = 0.0f;
+	float m_aspect = 1.3333f;
 	float m_znear = 0.3f;
 	float m_zfar = 1000.0f;
-	mutable bool m_camera_dirty_info;
+	bool m_auto_aspect_ratio = true;
+	mutable int m_camera_dirty_info;
 	mutable Matrix4 m_view_matrix;
 	mutable Matrix4 m_projection_matrix;
 	mutable Matrix4 m_view_projection_matrix;

@@ -38,6 +38,7 @@ public:
 
 public:
 	static void mainLoop( void );
+	static void resize( int width, int height );
 	static float deltaTime( void );
 	static void runScene( const Ptr<Scene>& scene );
 	static Scene* runningScene( void );

@@ -41,7 +41,7 @@ void MainCameraScript::onStart( void )
 
 void MainCameraScript::onUpdate( void )
 {
-	magicalLog( "onUpdate" );
+	//magicalLog( "onUpdate" );
 }
 
 void MainCameraScript::onStop( void )
@@ -56,6 +56,9 @@ void MainCameraScript::onDestroy( void )
 
 void mainDelegate( void )
 {
+	Application::setInterval( 1.0 / 200.0 );
+	Application::setWindowSize( Size{ 1280, 720 } );
+
 	Ptr<Scene> scene = Scene::create();
 	scene->getViewChannel( ViewChannel::Default )->setEnabled( true );
 	scene->getViewChannel( ViewChannel::Default )->setViewRect( 0, 0, 1, 1 );
