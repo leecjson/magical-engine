@@ -27,25 +27,35 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 
-MAGICALAPI void magicalLogLastError( void ); 
-#define magicalLog( txt ) ::magical::Log::write( txt )
-
 #ifndef MAGICAL_DEBUG
-#define magicalDebugLog( txt )
+#define magicalLog( txt )
 #else
-#define magicalDebugLog( txt ) magicalLog( txt )
+#define magicalLog( txt ) ::magical::Log::writeLine( ::magical::Log::Debug, txt )
 #endif
+
+#define DEBUG_LOG_FILE "magical-Log-debug.log"
+#define WARNING_LOG_FILE "magical-Log-warning.log"
+#define ERROR_LOG_FILE "magical-Log-error.log"
 
 NS_MAGICAL_BEGIN
 
 class Log
 {
 public:
+	enum : int 
+	{
+		Debug = 0,
+		Warning = 1,
+		Error = 2,
+	};
+
+public:
 	static void init( void );
 	static void delc( void );
 
 public:
-	static void write( const char* txt );
+	static void write( int level, const char* txt );
+	static void writeLine( int level, const char* txt );
 };
 
 NS_MAGICAL_END

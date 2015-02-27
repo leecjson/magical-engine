@@ -24,33 +24,35 @@ SOFTWARE.
 #ifndef __INPUT_SYSTEM_H__
 #define __INPUT_SYSTEM_H__
 
-#include "PlatformMacros.h"
+#include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "Behaviour.h"
+//#include "Behaviour.h"
+
+#include <functional>
 
 NS_MAGICAL_BEGIN
 
-enum class DelegatePlatform
+enum class DelegatePlatform : int
 {
 	Cpp         = 1,
 	Lua         = 2,
 };
 
-enum class InputDevice
+enum class InputDevice : int
 {
 	Mouse       = 1,             // 鼠标
 	Touch       = 2,             // 触屏
 };
 
-enum class KeyAction
+enum class KeyAction : int
 {
 	Down        = 1,             // 按下
 	Press       = 2,             // 按住
 	Up          = 0,             // 抬起
 };
 
-enum class KeyCode
+enum class KeyCode : int
 {
 	Unknown     = -1,            // 未知按键。
 
@@ -232,13 +234,48 @@ enum class KeyCode
 //	KeyAction action;
 //};
 
-//typedef std::function<void( KeyEvent* )> KeyEventDelegate;
+struct KeyEvent
+{
+	KeyCode key;
+	KeyAction action;
+};
+
+struct ScrollEvent
+{
+	double x;
+	double y;
+};
+
+struct MouseButtonEvent
+{
+	int button;
+	int action;
+};
+
+struct MouseMoveEvent
+{
+	double x;
+	double y;
+};
+
+typedef std::function<void( KeyEvent* )> KeyEventFunction;
+typedef std::function<void( MouseButtonEvent* )> MouseButtonEventFunction;
+typedef std::function<void( MouseMoveEvent* )> MouseMoveEventFunction;
 
 class Input
 {
 public:
-	static void Init( void );
-	static void Delc( void );
+	static void init( void );
+	static void delc( void );
+
+public:
+	static void addKeyEventFunction( Reference* ref, const KeyEventFunction& keyevent_function );
+	static void addMouseButtonEventFunction( Reference* ref, const MouseButtonEventFunction& mousebuttonevent_function );
+	static void addMouseMoveEventFunction( Reference* ref, const MouseMoveEventFunction& mousemoveevent_function );
+
+	static void onKeyEvent( KeyCode key, KeyAction action );
+	static void onMouseButtonEvent( int button, int action );
+	static void onMouseEvent( double x, double y );
 
 public:
 	//static void OnKeyEvent( KeyCode key, KeyAction action );

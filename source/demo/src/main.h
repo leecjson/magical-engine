@@ -36,6 +36,21 @@ public:
 	virtual void onUpdate( void );
 	virtual void onStop( void );
 	virtual void onDestroy( void );
+
+	void onKeyEvent( KeyEvent* keyevent );
+	void onMouseButtonEvent( MouseButtonEvent* mousebtnevnet );
+	void onMouseMoveEvent( MouseMoveEvent* mousemoveevent );
+
+private:
+	bool m_w_pressed = false;
+	bool m_d_pressed = false;
+	bool m_a_pressed = false;
+	bool m_s_pressed = false;
+	bool m_right_button_down = false;
+	double m_last_x = 0.0f;
+	double m_last_y = 0.0f;
+
+	Entity* entity1;
 };
 
 extern void mainDelegate( void );

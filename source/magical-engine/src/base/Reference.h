@@ -28,16 +28,6 @@ SOFTWARE.
 #include "Common.h"
 #include "Ptr.h"
 
-/*
-hash code macros
-*/
-#define define_class_hash_code( cls ) \
-	const size_t cls::HashCode = typeid( cls ).hash_code()
-#define declare_class_hash_code \
-	static const size_t HashCode
-#define assign_class_hash_code() \
-	m_class_hash_code = HashCode
-
 NS_MAGICAL_BEGIN
 
 class Reference
@@ -50,17 +40,9 @@ public:
 	void retain( void );
 	void release( void );
 	unsigned int retainCount( void ) const;
-	
-	size_t type( void ) const;
-	template< class Tz >
-	inline bool typeof( void ) const
-	{
-		return m_class_hash_code == Tz::HashCode;
-	}
 
 protected:
 	unsigned int m_reference = 1;
-	size_t m_class_hash_code = 0;
 };
 
 NS_MAGICAL_END

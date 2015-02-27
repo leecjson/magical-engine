@@ -21,38 +21,42 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __DATA_H__
-#define __DATA_H__
+#ifndef __RENDERER_COMMON_H__
+#define __RENDERER_COMMON_H__
 
 #include "magical-macros.h"
 #include "Common.h"
-#include "Reference.h"
 
-NS_MAGICAL_BEGIN
- 
-class Data : public Reference
-{
-public:
-	Data( void );
-	virtual ~Data( void );
-	static Ptr<Data> create( void );
-	static Ptr<Data> create( size_t size );
-	static Ptr<Data> create( char* data, size_t size );
+#ifdef MAGICAL_USING_GL
 
-public:
-	void assign( char* data, size_t size );
-	void malloc( size_t size );
-	void realloc( size_t size );
-	void free( void );
-	bool empty( void ) const;
-	size_t size( void ) const;
-	char* cPtr( void );
+#ifdef MAGICAL_WIN32
+#include "win32/gl/glew/glew.h"
+#endif
 
-private:
-	char* m_data = nullptr;
-	size_t m_size = 0;
-};
+#define magicalCheckGLError() do {                       \
+	if( GLenum Glerr = glGetError() ) {                  \
+		magicalFormat( "GL:0x%04X", Glerr );             \
+		magicalSetLastErrorA( magicalGetBuffer() );      \
+		magicalLogLastError();                           \
+	}                                                    \
+	} while( 0 )
 
-NS_MAGICAL_END
+#ifndef MAGICAL_DEBUG
+#define magicalDebugCheckGLError()
+#else
+#define magicalDebugCheckGLError() magicalCheckGLError()
+#endif
 
-#endif //__DATA_H__
+MAGICALAPI bool magicalGetShaderInfoLog( GLuint shader );
+MAGICALAPI bool magicalGetProgramInfoLog( GLuint program );
+
+#endif //MAGICAL_USING_GL
+
+#ifdef MAGICAL_USING_D3D9
+#endif //MAGICAL_USING_D3D9
+
+#ifdef MAGICAL_USING_D3D11
+#endif //MAGICAL_USING_D3D11
+
+
+#endif //__RENDERER_COMMON_H__

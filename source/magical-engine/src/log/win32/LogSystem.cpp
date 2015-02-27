@@ -25,69 +25,125 @@ SOFTWARE.
 #include "Utils.h"
 #include <windows.h>
 
-#define MAGICAL_LOG_DEBUG "DEBUG"
-#define MAGICAL_LOG_ERROR "ERROR"
-
 NS_MAGICAL_BEGIN
 
 static char s_buffer[ kBufferLen ];
-static FILE* s_output_file = nullptr;
+static FILE* s_debug_file = nullptr;
+static FILE* s_warning_file = nullptr;
+static FILE* s_error_file = nullptr;
 
 void Log::init( void )
 {
-	std::string dir, name;
+	string dir, name;
 	char buff[ MAX_PATH ];
-	std::memset( buff, 0, MAX_PATH );
+	memset( buff, 0, MAX_PATH );
 
-	GetModuleFileNameA( NULL, buff, MAX_PATH );
+	GetModuleFileNameA( nullptr, buff, MAX_PATH );
 	dir = FileUtils::toUnixPath( buff );
-	dir = dir.substr( 0, dir.find_last_of( "/" ) );
+	dir = dir.substr( 0, dir.find_last_of( "/" ) + 1 );
 
-	name = dir + "/magical-log.log";
-	s_output_file = fopen( name.c_str(), "w" );
-	if( s_output_file == nullptr )
+	name = dir + DEBUG_LOG_FILE;
+	s_debug_file = fopen( name.c_str(), "w" );
+	if( s_debug_file == nullptr )
 	{
-		magicalSetLastErrorA( "open file(debug.log) failed!" );
+		magicalFormat( "open file(%s) failed!", DEBUG_LOG_FILE );
+		magicalSetLastErrorA( magicalGetBuffer() );
 		magicalLogLastError();
+		return;
+	}
+
+	name = dir + WARNING_LOG_FILE;
+	s_warning_file = fopen( name.c_str(), "w" );
+	if( s_warning_file == nullptr )
+	{
+		magicalFormat( "open file(%s) failed!", WARNING_LOG_FILE );
+		magicalSetLastErrorA( magicalGetBuffer() );
+		magicalLogLastError();
+		return;
+	}
+
+	name = dir + ERROR_LOG_FILE;
+	s_error_file = fopen( name.c_str(), "w" );
+	if( s_error_file == nullptr )
+	{
+		magicalFormat( "open file(%s) failed!", ERROR_LOG_FILE );
+		magicalSetLastErrorA( magicalGetBuffer() );
+		magicalLogLastError();
+		return;
 	}
 }
 
 void Log::delc( void )
 {
-	fclose( s_output_file );
-	s_output_file = nullptr;
+	fclose( s_debug_file );
+	fclose( s_warning_file );
+	fclose( s_error_file );
+	s_debug_file = nullptr;
+	s_warning_file = nullptr;
+	s_error_file = nullptr;
 }
 
-void Log::write( const char* txt )
+void Log::write( int level, const char* txt )
 {
-#ifdef MAGICAL_DEBUG
-	magicalAssert( txt, "should not be nullptr." );
-#else
-	if( !txt ) return;
-#endif
+	if( !txt || !(*txt) ) 
+		return;
 
 #ifdef MAGICAL_DEBUG
 	sprintf( s_buffer, "%s", txt );
+	OutputDebugStringA( s_buffer );
+	printf( "%s", s_buffer );
+#endif
 
+	switch( level )
+	{
+	case Debug:
+		fprintf( s_debug_file, "%s", txt );
+		fflush( s_debug_file );
+		break;
+	case Warning:
+		fprintf( s_warning_file, "%s", txt );
+		fflush( s_warning_file );
+		break;
+	case Error:
+		fprintf( s_error_file, "%s", txt );
+		fflush( s_error_file );
+		break;
+	default:
+		magicalAssert( false, "Invalid!" );
+		break;
+	}
+}
+
+void Log::writeLine( int level, const char* txt )
+{
+	if( !txt || !(*txt) ) 
+		return;
+
+#ifdef MAGICAL_DEBUG
+	sprintf( s_buffer, "%s", txt );
 	OutputDebugStringA( s_buffer );
 	OutputDebugStringA( "\n" );
 	printf( "%s\n", s_buffer );
 #endif
 
-	if( s_output_file )
+	switch( level )
 	{
-		fprintf( s_output_file, "%s\n", txt );
-		fflush( s_output_file );
+	case Debug:
+		fprintf( s_debug_file, "%s\n", txt );
+		fflush( s_debug_file );
+		break;
+	case Warning:
+		fprintf( s_warning_file, "%s\n", txt );
+		fflush( s_warning_file );
+		break;
+	case Error:
+		fprintf( s_error_file, "%s\n", txt );
+		fflush( s_error_file );
+		break;
+	default:
+		magicalAssert( false, "Invalid!" );
+		break;
 	}
 }
 
 NS_MAGICAL_END
-
-void magicalLogLastError( void )
-{
-	char temp[ kBufferLen ];
-	const char* last_error = magicalGetLastErrorInfo();
-	
-	sprintf( temp, "[%s]: %s", MAGICAL_LOG_ERROR, last_error );
-	magicalLog( temp );
-}

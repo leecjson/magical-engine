@@ -22,11 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "InputSystem.h"
+
 #include <vector>
 #include <unordered_set>
 #include <unordered_map>
 
 NS_MAGICAL_BEGIN
+
+using ::std::unordered_map;
 
 enum class OperateOnLocked
 {
@@ -45,15 +48,87 @@ enum class OperateOnLocked
 //static std::vector< std::pair<OperateOnLocked, KeyEventObject> > _s_temp_key_event_objects;
 //static bool _s_key_event_dispatch_locked = false;
 
-void Input::Init( void )
+static unordered_map<Reference*, KeyEventFunction> s_key_event_map;
+static unordered_map<Reference*, MouseButtonEventFunction> s_mouse_button_event_map;
+static unordered_map<Reference*, MouseMoveEventFunction> s_mouse_move_event_map;
+
+void Input::init( void )
 {
 
 }
 
-void Input::Delc( void )
+void Input::delc( void )
 {
-	
+	for( auto& itr : s_key_event_map )
+	{
+		itr.first->release();
+	}
+
+	for( auto& itr : s_mouse_button_event_map )
+	{
+		itr.first->release();
+	}
+
+	for( auto& itr : s_mouse_move_event_map )
+	{
+		itr.first->release();
+	}
 }
+
+void Input::addKeyEventFunction( Reference* ref, const KeyEventFunction& keyevent_function )
+{
+	ref->retain();
+	s_key_event_map.insert( std::make_pair( ref, keyevent_function ) );
+}
+
+void Input::addMouseButtonEventFunction( Reference* ref, const MouseButtonEventFunction& mousebuttonevent_function )
+{
+	ref->retain();
+	s_mouse_button_event_map.insert( std::make_pair( ref, mousebuttonevent_function ) );
+}
+
+void Input::addMouseMoveEventFunction( Reference* ref, const MouseMoveEventFunction& mousemoveevent_function )
+{
+	ref->retain();
+	s_mouse_move_event_map.insert( std::make_pair( ref, mousemoveevent_function ) );
+}
+
+void Input::onKeyEvent( KeyCode key, KeyAction action )
+{
+	KeyEvent keyevent;
+	keyevent.action = action;
+	keyevent.key = key;
+
+	for( const auto& itr : s_key_event_map )
+	{
+		itr.second( &keyevent );
+	}
+}
+
+void Input::onMouseButtonEvent( int button, int action )
+{
+	MouseButtonEvent et;
+	et.action = action;
+	et.button = button;
+
+	for( const auto& itr : s_mouse_button_event_map )
+	{
+		itr.second( &et );
+	}
+}
+
+void Input::onMouseEvent( double x, double y )
+{
+	MouseMoveEvent mousemoveevent;
+	mousemoveevent.x = x;
+	mousemoveevent.y = y;
+
+	for( const auto& itr : s_mouse_move_event_map )
+	{
+		itr.second( &mousemoveevent );
+	}
+}
+
 //
 //void Input::keyEvent( KeyCode key, KeyAction action )
 //{

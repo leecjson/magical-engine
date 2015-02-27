@@ -26,24 +26,19 @@ SOFTWARE.
 
 #include "magical-macros.h"
 
-/*
-c include
-*/
 #include <assert.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdint.h>
-#include <float.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-/*
-c++ include
-*/
 #include <string>
+#include <sstream>
+
 NS_MAGICAL_BEGIN
 using ::std::string;
+using ::std::stringstream;
 NS_MAGICAL_END
-#include <typeinfo>
-#include <iostream>
 
 #include "LogSystem.h"
 
@@ -51,31 +46,32 @@ NS_MAGICAL_END
 macros
 */
 NS_MAGICAL_BEGIN
-#ifdef MAX
-#undef MAX
-#endif
+//#ifdef MAX
+//#undef MAX
+//#endif
 template< class T >
-inline T MAX( const T& a, const T& b ){ return a > b ? a : b; }
+inline const T& cmax( const T& a, const T& b ){ return a > b ? a : b; }
 
-#ifdef MIN
-#undef MIN
-#endif
+//#ifdef MIN
+//#undef MIN
+//#endif
 template< class T >
-inline T MIN( const T& a, const T& b ){ return a < b ? a : b; }
+inline const T& cmin( const T& a, const T& b ){ return a < b ? a : b; }
 NS_MAGICAL_END
+
 
 /*
 buffer macros
 */
 #define kBufferLen 1024 * 128
 NS_MAGICAL_BEGIN
-extern char g_buffer[];
+extern char commonbuf[];
 NS_MAGICAL_END
-#define magicalGetBuffer() ::magical::g_buffer
-#define magicalFormat( fmt, ... ) ::sprintf( ::magical::g_buffer, fmt, ##__VA_ARGS__ )
+#define magicalGetBuffer() ::magical::commonbuf
+#define magicalFormat( fmt, ... ) ::sprintf( ::magical::commonbuf, fmt, ##__VA_ARGS__ )
 
 /*
-func macros 
+func macros
 */
 #define magicalSafeFree( var ) do{ if( var ) ::free( var ); } while(0)
 #define magicalSafeFreeNull( var ) do{ if( var ) ::free( var ); var = nullptr; } while(0)
@@ -87,18 +83,20 @@ func macros
 #define magicalSafeRelease( var ) do{ if( var ) var->release(); } while(0)
 #define magicalSafeReleaseNull( var ) do{ if( var ){ var->release(); var = nullptr; } } while(0)
 #define magicalSafeAssign( lvar, rvar ) do{ if( rvar ) rvar->retain(); if( lvar ) lvar->release(); lvar = rvar; } while(0)
-#define magicalSafeMove( lvar, rvar ) do{ magicalAssert( lvar != rvar, "Invaild move operate" ); if( lvar ) lvar->release(); lvar = rvar; } while(0)
-#define magicalSafeMoveNull( lvar, rvar ) do{ magicalAssert( lvar != rvar, "Invaild move operate" ); if( lvar ) lvar->release(); lvar = rvar; rvar = nullptr; } while(0)
+#define magicalSafeMove( lvar, rvar ) do{ magicalAssert( lvar != rvar, "Invalid move operate" ); if( lvar ) lvar->release(); lvar = rvar; } while(0)
+#define magicalSafeMoveNull( lvar, rvar ) do{ magicalAssert( lvar != rvar, "Invalid move operate" ); if( lvar ) lvar->release(); lvar = rvar; rvar = nullptr; } while(0)
 
 /*
 error macros
 */
 MAGICALAPI bool magicalIsError( void );
 MAGICALAPI void magicalIgnoreLastError( void );
-MAGICALAPI void magicalSetLastError( const char* info, const char* func = nullptr, int line = 0 );
-#define magicalSetLastErrorA( info ) magicalSetLastError( info, __FUNCTION__, __LINE__ )
+MAGICALAPI void magicalSetLastError( const char* info, const char* file = nullptr, int line = 0 );
+#define magicalSetLastErrorA( info ) magicalSetLastError( info, __FILE__, __LINE__ )
 MAGICALAPI const char* magicalGetLastErrorInfo( void );
 MAGICALAPI void magicalShowLastError( void );
+MAGICALAPI void magicalLogLastError( void );
+MAGICALAPI void magicalLogLastErrorWithoutNewLine( void );
 #define magicalReturnIfError() do{ if( magicalIsError() ) return; } while(0)
 #define magicalReturnVarIfError( var ) do{ if( magicalIsError() ) return var; } while(0)
 
@@ -120,7 +118,7 @@ MAGICALAPI void magicalLocalAssert( const char* exp, const char* msg, const char
 #ifndef MAGICAL_DEBUG
 #define magicalAssert( exp, msg )
 #else
-#define magicalAssert( exp, msg ) do{                     \
+#define magicalAssert( exp, msg ) do {                    \
 	if( !( exp ) ) {                                      \
 		magicalSetLastErrorA( msg );                      \
 		magicalLogLastError();                            \
@@ -165,44 +163,53 @@ size and rect
 */
 NS_MAGICAL_BEGIN
 
-struct Size { float w, h; };
-struct Rect { float x, y, w, h; };
+struct Size
+{
+public:
+	float w;
+	float h;
+	static const Size Zero;
+
+	Size( float w, float h ){ this->w = w; this->h = h; }
+};
+
+struct Rect
+{
+public:
+	float x;
+	float y;
+	float w;
+	float h;
+	static const Rect Zero;
+
+	Rect( float x, float y, float w, float h ){ this->x = x; this->y = y; this->w = w; this->h = h; }
+};
+
+struct Color4f
+{
+public:
+	float r;
+	float g;
+	float b;
+	float a;
+	static const Color4f Red;                  // 红
+	static const Color4f Green;                // 绿
+	static const Color4f Blue;                 // 蓝
+	static const Color4f White;                // 白
+	static const Color4f Black;                // 黑
+	static const Color4f Yello;                // 黄
+	static const Color4f Magenta;              // 洋红
+	static const Color4f Cyan;                 // 青
+	static const Color4f DarkGray;             // 深灰
+	static const Color4f LightGray;            // 浅灰
+	static const Color4f Brown;                // 褐
+	static const Color4f Orange;               // 南瓜橙
+	static const Color4f Pink;                 // 粉红
+	static const Color4f Purple;               // 紫
+
+	Color4f( float r, float g, float b, float a ){ this->r = r; this->g = g; this->b = b; this->a = a; }
+};
 
 NS_MAGICAL_END
-
-
-
-//struct Color4F
-//{
-//public:
-//	float r;
-//	float g;
-//	float b;
-//	float a;
-//};
-//
-//struct Color4B
-//{
-//public:
-//	uint8_t r;
-//	uint8_t g;
-//	uint8_t b;
-//	uint8_t a;
-//};
-
-//Color kColorRed = { 1.0f, 0.0f, 0.0f, 1.0f };                   // 红
-//Color kColorGreen = { 0.0f, 1.0f, 0.0f, 1.0f };                 // 绿
-//Color kColorBlue = { 0.0f, 0.0f, 1.0f, 1.0f };                  // 蓝
-//Color kColorWhite = { 1.0f, 1.0f, 1.0f, 1.0f };                 // 白
-//Color kColorBlack = { 0.0f, 0.0f, 0.0f, 1.0f };                 // 黑
-//Color kColorYello = { 1.0f, 1.0f, 0.0f, 1.0f };                 // 黄
-//Color kColorMagenta = { 1.0f, 0.0f, 1.0f, 1.0f };                // 洋红
-//Color kColorCyan = { 0.0f, 1.0f, 1.0f, 1.0f };                  // 青
-//Color kColorDarkGray = { 0.25f, 0.25f, 0.25f, 1.0f };           // 深灰
-//Color kColorLightGray = { 0.75f, 0.75f, 0.75f, 1.0f };          // 浅灰
-//Color kColorBrown = { 0.6f, 0.4f, 0.12f, 1.0f };                // 褐
-//Color kColorOrange = { 0.98f, 0.625f, 0.12f, 1.0f };            // 南瓜橙
-//Color kColorPink = { 0.98f, 0.04f, 0.7f, 1.0f };				 // 粉红
-//Color kColorPurple = { 0.6f, 0.4f, 0.7f, 1.0f };                // 紫
 
 #endif //__COMMON_H__

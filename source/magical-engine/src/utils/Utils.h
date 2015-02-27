@@ -29,32 +29,37 @@ SOFTWARE.
 
 #include <stdarg.h>
 
-class StringUtils
-{
-public:
-	template< int size >
-	static inline std::string format( const char* format, ... )
-	{
-		char buf[ size ];
-		va_list args;
-		va_start( args, format );
-		vsnprintf( buf, size, format, args );
-		va_end( args );
-		return std::string( buf );
-	}
-};
+NS_MAGICAL_BEGIN
+
+//class StringUtils
+//{
+//public:
+//	template< int size >
+//	static inline std::string format( const char* format, ... )
+//	{
+//		char buf[ size ];
+//		va_list args;
+//		va_start( args, format );
+//		vsnprintf( buf, size, format, args );
+//		va_end( args );
+//		return std::string( buf );
+//	}
+//};
 
 class TimeUtils
 {
 public:
-	static int64_t currentMicrosecondsTime( void );
+	static int64_t currentMicroseconds( void );
+	static int64_t currentSeconds( void );
 };
 
 class FileUtils
 {
 public:
 	static bool isAbsPath( const char* path );
-	static std::string toUnixPath( const char* path );
+	static string toUnixPath( const char* path );
 };
+
+NS_MAGICAL_END
 
 #endif //__UTILS_H__

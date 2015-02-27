@@ -21,38 +21,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __DATA_H__
-#define __DATA_H__
+#ifndef __RENDERER_H__
+#define __RENDERER_H__
 
 #include "magical-macros.h"
 #include "Common.h"
-#include "Reference.h"
+#include "RendererCommon.h"
+#include "ViewChannel.h"
+
+#include "ShaderProgram.h"
+#include "magical-math.h"
 
 NS_MAGICAL_BEGIN
- 
-class Data : public Reference
+
+class Renderer
 {
 public:
-	Data( void );
-	virtual ~Data( void );
-	static Ptr<Data> create( void );
-	static Ptr<Data> create( size_t size );
-	static Ptr<Data> create( char* data, size_t size );
+	static void init( void );
+	static void delc( void );
 
 public:
-	void assign( char* data, size_t size );
-	void malloc( size_t size );
-	void realloc( size_t size );
-	void free( void );
-	bool empty( void ) const;
-	size_t size( void ) const;
-	char* cPtr( void );
+	static void render( void );
+	static void resize( int width, int height );
+	static void setDefault( void );
+	
+public:
+	static void pushRenderChannel( const ViewChannel* channel );
 
-private:
-	char* m_data = nullptr;
-	size_t m_size = 0;
 };
+
+#define kAttrVertexIndex 1
+#define kAttrColorIndex 2
+extern ShaderProgram* s_simple_program;
+extern ShaderProgram* s_flat_program;
+extern Vector3 rect[4];
+extern Vector3 rect_triangle[4];
+extern Vector3 cube[24];
 
 NS_MAGICAL_END
 
-#endif //__DATA_H__
+#endif //__RENDERER_H__

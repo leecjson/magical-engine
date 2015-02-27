@@ -26,11 +26,11 @@ SOFTWARE.
 
 #include "c/c-utility.h"
 
-#ifndef NS_MAGICAL_BEGIN
-#define NS_MAGICAL_BEGIN   namespace magical {
+#if !defined( NS_MAGICAL_BEGIN )
+#define NS_MAGICAL_BEGIN namespace magical {
 #endif
-#ifndef NS_MAGICAL_END
-#define NS_MAGICAL_END     }
+#if !defined( NS_MAGICAL_END )
+#define NS_MAGICAL_END }
 #endif
 
 #if defined MAGICAL_ENGINE
@@ -58,8 +58,6 @@ SOFTWARE.
 	struct Quaternion;             \
 	struct Ray2;                   \
 	struct Ray3;                   \
-	struct RayIntersectResult;     \
-	struct Rect;                   \
 	struct Sphere;                 \
 	struct Vector2;                \
 	struct Vector3;                \

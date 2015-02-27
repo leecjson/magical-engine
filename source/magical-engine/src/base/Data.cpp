@@ -22,14 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Data.h"
+#include <stdlib.h>
 
 NS_MAGICAL_BEGIN
 
-define_class_hash_code( Data );
-
 Data::Data( void )
 {
-	assign_class_hash_code();
+
 }
 
 Data::~Data( void )
@@ -41,7 +40,7 @@ Ptr<Data> Data::create( void )
 {
 	Data* ret = new Data();
 	magicalAssert( ret, "new Data() failed" );
-	return Ptr<Data>( Initializer<Data>( ret ) );
+	return Ptr<Data>( PtrCtor<Data>( ret ) );
 }
 
 Ptr<Data> Data::create( size_t size )
@@ -49,7 +48,7 @@ Ptr<Data> Data::create( size_t size )
 	Data* ret = new Data();
 	magicalAssert( ret, "new Data() failed" );
 	ret->malloc( size );
-	return Ptr<Data>( Initializer<Data>( ret ) );
+	return Ptr<Data>( PtrCtor<Data>( ret ) );
 }
 
 Ptr<Data> Data::create( char* data, size_t size )
@@ -57,7 +56,7 @@ Ptr<Data> Data::create( char* data, size_t size )
 	Data* ret = new Data();
 	magicalAssert( ret, "new Data() failed" );
 	ret->assign( data, size );
-	return Ptr<Data>( Initializer<Data>( ret ) );
+	return Ptr<Data>( PtrCtor<Data>( ret ) );
 }
 
 void Data::assign( char* data, size_t size )

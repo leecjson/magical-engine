@@ -35,9 +35,8 @@ class Camera;
 class ViewChannel : public Reference
 {
 public:
-	declare_class_hash_code;
-
-	enum Index : int {
+	enum Index : int 
+	{
 		C0 = 0,
 		C1 = 1,
 		C2 = 2,
@@ -56,17 +55,17 @@ public:
 	void setViewRect( const Rect& rect );
 	const Rect& getViewRect( void ) const { return m_view_rect; }
 	void setEnabled( bool enabled );
-	bool isEnabled( void ) const { return m_is_enabled; }
-	bool isChannelOpened( void ) const { return isEnabled() && m_camera; }
+	bool isEnabled( void ) const { return m_enabled; }
 	Camera* getCamera( void ) const { return m_camera; }
 	void removeCamera( void );
+	bool isDrawable( void ) const { return isEnabled() && m_camera; }
 
 public:
 	void setCamera( const Ptr<Camera>& camera );
 
 protected:
-	Rect m_view_rect = Rect{ 0.0f, 0.0f, 1.0f, 1.0f };
-	bool m_is_enabled = false;
+	Rect m_view_rect = Rect( 0.0f, 0.0f, 1.0f, 1.0f );
+	bool m_enabled = false;
 	Camera* m_camera = nullptr;
 };
 

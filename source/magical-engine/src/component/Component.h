@@ -21,38 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __DATA_H__
-#define __DATA_H__
+#ifndef __COMPONENT_H__
+#define __COMPONENT_H__
 
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
 
 NS_MAGICAL_BEGIN
- 
-class Data : public Reference
+
+class Component : public Reference
 {
 public:
-	Data( void );
-	virtual ~Data( void );
-	static Ptr<Data> create( void );
-	static Ptr<Data> create( size_t size );
-	static Ptr<Data> create( char* data, size_t size );
-
-public:
-	void assign( char* data, size_t size );
-	void malloc( size_t size );
-	void realloc( size_t size );
-	void free( void );
-	bool empty( void ) const;
-	size_t size( void ) const;
-	char* cPtr( void );
-
-private:
-	char* m_data = nullptr;
-	size_t m_size = 0;
+	Component( void );
+	virtual ~Component( void );
 };
+
 
 NS_MAGICAL_END
 
-#endif //__DATA_H__
+#endif //__COMPONENT_H__

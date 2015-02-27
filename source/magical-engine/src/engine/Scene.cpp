@@ -26,11 +26,8 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-define_class_hash_code( Scene );
-
 Scene::Scene( void )
 {
-	assign_class_hash_code();
 	m_root_scene = this;
 
 	for( int i = 0; i < ViewChannel::Count; i ++ )
@@ -61,7 +58,7 @@ Ptr<Scene> Scene::create( void )
 {
 	Scene* ret = new Scene();
 	magicalAssert( ret, "new Scene() failed" );
-	return Ptr<Scene>( Initializer<Scene>( ret ) );
+	return Ptr<Scene>( PtrCtor<Scene>( ret ) );
 }
 
 ViewChannel* Scene::getViewChannel( ViewChannel::Index index ) const
@@ -74,7 +71,10 @@ void Scene::resize( int width, int height )
 {
 	for( auto camera : m_cameras )
 	{
-		camera->setAspectRatio( (float)width / (float)height );
+		if( camera->isAutoAspectRatio() )
+		{
+			camera->setAspectRatio( (float)width / (float)height );
+		}
 	}
 }
 
@@ -88,7 +88,7 @@ void Scene::visit( void )
 
 	for( int i = 0; i < ViewChannel::Count; i ++ )
 	{
-		if( m_view_channels[i]->isChannelOpened() )
+		if( m_view_channels[i]->isDrawable() )
 		{
 			Camera* camera = m_view_channels[i]->getCamera();
 			for( auto child : m_children )

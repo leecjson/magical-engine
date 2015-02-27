@@ -26,7 +26,7 @@ SOFTWARE.
 #include "Utils.h"
 //#include "assetsSystem.h"
 //#include "LuaSystem.h"
-//#include "RendererSystem.h"
+#include "Renderer.h"
 #include "Application.h"
 #include "SceneObject.h"
 
@@ -40,7 +40,7 @@ static Scene* s_running_scene = nullptr;
 
 void Engine::init( void )
 {
-	s_last_update_time = TimeUtils::currentMicrosecondsTime();
+	s_last_update_time = TimeUtils::currentMicroseconds();
 }
 
 void Engine::delc( void )
@@ -56,6 +56,8 @@ void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
+	Renderer::render();
+
 	if( s_next_scene )
 	{
 		if( s_running_scene )
@@ -67,10 +69,9 @@ void Engine::mainLoop( void )
 
 	if( s_running_scene )
 	{
-		Scene* scene = s_running_scene;
-		scene->update();
-		scene->transform();
-		scene->visit();
+		s_running_scene->update();
+		s_running_scene->transform();
+		s_running_scene->visit();
 	}
 }
 
@@ -78,6 +79,8 @@ void Engine::resize( int width, int height )
 {
 	if( s_running_scene )
 		s_running_scene->resize( width, height );
+
+	Renderer::resize( width, height );
 }
 
 float Engine::deltaTime( void )
@@ -101,8 +104,8 @@ Scene* Engine::runningScene( void )
 
 void Engine::calcDeltaTime( void )
 {
-	int64_t now = TimeUtils::currentMicrosecondsTime();
-	s_delta_time = MAX( 0.0, ( now - s_last_update_time ) / 1000000.0 );
+	int64_t now = TimeUtils::currentMicroseconds();
+	s_delta_time = cmax( 0.0, ( now - s_last_update_time ) / 1000000.0 );
 	s_last_update_time = now;
 }
 

@@ -23,21 +23,15 @@ SOFTWARE.
 *******************************************************************************/
 
 template< class T >
-Initializer<T>::Initializer( T* ref )
+PtrCtor<T>::PtrCtor( T* rhs )
 {
-	m_reference = ref;
+	m_reference = rhs;
 }
 
 template< class T >
 Ptr<T>::Ptr( void )
 {
 
-}
-
-template< class T >
-Ptr<T>::Ptr( nullptr_t nt )
-{
-	m_reference = nt;
 }
 
 template< class T >
@@ -71,30 +65,28 @@ Ptr<T>::Ptr( Ptr<T>&& rhs )
 }
 
 template< class T >
-Ptr<T>::Ptr( Initializer<T>& ir )
+Ptr<T>::Ptr( PtrCtor<T>& rhs )
 {
-	if( ir.m_reference )
+	if( rhs.m_reference )
 	{
-		m_reference = ir.m_reference;
+		m_reference = rhs.m_reference;
 	}
 }
 
 template< class T >
-Ptr<T>::Ptr( Initializer<T>&& ir )
+Ptr<T>::Ptr( PtrCtor<T>&& rhs )
 {
-	if( ir.m_reference )
+	if( rhs.m_reference )
 	{
-		m_reference = ir.m_reference;
+		m_reference = rhs.m_reference;
+		rhs.m_reference = nullptr;
 	}
 }
 
 template< class T >
-Ptr<T>::~Ptr( void )
+Ptr<T>::Ptr( nullptr_t rhs )
 {
-	if( m_reference )
-	{
-		m_reference->release();
-	}
+	m_reference = rhs;
 }
 
 template< class T >
@@ -122,22 +114,21 @@ Ptr<T>::Ptr( Ptr<Tz>&& rhs )
 }
 
 template< class T >
+Ptr<T>::~Ptr( void )
+{
+	if( m_reference )
+	{
+		m_reference->release();
+	}
+}
+
+template< class T >
 void Ptr<T>::reset( void )
 {
 	if( m_reference )
 	{
 		m_reference->release();
 		m_reference = nullptr;
-	}
-}
-
-template< class T >
-void Ptr<T>::set( nullptr_t nt )
-{
-	if( m_reference )
-	{
-		m_reference->release();
-		m_reference = nt;
 	}
 }
 
@@ -176,6 +167,8 @@ void Ptr<T>::set( Ptr<T>& rhs )
 template< class T >
 void Ptr<T>::set( Ptr<T>&& rhs )
 {
+	magicalAssert( m_reference != rhs.m_reference || ( !rhs.m_reference && !m_reference ), "Invalid!" );
+
 	if( m_reference )
 	{
 		m_reference->release();
@@ -190,17 +183,47 @@ void Ptr<T>::set( Ptr<T>&& rhs )
 }
 
 template< class T >
-void Ptr<T>::set( Initializer<T>& ir )
+void Ptr<T>::set( PtrCtor<T>& rhs )
 {
+	magicalAssert( m_reference != rhs.m_reference || ( !rhs.m_reference && !m_reference ), "Invalid!" );
+
 	if( m_reference )
 	{
 		m_reference->release();
 		m_reference = nullptr;
 	}
 
-	if( ir.m_reference )
+	if( rhs.m_reference )
 	{
-		m_reference = ir.m_reference;
+		m_reference = rhs.m_reference;
+	}
+}
+
+template< class T >
+void Ptr<T>::set( PtrCtor<T>&& rhs )
+{
+	magicalAssert( m_reference != rhs.m_reference || ( !rhs.m_reference && !m_reference ), "Invalid!" );
+
+	if( m_reference )
+	{
+		m_reference->release();
+		m_reference = nullptr;
+	}
+
+	if( rhs.m_reference )
+	{
+		m_reference = rhs.m_reference;
+		rhs.m_reference = nullptr;
+	}
+}
+
+template< class T >
+void Ptr<T>::set( nullptr_t rhs )
+{
+	if( m_reference )
+	{
+		m_reference->release();
+		m_reference = rhs;
 	}
 }
 
@@ -233,6 +256,8 @@ template< class Tz >
 void Ptr<T>::set( Ptr<Tz>&& rhs )
 {
 	Tz* ref = rhs.get();
+	magicalAssert( m_reference != ref || ( !ref && !m_reference ), "Invalid!" );
+
 	if( ref != nullptr )
 	{
 		if( m_reference )
@@ -258,13 +283,6 @@ T* Ptr<T>::get( void ) const
 }
 
 template< class T >
-template< class Tz >
-Tz* Ptr<T>::get( void ) const
-{
-	return static_cast< Tz* >( m_reference );
-}
-
-template< class T >
 T* Ptr<T>::take( void )
 {
 	T* ref = m_reference;
@@ -274,30 +292,22 @@ T* Ptr<T>::take( void )
 
 template< class T >
 template< class Tz >
-Tz* Ptr<T>::take( void )
+Tz* Ptr<T>::static_cast_to( void ) const
 {
-	Tz* ref = static_cast< Tz* >( m_reference );
-	m_reference = nullptr;
-	return ref;
-}
-
-template< class T >
-Ptr<T> Ptr<T>::share( void ) const
-{
-	return Ptr<T>( m_reference );
+	return static_cast< Tz* >( m_reference );
 }
 
 template< class T >
 template< class Tz >
-Ptr<Tz> Ptr<T>::share( void ) const
+Tz* Ptr<T>::dynamic_cast_to( void ) const
 {
-	return Ptr<Tz>( static_cast< Tz* >( m_reference ) );
+	return dynamic_cast< Tz* >( m_reference );
 }
 
 template< class T >
-Ptr<T>& Ptr<T>::operator=( nullptr_t nt )
+Ptr<T>& Ptr<T>::operator=( nullptr_t rhs )
 {
-	set( nt );
+	set( rhs );
 	return *this;
 }
 
@@ -341,13 +351,13 @@ bool Ptr<T>::operator!=( const Ptr<T>& rhs ) const
 }
 
 template< class T >
-bool Ptr<T>::operator==( nullptr_t nt ) const
+bool Ptr<T>::operator==( nullptr_t rhs ) const
 {
-	return m_reference == nt;
+	return m_reference == rhs;
 }
 
 template< class T >
-bool Ptr<T>::operator!=( nullptr_t nt ) const
+bool Ptr<T>::operator!=( nullptr_t rhs ) const
 {
-	return m_reference != nt;
+	return m_reference != rhs;
 }

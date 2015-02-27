@@ -48,9 +48,6 @@ class Entity;
 class Scene : public SceneObject
 {
 public:
-	declare_class_hash_code;
-
-public:
 	Scene( void );
 	virtual ~Scene( void );
 	static Ptr<Scene> create( void );

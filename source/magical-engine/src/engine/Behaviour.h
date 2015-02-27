@@ -44,23 +44,10 @@ public:
 template< class T >
 class Behaviour : public BehaviourBase
 {
-public:
-	friend class Entity;
-	declare_class_hash_code;
-	Behaviour( void );
-
 protected:
+	friend class Entity;
 	T* that = nullptr;
 };
-
-template< class T >
-Behaviour<T>::Behaviour( void )
-{
-	assign_class_hash_code();
-}
-
-template< class T >
-define_class_hash_code( Behaviour<T> );
 
 NS_MAGICAL_END
 

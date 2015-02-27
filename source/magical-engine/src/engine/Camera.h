@@ -51,10 +51,6 @@ enum : int
 class Camera : public Entity
 {
 public:
-	friend class ViewChannel;
-	declare_class_hash_code;
-	
-public:
 	Camera( void );
 	virtual ~Camera( void );
 	static Ptr<Camera> create( void );

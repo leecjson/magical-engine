@@ -26,11 +26,9 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-define_class_hash_code( ViewChannel );
-
 ViewChannel::ViewChannel( void )
 {
-	assign_class_hash_code();
+
 }
 
 ViewChannel::~ViewChannel( void )
@@ -53,7 +51,7 @@ void ViewChannel::setViewRect( const Rect& rect )
 
 void ViewChannel::setEnabled( bool enabled )
 {
-	m_is_enabled = enabled;
+	m_enabled = enabled;
 }
 
 void ViewChannel::removeCamera( void )

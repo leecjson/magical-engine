@@ -24,8 +24,9 @@ SOFTWARE.
 #ifndef __SHADER_PROGRAM_H__
 #define __SHADER_PROGRAM_H__
 
-#include "PlatformMacros.h"
+#include "magical-macros.h"
 #include "Common.h"
+#include "RendererCommon.h"
 #include "Reference.h"
 
 NS_MAGICAL_BEGIN
@@ -36,26 +37,27 @@ public:
 	ShaderProgram( void );
 	virtual ~ShaderProgram( void );
 	static Ptr<ShaderProgram> create( void );
+	static Ptr<ShaderProgram> create( const char* vertex_src, const char* pixel_src );
 
 public:
 	void setVertexSource( const char* vertex_src );
-	void setFragmentSource( const char* fragment_src );
+	void setPixelSource( const char* pixel_src );
+	uint32_t getId( void ) const { return m_program; }
 	bool build( void );
 	bool link( void );
 	void shutdown( void );
-	inline uint32_t getId( void ) const { return _program_id; }
-	bool isReady( void ) const;
+	bool isDone( void ) const;
 
 public:
 	void bindAttribLocation( uint32_t index, const char* name ) const;
-	int getUniformLocation( const char* name ) const;
+	int32_t getUniformLocation( const char* name ) const;
 
 protected:
-	std::string _vertex_src;
-	std::string _fragment_src;
-	uint32_t _program_id = 0;
-	bool _is_built = false;
-	bool _is_linked = false;
+	string m_vertex_src;
+	string m_pixel_src;
+	uint32_t m_program;
+	bool m_built = false;
+	bool m_linked = false;
 };
 
 NS_MAGICAL_END

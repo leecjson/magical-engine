@@ -22,11 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Application.h"
+#include "Engine.h"
+#include "InputSystem.h"
+
 #include <windows.h>
 #include "win32/gl/glew/glew.h"
 #include "win32/gl/glfw3/glfw3.h"
-#include "Engine.h"
-//#include "InputSystem.h"
 
 NS_MAGICAL_BEGIN
 
@@ -44,7 +45,7 @@ static GLFWwindow* s_window = nullptr;
 static LARGE_INTEGER s_interval_win32;
 static double s_interval;
 static bool s_window_resizable = true;
-static Size s_window_size;
+static Size s_window_size = Size::Zero;
 static std::string s_window_title = "magical-engine";
 
 void Application::run( MainDelegate mainDelegate )
@@ -68,6 +69,8 @@ void Application::run( MainDelegate mainDelegate )
 			last.QuadPart = now.QuadPart;
 
 			Engine::mainLoop();
+			glfwSwapBuffers( s_window );
+
 #ifdef MAGICAL_DEBUG
 			magicalShowLastError();
 			magicalReturnIfError();
@@ -167,6 +170,8 @@ void Application::initWindow( void )
 	glfwSetWindowPosCallback( s_window, win32WindowPosCallBack );
 	glfwSetFramebufferSizeCallback( s_window, win32FrameBufferSizeCallBack );
 	glfwSetWindowSizeCallback( s_window, win32WindowSizeCallBack );
+
+	Engine::resize( s_window_size.w, s_window_size.h );
 }
 
 void Application::delcWindow( void )
@@ -228,16 +233,27 @@ static void win32ErrorCallBack( int err_id, const char* error_desc )
 
 static void win32MouseButtonCallBack( GLFWwindow* window, int button, int action, int modify )
 {
-	//magicalLog( "win32MouseButtonCallBack" );
+	Input::onMouseButtonEvent( button, action );
+
+	stringstream ss;
+	ss << "Button:" << button << "  Action:" << action << "  Modify:" << modify; 
+
+	magicalLog( ss.str().c_str() );
+	magicalLog( "win32MouseButtonCallBack" );
 }
 
 static void win32MouseMoveCallBack( GLFWwindow* window, double x, double y )
 {
+	Input::onMouseEvent( x, y );
 	//magicalLog( "win32MouseMoveCallBack" );
 }
 
 static void win32MouseScrollCallBack( GLFWwindow* window, double x, double y )
 {
+	stringstream ss;
+	ss << "Scroll: x=" << x << "  y=" << y;
+
+	magicalLog( ss.str().c_str() );
 	//magicalLog( "win32MouseScrollCallBack" );
 }
 
@@ -248,7 +264,7 @@ static void win32CharCallBack( GLFWwindow* window, unsigned int character )
 
 static void win32KeyCallBack( GLFWwindow* window, int key, int scancode, int action, int mods )
 {
-	//Input::OnkeyEvent( (KeyCode) key, (KeyAction) action );
+	Input::onKeyEvent( (KeyCode) key, (KeyAction) action );
 	magicalLog( "win32KeyCallBack" );
 }
 

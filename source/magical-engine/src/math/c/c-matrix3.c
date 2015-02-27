@@ -85,7 +85,7 @@ void magicalMatrix3Fill( cMatrix3* out, float m11, float m12, float m13, float m
 
 void magicalMatrix3Copy( cMatrix3* out, const cMatrix3* m )
 {
-	memcpy( out, &m, sizeof( cMatrix3 ) );
+	memcpy( out, m, sizeof( cMatrix3 ) );
 }
 
 void magicalMatrix3SetIdentity( cMatrix3* out )

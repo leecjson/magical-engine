@@ -55,6 +55,15 @@
     <Filter Include="src\log\win32">
       <UniqueIdentifier>{5fec5e40-0949-43d4-b947-158c88270488}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\renderer\gl">
+      <UniqueIdentifier>{cc5532dc-de7a-469c-be26-2ba80ba22335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input">
+      <UniqueIdentifier>{4b85121b-0eb5-4dee-bf76-f8b83991714e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\component">
+      <UniqueIdentifier>{e6fcc63d-46ea-4a41-a9b3-2eff2e58af81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3.h">
@@ -162,15 +171,6 @@
     <ClInclude Include="..\src\engine\Engine.h">
       <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\log\LogSystem.h">
-      <Filter>src\log</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\utils\Utils.h">
-      <Filter>src\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\com\magical-macros.h">
-      <Filter>src\com</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\c\c-aabb2.h">
       <Filter>src\math\c</Filter>
     </ClInclude>
@@ -218,6 +218,30 @@
     </ClInclude>
     <ClInclude Include="..\src\engine\ViewChannel.h">
       <Filter>src\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\com\magical-macros.h">
+      <Filter>src\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\log\LogSystem.h">
+      <Filter>src\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\Renderer.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\RendererCommon.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\ShaderProgram.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\Utils.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\input\InputSystem.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\component\Component.h">
+      <Filter>src\component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,12 +320,6 @@
     <ClCompile Include="..\src\engine\Engine.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\log\win32\LogSystem.cpp">
-      <Filter>src\log\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\utils\Utils.cpp">
-      <Filter>src\utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\math\c\c-aabb2.c">
       <Filter>src\math\c</Filter>
     </ClCompile>
@@ -346,6 +364,27 @@
     </ClCompile>
     <ClCompile Include="..\src\engine\ViewChannel.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\log\win32\LogSystem.cpp">
+      <Filter>src\log\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\Renderer.cpp">
+      <Filter>src\renderer\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\RendererCommon.cpp">
+      <Filter>src\renderer\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\ShaderProgram.cpp">
+      <Filter>src\renderer\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils\Utils.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\input\InputSystem.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\component\Component.cpp">
+      <Filter>src\component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

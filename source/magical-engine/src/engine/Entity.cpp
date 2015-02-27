@@ -24,19 +24,20 @@ SOFTWARE.
 #include "Entity.h"
 #include "Scene.h"
 
-NS_MAGICAL_BEGIN
+#include "ShaderProgram.h"
+#include "Renderer.h"
+#include "win32/gl/glew/glew.h"
 
-define_class_hash_code( Entity );
+NS_MAGICAL_BEGIN
 
 Entity::Entity( void )
 {
-	assign_class_hash_code();
 	m_element_enum = Element::Entity;
 }
 
 Entity::~Entity( void )
 {
-	for( auto& itr : m_behaviours )
+	for( const auto& itr : m_behaviours )
 	{
 		itr.second->onDestroy();
 		itr.second->release();
@@ -47,7 +48,7 @@ Ptr<Entity> Entity::create( void )
 {
 	Entity* ret = new Entity();
 	magicalAssert( ret, "new Entity() failed" );
-	return Ptr<Entity>( Initializer<Entity>( ret ) );
+	return Ptr<Entity>( PtrCtor<Entity>( ret ) );
 }
 
 Ptr<Entity> Entity::create( const char* name )
@@ -55,13 +56,59 @@ Ptr<Entity> Entity::create( const char* name )
 	Entity* ret = new Entity();
 	magicalAssert( ret, "new Entity() failed" );
 	ret->setName( name );
-	return Ptr<Entity>( Initializer<Entity>( ret ) );
+	return Ptr<Entity>( PtrCtor<Entity>( ret ) );
 }
 
 void Entity::visit( Camera* camera )
 {
 	if( !m_visible )
 		return;
+
+	if( m_element_enum == Element::Camera )
+	{
+		if( !m_children.empty() )
+		{
+			for( auto child : m_children )
+			{
+				child->visit( camera );
+			}
+		}
+		return;
+	}
+
+	glUseProgram( s_flat_program->getId() );
+
+	Matrix4 mvp_matrix = getLocalToWorldMatrix() * camera->getViewProjectionMatrix();
+
+	GLint u_mvp_matrix = s_flat_program->getUniformLocation( "u_mvp_matrix" );
+	glUniformMatrix4fv( u_mvp_matrix, 1, GL_FALSE, (GLfloat*)&mvp_matrix );
+
+	/*Color4f colors[4] = {
+		Color4f::Pink,
+		Color4f::Yello,
+		Color4f::Green,
+		Color4f::Red };
+
+	glEnableVertexAttribArray( kAttrVertexIndex );
+	glEnableVertexAttribArray( kAttrColorIndex );
+	glVertexAttribPointer( kAttrVertexIndex, 3, GL_FLOAT, GL_FALSE, 0, &rect_triangle );
+	glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
+	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );*/
+
+	Color4f colors[24] = { 
+		Color4f::Red, Color4f::Red, Color4f::Red, Color4f::Red, //font
+		Color4f::Black, Color4f::Black, Color4f::Black, Color4f::Black, //top
+		Color4f::Pink, Color4f::Pink, Color4f::Pink, Color4f::Pink,  //back
+		Color4f::Blue, Color4f::Blue, Color4f::Blue, Color4f::Blue, //bottom
+		Color4f::Brown, Color4f::Brown, Color4f::Brown, Color4f::Brown, //left
+		Color4f::Cyan, Color4f::Cyan, Color4f::Cyan, Color4f::Cyan //right
+	};
+
+	glEnableVertexAttribArray( kAttrVertexIndex );
+	glEnableVertexAttribArray( kAttrColorIndex );
+	glVertexAttribPointer( kAttrVertexIndex, 3, GL_FLOAT, GL_FALSE, 0, &cube );
+	glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
+	glDrawArrays( GL_QUADS, 0, 24 );
 
 	if( !m_children.empty() )
 	{
@@ -71,6 +118,11 @@ void Entity::visit( Camera* camera )
 		}
 	}
 }
+
+//void Entity::draw( void )
+//{
+//	glUseProgram( s_flat_program->getId() );
+//}
 
 void Entity::prepare( void )
 {

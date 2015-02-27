@@ -28,6 +28,7 @@ SOFTWARE.
 #include "magical-math.h"
 
 #include "Common.h"
+#include "CachePool.h"
 #include "Ptr.h"
 #include "Reference.h"
 #include "Data.h"
@@ -39,7 +40,7 @@ SOFTWARE.
 #include "Behaviour.h"
 //#include "AssetsSystem.h"
 #include "LogSystem.h"
-//#include "InputSystem.h"
+#include "InputSystem.h"
 #include "Utils.h"
 
 //#include "LuaMacros.h"

@@ -26,26 +26,23 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-define_class_hash_code( Camera );
-
 Camera::Camera( void )
 : m_view_channel_index( ViewChannel::Default )
 , m_camera_dirty_info( kCameraClean )
 {
-	assign_class_hash_code();
 	m_element_enum = Element::Camera;
 }
 
 Camera::~Camera( void )
 {
-
+	
 }
 
 Ptr<Camera> Camera::create( void )
 {
 	Camera* ret = new Camera();
 	magicalAssert( ret, "new Camera() failed" );
-	return Ptr<Camera>( Initializer<Camera>( ret ) );
+	return Ptr<Camera>( PtrCtor<Camera>( ret ) );
 }
 
 Ptr<Camera> Camera::create( const char* name )
@@ -53,7 +50,7 @@ Ptr<Camera> Camera::create( const char* name )
 	Camera* ret = new Camera();
 	magicalAssert( ret, "new Camera() failed" );
 	ret->setName( name );
-	return Ptr<Camera>( Initializer<Camera>( ret ) );
+	return Ptr<Camera>( PtrCtor<Camera>( ret ) );
 }
 
 void Camera::setVisible( bool visible )

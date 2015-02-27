@@ -33,17 +33,11 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-using ::std::string;
-using ::std::vector;
 class Scene;
 class Camera;
 
-enum class Space : int
-{
-	Self,
-	Parent,
-	World,
-};
+using ::std::string;
+using ::std::vector;
 
 enum : int
 {
@@ -53,12 +47,18 @@ enum : int
 	kTsScaleDirty = 0x04,
 };
 
+enum class Space : int
+{
+	Self,
+	Parent,
+	World,
+};
+
 class SceneObject : public Reference
 {
 public:
 	friend class Scene;
 	typedef vector<SceneObject*> Children;
-	declare_class_hash_code;
 	
 public:
 	SceneObject( void );
@@ -128,6 +128,7 @@ public:
 	virtual void link( SceneObject* child );
 	virtual void unlink( SceneObject* child );
 	virtual void visit( Camera* camera );
+	//virtual void draw( void );
 	virtual void start( void );
 	virtual void stop( void );
 	virtual void transform( void );
@@ -144,7 +145,7 @@ protected:
 	string m_name;
 	Scene* m_root_scene = nullptr;
 	Element m_element_enum;
-	bool m_visible = false;
+	bool m_visible = true;
 	bool m_running = false;
 	Children m_children;
 	SceneObject* m_parent = nullptr;

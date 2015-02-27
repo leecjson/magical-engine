@@ -21,38 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __DATA_H__
-#define __DATA_H__
+#include "RendererCommon.h"
 
-#include "magical-macros.h"
-#include "Common.h"
-#include "Reference.h"
-
-NS_MAGICAL_BEGIN
- 
-class Data : public Reference
+MAGICALAPI bool magicalGetShaderInfoLog( GLuint shader )
 {
-public:
-	Data( void );
-	virtual ~Data( void );
-	static Ptr<Data> create( void );
-	static Ptr<Data> create( size_t size );
-	static Ptr<Data> create( char* data, size_t size );
+	char* info_log;
+	GLint info_length;
+	glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &info_length );
 
-public:
-	void assign( char* data, size_t size );
-	void malloc( size_t size );
-	void realloc( size_t size );
-	void free( void );
-	bool empty( void ) const;
-	size_t size( void ) const;
-	char* cPtr( void );
+	info_log = (char*) malloc( info_length );
+	glGetShaderInfoLog( shader, info_length, &info_length, info_log );
 
-private:
-	char* m_data = nullptr;
-	size_t m_size = 0;
-};
+	if( info_log == nullptr )
+		return false;
 
-NS_MAGICAL_END
+	magicalFormat( "%s", info_log );
+	free( info_log );
+	return true;
+}
 
-#endif //__DATA_H__
+MAGICALAPI bool magicalGetProgramInfoLog( GLuint program )
+{
+	char* info_log;
+	GLint info_length;
+	glGetProgramiv( program, GL_INFO_LOG_LENGTH, &info_length );
+
+	info_log = (char*) malloc( info_length );
+	glGetProgramInfoLog( program, info_length, &info_length, info_log );
+
+	if( info_log == nullptr )
+		return false;
+
+	magicalFormat( "%s", info_log );
+	free( info_log );
+	return true;
+}

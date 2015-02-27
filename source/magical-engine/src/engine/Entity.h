@@ -37,9 +37,6 @@ using ::std::unordered_map;
 class Entity : public SceneObject
 {
 public:
-	declare_class_hash_code;
-
-public:
 	Entity( void );
 	virtual ~Entity( void );
 	static Ptr<Entity> create( void );
@@ -53,6 +50,7 @@ public:
 
 public:
 	virtual void visit( Camera* camera ) override;
+	//virtual void draw( void ) override;
 	virtual void prepare( void );
 	virtual void start( void ) override;
 	virtual void stop( void ) override;
@@ -62,8 +60,13 @@ protected:
 	unordered_map<size_t, BehaviourBase*> m_behaviours;
 
 protected:
-	AABB3 m_aabb;
+	//AABB3 m_aabb;
 };
+
+//class RenderComponent
+//{
+//
+//};
 
 #include "Entity.inl"
 

@@ -24,12 +24,21 @@ SOFTWARE.
 #include "Utils.h"
 #include <chrono>
 
-int64_t TimeUtils::currentMicrosecondsTime( void )
+NS_MAGICAL_BEGIN
+
+int64_t TimeUtils::currentMicroseconds( void )
 {
 	using namespace ::std::chrono;
 	system_clock::duration scd = system_clock::now().time_since_epoch();
 	microseconds::rep now = duration_cast<microseconds>( scd ).count();
 	return now;
+}
+
+int64_t TimeUtils::currentSeconds( void )
+{
+	using namespace ::std::chrono;
+	system_clock::duration scd = system_clock::now().time_since_epoch();
+	return scd.count();
 }
 
 bool FileUtils::isAbsPath( const char* path )
@@ -48,11 +57,11 @@ bool FileUtils::isAbsPath( const char* path )
 #endif
 }
 
-std::string FileUtils::toUnixPath( const char* path )
+string FileUtils::toUnixPath( const char* path )
 {
 	magicalAssert( path, "should not be nullptr." );
 
-	std::string ret = path;
+	string ret = path;
 	int len = ret.length();
     for( int i = 0; i < len; ++i )
     {
@@ -63,3 +72,5 @@ std::string FileUtils::toUnixPath( const char* path )
     }
     return ret;
 }
+
+NS_MAGICAL_END

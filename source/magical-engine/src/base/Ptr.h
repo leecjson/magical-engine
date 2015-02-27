@@ -30,20 +30,20 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-using ::std::nullptr_t;
-
+class Reference;
 template< class T >
 class Ptr;
-class Reference;
+template< class T >
+class PtrCtor;
 
 template< class T >
-class Initializer
+class PtrCtor
 {
 public:
-	Initializer( T* ref );
+	PtrCtor( T* rhs );
 
 private:
-	template< class T >
+	template< class T > 
 	friend class Ptr;
 	T* m_reference = nullptr;
 };
@@ -53,51 +53,47 @@ class Ptr
 {
 public:
 	Ptr( void );
-	Ptr( nullptr_t nt );
 	Ptr( T* rhs );
 	Ptr( Ptr<T>& rhs );
 	Ptr( Ptr<T>&& rhs );
-	Ptr( Initializer<T>& ir );
-	Ptr( Initializer<T>&& ir );
-	~Ptr( void );
-
+	Ptr( PtrCtor<T>& rhs );
+	Ptr( PtrCtor<T>&& rhs );
+	Ptr( nullptr_t rhs );
 	template< class Tz >
 	Ptr( Ptr<Tz>& rhs );
 	template< class Tz >
 	Ptr( Ptr<Tz>&& rhs );
+	~Ptr( void );
 
 public:
 	void reset( void );
-	void set( nullptr_t nt );
 	void set( T* rhs );
 	void set( Ptr<T>& rhs );
 	void set( Ptr<T>&& rhs );
-	void set( Initializer<T>& ir );
-	T* get( void ) const;
-	T* take( void );
-	Ptr<T> share( void ) const;
-	
+	void set( PtrCtor<T>& rhs );
+	void set( PtrCtor<T>&& rhs );
+	void set( nullptr_t rhs );
 	template< class Tz > 
 	void set( Ptr<Tz>& rhs );
 	template< class Tz > 
 	void set( Ptr<Tz>&& rhs );
-	template< class Tz > 
-	Tz* get( void ) const;
-	template< class Tz > 
-	Tz* take( void );
+	T* get( void ) const;
+	T* take( void );
 	template< class Tz >
-	Ptr<Tz> share( void ) const;
+	Tz* static_cast_to( void ) const;
+	template< class Tz >
+	Tz* dynamic_cast_to( void ) const;
 
 public:
-	Ptr<T>& operator=( nullptr_t nt );
+	Ptr<T>& operator=( nullptr_t rhs );
 	Ptr<T>& operator=( T* rhs );
 	Ptr<T>& operator=( Ptr<T>& rhs );
 	Ptr<T>& operator=( Ptr<T>&& rhs );
 	T* operator->( void ) const;
 	bool operator==( const Ptr<T>& rhs ) const;
 	bool operator!=( const Ptr<T>& rhs ) const;
-	bool operator==( nullptr_t nt ) const;
-	bool operator!=( nullptr_t nt ) const;
+	bool operator==( nullptr_t rhs ) const;
+	bool operator!=( nullptr_t rhs ) const;
 
 protected:
 	T* m_reference = nullptr;

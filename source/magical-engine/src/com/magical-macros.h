@@ -24,41 +24,37 @@ SOFTWARE.
 #ifndef __MAGICAL_MACROS_H__
 #define __MAGICAL_MACROS_H__
 
-/*
-MAGICAL_WIN32
-MAG_ANDROID
-MAG_IOS
-MAG_LINUX
-MAG_MAC
-*/
-#ifdef _WIN32
+#if defined( _WIN32 )
 #define MAGICAL_WIN32
 #define MAGICAL_PLATFORM "Win32"
+#elif defined( ANDROID )
+#define MAGICAL_ANDROID
+#define MAGICAL_PLATFORM "Android"
+#elif defined( IOS )
+#define MAGICAL_IOS
+#define MAGICAL_PLATFORM "Ios"
+#elif defined( MAC )
+#define MAGICAL_MAC
+#define MAGICAL_PLATFORM "MacOS"
 #endif
 
-#ifndef MAGICALAPI
+#if !defined( MAGICALAPI )
 #define MAGICALAPI extern
 #endif
 
-#ifndef NS_MAGICAL_BEGIN
-#define NS_MAGICAL_BEGIN   namespace magical {
+#if !defined( NS_MAGICAL_BEGIN )
+#define NS_MAGICAL_BEGIN namespace magical {
 #endif
-#ifndef NS_MAGICAL_END
-#define NS_MAGICAL_END     }
+#if !defined( NS_MAGICAL_END )
+#define NS_MAGICAL_END }
 #endif
 
-#ifndef USING_NS_MAGICAL
-#define USING_NS_MAGICAL   using namespace magical
+#if !defined( USING_NS_MAGICAL )
+#define USING_NS_MAGICAL using namespace magical
 #endif
 
 typedef unsigned char cBool;
-
-#ifndef cTrue
 #define cTrue  1
-#endif
-
-#ifndef cFalse
 #define cFalse 0
-#endif
 
 #endif //__MAGICAL_MACROS_H__

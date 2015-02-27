@@ -19,7 +19,7 @@
       <SDLCheck>false</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <AdditionalIncludeDirectories>$(SolutionDir)magical-engine\src;$(SolutionDir)magical-engine\src\assets;$(SolutionDir)magical-engine\src\base;$(SolutionDir)magical-engine\src\com;$(SolutionDir)magical-engine\src\context;$(SolutionDir)magical-engine\src\engine;$(SolutionDir)magical-engine\src\include;$(SolutionDir)magical-engine\src\input;$(SolutionDir)magical-engine\src\log;$(SolutionDir)magical-engine\src\math;$(SolutionDir)magical-engine\src\renderer;$(SolutionDir)magical-engine\src\script;$(SolutionDir)magical-engine\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)magical-engine\src;$(SolutionDir)magical-engine\src\assets;$(SolutionDir)magical-engine\src\base;$(SolutionDir)magical-engine\src\com;$(SolutionDir)magical-engine\src\component;$(SolutionDir)magical-engine\src\context;$(SolutionDir)magical-engine\src\engine;$(SolutionDir)magical-engine\src\include;$(SolutionDir)magical-engine\src\input;$(SolutionDir)magical-engine\src\log;$(SolutionDir)magical-engine\src\math;$(SolutionDir)magical-engine\src\renderer;$(SolutionDir)magical-engine\src\script;$(SolutionDir)magical-engine\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>

@@ -27,17 +27,29 @@ SOFTWARE.
 #ifdef MAGICAL_DEBUG
 #include <mutex>
 #endif
-#include <sstream>
 
-/*
-platform include
-*/
 #ifdef MAGICAL_WIN32
 #include <windows.h>
 #endif
 
 NS_MAGICAL_BEGIN
-char g_buffer[ kBufferLen ];
+char commonbuf[ kBufferLen ];
+const Size Size::Zero = Size( 0.0f, 0.0f );
+const Rect Rect::Zero = Rect( 0.0f, 0.0f, 0.0f, 0.0f );
+const Color4f Color4f::Red = { 1.0f, 0.0f, 0.0f, 1.0f };
+const Color4f Color4f::Green = { 0.0f, 1.0f, 0.0f, 1.0f };
+const Color4f Color4f::Blue = { 0.0f, 0.0f, 1.0f, 1.0f };
+const Color4f Color4f::White = { 1.0f, 1.0f, 1.0f, 1.0f };
+const Color4f Color4f::Black = { 0.0f, 0.0f, 0.0f, 1.0f };
+const Color4f Color4f::Yello = { 1.0f, 1.0f, 0.0f, 1.0f };
+const Color4f Color4f::Magenta = { 1.0f, 0.0f, 1.0f, 1.0f };
+const Color4f Color4f::Cyan = { 0.0f, 1.0f, 1.0f, 1.0f };
+const Color4f Color4f::DarkGray = { 0.25f, 0.25f, 0.25f, 1.0f };
+const Color4f Color4f::LightGray = { 0.75f, 0.75f, 0.75f, 1.0f };
+const Color4f Color4f::Brown = { 0.6f, 0.4f, 0.12f, 1.0f };
+const Color4f Color4f::Orange = { 0.98f, 0.625f, 0.12f, 1.0f };
+const Color4f Color4f::Pink = { 0.98f, 0.04f, 0.7f, 1.0f };
+const Color4f Color4f::Purple = { 0.6f, 0.4f, 0.7f, 1.0f };
 NS_MAGICAL_END
 
 static bool s_last_error = false;
@@ -68,13 +80,13 @@ void magicalIgnoreLastError( void )
 	s_last_error = false;
 }
 
-void magicalSetLastError( const char* info, const char* func, int line )
+void magicalSetLastError( const char* info, const char* file, int line )
 {
 	if( info == nullptr )
 		return;
 
-	if( func )
-		sprintf( s_last_error_info, "%s %s:%d", info, func, line );
+	if( file )
+		sprintf( s_last_error_info, "%s %s:%d", info, file, line );
 	else
 		strcpy( s_last_error_info, info );
 
@@ -105,6 +117,28 @@ void magicalShowLastError( void )
 #endif
 }
 
+void magicalLogLastError( void )
+{
+	char temp[ kBufferLen ];
+	const char* last_error = magicalGetLastErrorInfo();
+	
+	sprintf( temp, "[%s]: %s", "Error", last_error );
+
+	USING_NS_MAGICAL;
+	Log::writeLine( Log::Error, temp );
+}
+
+void magicalLogLastErrorWithoutNewLine( void )
+{
+	char temp[ kBufferLen ];
+	const char* last_error = magicalGetLastErrorInfo();
+	
+	sprintf( temp, "[%s]: %s", "Error", last_error );
+
+	USING_NS_MAGICAL;
+	Log::write( Log::Error, temp );
+}
+
 void magicalMessageBox( const char* msg, const char* title )
 {
 #ifdef MAGICAL_WIN32
@@ -117,7 +151,7 @@ void magicalLocalAssert( const char* exp, const char* msg, const char* file, int
 #ifdef MAGICAL_WIN32
 	std::stringstream stext;
 	stext << file << "\n\n" << "Line: " << line << "\n\n";
-	stext << "条件表达式：" << exp << " " << msg << "\n\n";
+	stext << "条件表达式：" << "(" << exp << ") " << msg << "\n\n";
 	stext << "是否跟进断点，查看运行时调用堆栈？";
 	if( MessageBoxA( nullptr, stext.str().c_str(), "Assertion failed! 魔幻引擎 \t", MB_ICONERROR | MB_YESNO ) == IDYES )
 	{
@@ -137,7 +171,9 @@ bool magicalIsTimerStarted( void )
 
 void magicalStartTimer( void )
 {
-	s_timer_mark_var = TimeUtils::currentMicrosecondsTime();
+	USING_NS_MAGICAL;
+
+	s_timer_mark_var = TimeUtils::currentMicroseconds();
 }
 
 double magicalEndTimer( void )
@@ -148,8 +184,8 @@ double magicalEndTimer( void )
 		return 0.0;
 
 	double result;
-	int64_t now = TimeUtils::currentMicrosecondsTime();
-	result = MAX( 0.0, ( now - s_timer_mark_var ) / 1000000.0 );
+	int64_t now = TimeUtils::currentMicroseconds();
+	result = cmax( 0.0, ( now - s_timer_mark_var ) / 1000000.0 );
 	s_timer_mark_var = 0;
 	return result;
 }

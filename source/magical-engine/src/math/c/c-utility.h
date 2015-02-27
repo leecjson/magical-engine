@@ -33,12 +33,8 @@ SOFTWARE.
 #include "magical-macros.h"
 #elif
 typedef unsigned char cBool;
-#ifndef cTrue
 #define cTrue  1
-#endif
-#ifndef cFalse
 #define cFalse 0
-#endif
 #endif
 
 #ifndef MAGICALAPI_MATH
@@ -61,7 +57,7 @@ typedef unsigned char cBool;
 #define k1OverPI 0.31830988618379067153f
 #define k1Over2PI 0.15915494309189533576f
 #define k180OverPI 57.2957795130823208768f
-#define kNumberEpsilon 1.0e-007f
+#define kNumberEpsilon 1.0e-006f
 #define kQuaternionEpsilon 1.0e-006f
 #define kVectorEpsilon 1.0e-005f
 #define kRadianEpsilon 1.0e-005f

@@ -27,13 +27,11 @@ SOFTWARE.
 
 NS_MAGICAL_BEGIN
 
-define_class_hash_code( SceneObject );
-
 SceneObject::SceneObject( void )
 : m_ts_dirty_info( kTsClean )
 , m_element_enum( Element::Object )
 {
-	assign_class_hash_code();
+
 }
 
 SceneObject::~SceneObject( void )
@@ -53,7 +51,7 @@ Ptr<SceneObject> SceneObject::create( void )
 { 
 	SceneObject* ret = new SceneObject();
 	magicalAssert( ret, "new SceneObject() failed" );
-	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
+	return Ptr<SceneObject>( PtrCtor<SceneObject>( ret ) );
 }
 
 Ptr<SceneObject> SceneObject::create( const char* name )
@@ -61,7 +59,7 @@ Ptr<SceneObject> SceneObject::create( const char* name )
 	SceneObject* ret = new SceneObject();
 	magicalAssert( ret, "new SceneObject() failed" );
 	ret->setName( name );
-	return Ptr<SceneObject>( Initializer<SceneObject>( ret ) );
+	return Ptr<SceneObject>( PtrCtor<SceneObject>( ret ) );
 }
 
 void SceneObject::setName( const char* name )
@@ -496,6 +494,11 @@ void SceneObject::visit( Camera* camera )
 	}
 }
 
+//void SceneObject::draw( void )
+//{
+//
+//}
+
 void SceneObject::start( void )
 {
 	if( m_running == false )
@@ -553,9 +556,9 @@ void SceneObject::setRootScene( Scene* scene )
 {
 	m_root_scene = scene;
 
-	for( auto itr : m_children )
+	for( auto child : m_children )
 	{
-		itr->setRootScene( scene );
+		child->setRootScene( scene );
 	}
 }
 
