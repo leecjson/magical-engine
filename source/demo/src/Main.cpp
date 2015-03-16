@@ -180,6 +180,9 @@ void mainDelegate( void )
 	camera->addComponent<MainCameraScript>();
 	camera->setParent( scene );
 
+
+	vec3::Zero();
+
 	Ptr<Entity> entity = Entity::create( "Cube Entity1" );
 	entity->setPosition( 0, 0, 0 );
 	//entity->addComponent( RenderComponent::HashCode );
