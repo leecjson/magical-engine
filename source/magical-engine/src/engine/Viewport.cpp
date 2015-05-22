@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "Viewport.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 Viewport::Viewport( void )
 {
@@ -58,4 +58,4 @@ void Viewport::set( int x, int y, int w, int h )
 	this->h = h;
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

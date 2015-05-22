@@ -27,15 +27,18 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Behaviour.h"
-#include "SceneObject.h"
+#include "Object.h"
 #include <unordered_map>
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 using ::std::unordered_map;
 
-class Entity : public SceneObject
+class Entity : public Object
 {
+public:
+	enum : int { Feature = 10 };
+
 public:
 	Entity( void );
 	virtual ~Entity( void );
@@ -43,33 +46,22 @@ public:
 	static Ptr<Entity> create( const char* name );
 
 public:
-	template< class TBehaviour >
-	void addComponent( void );
-	template< class TBehaviour >
-	void removeComponent( void );
+	template<class TBehaviour> void addComponent( void );
+	template<class TBehaviour> void removeComponent( void );
 
 public:
 	virtual void visit( Camera* camera ) override;
-	//virtual void draw( void ) override;
-	virtual void prepare( void );
 	virtual void start( void ) override;
 	virtual void stop( void ) override;
+	virtual void prepare( void );
 	virtual void update( void );
 
 protected:
-	unordered_map<size_t, BehaviourBase*> m_behaviours;
-
-protected:
-	//AABB3 m_aabb;
+	unordered_map<size_t, BehaviourFeature*> m_behaviours;
 };
-
-//class RenderComponent
-//{
-//
-//};
 
 #include "Entity.inl"
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__ENTITY_H__

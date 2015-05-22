@@ -27,50 +27,44 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
+#include "Area.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 class Camera;
 
 class ViewChannel : public Reference
 {
 public:
-	enum Index : int 
-	{
-		C0 = 0,
-		C1 = 1,
-		C2 = 2,
-		C3 = 3,
-		C4 = 4,
-		Count,
-		Default = C0,
-	};
+	friend class Scene;
+	enum : int { C0 = 0, C1, C2, C3, C4, Count, Default = C0, };
 
 public:
 	ViewChannel( void );
 	virtual ~ViewChannel( void );
 
 public:
-	void setViewRect( float x, float y, float w, float h );
-	void setViewRect( const Rect& rect );
-	const Rect& getViewRect( void ) const { return m_view_rect; }
+	void setArea( float x, float y, float w, float h );
+	void setArea( const Area& area );
 	void setEnabled( bool enabled );
-	bool isEnabled( void ) const { return m_enabled; }
-	Camera* getCamera( void ) const { return m_camera; }
-	void removeCamera( void );
-	bool isDrawable( void ) const { return isEnabled() && m_camera; }
 
-public:
-	void setCamera( const Ptr<Camera>& camera );
+	const Area& getArea( void ) const { return m_area; }
+	bool isEnabled( void ) const { return m_enabled; }
+	bool isAvailable( void ) const { return isEnabled() && m_camera; }
+	Camera* getCamera( void ) const { return m_camera; }
 
 protected:
-	Rect m_view_rect = Rect( 0.0f, 0.0f, 1.0f, 1.0f );
+	void setCamera( Camera* camera );
+	void removeCamera( void );
+
+protected:
+	Area m_area = Area( 0.0f, 0.0f, 1.0f, 1.0f );
 	bool m_enabled = false;
 	Camera* m_camera = nullptr;
 };
 
 //typedef ViewChannel::Index ViewChannelIndex;
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__VIEW_CHANNEL_H__

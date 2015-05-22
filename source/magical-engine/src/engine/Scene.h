@@ -27,7 +27,7 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
-#include "SceneObject.h"
+#include "Object.h"
 #include "Entity.h"
 #include "Camera.h"
 #include "ViewChannel.h"
@@ -36,16 +36,15 @@ SOFTWARE.
 #include <unordered_set>
 #include <unordered_map>
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
-using ::std::string;
 using ::std::unordered_set;
 
-class SceneObject;
+class Object;
 class Camera;
 class Entity;
 
-class Scene : public SceneObject
+class Scene : public Object
 {
 public:
 	Scene( void );
@@ -53,15 +52,14 @@ public:
 	static Ptr<Scene> create( void );
 
 public:
-	ViewChannel* getViewChannel( ViewChannel::Index index ) const;
-
+	ViewChannel* getViewChannel( int index ) const;
 
 public:
 	void resize( int width, int height );
 	virtual void visit( void );
 	virtual void update( void );
-	virtual void link( SceneObject* child ) override;
-	virtual void unlink( SceneObject* child ) override;
+	virtual void link( Object* child ) override;
+	virtual void unlink( Object* child ) override;
 
 public:
 	void bindCameraToViewChannel( Camera* camera );
@@ -82,6 +80,6 @@ protected:
 	ViewChannel* m_view_channels[ ViewChannel::Count ];
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__SCENE_H__

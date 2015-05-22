@@ -26,13 +26,13 @@ template< class TBehaviour >
 void Entity::addComponent( void )
 {
 	size_t key = typeid( TBehaviour ).hash_code();
-	magicalAssert( m_behaviours.find( key ) == m_behaviours.end(), "Invaild, can't add the same one." );
+	MAGICAL_ASSERT( m_behaviours.find( key ) == m_behaviours.end(), "Invaild, can't add the same one." );
 
 	TBehaviour* behaviour = new TBehaviour();
 	m_behaviours.insert( std::make_pair( key, behaviour ) );
 
-	behaviour->that = dynamic_cast< decltype( behaviour->that ) >( this );
-	magicalAssert( behaviour->that, "Invaild, dose not match target type!" );
+	behaviour->object = dynamic_cast< decltype( behaviour->object ) >( this );
+	MAGICAL_ASSERT( behaviour->object, "Invaild, dose not match target type!" );
 	behaviour->onCreate();
 
 	if( m_running )

@@ -24,55 +24,77 @@ SOFTWARE.
 #ifndef __MAGICAL_MATH_H__
 #define __MAGICAL_MATH_H__
 
-#include "c/c-utility.h"
+#include "MathUtils.h"
 
-#include "c/c-aabb2.h"
-#include "c/c-aabb3.h"
-#include "c/c-axis-angle.h"
-#include "c/c-euler-angles.h"
-#include "c/c-frustum.h"
-//#include "c/c-line2.h"
-#include "c/c-matrix3.h"
-#include "c/c-matrix4.h"
-//#include "c/c-obb2.h"
-//#include "c/c-obb3.h"
-#include "c/c-plane.h"
-#include "c/c-quaternion.h"
-//#include "c/c-ray2.h"
-#include "c/c-ray3.h"
-#include "c/c-sphere.h"
-#include "c/c-vector2.h"
-#include "c/c-vector3.h"
-#include "c/c-vector4.h"
+struct Vector2;
+struct Vector4;
+struct Rotater;
+struct Quaternion;
+struct Matrix3x3;
+struct Matrix4x4;
 
-#include "cpp/utility.h"
+struct Ray;
+struct Sphere;
+struct Box;
+struct OriBox;
+struct Plane;
+struct Frustum;
+struct Triangle;
+struct Polygon;
 
-#include "cpp/aabb3.h"
-#include "cpp/axis-angle.h"
-#include "cpp/euler-angles.h"
-#include "cpp/frustum.h"
-#include "cpp/matrix3.h"
-#include "cpp/matrix4.h"
-#include "cpp/plane.h"
-#include "cpp/quaternion.h"
-#include "cpp/ray3.h"
-#include "cpp/sphere.h"
-#include "cpp/vector2.h"
-#include "cpp/vector3.h"
-#include "cpp/vector4.h"
+struct Ray2d;
+struct Circle;
+struct Box2d;
+struct OriBox2d;
+struct Triangle2d;
+struct Polygon2d;
 
-#include "cpp/aabb3.inl"
-#include "cpp/axis-angle.inl"
-#include "cpp/euler-angles.inl"
-#include "cpp/frustum.inl"
-#include "cpp/matrix3.inl"
-#include "cpp/matrix4.inl"
-#include "cpp/plane.inl"
-#include "cpp/quaternion.inl"
-#include "cpp/ray3.h"
-#include "cpp/sphere.h"
-#include "cpp/vector2.inl"
-#include "cpp/vector3.inl"
-#include "cpp/vector4.inl"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Rotater.h"
+#include "Quaternion.h"
+#include "Matrix3x3.h"
+#include "Matrix4x4.h"
+
+#include "Vector2.inl"
+#include "Vector3.inl"
+#include "Vector4.inl"
+#include "Rotater.inl"
+#include "Quaternion.inl"
+#include "Matrix3x3.inl"
+#include "Matrix4x4.inl"
+
+#include "Ray.h"
+#include "Sphere.h"
+#include "Box.h"
+#include "OriBox.h"
+#include "Plane.h"
+#include "Frustum.h"
+#include "Triangle.h"
+#include "Polygon.h"
+
+#include "Ray2d.h"
+#include "Circle.h"
+#include "Box2d.h"
+#include "OriBox2d.h"
+#include "Triangle2d.h"
+#include "Polygon2d.h"
+
+#include "Ray.inl"
+#include "Sphere.inl"
+#include "Box.inl"
+#include "OriBox.inl"
+#include "Plane.inl"
+#include "Frustum.inl"
+#include "Triangle.inl"
+#include "Polygon.inl"
+
+#include "Ray2d.inl"
+#include "Circle.inl"
+#include "Box2d.inl"
+#include "OriBox2d.inl"
+#include "Triangle2d.inl"
+#include "Polygon2d.inl"
 
 #endif //__MAGICAL_MATH_H__

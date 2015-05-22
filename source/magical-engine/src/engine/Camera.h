@@ -29,16 +29,10 @@ SOFTWARE.
 #include "Entity.h"
 #include "ViewChannel.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 class Entity;
 class ViewChannel;
-
-enum class Projection : int
-{
-	Orth,
-	Perspective
-};
 
 enum : int
 {
@@ -48,8 +42,17 @@ enum : int
 	kCameraViewProjectionDirty = 0x04,
 };
 
+enum class Projection : int
+{
+	Orth,
+	Perspective
+};
+
 class Camera : public Entity
 {
+public:
+	enum : int { Feature = 20 };
+
 public:
 	Camera( void );
 	virtual ~Camera( void );
@@ -57,43 +60,48 @@ public:
 	static Ptr<Camera> create( const char* name );
 
 public:
-	virtual void setVisible( bool visible ) override;
-	void setActive( bool active );
 	bool isActive( void ) const { return m_active; }
-	void bindViewChannel( ViewChannel::Index index );
-	ViewChannel::Index getBoundViewChannelIndex( void ) const { return m_view_channel_index; }
+	virtual void setActive( bool active );
+	virtual void setVisible( bool visible ) override;
+	
+public:
+	void bindViewChannel( int index );
+	int getBoundViewChannelIndex( void ) const { return m_view_channel_index; }
 
 public:
 	void setOrthWindow( float width, float height );
-	float getOrthWindowWidth( void ) const { return m_right - m_left; }
-	float getOrthWindowHeight( void ) const { return m_top - m_bottom; }
 	void setOrth( float left, float right, float bottom, float top, float znear, float zfar );
 	void setFieldOfView( float fov );
-	float getFieldOfView( void ) const { return m_fov; }
 	void setAutoAspectRatio( bool auto_aspect_ratio );
-	bool isAutoAspectRatio( void ) const { return m_auto_aspect_ratio; }
 	void setAspectRatio( float aspect );
-	float getAspectRatio( void ) const { return m_aspect; }
 	void setNearClipDistance( float znear );
-	float getNearClipDistance( void ) const { return m_znear; }
 	void setFarClipDistance( float zfar );
-	float getFarClipDistance( void ) const { return m_zfar; }
 	void setPerspective( float fov, float aspect, float znear, float zfar );
 
+	float getOrthWindowWidth( void ) const { return m_right - m_left; }
+	float getOrthWindowHeight( void ) const { return m_top - m_bottom; }
+	float getFieldOfView( void ) const { return m_fov; }
+	bool isAutoAspectRatio( void ) const { return m_auto_aspect_ratio; }
+	float getAspectRatio( void ) const { return m_aspect; }
+	float getNearClipDistance( void ) const { return m_znear; }
+	float getFarClipDistance( void ) const { return m_zfar; }
+	
 public:
-	const Matrix4& getViewMatrix( void ) const;
-	const Matrix4& getProjectionMatrix( void ) const;
-	const Matrix4& getViewProjectionMatrix( void ) const;
+	//virtual void start( void ) override;
+	//virtual void stop( void ) override;
 	virtual void transform( void ) override;
+
+public:
 	virtual void transformDirty( int info ) override;
+	const Matrix4x4& getViewMatrix( void ) const;
+	const Matrix4x4& getProjectionMatrix( void ) const;
+	const Matrix4x4& getViewProjectionMatrix( void ) const;
 
 protected:
+	int m_view_channel_index = ViewChannel::Default;
 	bool m_active = true;
 	bool m_frustum_cull_enabled = true;
-	Projection m_projection = Projection::Perspective;
-	ViewChannel::Index m_view_channel_index;
-
-protected:
+	bool m_auto_aspect_ratio = true;
 	float m_left = 0.0f;
 	float m_right = 0.0f;
 	float m_bottom = 0.0f;
@@ -102,14 +110,14 @@ protected:
 	float m_aspect = 1.3333f;
 	float m_znear = 0.3f;
 	float m_zfar = 1000.0f;
-	bool m_auto_aspect_ratio = true;
 	mutable int m_camera_dirty_info;
-	mutable Matrix4 m_view_matrix;
-	mutable Matrix4 m_projection_matrix;
-	mutable Matrix4 m_view_projection_matrix;
 	Frustum m_frustum;
+	mutable Matrix4x4 m_view_matrix;
+	mutable Matrix4x4 m_projection_matrix;
+	mutable Matrix4x4 m_view_projection_matrix;
+	Projection m_projection = Projection::Perspective;
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__CAMERA_H__

@@ -28,12 +28,11 @@ SOFTWARE.
 #include "Common.h"
 #include "Reference.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
-class BehaviourBase : public Reference
+class BehaviourFeature : public Reference
 {
 public:
-	friend class Entity;
 	virtual void onCreate( void ){}
 	virtual void onStart( void ){}
 	virtual void onUpdate( void ){}
@@ -42,13 +41,13 @@ public:
 };
 
 template< class T >
-class Behaviour : public BehaviourBase
+class Behaviour : public BehaviourFeature
 {
 protected:
 	friend class Entity;
-	T* that = nullptr;
+	T* object = nullptr;
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__BEHAVIOUR_H__

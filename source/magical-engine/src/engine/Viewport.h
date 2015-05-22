@@ -28,7 +28,7 @@ SOFTWARE.
 #include "Common.h"
 #include "Reference.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 class Viewport : public Reference
 {
@@ -50,6 +50,6 @@ public:
 	int w = 0;
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__VIEWPORT_H__

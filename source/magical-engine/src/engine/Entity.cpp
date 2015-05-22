@@ -23,16 +23,17 @@ SOFTWARE.
 *******************************************************************************/
 #include "Entity.h"
 #include "Scene.h"
+#include "Color.h"
 
 #include "ShaderProgram.h"
 #include "Renderer.h"
 #include "win32/gl/glew/glew.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 Entity::Entity( void )
 {
-	m_element_enum = Element::Entity;
+	m_feature = Entity::Feature;
 }
 
 Entity::~Entity( void )
@@ -47,16 +48,16 @@ Entity::~Entity( void )
 Ptr<Entity> Entity::create( void )
 {
 	Entity* ret = new Entity();
-	magicalAssert( ret, "new Entity() failed" );
-	return Ptr<Entity>( PtrCtor<Entity>( ret ) );
+	MAGICAL_ASSERT( ret, "new Entity() failed" );
+	return Ptr<Entity>( Ptrctor<Entity>( ret ) );
 }
 
 Ptr<Entity> Entity::create( const char* name )
 {
 	Entity* ret = new Entity();
-	magicalAssert( ret, "new Entity() failed" );
+	MAGICAL_ASSERT( ret, "new Entity() failed" );
 	ret->setName( name );
-	return Ptr<Entity>( PtrCtor<Entity>( ret ) );
+	return Ptr<Entity>( Ptrctor<Entity>( ret ) );
 }
 
 void Entity::visit( Camera* camera )
@@ -64,7 +65,7 @@ void Entity::visit( Camera* camera )
 	if( !m_visible )
 		return;
 
-	if( m_element_enum == Element::Camera )
+	if( m_feature == Camera::Feature )
 	{
 		if( !m_children.empty() )
 		{
@@ -78,7 +79,7 @@ void Entity::visit( Camera* camera )
 
 	glUseProgram( s_flat_program->getId() );
 
-	Matrix4 mvp_matrix = getLocalToWorldMatrix() * camera->getViewProjectionMatrix();
+	Matrix4x4 mvp_matrix = getLocalToWorldMatrix() * camera->getViewProjectionMatrix();
 
 	GLint u_mvp_matrix = s_flat_program->getUniformLocation( "u_mvp_matrix" );
 	glUniformMatrix4fv( u_mvp_matrix, 1, GL_FALSE, (GLfloat*)&mvp_matrix );
@@ -110,13 +111,15 @@ void Entity::visit( Camera* camera )
 	glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
 	glDrawArrays( GL_QUADS, 0, 24 );
 
-	if( !m_children.empty() )
+	MAGICAL_DEBUG_CHECK_GL_ERROR();
+
+	/*if( !m_children.empty() )
 	{
 		for( auto child : m_children )
 		{
 			child->visit( camera );
 		}
-	}
+	}*/
 }
 
 //void Entity::draw( void )
@@ -124,18 +127,13 @@ void Entity::visit( Camera* camera )
 //	glUseProgram( s_flat_program->getId() );
 //}
 
-void Entity::prepare( void )
-{
-
-}
-
-void Entity::start( void )
+void Entity::start( void ) 
 {
 	for( const auto& itr : m_behaviours )
 	{
 		itr.second->onStart();
 	}
-	SceneObject::start();
+	Object::start();
 }
 
 void Entity::stop( void )
@@ -144,7 +142,12 @@ void Entity::stop( void )
 	{
 		itr.second->onStop();
 	}
-	SceneObject::stop();
+	Object::stop();
+}
+
+void Entity::prepare( void )
+{
+
 }
 
 void Entity::update( void )
@@ -156,4 +159,4 @@ void Entity::update( void )
 }
 
 
-NS_MAGICAL_END
+NAMESPACE_END

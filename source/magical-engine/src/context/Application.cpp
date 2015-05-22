@@ -23,51 +23,51 @@ SOFTWARE.
 *******************************************************************************/
 #include "Application.h"
 #include "Engine.h"
-#include "Renderer.h"
-//#include "AssetsSystem.h"
+#include "Log.h"
+#include "Assets.h"
+#include "Input.h"
 //#include "LuaSystem.h"
-#include "LogSystem.h"
-#include "InputSystem.h"
+#include "Renderer.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 void Application::init( void )
 {
-	magicalStartObjectsListener( kEngineObjectsListener );
+	//magicalStartObjectsListener( kEngineObjectsListener );
 
 	Log::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
-	/*Assets::Init();
-	magicalShowLastError();
-	magicalReturnIfError();*/
+	Assets::init();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	Input::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	/*Lua::init();
 	magicalShowLastError();
 	magicalReturnIfError();*/
 
 	initWindow();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	initRenderContext();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	Engine::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	Renderer::init();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
-	std::string msg;
+	/*std::string msg;
 	msg += "<init>\n";
 
 #ifdef MAGICAL_DEBUG
@@ -77,49 +77,49 @@ void Application::init( void )
 #endif
 
 	msg += "<init>\n";
-	magicalLog( msg.c_str() );
+	magicalLog( msg.c_str() );*/
 }
 
 void Application::delc( void )
 {
 	Renderer::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	Engine::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	delcRenderContext();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	delcWindow();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
 	/*Lua::delc();
 	magicalShowLastError();
 	magicalReturnIfError();*/
 
 	Input::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
-	/*Assets::Delc();
-	magicalShowLastError();
-	magicalReturnIfError();*/
+	Assets::delc();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 
-	std::stringstream ss;
-	ss << "C: " << magicalGetObjectsConstructCount( kEngineObjectsListener ) << "  ";
-	ss << "D: " << magicalGetObjectsDestructCount( kEngineObjectsListener ) << "\n";
-	magicalLog( ss.str().c_str() );
+	//std::stringstream ss;
+	//ss << "C: " << magicalGetObjectsConstructCount( kEngineObjectsListener ) << "  ";
+	//ss << "D: " << magicalGetObjectsDestructCount( kEngineObjectsListener ) << "\n";
+	//magicalLog( ss.str().c_str() );
 
-	magicalEndObjectsListener( kEngineObjectsListener );
+	//magicalEndObjectsListener( kEngineObjectsListener );
 
 	Log::delc();
-	magicalShowLastError();
-	magicalReturnIfError();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

@@ -24,14 +24,12 @@ SOFTWARE.
 #ifndef __SHADER_PROGRAM_MANAGER_H__
 #define __SHADER_PROGRAM_MANAGER_H__
 
-#include "PlatformMacros.h"
+#include "magical-macros.h"
 #include "Common.h"
-#include "RendererMacros.h"
+#include "RendererCommon.h"
 #include "ShaderProgram.h"
 
-//class ShaderProgramColor;
-
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 enum ShaderProgramIndex
 {
@@ -51,7 +49,7 @@ public:
 	static const Ptr<ShaderProgram> getProgram( ShaderProgramIndex index );
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 //class ShaderProgramColor : public ShaderProgram
 //{

@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "ShaderProgram.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 ShaderProgram::ShaderProgram( void )
 : m_program( GL_ZERO )
@@ -39,17 +39,17 @@ ShaderProgram::~ShaderProgram( void )
 Ptr<ShaderProgram> ShaderProgram::create( void )
 {
 	ShaderProgram* ret = new ShaderProgram();
-	magicalAssert( ret, "New ShaderProgram() failed" );
-	return Ptr<ShaderProgram>( PtrCtor<ShaderProgram>( ret ) );
+	MAGICAL_ASSERT( ret, "New ShaderProgram() failed" );
+	return Ptr<ShaderProgram>( Ptrctor<ShaderProgram>( ret ) );
 }
 
 Ptr<ShaderProgram> ShaderProgram::create( const char* vertex_src, const char* pixel_src )
 {
 	ShaderProgram* ret = new ShaderProgram();
-	magicalAssert( ret, "New ShaderProgram() failed" );
+	MAGICAL_ASSERT( ret, "New ShaderProgram() failed" );
 	ret->setVertexSource( vertex_src );
 	ret->setPixelSource( pixel_src );
-	return Ptr<ShaderProgram>( PtrCtor<ShaderProgram>( ret ) );
+	return Ptr<ShaderProgram>( Ptrctor<ShaderProgram>( ret ) );
 }
 
 void ShaderProgram::setVertexSource( const char* vertex_src )
@@ -73,13 +73,13 @@ void ShaderProgram::shutdown( void )
 	m_built = false;
 	m_linked = false;
 	m_program = GL_ZERO;
-	magicalCheckGLError();
+	MAGICAL_CHECK_GL_ERROR();
 }
 
 bool ShaderProgram::build( void )
 {
-	magicalAssert( !m_vertex_src.empty() && !m_pixel_src.empty(), "Invalid! should not empty!" );
-	magicalAssert( !m_built, "Invalid! already built!" );
+	MAGICAL_ASSERT( !m_vertex_src.empty() && !m_pixel_src.empty(), "Invalid! should not empty!" );
+	MAGICAL_ASSERT( !m_built, "Invalid! already built!" );
 
 	GLint succeed = GL_FALSE;
 	GLuint program = GL_ZERO;
@@ -88,7 +88,7 @@ bool ShaderProgram::build( void )
 
 	if( !vertex_shader || !pixel_shader )
 	{
-		magicalCheckGLError();
+		MAGICAL_CHECK_GL_ERROR();
 		glDeleteShader( vertex_shader );
 		glDeleteShader( pixel_shader );
 		return false;
@@ -106,13 +106,13 @@ bool ShaderProgram::build( void )
 	glGetShaderiv( vertex_shader, GL_COMPILE_STATUS, &succeed );
 	if( succeed == GL_FALSE )
 	{
-		if( magicalGetShaderInfoLog( vertex_shader ) )
+		if( MAGICAL_GET_SHADER_INFO_LOG( vertex_shader ) )
 		{
-			magicalSetLastError( magicalGetBuffer() );
-			magicalLogLastErrorWithoutNewLine();
+			MAGICAL_SET_LAST_ERROR( System::storage );
+			MAGICAL_LOG_LAST_ERROR( false );
 		}
 
-		magicalCheckGLError();
+		MAGICAL_CHECK_GL_ERROR();
 		glDeleteShader( vertex_shader );
 		glDeleteShader( pixel_shader );
 		return false;
@@ -121,13 +121,13 @@ bool ShaderProgram::build( void )
 	glGetShaderiv( pixel_shader, GL_COMPILE_STATUS, &succeed );
 	if( succeed == GL_FALSE )
 	{
-		if( magicalGetShaderInfoLog( pixel_shader ) )
+		if( MAGICAL_GET_SHADER_INFO_LOG( pixel_shader ) )
 		{
-			magicalSetLastError( magicalGetBuffer() );
-			magicalLogLastErrorWithoutNewLine();
+			MAGICAL_SET_LAST_ERROR( System::storage );
+			MAGICAL_LOG_LAST_ERROR( false );
 		}
 
-		magicalCheckGLError();
+		MAGICAL_CHECK_GL_ERROR();
 		glDeleteShader( vertex_shader );
 		glDeleteShader( pixel_shader );
 		return false;
@@ -136,7 +136,7 @@ bool ShaderProgram::build( void )
 	program = glCreateProgram();
 	if( program == GL_ZERO )
 	{
-		magicalCheckGLError();
+		MAGICAL_CHECK_GL_ERROR();
 		glDeleteShader( vertex_shader );
 		glDeleteShader( pixel_shader );
 		return false;
@@ -147,8 +147,8 @@ bool ShaderProgram::build( void )
 	glDeleteShader( vertex_shader );
 	glDeleteShader( pixel_shader );
 
-	magicalCheckGLError();
-	magicalReturnVarIfError( false );
+	MAGICAL_CHECK_GL_ERROR();
+	MAGICAL_RETURN_EXP_IF_ERROR( false );
 
 	m_program = program;
 	m_built = true;
@@ -157,9 +157,9 @@ bool ShaderProgram::build( void )
 
 bool ShaderProgram::link( void )
 {
-	magicalAssert( m_built, "Invalid! build first!" );
-	magicalAssert( m_linked == false, "Invalid! already linked!" );
-	magicalAssert( m_program && glIsProgram( m_program ), "Invalid!" );
+	MAGICAL_ASSERT( m_built, "Invalid! build first!" );
+	MAGICAL_ASSERT( m_linked == false, "Invalid! already linked!" );
+	MAGICAL_ASSERT( m_program && glIsProgram( m_program ), "Invalid!" );
 
 	GLint succeed = GL_FALSE;
 
@@ -167,13 +167,13 @@ bool ShaderProgram::link( void )
 	glGetProgramiv( m_program, GL_LINK_STATUS, &succeed );
 	if( succeed == GL_FALSE )
 	{
-		if( magicalGetProgramInfoLog( m_program ) )
+		if( MAGICAL_GET_PROGRAM_INFO_LOG( m_program ) )
 		{
-			magicalSetLastError( magicalGetBuffer() );
-			magicalLogLastErrorWithoutNewLine();
+			MAGICAL_SET_LAST_ERROR( System::storage );
+			MAGICAL_LOG_LAST_ERROR( false );
 		}
 
-		magicalCheckGLError();
+		MAGICAL_CHECK_GL_ERROR();
 		glDeleteProgram( m_program );
 		return false;
 	}
@@ -182,13 +182,13 @@ bool ShaderProgram::link( void )
 	glGetProgramiv( m_program, GL_VALIDATE_STATUS, &succeed );
 	if( succeed == GL_FALSE )
 	{
-		if( magicalGetProgramInfoLog( m_program ) )
+		if( MAGICAL_GET_PROGRAM_INFO_LOG( m_program ) )
 		{
-			magicalSetLastError( magicalGetBuffer() );
-			magicalLogLastErrorWithoutNewLine();
+			MAGICAL_SET_LAST_ERROR( System::storage );
+			MAGICAL_LOG_LAST_ERROR( false );
 		}
 
-		magicalCheckGLError();
+		MAGICAL_CHECK_GL_ERROR();
 		glDeleteProgram( m_program );
 		return false;
 	}
@@ -205,14 +205,14 @@ bool ShaderProgram::isDone( void ) const
 void ShaderProgram::bindAttribLocation( uint32_t index, const char* name ) const
 {
 	glBindAttribLocation( m_program, index, name );
-	magicalDebugCheckGLError();
+	MAGICAL_DEBUG_CHECK_GL_ERROR();
 }
 
 int32_t ShaderProgram::getUniformLocation( const char* name ) const
 {
 	int32_t location = glGetUniformLocation( m_program, name );
-	magicalDebugCheckGLError();
+	MAGICAL_DEBUG_CHECK_GL_ERROR();
 	return location;
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

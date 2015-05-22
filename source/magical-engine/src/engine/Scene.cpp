@@ -24,7 +24,7 @@ SOFTWARE.
 #include "Scene.h"
 #include "Application.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 Scene::Scene( void )
 {
@@ -57,13 +57,14 @@ Scene::~Scene( void )
 Ptr<Scene> Scene::create( void )
 {
 	Scene* ret = new Scene();
-	magicalAssert( ret, "new Scene() failed" );
-	return Ptr<Scene>( PtrCtor<Scene>( ret ) );
+	MAGICAL_ASSERT( ret, "new Scene() failed" );
+	return Ptr<Scene>( Ptrctor<Scene>( ret ) );
 }
 
-ViewChannel* Scene::getViewChannel( ViewChannel::Index index ) const
+ViewChannel* Scene::getViewChannel( int index ) const
 {
-	magicalAssert( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
+	MAGICAL_ASSERT( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
+
 	return m_view_channels[ index ];
 }
 
@@ -88,12 +89,15 @@ void Scene::visit( void )
 
 	for( int i = 0; i < ViewChannel::Count; i ++ )
 	{
-		if( m_view_channels[i]->isDrawable() )
+		if( m_view_channels[i]->isAvailable() )
 		{
 			Camera* camera = m_view_channels[i]->getCamera();
-			for( auto child : m_children )
+			if( camera->isActive() && camera->isVisiable() )
 			{
-				child->visit( camera );
+				for( auto child : m_children )
+				{
+					child->visit( camera );
+				}
 			}
 		}
 	}
@@ -108,23 +112,23 @@ void Scene::update( void )
 	}
 }
 
-void Scene::link( SceneObject* child )
+void Scene::link( Object* child )
 {
-	switch( child->m_element_enum )
+	switch( child->m_feature )
 	{
-	case Element::Object:
+	case Object::Feature:
 		break;
-	case Element::Entity:
+	case Entity::Feature:
 		addEntity( (Entity*)child );
 		break;
-	case Element::Camera:
+	case Camera::Feature:
 		addCamera( (Camera*)child );
 		addEntity( (Entity*)child );
 		break;
-	case Element::Light:
-		break;
+	/*case Element::Light:
+		break;*/
 	default:
-		magicalAssert( false, "Invalid!" );
+		MAGICAL_ASSERT( false, "Invalid!" );
 		break;
 	}
 
@@ -134,23 +138,23 @@ void Scene::link( SceneObject* child )
 	}
 }
 
-void Scene::unlink( SceneObject* child )
+void Scene::unlink( Object* child )
 {
-	switch( child->m_element_enum )
+	switch( child->m_feature )
 	{
-	case Element::Object:
+	case Object::Feature:
 		break;
-	case Element::Entity:
+	case Entity::Feature:
 		removeEntity( (Entity*)child );
 		break;
-	case Element::Camera:
+	case Camera::Feature:
 		removeEntity( (Entity*)child );
 		removeCamera( (Camera*)child );
 		break;
-	case Element::Light:
-		break;
+	/*case Element::Light:
+		break;*/
 	default:
-		magicalAssert( false, "Invalid!" );
+		MAGICAL_ASSERT( false, "Invalid!" );
 		break;
 	}
 
@@ -165,10 +169,10 @@ void Scene::bindCameraToViewChannel( Camera* camera )
 	ViewChannel* channel = m_view_channels[ camera->getBoundViewChannelIndex() ];
 
 	Camera* lcamera = channel->getCamera();
-	magicalAssert( lcamera != camera, "Invalid!" );
+	MAGICAL_ASSERT( lcamera != camera, "Invalid!" );
 	if( lcamera != nullptr )
 	{
-		magicalAssert( lcamera->isActive(), "Invalid!" );
+		MAGICAL_ASSERT( lcamera->isActive(), "Invalid!" );
 		lcamera->setActive( false );
 	}
 
@@ -180,7 +184,7 @@ void Scene::unbindCameraFromViewChannel( Camera* camera )
 	ViewChannel* channel = m_view_channels[ camera->getBoundViewChannelIndex() ];
 
 	Camera* lcamera = channel->getCamera();
-	magicalAssert( lcamera == camera, "Invalid!" );
+	MAGICAL_ASSERT( lcamera == camera, "Invalid!" );
 
 	channel->removeCamera();
 }
@@ -188,7 +192,7 @@ void Scene::unbindCameraFromViewChannel( Camera* camera )
 void Scene::addCamera( Camera* camera )
 {
 	auto itr = m_cameras.find( camera );
-	magicalAssert( itr == m_cameras.end(), "Invalid! already in scene" );
+	MAGICAL_ASSERT( itr == m_cameras.end(), "Invalid! already in scene" );
 
 	camera->retain();
 	m_cameras.insert( camera );
@@ -201,14 +205,14 @@ void Scene::addCamera( Camera* camera )
 	if( camera->isAutoAspectRatio() )
 	{
 		const Size& size = Application::getWindowSize();
-		camera->setAspectRatio( (float)size.w / (float)size.h );
+		camera->setAspectRatio( size.w / size.h );
 	}
 }
 
 void Scene::removeCamera( Camera* camera )
 {
 	auto itr = m_cameras.find( camera );
-	magicalAssert( itr != m_cameras.end(), "Invalid! isn't exists in scene" );
+	MAGICAL_ASSERT( itr != m_cameras.end(), "Invalid! isn't exists in scene" );
 
 	m_cameras.erase( itr );
 	camera->release();
@@ -222,7 +226,7 @@ void Scene::removeCamera( Camera* camera )
 void Scene::addEntity( Entity* object )
 {
 	auto itr = m_entities.find( object );
-	magicalAssert( itr == m_entities.end(), "Invalid! already in scene" );
+	MAGICAL_ASSERT( itr == m_entities.end(), "Invalid! already in scene" );
 
 	object->retain();
 	m_entities.insert( object );
@@ -231,10 +235,10 @@ void Scene::addEntity( Entity* object )
 void Scene::removeEntity( Entity* object )
 {
 	auto itr = m_entities.find( object );
-	magicalAssert( itr != m_entities.end(), "Invalid! isn't exists in scene" );
+	MAGICAL_ASSERT( itr != m_entities.end(), "Invalid! isn't exists in scene" );
 
 	m_entities.erase( itr );
 	object->release();
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

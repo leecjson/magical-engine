@@ -29,13 +29,13 @@ int main( int argc, char* argv[] )
 	USING_NS_MAGICAL;
 
 	Application::init();
-	magicalReturnVarIfError( -1 );
+	MAGICAL_RETURN_EXP_IF_ERROR( -1 );
 
 	Application::run( mainDelegate );
-	magicalReturnVarIfError( -1 );
+	MAGICAL_RETURN_EXP_IF_ERROR( -1 );
 
 	Application::delc();
-	magicalReturnVarIfError( -1 );
+	MAGICAL_RETURN_EXP_IF_ERROR( -1 );
 
 	return 0;
 }

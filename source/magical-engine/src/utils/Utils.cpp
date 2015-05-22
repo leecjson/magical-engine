@@ -24,9 +24,9 @@ SOFTWARE.
 #include "Utils.h"
 #include <chrono>
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
-int64_t TimeUtils::currentMicroseconds( void )
+int64_t Time::currentMicroseconds( void )
 {
 	using namespace ::std::chrono;
 	system_clock::duration scd = system_clock::now().time_since_epoch();
@@ -34,7 +34,7 @@ int64_t TimeUtils::currentMicroseconds( void )
 	return now;
 }
 
-int64_t TimeUtils::currentSeconds( void )
+int64_t Time::currentSeconds( void )
 {
 	using namespace ::std::chrono;
 	system_clock::duration scd = system_clock::now().time_since_epoch();
@@ -43,7 +43,7 @@ int64_t TimeUtils::currentSeconds( void )
 
 bool FileUtils::isAbsPath( const char* path )
 {
-	magicalAssert( path, "should not be nullptr." );
+	MAGICAL_ASSERT( path, "should not be nullptr." );
 
 #ifdef MAGICAL_WIN32
 	if( strlen( path ) > 2
@@ -59,7 +59,7 @@ bool FileUtils::isAbsPath( const char* path )
 
 string FileUtils::toUnixPath( const char* path )
 {
-	magicalAssert( path, "should not be nullptr." );
+	MAGICAL_ASSERT( path, "should not be nullptr." );
 
 	string ret = path;
 	int len = ret.length();
@@ -73,4 +73,4 @@ string FileUtils::toUnixPath( const char* path )
     return ret;
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

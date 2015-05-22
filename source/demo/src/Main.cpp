@@ -35,14 +35,14 @@ void MainCameraScript::onCreate( void )
 	Input::addMouseMoveEventFunction( 
 		this, std::bind( &MainCameraScript::onMouseMoveEvent, this, std::placeholders::_1 ) );
 
-	magicalLog( "onCreate" );
+	MAGICAL_LOGD( "onCreate" );
 }
 
 void MainCameraScript::onStart( void )
 {
 	entity1 = (Entity*) Engine::runningScene()->findChild( "Cube Entity1" );
 
-	magicalLog( "onStart" );
+	MAGICAL_LOGD( "onStart" );
 }
 
 void MainCameraScript::onUpdate( void )
@@ -52,37 +52,37 @@ void MainCameraScript::onUpdate( void )
 	static float a = 1.0f;
 	a += 20.0f * Engine::deltaTime();
 	entity1->setRotation( 
-		Quaternion::createRotationZ( magicalDegToRad( a ) ) );
+		Quaternion::createRotationZ( Math::rad( a ) ) );
 
 	if( m_w_pressed )
 	{
-		that->translate( 0, 0, 0.1f, Space::Self );
+		object->translate( 0, 0, 0.1f, Space::Self );
 	}
 
 	if( m_s_pressed )
 	{
-		that->translate( 0, 0, -0.1f, Space::Self );
+		object->translate( 0, 0, -0.1f, Space::Self );
 	}
 
 	if( m_a_pressed )
 	{
-		that->translate( -0.1f, 0, 0, Space::Self );
+		object->translate( -0.1f, 0, 0, Space::Self );
 	}
 
 	if( m_d_pressed )
 	{
-		that->translate( 0.1f, 0, 0, Space::Self );
+		object->translate( 0.1f, 0, 0, Space::Self );
 	}
 }	
 
 void MainCameraScript::onStop( void )
 {
-	magicalLog( "onStop" );
+	MAGICAL_LOGD( "onStop" );
 }
 
 void MainCameraScript::onDestroy( void )
 {
-	magicalLog( "onDestroy" );
+	MAGICAL_LOGD( "onDestroy" );
 }
 
 void MainCameraScript::onKeyEvent( KeyEvent* keyevent )
@@ -116,7 +116,7 @@ void MainCameraScript::onKeyEvent( KeyEvent* keyevent )
 	case KeyCode::Space:
 		if( keyevent->action == KeyAction::Down )
 		{
-			that->setPosition( 0, 0, -10 );
+			object->setPosition( 0, 0, -10 );
 		}
 		break;
 	default:
@@ -153,8 +153,8 @@ void MainCameraScript::onMouseMoveEvent( MouseMoveEvent* mousemoveevent )
 		ea.pitch = magicalDegToRad( -delta_y );
 		ea.roll = 0.0f;
 		that->rotate( ea.toQuaternion(), Space::World );*/
-		that->rotate( Quaternion::createRotationY( magicalDegToRad( delta_x ) ), Space::Parent );
-		that->rotate( Quaternion::createRotationX( magicalDegToRad( delta_y ) ), Space::Self );
+		object->rotate( Quaternion::createRotationY( Math::rad( delta_x ) ), Space::Parent );
+		object->rotate( Quaternion::createRotationX( Math::rad( delta_y ) ), Space::Self );
 	}
 
 	m_last_x = mousemoveevent->x;
@@ -163,12 +163,14 @@ void MainCameraScript::onMouseMoveEvent( MouseMoveEvent* mousemoveevent )
 
 void mainDelegate( void )
 {
+	MAGICAL_LOGD( "哈哈" );
+
 	Application::setInterval( 1.0 / 60.0 );
 	Application::setWindowSize( Size( 960, 640 ) );
 
 	Ptr<Scene> scene = Scene::create();
 	scene->getViewChannel( ViewChannel::Default )->setEnabled( true );
-	scene->getViewChannel( ViewChannel::Default )->setViewRect( 0, 0, 1, 1 );
+	scene->getViewChannel( ViewChannel::Default )->setArea( 0, 0, 1, 1 );
 	Engine::runScene( scene );
 
 	Ptr<Camera> camera = Camera::create( "Main Camera" );
@@ -179,9 +181,6 @@ void mainDelegate( void )
 	camera->lookAt( 0, 0, -10 );
 	camera->addComponent<MainCameraScript>();
 	camera->setParent( scene );
-
-
-	vec3::Zero();
 
 	Ptr<Entity> entity = Entity::create( "Cube Entity1" );
 	entity->setPosition( 0, 0, 0 );

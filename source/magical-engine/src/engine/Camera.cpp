@@ -24,13 +24,13 @@ SOFTWARE.
 #include "Camera.h"
 #include "Scene.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 Camera::Camera( void )
 : m_view_channel_index( ViewChannel::Default )
 , m_camera_dirty_info( kCameraClean )
 {
-	m_element_enum = Element::Camera;
+	m_feature = Camera::Feature;
 }
 
 Camera::~Camera( void )
@@ -41,33 +41,20 @@ Camera::~Camera( void )
 Ptr<Camera> Camera::create( void )
 {
 	Camera* ret = new Camera();
-	magicalAssert( ret, "new Camera() failed" );
-	return Ptr<Camera>( PtrCtor<Camera>( ret ) );
+	MAGICAL_ASSERT( ret, "new Camera() failed" );
+	return Ptr<Camera>( Ptrctor<Camera>( ret ) );
 }
 
 Ptr<Camera> Camera::create( const char* name )
 {
 	Camera* ret = new Camera();
-	magicalAssert( ret, "new Camera() failed" );
+	MAGICAL_ASSERT( ret, "new Camera() failed" );
 	ret->setName( name );
-	return Ptr<Camera>( PtrCtor<Camera>( ret ) );
-}
-
-void Camera::setVisible( bool visible )
-{
-	if( visible != m_visible )
-	{
-		if( visible == false ) 
-			setActive( false );
-
-		Entity::setVisible( visible );
-	}
+	return Ptr<Camera>( Ptrctor<Camera>( ret ) );
 }
 
 void Camera::setActive( bool active ) 
 {
-	if( m_visible == false )
-		return;
 	if( active == m_active )
 		return;
 
@@ -85,9 +72,21 @@ void Camera::setActive( bool active )
 	}
 }
 
-void Camera::bindViewChannel( ViewChannel::Index index )
+void Camera::setVisible( bool visible )
 {
-	magicalAssert( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
+	/*if( visible != m_visible )
+	{
+		if( visible == false )
+			setActive( false );
+
+		Entity::setVisible( visible );
+	}*/
+	Entity::setVisible( visible );
+}
+
+void Camera::bindViewChannel( int index )
+{
+	MAGICAL_ASSERT( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
 	if( index == m_view_channel_index  )
 		return;
 
@@ -156,31 +155,54 @@ void Camera::setPerspective( float fov, float aspect, float znear, float zfar )
 	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty );
 }
 
-const Matrix4& Camera::getViewMatrix( void ) const
+//void Camera::start( void )
+//{
+//
+//}
+//
+//void Camera::stop( void )
+//{
+//
+//}
+
+void Camera::transform( void )
+{
+	Entity::transform();
+}
+
+void Camera::transformDirty( int info )
+{
+	Object::transformDirty( info );
+
+	m_camera_dirty_info |= kCameraViewDirty;
+	m_camera_dirty_info |= kCameraViewProjectionDirty;
+}
+
+const Matrix4x4& Camera::getViewMatrix( void ) const
 {
 	if( m_camera_dirty_info & kCameraViewDirty )
 	{
-		m_view_matrix = getLocalToWorldMatrix().getInversed();
+		m_view_matrix = Matrix4x4::inverse( getLocalToWorldMatrix() );
 		m_camera_dirty_info &= ~kCameraViewDirty;
 	}
 
 	return m_view_matrix;
 }
 
-const Matrix4& Camera::getProjectionMatrix( void ) const
+const Matrix4x4& Camera::getProjectionMatrix( void ) const
 {
 	if( m_camera_dirty_info & kCameraProjectionDirty )
 	{
 		switch( m_projection )
 		{
 		case Projection::Orth:
-			m_projection_matrix.setOrth( m_left, m_right, m_bottom, m_top, m_znear, m_zfar );
+			m_projection_matrix.setOrtho( m_left, m_right, m_bottom, m_top, m_znear, m_zfar );
 			break;
 		case Projection::Perspective:
 			m_projection_matrix.setPerspective( m_fov, m_aspect, m_znear, m_zfar );
 			break;
 		default:
-			magicalAssert( false, "Invalid!" );
+			MAGICAL_ASSERT( false, "Invalid!" );
 			break;
 		}
 		m_camera_dirty_info &= ~kCameraProjectionDirty;
@@ -189,7 +211,7 @@ const Matrix4& Camera::getProjectionMatrix( void ) const
 	return m_projection_matrix;
 }
 
-const Matrix4& Camera::getViewProjectionMatrix( void ) const
+const Matrix4x4& Camera::getViewProjectionMatrix( void ) const
 {
 	if( m_camera_dirty_info & kCameraViewProjectionDirty )
 	{
@@ -200,17 +222,4 @@ const Matrix4& Camera::getViewProjectionMatrix( void ) const
 	return m_view_projection_matrix;
 }
 
-void Camera::transform( void )
-{
-	Entity::transform();
-}
-
-void Camera::transformDirty( int info )
-{
-	SceneObject::transformDirty( info );
-
-	m_camera_dirty_info |= kCameraViewDirty;
-	m_camera_dirty_info |= kCameraViewProjectionDirty;
-}
-
-NS_MAGICAL_END
+NAMESPACE_END

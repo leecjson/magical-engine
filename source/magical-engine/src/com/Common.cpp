@@ -32,55 +32,35 @@ SOFTWARE.
 #include <windows.h>
 #endif
 
-NS_MAGICAL_BEGIN
-char commonbuf[ kBufferLen ];
-const Size Size::Zero = Size( 0.0f, 0.0f );
-const Rect Rect::Zero = Rect( 0.0f, 0.0f, 0.0f, 0.0f );
-const Color4f Color4f::Red = { 1.0f, 0.0f, 0.0f, 1.0f };
-const Color4f Color4f::Green = { 0.0f, 1.0f, 0.0f, 1.0f };
-const Color4f Color4f::Blue = { 0.0f, 0.0f, 1.0f, 1.0f };
-const Color4f Color4f::White = { 1.0f, 1.0f, 1.0f, 1.0f };
-const Color4f Color4f::Black = { 0.0f, 0.0f, 0.0f, 1.0f };
-const Color4f Color4f::Yello = { 1.0f, 1.0f, 0.0f, 1.0f };
-const Color4f Color4f::Magenta = { 1.0f, 0.0f, 1.0f, 1.0f };
-const Color4f Color4f::Cyan = { 0.0f, 1.0f, 1.0f, 1.0f };
-const Color4f Color4f::DarkGray = { 0.25f, 0.25f, 0.25f, 1.0f };
-const Color4f Color4f::LightGray = { 0.75f, 0.75f, 0.75f, 1.0f };
-const Color4f Color4f::Brown = { 0.6f, 0.4f, 0.12f, 1.0f };
-const Color4f Color4f::Orange = { 0.98f, 0.625f, 0.12f, 1.0f };
-const Color4f Color4f::Pink = { 0.98f, 0.04f, 0.7f, 1.0f };
-const Color4f Color4f::Purple = { 0.6f, 0.4f, 0.7f, 1.0f };
-NS_MAGICAL_END
-
 static bool s_last_error = false;
-static char s_last_error_info[ kBufferLen ];
-static int64_t s_timer_mark_var = 0;
+static char s_last_error_info[ MAGICAL_ERROR_MAX_LENGTH ];
+//static int64_t s_time_marker = 0;
 
-#ifdef MAGICAL_DEBUG
-static struct {
-	int construct_count;
-	int destruct_count;
-} 
-s_engine_objects_listener, 
-s_custom_objects_listener;
+//#ifdef MAGICAL_DEBUG
+//static struct {
+//	int construct_count;
+//	int destruct_count;
+//} 
+//s_engine_objects_listener, 
+//s_custom_objects_listener;
+//
+//static std::mutex s_olc_mutex;
+//static std::mutex s_old_mutex;
+//static bool s_is_engine_objects_listener_started = false;
+//static bool s_is_custom_objects_listener_started = false;
+//#endif
 
-static std::mutex s_olc_mutex;
-static std::mutex s_old_mutex;
-static bool s_is_engine_objects_listener_started = false;
-static bool s_is_custom_objects_listener_started = false;
-#endif
-
-bool magicalIsError( void )
+MAGICALAPI bool MAGICAL_IS_ERROR( void )
 {
 	return s_last_error;
 }
 
-void magicalIgnoreLastError( void )
+MAGICALAPI void MAGICAL_IGNORE_LAST_ERROR( void )
 {
 	s_last_error = false;
 }
 
-void magicalSetLastError( const char* info, const char* file, int line )
+MAGICALAPI void MAGICAL_SET_LAST_ERROR( const char* info, const char* file, int line )
 {
 	if( info == nullptr )
 		return;
@@ -93,7 +73,7 @@ void magicalSetLastError( const char* info, const char* file, int line )
 	s_last_error = true;
 }
 
-const char* magicalGetLastErrorInfo( void )
+MAGICALAPI const char* MAGICAL_GET_LAST_ERROR_INFO( void )
 {
 	if( strlen( s_last_error_info ) > 0 )
 	{
@@ -105,55 +85,63 @@ const char* magicalGetLastErrorInfo( void )
 	}
 }
 
-void magicalShowLastError( void )
+MAGICALAPI void MAGICAL_SHOW_LAST_ERROR( void )
 {
-	if( !magicalIsError() ) return;
+	if( !MAGICAL_IS_ERROR() ) return;
 
 #ifdef MAGICAL_WIN32
 	std::stringstream stext;
-	stext << magicalGetLastErrorInfo() << "\n\n";
+	stext << MAGICAL_GET_LAST_ERROR_INFO() << "\n\n";
 	stext << "请查看程序日志清单，追溯错误来源！";
-	MessageBoxA( nullptr, stext.str().c_str(), "运行时错误! 魔幻引擎 \t", MB_ICONERROR | MB_OK );
+
+	std::wstring wtext = magical::System::utf8ToUnicode( stext.str() );
+	MessageBoxW( nullptr, wtext.c_str(), L"运行时错误! 魔幻引擎 \t", MB_ICONERROR | MB_OK );
 #endif
 }
 
-void magicalLogLastError( void )
+MAGICALAPI void MAGICAL_LOG_LAST_ERROR( bool newline )
 {
-	char temp[ kBufferLen ];
-	const char* last_error = magicalGetLastErrorInfo();
-	
-	sprintf( temp, "[%s]: %s", "Error", last_error );
-
 	USING_NS_MAGICAL;
-	Log::writeLine( Log::Error, temp );
+
+	char temp[ MAGICAL_ERROR_MAX_LENGTH + 12 ];
+	const char* last_error = MAGICAL_GET_LAST_ERROR_INFO();
+	
+	sprintf( temp, "[Error]: %s", last_error );
+
+	if( newline )
+	{
+		Log::writeLine( Log::Error, temp );
+	}
+	else
+	{
+		Log::write( Log::Error, temp );
+	}
 }
 
-void magicalLogLastErrorWithoutNewLine( void )
-{
-	char temp[ kBufferLen ];
-	const char* last_error = magicalGetLastErrorInfo();
-	
-	sprintf( temp, "[%s]: %s", "Error", last_error );
-
-	USING_NS_MAGICAL;
-	Log::write( Log::Error, temp );
-}
-
-void magicalMessageBox( const char* msg, const char* title )
+NAMESPACE_MAGICAL
+#ifdef MAGICAL_WIN32
+#ifdef MessageBox
+#undef MessageBox
+#endif
+#endif
+void MessageBox::show( const char* msg, const char* title )
 {
 #ifdef MAGICAL_WIN32
 	MessageBoxA( nullptr, msg, title, MB_OK );
 #endif
 }
+NAMESPACE_END
 
-void magicalLocalAssert( const char* exp, const char* msg, const char* file, int line )
+MAGICALAPI void MAGICAL_ASSERT_IMPL( const char* exp, const char* msg, const char* file, int line )
 {
 #ifdef MAGICAL_WIN32
 	std::stringstream stext;
-	stext << file << "\n\n" << "Line: " << line << "\n\n";
+	stext << file << "\n\nLine: " << line << "\n\n";
 	stext << "条件表达式：" << "(" << exp << ") " << msg << "\n\n";
-	stext << "是否跟进断点，查看运行时调用堆栈？";
-	if( MessageBoxA( nullptr, stext.str().c_str(), "Assertion failed! 魔幻引擎 \t", MB_ICONERROR | MB_YESNO ) == IDYES )
+	stext << "是否跟进断点，查看调用堆栈？";
+
+	std::wstring wtext = magical::System::utf8ToUnicode( stext.str() );
+	if( MessageBoxW( nullptr, wtext.c_str(), L"Assertion failed! 魔幻引擎 \t", MB_ICONERROR | MB_YESNO ) == IDYES )
 	{
 		_CrtDbgBreak();
 	}
@@ -164,132 +152,231 @@ void magicalLocalAssert( const char* exp, const char* msg, const char* file, int
 #endif
 }
 
-bool magicalIsTimerStarted( void )
+NAMESPACE_MAGICAL
+char System::storage[ MAGICAL_SYSTEM_STORAGE_SIZE ] = { 0 };
+
+wstring System::utf8ToUnicode( const string& str )
 {
-	return s_timer_mark_var != 0;
-}
+#ifdef MAGICAL_WIN32
+	wstring result;
 
-void magicalStartTimer( void )
-{
-	USING_NS_MAGICAL;
+	int size = ::MultiByteToWideChar( CP_UTF8, 0, str.c_str(), -1, NULL, 0 );
+	MAGICAL_ASSERT( size != ERROR_NO_UNICODE_TRANSLATION && size != 0, "Invalid utf-8 sequence!" );
 
-	s_timer_mark_var = TimeUtils::currentMicroseconds();
-}
+	size_t dst_size = sizeof( wchar_t ) * size;
+	wchar_t* dst = ( wchar_t* ) ::malloc( dst_size );
+	::memset( dst, 0, dst_size );
 
-double magicalEndTimer( void )
-{
-	USING_NS_MAGICAL;
+	int convert_size = ::MultiByteToWideChar( CP_UTF8, 0, str.c_str(), -1, dst, size );
+	MAGICAL_ASSERT( convert_size == size, "La falla!" );
 
-	if( s_timer_mark_var == 0 )
-		return 0.0;
-
-	double result;
-	int64_t now = TimeUtils::currentMicroseconds();
-	result = cmax( 0.0, ( now - s_timer_mark_var ) / 1000000.0 );
-	s_timer_mark_var = 0;
+	result = dst;
+	::free( dst );
 	return result;
-}
-
-#ifdef MAGICAL_DEBUG
-void magicalStartObjectsListener( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		s_engine_objects_listener.destruct_count = 0;
-		s_engine_objects_listener.construct_count = 0;
-		s_is_engine_objects_listener_started = true;
-	}
-	else
-	{
-		s_custom_objects_listener.destruct_count = 0;
-		s_custom_objects_listener.construct_count = 0;
-		s_is_custom_objects_listener_started = true;
-	}
-}
-
-void magicalEndObjectsListener( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		s_engine_objects_listener.destruct_count = 0;
-		s_engine_objects_listener.construct_count = 0;
-		s_is_engine_objects_listener_started = false;
-	}
-	else
-	{
-		s_custom_objects_listener.destruct_count = 0;
-		s_custom_objects_listener.construct_count = 0;
-		s_is_custom_objects_listener_started = false;
-	}
-}
-
-bool magicalIsObjectsListenerStarted( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		return s_is_engine_objects_listener_started;
-	}
-	else
-	{
-		return s_is_custom_objects_listener_started;
-	}
-}
-
-void magicalObjectConstruct( void )
-{
-	s_olc_mutex.lock();
-
-	if( s_is_engine_objects_listener_started )
-	{
-		s_engine_objects_listener.construct_count += 1;
-	}
-
-	if( s_is_custom_objects_listener_started )
-	{
-		s_custom_objects_listener.construct_count += 1;
-	}
-
-	s_olc_mutex.unlock();
-}
-
-void magicalObjectDestruct( void )
-{
-	s_old_mutex.lock();
-
-	if( s_is_engine_objects_listener_started )
-	{
-		s_engine_objects_listener.destruct_count += 1;
-	}
-
-	if( s_is_custom_objects_listener_started )
-	{
-		s_custom_objects_listener.destruct_count += 1;
-	}
-
-	s_old_mutex.unlock();
-}
-
-int magicalGetObjectsConstructCount( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		return s_engine_objects_listener.construct_count;
-	}
-	else
-	{
-		return s_custom_objects_listener.construct_count;
-	}
-}
-
-int magicalGetObjectsDestructCount( int listener )
-{
-	if( listener == kEngineObjectsListener )
-	{
-		return s_engine_objects_listener.destruct_count;
-	}
-	else
-	{
-		return s_custom_objects_listener.destruct_count;
-	}
-}
 #endif
+}
+
+wstring System::ansiToUnicode( const string& str )
+{
+#ifdef MAGICAL_WIN32
+	wstring result;
+
+	int size = ::MultiByteToWideChar( CP_ACP, 0, str.c_str(), -1, NULL, 0 );
+	MAGICAL_ASSERT( size != ERROR_NO_UNICODE_TRANSLATION && size != 0, "Invalid conversion!" );
+
+	size_t dst_size = sizeof( wchar_t )* size;
+	wchar_t* dst = ( wchar_t* ) ::malloc( dst_size );
+	::memset( dst, 0, dst_size );
+
+	int convert_size = ::MultiByteToWideChar( CP_ACP, 0, str.c_str(), -1, dst, size );
+	MAGICAL_ASSERT( convert_size == size, "La falla!" );
+
+	result = dst;
+	::free( dst );
+	return result;
+#endif
+}
+
+string System::unicodeToUtf8( const wstring& str )
+{
+#ifdef MAGICAL_WIN32
+	string result;
+
+	int size = ::WideCharToMultiByte( CP_UTF8, 0, str.c_str(), -1, NULL, 0, NULL, NULL );
+	MAGICAL_ASSERT( size != ERROR_NO_UNICODE_TRANSLATION && size != 0, "Invalid conversion!" );
+
+	size_t dst_size = sizeof( char ) * size;
+	char* dst = ( char* ) ::malloc( dst_size );
+	::memset( dst, 0, dst_size );
+
+	int convert_size = ::WideCharToMultiByte( CP_UTF8, 0, str.c_str(), -1, dst, size, NULL, NULL );
+	MAGICAL_ASSERT( convert_size == size, "La falla!" );
+
+	result = dst;
+	::free( dst );
+	return result;
+#endif
+}
+
+string System::unicodeToAnsi( const wstring& str )
+{
+#ifdef MAGICAL_WIN32
+	string result;
+
+	int size = ::WideCharToMultiByte( CP_OEMCP, 0, str.c_str(), -1, NULL, 0, NULL, NULL );
+	MAGICAL_ASSERT( size != ERROR_NO_UNICODE_TRANSLATION && size != 0, "Invalid conversion!" );
+
+	size_t dst_size = sizeof( char ) * size;
+	char* dst = ( char* ) ::malloc( dst_size );
+	::memset( dst, 0, dst_size );
+
+	int convert_size = ::WideCharToMultiByte( CP_OEMCP, 0, str.c_str(), -1, dst, size, NULL, NULL );
+	MAGICAL_ASSERT( convert_size == size, "La falla!" );
+
+	result = dst;
+	::free( dst );
+	return result;
+#endif
+}
+
+string System::utf8ToAnsi( const string& str )
+{
+	return unicodeToAnsi( utf8ToUnicode( str ) );
+}
+
+string System::ansiToUtf8( const string& str )
+{
+	return unicodeToUtf8( ansiToUnicode( str ) );
+}
+NAMESPACE_END
+
+//bool magicalIsTimerStarted( void )
+//{
+//	return s_timer_mark_var != 0;
+//}
+//
+//void magicalStartTimer( void )
+//{
+//	USING_NS_MAGICAL;
+//
+//	s_timer_mark_var = TimeUtils::currentMicroseconds();
+//}
+//
+//double magicalEndTimer( void )
+//{
+//	USING_NS_MAGICAL;
+//
+//	if( s_timer_mark_var == 0 )
+//		return 0.0;
+//
+//	double result;
+//	int64_t now = TimeUtils::currentMicroseconds();
+//	result = cmax( 0.0, ( now - s_timer_mark_var ) / 1000000.0 );
+//	s_timer_mark_var = 0;
+//	return result;
+//}
+
+//#ifdef MAGICAL_DEBUG
+//void magicalStartObjectsListener( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		s_engine_objects_listener.destruct_count = 0;
+//		s_engine_objects_listener.construct_count = 0;
+//		s_is_engine_objects_listener_started = true;
+//	}
+//	else
+//	{
+//		s_custom_objects_listener.destruct_count = 0;
+//		s_custom_objects_listener.construct_count = 0;
+//		s_is_custom_objects_listener_started = true;
+//	}
+//}
+//
+//void magicalEndObjectsListener( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		s_engine_objects_listener.destruct_count = 0;
+//		s_engine_objects_listener.construct_count = 0;
+//		s_is_engine_objects_listener_started = false;
+//	}
+//	else
+//	{
+//		s_custom_objects_listener.destruct_count = 0;
+//		s_custom_objects_listener.construct_count = 0;
+//		s_is_custom_objects_listener_started = false;
+//	}
+//}
+//
+//bool magicalIsObjectsListenerStarted( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		return s_is_engine_objects_listener_started;
+//	}
+//	else
+//	{
+//		return s_is_custom_objects_listener_started;
+//	}
+//}
+//
+//void magicalObjectConstruct( void )
+//{
+//	s_olc_mutex.lock();
+//
+//	if( s_is_engine_objects_listener_started )
+//	{
+//		s_engine_objects_listener.construct_count += 1;
+//	}
+//
+//	if( s_is_custom_objects_listener_started )
+//	{
+//		s_custom_objects_listener.construct_count += 1;
+//	}
+//
+//	s_olc_mutex.unlock();
+//}
+//
+//void magicalObjectDestruct( void )
+//{
+//	s_old_mutex.lock();
+//
+//	if( s_is_engine_objects_listener_started )
+//	{
+//		s_engine_objects_listener.destruct_count += 1;
+//	}
+//
+//	if( s_is_custom_objects_listener_started )
+//	{
+//		s_custom_objects_listener.destruct_count += 1;
+//	}
+//
+//	s_old_mutex.unlock();
+//}
+//
+//int magicalGetObjectsConstructCount( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		return s_engine_objects_listener.construct_count;
+//	}
+//	else
+//	{
+//		return s_custom_objects_listener.construct_count;
+//	}
+//}
+//
+//int magicalGetObjectsDestructCount( int listener )
+//{
+//	if( listener == kEngineObjectsListener )
+//	{
+//		return s_engine_objects_listener.destruct_count;
+//	}
+//	else
+//	{
+//		return s_custom_objects_listener.destruct_count;
+//	}
+//}
+//#endif
+

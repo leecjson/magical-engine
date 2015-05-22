@@ -60,9 +60,6 @@
     <ClCompile Include="demo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\assets\main.lua" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\src\Main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
