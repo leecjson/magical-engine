@@ -1,0 +1,23 @@
+$#include "BindCommon.h"
+$#include "tolua_ext.h"
+$#include "magical-engine.h"
+
+$pfile "toluapp-typedef.pkg"
+
+$pfile "../magical-common/assets/AssetsSystem.pkg"
+
+$pfile "../magical-common/base/Common.pkg"
+$pfile "../magical-common/base/Data.pkg"
+$pfile "../magical-common/base/Reference.pkg"
+
+$pfile "../magical-common/engine/Transform.pkg"
+
+$pfile "../magical-common/log/LogSystem.pkg"
+
+$pfile "../magical-common/math/cpp/AxisAngle.pkg"
+$pfile "../magical-common/math/cpp/EulerAngles.pkg"
+$pfile "../magical-common/math/cpp/Matrix4.pkg"
+$pfile "../magical-common/math/cpp/Quaternion.pkg"
+$pfile "../magical-common/math/cpp/Vector2.pkg"
+$pfile "../magical-common/math/cpp/Vector3.pkg"
+$pfile "../magical-common/math/cpp/Vector4.pkg"

@@ -1,0 +1,37 @@
+struct AxisAngle
+{
+public:
+	float x, y, z, w;
+
+public:
+	static const AxisAngle Identity;
+	static const AxisAngle Zero;
+	static AxisAngle var;
+
+public:
+	AxisAngle( float x, float y, float z, float w );
+	AxisAngle( const Vector3& axis, float angle );
+	AxisAngle( const AxisAngle& aa );
+	AxisAngle( void );
+	~AxisAngle( void );
+
+public:
+	static inline AxisAngle create( const Vector3& axis, float angle );
+	static inline AxisAngle createIdentity( void );
+	static inline AxisAngle createZero( void );
+	static inline AxisAngle createFromQuaternion( const Quaternion& q );
+
+public:
+	inline bool equals( const AxisAngle& aa ) const;
+	inline bool isIdentity( void ) const;
+	inline bool isZero( void ) const;
+	inline bool operator==( const AxisAngle& aa ) const;
+	inline void set( const AxisAngle& aa );
+	inline void set( const Vector3& axis, float angle );
+	inline void setIdentity( void );
+	inline void setZero( void );
+	inline void setScalaas( float x, float y, float z, float w );
+	inline void fromQuaternion( const Quaternion& q );
+	inline Quaternion toQuaternion( void ) const;
+	inline Vector3 axis( void ) const;
+};

@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\assets\win32\Assets.cpp" />
+    <ClCompile Include="..\src\com\Area.cpp" />
+    <ClCompile Include="..\src\com\Color.cpp" />
+    <ClCompile Include="..\src\com\Common.cpp" />
+    <ClCompile Include="..\src\com\Size.cpp" />
+    <ClCompile Include="..\src\context\Application.cpp" />
+    <ClCompile Include="..\src\context\win32\gl\OGLApplication.cpp" />
+    <ClCompile Include="..\src\engine\Camera.cpp" />
+    <ClCompile Include="..\src\engine\Engine.cpp" />
+    <ClCompile Include="..\src\engine\Entity.cpp" />
+    <ClCompile Include="..\src\engine\Object.cpp" />
+    <ClCompile Include="..\src\engine\Scene.cpp" />
+    <ClCompile Include="..\src\engine\ViewChannel.cpp" />
+    <ClCompile Include="..\src\input\Input.cpp" />
+    <ClCompile Include="..\src\log\win32\Log.cpp" />
+    <ClCompile Include="..\src\math\Box.cpp" />
+    <ClCompile Include="..\src\math\Box2d.cpp" />
+    <ClCompile Include="..\src\math\Circle.cpp" />
+    <ClCompile Include="..\src\math\Frustum.cpp" />
+    <ClCompile Include="..\src\math\Line2d.cpp" />
+    <ClCompile Include="..\src\math\MathUtils.cpp" />
+    <ClCompile Include="..\src\math\Matrix3x3.cpp" />
+    <ClCompile Include="..\src\math\Matrix4x4.cpp" />
+    <ClCompile Include="..\src\math\OriBox.cpp" />
+    <ClCompile Include="..\src\math\OriBox2d.cpp" />
+    <ClCompile Include="..\src\math\Plane.cpp" />
+    <ClCompile Include="..\src\math\Polygon.cpp" />
+    <ClCompile Include="..\src\math\Polygon2d.cpp" />
+    <ClCompile Include="..\src\math\Quaternion.cpp" />
+    <ClCompile Include="..\src\math\Ray.cpp" />
+    <ClCompile Include="..\src\math\Ray2d.cpp" />
+    <ClCompile Include="..\src\math\Rotater.cpp" />
+    <ClCompile Include="..\src\math\Sphere.cpp" />
+    <ClCompile Include="..\src\math\Triangle.cpp" />
+    <ClCompile Include="..\src\math\Triangle2d.cpp" />
+    <ClCompile Include="..\src\math\Vector2.cpp" />
+    <ClCompile Include="..\src\math\Vector3.cpp" />
+    <ClCompile Include="..\src\math\Vector4.cpp" />
+    <ClCompile Include="..\src\renderer\gl\Renderer.cpp" />
+    <ClCompile Include="..\src\renderer\gl\RendererCommon.cpp" />
+    <ClCompile Include="..\src\renderer\gl\ShaderProgram.cpp" />
+    <ClCompile Include="..\src\renderer\gl\ShaderProgramManager.cpp" />
+    <ClCompile Include="..\src\utils\Data.cpp" />
+    <ClCompile Include="..\src\utils\Reference.cpp" />
+    <ClCompile Include="..\src\utils\Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\assets\Assets.h" />
+    <ClInclude Include="..\src\com\Area.h" />
+    <ClInclude Include="..\src\com\Color.h" />
+    <ClInclude Include="..\src\com\Common.h" />
+    <ClInclude Include="..\src\com\Size.h" />
+    <ClInclude Include="..\src\context\Application.h" />
+    <ClInclude Include="..\src\context\win32\gl\glew\glew.h" />
+    <ClInclude Include="..\src\context\win32\gl\glew\glxew.h" />
+    <ClInclude Include="..\src\context\win32\gl\glew\wglew.h" />
+    <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3.h" />
+    <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3native.h" />
+    <ClInclude Include="..\src\engine\Behaviour.h" />
+    <ClInclude Include="..\src\engine\Camera.h" />
+    <ClInclude Include="..\src\engine\Engine.h" />
+    <ClInclude Include="..\src\engine\Entity.h" />
+    <ClInclude Include="..\src\engine\Object.h" />
+    <ClInclude Include="..\src\engine\Scene.h" />
+    <ClInclude Include="..\src\engine\ViewChannel.h" />
+    <ClInclude Include="..\src\include\magical-engine.h" />
+    <ClInclude Include="..\src\input\Input.h" />
+    <ClInclude Include="..\src\log\Log.h" />
+    <ClInclude Include="..\src\math\Box.h" />
+    <ClInclude Include="..\src\math\Box2d.h" />
+    <ClInclude Include="..\src\math\Circle.h" />
+    <ClInclude Include="..\src\math\Frustum.h" />
+    <ClInclude Include="..\src\math\Line2d.h" />
+    <ClInclude Include="..\src\math\magical-math.h" />
+    <ClInclude Include="..\src\math\MathUtils.h" />
+    <ClInclude Include="..\src\math\Matrix3x3.h" />
+    <ClInclude Include="..\src\math\Matrix4x4.h" />
+    <ClInclude Include="..\src\math\OriBox.h" />
+    <ClInclude Include="..\src\math\OriBox2d.h" />
+    <ClInclude Include="..\src\math\Plane.h" />
+    <ClInclude Include="..\src\math\Polygon.h" />
+    <ClInclude Include="..\src\math\Polygon2d.h" />
+    <ClInclude Include="..\src\math\Quaternion.h" />
+    <ClInclude Include="..\src\math\Ray.h" />
+    <ClInclude Include="..\src\math\Ray2d.h" />
+    <ClInclude Include="..\src\math\Rotater.h" />
+    <ClInclude Include="..\src\math\Sphere.h" />
+    <ClInclude Include="..\src\math\Triangle.h" />
+    <ClInclude Include="..\src\math\Triangle2d.h" />
+    <ClInclude Include="..\src\math\Vector2.h" />
+    <ClInclude Include="..\src\math\Vector3.h" />
+    <ClInclude Include="..\src\math\Vector4.h" />
+    <ClInclude Include="..\src\platform\magical-macros.h" />
+    <ClInclude Include="..\src\renderer\Renderer.h" />
+    <ClInclude Include="..\src\renderer\RendererCommon.h" />
+    <ClInclude Include="..\src\renderer\ShaderProgram.h" />
+    <ClInclude Include="..\src\renderer\ShaderProgramManager.h" />
+    <ClInclude Include="..\src\utils\CachePool.h" />
+    <ClInclude Include="..\src\utils\Data.h" />
+    <ClInclude Include="..\src\utils\Ptr.h" />
+    <ClInclude Include="..\src\utils\Ptrctor.h" />
+    <ClInclude Include="..\src\utils\Reference.h" />
+    <ClInclude Include="..\src\utils\Utils.h" />
+    <ClInclude Include="..\src\utils\WeakPtr.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\engine\Entity.inl" />
+    <None Include="..\src\math\Box.inl" />
+    <None Include="..\src\math\Box2d.inl" />
+    <None Include="..\src\math\Circle.inl" />
+    <None Include="..\src\math\Frustum.inl" />
+    <None Include="..\src\math\Line2d.inl" />
+    <None Include="..\src\math\Matrix3x3.inl" />
+    <None Include="..\src\math\Matrix4x4.inl" />
+    <None Include="..\src\math\OriBox.inl" />
+    <None Include="..\src\math\OriBox2d.inl" />
+    <None Include="..\src\math\Plane.inl" />
+    <None Include="..\src\math\Polygon.inl" />
+    <None Include="..\src\math\Polygon2d.inl" />
+    <None Include="..\src\math\Quaternion.inl" />
+    <None Include="..\src\math\Ray.inl" />
+    <None Include="..\src\math\Ray2d.inl" />
+    <None Include="..\src\math\Rotater.inl" />
+    <None Include="..\src\math\Sphere.inl" />
+    <None Include="..\src\math\Triangle.inl" />
+    <None Include="..\src\math\Triangle2d.inl" />
+    <None Include="..\src\math\Vector2.inl" />
+    <None Include="..\src\math\Vector3.inl" />
+    <None Include="..\src\math\Vector4.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FB56813F-8606-453E-A972-09246B0ADDE8}</ProjectGuid>
+    <RootNamespace>magicalengine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="magical-engine-x86-debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="magical-engine-x86-release.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile />
+    <Link />
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-libs\glfw3\libs\win32\32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile />
+    <Link />
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-libs\glfw3\libs\win32\32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)magical-libs\glew\libs\win32\32\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

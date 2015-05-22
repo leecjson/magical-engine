@@ -1,0 +1,8 @@
+class Reference
+{
+public:
+	void retain( void );
+	void release( void );
+
+	int referenceCount( void ) const;
+};

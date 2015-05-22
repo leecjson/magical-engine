@@ -1,0 +1,16 @@
+#define kBufferLen 1024 * 100
+
+bool magicalIsError( void );
+void magicalIgnoreLastError( void );
+void magicalSetLastErrorInfo( const char* info, const char* func = NULL, int line = 0 );
+void magicalSetLastErrorInfoB( const char* __info );
+void magicalShowLastError( void );
+
+void magicalMessageBox( const char* msg, const char* title );
+void magicalDebugMessageBox( const char* __msg, const char* __title );
+
+void magicalAssert( bool __con, const char* __msg );
+
+bool magicalIsTimerStarted( void );
+void magicalStartTimer( void );
+double magicalEndTimer( void );
