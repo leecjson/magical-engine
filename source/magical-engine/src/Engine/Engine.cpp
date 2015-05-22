@@ -24,89 +24,88 @@ SOFTWARE.
 #include "Engine.h"
 #include "magical-math.h"
 #include "Utils.h"
-//#include "assetsSystem.h"
+#include "Assets.h"
 //#include "LuaSystem.h"
 #include "Renderer.h"
 #include "Application.h"
-#include "SceneObject.h"
+#include "Object.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
-static int64_t s_last_update_time = 0;
-static double s_delta_time = 0.0;
+static int64_t _last_update_time = 0;
+static double _delta_time = 0.0;
 
-static Scene* s_next_scene = nullptr;
-static Scene* s_running_scene = nullptr;
+static Scene* _next_scene = nullptr;
+static Scene* _running_scene = nullptr;
 
 void Engine::init( void )
 {
-	s_last_update_time = TimeUtils::currentMicroseconds();
+	_last_update_time = Time::currentMicroseconds();
 }
 
 void Engine::delc( void )
 {
-	if( s_running_scene )
-		s_running_scene->stop();
+	if( _running_scene )
+		_running_scene->stop();
 
-	magicalSafeRelease( s_running_scene );
-	magicalSafeRelease( s_next_scene );
+	SAFE_RELEASE( _running_scene );
+	SAFE_RELEASE( _next_scene );
 }
 
 void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
-	Renderer::render();
+	//Renderer::render();
 
-	if( s_next_scene )
+	if( _next_scene )
 	{
-		if( s_running_scene )
-			s_running_scene->stop();
+		if( _running_scene )
+			_running_scene->stop();
 
-		magicalSafeMoveNull( s_running_scene, s_next_scene );
-		s_running_scene->start();
+		SAFE_MOVE_NULL( _running_scene, _next_scene );
+		_running_scene->start();
 	}
 
-	if( s_running_scene )
+	if( _running_scene )
 	{
-		s_running_scene->update();
-		s_running_scene->transform();
-		s_running_scene->visit();
+		_running_scene->update();
+		_running_scene->transform();
+		_running_scene->visit();
 	}
 }
 
 void Engine::resize( int width, int height )
 {
-	if( s_running_scene )
-		s_running_scene->resize( width, height );
+	if( _running_scene )
+		_running_scene->resize( width, height );
 
-	Renderer::resize( width, height );
+	//Renderer::resize( width, height );
 }
 
 float Engine::deltaTime( void )
 {
-	return s_delta_time;
+	return _delta_time;
 }
 
-void Engine::runScene( const Ptr<Scene>& scene )
+void Engine::runScene( Scene* scene )
 {
-	Scene* rscene = scene.get();
-	magicalAssert( rscene, "should not be nullptr." );
-	magicalAssert( rscene != s_running_scene, "Invaild!" );
+	MAGICAL_ASSERT( scene, "should not be nullptr." );
+	MAGICAL_ASSERT( scene != _running_scene, "Invaild!" );
 
-	magicalSafeAssign( s_next_scene, rscene );
+	SAFE_ASSIGN( _next_scene, scene );
 }
 
 Scene* Engine::runningScene( void )
 {
-	return s_running_scene;
+	return _running_scene;
 }
 
 void Engine::calcDeltaTime( void )
 {
-	int64_t now = TimeUtils::currentMicroseconds();
-	s_delta_time = cmax( 0.0, ( now - s_last_update_time ) / 1000000.0 );
-	s_last_update_time = now;
+	int64_t now = Time::currentMicroseconds();
+	_delta_time = Math::max( 0.0, ( now - _last_update_time ) / 1000000.0 );
+	_last_update_time = now;
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

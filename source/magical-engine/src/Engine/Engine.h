@@ -28,7 +28,7 @@ SOFTWARE.
 #include "Common.h"
 #include "Scene.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 class Engine
 {
@@ -40,13 +40,13 @@ public:
 	static void mainLoop( void );
 	static void resize( int width, int height );
 	static float deltaTime( void );
-	static void runScene( const Ptr<Scene>& scene );
+	static void runScene( Scene* scene );
 	static Scene* runningScene( void );
 
 private:
 	static void calcDeltaTime( void );
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__ENGINE_H__

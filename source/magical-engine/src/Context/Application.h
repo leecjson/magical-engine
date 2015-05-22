@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
 The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
@@ -26,10 +26,10 @@ SOFTWARE.
 
 #include "magical-macros.h"
 #include "Common.h"
-
+#include "Size.h"
 #include <functional>
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 typedef std::function<void( void )> MainDelegate;
 
@@ -43,7 +43,7 @@ class Application
 public:
 	static void init( void );
 	static void delc( void );
-	static void run( MainDelegate mainDelegate );
+	static void run( MainDelegate main );
 
 public:	
 	static void setInterval( double interval );
@@ -55,7 +55,7 @@ public:
 	static const Size& getWindowSize( void );
 	static void setWindowTitle( const char* title );
 	static void swapBuffers( void );
-	static void exit( void );
+	static void exit( void ); 
 
 private:
 	static void initWindow( void );
@@ -64,6 +64,6 @@ private:
 	static void delcRenderContext( void );
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__APPLICATION_H__

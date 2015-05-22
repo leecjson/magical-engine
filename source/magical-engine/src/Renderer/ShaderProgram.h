@@ -29,7 +29,7 @@ SOFTWARE.
 #include "RendererCommon.h"
 #include "Reference.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 class ShaderProgram : public Reference
 {
@@ -60,6 +60,6 @@ protected:
 	bool m_linked = false;
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__SHADER_PROGRAM_H__

@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "Behaviour.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 //define_class_hash_code( Behaviour );
 //
@@ -32,4 +32,4 @@ NS_MAGICAL_BEGIN
 //	assign_class_hash_code( Behaviour );
 //}
 
-NS_MAGICAL_END
+NAMESPACE_END

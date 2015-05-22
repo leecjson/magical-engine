@@ -24,26 +24,26 @@ SOFTWARE.
 #ifndef __RENDERER_SYSTEM_H__
 #define __RENDERER_SYSTEM_H__
 
-#include "PlatformMacros.h"
+#include "magical-macros.h"
 #include "Common.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 class Renderer
 {
 public:
-	static void Init( void );
-	static void Delc( void );
+	static void init( void );
+	static void delc( void );
 
 public:
-	static void Render( void );
-	static void Resize( int w, int h );
-	static void SetDefault( void );
+	static void render( void );
+	static void resize( int w, int h );
+	static void setDefault( void );
 
 public:
-	static void UseProgram( uint32_t program_id );
+	static void useProgram( uint32_t program_id );
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__RENDERER_SYSTEM_H__

@@ -25,14 +25,13 @@ SOFTWARE.
 #define __RENDERER_H__
 
 #include "magical-macros.h"
+#include "magical-math.h"
 #include "Common.h"
 #include "RendererCommon.h"
 #include "ViewChannel.h"
-
 #include "ShaderProgram.h"
-#include "magical-math.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 class Renderer
 {
@@ -47,7 +46,6 @@ public:
 	
 public:
 	static void pushRenderChannel( const ViewChannel* channel );
-
 };
 
 #define kAttrVertexIndex 1
@@ -58,6 +56,6 @@ extern Vector3 rect[4];
 extern Vector3 rect_triangle[4];
 extern Vector3 cube[24];
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__RENDERER_H__

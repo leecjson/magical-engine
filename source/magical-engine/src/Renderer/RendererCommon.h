@@ -33,22 +33,22 @@ SOFTWARE.
 #include "win32/gl/glew/glew.h"
 #endif
 
-#define magicalCheckGLError() do {                       \
-	if( GLenum Glerr = glGetError() ) {                  \
-		magicalFormat( "GL:0x%04X", Glerr );             \
-		magicalSetLastErrorA( magicalGetBuffer() );      \
-		magicalLogLastError();                           \
-	}                                                    \
+#define MAGICAL_CHECK_GL_ERROR() do {                      \
+	if( GLenum gl_error = glGetError() ) {                 \
+		MAGICAL_SET_LAST_ERROR_A(                          \
+		System::format( "GL 0x%04X", gl_error ).c_str() ); \
+		MAGICAL_LOG_LAST_ERROR();                          \
+	}                                                      \
 	} while( 0 )
 
 #ifndef MAGICAL_DEBUG
-#define magicalDebugCheckGLError()
+#define MAGICAL_DEBUG_CHECK_GL_ERROR()
 #else
-#define magicalDebugCheckGLError() magicalCheckGLError()
+#define MAGICAL_DEBUG_CHECK_GL_ERROR() MAGICAL_CHECK_GL_ERROR()
 #endif
 
-MAGICALAPI bool magicalGetShaderInfoLog( GLuint shader );
-MAGICALAPI bool magicalGetProgramInfoLog( GLuint program );
+MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader );
+MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program );
 
 #endif //MAGICAL_USING_GL
 
@@ -57,6 +57,5 @@ MAGICALAPI bool magicalGetProgramInfoLog( GLuint program );
 
 #ifdef MAGICAL_USING_D3D11
 #endif //MAGICAL_USING_D3D11
-
 
 #endif //__RENDERER_COMMON_H__

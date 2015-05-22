@@ -24,7 +24,7 @@ SOFTWARE.
 #include "ViewChannel.h"
 #include "Camera.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 ViewChannel::ViewChannel( void )
 {
@@ -33,20 +33,24 @@ ViewChannel::ViewChannel( void )
 
 ViewChannel::~ViewChannel( void )
 {
-	magicalSafeRelease( m_camera );
+	SAFE_RELEASE( m_camera );
 }
 
-void ViewChannel::setViewRect( float x, float y, float w, float h )
+void ViewChannel::setArea( float x, float y, float w, float h )
 {
-	m_view_rect.x = x;
-	m_view_rect.y = y;
-	m_view_rect.w = w;
-	m_view_rect.h = h;
+	m_area.x = x;
+	m_area.y = y;
+	m_area.w = w;
+	m_area.h = h;
+
+	MAGICAL_ASSERT( m_area.isValid(), "Invalid!" );
 }
 
-void ViewChannel::setViewRect( const Rect& rect )
+void ViewChannel::setArea( const Area& area )
 {
-	m_view_rect = rect;
+	MAGICAL_ASSERT( area.isValid(), "Invalid!" );
+
+	m_area = area;
 }
 
 void ViewChannel::setEnabled( bool enabled )
@@ -54,15 +58,14 @@ void ViewChannel::setEnabled( bool enabled )
 	m_enabled = enabled;
 }
 
+void ViewChannel::setCamera( Camera* camera )
+{
+	SAFE_ASSIGN( m_camera, camera );
+}
+
 void ViewChannel::removeCamera( void )
 {
-	magicalSafeReleaseNull( m_camera );
+	SAFE_RELEASE_NULL( m_camera );
 }
 
-void ViewChannel::setCamera( const Ptr<Camera>& camera )
-{
-	Camera* rcamera = camera.get();
-	magicalSafeAssign( m_camera, rcamera );
-}
-
-NS_MAGICAL_END
+NAMESPACE_END

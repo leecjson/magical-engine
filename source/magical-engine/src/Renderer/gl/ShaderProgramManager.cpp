@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "ShaderProgramManager.h"
-#include "AssetsSystem.h"
+#include "Assets.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 enum
 {
@@ -52,13 +52,13 @@ static ShaderProgram* s_programs[ kShaderProgram_Count ] = { nullptr };
 void ShaderProgramManager::init( void )
 {
 	initPrograms();
-	magicalReturnIfError();
+	MAGICAL_RETURN_IF_ERROR();
 }
 
 void ShaderProgramManager::delc( void )
 {
 	delcPrograms();
-	magicalReturnIfError();
+	MAGICAL_RETURN_IF_ERROR();
 }
 
 void ShaderProgramManager::initPrograms( void )
@@ -184,4 +184,4 @@ const Ptr<ShaderProgram> ShaderProgramManager::getProgram( ShaderProgramIndex in
 //
 //}
 
-NS_MAGICAL_END
+NAMESPACE_END

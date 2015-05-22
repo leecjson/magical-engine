@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "RendererCommon.h"
 
-MAGICALAPI bool magicalGetShaderInfoLog( GLuint shader )
+MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader )
 {
 	char* info_log;
 	GLint info_length;
@@ -35,12 +35,12 @@ MAGICALAPI bool magicalGetShaderInfoLog( GLuint shader )
 	if( info_log == nullptr )
 		return false;
 
-	magicalFormat( "%s", info_log );
+	sprintf( magical::System::storage, "%s", info_log );
 	free( info_log );
 	return true;
 }
 
-MAGICALAPI bool magicalGetProgramInfoLog( GLuint program )
+MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program )
 {
 	char* info_log;
 	GLint info_length;
@@ -52,7 +52,7 @@ MAGICALAPI bool magicalGetProgramInfoLog( GLuint program )
 	if( info_log == nullptr )
 		return false;
 
-	magicalFormat( "%s", info_log );
+	sprintf( magical::System::storage, "%s", info_log );
 	free( info_log );
 	return true;
 }

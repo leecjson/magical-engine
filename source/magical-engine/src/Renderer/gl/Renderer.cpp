@@ -29,12 +29,9 @@ SOFTWARE.
 
 #include <vector>
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 using std::vector;
-
-//#define kAttrVertexIndex 1
-//#define kAttrColorIndex 2
 
 static const char* simple_vertex_shader = R"(
 attribute vec4 attr_vertex;
@@ -85,7 +82,7 @@ Vector3 cube[24];
 void Renderer::init( void )
 {
 	setDefault();
-	magicalReturnIfError();
+	MAGICAL_RETURN_IF_ERROR();
 
 	s_simple_program = ShaderProgram::create( simple_vertex_shader, simple_pixel_shader ).take();
 	s_simple_program->build();
@@ -99,52 +96,52 @@ void Renderer::init( void )
 	s_flat_program->link();
 
 	// 2D Rect Vertex
-	rect[0].setScalars( -0.5f, -0.5f, 0 );
-	rect[1].setScalars( 0.5f, -0.5f, 0 );
-	rect[2].setScalars( 0.5f, 0.5f, 0 );
-	rect[3].setScalars( -0.5f, 0.5f, 0 );
+	rect[0].set( -0.5f, -0.5f, 0 );
+	rect[1].set( 0.5f, -0.5f, 0 );
+	rect[2].set( 0.5f, 0.5f, 0 );
+	rect[3].set( -0.5f, 0.5f, 0 );
 
 	// 2D Rect Vertex Triangle strip
-	rect_triangle[0].setScalars( -0.5f, -0.5f, 2.0f );
-	rect_triangle[1].setScalars( 0.5f, -0.5f, 2.0f );
-	rect_triangle[2].setScalars( -0.5f, 0.5f, 2.0f );
-	rect_triangle[3].setScalars( 0.5f, 0.5f, 2.0f );
+	rect_triangle[0].set( -0.5f, -0.5f, 2.0f );
+	rect_triangle[1].set( 0.5f, -0.5f, 2.0f );
+	rect_triangle[2].set( -0.5f, 0.5f, 2.0f );
+	rect_triangle[3].set( 0.5f, 0.5f, 2.0f );
 
 	// font
-	cube[0].setScalars( -0.5f, -0.5f, -0.5f );
-	cube[1].setScalars( 0.5f, -0.5f, -0.5f );
-	cube[2].setScalars( 0.5f, 0.5f, -0.5f );
-	cube[3].setScalars( -0.5f, 0.5f, -0.5f );
+	cube[0].set( -0.5f, -0.5f, -0.5f );
+	cube[1].set( 0.5f, -0.5f, -0.5f );
+	cube[2].set( 0.5f, 0.5f, -0.5f );
+	cube[3].set( -0.5f, 0.5f, -0.5f );
 
 	// top
-	cube[4].setScalars( -0.5f, 0.5f, -0.5f );
-	cube[5].setScalars( 0.5f, 0.5f, -0.5f );
-	cube[6].setScalars( 0.5f, 0.5f, 0.5f );
-	cube[7].setScalars( -0.5f, 0.5f, 0.5f );
+	cube[4].set( -0.5f, 0.5f, -0.5f );
+	cube[5].set( 0.5f, 0.5f, -0.5f );
+	cube[6].set( 0.5f, 0.5f, 0.5f );
+	cube[7].set( -0.5f, 0.5f, 0.5f );
 
 	// back
-	cube[8].setScalars( -0.5f, -0.5f, 0.5f );
-	cube[9].setScalars( -0.5f, 0.5f, 0.5f );
-	cube[10].setScalars( 0.5f, 0.5f, 0.5f );
-	cube[11].setScalars( 0.5f, -0.5f, 0.5f );
+	cube[8].set( -0.5f, -0.5f, 0.5f );
+	cube[9].set( -0.5f, 0.5f, 0.5f );
+	cube[10].set( 0.5f, 0.5f, 0.5f );
+	cube[11].set( 0.5f, -0.5f, 0.5f );
 
 	// bottom
-	cube[12].setScalars( -0.5f, -0.5f, -0.5f );
-	cube[13].setScalars( -0.5f, -0.5f, 0.5f );
-	cube[14].setScalars( 0.5f, -0.5f, 0.5f );
-	cube[15].setScalars( 0.5f, -0.5f, -0.5f );
+	cube[12].set( -0.5f, -0.5f, -0.5f );
+	cube[13].set( -0.5f, -0.5f, 0.5f );
+	cube[14].set( 0.5f, -0.5f, 0.5f );
+	cube[15].set( 0.5f, -0.5f, -0.5f );
 
 	// left
-	cube[16].setScalars( -0.5f, -0.5f, 0.5f );
-	cube[17].setScalars( -0.5f, -0.5f, -0.5f );
-	cube[18].setScalars( -0.5f, 0.5f, -0.5f );
-	cube[19].setScalars( -0.5f, 0.5f, 0.5f );
+	cube[16].set( -0.5f, -0.5f, 0.5f );
+	cube[17].set( -0.5f, -0.5f, -0.5f );
+	cube[18].set( -0.5f, 0.5f, -0.5f );
+	cube[19].set( -0.5f, 0.5f, 0.5f );
 
 	// right
-	cube[20].setScalars( 0.5f, -0.5f, 0.5f );
-	cube[21].setScalars( 0.5f, 0.5f, 0.5f );
-	cube[22].setScalars( 0.5f, 0.5f, -0.5f );
-	cube[23].setScalars( 0.5f, -0.5f, -0.5f );
+	cube[20].set( 0.5f, -0.5f, 0.5f );
+	cube[21].set( 0.5f, 0.5f, 0.5f );
+	cube[22].set( 0.5f, 0.5f, -0.5f );
+	cube[23].set( 0.5f, -0.5f, -0.5f );
 }
 
 void Renderer::delc( void )
@@ -194,7 +191,7 @@ void Renderer::render( void )
 
 
 
-	magicalDebugCheckGLError();
+	MAGICAL_DEBUG_CHECK_GL_ERROR();
 }
 
 void Renderer::resize( int width, int height )
@@ -203,7 +200,7 @@ void Renderer::resize( int width, int height )
 
 	//m_projection_matrix.setPerspective( 60.0f, (float)width / (float)height, 0.3f, 1000.0f );
 
-	magicalCheckGLError();
+	MAGICAL_CHECK_GL_ERROR();
 }
 
 void Renderer::setDefault( void )
@@ -213,7 +210,7 @@ void Renderer::setDefault( void )
 	glEnable( GL_DEPTH_TEST );
 	glEnable( GL_CULL_FACE );
 
-	magicalCheckGLError();
+	MAGICAL_CHECK_GL_ERROR();
 }
 
 void Renderer::pushRenderChannel( const ViewChannel* channel )
@@ -221,4 +218,4 @@ void Renderer::pushRenderChannel( const ViewChannel* channel )
 	//Application::getWindowSize()
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

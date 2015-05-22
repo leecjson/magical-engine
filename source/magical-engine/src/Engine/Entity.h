@@ -27,49 +27,41 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Behaviour.h"
-#include "SceneObject.h"
+#include "Object.h"
 #include <unordered_map>
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 using ::std::unordered_map;
 
-class Entity : public SceneObject
+class Entity : public Object
 {
 public:
-	member_method Entity( void );
-	member_method virtual ~Entity( void );
-	member_method static Ptr<Entity> Create( void );
-	member_method static Ptr<Entity> Create( const char* name );
+	enum : int { Feature = 10 };
 
 public:
-	template< class TBehaviour >
-	member_method void AddComponent( void );
-	template< class TBehaviour >
-	member_method void RemoveComponent( void );
+	Entity( void );
+	virtual ~Entity( void );
+	static Ptr<Entity> create( void );
+	static Ptr<Entity> create( const char* name );
 
 public:
-	member_method virtual void Visit( Camera* camera ) override;
-	//virtual void draw( void ) override;
-	member_method virtual void Prepare( void );
-	member_method virtual void Start( void ) override;
-	member_method virtual void Stop( void ) override;
-	member_method virtual void Update( void );
+	template<class TBehaviour> void addComponent( void );
+	template<class TBehaviour> void removeComponent( void );
+
+public:
+	virtual void visit( Camera* camera ) override;
+	virtual void start( void ) override;
+	virtual void stop( void ) override;
+	virtual void prepare( void );
+	virtual void update( void );
 
 protected:
-	unordered_map<size_t, BehaviourBase*> m_behaviours;
-
-protected:
-	//AABB3 m_aabb;
+	unordered_map<size_t, BehaviourFeature*> m_behaviours;
 };
-
-//class RenderComponent
-//{
-//
-//};
 
 #include "Entity.inl"
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__ENTITY_H__

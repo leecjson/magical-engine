@@ -26,7 +26,7 @@ SOFTWARE.
 #include "RendererMacros.h"
 #include "ShaderProgramManager.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 void Renderer::Init( void )
 {
@@ -75,4 +75,4 @@ void Renderer::UseProgram( uint32_t program_id )
 	glUseProgram( program_id );
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

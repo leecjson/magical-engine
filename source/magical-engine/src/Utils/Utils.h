@@ -26,27 +26,11 @@ SOFTWARE.
 
 #include "magical-macros.h"
 #include "Common.h"
-
 #include <stdarg.h>
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
-//class StringUtils
-//{
-//public:
-//	template< int size >
-//	static inline std::string format( const char* format, ... )
-//	{
-//		char buf[ size ];
-//		va_list args;
-//		va_start( args, format );
-//		vsnprintf( buf, size, format, args );
-//		va_end( args );
-//		return std::string( buf );
-//	}
-//};
-
-class TimeUtils
+class Time
 {
 public:
 	static int64_t currentMicroseconds( void );
@@ -60,6 +44,6 @@ public:
 	static string toUnixPath( const char* path );
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__UTILS_H__

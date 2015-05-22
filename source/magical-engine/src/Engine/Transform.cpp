@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "Transform.h"
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 enum
 {
@@ -390,4 +390,4 @@ const Vector3& Transform::getDerivedScale( void ) const
 	return m_derived_scale;
 }
 
-NS_MAGICAL_END
+NAMESPACE_END

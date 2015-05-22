@@ -31,7 +31,7 @@ SOFTWARE.
 #include "magical-math.h"
 #include <vector>
 
-NS_MAGICAL_BEGIN
+NAMESPACE_MAGICAL
 
 enum class Space
 {
@@ -182,6 +182,6 @@ protected:
 	mutable Vector3 m_derived_scale = Vector3::One;
 };
 
-NS_MAGICAL_END
+NAMESPACE_END
 
 #endif //__TRANSFORM_H__
