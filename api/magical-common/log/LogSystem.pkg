@@ -1,9 +1,0 @@
-void magicalLogLastError( void ); 
-void magicalLog( const char* __txt );
-void magicalDebugLog( const char* __txt );
-
-class Log
-{
-public:
-	static void write( const char* txt );
-};
