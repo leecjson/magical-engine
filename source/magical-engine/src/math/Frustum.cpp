@@ -64,6 +64,8 @@ struct Sphere;
 #include "Sphere.inl"
 #include "Frustum.inl"
 
+const Frustum Frustum::Invalid = Frustum( Plane::Invalid, Plane::Invalid, Plane::Invalid, Plane::Invalid, Plane::Invalid, Plane::Invalid );
+
 void Frustum::extract( const Matrix4x4& m )
 {
 	left.x = m.m14 + m.m11;

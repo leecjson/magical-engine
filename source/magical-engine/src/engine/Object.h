@@ -152,12 +152,12 @@ protected:
 	bool m_inherit_rotation = true;
 	mutable int m_ts_dirty_info = kTsClean;
 	bool m_ts_dirty = false;
-	Vector3 m_local_position;
-	Quaternion m_local_rotation;
+	Vector3 m_local_position = Vector3::Zero;
+	Quaternion m_local_rotation = Quaternion::Identity;
 	Vector3 m_local_scale = Vector3::One;
-	Matrix4x4 m_local_to_world_matrix;
-	mutable Vector3 m_derived_position;
-	mutable Quaternion m_derived_rotation;
+	Matrix4x4 m_local_to_world_matrix = Matrix4x4::Identity;
+	mutable Vector3 m_derived_position = Vector3::Zero;
+	mutable Quaternion m_derived_rotation = Quaternion::Identity;
 	mutable Vector3 m_derived_scale = Vector3::One;
 };
 

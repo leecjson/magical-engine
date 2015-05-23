@@ -65,7 +65,24 @@ void Entity::visit( Camera* camera )
 	if( !m_visible )
 		return;
 
-	if( m_feature == Camera::Feature )
+	// frustum cull check
+	if( camera->isFrustumCullEnabled() )
+	{
+		// cull
+	}
+
+	// commit to renderer
+	// Renderer::commit
+
+	if( !m_children.empty() )
+	{
+		for( auto child : m_children )
+		{
+			child->visit( camera );
+		}
+	}
+
+	/*if( m_feature == Camera::Feature )
 	{
 		if( !m_children.empty() )
 		{
@@ -75,14 +92,14 @@ void Entity::visit( Camera* camera )
 			}
 		}
 		return;
-	}
+	}*/
 
-	glUseProgram( s_flat_program->getId() );
+	/*glUseProgram( s_flat_program->getId() );
 
 	Matrix4x4 mvp_matrix = getLocalToWorldMatrix() * camera->getViewProjectionMatrix();
 
 	GLint u_mvp_matrix = s_flat_program->getUniformLocation( "u_mvp_matrix" );
-	glUniformMatrix4fv( u_mvp_matrix, 1, GL_FALSE, (GLfloat*)&mvp_matrix );
+	glUniformMatrix4fv( u_mvp_matrix, 1, GL_FALSE, (GLfloat*)&mvp_matrix );*/
 
 	/*Color4f colors[4] = {
 		Color4f::Pink,
@@ -96,30 +113,22 @@ void Entity::visit( Camera* camera )
 	glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );*/
 
-	Color4f colors[24] = { 
-		Color4f::Red, Color4f::Red, Color4f::Red, Color4f::Red, //font
-		Color4f::Black, Color4f::Black, Color4f::Black, Color4f::Black, //top
-		Color4f::Pink, Color4f::Pink, Color4f::Pink, Color4f::Pink,  //back
-		Color4f::Blue, Color4f::Blue, Color4f::Blue, Color4f::Blue, //bottom
-		Color4f::Brown, Color4f::Brown, Color4f::Brown, Color4f::Brown, //left
-		Color4f::Cyan, Color4f::Cyan, Color4f::Cyan, Color4f::Cyan //right
-	};
+	//Color4f colors[24] = { 
+	//	Color4f::Red, Color4f::Red, Color4f::Red, Color4f::Red, //font
+	//	Color4f::Black, Color4f::Black, Color4f::Black, Color4f::Black, //top
+	//	Color4f::Pink, Color4f::Pink, Color4f::Pink, Color4f::Pink,  //back
+	//	Color4f::Blue, Color4f::Blue, Color4f::Blue, Color4f::Blue, //bottom
+	//	Color4f::Brown, Color4f::Brown, Color4f::Brown, Color4f::Brown, //left
+	//	Color4f::Cyan, Color4f::Cyan, Color4f::Cyan, Color4f::Cyan //right
+	//};
 
-	glEnableVertexAttribArray( kAttrVertexIndex );
-	glEnableVertexAttribArray( kAttrColorIndex );
-	glVertexAttribPointer( kAttrVertexIndex, 3, GL_FLOAT, GL_FALSE, 0, &cube );
-	glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
-	glDrawArrays( GL_QUADS, 0, 24 );
+	//glEnableVertexAttribArray( kAttrVertexIndex );
+	//glEnableVertexAttribArray( kAttrColorIndex );
+	//glVertexAttribPointer( kAttrVertexIndex, 3, GL_FLOAT, GL_FALSE, 0, &cube );
+	//glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
+	//glDrawArrays( GL_QUADS, 0, 24 );
 
-	MAGICAL_DEBUG_CHECK_GL_ERROR();
-
-	/*if( !m_children.empty() )
-	{
-		for( auto child : m_children )
-		{
-			child->visit( camera );
-		}
-	}*/
+	//MAGICAL_DEBUG_CHECK_GL_ERROR();
 }
 
 //void Entity::draw( void )

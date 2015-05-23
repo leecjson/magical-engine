@@ -63,8 +63,6 @@ protected:
 	Camera* m_camera = nullptr;
 };
 
-//typedef ViewChannel::Index ViewChannelIndex;
-
 NAMESPACE_END
 
 #endif //__VIEW_CHANNEL_H__

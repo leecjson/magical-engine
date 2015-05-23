@@ -39,9 +39,16 @@ struct Frustum
 	};
 
 public:
+	static const Frustum Invalid;
+
+public:
+	inline Frustum( const Plane& left, const Plane& right, const Plane& top, const Plane& bottom, const Plane& near, const Plane& far );
 	inline Frustum( const Frustum& frustum );
 	inline Frustum( const Matrix4x4& m );
 	inline Frustum( void );
+
+public:
+	inline bool isValid( void ) const;
 
 public:
 	void extract( const Matrix4x4& m );

@@ -51,6 +51,7 @@ void MainCameraScript::onUpdate( void )
 
 	static float a = 1.0f;
 	a += 20.0f * Engine::deltaTime();
+	
 	entity1->setRotation( 
 		Quaternion::createRotationZ( Math::rad( a ) ) );
 
@@ -177,6 +178,7 @@ void mainDelegate( void )
 	//camera->setOrth( -1.0f, 1.0f, -1.0f, 1.0f, 0.3, 1000 );
 	camera->bindViewChannel( ViewChannel::Default );
 	camera->setNearClipDistance( 0.3f );
+	camera->setOrth( 0, 100, 0, 100, 5, 1000 );
 	camera->setPosition( 0, 0, -5 );
 	camera->lookAt( 0, 0, -10 );
 	camera->addComponent<MainCameraScript>();

@@ -517,7 +517,7 @@ void Object::transform( void )
 		return;
 
 	int info = m_ts_dirty_info;
-	if( m_ts_dirty != kTsClean )
+	if( m_ts_dirty )
 	{
 		const Quaternion& r = getDerivedRotation();
 		const Vector3& s = getDerivedScale();

@@ -45,16 +45,16 @@ public:
 	static void setDefault( void );
 	
 public:
-	static void pushRenderChannel( const ViewChannel* channel );
+	static void setRenderChannel( const ViewChannel* channel );
 };
 
-#define kAttrVertexIndex 1
-#define kAttrColorIndex 2
-extern ShaderProgram* s_simple_program;
-extern ShaderProgram* s_flat_program;
-extern Vector3 rect[4];
-extern Vector3 rect_triangle[4];
-extern Vector3 cube[24];
+//#define kAttrVertexIndex 1
+//#define kAttrColorIndex 2
+//extern ShaderProgram* s_simple_program;
+//extern ShaderProgram* s_flat_program;
+//extern Vector3 rect[4];
+//extern Vector3 rect_triangle[4];
+//extern Vector3 cube[24];
 
 NAMESPACE_END
 

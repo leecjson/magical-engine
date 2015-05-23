@@ -141,7 +141,7 @@ void Camera::setNearClipDistance( float znear )
 void Camera::setFarClipDistance( float zfar )
 {
 	m_zfar = zfar;
-	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty);
+	m_camera_dirty_info |= ( kCameraProjectionDirty | kCameraViewProjectionDirty );
 }
 
 void Camera::setPerspective( float fov, float aspect, float znear, float zfar )

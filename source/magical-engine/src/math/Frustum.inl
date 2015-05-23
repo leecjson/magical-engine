@@ -22,6 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+inline Frustum::Frustum( const Plane& left, const Plane& right, const Plane& top, const Plane& bottom, const Plane& near, const Plane& far )
+{
+	this->left = left;
+	this->right = right;
+	this->top = top;
+	this->bottom = bottom;
+	this->near = near;
+	this->far = far;
+}
+
 inline Frustum::Frustum( const Frustum& frustum ) 
 : left( frustum.left )
 , right( frustum.right )
@@ -41,4 +51,9 @@ inline Frustum::Frustum( const Matrix4x4& m )
 inline Frustum::Frustum( void )
 {
 
+}
+
+inline bool Frustum::isValid( void ) const
+{
+	return left.isValid() && right.isValid() && top.isValid() && bottom.isValid() && near.isValid() && far.isValid();
 }

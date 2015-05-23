@@ -61,6 +61,7 @@ public:
 
 public:
 	bool isActive( void ) const { return m_active; }
+	bool isFrustumCullEnabled( void ) { return m_frustum_cull_enabled; }
 	virtual void setActive( bool active );
 	virtual void setVisible( bool visible ) override;
 	
@@ -98,10 +99,6 @@ public:
 	const Matrix4x4& getViewProjectionMatrix( void ) const;
 
 protected:
-	int m_view_channel_index = ViewChannel::Default;
-	bool m_active = true;
-	bool m_frustum_cull_enabled = true;
-	bool m_auto_aspect_ratio = true;
 	float m_left = 0.0f;
 	float m_right = 0.0f;
 	float m_bottom = 0.0f;
@@ -110,11 +107,17 @@ protected:
 	float m_aspect = 1.3333f;
 	float m_znear = 0.3f;
 	float m_zfar = 1000.0f;
-	mutable int m_camera_dirty_info;
-	Frustum m_frustum;
-	mutable Matrix4x4 m_view_matrix;
-	mutable Matrix4x4 m_projection_matrix;
-	mutable Matrix4x4 m_view_projection_matrix;
+
+protected:
+	int m_view_channel_index = ViewChannel::Default;
+	bool m_active = true;
+	bool m_frustum_cull_enabled = true;
+	bool m_auto_aspect_ratio = true;
+	mutable int m_camera_dirty_info = kTsClean;
+	Frustum m_frustum = Frustum::Invalid;
+	mutable Matrix4x4 m_view_matrix = Matrix4x4::Identity;
+	mutable Matrix4x4 m_projection_matrix = Matrix4x4::Identity;
+	mutable Matrix4x4 m_view_projection_matrix = Matrix4x4::Identity;
 	Projection m_projection = Projection::Perspective;
 };
 
