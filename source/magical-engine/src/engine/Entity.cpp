@@ -23,11 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "Entity.h"
 #include "Scene.h"
-#include "Color.h"
-
-#include "ShaderProgram.h"
 #include "Renderer.h"
-#include "win32/gl/glew/glew.h"
 
 NAMESPACE_MAGICAL
 
@@ -68,11 +64,10 @@ void Entity::visit( Camera* camera )
 	// frustum cull check
 	if( camera->isFrustumCullEnabled() )
 	{
-		// cull
+		
 	}
 
-	// commit to renderer
-	// Renderer::commit
+	Renderer::addCommand( getLocalToWorldMatrix(), camera->getViewProjectionMatrix() );
 
 	if( !m_children.empty() )
 	{
@@ -81,60 +76,7 @@ void Entity::visit( Camera* camera )
 			child->visit( camera );
 		}
 	}
-
-	/*if( m_feature == Camera::Feature )
-	{
-		if( !m_children.empty() )
-		{
-			for( auto child : m_children )
-			{
-				child->visit( camera );
-			}
-		}
-		return;
-	}*/
-
-	/*glUseProgram( s_flat_program->getId() );
-
-	Matrix4x4 mvp_matrix = getLocalToWorldMatrix() * camera->getViewProjectionMatrix();
-
-	GLint u_mvp_matrix = s_flat_program->getUniformLocation( "u_mvp_matrix" );
-	glUniformMatrix4fv( u_mvp_matrix, 1, GL_FALSE, (GLfloat*)&mvp_matrix );*/
-
-	/*Color4f colors[4] = {
-		Color4f::Pink,
-		Color4f::Yello,
-		Color4f::Green,
-		Color4f::Red };
-
-	glEnableVertexAttribArray( kAttrVertexIndex );
-	glEnableVertexAttribArray( kAttrColorIndex );
-	glVertexAttribPointer( kAttrVertexIndex, 3, GL_FLOAT, GL_FALSE, 0, &rect_triangle );
-	glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
-	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );*/
-
-	//Color4f colors[24] = { 
-	//	Color4f::Red, Color4f::Red, Color4f::Red, Color4f::Red, //font
-	//	Color4f::Black, Color4f::Black, Color4f::Black, Color4f::Black, //top
-	//	Color4f::Pink, Color4f::Pink, Color4f::Pink, Color4f::Pink,  //back
-	//	Color4f::Blue, Color4f::Blue, Color4f::Blue, Color4f::Blue, //bottom
-	//	Color4f::Brown, Color4f::Brown, Color4f::Brown, Color4f::Brown, //left
-	//	Color4f::Cyan, Color4f::Cyan, Color4f::Cyan, Color4f::Cyan //right
-	//};
-
-	//glEnableVertexAttribArray( kAttrVertexIndex );
-	//glEnableVertexAttribArray( kAttrColorIndex );
-	//glVertexAttribPointer( kAttrVertexIndex, 3, GL_FLOAT, GL_FALSE, 0, &cube );
-	//glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
-	//glDrawArrays( GL_QUADS, 0, 24 );
-
-	//MAGICAL_DEBUG_CHECK_GL_ERROR();
 }
-
-//void Entity::draw( void )
-//{
-//	glUseProgram( s_flat_program->getId() );
-//}
 
 void Entity::start( void ) 
 {

@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
@@ -21,44 +21,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __APPLICATION_H__
-#define __APPLICATION_H__
-
-#include "magical-macros.h"
-#include "Common.h"
-#include "Size.h"
-#include <functional>
-
-NAMESPACE_MAGICAL
-
-typedef std::function<void( void )> MainDelegate;
-
-class Application
-{
-public:
-	static void init( void );
-	static void delc( void );
-	static void run( MainDelegate main );
-
-public:	
-	static void setInterval( double interval );
-	static double getInterval( void );
-	static void setResizable( bool resizable );
-	static bool isResizable( void );
-	static void setWindowSize( int width, int height );
-	static void setWindowSize( const Size& size );
-	static const Size& getWindowSize( void );
-	static void setWindowTitle( const char* title );
-	static void swapBuffers( void );
-	static void exit( void ); 
-
-private:
-	static void initWindow( void );
-	static void delcWindow( void );
-	static void initRenderContext( void );
-	static void delcRenderContext( void );
-};
-
-NAMESPACE_END
-
-#endif //__APPLICATION_H__
+#include "RenderCommand.h"

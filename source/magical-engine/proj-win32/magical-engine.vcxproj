@@ -49,8 +49,9 @@
     <ClCompile Include="..\src\math\Vector2.cpp" />
     <ClCompile Include="..\src\math\Vector3.cpp" />
     <ClCompile Include="..\src\math\Vector4.cpp" />
+    <ClCompile Include="..\src\renderer\gl\RenderCommand.cpp" />
+    <ClCompile Include="..\src\renderer\gl\RenderCommon.cpp" />
     <ClCompile Include="..\src\renderer\gl\Renderer.cpp" />
-    <ClCompile Include="..\src\renderer\gl\RendererCommon.cpp" />
     <ClCompile Include="..\src\renderer\gl\ShaderProgram.cpp" />
     <ClCompile Include="..\src\renderer\gl\ShaderProgramManager.cpp" />
     <ClCompile Include="..\src\utils\Data.cpp" />
@@ -104,8 +105,9 @@
     <ClInclude Include="..\src\math\Vector3.h" />
     <ClInclude Include="..\src\math\Vector4.h" />
     <ClInclude Include="..\src\platform\magical-macros.h" />
+    <ClInclude Include="..\src\renderer\RenderCommand.h" />
+    <ClInclude Include="..\src\renderer\RenderCommon.h" />
     <ClInclude Include="..\src\renderer\Renderer.h" />
-    <ClInclude Include="..\src\renderer\RendererCommon.h" />
     <ClInclude Include="..\src\renderer\ShaderProgram.h" />
     <ClInclude Include="..\src\renderer\ShaderProgramManager.h" />
     <ClInclude Include="..\src\utils\CachePool.h" />

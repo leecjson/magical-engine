@@ -175,10 +175,10 @@ void mainDelegate( void )
 	Engine::runScene( scene );
 
 	Ptr<Camera> camera = Camera::create( "Main Camera" );
-	//camera->setOrth( -1.0f, 1.0f, -1.0f, 1.0f, 0.3, 1000 );
 	camera->bindViewChannel( ViewChannel::Default );
 	camera->setNearClipDistance( 0.3f );
-	camera->setOrth( 0, 100, 0, 100, 5, 1000 );
+	//camera->setOrth( -1.0f, 1.0f, -1.0f, 1.0f, 0.3f, 1000 );
+	//camera->setOrth( 0, 100, 0, 100, 5, 1000 );
 	camera->setPosition( 0, 0, -5 );
 	camera->lookAt( 0, 0, -10 );
 	camera->addComponent<MainCameraScript>();
@@ -186,10 +186,13 @@ void mainDelegate( void )
 
 	Ptr<Entity> entity = Entity::create( "Cube Entity1" );
 	entity->setPosition( 0, 0, 0 );
-	//entity->addComponent( RenderComponent::HashCode );
 	scene->addChild( entity );
 
-	/*Ptr<SceneObject> cube = SceneObject::create( "Cube" );
-	cube->setPosition( Vector3::Zero );
-	scene->addChild( cube );*/
+	Ptr<Entity> entity2 = Entity::create( "Cube Entity2" );
+	entity2->setPosition( 0, 0, 5 );
+	entity->addChild( entity2 );
+
+	Ptr<Entity> entity3 = Entity::create( "Cube Entity3" );
+	entity3->setPosition( 5, 0, 0 );
+	scene->addChild( entity3 );
 }

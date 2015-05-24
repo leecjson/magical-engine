@@ -21,41 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDERER_COMMON_H__
-#define __RENDERER_COMMON_H__
+#ifndef __RENDERER_H__
+#define __RENDERER_H__
 
 #include "magical-macros.h"
+#include "magical-math.h"
 #include "Common.h"
+#include "RenderCommon.h"
 
-#ifdef MAGICAL_USING_GL
+NAMESPACE_MAGICAL
 
-#ifdef MAGICAL_WIN32
-#include "win32/gl/glew/glew.h"
-#endif
+class RenderCommand
+{
+public:
+	RenderCommand( void );
+	virtual ~RenderCommand( void );
 
-#define MAGICAL_CHECK_GL_ERROR() do {                      \
-	if( GLenum gl_error = glGetError() ) {                 \
-		MAGICAL_SET_LAST_ERROR_A(                          \
-		System::format( "GL 0x%04X", gl_error ).c_str() ); \
-		MAGICAL_LOG_LAST_ERROR();                          \
-	}                                                      \
-	} while( 0 )
+};
 
-#ifndef MAGICAL_DEBUG
-#define MAGICAL_DEBUG_CHECK_GL_ERROR()
-#else
-#define MAGICAL_DEBUG_CHECK_GL_ERROR() MAGICAL_CHECK_GL_ERROR()
-#endif
+NAMESPACE_END
 
-MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader );
-MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program );
-
-#endif //MAGICAL_USING_GL
-
-#ifdef MAGICAL_USING_D3D9
-#endif //MAGICAL_USING_D3D9
-
-#ifdef MAGICAL_USING_D3D11
-#endif //MAGICAL_USING_D3D11
-
-#endif //__RENDERER_COMMON_H__
+#endif //__RENDERER_H__

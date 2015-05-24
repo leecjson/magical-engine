@@ -226,18 +226,18 @@ static void win32ErrorCallBack( int err_id, const char* error_desc )
 	MAGICAL_SET_LAST_ERROR_A( error_desc );
 	MAGICAL_LOG_LAST_ERROR();
 
-	MAGICAL_LOGD( "win32ErrorCallBack" );
+	//MAGICAL_LOGD( "win32ErrorCallBack" );
 }
 
 static void win32MouseButtonCallBack( GLFWwindow* window, int button, int action, int modify )
 {
 	Input::onMouseButtonEvent( button, action );
 
-	stringstream ss;
-	ss << "Button:" << button << "  Action:" << action << "  Modify:" << modify; 
+	//stringstream ss;
+	//ss << "Button:" << button << "  Action:" << action << "  Modify:" << modify; 
 
-	MAGICAL_LOGD( ss.str().c_str() );
-	MAGICAL_LOGD( "win32MouseButtonCallBack" );
+	//MAGICAL_LOGD( ss.str().c_str() );
+	//MAGICAL_LOGD( "win32MouseButtonCallBack" );
 }
 
 static void win32MouseMoveCallBack( GLFWwindow* window, double x, double y )
@@ -251,7 +251,7 @@ static void win32MouseScrollCallBack( GLFWwindow* window, double x, double y )
 	stringstream ss;
 	ss << "Scroll: x=" << x << "  y=" << y;
 
-	MAGICAL_LOGD( ss.str().c_str() );
+	//MAGICAL_LOGD( ss.str().c_str() );
 	//MAGICAL_LOGD( "win32MouseScrollCallBack" );
 }
 
@@ -263,7 +263,7 @@ static void win32CharCallBack( GLFWwindow* window, unsigned int character )
 static void win32KeyCallBack( GLFWwindow* window, int key, int scancode, int action, int mods )
 {
 	Input::onKeyEvent( (KeyCode) key, (KeyAction) action );
-	MAGICAL_LOGD( "win32KeyCallBack" );
+	//MAGICAL_LOGD( "win32KeyCallBack" );
 }
 
 static void win32WindowPosCallBack( GLFWwindow* windows, int x, int y )
@@ -282,7 +282,7 @@ static void win32WindowSizeCallBack( GLFWwindow* window, int width, int height )
 	_window_size.h = height;
 
 	Engine::resize( width, height );
-	MAGICAL_LOGD( "win32WindowSizeCallBack" );
+	//MAGICAL_LOGD( "win32WindowSizeCallBack" );
 }
 
 NAMESPACE_END

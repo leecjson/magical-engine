@@ -23,6 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "Scene.h"
 #include "Application.h"
+#include "Renderer.h"
 
 NAMESPACE_MAGICAL
 
@@ -89,15 +90,17 @@ void Scene::visit( void )
 
 	for( int i = 0; i < ViewChannel::Count; i ++ )
 	{
-		if( m_view_channels[i]->isAvailable() )
+		ViewChannel* channel = m_view_channels[i];
+		if( channel->isAvailable() )
 		{
-			Camera* camera = m_view_channels[i]->getCamera();
+			Camera* camera = channel->getCamera();
 			if( camera->isActive() && camera->isVisiable() )
 			{
 				for( auto child : m_children )
 				{
 					child->visit( camera );
 				}
+				Renderer::render( channel );
 			}
 		}
 	}

@@ -56,8 +56,6 @@ void Engine::mainLoop( void )
 {
 	calcDeltaTime();
 
-	Renderer::render();
-
 	if( _next_scene )
 	{
 		if( _running_scene )
@@ -79,8 +77,6 @@ void Engine::resize( int width, int height )
 {
 	if( _running_scene )
 		_running_scene->resize( width, height );
-
-	Renderer::resize( width, height );
 }
 
 float Engine::deltaTime( void )

@@ -27,7 +27,7 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "magical-math.h"
 #include "Common.h"
-#include "RendererCommon.h"
+#include "RenderCommon.h"
 #include "ViewChannel.h"
 #include "ShaderProgram.h"
 
@@ -40,21 +40,10 @@ public:
 	static void delc( void );
 
 public:
-	static void render( void );
-	static void resize( int width, int height );
 	static void setDefault( void );
-	
-public:
-	static void setRenderChannel( const ViewChannel* channel );
+	static void render( const ViewChannel* channel );
+	static void addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection );
 };
-
-//#define kAttrVertexIndex 1
-//#define kAttrColorIndex 2
-//extern ShaderProgram* s_simple_program;
-//extern ShaderProgram* s_flat_program;
-//extern Vector3 rect[4];
-//extern Vector3 rect_triangle[4];
-//extern Vector3 cube[24];
 
 NAMESPACE_END
 

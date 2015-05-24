@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
@@ -21,44 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __APPLICATION_H__
-#define __APPLICATION_H__
+#include "RenderCommon.h"
 
-#include "magical-macros.h"
-#include "Common.h"
-#include "Size.h"
-#include <functional>
-
-NAMESPACE_MAGICAL
-
-typedef std::function<void( void )> MainDelegate;
-
-class Application
+MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader )
 {
-public:
-	static void init( void );
-	static void delc( void );
-	static void run( MainDelegate main );
+	char* info_log;
+	GLint info_length;
+	glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &info_length );
 
-public:	
-	static void setInterval( double interval );
-	static double getInterval( void );
-	static void setResizable( bool resizable );
-	static bool isResizable( void );
-	static void setWindowSize( int width, int height );
-	static void setWindowSize( const Size& size );
-	static const Size& getWindowSize( void );
-	static void setWindowTitle( const char* title );
-	static void swapBuffers( void );
-	static void exit( void ); 
+	info_log = (char*) malloc( info_length );
+	glGetShaderInfoLog( shader, info_length, &info_length, info_log );
 
-private:
-	static void initWindow( void );
-	static void delcWindow( void );
-	static void initRenderContext( void );
-	static void delcRenderContext( void );
-};
+	if( info_log == nullptr )
+		return false;
 
-NAMESPACE_END
+	sprintf( magical::System::storage, "%s", info_log );
+	free( info_log );
+	return true;
+}
 
-#endif //__APPLICATION_H__
+MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program )
+{
+	char* info_log;
+	GLint info_length;
+	glGetProgramiv( program, GL_INFO_LOG_LENGTH, &info_length );
+
+	info_log = (char*) malloc( info_length );
+	glGetProgramInfoLog( program, info_length, &info_length, info_log );
+
+	if( info_log == nullptr )
+		return false;
+
+	sprintf( magical::System::storage, "%s", info_log );
+	free( info_log );
+	return true;
+}

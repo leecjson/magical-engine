@@ -105,9 +105,6 @@
     <ClCompile Include="..\src\renderer\gl\Renderer.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\RendererCommon.cpp">
-      <Filter>src\renderer\gl</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\renderer\gl\ShaderProgram.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
@@ -203,6 +200,12 @@
     </ClCompile>
     <ClCompile Include="..\src\com\Size.cpp">
       <Filter>src\com</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\RenderCommand.cpp">
+      <Filter>src\renderer\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\RenderCommon.cpp">
+      <Filter>src\renderer\gl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -371,11 +374,14 @@
     <ClInclude Include="..\src\com\Area.h">
       <Filter>src\com</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\renderer\RendererCommon.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\com\Size.h">
       <Filter>src\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\RenderCommand.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\RenderCommon.h">
+      <Filter>src\renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

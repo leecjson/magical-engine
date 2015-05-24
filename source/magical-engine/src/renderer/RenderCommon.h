@@ -21,38 +21,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "RendererCommon.h"
+#ifndef __RENDER_COMMON_H__
+#define __RENDER_COMMON_H__
 
-MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader )
-{
-	char* info_log;
-	GLint info_length;
-	glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &info_length );
+#include "magical-macros.h"
+#include "Common.h"
 
-	info_log = (char*) malloc( info_length );
-	glGetShaderInfoLog( shader, info_length, &info_length, info_log );
+//struct 
 
-	if( info_log == nullptr )
-		return false;
+#ifdef MAGICAL_USING_GL
 
-	sprintf( magical::System::storage, "%s", info_log );
-	free( info_log );
-	return true;
-}
+#ifdef MAGICAL_WIN32
+#include "win32/gl/glew/glew.h"
+#endif
 
-MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program )
-{
-	char* info_log;
-	GLint info_length;
-	glGetProgramiv( program, GL_INFO_LOG_LENGTH, &info_length );
+#define MAGICAL_CHECK_GL_ERROR() do {                      \
+	if( GLenum gl_error = glGetError() ) {                 \
+		MAGICAL_SET_LAST_ERROR_A(                          \
+		System::format( "GL 0x%04X", gl_error ).c_str() ); \
+		MAGICAL_LOG_LAST_ERROR();                          \
+	}                                                      \
+	} while( 0 )
 
-	info_log = (char*) malloc( info_length );
-	glGetProgramInfoLog( program, info_length, &info_length, info_log );
+#ifndef MAGICAL_DEBUG
+#define MAGICAL_DEBUG_CHECK_GL_ERROR()
+#else
+#define MAGICAL_DEBUG_CHECK_GL_ERROR() MAGICAL_CHECK_GL_ERROR()
+#endif
 
-	if( info_log == nullptr )
-		return false;
+MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader );
+MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program );
 
-	sprintf( magical::System::storage, "%s", info_log );
-	free( info_log );
-	return true;
-}
+#endif //MAGICAL_USING_GL
+
+#ifdef MAGICAL_USING_D3D9
+#endif //MAGICAL_USING_D3D9
+
+#ifdef MAGICAL_USING_D3D11
+#endif //MAGICAL_USING_D3D11
+
+#endif //__RENDER_COMMON_H__
