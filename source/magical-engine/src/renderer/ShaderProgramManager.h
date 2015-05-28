@@ -31,12 +31,11 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-enum ShaderProgramIndex
+enum class ShaderProgramIndex
 {
 	kShaderProgram_Color = 0,
 	kShaderProgram_Count,
 };
-
 
 class ShaderProgramManager
 {
@@ -56,7 +55,7 @@ NAMESPACE_END
 //public:
 //	ShaderProgramColor( void );
 //	virtual ~ShaderProgramColor( void );
-//
+//0
 //public:
 //	bool bindAttribLocation( void ) const;
 //	bool bindUniformLocation( void );

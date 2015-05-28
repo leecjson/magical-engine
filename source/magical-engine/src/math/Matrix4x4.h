@@ -107,7 +107,7 @@ public:
 	inline void add( const Matrix4x4& m );
 	inline void sub( const Matrix4x4& m );
 	inline void mul( const Matrix4x4& m );
-	inline void mul3x4( const Matrix4x4& m ); 
+	inline void mul3x4( const Matrix4x4& m );
 	inline void addScalar( float a );
 	inline void subScalar( float a );
 	inline void mulScalar( float a );

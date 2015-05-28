@@ -106,3 +106,8 @@ void Vector2::project( Vector2& out, const Vector2& v, const Vector2& n )
 	out.x = normalize.x * d;
 	out.y = normalize.y * d;
 }
+
+void Vector2::lerp( Vector2& out, const Vector2& v1, const Vector2& v2 )
+{
+
+}

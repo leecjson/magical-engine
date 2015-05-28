@@ -58,7 +58,7 @@ const Vector3 Vector3::Left = Vector3( -1.0f, 0.0f, 0.0f );
 const Vector3 Vector3::Forward = Vector3( 0.0f, 0.0f, 1.0f );
 const Vector3 Vector3::Back = Vector3( 0.0f, 0.0f, -1.0f );
 
-void Vector3::mulMatrix3x3( Vector3& out, const Vector3& v, const Matrix3x3& m )
+void Vector3::mul3x3( Vector3& out, const Vector3& v, const Matrix3x3& m )
 {
 	Vector3 dst;
 
@@ -71,7 +71,7 @@ void Vector3::mulMatrix3x3( Vector3& out, const Vector3& v, const Matrix3x3& m )
 	out.z = dst.z;
 }
 
-void Vector3::mulMatrix4x4( Vector3& out, const Vector3& v, const Matrix4x4& m )
+void Vector3::mul4x4( Vector3& out, const Vector3& v, const Matrix4x4& m )
 {
 	Vector3 dst;
 

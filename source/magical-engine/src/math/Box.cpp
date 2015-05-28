@@ -198,14 +198,14 @@ void Box::transform( Box& out, const Box& box, const Matrix4x4& m )
 	Vector3 right_top_back( box.max.x, box.max.y, box.min.z );
 	Vector3 right_bottom_back( box.max.x, box.min.y, box.min.z );
 
-	Vector3::mulMatrix4x4( left_top_front, left_top_front, m );
-	Vector3::mulMatrix4x4( left_bottom_front, left_bottom_front, m );
-	Vector3::mulMatrix4x4( right_top_front, right_top_front, m );
-	Vector3::mulMatrix4x4( right_bottom_front, right_bottom_front, m );
-	Vector3::mulMatrix4x4( left_top_back, left_top_back, m );
-	Vector3::mulMatrix4x4( left_bottom_back, left_bottom_back, m );
-	Vector3::mulMatrix4x4( right_top_back, right_top_back, m );
-	Vector3::mulMatrix4x4( right_bottom_back, right_bottom_back, m );
+	Vector3::mul4x4( left_top_front, left_top_front, m );
+	Vector3::mul4x4( left_bottom_front, left_bottom_front, m );
+	Vector3::mul4x4( right_top_front, right_top_front, m );
+	Vector3::mul4x4( right_bottom_front, right_bottom_front, m );
+	Vector3::mul4x4( left_top_back, left_top_back, m );
+	Vector3::mul4x4( left_bottom_back, left_bottom_back, m );
+	Vector3::mul4x4( right_top_back, right_top_back, m );
+	Vector3::mul4x4( right_bottom_back, right_bottom_back, m );
 
 	out.set( Box::Invalid );
 	out.expandBy( left_top_front );

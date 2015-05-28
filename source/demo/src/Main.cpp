@@ -167,7 +167,7 @@ void mainDelegate( void )
 	MAGICAL_LOGD( "哈哈" );
 
 	Application::setInterval( 1.0 / 60.0 );
-	Application::setWindowSize( Size( 960, 640 ) );
+	//Application::setWindowSize( Size( 960, 640 ) );
 
 	Ptr<Scene> scene = Scene::create();
 	scene->getViewChannel( ViewChannel::Default )->setEnabled( true );

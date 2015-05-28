@@ -41,6 +41,8 @@ public:
 
 public:
 	static void setDefault( void );
+
+public:
 	static void render( const ViewChannel* channel );
 	static void addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection );
 };

@@ -56,16 +56,22 @@
       <UniqueIdentifier>{91b80170-5f50-445c-ac39-e5532c1e7092}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\math">
-      <UniqueIdentifier>{617735a3-b191-4a8b-abb9-dc43240da041}</UniqueIdentifier>
+      <UniqueIdentifier>{c2967a7c-8378-4f59-9542-c2c7015125a5}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\math\space">
-      <UniqueIdentifier>{bc79bcb2-fc93-45bd-9c5a-a08c86db3210}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\math\utils">
-      <UniqueIdentifier>{05d85b0d-2d31-4d42-b4a6-267e33d3c40f}</UniqueIdentifier>
+      <UniqueIdentifier>{8557d121-b628-40eb-87a8-a3696e89a69c}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\math\geo">
-      <UniqueIdentifier>{1ec1b595-311e-4dd5-a2e8-b5637f82e33b}</UniqueIdentifier>
+      <UniqueIdentifier>{5f21b1ea-ac05-4d22-8b43-da73fb1e60d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\geo\3d">
+      <UniqueIdentifier>{a9c655c0-3ed3-42ed-a3ee-e1e2c029f83a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\geo\2d">
+      <UniqueIdentifier>{3356c37e-5e08-4fda-ac6f-771664cac12c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math\utils">
+      <UniqueIdentifier>{76d8796b-f8e6-4610-b922-0557e0d10a6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,77 +129,8 @@
     <ClCompile Include="..\src\engine\Object.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\MathUtils.cpp">
-      <Filter>src\math\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Rotater.cpp">
-      <Filter>src\math\space</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Matrix3x3.cpp">
-      <Filter>src\math\space</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Matrix4x4.cpp">
-      <Filter>src\math\space</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Quaternion.cpp">
-      <Filter>src\math\space</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Vector2.cpp">
-      <Filter>src\math\space</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Vector3.cpp">
-      <Filter>src\math\space</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Vector4.cpp">
-      <Filter>src\math\space</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Plane.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Sphere.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Ray.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Frustum.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\com\Color.cpp">
       <Filter>src\com</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Box.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Box2d.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Ray2d.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Circle.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\OriBox.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\OriBox2d.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Triangle.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Triangle2d.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Polygon.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Polygon2d.cpp">
-      <Filter>src\math\geo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\Line2d.cpp">
-      <Filter>src\math\geo</Filter>
     </ClCompile>
     <ClCompile Include="..\src\com\Area.cpp">
       <Filter>src\com</Filter>
@@ -206,6 +143,72 @@
     </ClCompile>
     <ClCompile Include="..\src\renderer\gl\RenderCommon.cpp">
       <Filter>src\renderer\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Matrix3x3.cpp">
+      <Filter>src\math\space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Matrix4x4.cpp">
+      <Filter>src\math\space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Rotater.cpp">
+      <Filter>src\math\space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Vector2.cpp">
+      <Filter>src\math\space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Vector3.cpp">
+      <Filter>src\math\space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Vector4.cpp">
+      <Filter>src\math\space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\MathUtils.cpp">
+      <Filter>src\math\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Box.cpp">
+      <Filter>src\math\geo\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Frustum.cpp">
+      <Filter>src\math\geo\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Plane.cpp">
+      <Filter>src\math\geo\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Polygon.cpp">
+      <Filter>src\math\geo\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Ray.cpp">
+      <Filter>src\math\geo\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Sphere.cpp">
+      <Filter>src\math\geo\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Triangle.cpp">
+      <Filter>src\math\geo\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\OrientBox.cpp">
+      <Filter>src\math\geo\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\OrientBox2.cpp">
+      <Filter>src\math\geo\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Box2.cpp">
+      <Filter>src\math\geo\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Circle.cpp">
+      <Filter>src\math\geo\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Line2.cpp">
+      <Filter>src\math\geo\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Polygon2.cpp">
+      <Filter>src\math\geo\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Ray2.cpp">
+      <Filter>src\math\geo\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\Triangle2.cpp">
+      <Filter>src\math\geo\2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,9 +287,6 @@
     <ClInclude Include="..\src\renderer\ShaderProgramManager.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\magical-math.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\log\Log.h">
       <Filter>src\log</Filter>
     </ClInclude>
@@ -299,77 +299,8 @@
     <ClInclude Include="..\src\engine\Object.h">
       <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\MathUtils.h">
-      <Filter>src\math\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Rotater.h">
-      <Filter>src\math\space</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Matrix3x3.h">
-      <Filter>src\math\space</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Matrix4x4.h">
-      <Filter>src\math\space</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Quaternion.h">
-      <Filter>src\math\space</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Vector2.h">
-      <Filter>src\math\space</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Vector3.h">
-      <Filter>src\math\space</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Vector4.h">
-      <Filter>src\math\space</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Plane.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Sphere.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Ray.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Frustum.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\com\Color.h">
       <Filter>src\com</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Box.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Box2d.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Ray2d.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Circle.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\OriBox.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\OriBox2d.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Triangle.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Triangle2d.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Polygon.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Polygon2d.h">
-      <Filter>src\math\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\math\Line2d.h">
-      <Filter>src\math\geo</Filter>
     </ClInclude>
     <ClInclude Include="..\src\com\Area.h">
       <Filter>src\com</Filter>
@@ -383,12 +314,81 @@
     <ClInclude Include="..\src\renderer\RenderCommon.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\math\Matrix3x3.h">
+      <Filter>src\math\space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Matrix4x4.h">
+      <Filter>src\math\space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Rotater.h">
+      <Filter>src\math\space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Vector2.h">
+      <Filter>src\math\space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Vector3.h">
+      <Filter>src\math\space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Vector4.h">
+      <Filter>src\math\space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\MathUtils.h">
+      <Filter>src\math\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\magical-math.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Box.h">
+      <Filter>src\math\geo\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Frustum.h">
+      <Filter>src\math\geo\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Plane.h">
+      <Filter>src\math\geo\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Polygon.h">
+      <Filter>src\math\geo\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Ray.h">
+      <Filter>src\math\geo\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Sphere.h">
+      <Filter>src\math\geo\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Triangle.h">
+      <Filter>src\math\geo\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\OrientBox.h">
+      <Filter>src\math\geo\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\OrientBox2.h">
+      <Filter>src\math\geo\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Box2.h">
+      <Filter>src\math\geo\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Circle.h">
+      <Filter>src\math\geo\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Line2.h">
+      <Filter>src\math\geo\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Polygon2.h">
+      <Filter>src\math\geo\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Ray2.h">
+      <Filter>src\math\geo\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Triangle2.h">
+      <Filter>src\math\geo\2d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\engine\Entity.inl">
       <Filter>src\engine</Filter>
     </None>
-    <None Include="..\src\math\Rotater.inl">
+    <None Include="..\src\math\Vector4.inl">
       <Filter>src\math\space</Filter>
     </None>
     <None Include="..\src\math\Matrix3x3.inl">
@@ -397,7 +397,7 @@
     <None Include="..\src\math\Matrix4x4.inl">
       <Filter>src\math\space</Filter>
     </None>
-    <None Include="..\src\math\Quaternion.inl">
+    <None Include="..\src\math\Rotater.inl">
       <Filter>src\math\space</Filter>
     </None>
     <None Include="..\src\math\Vector2.inl">
@@ -406,53 +406,50 @@
     <None Include="..\src\math\Vector3.inl">
       <Filter>src\math\space</Filter>
     </None>
-    <None Include="..\src\math\Vector4.inl">
-      <Filter>src\math\space</Filter>
-    </None>
-    <None Include="..\src\math\Plane.inl">
-      <Filter>src\math\geo</Filter>
-    </None>
-    <None Include="..\src\math\Sphere.inl">
-      <Filter>src\math\geo</Filter>
-    </None>
-    <None Include="..\src\math\Ray.inl">
-      <Filter>src\math\geo</Filter>
-    </None>
-    <None Include="..\src\math\Frustum.inl">
-      <Filter>src\math\geo</Filter>
+    <None Include="..\src\math\Triangle.inl">
+      <Filter>src\math\geo\3d</Filter>
     </None>
     <None Include="..\src\math\Box.inl">
-      <Filter>src\math\geo</Filter>
+      <Filter>src\math\geo\3d</Filter>
     </None>
-    <None Include="..\src\math\Box2d.inl">
-      <Filter>src\math\geo</Filter>
+    <None Include="..\src\math\Frustum.inl">
+      <Filter>src\math\geo\3d</Filter>
     </None>
-    <None Include="..\src\math\Ray2d.inl">
-      <Filter>src\math\geo</Filter>
-    </None>
-    <None Include="..\src\math\Circle.inl">
-      <Filter>src\math\geo</Filter>
-    </None>
-    <None Include="..\src\math\OriBox.inl">
-      <Filter>src\math\geo</Filter>
-    </None>
-    <None Include="..\src\math\OriBox2d.inl">
-      <Filter>src\math\geo</Filter>
-    </None>
-    <None Include="..\src\math\Triangle.inl">
-      <Filter>src\math\geo</Filter>
-    </None>
-    <None Include="..\src\math\Triangle2d.inl">
-      <Filter>src\math\geo</Filter>
+    <None Include="..\src\math\Plane.inl">
+      <Filter>src\math\geo\3d</Filter>
     </None>
     <None Include="..\src\math\Polygon.inl">
-      <Filter>src\math\geo</Filter>
+      <Filter>src\math\geo\3d</Filter>
     </None>
-    <None Include="..\src\math\Polygon2d.inl">
-      <Filter>src\math\geo</Filter>
+    <None Include="..\src\math\Ray.inl">
+      <Filter>src\math\geo\3d</Filter>
     </None>
-    <None Include="..\src\math\Line2d.inl">
-      <Filter>src\math\geo</Filter>
+    <None Include="..\src\math\Sphere.inl">
+      <Filter>src\math\geo\3d</Filter>
+    </None>
+    <None Include="..\src\math\OrientBox.inl">
+      <Filter>src\math\geo\3d</Filter>
+    </None>
+    <None Include="..\src\math\OrientBox2.inl">
+      <Filter>src\math\geo\2d</Filter>
+    </None>
+    <None Include="..\src\math\Box2.inl">
+      <Filter>src\math\geo\2d</Filter>
+    </None>
+    <None Include="..\src\math\Circle.inl">
+      <Filter>src\math\geo\2d</Filter>
+    </None>
+    <None Include="..\src\math\Line2.inl">
+      <Filter>src\math\geo\2d</Filter>
+    </None>
+    <None Include="..\src\math\Polygon2.inl">
+      <Filter>src\math\geo\2d</Filter>
+    </None>
+    <None Include="..\src\math\Ray2.inl">
+      <Filter>src\math\geo\2d</Filter>
+    </None>
+    <None Include="..\src\math\Triangle2.inl">
+      <Filter>src\math\geo\2d</Filter>
     </None>
   </ItemGroup>
 </Project>

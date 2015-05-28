@@ -30,8 +30,6 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-
-
 struct Area
 {
 	union

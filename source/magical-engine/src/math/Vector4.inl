@@ -119,7 +119,7 @@ inline Vector4 Vector4::operator-( const Vector4& v ) const
 inline Vector4 Vector4::operator*( const Matrix4x4& m ) const
 {
 	Vector4 dst;
-	Vector4::mulMatrix4x4( dst, *this, m );
+	Vector4::mul4x4( dst, *this, m );
 	return dst;
 }
 
@@ -181,7 +181,7 @@ inline Vector4& Vector4::operator-=( const Vector4& v )
 
 inline Vector4& Vector4::operator*=( const Matrix4x4& m )
 {
-	Vector4::mulMatrix4x4( *this, *this, m );
+	Vector4::mul4x4( *this, *this, m );
 	return *this;
 }
 
@@ -325,10 +325,10 @@ inline Vector4 Vector4::divScalar( const Vector4& v, float a )
 	return Vector4( v.x / a, v.y / a, v.z / a, v.w / a );
 }
 
-inline Vector4 Vector4::mulMatrix4x4( const Vector4& v, const Matrix4x4& m )
+inline Vector4 Vector4::mul4x4( const Vector4& v, const Matrix4x4& m )
 {
 	Vector4 dst;
-	Vector4::mulMatrix4x4( dst, v, m );
+	Vector4::mul4x4( dst, v, m );
 	return dst;
 }
 
@@ -396,9 +396,9 @@ inline void Vector4::divScalar( float a )
 	w /= a;
 }
 
-inline void Vector4::mulMatrix4x4( const Matrix4x4& m )
+inline void Vector4::mul4x4( const Matrix4x4& m )
 {
-	Vector4::mulMatrix4x4( *this, *this, m );
+	Vector4::mul4x4( *this, *this, m );
 }
 
 inline bool Vector4::equals( const Vector4& v ) const

@@ -153,8 +153,8 @@ void Application::initWindow( void )
 	setResizable( true );
 	glfwDefaultWindowHints();
 
-	_window_size.w = 960;
-	_window_size.h = 640;
+	_window_size.w = 1280;
+	_window_size.h = 760;
 
 	_window = glfwCreateWindow( _window_size.w, _window_size.h, _window_title.c_str(), nullptr, nullptr );
 	MAGICAL_RETURN_IF_ERROR();

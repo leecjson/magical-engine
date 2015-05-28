@@ -26,17 +26,12 @@ SOFTWARE.
 
 struct Frustum
 {
-	union
-	{
-		struct {
-			Plane left;
-			Plane right;
-			Plane top;
-			Plane bottom;
-			Plane near;
-			Plane far;
-		};
-	};
+	Plane left;
+	Plane right;
+	Plane top;
+	Plane bottom;
+	Plane near;
+	Plane far;
 
 public:
 	static const Frustum Invalid;

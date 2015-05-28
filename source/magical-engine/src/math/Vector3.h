@@ -98,8 +98,8 @@ public:
 	static inline void subScalar( Vector3& out, const Vector3& v, float a );
 	static inline void mulScalar( Vector3& out, const Vector3& v, float a );
 	static inline void divScalar( Vector3& out, const Vector3& v, float a );
-	static void mulMatrix3x3( Vector3& out, const Vector3& v, const Matrix3x3& m );
-	static void mulMatrix4x4( Vector3& out, const Vector3& v, const Matrix4x4& m );
+	static void mul3x3( Vector3& out, const Vector3& v, const Matrix3x3& m );
+	static void mul4x4( Vector3& out, const Vector3& v, const Matrix4x4& m );
 
 public:
 	static inline Vector3 add( const Vector3& v1, const Vector3& v2 );
@@ -110,8 +110,8 @@ public:
 	static inline Vector3 subScalar( const Vector3& v, float a );
 	static inline Vector3 mulScalar( const Vector3& v, float a );
 	static inline Vector3 divScalar( const Vector3& v, float a );
-	static inline Vector3 mulMatrix3x3( const Vector3& v, const Matrix3x3& m );
-	static inline Vector3 mulMatrix4x4( const Vector3& v, const Matrix4x4& m );
+	static inline Vector3 mul3x3( const Vector3& v, const Matrix3x3& m );
+	static inline Vector3 mul4x4( const Vector3& v, const Matrix4x4& m );
 
 public:
 	inline void add( const Vector3& v );
@@ -122,8 +122,8 @@ public:
 	inline void subScalar( float a );
 	inline void mulScalar( float a );
 	inline void divScalar( float a );
-	inline void mulMatrix3x3( const Matrix3x3& m );
-	inline void mulMatrix4x4( const Matrix4x4& m );
+	inline void mul3x3( const Matrix3x3& m );
+	inline void mul4x4( const Matrix4x4& m );
 	
 public:
 	inline bool equals( const Vector3& v ) const;

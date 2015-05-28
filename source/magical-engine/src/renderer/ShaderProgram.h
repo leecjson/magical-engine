@@ -39,7 +39,7 @@ public:
 	static Ptr<ShaderProgram> create( void );
 	static Ptr<ShaderProgram> create( const char* vertex_src, const char* pixel_src );
 
-public:
+public:	 
 	void setVertexSource( const char* vertex_src );
 	void setPixelSource( const char* pixel_src );
 	uint32_t getId( void ) const { return m_program; }
@@ -52,10 +52,10 @@ public:
 	void bindAttribLocation( uint32_t index, const char* name ) const;
 	int32_t getUniformLocation( const char* name ) const;
 
-protected:
-	string m_vertex_src;
-	string m_pixel_src;
+protected: 
 	uint32_t m_program;
+	std::string m_vertex_src;
+	std::string m_pixel_src;
 	bool m_built = false;
 	bool m_linked = false;
 };

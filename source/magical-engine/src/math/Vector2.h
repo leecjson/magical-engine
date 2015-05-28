@@ -121,6 +121,7 @@ public:
 	static void scale( Vector2& out, const Vector2& v, float s );
 	static void midPointBetween( Vector2& out, const Vector2& v1, const Vector2& v2 );
 	static void project( Vector2& out, const Vector2& v, const Vector2& n );
+	static void lerp( Vector2& out, const Vector2& v1, const Vector2& v2 );
 
 public:
 	static inline Vector2 clamp( const Vector2& v, const Vector2& min, const Vector2& max );

@@ -30,7 +30,7 @@ SOFTWARE.
 //	float distance;
 //};
 
-struct Ray
+struct RayVector
 {
 	union
 	{

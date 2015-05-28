@@ -48,8 +48,8 @@ void Application::init( void )
 	MAGICAL_RETURN_IF_ERROR();
 
 	/*Lua::init();
-	magicalShowLastError();
-	magicalReturnIfError();*/
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();*/
 
 	initWindow();
 	MAGICAL_SHOW_LAST_ERROR();
@@ -99,8 +99,8 @@ void Application::delc( void )
 	MAGICAL_RETURN_IF_ERROR();
 
 	/*Lua::delc();
-	magicalShowLastError();
-	magicalReturnIfError();*/
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();*/
 
 	Input::delc();
 	MAGICAL_SHOW_LAST_ERROR();

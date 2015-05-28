@@ -111,14 +111,14 @@ inline Vector3 Vector3::operator-( const Vector3& v ) const
 inline Vector3 Vector3::operator*( const Matrix3x3& m ) const
 {
 	Vector3 dst; 
-	Vector3::mulMatrix3x3( dst, *this, m ); 
+	Vector3::mul3x3( dst, *this, m ); 
 	return dst;
 }
 
 inline Vector3 Vector3::operator*( const Matrix4x4& m ) const
 {
 	Vector3 dst; 
-	Vector3::mulMatrix4x4( dst, *this, m );
+	Vector3::mul4x4( dst, *this, m );
 	return dst;
 }
 
@@ -164,13 +164,13 @@ inline Vector3& Vector3::operator-=( const Vector3& v )
 
 inline Vector3& Vector3::operator*=( const Matrix3x3& m )
 {
-	Vector3::mulMatrix3x3( *this, *this, m );
+	Vector3::mul3x3( *this, *this, m );
 	return *this;
 }
 
 inline Vector3& Vector3::operator*=( const Matrix4x4& m )
 {
-	Vector3::mulMatrix4x4( *this, *this, m );
+	Vector3::mul4x4( *this, *this, m );
 	return *this;
 }
 
@@ -290,17 +290,17 @@ inline Vector3 Vector3::divScalar( const Vector3& v, float a )
 	return Vector3( v.x / a, v.y / a, v.z / a );
 }
 
-inline Vector3 Vector3::mulMatrix3x3( const Vector3& v, const Matrix3x3& m )
+inline Vector3 Vector3::mul3x3( const Vector3& v, const Matrix3x3& m )
 {
 	Vector3 dst; 
-	Vector3::mulMatrix3x3( dst, v, m );
+	Vector3::mul3x3( dst, v, m );
 	return dst;
 }
 
-inline Vector3 Vector3::mulMatrix4x4( const Vector3& v, const Matrix4x4& m )
+inline Vector3 Vector3::mul4x4( const Vector3& v, const Matrix4x4& m )
 {
 	Vector3 dst; 
-	Vector3::mulMatrix4x4( dst, v, m );
+	Vector3::mul4x4( dst, v, m );
 	return dst;
 }
 
@@ -344,14 +344,14 @@ inline void Vector3::divScalar( float a )
 	x /= a; y /= a; z /= a;
 }
 
-inline void Vector3::mulMatrix3x3( const Matrix3x3& m )
+inline void Vector3::mul3x3( const Matrix3x3& m )
 {
-	Vector3::mulMatrix3x3( *this, *this, m );
+	Vector3::mul3x3( *this, *this, m );
 }
 
-inline void Vector3::mulMatrix4x4( const Matrix4x4& m )
+inline void Vector3::mul4x4( const Matrix4x4& m )
 {
-	Vector3::mulMatrix4x4( *this, *this, m );
+	Vector3::mul4x4( *this, *this, m );
 }
 
 inline bool Vector3::equals( const Vector3& v ) const

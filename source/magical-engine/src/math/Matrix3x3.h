@@ -29,7 +29,7 @@ struct Matrix3x3
 	union
 	{
 		float m[9];
-		
+
 		struct {
 			float m11; float m12; float m13;
 			float m21; float m22; float m23;
@@ -119,7 +119,7 @@ public:
 	static inline Matrix3x3 createRotationX( float a );
 	static inline Matrix3x3 createRotationY( float a );
 	static inline Matrix3x3 createRotationZ( float a );
-	 
+	
 public:
 	void setLookAt( const Vector3& eye, const Vector3& target, const Vector3& up );
 	void setRotation( const Vector3& axis, float angle );

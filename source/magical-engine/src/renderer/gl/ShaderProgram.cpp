@@ -150,8 +150,8 @@ bool ShaderProgram::build( void )
 	MAGICAL_CHECK_GL_ERROR();
 	MAGICAL_RETURN_EXP_IF_ERROR( false );
 
-	m_program = program;
 	m_built = true;
+	m_program = program;
 	return true;
 }
 

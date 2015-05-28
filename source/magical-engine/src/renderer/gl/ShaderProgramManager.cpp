@@ -47,7 +47,7 @@ enum
 
 //static bool createProgram( ShaderProgramIndex index, ShaderProgram* program );
 
-static ShaderProgram* s_programs[ kShaderProgram_Count ] = { nullptr };
+//static ShaderProgram* s_programs[ kShaderProgram_Count ] = { nullptr };
 
 void ShaderProgramManager::init( void )
 {
@@ -85,6 +85,7 @@ void ShaderProgramManager::initPrograms( void )
 
 	//	s_programs[ i ] = program;
 	//}
+
 }
 
 void ShaderProgramManager::delcPrograms( void )
@@ -97,42 +98,43 @@ void ShaderProgramManager::delcPrograms( void )
 
 const Ptr<ShaderProgram> ShaderProgramManager::getProgram( ShaderProgramIndex index )
 {
-	return s_programs[ index ];
+	//return s_programs[ index ];
+	return nullptr;
 }
 
-//static ShaderProgram* createProgram( ShaderProgramIndex index, ShaderProgram* program )
-//{
-//	ShaderProgram* program = nullptr;
-//	Shared<Data> vertex_data;
-//	Shared<Data> fragment_data;
-//
-//	switch( index )
-//	{
-//	case kShaderProgram_Color:
-//		{
-//			program = new ShaderProgramColor();
-//			vertex_data = Assets::getAssetsFileData( "standard/shaders/test_vertex.glsl" );
-//			fragment_data = Assets::getAssetsFileData( "standard/shaders/test_fragment.glsl" );
-//		}
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	if( vertex_data == nullptr || fragment_data == nullptr )
-//		return nullptr;
-//
-//	program->setVertexSource( vertex_data->ptr() );
-//	program->setFragmentSource( fragment_data->ptr() );
-//	
-//	if( !program->build() )
-//		return nullptr;
-//
-//	if( !program-> )
-//
-//
-//	return program;
-//}
+static ShaderProgram* createProgram( ShaderProgramIndex index )
+{
+	ShaderProgram* program = nullptr;
+	Ptr<Data> vertex_data;
+	Ptr<Data> pixel_data;
+
+	switch( index )
+	{
+	case kShaderProgram_Color:
+		{
+			program = new ShaderProgram();
+			vertex_data = Assets::loadFile( "standard/shaders/test_vertex.glsl" );
+			pixel_data = Assets::loadFile( "standard/shaders/test_fragment.glsl" );
+		}
+		break;
+	default:
+		break;
+	}
+
+	if( vertex_data == nullptr || fragment_data == nullptr )
+		return nullptr;
+
+	program->setVertexSource( vertex_data->ptr() );
+	program->setFragmentSource( fragment_data->ptr() );
+	
+	if( !program->build() )
+		return nullptr;
+
+	if( !program-> )
+
+
+	return program;
+}
 
 
 //MAGICALAPI GLvoid magicalSetShaderColorUniform(const GLfloat* mvp_matrix, const GLfloat* color)

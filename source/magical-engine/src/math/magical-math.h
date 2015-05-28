@@ -36,18 +36,18 @@ struct Matrix4x4;
 struct Ray;
 struct Sphere;
 struct Box;
-struct OriBox;
+struct OrientBox;
 struct Plane;
 struct Frustum;
 struct Triangle;
 struct Polygon;
 
-struct Ray2d;
+struct Ray2D;
+struct Box2D;
+struct OrientBox2D;
 struct Circle;
-struct Box2d;
-struct OriBox2d;
-struct Triangle2d;
-struct Polygon2d;
+struct Triangle2D;
+struct Polygon2D;
 
 #include "Vector2.h"
 #include "Vector3.h"

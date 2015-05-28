@@ -62,7 +62,7 @@ const Vector4 Vector4::Space0 = Vector4( 0.0f, 0.0f, 0.0f, 0.0f );
 const Vector4 Vector4::Space1 = Vector4( 0.0f, 0.0f, 0.0f, 1.0f );
 const Vector4 Vector4::Space2 = Vector4( 0.0f, 0.0f, 0.0f, 2.0f );
 
-void Vector4::mulMatrix4x4( Vector4& out, const Vector4& v, const Matrix4x4& m )
+void Vector4::mul4x4( Vector4& out, const Vector4& v, const Matrix4x4& m )
 {
 	Vector4 dst;
 
