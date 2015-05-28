@@ -24,7 +24,7 @@ SOFTWARE.
 #ifndef __SPHERE_H__
 #define __SPHERE_H__
 
-struct BoundingSphere
+struct Sphere
 {
 	union
 	{
@@ -38,39 +38,39 @@ struct BoundingSphere
 	};
 
 public:
-	static const BoundingSphere One;
-	static const BoundingSphere Invalid;
+	static const Sphere One;
+	static const Sphere Invalid;
 
 public:
-	inline BoundingSphere( float x, float y, float z, float r );
-	inline BoundingSphere( const Vector3& center, float r );
-	inline BoundingSphere( const BoundingSphere& sphere );
-	inline BoundingSphere( void );
+	inline Sphere( float x, float y, float z, float r );
+	inline Sphere( const Vector3& center, float r );
+	inline Sphere( const Sphere& sphere );
+	inline Sphere( void );
 
 public:
-	inline bool operator==( const BoundingSphere& sphere ) const;
-	inline bool operator!=( const BoundingSphere& sphere ) const;
-	inline BoundingSphere& operator=( const BoundingSphere& sphere );
+	inline bool operator==( const Sphere& sphere ) const;
+	inline bool operator!=( const Sphere& sphere ) const;
+	inline Sphere& operator=( const Sphere& sphere );
 
 public:
-	inline bool equals( const BoundingSphere& sphere ) const;
+	inline bool equals( const Sphere& sphere ) const;
 	inline bool isValid( void ) const;
-	inline void set( const BoundingSphere& sphere );
+	inline void set( const Sphere& sphere );
 	inline void set( const Vector3& center, float r );
 	inline void set( float x, float y, float z, float r );
 
 public:
-	static void scale( BoundingSphere& out, const BoundingSphere& sphere, float s );
-	static void merge( BoundingSphere& out, const BoundingSphere& sphere1, const BoundingSphere& sphere2 );
-	static void closest( Vector3& out, const BoundingSphere& sphere, const Vector3& v );
-	static inline BoundingSphere scale( const BoundingSphere& sphere, float s );
-	static inline BoundingSphere merge( const BoundingSphere& sphere1, const BoundingSphere& sphere2 );
+	static void scale( Sphere& out, const Sphere& sphere, float s );
+	static void merge( Sphere& out, const Sphere& sphere1, const Sphere& sphere2 );
+	static void closest( Vector3& out, const Sphere& sphere, const Vector3& v );
+	static inline Sphere scale( const Sphere& sphere, float s );
+	static inline Sphere merge( const Sphere& sphere1, const Sphere& sphere2 );
 	inline void scale( float s );
-	inline void merge( const BoundingSphere& sphere );
+	inline void merge( const Sphere& sphere );
 	inline Vector3 closest( const Vector3& v );
 
 public:
-	inline bool intersects( const BoundingSphere& sphere ) const;
+	inline bool intersects( const Sphere& sphere ) const;
 	inline bool intersects( const Box& box ) const;
 	inline bool intersects( const Plane& plane ) const;
 	inline bool intersects( float& distance, const Ray& ray, bool discard_inside = false ) const;

@@ -24,13 +24,7 @@ SOFTWARE.
 #ifndef __RAY3_H__
 #define __RAY3_H__
 
-//struct RaycastOut
-//{
-//	bool intersection;
-//	float distance;
-//};
-
-struct RayVector
+struct Ray
 {
 	union
 	{
