@@ -377,6 +377,13 @@ inline Vector2 Vector2::project( const Vector2& v, const Vector2& n )
 	return dst;
 }
 
+inline Vector2 Vector2::lerp( const Vector2& v1, const Vector2& v2, float t )
+{
+	Vector2 dst;
+	Vector2::lerp( dst, v1, v2, t );
+	return dst;
+}
+
 inline void Vector2::clamp( const Vector2& min, const Vector2& max )
 {
 	Vector2::clamp( *this, *this, min, max );
@@ -410,6 +417,11 @@ inline Vector2 Vector2::midPointBetween( const Vector2& v ) const
 inline Vector2 Vector2::project( const Vector2& n ) const
 {
 	return Vector2::project( *this, n );
+}
+
+inline Vector2 Vector2::lerp( const Vector2& v, float t ) const
+{
+	return Vector2::lerp( *this, v, t );
 }
 
 inline float Vector2::dot( const Vector2& v1, const Vector2& v2 )

@@ -27,14 +27,18 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 
-#ifndef MAGICAL_DEBUG
-#define MAGICAL_LOGD( text )
-#define MAGICAL_LOGW( text )
-#define MAGICAL_LOGE( text )
-#else
 #define MAGICAL_LOGD( text ) ::magical::Log::writeLine( ::magical::Log::Debug, text )
 #define MAGICAL_LOGW( text ) ::magical::Log::writeLine( ::magical::Log::Warning, text )
 #define MAGICAL_LOGE( text ) ::magical::Log::writeLine( ::magical::Log::Error, text )
+
+#ifndef MAGICAL_DEBUG
+#define MAGICAL_DEBUG_LOGD( text )
+#define MAGICAL_DEBUG_LOGW( text )
+#define MAGICAL_DEBUG_LOGE( text )
+#else
+#define MAGICAL_DEBUG_LOGD( text ) MAGICAL_LOGD( text )
+#define MAGICAL_DEBUG_LOGW( text ) MAGICAL_LOGD( text )
+#define MAGICAL_DEBUG_LOGE( text ) MAGICAL_LOGD( text )
 #endif
 
 #define MAGICAL_LOG_MAX_LENGTH 1024*128
@@ -44,8 +48,9 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-class Log { public:
-
+class Log 
+{ 
+public:
 	enum Level : int
 	{
 		Debug = 0,
@@ -53,9 +58,11 @@ class Log { public:
 		Error = 2,
 	};
 
+public:
 	static void init( void );
 	static void delc( void );
-
+	
+public:
 	static void write( Level level, const char* text );
 	static void writeLine( Level level, const char* text );
 };

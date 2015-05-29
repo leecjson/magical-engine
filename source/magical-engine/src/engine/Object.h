@@ -137,9 +137,6 @@ public:
 	const Vector3& getDerivedScale( void ) const;
 	const Matrix4x4& getLocalToWorldMatrix( void ) const;
 
-public:
-	typedef std::vector<Object*> Children;
-
 protected:
 	string m_name;
 	Scene* m_root_scene = nullptr;
@@ -147,6 +144,7 @@ protected:
 	bool m_visible = true;
 	bool m_running = false;
 	Object* m_parent = nullptr;
+	typedef std::vector<Object*> Children;
 	Children m_children;
 	bool m_inherit_scale = true;
 	bool m_inherit_rotation = true;

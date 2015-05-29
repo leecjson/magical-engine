@@ -21,33 +21,71 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDERER_H__
-#define __RENDERER_H__
+#ifndef __SHADERS_H__
+#define __SHADERS_H__
 
 #include "magical-macros.h"
-#include "magical-math.h"
 #include "Common.h"
-#include "RenderCommon.h"
-#include "ViewChannel.h"
+#include "Reference.h"
 #include "ShaderProgram.h"
-#include "Shaders.h"
 
 NAMESPACE_MAGICAL
 
-class Renderer
+class Shader
 {
+public:
+	enum : int 
+	{
+		Simple,
+		Flat,
+		Count
+	};
+
+public:
+	struct AttribLocation 
+	{
+		enum : int
+		{
+			iVertex,
+			iColor,
+			iTextureCoord,
+			iNormal,
+		};
+
+		static const char* Vertex;
+		static const char* Color;
+		static const char* TextureCoord;
+		static const char* Normal;
+	};
+
+public:
+	struct Uniform
+	{
+		static const char* Color;
+		static const char* MvpMatrix;
+		static const char* MvMatrix;
+		static const char* PMatrix;
+		static const char* TexUnit0;
+	};
+
+public:
+	struct Source
+	{
+		static const char* SimpleVertex;
+		static const char* SimplePiexl;
+		static const char* FlatVertex;
+		static const char* FlatPiexl;
+	};
+
 public:
 	static void init( void );
 	static void delc( void );
 
 public:
-	static void setDefault( void );
-
-public:
-	static void render( const ViewChannel* channel );
-	static void addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection );
+	static ShaderProgram* getProgram( int index );
 };
 
 NAMESPACE_END
 
-#endif //__RENDERER_H__
+
+#endif //__SHADERS_H__

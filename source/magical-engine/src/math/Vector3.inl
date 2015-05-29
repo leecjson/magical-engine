@@ -452,6 +452,13 @@ inline Vector3 Vector3::project( const Vector3& v, const Vector3& n )
 	return dst;
 }
 
+inline Vector3 Vector3::lerp( const Vector3& v1, const Vector3& v2, float t )
+{
+	Vector3 dst;
+	Vector3::lerp( dst, v1, v2, t );
+	return dst;
+}
+
 inline void Vector3::clamp( const Vector3& min, const Vector3& max )
 {
 	Vector3::clamp( *this, *this, min, max );
@@ -474,23 +481,22 @@ inline void Vector3::scale( float s )
 
 inline Vector3 Vector3::cross( const Vector3& v )
 {
-	Vector3 dst;
-	Vector3::cross( dst, *this, v );
-	return dst;
+	return Vector3::cross( *this, v );
 }
 
 inline Vector3 Vector3::midPointBetween( const Vector3& v ) const
 {
-	Vector3 dst;
-	Vector3::midPointBetween( dst, *this, v );
-	return dst;
+	return Vector3::midPointBetween( *this, v );
 }
 
 inline Vector3 Vector3::project( const Vector3& n ) const
 {
-	Vector3 dst;
-	Vector3::project( dst, *this, n );
-	return dst;
+	return Vector3::project( *this, n );
+}
+
+inline Vector3 Vector3::lerp( const Vector3& v, float t ) const
+{
+	return Vector3::lerp( *this, v, t );
 }
 
 inline float Vector3::dot( const Vector3& v1, const Vector3& v2 )

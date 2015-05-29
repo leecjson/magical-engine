@@ -114,9 +114,6 @@
     <ClCompile Include="..\src\renderer\gl\ShaderProgram.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\ShaderProgramManager.cpp">
-      <Filter>src\renderer\gl</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\log\win32\Log.cpp">
       <Filter>src\log\win32</Filter>
     </ClCompile>
@@ -210,6 +207,12 @@
     <ClCompile Include="..\src\math\Triangle2.cpp">
       <Filter>src\math\geo\2d</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\Quaternion.cpp">
+      <Filter>src\math\space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\Shaders.cpp">
+      <Filter>src\renderer\gl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\platform\magical-macros.h">
@@ -282,9 +285,6 @@
       <Filter>src\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\renderer\ShaderProgram.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\renderer\ShaderProgramManager.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\log\Log.h">
@@ -383,6 +383,12 @@
     <ClInclude Include="..\src\math\Triangle2.h">
       <Filter>src\math\geo\2d</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\math\Quaternion.h">
+      <Filter>src\math\space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\Shaders.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\engine\Entity.inl">
@@ -450,6 +456,9 @@
     </None>
     <None Include="..\src\math\Triangle2.inl">
       <Filter>src\math\geo\2d</Filter>
+    </None>
+    <None Include="..\src\math\Quaternion.inl">
+      <Filter>src\math\space</Filter>
     </None>
   </ItemGroup>
 </Project>

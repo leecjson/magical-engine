@@ -143,6 +143,7 @@ public:
 	static void cross( Vector3& out, const Vector3& v1, const Vector3& v2 );
 	static void midPointBetween( Vector3& out, const Vector3& v1, const Vector3& v2 );
 	static void project( Vector3& out, const Vector3& v, const Vector3& n );
+	static void lerp( Vector3& out, const Vector3& v1, const Vector3& v2, float t );
 
 public:
 	static inline Vector3 clamp( const Vector3& v, const Vector3& min, const Vector3& max );
@@ -152,6 +153,7 @@ public:
 	static inline Vector3 cross( const Vector3& v1, const Vector3& v2 );
 	static inline Vector3 midPointBetween( const Vector3& v1, const Vector3& v2 );
 	static inline Vector3 project( const Vector3& v, const Vector3& n );
+	static inline Vector3 lerp( const Vector3& v1, const Vector3& v2, float t );
 
 public:
 	inline void clamp( const Vector3& min, const Vector3& max );
@@ -161,6 +163,7 @@ public:
 	inline Vector3 cross( const Vector3& v );
 	inline Vector3 midPointBetween( const Vector3& v ) const;
 	inline Vector3 project( const Vector3& n ) const;
+	inline Vector3 lerp( const Vector3& v, float t ) const;
 
 public:
 	static inline float dot( const Vector3& v1, const Vector3& v2 );

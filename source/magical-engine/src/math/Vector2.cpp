@@ -98,7 +98,7 @@ void Vector2::midPointBetween( Vector2& out, const Vector2& v1, const Vector2& v
 void Vector2::project( Vector2& out, const Vector2& v, const Vector2& n )
 {
 	Vector2 normalize;
-	debugassert( !n.isZero(), "invaild operate!" );
+	debugassert( !n.isZero(), "Invalid operate!" );
 	
 	Vector2::normalize( normalize, n );
 	float d = Vector2::dot( v, normalize );
@@ -107,7 +107,21 @@ void Vector2::project( Vector2& out, const Vector2& v, const Vector2& n )
 	out.y = normalize.y * d;
 }
 
-void Vector2::lerp( Vector2& out, const Vector2& v1, const Vector2& v2 )
+void Vector2::lerp( Vector2& out, const Vector2& v1, const Vector2& v2, float t )
 {
+	if( t >= 1.0f )
+	{
+		out = v2;
+	}
+	else if( t <= 0.0f )
+	{
+		out = v1;
+	}
+	else
+	{
+		Vector2 v1_to_v2 = v2 - v1;
+		Vector2::scale( v1_to_v2, v1_to_v2, t );
 
+		out = Vector2::add( v1, v1_to_v2 );
+	}
 }

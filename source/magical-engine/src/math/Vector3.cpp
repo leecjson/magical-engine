@@ -164,3 +164,22 @@ void Vector3::project( Vector3& out, const Vector3& v, const Vector3& n )
 	out.y = normalize.y * d;
 	out.z = normalize.z * d;
 }
+
+void Vector3::lerp( Vector3& out, const Vector3& v1, const Vector3& v2, float t )
+{
+	if( t >= 1.0f )
+	{
+		out = v2;
+	}
+	else if( t <= 0.0f )
+	{
+		out = v1;
+	}
+	else
+	{
+		Vector3 v1_to_v2 = v2 - v1;
+		Vector3::scale( v1_to_v2, v1_to_v2, t );
+
+		out = Vector3::add( v1, v1_to_v2 );
+	}
+}

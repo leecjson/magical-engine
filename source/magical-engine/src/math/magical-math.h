@@ -33,22 +33,6 @@ struct Quaternion;
 struct Matrix3x3;
 struct Matrix4x4;
 
-struct Ray;
-struct Sphere;
-struct Box;
-struct OrientBox;
-struct Plane;
-struct Frustum;
-struct Triangle;
-struct Polygon;
-
-struct Ray2D;
-struct Box2D;
-struct OrientBox2D;
-struct Circle;
-struct Triangle2D;
-struct Polygon2D;
-
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -65,36 +49,55 @@ struct Polygon2D;
 #include "Matrix3x3.inl"
 #include "Matrix4x4.inl"
 
+struct Ray2;
+struct Box2;
+struct OrientBox2;
+struct Line2;
+struct Circle;
+struct Triangle2;
+struct Polygon2;
+
+#include "Ray2.h"
+#include "Box2.h"
+#include "OrientBox2.h"
+#include "Line2.h"
+#include "Circle.h"
+#include "Triangle2.h"
+#include "Polygon2.h"
+
+#include "Ray2.inl"
+#include "Box2.inl"
+#include "OrientBox2.inl"
+#include "Line2.inl"
+#include "Circle.inl"
+#include "Triangle2.inl"
+#include "Polygon2.inl"
+
+struct Ray;
+struct Box;
+struct OrientBox;
+struct Plane;
+struct Sphere;
+struct Frustum;
+struct Triangle;
+struct Polygon;
+
 #include "Ray.h"
-#include "Sphere.h"
 #include "Box.h"
-#include "OriBox.h"
+#include "OrientBox.h"
+#include "Sphere.h"
 #include "Plane.h"
 #include "Frustum.h"
 #include "Triangle.h"
 #include "Polygon.h"
 
-#include "Ray2d.h"
-#include "Circle.h"
-#include "Box2d.h"
-#include "OriBox2d.h"
-#include "Triangle2d.h"
-#include "Polygon2d.h"
-
 #include "Ray.inl"
-#include "Sphere.inl"
 #include "Box.inl"
-#include "OriBox.inl"
+#include "OrientBox.inl"
+#include "Sphere.inl"
 #include "Plane.inl"
 #include "Frustum.inl"
 #include "Triangle.inl"
 #include "Polygon.inl"
-
-#include "Ray2d.inl"
-#include "Circle.inl"
-#include "Box2d.inl"
-#include "OriBox2d.inl"
-#include "Triangle2d.inl"
-#include "Polygon2d.inl"
 
 #endif //__MAGICAL_MATH_H__

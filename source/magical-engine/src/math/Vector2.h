@@ -121,7 +121,7 @@ public:
 	static void scale( Vector2& out, const Vector2& v, float s );
 	static void midPointBetween( Vector2& out, const Vector2& v1, const Vector2& v2 );
 	static void project( Vector2& out, const Vector2& v, const Vector2& n );
-	static void lerp( Vector2& out, const Vector2& v1, const Vector2& v2 );
+	static void lerp( Vector2& out, const Vector2& v1, const Vector2& v2, float t );
 
 public:
 	static inline Vector2 clamp( const Vector2& v, const Vector2& min, const Vector2& max );
@@ -131,6 +131,7 @@ public:
 	static inline Vector2 scale( const Vector2& v, float s );
 	static inline Vector2 midPointBetween( const Vector2& v1, const Vector2& v2 );
 	static inline Vector2 project( const Vector2& v, const Vector2& n );
+	static inline Vector2 lerp( const Vector2& v1, const Vector2& v2, float t );
 
 public:
 	inline void clamp( const Vector2& min, const Vector2& max );
@@ -140,6 +141,7 @@ public:
 	inline void scale( float s );
 	inline Vector2 midPointBetween( const Vector2& v ) const;
 	inline Vector2 project( const Vector2& n ) const;
+	inline Vector2 lerp( const Vector2& v, float t ) const;
 
 public:
 	static inline float dot( const Vector2& v1, const Vector2& v2 );

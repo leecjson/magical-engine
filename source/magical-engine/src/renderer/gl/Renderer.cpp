@@ -34,71 +34,17 @@ NAMESPACE_MAGICAL
 
 using std::vector;
 
-#define kAttrVertexIndex 1
-#define kAttrColorIndex 2
-
-
-static const char* simple_vertex_shader = R"(
-attribute vec4 attr_vertex;
-void main( void )
-{
-	gl_Position = attr_vertex;
-}
-)";
-						
-static const char* simple_pixel_shader = R"(
-uniform vec4 u_color;
-void main( void )
-{ 
-	gl_FragColor = u_color;
-}
-)";
-
-static const char* flat_vertex_shader = R"(
-uniform mat4 u_mvp_matrix;
-attribute vec4 attr_vertex;
-attribute vec4 attr_color;
-varying vec4 v_color;
-void main( void )
-{
-	v_color = attr_color;
-	gl_Position = u_mvp_matrix * attr_vertex;
-}
-)";
-						
-static const char* flat_pixel_shader = R"(
-varying vec4 v_color;
-void main( void )
-{ 
-	gl_FragColor = v_color;
-}
-)";
-
-ShaderProgram* s_simple_program = nullptr;
-ShaderProgram* s_flat_program = nullptr;
-
 Vector3 rect[4];
 Vector3 rect_triangle[4];
 Vector3 cube[24];
-
-Matrix4x4 m_projection_matrix;
-Matrix4x4 m_model_matrix;
 
 void Renderer::init( void )
 {
 	setDefault();
 	MAGICAL_RETURN_IF_ERROR();
 
-	s_simple_program = ShaderProgram::create( simple_vertex_shader, simple_pixel_shader ).take();
-	s_simple_program->build();
-	s_simple_program->bindAttribLocation( kAttrVertexIndex, "attr_vertex" );
-	s_simple_program->link();
-
-	s_flat_program = ShaderProgram::create( flat_vertex_shader, flat_pixel_shader ).take();
-	s_flat_program->build();
-	s_flat_program->bindAttribLocation( kAttrVertexIndex, "attr_vertex" );
-	s_flat_program->bindAttribLocation( kAttrColorIndex, "attr_color" );
-	s_flat_program->link();
+	Shader::init();
+	MAGICAL_RETURN_IF_ERROR();
 
 	// 2D Rect Vertex
 	rect[0].set( -0.5f, -0.5f, 0 );
@@ -151,8 +97,8 @@ void Renderer::init( void )
 
 void Renderer::delc( void )
 {
-	s_simple_program->release();
-	s_flat_program->release();
+	Shader::delc();
+	MAGICAL_RETURN_IF_ERROR();
 }
 
 void Renderer::setDefault( void )
@@ -176,13 +122,15 @@ void Renderer::render( const ViewChannel* channel )
 
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+	ShaderProgram* program = Shader::getProgram( Shader::Flat );
+
 	for( const auto& itr : m_queue )
 	{
-		glUseProgram( s_flat_program->getId() );
+		glUseProgram( program->getId() );
 
 		Matrix4x4 mvp_matrix = itr.first * itr.second;
 
-		GLint u_mvp_matrix = s_flat_program->getUniformLocation( "u_mvp_matrix" );
+		GLint u_mvp_matrix = program->getUniformLocation( "u_mvp_matrix" );
 		glUniformMatrix4fv( u_mvp_matrix, 1, GL_FALSE, (GLfloat*)&mvp_matrix );
 
 		/*Color4f colors[4] = {
@@ -206,10 +154,10 @@ void Renderer::render( const ViewChannel* channel )
 			Color4f::Cyan, Color4f::Cyan, Color4f::Cyan, Color4f::Cyan //right
 		};
 
-		glEnableVertexAttribArray( kAttrVertexIndex );
-		glEnableVertexAttribArray( kAttrColorIndex );
-		glVertexAttribPointer( kAttrVertexIndex, 3, GL_FLOAT, GL_FALSE, 0, &cube );
-		glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
+		glEnableVertexAttribArray( Shader::AttribLocation::iVertex );
+		glEnableVertexAttribArray( Shader::AttribLocation::iColor );
+		glVertexAttribPointer( Shader::AttribLocation::iVertex, 3, GL_FLOAT, GL_FALSE, 0, cube );
+		glVertexAttribPointer( Shader::AttribLocation::iColor, 4, GL_FLOAT, GL_FALSE, 0, colors );
 		glDrawArrays( GL_QUADS, 0, 24 );
 	}
 	m_queue.clear();
