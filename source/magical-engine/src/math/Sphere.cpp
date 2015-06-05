@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector3;
 struct Vector4;
@@ -90,3 +92,5 @@ void Sphere::closest( Vector3& out, const Sphere& sphere, const Vector3& v )
 
 	out = sphere.center + v_to_center;
 }
+
+NAMESPACE_END

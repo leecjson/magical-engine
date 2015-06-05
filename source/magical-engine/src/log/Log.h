@@ -37,8 +37,8 @@ SOFTWARE.
 #define MAGICAL_DEBUG_LOGE( text )
 #else
 #define MAGICAL_DEBUG_LOGD( text ) MAGICAL_LOGD( text )
-#define MAGICAL_DEBUG_LOGW( text ) MAGICAL_LOGD( text )
-#define MAGICAL_DEBUG_LOGE( text ) MAGICAL_LOGD( text )
+#define MAGICAL_DEBUG_LOGW( text ) MAGICAL_LOGW( text )
+#define MAGICAL_DEBUG_LOGE( text ) MAGICAL_LOGE( text )
 #endif
 
 #define MAGICAL_LOG_MAX_LENGTH 1024*128

@@ -45,7 +45,7 @@ void Log::init( void )
 	_debug_file = fopen( name.c_str(), "w" );
 	if( _debug_file == nullptr )
 	{
-		MAGICAL_SET_LAST_ERROR_A( System::format( "open file(%s) failed!", MAGICAL_LOG_DEBUG_FILE ).c_str() );
+		MAGICAL_SET_LAST_ERROR( System::format( "open file(%s) failed!", MAGICAL_LOG_DEBUG_FILE ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
 		return;
 	}
@@ -54,7 +54,7 @@ void Log::init( void )
 	_warning_file = fopen( name.c_str(), "w" );
 	if( _warning_file == nullptr )
 	{
-		MAGICAL_SET_LAST_ERROR_A( System::format( "open file(%s) failed!", MAGICAL_LOG_WARNING_FILE ).c_str() );
+		MAGICAL_SET_LAST_ERROR( System::format( "open file(%s) failed!", MAGICAL_LOG_WARNING_FILE ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
 		return;
 	}
@@ -63,7 +63,7 @@ void Log::init( void )
 	_error_file = fopen( name.c_str(), "w" );
 	if( _error_file == nullptr )
 	{
-		MAGICAL_SET_LAST_ERROR_A( System::format( "open file(%s) failed!", MAGICAL_LOG_ERROR_FILE ).c_str() );
+		MAGICAL_SET_LAST_ERROR( System::format( "open file(%s) failed!", MAGICAL_LOG_ERROR_FILE ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
 		return;
 	}

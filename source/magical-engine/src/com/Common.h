@@ -43,6 +43,7 @@ NAMESPACE_END
 
 #include "Log.h"
 #include "Utils.h"
+#include "System.h"
 
 #define SAFE_FREE( var ) do{ if( var ) ::free( var ); } while(0)
 #define SAFE_FREE_NULL( var ) do{ if( var ) ::free( var ); var = nullptr; } while(0)
@@ -63,8 +64,8 @@ error macros
 #define MAGICAL_ERROR_MAX_LENGTH 1024*128
 MAGICALAPI bool MAGICAL_IS_ERROR( void );
 MAGICALAPI void MAGICAL_IGNORE_LAST_ERROR( void );
-MAGICALAPI void MAGICAL_SET_LAST_ERROR( const char* info, const char* file = nullptr, int line = 0 );
-#define MAGICAL_SET_LAST_ERROR_A( info ) MAGICAL_SET_LAST_ERROR( info, __FILE__, __LINE__ )
+MAGICALAPI void MAGICAL_SET_LAST_ERROR_IMPL( const char* info, const char* file = nullptr, int line = 0 );
+#define MAGICAL_SET_LAST_ERROR( info ) MAGICAL_SET_LAST_ERROR_IMPL( info, __FILE__, __LINE__ )
 MAGICALAPI const char* MAGICAL_GET_LAST_ERROR_INFO( void );
 MAGICALAPI void MAGICAL_SHOW_LAST_ERROR( void );
 MAGICALAPI void MAGICAL_LOG_LAST_ERROR( bool newline = true );
@@ -90,46 +91,13 @@ MAGICALAPI void MAGICAL_ASSERT_IMPL( const char* exp, const char* msg, const cha
 #else
 #define MAGICAL_ASSERT( exp, msg ) do {                        \
 	if( !( exp ) ) {                                           \
-		MAGICAL_SET_LAST_ERROR_A( msg );                       \
+		MAGICAL_SET_LAST_ERROR( msg );                         \
 		MAGICAL_LOG_LAST_ERROR();                              \
 		MAGICAL_ASSERT_IMPL( #exp, msg, __FILE__, __LINE__ );  \
 	}                                                          \
 	} while(0)
 #endif
 
-
-/*
-system 
-*/
-NAMESPACE_MAGICAL
-#define MAGICAL_SYSTEM_FORMAT_SIZE 1024*128
-#define MAGICAL_SYSTEM_STORAGE_SIZE 1024*512
-class System
-{
-public:
-	static char storage[ MAGICAL_SYSTEM_STORAGE_SIZE ];
-
-public:
-	template< int Len = MAGICAL_SYSTEM_FORMAT_SIZE >
-	static inline string format( const char* format, ... )
-	{
-		char dst[ Len ];
-		va_list args;
-		va_start( args, format );
-		vsnprintf( dst, Len, format, args );
-		va_end( args );
-		return dst;
-	}
-
-public:
-	static wstring utf8ToUnicode( const string& str );
-	static wstring ansiToUnicode( const string& str );
-	static string unicodeToUtf8( const wstring& str );
-	static string unicodeToAnsi( const wstring& str );
-	static string utf8ToAnsi( const string& str );
-	static string ansiToUtf8( const string& str );
-};
-NAMESPACE_END
 
 /*
 timer macros

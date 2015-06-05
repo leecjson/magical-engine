@@ -81,7 +81,7 @@ bool ShaderProgram::build( void )
 	MAGICAL_ASSERT( !m_vertex_src.empty() && !m_pixel_src.empty(), "Invalid! should not empty!" );
 	MAGICAL_ASSERT( !m_built, "Invalid! already built!" );
 
-	GLint succeed = GL_FALSE;
+	GLint success = GL_FALSE;
 	GLuint program = GL_ZERO;
 	GLuint vertex_shader = glCreateShader( GL_VERTEX_SHADER );
 	GLuint pixel_shader = glCreateShader( GL_FRAGMENT_SHADER );
@@ -103,8 +103,8 @@ bool ShaderProgram::build( void )
 	glCompileShader( vertex_shader );
 	glCompileShader( pixel_shader );
 
-	glGetShaderiv( vertex_shader, GL_COMPILE_STATUS, &succeed );
-	if( succeed == GL_FALSE )
+	glGetShaderiv( vertex_shader, GL_COMPILE_STATUS, &success );
+	if( success == GL_FALSE )
 	{
 		if( MAGICAL_GET_SHADER_INFO_LOG( vertex_shader ) )
 		{
@@ -118,8 +118,8 @@ bool ShaderProgram::build( void )
 		return false;
 	}
 
-	glGetShaderiv( pixel_shader, GL_COMPILE_STATUS, &succeed );
-	if( succeed == GL_FALSE )
+	glGetShaderiv( pixel_shader, GL_COMPILE_STATUS, &success );
+	if( success == GL_FALSE )
 	{
 		if( MAGICAL_GET_SHADER_INFO_LOG( pixel_shader ) )
 		{
@@ -161,11 +161,11 @@ bool ShaderProgram::link( void )
 	MAGICAL_ASSERT( m_linked == false, "Invalid! already linked!" );
 	MAGICAL_ASSERT( m_program && glIsProgram( m_program ), "Invalid!" );
 
-	GLint succeed = GL_FALSE;
+	GLint success = GL_FALSE;
 
 	glLinkProgram( m_program );
-	glGetProgramiv( m_program, GL_LINK_STATUS, &succeed );
-	if( succeed == GL_FALSE )
+	glGetProgramiv( m_program, GL_LINK_STATUS, &success );
+	if( success == GL_FALSE )
 	{
 		if( MAGICAL_GET_PROGRAM_INFO_LOG( m_program ) )
 		{
@@ -179,8 +179,8 @@ bool ShaderProgram::link( void )
 	}
 
 	glValidateProgram( m_program );
-	glGetProgramiv( m_program, GL_VALIDATE_STATUS, &succeed );
-	if( succeed == GL_FALSE )
+	glGetProgramiv( m_program, GL_VALIDATE_STATUS, &success );
+	if( success == GL_FALSE )
 	{
 		if( MAGICAL_GET_PROGRAM_INFO_LOG( m_program ) )
 		{

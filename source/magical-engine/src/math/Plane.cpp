@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector3;
 struct Vector4;
@@ -227,3 +229,5 @@ bool Plane::intersects( const Plane& plane ) const
 		return true;
 	}
 }
+
+NAMESPACE_END

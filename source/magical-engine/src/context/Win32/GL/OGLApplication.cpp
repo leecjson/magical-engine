@@ -184,7 +184,7 @@ void Application::initRenderContext( void )
 	const GLubyte* gl_version = glGetString( GL_VERSION );
 	if( atof( (const char*) gl_version ) < 1.5 )
 	{
-		MAGICAL_SET_LAST_ERROR_A( System::format( "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.", gl_version ).c_str() );
+		MAGICAL_SET_LAST_ERROR( System::format( "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.", gl_version ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
 		return;
 	}
@@ -192,7 +192,7 @@ void Application::initRenderContext( void )
 	GLenum result = glewInit();
 	if( result != GLEW_OK )
 	{
-		MAGICAL_SET_LAST_ERROR_A( System::format( "%s %s", "Init glew failed.", (char*)glewGetErrorString( result ) ).c_str() );
+		MAGICAL_SET_LAST_ERROR( System::format( "%s %s", "Init glew failed.", (char*)glewGetErrorString( result ) ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
 		return;
 	}
@@ -223,7 +223,7 @@ void Application::delcRenderContext( void )
 
 static void win32ErrorCallBack( int err_id, const char* error_desc )
 {
-	MAGICAL_SET_LAST_ERROR_A( error_desc );
+	MAGICAL_SET_LAST_ERROR( error_desc );
 	MAGICAL_LOG_LAST_ERROR();
 
 	//MAGICAL_LOGD( "win32ErrorCallBack" );

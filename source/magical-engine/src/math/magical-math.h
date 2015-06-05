@@ -26,6 +26,8 @@ SOFTWARE.
 
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector4;
 struct Rotater;
@@ -99,5 +101,7 @@ struct Polygon;
 #include "Frustum.inl"
 #include "Triangle.inl"
 #include "Polygon.inl"
+
+NAMESPACE_END
 
 #endif //__MAGICAL_MATH_H__

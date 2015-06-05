@@ -37,6 +37,9 @@ NAMESPACE_MAGICAL
 class Renderer
 {
 public:
+	static const int VboSize = 65536;
+
+public:
 	static void init( void );
 	static void delc( void );
 
@@ -46,6 +49,9 @@ public:
 public:
 	static void render( const ViewChannel* channel );
 	static void addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection );
+
+protected:
+	static Vertex3f_Color4b_TexCoord2f m_vbo_triangles[ VboSize ];
 };
 
 NAMESPACE_END

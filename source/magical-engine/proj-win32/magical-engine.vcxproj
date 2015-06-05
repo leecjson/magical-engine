@@ -16,6 +16,7 @@
     <ClCompile Include="..\src\com\Color.cpp" />
     <ClCompile Include="..\src\com\Common.cpp" />
     <ClCompile Include="..\src\com\Size.cpp" />
+    <ClCompile Include="..\src\com\System.cpp" />
     <ClCompile Include="..\src\context\Application.cpp" />
     <ClCompile Include="..\src\context\win32\gl\OGLApplication.cpp" />
     <ClCompile Include="..\src\engine\Camera.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="..\src\com\Color.h" />
     <ClInclude Include="..\src\com\Common.h" />
     <ClInclude Include="..\src\com\Size.h" />
+    <ClInclude Include="..\src\com\System.h" />
     <ClInclude Include="..\src\context\Application.h" />
     <ClInclude Include="..\src\context\win32\gl\glew\glew.h" />
     <ClInclude Include="..\src\context\win32\gl\glew\glxew.h" />

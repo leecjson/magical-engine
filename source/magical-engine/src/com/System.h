@@ -21,43 +21,44 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDERER_H__
-#define __RENDERER_H__
+#ifndef __SYSTEM_H__
+#define __SYSTEM_H__
 
 #include "magical-macros.h"
-#include "magical-math.h"
-#include "Common.h"
-#include "RenderCommon.h"
-#include "Reference.h"
+#include "Log.h"
+#include "Utils.h"
 
 NAMESPACE_MAGICAL
 
-class RenderCommand : public Reference
+class System
 {
 public:
-	RenderCommand( void );
-	virtual ~RenderCommand( void );
-
-};
-
-class TriangleCommand : public RenderCommand
-{
-public:
-	TriangleCommand( void );
-	virtual ~TriangleCommand( void );
-	static Ptr<TriangleCommand> create( void );
+	static const int StorageSize = 1024 * 512;
 
 public:
-	void initVertexes( const Vertex3f_Color4b_TexCoord2f* vertexes, size_t size );
-	void initIndices( const uint16_t* indices, size_t size );
+	static char storage[ StorageSize ];
 
-protected:
-	Vertex3f_Color4b_TexCoord2f* m_vertexes;
-	uint16_t* m_indices;
-	size_t m_vertexes_size;
-	size_t m_indices_size;
+public:
+	template< int Len = 1024 * 128 >
+	static inline string format( const char* format, ... )
+	{
+		char dst[ Len ];
+		va_list args;
+		va_start( args, format );
+		vsnprintf( dst, Len, format, args );
+		va_end( args );
+		return dst;
+	}
+
+public:
+	static std::wstring utf8ToUnicode( const std::string& str );
+	static std::wstring ansiToUnicode( const std::string& str );
+	static std::string unicodeToUtf8( const std::wstring& str );
+	static std::string unicodeToAnsi( const std::wstring& str );
+	static std::string utf8ToAnsi( const std::string& str );
+	static std::string ansiToUtf8( const std::string& str );
 };
 
 NAMESPACE_END
 
-#endif //__RENDERER_H__
+#endif //__SYSTEM_H__

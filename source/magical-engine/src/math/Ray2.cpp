@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Ray2;
 
@@ -33,3 +35,5 @@ struct Ray2;
 #include "Ray2.inl"
 
 const Ray2 Ray2::Invalid = Ray2( Vector2::Zero, Vector2::Zero );
+
+NAMESPACE_END

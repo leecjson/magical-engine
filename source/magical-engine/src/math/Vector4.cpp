@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector3;
 struct Rotater;
@@ -106,3 +108,5 @@ void Vector4::mul4x4( Vector4& out, const Vector4& v, const Matrix4x4& m )
 //{
 //
 //}
+
+NAMESPACE_END

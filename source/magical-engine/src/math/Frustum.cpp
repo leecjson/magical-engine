@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector3;
 struct Vector4;
@@ -153,3 +155,5 @@ bool Frustum::containsBox( const Box& box ) const
 
 	return true;
 }
+
+NAMESPACE_END

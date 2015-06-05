@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector3;
 struct Vector4;
@@ -116,3 +118,5 @@ void Rotater::limit( Rotater& dst, const Rotater& ea )
 	dst.pitch = pitch;
 	dst.roll = roll;
 }
+
+NAMESPACE_END

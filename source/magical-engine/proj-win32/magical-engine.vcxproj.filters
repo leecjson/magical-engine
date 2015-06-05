@@ -213,6 +213,9 @@
     <ClCompile Include="..\src\renderer\gl\Shaders.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\com\System.cpp">
+      <Filter>src\com</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\platform\magical-macros.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="..\src\renderer\Shaders.h">
       <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\com\System.h">
+      <Filter>src\com</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

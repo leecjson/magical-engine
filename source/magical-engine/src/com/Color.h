@@ -25,6 +25,7 @@ SOFTWARE.
 #define __COLOR_H__
 
 #include "magical-macros.h"
+#include <stdint.h>
 
 NAMESPACE_MAGICAL
 
@@ -54,6 +55,34 @@ public:
 public:
 	inline Color4f( float r, float g, float b, float a ) : r( r ), g( g ), b( b ), a( a ) { }
 	inline Color4f( void ) { }
+};
+
+struct Color4b
+{
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+	uint8_t a;
+
+public:
+	static const Color4b Red;        // 红
+	static const Color4b Green;      // 绿
+	static const Color4b Blue;       // 蓝
+	static const Color4b White;      // 白
+	static const Color4b Black;      // 黑
+	static const Color4b Yello;      // 黄
+	static const Color4b Magenta;    // 洋红
+	static const Color4b Cyan;       // 青
+	static const Color4b DarkGray;   // 深灰
+	static const Color4b LightGray;  // 浅灰
+	static const Color4b Brown;      // 褐
+	static const Color4b Orange;     // 南瓜橙
+	static const Color4b Pink;       // 粉红
+	static const Color4b Purple;     // 紫
+
+public:
+	inline Color4b( uint8_t r, uint8_t g, uint8_t b, uint8_t a ) : r( r ), g( g ), b( b ), a( a ) { }
+	inline Color4b( void ) { }
 };
 
 NAMESPACE_END

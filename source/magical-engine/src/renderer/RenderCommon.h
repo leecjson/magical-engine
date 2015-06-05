@@ -25,19 +25,18 @@ SOFTWARE.
 #define __RENDER_COMMON_H__
 
 #include "magical-macros.h"
+#include "magical-math.h"
 #include "Common.h"
-
-//struct 
+#include "Color.h"
 
 #ifdef MAGICAL_USING_GL
-
 #ifdef MAGICAL_WIN32
 #include "win32/gl/glew/glew.h"
 #endif
 
 #define MAGICAL_CHECK_GL_ERROR() do {                      \
 	if( GLenum gl_error = glGetError() ) {                 \
-		MAGICAL_SET_LAST_ERROR_A(                          \
+		MAGICAL_SET_LAST_ERROR(                            \
 		System::format( "GL 0x%04X", gl_error ).c_str() ); \
 		MAGICAL_LOG_LAST_ERROR();                          \
 	}                                                      \
@@ -51,7 +50,6 @@ SOFTWARE.
 
 MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader );
 MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program );
-
 #endif //MAGICAL_USING_GL
 
 #ifdef MAGICAL_USING_D3D9
@@ -59,5 +57,16 @@ MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program );
 
 #ifdef MAGICAL_USING_D3D11
 #endif //MAGICAL_USING_D3D11
+
+NAMESPACE_MAGICAL
+
+struct Vertex3f_Color4b_TexCoord2f
+{
+	Vector2 vertex;
+	Color4b color;
+	Vector2 texcoord;
+};
+
+NAMESPACE_END
 
 #endif //__RENDER_COMMON_H__

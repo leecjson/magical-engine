@@ -32,8 +32,8 @@ SOFTWARE.
 #include <windows.h>
 #endif
 
-static bool s_last_error = false;
-static char s_last_error_info[ MAGICAL_ERROR_MAX_LENGTH ];
+static bool _last_error = false;
+static char _last_error_info[ MAGICAL_ERROR_MAX_LENGTH ];
 //static int64_t s_time_marker = 0;
 
 //#ifdef MAGICAL_DEBUG
@@ -50,34 +50,36 @@ static char s_last_error_info[ MAGICAL_ERROR_MAX_LENGTH ];
 //static bool s_is_custom_objects_listener_started = false;
 //#endif
 
+//#include <algorithm>
+
 MAGICALAPI bool MAGICAL_IS_ERROR( void )
 {
-	return s_last_error;
+	return _last_error;
 }
 
 MAGICALAPI void MAGICAL_IGNORE_LAST_ERROR( void )
 {
-	s_last_error = false;
+	_last_error = false;
 }
 
-MAGICALAPI void MAGICAL_SET_LAST_ERROR( const char* info, const char* file, int line )
+MAGICALAPI void MAGICAL_SET_LAST_ERROR_IMPL( const char* info, const char* file, int line )
 {
 	if( info == nullptr )
 		return;
 
 	if( file )
-		sprintf( s_last_error_info, "%s %s:%d", info, file, line );
+		sprintf( _last_error_info, "%s %s:%d", info, file, line );
 	else
-		strcpy( s_last_error_info, info );
+		strcpy( _last_error_info, info );
 
-	s_last_error = true;
+	_last_error = true;
 }
 
 MAGICALAPI const char* MAGICAL_GET_LAST_ERROR_INFO( void )
 {
-	if( strlen( s_last_error_info ) > 0 )
+	if( strlen( _last_error_info ) > 0 )
 	{
-		return s_last_error_info;
+		return _last_error_info;
 	}
 	else
 	{
@@ -105,8 +107,7 @@ MAGICALAPI void MAGICAL_LOG_LAST_ERROR( bool newline )
 
 	char temp[ MAGICAL_ERROR_MAX_LENGTH + 12 ];
 	const char* last_error = MAGICAL_GET_LAST_ERROR_INFO();
-	
-	sprintf( temp, "[Error]: %s", last_error );
+	sprintf( temp, "[ERROR]: %s", last_error );
 
 	if( newline )
 	{
@@ -151,104 +152,6 @@ MAGICALAPI void MAGICAL_ASSERT_IMPL( const char* exp, const char* msg, const cha
 	}
 #endif
 }
-
-NAMESPACE_MAGICAL
-char System::storage[ MAGICAL_SYSTEM_STORAGE_SIZE ] = { 0 };
-
-wstring System::utf8ToUnicode( const string& str )
-{
-#ifdef MAGICAL_WIN32
-	wstring result;
-
-	int size = ::MultiByteToWideChar( CP_UTF8, 0, str.c_str(), -1, NULL, 0 );
-	MAGICAL_ASSERT( size != ERROR_NO_UNICODE_TRANSLATION && size != 0, "Invalid utf-8 sequence!" );
-
-	size_t dst_size = sizeof( wchar_t ) * size;
-	wchar_t* dst = ( wchar_t* ) ::malloc( dst_size );
-	::memset( dst, 0, dst_size );
-
-	int convert_size = ::MultiByteToWideChar( CP_UTF8, 0, str.c_str(), -1, dst, size );
-	MAGICAL_ASSERT( convert_size == size, "La falla!" );
-
-	result = dst;
-	::free( dst );
-	return result;
-#endif
-}
-
-wstring System::ansiToUnicode( const string& str )
-{
-#ifdef MAGICAL_WIN32
-	wstring result;
-
-	int size = ::MultiByteToWideChar( CP_ACP, 0, str.c_str(), -1, NULL, 0 );
-	MAGICAL_ASSERT( size != ERROR_NO_UNICODE_TRANSLATION && size != 0, "Invalid conversion!" );
-
-	size_t dst_size = sizeof( wchar_t )* size;
-	wchar_t* dst = ( wchar_t* ) ::malloc( dst_size );
-	::memset( dst, 0, dst_size );
-
-	int convert_size = ::MultiByteToWideChar( CP_ACP, 0, str.c_str(), -1, dst, size );
-	MAGICAL_ASSERT( convert_size == size, "La falla!" );
-
-	result = dst;
-	::free( dst );
-	return result;
-#endif
-}
-
-string System::unicodeToUtf8( const wstring& str )
-{
-#ifdef MAGICAL_WIN32
-	string result;
-
-	int size = ::WideCharToMultiByte( CP_UTF8, 0, str.c_str(), -1, NULL, 0, NULL, NULL );
-	MAGICAL_ASSERT( size != ERROR_NO_UNICODE_TRANSLATION && size != 0, "Invalid conversion!" );
-
-	size_t dst_size = sizeof( char ) * size;
-	char* dst = ( char* ) ::malloc( dst_size );
-	::memset( dst, 0, dst_size );
-
-	int convert_size = ::WideCharToMultiByte( CP_UTF8, 0, str.c_str(), -1, dst, size, NULL, NULL );
-	MAGICAL_ASSERT( convert_size == size, "La falla!" );
-
-	result = dst;
-	::free( dst );
-	return result;
-#endif
-}
-
-string System::unicodeToAnsi( const wstring& str )
-{
-#ifdef MAGICAL_WIN32
-	string result;
-
-	int size = ::WideCharToMultiByte( CP_OEMCP, 0, str.c_str(), -1, NULL, 0, NULL, NULL );
-	MAGICAL_ASSERT( size != ERROR_NO_UNICODE_TRANSLATION && size != 0, "Invalid conversion!" );
-
-	size_t dst_size = sizeof( char ) * size;
-	char* dst = ( char* ) ::malloc( dst_size );
-	::memset( dst, 0, dst_size );
-
-	int convert_size = ::WideCharToMultiByte( CP_OEMCP, 0, str.c_str(), -1, dst, size, NULL, NULL );
-	MAGICAL_ASSERT( convert_size == size, "La falla!" );
-
-	result = dst;
-	::free( dst );
-	return result;
-#endif
-}
-
-string System::utf8ToAnsi( const string& str )
-{
-	return unicodeToAnsi( utf8ToUnicode( str ) );
-}
-
-string System::ansiToUtf8( const string& str )
-{
-	return unicodeToUtf8( ansiToUnicode( str ) );
-}
-NAMESPACE_END
 
 //bool magicalIsTimerStarted( void )
 //{

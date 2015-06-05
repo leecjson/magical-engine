@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 const float Math::PI = 3.14159265358979323846f;
 const float Math::PIMul2 = 6.28318530717958647692f;
 const float Math::PIDiv2 = 1.57079632679489661923f;
@@ -36,3 +38,5 @@ const float Math::QuaternionEpsilon = 1.0e-006f;
 const float Math::VectorEpsilon = 1.0e-005f;
 const float Math::RadianEpsilon = 1.0e-005f;
 const float Math::DegreeEpsilon = 1.0e-004f;
+
+NAMESPACE_END

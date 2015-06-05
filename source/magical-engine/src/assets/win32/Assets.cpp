@@ -37,7 +37,7 @@ void Assets::init( void )
 
 void Assets::delc( void )
 {
-
+	
 }
 
 void Assets::setDefaultSearchPath( void )
@@ -46,7 +46,7 @@ void Assets::setDefaultSearchPath( void )
 	GetCurrentDirectoryA( 2048, directory );
 	if( strlen( directory ) == 0 )
 	{
-		MAGICAL_SET_LAST_ERROR_A( "result of GetCurrentDirectoryA is empty." );
+		MAGICAL_SET_LAST_ERROR( "result of GetCurrentDirectoryA is empty." );
 		MAGICAL_LOG_LAST_ERROR();
 		return;
 	}
@@ -114,7 +114,7 @@ Ptr<Data> Assets::loadFile( const char* file )
 	FILE* fp = fopen( abs_path.c_str(), "rb" );
 	if( fp == nullptr )
 	{
-		MAGICAL_SET_LAST_ERROR_A( System::format<512>( "get assets file data failed! file(%s).", file ).c_str() );
+		MAGICAL_SET_LAST_ERROR( System::format<512>( "get assets file data failed! file(%s).", file ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
 		return nullptr;
 	}

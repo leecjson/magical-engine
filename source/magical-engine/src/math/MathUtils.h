@@ -24,6 +24,7 @@ SOFTWARE.
 #ifndef __UTILITY_H__
 #define __UTILITY_H__
 
+#include "magical-macros.h"
 #include <math.h>
 #include <float.h>
 
@@ -36,6 +37,8 @@ SOFTWARE.
 		assert( ( con ) && msg );  \
 	} } while( 0 )
 #endif
+
+NAMESPACE_MAGICAL
 
 class Math
 {
@@ -298,6 +301,16 @@ public:
 		cos = ::cos( radian );
 	}
 
+	static inline float lerp( float s, float e, float t )
+	{
+		if( t <= 0.0f )
+			return s;
+		else if( t >= 1.0f )
+			return e;
+		else
+			return s + ( e - s ) * t;
+	}
+
 	/**
 	 * 返回两个值更大的那一个
      *
@@ -368,6 +381,8 @@ public:
 		return ::fabs( a - b ) < e;
 	}
 };
+
+NAMESPACE_END
 
 //#define RAD( a ) ( (a) * kPIOver180 )
 //#define DEG( a ) ( (a) * k180OverPI )

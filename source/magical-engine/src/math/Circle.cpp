@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Circle;
 
@@ -59,3 +61,5 @@ void Circle::closest( Vector2& out, const Circle& circle, const Vector2& v )
 
 	out = circle.center + v_to_center;
 }
+
+NAMESPACE_END

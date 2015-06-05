@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
+
+NAMESPACE_MAGICAL
+
 #include "Vector2.h"
 #include "Vector2.inl"
 
@@ -125,3 +128,5 @@ void Vector2::lerp( Vector2& out, const Vector2& v1, const Vector2& v2, float t 
 		out = Vector2::add( v1, v1_to_v2 );
 	}
 }
+
+NAMESPACE_END

@@ -222,7 +222,7 @@ public:
 		}
 	}
 
-	inline void clean( void )
+	inline void reset( void )
 	{
 		if( m_reference )
 		{

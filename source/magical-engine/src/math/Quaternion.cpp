@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector3;
 struct Vector4;
@@ -292,3 +294,5 @@ void Quaternion::inverse( Quaternion& out, const Quaternion& q )
 	out.y = - q.y * n;
 	out.z = - q.z * n;
 }
+
+NAMESPACE_END

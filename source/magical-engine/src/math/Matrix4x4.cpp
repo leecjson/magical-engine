@@ -24,6 +24,8 @@ SOFTWARE.
 #include "MathUtils.h"
 #include <memory.h>
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector3;
 struct Vector4;
@@ -412,3 +414,5 @@ void Matrix4x4::negate( Matrix4x4& out, const Matrix4x4& m )
 	out.m31 = -m.m31; out.m32 = -m.m32; out.m33 = -m.m33; out.m34 = -m.m34;
 	out.m41 = -m.m41; out.m42 = -m.m42; out.m43 = -m.m43; out.m44 = -m.m44;
 }
+
+NAMESPACE_END

@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Box2;
 
@@ -148,3 +150,5 @@ bool Box2::containsPoint( const Vector2& point ) const
 		point.y >= min.y &&
 		point.y <= max.y;
 }
+
+NAMESPACE_END

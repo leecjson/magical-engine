@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector4;
 struct Rotater;
@@ -183,3 +185,5 @@ void Vector3::lerp( Vector3& out, const Vector3& v1, const Vector3& v2, float t 
 		out = Vector3::add( v1, v1_to_v2 );
 	}
 }
+
+NAMESPACE_END

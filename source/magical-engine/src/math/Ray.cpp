@@ -23,6 +23,8 @@ SOFTWARE.
 *******************************************************************************/
 #include "MathUtils.h"
 
+NAMESPACE_MAGICAL
+
 struct Vector2;
 struct Vector3;
 struct Vector4;
@@ -211,3 +213,5 @@ bool Ray::intersects( float& distance, const Sphere& sphere, bool discard_inside
 	distance = a - f;
 	return true;
 }
+
+NAMESPACE_END
