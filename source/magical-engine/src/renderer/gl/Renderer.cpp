@@ -27,16 +27,18 @@ SOFTWARE.
 #include "Application.h"
 #include "ShaderProgram.h"
 #include "Color.h"
-
 #include <vector>
 
 NAMESPACE_MAGICAL
 
-using std::vector;
+//static V3f_C4b_T2f s_vbo_triangles[ Renderer::VboSize ];
 
-Vector3 rect[4];
-Vector3 rect_triangle[4];
-Vector3 cube[24];
+static Vector3 s_vbo_vertexes[ Renderer::VboSize ];
+static Color4b s_vbo_colors[ Renderer::VboSize ];
+static Vector3 s_vbo_normals[ Renderer::VboSize ];
+static Vector2 s_vbo_texcoords[ Renderer::VboSize ];
+static uint32_t s_vbo_indices[ Renderer::VboSize * 3 ];
+
 
 void Renderer::init( void )
 {
@@ -45,8 +47,58 @@ void Renderer::init( void )
 
 	Shader::init();
 	MAGICAL_RETURN_IF_ERROR();
+}
 
-	// 2D Rect Vertex
+void Renderer::delc( void )
+{
+	Shader::delc();
+	MAGICAL_RETURN_IF_ERROR();
+}
+
+void Renderer::setDefault( void )
+{
+	glClearColor( 0.3f, 0.3f, 0.3f, 1.0f );
+
+	glEnable( GL_DEPTH_TEST );
+	glEnable( GL_CULL_FACE );
+
+	MAGICAL_CHECK_GL_ERROR();
+}
+
+std::vector< std::pair<Matrix4x4, Matrix4x4> > m_queue;
+
+void Renderer::render( const ViewChannel* channel )
+{
+	const Area& area = channel->getArea();
+	const Size& win_size = Application::getWindowSize();
+
+	glViewport( area.x * win_size.w, area.y * win_size.h, area.w * win_size.w, area.h * win_size.h );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+	
+
+	MAGICAL_DEBUG_CHECK_GL_ERROR();
+}
+
+void Renderer::addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection )
+{
+	m_queue.push_back( std::make_pair( local_to_world, view_projection ) );
+}
+
+NAMESPACE_END
+
+
+
+
+
+
+
+/*
+Vector3 rect[4];
+Vector3 rect_triangle[4];
+Vector3 cube[24];
+
+// 2D Rect Vertex
 	rect[0].set( -0.5f, -0.5f, 0 );
 	rect[1].set( 0.5f, -0.5f, 0 );
 	rect[2].set( 0.5f, 0.5f, 0 );
@@ -93,34 +145,6 @@ void Renderer::init( void )
 	cube[21].set( 0.5f, 0.5f, 0.5f );
 	cube[22].set( 0.5f, 0.5f, -0.5f );
 	cube[23].set( 0.5f, -0.5f, -0.5f );
-}
-
-void Renderer::delc( void )
-{
-	Shader::delc();
-	MAGICAL_RETURN_IF_ERROR();
-}
-
-void Renderer::setDefault( void )
-{
-	glClearColor( 0.3f, 0.3f, 0.3f, 1.0f );
-
-	glEnable( GL_DEPTH_TEST );
-	glEnable( GL_CULL_FACE );
-
-	MAGICAL_CHECK_GL_ERROR();
-}
-
-std::vector< std::pair<Matrix4x4, Matrix4x4> > m_queue;
-
-void Renderer::render( const ViewChannel* channel )
-{
-	const Area& area = channel->getArea();
-	const Size& win_size = Application::getWindowSize();
-
-	glViewport( area.x * win_size.w, area.y * win_size.h, area.w * win_size.w, area.h * win_size.h );
-
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	ShaderProgram* program = Shader::getProgram( Shader::Flat );
 
@@ -143,7 +167,7 @@ void Renderer::render( const ViewChannel* channel )
 		glEnableVertexAttribArray( kAttrColorIndex );
 		glVertexAttribPointer( kAttrVertexIndex, 3, GL_FLOAT, GL_FALSE, 0, &rect_triangle );
 		glVertexAttribPointer( kAttrColorIndex, 4, GL_FLOAT, GL_FALSE, 0, colors );
-		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );*/
+		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
 		Color4f colors[24] = { 
 			Color4f::Red, Color4f::Red, Color4f::Red, Color4f::Red, //font
@@ -161,13 +185,4 @@ void Renderer::render( const ViewChannel* channel )
 		glDrawArrays( GL_QUADS, 0, 24 );
 	}
 	m_queue.clear();
-
-	MAGICAL_DEBUG_CHECK_GL_ERROR();
-}
-
-void Renderer::addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection )
-{
-	m_queue.push_back( std::make_pair( local_to_world, view_projection ) );
-}
-
-NAMESPACE_END
+*/

@@ -49,9 +49,6 @@ public:
 public:
 	static void render( const ViewChannel* channel );
 	static void addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection );
-
-protected:
-	static Vertex3f_Color4b_TexCoord2f m_vbo_triangles[ VboSize ];
 };
 
 NAMESPACE_END

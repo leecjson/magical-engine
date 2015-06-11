@@ -32,12 +32,23 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-class RenderCommand : public Reference
-{
+class RenderCommand
+{ 
+public:
+	enum
+	{
+		Invalid = -1,
+		Triangle,
+	};
+
 public:
 	RenderCommand( void );
 	virtual ~RenderCommand( void );
+};
 
+enum class VertexInnerData
+{
+	iV3f_C4b_T2f
 };
 
 class TriangleCommand : public RenderCommand
@@ -45,17 +56,22 @@ class TriangleCommand : public RenderCommand
 public:
 	TriangleCommand( void );
 	virtual ~TriangleCommand( void );
-	static Ptr<TriangleCommand> create( void );
 
 public:
-	void initVertexes( const Vertex3f_Color4b_TexCoord2f* vertexes, size_t size );
-	void initIndices( const uint16_t* indices, size_t size );
+	void beginCopyData( size_t vertexes_size, size_t indices_size );
+	void copyData( const Vector3& vertex, const Color4b& color, const Vector2& texcoord );
+	void copyIndex( uint32_t index );
+	void endCopyData( void );
+	
+protected:
+	V3f_C4b_T2f* m_vertexes = nullptr;
+	size_t m_vertexes_index = 0;
+	size_t m_vertexes_size = 0;
 
 protected:
-	Vertex3f_Color4b_TexCoord2f* m_vertexes;
-	uint16_t* m_indices;
-	size_t m_vertexes_size;
-	size_t m_indices_size;
+	uint32_t* m_indices = nullptr;
+	size_t m_indices_index = 0;
+	size_t m_indices_size = 0;
 };
 
 NAMESPACE_END

@@ -60,9 +60,9 @@ MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program );
 
 NAMESPACE_MAGICAL
 
-struct Vertex3f_Color4b_TexCoord2f
+struct V3f_C4b_T2f
 {
-	Vector2 vertex;
+	Vector3 vertex;
 	Color4b color;
 	Vector2 texcoord;
 };
