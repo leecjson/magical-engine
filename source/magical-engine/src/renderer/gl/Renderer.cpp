@@ -32,6 +32,8 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
+static Vertex3f_Color4b_TexCoord2f m_vbo_triangles[ VboSize ];
+
 using std::vector;
 
 Vector3 rect[4];
