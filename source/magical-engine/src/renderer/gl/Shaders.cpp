@@ -38,8 +38,7 @@ const char* Shader::Uniform::MvMatrix = "u_mv_matrix";
 const char* Shader::Uniform::PMatrix = "u_p_matrix";
 const char* Shader::Uniform::TexUnit0 = "u_tex_unit0";
 
-const char* Shader::Source::SimpleVertex = 
-R"(
+const char* Shader::Source::SimpleVertex = R"(
 	attribute vec4 a_vertex;
 
 	void main( void )
@@ -48,8 +47,7 @@ R"(
 	}
 )";
 						
-const char* Shader::Source::SimplePiexl = 
-R"(
+const char* Shader::Source::SimplePiexl = R"(
 	uniform vec4 u_color;
 
 	void main( void )
@@ -58,8 +56,7 @@ R"(
 	}
 )";
 
-const char* Shader::Source::FlatVertex = 
-R"(
+const char* Shader::Source::FlatVertex = R"(
 	uniform mat4 u_mvp_matrix;
 	attribute vec4 a_vertex;
 	attribute vec4 a_color;
@@ -72,8 +69,7 @@ R"(
 	}
 )";
 						
-const char* Shader::Source::FlatPiexl = 
-R"(
+const char* Shader::Source::FlatPiexl = R"(
 	varying vec4 v_color;
 
 	void main( void )
