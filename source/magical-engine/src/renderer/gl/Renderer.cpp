@@ -31,11 +31,6 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-<<<<<<< HEAD
-static Vertex3f_Color4b_TexCoord2f m_vbo_triangles[ VboSize ];
-
-using std::vector;
-=======
 //static V3f_C4b_T2f s_vbo_triangles[ Renderer::VboSize ];
 
 static Vector3 s_vbo_vertexes[ Renderer::VboSize ];
@@ -43,7 +38,6 @@ static Color4b s_vbo_colors[ Renderer::VboSize ];
 static Vector3 s_vbo_normals[ Renderer::VboSize ];
 static Vector2 s_vbo_texcoords[ Renderer::VboSize ];
 static uint32_t s_vbo_indices[ Renderer::VboSize * 3 ];
->>>>>>> origin/master
 
 
 void Renderer::init( void )

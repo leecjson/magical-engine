@@ -21,83 +21,37 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __SHADERS_H__
-#define __SHADERS_H__
+#ifndef __BATCH_H__
+#define __BATCH_H__
 
 #include "magical-macros.h"
+#include "magical-math.h"
 #include "Common.h"
-#include "Reference.h"
-#include "ShaderProgram.h"
 
 NAMESPACE_MAGICAL
 
-class Shader
+class Batch
 {
 public:
-	enum : int
-	{
-		Simple,
-		Flat,
-		Count
-	};
+	Batch( void );
+	~Batch( void );
 
 public:
-	struct AttribLocation 
-	{
-		enum : unsigned short
-		{
-			iVertex          = 1 << 0,
-			iColor           = 1 << 1,
-			iTextureCoord    = 1 << 2,
-			iNormal          = 1 << 3,
-			iPlaceHolder1    = 1 << 4,
-			iPlaceHolder2    = 1 << 5,
-			iPlaceHolder3    = 1 << 6,
-			iPlaceHolder3    = 1 << 7,
-			iAttrib1         = 1 << 8,
-			iAttrib2         = 1 << 9,
-			iAttrib3         = 1 << 10,
-			iAttrib4         = 1 << 11,
-			iAttrib5         = 1 << 12,
-			iAttrib6         = 1 << 13,
-			iAttrib7         = 1 << 14,
-			iAttrib8         = 1 << 15
-		};
+	void beginCopyData( unsigned short attr, size_t size );
+	void copyVector2( const Vector2& v );
+	void copyVector3( const Vector3& v );
+	void copyVector4( const Vector4& v );
+	void copyIndex( uint32_t index );
+	void endCopyData( void );
 
-		static const char* Vertex;
-		static const char* Color;
-		static const char* TextureCoord;
-		static const char* Normal;
-	};
-
-public:
-	struct Uniform
-	{
-		static const char* Color;
-		static const char* MvpMatrix;
-		static const char* MvMatrix;
-		static const char* PMatrix;
-		static const char* TexUnit0;
-	};
-
-public:
-	struct Source
-	{
-		static const char* SimpleVertex;
-		static const char* SimplePiexl;
-		static const char* FlatVertex;
-		static const char* FlatPiexl;
-	};
-
-public:
-	static void init( void );
-	static void delc( void );
-
-public:
-	static ShaderProgram* getProgram( int index );
+protected:
+	unsigned short m_attr = 0;
+	char* m_vertexes = nullptr;
+	size_t m_vertexes_size = 0;
+	unsigned int* m_indices = nullptr;
+	size_t m_indices_size = 0;
 };
 
 NAMESPACE_END
 
-
-#endif //__SHADERS_H__
+#endif //__BATCH_H__

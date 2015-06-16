@@ -216,6 +216,9 @@
     <ClCompile Include="..\src\com\System.cpp">
       <Filter>src\com</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\Batch.cpp">
+      <Filter>src\renderer\gl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\platform\magical-macros.h">
@@ -394,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="..\src\com\System.h">
       <Filter>src\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\Batch.h">
+      <Filter>src\renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
