@@ -25,44 +25,45 @@ SOFTWARE.
 #define __BATCH_H__
 
 #include "magical-macros.h"
-#include "magical-math.h"
 #include "Common.h"
+#include "Reference.h"
+#include "RenderDefine.h"
 #include "Shaders.h"
 
 NAMESPACE_MAGICAL
 
-class Batch
+class Batch : public Reference
 {
 public:
 	Batch( void );
-	~Batch( void );
+	virtual ~Batch( void );
+	static Ptr<Batch> create( void );
 
 public:
-	void beginCopyData( unsigned short location, size_t sizeof_vertex, size_t vertex_count, size_t indices_count = 0 );
-	void endCopyData( void );
+	void setDrawMode( unsigned int draw_mode );
+	void setVertexAttrib( unsigned short location );
+	unsigned int getDrawMode( void ) const { return m_draw_mode; }
+	unsigned short getVertexAttrib( void ) const { return m_location; }
 
 public:
-	inline void copyBool( const Shader::Inner::bool_t data );
-	inline void copyBool2( const Shader::Inner::bool2_t data );
-	inline void copyBool3( const Shader::Inner::bool3_t data );
-	inline void copyBool4( const Shader::Inner::bool4_t data );
-
-public:
-	inline void copyInt( const Shader::Inner::int_t data );
-	inline void copyInt2( const Shader::Inner::int2_t data );
-	inline void copyInt3( const Shader::Inner::int3_t data );
-	inline void copyInt4( const Shader::Inner::int4_t data );
-
-public:
-	inline void copyFloat( const Shader::Inner::float_t data );
-	inline void copyFloat2( const Shader::Inner::float2_t data );
-	inline void copyFloat3( const Shader::Inner::float3_t data );
-	inline void copyFloat4( const Shader::Inner::float4_t data );
-
-public:
+	void beginCopyData( size_t sizeof_vertex, size_t vertex_count, size_t indices_count = 0 );
+	inline void copyBool( const Shader::bool_t data );
+	inline void copyBool2( const Shader::bool2_t data );
+	inline void copyBool3( const Shader::bool3_t data );
+	inline void copyBool4( const Shader::bool4_t data );
+	inline void copyInt( const Shader::int_t data );
+	inline void copyInt2( const Shader::int2_t data );
+	inline void copyInt3( const Shader::int3_t data );
+	inline void copyInt4( const Shader::int4_t data );
+	inline void copyFloat( const Shader::float_t data );
+	inline void copyFloat2( const Shader::float2_t data );
+	inline void copyFloat3( const Shader::float3_t data );
+	inline void copyFloat4( const Shader::float4_t data );
 	inline void copyIndex( unsigned int index );
+	void endCopyData( void );
 	
 protected:
+	unsigned int m_draw_mode = DrawMode::Invalid;
 	unsigned short m_location = 0;
 	char* m_vertexes = nullptr;
 	size_t m_vertexes_count = 0;

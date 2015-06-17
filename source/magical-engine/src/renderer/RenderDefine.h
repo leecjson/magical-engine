@@ -54,7 +54,7 @@ MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program );
 
 NAMESPACE_MAGICAL
 
-struct DrawShape
+struct DrawMode
 {
 	static const unsigned int Invalid = -1;
 #ifdef MAGICAL_USING_GL

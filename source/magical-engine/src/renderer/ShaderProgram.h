@@ -26,8 +26,8 @@ SOFTWARE.
 
 #include "magical-macros.h"
 #include "Common.h"
-#include "RenderCommon.h"
 #include "Reference.h"
+#include "RenderDefine.h"
 
 NAMESPACE_MAGICAL
 

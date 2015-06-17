@@ -42,61 +42,58 @@ public:
 	};
 
 public:
-	struct Inner
+	typedef bool bool_t;
+	typedef bool bool2_t[2];
+	typedef bool bool3_t[3];
+	typedef bool bool4_t[4];
+
+	enum : size_t
 	{
-		typedef bool bool_t;
-		typedef bool bool2_t[2];
-		typedef bool bool3_t[3];
-		typedef bool bool4_t[4];
+		Sizeof_bool_t = sizeof( bool_t ),
+		Sizeof_bool2_t = sizeof( bool2_t ),
+		Sizeof_bool3_t = sizeof( bool3_t ),
+		Sizeof_bool4_t = sizeof( bool4_t ),
+	};
 
-		enum : size_t
-		{
-			Sizeof_bool_t = sizeof( bool_t ),
-			Sizeof_bool2_t = sizeof( bool2_t ),
-			Sizeof_bool3_t = sizeof( bool3_t ),
-			Sizeof_bool4_t = sizeof( bool4_t ),
-		};
+	typedef int int_t;
+	typedef int int2_t[2];
+	typedef int int3_t[3];
+	typedef int int4_t[4];
 
-		typedef int int_t;
-		typedef int int2_t[2];
-		typedef int int3_t[3];
-		typedef int int4_t[4];
+	enum : size_t
+	{
+		Sizeof_int_t = sizeof( int_t ),
+		Sizeof_int2_t = sizeof( int2_t ),
+		Sizeof_int3_t = sizeof( int3_t ),
+		Sizeof_int4_t = sizeof( int4_t ),
+	};
 
-		enum : size_t
-		{
-			Sizeof_int_t = sizeof( int_t ),
-			Sizeof_int2_t = sizeof( int2_t ),
-			Sizeof_int3_t = sizeof( int3_t ),
-			Sizeof_int4_t = sizeof( int4_t ),
-		};
+	typedef float float_t;
+	typedef float float2_t[2];
+	typedef float float3_t[3];
+	typedef float float4_t[4];
 
-		typedef float float_t;
-		typedef float float2_t[2];
-		typedef float float3_t[3];
-		typedef float float4_t[4];
+	enum : size_t
+	{
+		Sizeof_float_t = sizeof( float_t ),
+		Sizeof_float2_t = sizeof( float2_t ),
+		Sizeof_float3_t = sizeof( float3_t ),
+		Sizeof_float4_t = sizeof( float4_t ),
+	};
 
-		enum : size_t
-		{
-			Sizeof_float_t = sizeof( float_t ),
-			Sizeof_float2_t = sizeof( float2_t ),
-			Sizeof_float3_t = sizeof( float3_t ),
-			Sizeof_float4_t = sizeof( float4_t ),
-		};
+	typedef float float2x2_t[4];
+	typedef float float3x3_t[9];
+	typedef float float3x4_t[12];
+	typedef float float4x3_t[12];
+	typedef float float4x4_t[16];
 
-		typedef float float2x2_t[4];
-		typedef float float3x3_t[9];
-		typedef float float3x4_t[12];
-		typedef float float4x3_t[12];
-		typedef float float4x4_t[16];
-
-		enum : size_t
-		{
-			Sizeof_float2x2_t = sizeof( float2x2_t ),
-			Sizeof_float3x3_t = sizeof( float3x3_t ),
-			Sizeof_float3x4_t = sizeof( float3x4_t ),
-			Sizeof_float4x3_t = sizeof( float4x3_t ),
-			Sizeof_float4x4_t = sizeof( float4x4_t ),
-		};
+	enum : size_t
+	{
+		Sizeof_float2x2_t = sizeof( float2x2_t ),
+		Sizeof_float3x3_t = sizeof( float3x3_t ),
+		Sizeof_float3x4_t = sizeof( float3x4_t ),
+		Sizeof_float4x3_t = sizeof( float4x3_t ),
+		Sizeof_float4x4_t = sizeof( float4x4_t ),
 	};
 
 public:
@@ -104,6 +101,7 @@ public:
 	{
 		enum : unsigned short
 		{
+			Invalid    = 0,
 			iVertex    = 1 << 0x0,
 			iColor     = 1 << 0x1,
 			iNormal    = 1 << 0x2,

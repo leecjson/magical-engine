@@ -31,14 +31,8 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-//static V3f_C4b_T2f s_vbo_triangles[ Renderer::VboSize ];
 
-static Vector3 s_vbo_vertexes[ Renderer::VboSize ];
-static Color4b s_vbo_colors[ Renderer::VboSize ];
-static Vector3 s_vbo_normals[ Renderer::VboSize ];
-static Vector2 s_vbo_texcoords[ Renderer::VboSize ];
-static uint32_t s_vbo_indices[ Renderer::VboSize * 3 ];
-
+static char* s_vbo[ Renderer::VboSize ];
 
 void Renderer::init( void )
 {
@@ -65,8 +59,6 @@ void Renderer::setDefault( void )
 	MAGICAL_CHECK_GL_ERROR();
 }
 
-std::vector< std::pair<Matrix4x4, Matrix4x4> > m_queue;
-
 void Renderer::render( const ViewChannel* channel )
 {
 	const Area& area = channel->getArea();
@@ -75,12 +67,10 @@ void Renderer::render( const ViewChannel* channel )
 	glViewport( area.x * win_size.w, area.y * win_size.h, area.w * win_size.w, area.h * win_size.h );
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	
-
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
 }
 
-void Renderer::addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection )
+void Renderer::addCommand( const RenderCommand* command )
 {
 	m_queue.push_back( std::make_pair( local_to_world, view_projection ) );
 }

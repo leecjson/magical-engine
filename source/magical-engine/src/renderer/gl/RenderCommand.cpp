@@ -27,12 +27,20 @@ NAMESPACE_MAGICAL
 
 RenderCommand::RenderCommand( void )
 {
-
+	
 }
 
 RenderCommand::~RenderCommand( void )
 {
+	if( m_batch )
+		m_batch->release();
+}
 
+void RenderCommand::setBatch( Batch* batch )
+{
+	MAGICAL_ASSERT( batch, "Invalid! nullptr" );
+
+	SAFE_ASSIGN( m_batch, batch );
 }
 
 NAMESPACE_END

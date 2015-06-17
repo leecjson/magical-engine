@@ -27,19 +27,12 @@ NAMESPACE_MAGICAL
 
 Batch::Batch( void )
 {
-	/*Batch batch;
-	batch.beginCopyData( 
-		Shader::Attribute::iVertex | Shader::Attribute::iColor | Shader::Attribute::iTextureCoord, 
-		Shader::Inner::Sizeof_float3_t + Shader::Inner::Sizeof_float4_t + Shader::Inner::Sizeof_float2_t,
-		8, 36 );
-	batch.endCopyData();*/
+	Batch batch;
+	batch.setDrawMode( DrawMode::Triangles );
+	batch.setVertexAttrib( Shader::Attribute::iVertex | Shader::Attribute::iColor | Shader::Attribute::iTexCoord );
+	batch.beginCopyData( Shader::Sizeof_float3_t + Shader::Sizeof_float4_t + Shader::Sizeof_float2_t, 8, 36 );
 
-	Ptr<Batch> batch = Batch::create();
-
-	RenderCommand command;
-	command.setShape( Shape::Triangles );
-	command.setBatch( batch );
-	command.
+	batch.endCopyData();
 }
 
 Batch::~Batch( void )
@@ -51,12 +44,29 @@ Batch::~Batch( void )
 		::free( m_indices );
 }
 
-void Batch::beginCopyData( unsigned short location, size_t sizeof_vertex, size_t vertex_count, size_t indices_count )
+Ptr<Batch> Batch::create( void )
 {
-	MAGICAL_ASSERT( location != 0, "Invalid location!" );
+	Batch* ret = new Batch();
+	MAGICAL_ASSERT( ret, "new Batch() failed" );
+	return Ptr<Batch>( Ptrctor<Batch>( ret ) );
+}
+
+void Batch::setDrawMode( unsigned int draw_mode )
+{
+	MAGICAL_ASSERT( draw_mode != DrawMode::Invalid, "Invalid mode!" );
+	m_draw_mode = draw_mode;
+}
+
+void Batch::setVertexAttrib( unsigned short location )
+{
+	MAGICAL_ASSERT( location != Shader::Attribute::Invalid, "Invalid location!" );
+	m_location = location;
+}
+
+void Batch::beginCopyData( size_t sizeof_vertex, size_t vertex_count, size_t indices_count )
+{
 	MAGICAL_ASSERT( sizeof_vertex != 0 && vertex_count != 0, "Invalid size!" );
 
-	m_location = location;
 	m_vertexes_count = vertex_count;
 	m_vertexes_cursor = 0;
 	

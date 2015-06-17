@@ -27,17 +27,19 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "magical-math.h"
 #include "Common.h"
-#include "RenderCommon.h"
 #include "ViewChannel.h"
+
+#include "RenderDefine.h"
 #include "ShaderProgram.h"
 #include "Shaders.h"
+#include "RenderCommand.h"
 
 NAMESPACE_MAGICAL
 
 class Renderer
 {
 public:
-	static const int VboSize = 65536;
+	static const unsigned short VboSize = USHRT_MAX;
 
 public:
 	static void init( void );
@@ -48,7 +50,7 @@ public:
 
 public:
 	static void render( const ViewChannel* channel );
-	static void addCommand( const Matrix4x4 local_to_world, const Matrix4x4& view_projection );
+	static void addCommand( const RenderCommand* command );
 };
 
 NAMESPACE_END

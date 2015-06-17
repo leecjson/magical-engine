@@ -21,10 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDERER_H__
-#define __RENDERER_H__
+#ifndef __RENDER_COMMAND_H__
+#define __RENDER_COMMAND_H__
 
 #include "magical-macros.h"
+#include "magical-math.h"
 #include "Common.h"
 #include "Reference.h"
 #include "RenderDefine.h"
@@ -39,11 +40,13 @@ public:
 	RenderCommand( void );
 	~RenderCommand( void );
 
+public:
+	void setBatch( Batch* batch );
+
 protected:
-	unsigned int m_draw_shape = DrawShape::Invalid;
-	Ptr<Batch> m_batch = nullptr;
+	Batch* m_batch = nullptr;
 };
 
 NAMESPACE_END
 
-#endif //__RENDERER_H__
+#endif //__RENDER_COMMAND_H__
