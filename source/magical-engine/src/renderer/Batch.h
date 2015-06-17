@@ -27,6 +27,7 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "magical-math.h"
 #include "Common.h"
+#include "Shaders.h"
 
 NAMESPACE_MAGICAL
 
@@ -37,21 +38,42 @@ public:
 	~Batch( void );
 
 public:
-	void beginCopyData( unsigned short attr, size_t size );
-	void copyVector2( const Vector2& v );
-	void copyVector3( const Vector3& v );
-	void copyVector4( const Vector4& v );
-	void copyIndex( uint32_t index );
+	void beginCopyData( unsigned short location, size_t sizeof_vertex, size_t vertex_count, size_t indices_count = 0 );
 	void endCopyData( void );
 
+public:
+	inline void copyBool( const Shader::Inner::bool_t data );
+	inline void copyBool2( const Shader::Inner::bool2_t data );
+	inline void copyBool3( const Shader::Inner::bool3_t data );
+	inline void copyBool4( const Shader::Inner::bool4_t data );
+
+public:
+	inline void copyInt( const Shader::Inner::int_t data );
+	inline void copyInt2( const Shader::Inner::int2_t data );
+	inline void copyInt3( const Shader::Inner::int3_t data );
+	inline void copyInt4( const Shader::Inner::int4_t data );
+
+public:
+	inline void copyFloat( const Shader::Inner::float_t data );
+	inline void copyFloat2( const Shader::Inner::float2_t data );
+	inline void copyFloat3( const Shader::Inner::float3_t data );
+	inline void copyFloat4( const Shader::Inner::float4_t data );
+
+public:
+	inline void copyIndex( unsigned int index );
+	
 protected:
-	unsigned short m_attr = 0;
+	unsigned short m_location = 0;
 	char* m_vertexes = nullptr;
-	size_t m_vertexes_size = 0;
+	size_t m_vertexes_count = 0;
+	size_t m_vertexes_cursor = 0;
 	unsigned int* m_indices = nullptr;
-	size_t m_indices_size = 0;
+	size_t m_indices_count = 0;
+	size_t m_indices_cursor = 0;
 };
 
 NAMESPACE_END
+
+#include "Batch.inl"
 
 #endif //__BATCH_H__

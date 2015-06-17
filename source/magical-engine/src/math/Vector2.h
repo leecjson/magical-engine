@@ -46,6 +46,8 @@ public:
 	inline Vector2( void );
 
 public:
+	inline operator float*( void );
+	inline operator const float*( void ) const;
 	inline bool operator==( const Vector2& v ) const;
 	inline bool operator!=( const Vector2& v ) const;
 	inline float& operator[]( size_t i ) const;

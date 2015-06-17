@@ -25,53 +25,23 @@ SOFTWARE.
 #define __RENDERER_H__
 
 #include "magical-macros.h"
-#include "magical-math.h"
 #include "Common.h"
-#include "RenderCommon.h"
 #include "Reference.h"
+#include "RenderDefine.h"
+#include "Batch.h"
+#include "Shaders.h"
 
 NAMESPACE_MAGICAL
 
 class RenderCommand
 { 
 public:
-	enum
-	{
-		Invalid = -1,
-		Triangle,
-	};
-
-public:
 	RenderCommand( void );
-	virtual ~RenderCommand( void );
-};
-
-enum class VertexInnerData
-{
-	iV3f_C4b_T2f
-};
-
-class TriangleCommand : public RenderCommand
-{
-public:
-	TriangleCommand( void );
-	virtual ~TriangleCommand( void );
-
-public:
-	void beginCopyData( size_t vertexes_size, size_t indices_size );
-	void copyData( const Vector3& vertex, const Color4b& color, const Vector2& texcoord );
-	void copyIndex( uint32_t index );
-	void endCopyData( void );
-	
-protected:
-	V3f_C4b_T2f* m_vertexes = nullptr;
-	size_t m_vertexes_index = 0;
-	size_t m_vertexes_size = 0;
+	~RenderCommand( void );
 
 protected:
-	uint32_t* m_indices = nullptr;
-	size_t m_indices_index = 0;
-	size_t m_indices_size = 0;
+	unsigned int m_draw_shape = DrawShape::Invalid;
+	Ptr<Batch> m_batch = nullptr;
 };
 
 NAMESPACE_END

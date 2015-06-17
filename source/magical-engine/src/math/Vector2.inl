@@ -42,6 +42,16 @@ inline Vector2::Vector2( void )
 	
 }
 
+inline Vector2::operator float*( void )
+{
+	return (float*) this;
+}
+
+inline Vector2::operator const float*( void ) const
+{
+	return (const float*) this;
+}
+
 inline bool Vector2::operator==( const Vector2& v ) const
 {
 	return equals( v );

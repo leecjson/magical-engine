@@ -27,10 +27,10 @@ NAMESPACE_MAGICAL
 
 static ShaderProgram* s_programs[ Shader::Count ] = { nullptr };
 
-const char* Shader::AttribLocation::Vertex = "a_vertex";
-const char* Shader::AttribLocation::Color = "a_color";
-const char* Shader::AttribLocation::TextureCoord = "a_texture_coord";
-const char* Shader::AttribLocation::Normal = "a_normal";
+const char* Shader::Attribute::Vertex = "a_vertex";
+const char* Shader::Attribute::Color = "a_color";
+const char* Shader::Attribute::TexCoord = "a_tex_coord";
+const char* Shader::Attribute::Normal = "a_normal";
 
 const char* Shader::Uniform::Color = "u_color";
 const char* Shader::Uniform::MvpMatrix = "u_mvp_matrix";
@@ -51,7 +51,7 @@ const char* Shader::Source::SimplePiexl = R"(
 	uniform vec4 u_color;
 
 	void main( void )
-	{ 
+	{
 		gl_FragColor = u_color;
 	}
 )";

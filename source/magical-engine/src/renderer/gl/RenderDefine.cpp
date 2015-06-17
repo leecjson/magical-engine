@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "RenderCommon.h"
+#include "RenderDefine.h"
 
 MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader )
 {

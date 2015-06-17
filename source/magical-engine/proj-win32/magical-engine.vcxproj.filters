@@ -138,9 +138,6 @@
     <ClCompile Include="..\src\renderer\gl\RenderCommand.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\RenderCommon.cpp">
-      <Filter>src\renderer\gl</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\math\Matrix3x3.cpp">
       <Filter>src\math\space</Filter>
     </ClCompile>
@@ -210,13 +207,16 @@
     <ClCompile Include="..\src\math\Quaternion.cpp">
       <Filter>src\math\space</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\Shaders.cpp">
-      <Filter>src\renderer\gl</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\com\System.cpp">
       <Filter>src\com</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\renderer\gl\Batch.cpp">
+    <ClCompile Include="..\src\renderer\Batch.cpp">
+      <Filter>src\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\Shaders.cpp">
+      <Filter>src\renderer\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\RenderDefine.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
   </ItemGroup>
@@ -317,9 +317,6 @@
     <ClInclude Include="..\src\renderer\RenderCommand.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\renderer\RenderCommon.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\Matrix3x3.h">
       <Filter>src\math\space</Filter>
     </ClInclude>
@@ -392,13 +389,16 @@
     <ClInclude Include="..\src\math\Quaternion.h">
       <Filter>src\math\space</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\renderer\Shaders.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\com\System.h">
       <Filter>src\com</Filter>
     </ClInclude>
     <ClInclude Include="..\src\renderer\Batch.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\Shaders.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\RenderDefine.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
   </ItemGroup>
@@ -471,6 +471,9 @@
     </None>
     <None Include="..\src\math\Quaternion.inl">
       <Filter>src\math\space</Filter>
+    </None>
+    <None Include="..\src\renderer\Batch.inl">
+      <Filter>src\renderer</Filter>
     </None>
   </ItemGroup>
 </Project>

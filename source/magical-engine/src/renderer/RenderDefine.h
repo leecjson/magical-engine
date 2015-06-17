@@ -21,52 +21,54 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Batch.h"
+#ifndef __RENDER_COMMON_H__
+#define __RENDER_COMMON_H__
+
+#include "magical-macros.h"
+#include "Common.h"
+
+#ifdef MAGICAL_USING_GL
+#ifdef MAGICAL_WIN32
+#include "win32/gl/glew/glew.h"
+#endif
+
+#define MAGICAL_CHECK_GL_ERROR() do {                                              \
+	if( GLenum glerror = glGetError() ) {                                          \
+		MAGICAL_SET_LAST_ERROR( System::format( "GL 0x%04X", glerror ).c_str() );  \
+		MAGICAL_LOG_LAST_ERROR();                                                  \
+	}                                                                              \
+	} while( 0 )
+
+#ifndef MAGICAL_DEBUG
+#define MAGICAL_DEBUG_CHECK_GL_ERROR()
+#else
+#define MAGICAL_DEBUG_CHECK_GL_ERROR() MAGICAL_CHECK_GL_ERROR()
+#endif
+
+MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader );
+MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program );
+#endif
+
+#ifdef MAGICAL_USING_D3D11
+#endif
 
 NAMESPACE_MAGICAL
 
-Batch::Batch( void )
+struct DrawShape
 {
-
-}
-
-Batch::~Batch( void )
-{
-	if( m_vertexes )
-		::free( m_vertexes );
-
-	if( m_indices )
-		::free( m_indices );
-}
-
-void Batch::beginCopyData( unsigned short attr, size_t size )
-{
-	m_attr = attr;
-	m_size = size;
-
-	if( m_vertexes )
-		::free( m_vertexes );
-
-	if( m_indices )
-		::free( m_indices );
-
-	m_data = (char*) ::malloc( size );
-	MAGICAL_ASSERT( m_data, "Invalid! ::malloc( size )" );
-}
-
-void Batch::copyVector2( const Vector2& v )
-{
-
-}
-
-void Batch::copyVector3( const Vector3& v )
-{
-
-}
-
-void Batch::copyVector4( const Vector4& v )
-{
-
-}
+	static const unsigned int Invalid = -1;
+#ifdef MAGICAL_USING_GL
+	enum : unsigned int
+	{
+		Triangles = GL_TRIANGLES,
+		TrianglesStrip = GL_TRIANGLE_STRIP,
+		Polygon = GL_POLYGON,
+	};
+#endif
+#ifdef MAGICAL_USING_D3D11
+#endif
+};
 
 NAMESPACE_END
+
+#endif //__RENDER_COMMON_H__

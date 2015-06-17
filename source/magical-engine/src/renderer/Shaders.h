@@ -42,31 +42,89 @@ public:
 	};
 
 public:
-	struct AttribLocation 
+	struct Inner
+	{
+		typedef bool bool_t;
+		typedef bool bool2_t[2];
+		typedef bool bool3_t[3];
+		typedef bool bool4_t[4];
+
+		enum : size_t
+		{
+			Sizeof_bool_t = sizeof( bool_t ),
+			Sizeof_bool2_t = sizeof( bool2_t ),
+			Sizeof_bool3_t = sizeof( bool3_t ),
+			Sizeof_bool4_t = sizeof( bool4_t ),
+		};
+
+		typedef int int_t;
+		typedef int int2_t[2];
+		typedef int int3_t[3];
+		typedef int int4_t[4];
+
+		enum : size_t
+		{
+			Sizeof_int_t = sizeof( int_t ),
+			Sizeof_int2_t = sizeof( int2_t ),
+			Sizeof_int3_t = sizeof( int3_t ),
+			Sizeof_int4_t = sizeof( int4_t ),
+		};
+
+		typedef float float_t;
+		typedef float float2_t[2];
+		typedef float float3_t[3];
+		typedef float float4_t[4];
+
+		enum : size_t
+		{
+			Sizeof_float_t = sizeof( float_t ),
+			Sizeof_float2_t = sizeof( float2_t ),
+			Sizeof_float3_t = sizeof( float3_t ),
+			Sizeof_float4_t = sizeof( float4_t ),
+		};
+
+		typedef float float2x2_t[4];
+		typedef float float3x3_t[9];
+		typedef float float3x4_t[12];
+		typedef float float4x3_t[12];
+		typedef float float4x4_t[16];
+
+		enum : size_t
+		{
+			Sizeof_float2x2_t = sizeof( float2x2_t ),
+			Sizeof_float3x3_t = sizeof( float3x3_t ),
+			Sizeof_float3x4_t = sizeof( float3x4_t ),
+			Sizeof_float4x3_t = sizeof( float4x3_t ),
+			Sizeof_float4x4_t = sizeof( float4x4_t ),
+		};
+	};
+
+public:
+	struct Attribute
 	{
 		enum : unsigned short
 		{
-			iVertex          = 1 << 0,
-			iColor           = 1 << 1,
-			iTextureCoord    = 1 << 2,
-			iNormal          = 1 << 3,
-			iPlaceHolder1    = 1 << 4,
-			iPlaceHolder2    = 1 << 5,
-			iPlaceHolder3    = 1 << 6,
-			iPlaceHolder3    = 1 << 7,
-			iAttrib1         = 1 << 8,
-			iAttrib2         = 1 << 9,
-			iAttrib3         = 1 << 10,
-			iAttrib4         = 1 << 11,
-			iAttrib5         = 1 << 12,
-			iAttrib6         = 1 << 13,
-			iAttrib7         = 1 << 14,
-			iAttrib8         = 1 << 15
+			iVertex    = 1 << 0x0,
+			iColor     = 1 << 0x1,
+			iNormal    = 1 << 0x2,
+			iTexCoord  = 1 << 0x3,
+			iUnused1   = 1 << 0x4,
+			iUnused2   = 1 << 0x5,
+			iUnused3   = 1 << 0x6,
+			iUnused4   = 1 << 0x7,
+			iAttrib1   = 1 << 0x8,
+			iAttrib2   = 1 << 0x9,
+			iAttrib3   = 1 << 0xA,
+			iAttrib4   = 1 << 0xB,
+			iAttrib5   = 1 << 0xC,
+			iAttrib6   = 1 << 0xD,
+			iAttrib7   = 1 << 0xE,
+			iAttrib8   = 1 << 0xF,
 		};
 
 		static const char* Vertex;
 		static const char* Color;
-		static const char* TextureCoord;
+		static const char* TexCoord;
 		static const char* Normal;
 	};
 
