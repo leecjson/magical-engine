@@ -99,25 +99,37 @@ public:
 public:
 	struct Attribute
 	{
-		enum : unsigned short
+		//enum : unsigned short
+		//{
+		//	Invalid    = 0,
+		//	iVertex    = 1 << 0x0,
+		//	iColor     = 1 << 0x1,
+		//	iNormal    = 1 << 0x2,
+		//	iTexCoord  = 1 << 0x3,
+		//	iUnused1   = 1 << 0x4,
+		//	iUnused2   = 1 << 0x5,
+		//	iUnused3   = 1 << 0x6,
+		//	iUnused4   = 1 << 0x7,
+		//	iAttrib1   = 1 << 0x8,
+		//	iAttrib2   = 1 << 0x9,
+		//	iAttrib3   = 1 << 0xA,
+		//	iAttrib4   = 1 << 0xB,
+		//	iAttrib5   = 1 << 0xC,
+		//	iAttrib6   = 1 << 0xD,
+		//	iAttrib7   = 1 << 0xE,
+		//	iAttrib8   = 1 << 0xF,
+		//};
+
+		enum : unsigned int
 		{
-			Invalid    = 0,
-			iVertex    = 1 << 0x0,
-			iColor     = 1 << 0x1,
-			iNormal    = 1 << 0x2,
-			iTexCoord  = 1 << 0x3,
-			iUnused1   = 1 << 0x4,
-			iUnused2   = 1 << 0x5,
-			iUnused3   = 1 << 0x6,
-			iUnused4   = 1 << 0x7,
-			iAttrib1   = 1 << 0x8,
-			iAttrib2   = 1 << 0x9,
-			iAttrib3   = 1 << 0xA,
-			iAttrib4   = 1 << 0xB,
-			iAttrib5   = 1 << 0xC,
-			iAttrib6   = 1 << 0xD,
-			iAttrib7   = 1 << 0xE,
-			iAttrib8   = 1 << 0xF,
+			iVertex2f   = 50,
+			iVertex3f   = 51,
+			iVertex4f   = 52,
+			iColor3f    = 53,
+			iColor4f    = 54,
+			iNormal3f   = 55,
+			iTexCoord   = 56, 
+			Count = 64, Invalid = -1,
 		};
 
 		static const char* Vertex;

@@ -32,13 +32,25 @@ RenderCommand::RenderCommand( void )
 
 RenderCommand::~RenderCommand( void )
 {
+	
+}
+
+
+
+BatchCommand::BatchCommand( void )
+{
+	m_feature = BatchCommand::Feature;
+}
+
+BatchCommand::BatchCommand( void )
+{
 	if( m_batch )
 		m_batch->release();
 }
 
-void RenderCommand::setBatch( Batch* batch )
+void BatchCommand::setBatch( Batch* batch )
 {
-	MAGICAL_ASSERT( batch, "Invalid! nullptr" );
+	MAGICAL_ASSERT( batch, "Invalid! should not nullptr" );
 
 	SAFE_ASSIGN( m_batch, batch );
 }

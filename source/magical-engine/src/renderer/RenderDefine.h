@@ -69,6 +69,15 @@ struct DrawMode
 #endif
 };
 
+struct VertexArray 
+{
+	char*  data;
+	size_t cursor;
+	size_t capacity;
+	unsigned int vertex_index;
+	size_t sizeof_vertex; 
+};
+
 NAMESPACE_END
 
 #endif //__RENDER_COMMON_H__

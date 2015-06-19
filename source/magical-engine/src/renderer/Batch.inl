@@ -23,118 +23,184 @@ SOFTWARE.
 *******************************************************************************/
 NAMESPACE_MAGICAL
 
-inline void Batch::copyBool( const Shader::bool_t data )
+inline void Batch::copyb( Shader::bool_t x )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_bool_t < m_vertexes_count, "Invalid! out of range" );
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_bool_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_bool_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
 
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) &data, Shader::Sizeof_bool_t );
-	m_vertexes_cursor += Shader::Sizeof_bool_t;
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) &x, Shader::Sizeof_bool_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_bool_t;
 }
 
-inline void Batch::copyBool2( const Shader::bool2_t data )
+inline void Batch::copy2b( Shader::bool_t x, Shader::bool_t y )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_bool2_t < m_vertexes_count, "Invalid! out of range" );
-
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_bool2_t );
-	m_vertexes_cursor += Shader::Sizeof_bool2_t;
+	const Shader::bool2_t v = { x, y };
+	copy2bv( v );
 }
 
-inline void Batch::copyBool3( const Shader::bool3_t data )
+inline void Batch::copy3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_bool3_t < m_vertexes_count, "Invalid! out of range" );
-
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_bool3_t );
-	m_vertexes_cursor += Shader::Sizeof_bool3_t;
+	const Shader::bool3_t v = { x, y, z };
+	copy3bv( v );
 }
 
-inline void Batch::copyBool4( const Shader::bool4_t data )
+inline void Batch::copy4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_bool4_t < m_vertexes_count, "Invalid! out of range" );
-
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_bool4_t );
-	m_vertexes_cursor += Shader::Sizeof_bool4_t;
+	const Shader::bool4_t v = { x, y, z, w };
+	copy4bv( v );
 }
 
-inline void Batch::copyInt( const Shader::int_t data )
+inline void Batch::copy2bv( const Shader::bool2_t v )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_int_t < m_vertexes_count, "Invalid! out of range" );
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_bool2_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_bool2_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
 
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) &data, Shader::Sizeof_int_t );
-	m_vertexes_cursor += Shader::Sizeof_int_t;
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor * Shader::Sizeof_bool2_t, (char*) v, Shader::Sizeof_bool2_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_bool2_t;
 }
 
-inline void Batch::copyInt2( const Shader::int2_t data )
+inline void Batch::copy3bv( const Shader::bool3_t v )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_int2_t < m_vertexes_count, "Invalid! out of range" );
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_bool3_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_bool3_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
 
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_int2_t );
-	m_vertexes_cursor += Shader::Sizeof_int2_t;
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor * Shader::Sizeof_bool3_t, (char*) v, Shader::Sizeof_bool3_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_bool3_t;
 }
 
-inline void Batch::copyInt3( const Shader::int3_t data )
+inline void Batch::copy4bv( const Shader::bool4_t v )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_int3_t < m_vertexes_count, "Invalid! out of range" );
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_bool4_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_bool4_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
 
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_int3_t );
-	m_vertexes_cursor += Shader::Sizeof_int3_t;
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor * Shader::Sizeof_bool4_t, (char*) v, Shader::Sizeof_bool4_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_bool4_t;
 }
 
-inline void Batch::copyInt4( const Shader::int4_t data )
+inline void Batch::copyi( Shader::int_t x )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_int4_t < m_vertexes_count, "Invalid! out of range" );
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_int_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_int_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
 
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_int4_t );
-	m_vertexes_cursor += Shader::Sizeof_int4_t;
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) &x, Shader::Sizeof_int_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_int_t;
 }
 
-inline void Batch::copyFloat( const Shader::float_t data )
+inline void Batch::copy2i( Shader::int_t x, Shader::int_t y )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_float_t < m_vertexes_count, "Invalid! out of range" );
-
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) &data, Shader::Sizeof_float_t );
-	m_vertexes_cursor += Shader::Sizeof_float_t;
+	const Shader::int2_t v = { x, y };
+	copy2iv( v );
 }
 
-inline void Batch::copyFloat2( const Shader::float2_t data )
+inline void Batch::copy3i( Shader::int_t x, Shader::int_t y, Shader::int_t z )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_float2_t < m_vertexes_count, "Invalid! out of range" );
-
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_float2_t );
-	m_vertexes_cursor += Shader::Sizeof_float2_t;
+	const Shader::int3_t v = { x, y, z };
+	copy3iv( v );
 }
 
-inline void Batch::copyFloat3( const Shader::float3_t data )
+inline void Batch::copy4i( Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_float3_t < m_vertexes_count, "Invalid! out of range" );
-
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_float3_t );
-	m_vertexes_cursor += Shader::Sizeof_float3_t;
+	const Shader::int4_t v = { x, y, z, w };
+	copy4iv( v );
 }
 
-inline void Batch::copyFloat4( const Shader::float4_t data )
+inline void Batch::copy2iv( const Shader::int2_t v )
 {
-	MAGICAL_ASSERT( m_vertexes, "Invalid! call beginCopyData first!" );
-	MAGICAL_ASSERT( m_vertexes_cursor + Shader::Sizeof_float4_t < m_vertexes_count, "Invalid! out of range" );
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_int2_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_int2_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
 
-	memcpy( m_vertexes + m_vertexes_cursor, (char*) data, Shader::Sizeof_float4_t );
-	m_vertexes_cursor += Shader::Sizeof_float4_t;
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) v, Shader::Sizeof_int2_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_int2_t;
+}
+
+inline void Batch::copy3iv( const Shader::int3_t v )
+{
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_int3_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_int3_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
+
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) v, Shader::Sizeof_int3_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_int3_t;
+}
+
+inline void Batch::copy4iv( const Shader::int4_t v )
+{
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_int4_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_int4_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
+
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) v, Shader::Sizeof_int4_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_int4_t;
+}
+
+inline void Batch::copyf( Shader::float_t x )
+{
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_float_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_float_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
+
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) &x, Shader::Sizeof_float_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_float_t;
+}
+
+inline void Batch::copy2f( Shader::float_t x, Shader::float_t y )
+{
+	const Shader::float2_t v = { x, y };
+	copy2fv( v );
+}
+
+inline void Batch::copy3f( Shader::float_t x, Shader::float_t y, Shader::float_t z )
+{
+	const Shader::float3_t v = { x, y, z };
+	copy3fv( v );
+}
+
+inline void Batch::copy4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w )
+{
+	const Shader::float4_t v = { x, y, z, w };
+	copy4fv( v );
+}
+
+inline void Batch::copy2fv( const Shader::float2_t v )
+{
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_float2_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_float2_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
+
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) v, Shader::Sizeof_float2_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_float2_t;
+}
+
+inline void Batch::copy3fv( const Shader::float3_t v )
+{
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_float3_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_float3_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
+
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) v, Shader::Sizeof_float3_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_float3_t;
+}
+
+inline void Batch::copy4fv( const Shader::float4_t v )
+{
+	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
+	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_float4_t, "Invalid! size not equals" );
+	MAGICAL_ASSERT( m_bind_vertex_array->cursor + Shader::Sizeof_float4_t <= m_bind_vertex_array->capacity, "Invalid! out of range" );
+
+	memcpy( m_bind_vertex_array->data + m_bind_vertex_array->cursor, (char*) v, Shader::Sizeof_float4_t );
+	m_bind_vertex_array->cursor += Shader::Sizeof_float4_t;
 }
 
 inline void Batch::copyIndex( unsigned int index )
 {
 	MAGICAL_ASSERT( m_indices, "Invalid!" );
-	MAGICAL_ASSERT( m_indices_cursor + 1 < m_indices_count, "Invalid! out of range" );
+	MAGICAL_ASSERT( m_indices_cursor + 1 <= m_indices_count, "Invalid! out of range" );
 
 	m_indices[ m_indices_cursor ] = index;
 	m_indices_cursor ++;

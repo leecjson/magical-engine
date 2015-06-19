@@ -27,6 +27,7 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
+
 #include "RenderDefine.h"
 #include "Shaders.h"
 
@@ -40,37 +41,50 @@ public:
 	static Ptr<Batch> create( void );
 
 public:
-	void setDrawMode( unsigned int draw_mode );
-	void setVertexAttrib( unsigned short location );
-	unsigned int getDrawMode( void ) const { return m_draw_mode; }
-	unsigned short getVertexAttrib( void ) const { return m_location; }
+	void draw( unsigned int draw_mode, size_t vertex_count, size_t indices_count = 0 );
+	void enableVertexAttrib( unsigned int vertex_index, size_t sizeof_vertex );
+	void disableVertexAttrib( unsigned int vertex_index );
+	void bindVertexAttrib( unsigned int vertex_index );
 
 public:
-	void beginCopyData( size_t sizeof_vertex, size_t vertex_count, size_t indices_count = 0 );
-	inline void copyBool( const Shader::bool_t data );
-	inline void copyBool2( const Shader::bool2_t data );
-	inline void copyBool3( const Shader::bool3_t data );
-	inline void copyBool4( const Shader::bool4_t data );
-	inline void copyInt( const Shader::int_t data );
-	inline void copyInt2( const Shader::int2_t data );
-	inline void copyInt3( const Shader::int3_t data );
-	inline void copyInt4( const Shader::int4_t data );
-	inline void copyFloat( const Shader::float_t data );
-	inline void copyFloat2( const Shader::float2_t data );
-	inline void copyFloat3( const Shader::float3_t data );
-	inline void copyFloat4( const Shader::float4_t data );
+	inline void copyb( Shader::bool_t x );
+	inline void copy2b( Shader::bool_t x, Shader::bool_t y );
+	inline void copy3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z );
+	inline void copy4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w );
+	inline void copy2bv( const Shader::bool2_t v );
+	inline void copy3bv( const Shader::bool3_t v );
+	inline void copy4bv( const Shader::bool4_t v );
+	inline void copyi( Shader::int_t x );
+	inline void copy2i( Shader::int_t x, Shader::int_t y );
+	inline void copy3i( Shader::int_t x, Shader::int_t y, Shader::int_t z );
+	inline void copy4i( Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w );
+	inline void copy2iv( const Shader::int2_t v );
+	inline void copy3iv( const Shader::int3_t v );
+	inline void copy4iv( const Shader::int4_t v );
+	inline void copyf( Shader::float_t x );
+	inline void copy2f( Shader::float_t x, Shader::float_t y );
+	inline void copy3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
+	inline void copy4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
+	inline void copy2fv( const Shader::float2_t v );
+	inline void copy3fv( const Shader::float3_t v );
+	inline void copy4fv( const Shader::float4_t v );
 	inline void copyIndex( unsigned int index );
-	void endCopyData( void );
 	
 protected:
+	friend class Renderer;
 	unsigned int m_draw_mode = DrawMode::Invalid;
-	unsigned short m_location = 0;
-	char* m_vertexes = nullptr;
-	size_t m_vertexes_count = 0;
-	size_t m_vertexes_cursor = 0;
+
+protected:
+	unsigned int m_bind_vertex_index = Shader::Attribute::Invalid;
+	VertexArray* m_bind_vertex_array = nullptr;
+	VertexArray* m_vertex_arrays[ Shader::Attribute::Count ];
+	size_t m_vertex_count = 0;
+
+protected:
 	unsigned int* m_indices = nullptr;
-	size_t m_indices_count = 0;
 	size_t m_indices_cursor = 0;
+	size_t m_indices_count = 0;
+	size_t m_indices_capacity = 0;
 };
 
 NAMESPACE_END

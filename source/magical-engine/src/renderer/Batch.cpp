@@ -27,18 +27,39 @@ NAMESPACE_MAGICAL
 
 Batch::Batch( void )
 {
-	Batch batch;
-	batch.setDrawMode( DrawMode::Triangles );
-	batch.setVertexAttrib( Shader::Attribute::iVertex | Shader::Attribute::iColor | Shader::Attribute::iTexCoord );
-	batch.beginCopyData( Shader::Sizeof_float3_t + Shader::Sizeof_float4_t + Shader::Sizeof_float2_t, 8, 36 );
+	memset( m_vertex_arrays, 0, sizeof( VertexArray* ) * Shader::Attribute::Count );
+	//Batch batch;
+	//batch.draw( DrawMode::Triangles, 8, 36 );
 
-	batch.endCopyData();
+	//batch.enableVertexAttrib( Shader::Attribute::iVertex3f, Shader::Sizeof_float3_t );
+	//batch.copy3f( 1, 1, 1 );
+	//batch.copy3f( 4, 5, 6 );
+	//batch.copy3f( 2, 2, 2 );
+
+	//batch.enableVertexAttrib( Shader::Attribute::iColor4f, Shader::Sizeof_float4_t );
+	//batch.copy4f( 1, 1, 1, 1 );
+	//batch.copy4f( 1, 1, 1, 1 );
+	//batch.copy4f( 1, 1, 1, 1 );
+
+	//batch.enableVertexAttrib( Shader::Attribute::iTexCoord, Shader::Sizeof_float2_t );
+	////batch.bindVertexAttrib( Shader::Attribute::iTexCoord );
+	//batch.copy2f( 1, 1 );
+	//batch.copy2f( 1, 1 );
+	//batch.copy2f( 1, 1 );
+
+	//batch.copyIndex( 0 );
+	//batch.copyIndex( 1 );
+	//batch.copyIndex( 2 );
+
+	//RenderCommand comand;
+	//command.setBatch( batch );
+	//Renderer::addCommand( command );
 }
 
 Batch::~Batch( void )
 {
-	if( m_vertexes )
-		::free( m_vertexes );
+	for( auto& arr : m_vertex_arrays )
+		if( arr ){ ::free( arr->data ); delete arr; }
 
 	if( m_indices )
 		::free( m_indices );
@@ -51,51 +72,132 @@ Ptr<Batch> Batch::create( void )
 	return Ptr<Batch>( Ptrctor<Batch>( ret ) );
 }
 
-void Batch::setDrawMode( unsigned int draw_mode )
+void Batch::draw( unsigned int draw_mode, size_t vertex_count, size_t indices_count = 0 )
 {
 	MAGICAL_ASSERT( draw_mode != DrawMode::Invalid, "Invalid mode!" );
+	MAGICAL_ASSERT( vertex_count > 0, "Invalid count!" );
+
 	m_draw_mode = draw_mode;
-}
-
-void Batch::setVertexAttrib( unsigned short location )
-{
-	MAGICAL_ASSERT( location != Shader::Attribute::Invalid, "Invalid location!" );
-	m_location = location;
-}
-
-void Batch::beginCopyData( size_t sizeof_vertex, size_t vertex_count, size_t indices_count )
-{
-	MAGICAL_ASSERT( sizeof_vertex != 0 && vertex_count != 0, "Invalid size!" );
-
-	m_vertexes_count = vertex_count;
-	m_vertexes_cursor = 0;
-	
-	if( m_vertexes )
-		::free( m_vertexes );
-
-	m_vertexes = (char*) ::malloc( sizeof_vertex * vertex_count );
-	MAGICAL_ASSERT( m_vertexes, "Invalid! ::malloc( sizeof_vertex * count )" );
-
-	m_indices_count = indices_count;
-	m_indices_cursor = 0;
-
-	if( m_indices )
+	if( vertex_count != m_vertex_count )
 	{
-		::free( m_indices );
-		m_indices = nullptr;
+		for( auto& arr : m_vertex_arrays )
+		{
+			if( arr != nullptr )
+			{
+				size_t new_size = vertex_count * arr->sizeof_vertex;
+				if( arr->cursor > new_size )
+					arr->cursor = new_size;
+
+				arr->capacity = new_size;
+				arr->data = (char*) ::realloc( arr->data, new_size );
+				MAGICAL_ASSERT( arr->data, "Invalid realloc!" );
+			}
+		}
+		m_vertex_count = vertex_count;
 	}
 
-	if( indices_count )
+	if( indices_count != m_indices_count )
 	{
-		m_indices = (unsigned int*) ::malloc( sizeof( unsigned int ) * indices_count );
-		MAGICAL_ASSERT( m_indices, "Invalid! ::malloc( sizeof( unsigned int ) * indices_count )" );
+		if( indices_count == 0 && m_indices )
+		{
+			::free( m_indices );
+			m_indices = nullptr;
+			m_indices_cursor = 0;
+		}
+		else
+		{
+			size_t new_size = indices_count * sizeof( unsigned int );
+			if( m_indices_cursor > new_size )
+				m_indices_cursor = new_size;
+
+			if( m_indices )
+			{
+				m_indices = (unsigned int*) ::realloc( m_indices, new_size );
+				MAGICAL_ASSERT( m_indices, "Invalid realloc!" );
+			}
+			else
+			{
+				m_indices = (unsigned int*) ::malloc( new_size );
+				MAGICAL_ASSERT( m_indices, "Invalid malloc!" );
+			}
+		}
+		m_indices_count = indices_count;
+	}
+
+	bindVertexAttrib( Shader::Attribute::Invalid );
+}
+
+void Batch::enableVertexAttrib( unsigned int vertex_index, size_t sizeof_vertex )
+{
+	MAGICAL_ASSERT( m_vertex_count > 0, "Invalid! m_vertex_count should > 0." );
+	MAGICAL_ASSERT( 0 <= vertex_index && vertex_index < Shader::Attribute::Count, "Invalid index!" );
+	MAGICAL_ASSERT( sizeof_vertex > 0, "Invalid sizeof!" );
+
+	VertexArray* arr = m_vertex_arrays[ vertex_index ];
+	if( arr != nullptr )
+	{
+		::free( arr->data );
+		arr->capacity = sizeof_vertex * m_vertex_count;
+		arr->data = (char*) ::malloc( arr->capacity );
+		MAGICAL_ASSERT( arr->data, "Invalid malloc!" );
+		arr->sizeof_vertex = sizeof_vertex;
+		arr->cursor = 0;
+		arr->vertex_index = vertex_index;
+
+		m_bind_vertex_index = vertex_index;
+		m_bind_vertex_array = arr;
+	}
+	else
+	{
+		arr = new VertexArray();
+		arr->capacity = sizeof_vertex * m_vertex_count;
+		arr->data = (char*) ::malloc( arr->capacity );
+		MAGICAL_ASSERT( arr->data, "Invalid malloc!" );
+		arr->sizeof_vertex = sizeof_vertex;
+		arr->cursor = 0;
+		arr->vertex_index = vertex_index;
+		m_vertex_arrays[ vertex_index ] = arr;
+
+		m_bind_vertex_index = vertex_index;
+		m_bind_vertex_array = arr;
 	}
 }
 
-void Batch::endCopyData( void )
+void Batch::disableVertexAttrib( unsigned int vertex_index )
 {
-	MAGICAL_ASSERT( m_vertexes_cursor == m_vertexes_count - 1, "Invalid! didn't finished copy" );
-	MAGICAL_ASSERT( m_indices ? m_indices_cursor == m_indices_count - 1 : true, "Invalid! didn't finished copy" );
+	MAGICAL_ASSERT( 0 <= vertex_index && vertex_index < Shader::Attribute::Count, "Invalid index!" );
+
+	VertexArray* arr = m_vertex_arrays[ vertex_index ];
+	if( arr != nullptr )
+	{
+		::free( arr->data );
+		delete arr;
+		m_vertex_arrays[ vertex_index ] = nullptr;
+	}
+
+	if( vertex_index == m_bind_vertex_index )
+	{
+		m_bind_vertex_index = Shader::Attribute::Invalid;
+		m_bind_vertex_array = nullptr;
+	}
+}
+
+void Batch::bindVertexAttrib( unsigned int vertex_index )
+{
+	if( vertex_index == m_bind_vertex_index )
+		return;
+
+	m_bind_vertex_index = vertex_index;
+	if( vertex_index == Shader::Attribute::Invalid )
+	{
+		m_bind_vertex_array = nullptr;
+		return;
+	}
+
+	VertexArray* arr = m_vertex_arrays[ vertex_index ];
+	MAGICAL_ASSERT( arr, "Invalid bind index!" );
+
+	m_bind_vertex_array = arr;
 }
 
 NAMESPACE_END

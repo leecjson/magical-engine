@@ -39,7 +39,7 @@ NAMESPACE_MAGICAL
 class Renderer
 {
 public:
-	static const unsigned short VboSize = USHRT_MAX;
+	static const size_t VertexArrayDefaultSize = 1024;
 
 public:
 	static void init( void );
@@ -50,7 +50,10 @@ public:
 
 public:
 	static void render( const ViewChannel* channel );
-	static void addCommand( const RenderCommand* command );
+	static void addCommand( RenderCommand* command );
+
+private:
+	static void drawBatchCommands( void );
 };
 
 NAMESPACE_END

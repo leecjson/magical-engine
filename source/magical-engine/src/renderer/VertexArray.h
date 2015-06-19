@@ -21,47 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDER_COMMAND_H__
-#define __RENDER_COMMAND_H__
+#ifndef __VERTEX_ARRAY_H__
+#define __VERTEX_ARRAY_H__
 
 #include "magical-macros.h"
-#include "magical-math.h"
 #include "Common.h"
-#include "Reference.h"
-#include "RenderDefine.h"
-#include "Batch.h"
-#include "Shaders.h"
 
 NAMESPACE_MAGICAL
 
-class RenderCommand
+struct VertexArray
 {
-public:
-	RenderCommand( void );
-	virtual ~RenderCommand( void );
-	int getFeature( void ) const { return m_feature; }
-
-protected:
-	int m_feature;
-};
-
-class BatchCommand : public RenderCommand
-{
-public:
-	enum : int { Feature = 1001 };
-
-public:
-	BatchCommand( void );
-	virtual ~BatchCommand( void );
-
-public:
-	void setBatch( Batch* batch );
-	Batch* getBatch( void ) const { return m_batch; }
-
-protected:
-	Batch* m_batch = nullptr;
+	char*  data;
+	size_t fill_size;
+	size_t capacity;
+	unsigned int vertex_index;
+	size_t sizeof_vertex; 
 };
 
 NAMESPACE_END
 
-#endif //__RENDER_COMMAND_H__
+#endif //__VERTEX_ARRAY_H__

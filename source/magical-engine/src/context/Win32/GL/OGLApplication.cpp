@@ -31,6 +31,13 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
+static GLFWwindow* _window = nullptr;
+static LARGE_INTEGER _interval_win32;
+static double _interval;
+static bool _window_resizable = true;
+static Size _window_size = Size::Zero;
+static std::string _window_title = "magical-engine";
+
 static void win32ErrorCallBack( int err_id, const char* error_desc );
 static void win32MouseButtonCallBack( GLFWwindow* window, int button, int action, int modify );
 static void win32MouseMoveCallBack( GLFWwindow* window, double x, double y );
@@ -40,13 +47,6 @@ static void win32KeyCallBack( GLFWwindow* window, int key, int scancode, int act
 static void win32WindowPosCallBack( GLFWwindow* windows, int x, int y );
 static void win32FrameBufferSizeCallBack( GLFWwindow* window, int w, int h );
 static void win32WindowSizeCallBack( GLFWwindow* window, int width, int height );
-
-static GLFWwindow* _window = nullptr;
-static LARGE_INTEGER _interval_win32;
-static double _interval;
-static bool _window_resizable = true;
-static Size _window_size = Size::Zero;
-static std::string _window_title = "magical-engine";
 
 void Application::run( MainDelegate maindelegate )
 {
