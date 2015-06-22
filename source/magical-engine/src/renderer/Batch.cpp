@@ -103,12 +103,15 @@ void Batch::draw( unsigned int draw_mode, size_t vertex_count, size_t indices_co
 			::free( m_indices );
 			m_indices = nullptr;
 			m_indices_cursor = 0;
+			m_indices_capacity = 0;
 		}
 		else
 		{
 			size_t new_size = indices_count * sizeof( unsigned int );
 			if( m_indices_cursor > new_size )
 				m_indices_cursor = new_size;
+
+			m_indices_capacity = new_size;
 
 			if( m_indices )
 			{

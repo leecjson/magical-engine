@@ -37,25 +37,27 @@ public:
 	ShaderProgram( void );
 	virtual ~ShaderProgram( void );
 	static Ptr<ShaderProgram> create( void );
-	static Ptr<ShaderProgram> create( const char* vertex_src, const char* pixel_src );
+	static Ptr<ShaderProgram> create( const char* vert, const char* frag );
 
-public:	 
-	void setVertexSource( const char* vertex_src );
-	void setPixelSource( const char* pixel_src );
-	uint32_t getId( void ) const { return m_program; }
+public:	
+	void setSource( const char* vert, const char* frag );
+	unsigned int getId( void ) const { return m_program; }
 	bool build( void );
 	bool link( void );
 	void shutdown( void );
 	bool isDone( void ) const;
 
 public:
-	void bindAttribLocation( uint32_t index, const char* name ) const;
-	int32_t getUniformLocation( const char* name ) const;
+	void setUniform4f(  )
+
+public:
+	void bindAttribLocation( unsigned int index, const char* name ) const;
+	int getUniformLocation( const char* name ) const;
 
 protected: 
-	uint32_t m_program;
-	std::string m_vertex_src;
-	std::string m_pixel_src;
+	unsigned int m_program;
+	std::string m_vert_src;
+	std::string m_frag_src;
 	bool m_built = false;
 	bool m_linked = false;
 };

@@ -39,97 +39,92 @@ ShaderProgram::~ShaderProgram( void )
 Ptr<ShaderProgram> ShaderProgram::create( void )
 {
 	ShaderProgram* ret = new ShaderProgram();
-	MAGICAL_ASSERT( ret, "New ShaderProgram() failed" );
+	MAGICAL_ASSERT( ret, "new ShaderProgram() failed" );
 	return Ptr<ShaderProgram>( Ptrctor<ShaderProgram>( ret ) );
 }
 
-Ptr<ShaderProgram> ShaderProgram::create( const char* vertex_src, const char* pixel_src )
+Ptr<ShaderProgram> ShaderProgram::create( const char* vert, const char* frag )
 {
 	ShaderProgram* ret = new ShaderProgram();
-	MAGICAL_ASSERT( ret, "New ShaderProgram() failed" );
-	ret->setVertexSource( vertex_src );
-	ret->setPixelSource( pixel_src );
+	MAGICAL_ASSERT( ret, "new ShaderProgram() failed" );
+	ret->setSource( vert, frag );
 	return Ptr<ShaderProgram>( Ptrctor<ShaderProgram>( ret ) );
 }
 
-void ShaderProgram::setVertexSource( const char* vertex_src )
+void ShaderProgram::setSource( const char* vert, const char* frag )
 {
-	m_vertex_src = vertex_src;
-}
-
-void ShaderProgram::setPixelSource( const char* pixel_src )
-{
-	m_pixel_src = pixel_src;
+	m_vert_src = vert;
+	m_frag_src = frag;
 }
 
 void ShaderProgram::shutdown( void )
 {
-	if( m_program == GL_ZERO )
-		return;
+	if( m_program != GL_ZERO )
+	{
+		if( glIsProgram( m_program ) )
+			glDeleteProgram( m_program );
 
-	if( glIsProgram( m_program ) )
-		glDeleteProgram( m_program );
+		m_built = false;
+		m_linked = false;
+		m_program = GL_ZERO;
 
-	m_built = false;
-	m_linked = false;
-	m_program = GL_ZERO;
-	MAGICAL_CHECK_GL_ERROR();
+		MAGICAL_CHECK_GL_ERROR();
+	}
 }
 
 bool ShaderProgram::build( void )
 {
-	MAGICAL_ASSERT( !m_vertex_src.empty() && !m_pixel_src.empty(), "Invalid! should not empty!" );
+	MAGICAL_ASSERT( !m_vert_src.empty() && !m_frag_src.empty(), "Invalid! should not empty!" );
 	MAGICAL_ASSERT( !m_built, "Invalid! already built!" );
 
 	GLint success = GL_FALSE;
 	GLuint program = GL_ZERO;
-	GLuint vertex_shader = glCreateShader( GL_VERTEX_SHADER );
-	GLuint pixel_shader = glCreateShader( GL_FRAGMENT_SHADER );
+	GLuint vert_shader = glCreateShader( GL_VERTEX_SHADER );
+	GLuint frag_shader = glCreateShader( GL_FRAGMENT_SHADER );
 
-	if( !vertex_shader || !pixel_shader )
+	if( vert_shader == GL_ZERO ||
+		frag_shader == GL_ZERO )
 	{
 		MAGICAL_CHECK_GL_ERROR();
-		glDeleteShader( vertex_shader );
-		glDeleteShader( pixel_shader );
+		glDeleteShader( vert_shader );
+		glDeleteShader( frag_shader );
 		return false;
 	}
 
 	GLchar* buffer[1];
-	buffer[0] = (GLchar*) m_vertex_src.c_str();
-	glShaderSource( vertex_shader, 1, (const GLchar**)buffer, NULL );
-	buffer[0] = (GLchar*) m_pixel_src.c_str();
-	glShaderSource( pixel_shader, 1, (const GLchar**)buffer, NULL );
+	buffer[0] = (GLchar*) m_vert_src.c_str();
+	glShaderSource( vert_shader, 1, (const GLchar**)buffer, NULL );
+	buffer[0] = (GLchar*) m_frag_src.c_str();
+	glShaderSource( frag_shader, 1, (const GLchar**)buffer, NULL );
 
-	glCompileShader( vertex_shader );
-	glCompileShader( pixel_shader );
+	glCompileShader( vert_shader );
+	glCompileShader( frag_shader );
 
-	glGetShaderiv( vertex_shader, GL_COMPILE_STATUS, &success );
+	glGetShaderiv( vert_shader, GL_COMPILE_STATUS, &success );
 	if( success == GL_FALSE )
 	{
-		if( MAGICAL_GET_SHADER_INFO_LOG( vertex_shader ) )
-		{
-			MAGICAL_SET_LAST_ERROR( System::storage );
-			MAGICAL_LOG_LAST_ERROR( false );
-		}
+		char* info = nullptr;
+		MAGICAL_GET_SHADER_INFO_LOG( vert_shader, info );
+		MAGICAL_LOGE( info );
+		::free( info );
 
 		MAGICAL_CHECK_GL_ERROR();
-		glDeleteShader( vertex_shader );
-		glDeleteShader( pixel_shader );
+		glDeleteShader( vert_shader );
+		glDeleteShader( frag_shader );
 		return false;
 	}
 
-	glGetShaderiv( pixel_shader, GL_COMPILE_STATUS, &success );
+	glGetShaderiv( frag_shader, GL_COMPILE_STATUS, &success );
 	if( success == GL_FALSE )
 	{
-		if( MAGICAL_GET_SHADER_INFO_LOG( pixel_shader ) )
-		{
-			MAGICAL_SET_LAST_ERROR( System::storage );
-			MAGICAL_LOG_LAST_ERROR( false );
-		}
+		char* info = nullptr;
+		MAGICAL_GET_SHADER_INFO_LOG( frag_shader, info );
+		MAGICAL_LOGE( info );
+		::free( info );
 
 		MAGICAL_CHECK_GL_ERROR();
-		glDeleteShader( vertex_shader );
-		glDeleteShader( pixel_shader );
+		glDeleteShader( vert_shader );
+		glDeleteShader( frag_shader );
 		return false;
 	}
 
@@ -137,15 +132,15 @@ bool ShaderProgram::build( void )
 	if( program == GL_ZERO )
 	{
 		MAGICAL_CHECK_GL_ERROR();
-		glDeleteShader( vertex_shader );
-		glDeleteShader( pixel_shader );
+		glDeleteShader( vert_shader );
+		glDeleteShader( frag_shader );
 		return false;
 	}
 
-	glAttachShader( program, vertex_shader );
-	glAttachShader( program, pixel_shader );
-	glDeleteShader( vertex_shader );
-	glDeleteShader( pixel_shader );
+	glAttachShader( program, vert_shader );
+	glAttachShader( program, frag_shader );
+	glDeleteShader( vert_shader );
+	glDeleteShader( frag_shader );
 
 	MAGICAL_CHECK_GL_ERROR();
 	MAGICAL_RETURN_EXP_IF_ERROR( false );
@@ -167,11 +162,10 @@ bool ShaderProgram::link( void )
 	glGetProgramiv( m_program, GL_LINK_STATUS, &success );
 	if( success == GL_FALSE )
 	{
-		if( MAGICAL_GET_PROGRAM_INFO_LOG( m_program ) )
-		{
-			MAGICAL_SET_LAST_ERROR( System::storage );
-			MAGICAL_LOG_LAST_ERROR( false );
-		}
+		char* info = nullptr;
+		MAGICAL_GET_PROGRAM_INFO_LOG( m_program, info );
+		MAGICAL_LOGE( info );
+		::free( info );
 
 		MAGICAL_CHECK_GL_ERROR();
 		glDeleteProgram( m_program );
@@ -182,16 +176,18 @@ bool ShaderProgram::link( void )
 	glGetProgramiv( m_program, GL_VALIDATE_STATUS, &success );
 	if( success == GL_FALSE )
 	{
-		if( MAGICAL_GET_PROGRAM_INFO_LOG( m_program ) )
-		{
-			MAGICAL_SET_LAST_ERROR( System::storage );
-			MAGICAL_LOG_LAST_ERROR( false );
-		}
+		char* info = nullptr;
+		MAGICAL_GET_PROGRAM_INFO_LOG( m_program, info );
+		MAGICAL_LOGE( info );
+		::free( info );
 
 		MAGICAL_CHECK_GL_ERROR();
 		glDeleteProgram( m_program );
 		return false;
 	}
+
+	MAGICAL_CHECK_GL_ERROR();
+	MAGICAL_RETURN_EXP_IF_ERROR( false );
 
 	m_linked = true;
 	return true;
@@ -202,15 +198,15 @@ bool ShaderProgram::isDone( void ) const
 	return m_built && m_linked && m_program;
 }
 
-void ShaderProgram::bindAttribLocation( uint32_t index, const char* name ) const
+void ShaderProgram::bindAttribLocation( unsigned int index, const char* name ) const
 {
 	glBindAttribLocation( m_program, index, name );
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
 }
 
-int32_t ShaderProgram::getUniformLocation( const char* name ) const
+int ShaderProgram::getUniformLocation( const char* name ) const
 {
-	int32_t location = glGetUniformLocation( m_program, name );
+	int location = glGetUniformLocation( m_program, name );
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
 	return location;
 }

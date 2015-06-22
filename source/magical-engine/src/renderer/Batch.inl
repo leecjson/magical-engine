@@ -23,7 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 NAMESPACE_MAGICAL
 
-inline void Batch::copyb( Shader::bool_t x )
+inline void Batch::copy1b( Shader::bool_t x )
 {
 	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
 	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_bool_t, "Invalid! size not equals" );
@@ -81,7 +81,7 @@ inline void Batch::copy4bv( const Shader::bool4_t v )
 	m_bind_vertex_array->cursor += Shader::Sizeof_bool4_t;
 }
 
-inline void Batch::copyi( Shader::int_t x )
+inline void Batch::copy1i( Shader::int_t x )
 {
 	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
 	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_int_t, "Invalid! size not equals" );
@@ -139,7 +139,7 @@ inline void Batch::copy4iv( const Shader::int4_t v )
 	m_bind_vertex_array->cursor += Shader::Sizeof_int4_t;
 }
 
-inline void Batch::copyf( Shader::float_t x )
+inline void Batch::copy1f( Shader::float_t x )
 {
 	MAGICAL_ASSERT( 0 <= m_bind_vertex_index && m_bind_vertex_index < Shader::Attribute::Count && m_bind_vertex_array, "Invalid! bind vertex index" );
 	MAGICAL_ASSERT( m_bind_vertex_array->sizeof_vertex == Shader::Sizeof_float_t, "Invalid! size not equals" );
@@ -200,10 +200,10 @@ inline void Batch::copy4fv( const Shader::float4_t v )
 inline void Batch::copyIndex( unsigned int index )
 {
 	MAGICAL_ASSERT( m_indices, "Invalid!" );
-	MAGICAL_ASSERT( m_indices_cursor + 1 <= m_indices_count, "Invalid! out of range" );
+	MAGICAL_ASSERT( m_indices_cursor + sizeof( unsigned int ) <= m_indices_capacity, "Invalid! out of range" );
 
-	m_indices[ m_indices_cursor ] = index;
-	m_indices_cursor ++;
+	m_indices[ m_indices_cursor / sizeof( unsigned int ) ] = index;
+	m_indices_cursor += sizeof( unsigned int );
 }
 
 NAMESPACE_END

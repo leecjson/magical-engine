@@ -47,21 +47,21 @@ public:
 	void bindVertexAttrib( unsigned int vertex_index );
 
 public:
-	inline void copyb( Shader::bool_t x );
+	inline void copy1b( Shader::bool_t x );
 	inline void copy2b( Shader::bool_t x, Shader::bool_t y );
 	inline void copy3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z );
 	inline void copy4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w );
 	inline void copy2bv( const Shader::bool2_t v );
 	inline void copy3bv( const Shader::bool3_t v );
 	inline void copy4bv( const Shader::bool4_t v );
-	inline void copyi( Shader::int_t x );
+	inline void copy1i( Shader::int_t x );
 	inline void copy2i( Shader::int_t x, Shader::int_t y );
 	inline void copy3i( Shader::int_t x, Shader::int_t y, Shader::int_t z );
 	inline void copy4i( Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w );
 	inline void copy2iv( const Shader::int2_t v );
 	inline void copy3iv( const Shader::int3_t v );
 	inline void copy4iv( const Shader::int4_t v );
-	inline void copyf( Shader::float_t x );
+	inline void copy1f( Shader::float_t x );
 	inline void copy2f( Shader::float_t x, Shader::float_t y );
 	inline void copy3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
 	inline void copy4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
