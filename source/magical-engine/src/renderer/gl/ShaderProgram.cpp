@@ -67,6 +67,7 @@ void ShaderProgram::shutdown( void )
 		m_built = false;
 		m_linked = false;
 		m_program = GL_ZERO;
+		m_vertex_index_array.clear();
 
 		MAGICAL_CHECK_GL_ERROR();
 	}
@@ -198,10 +199,12 @@ bool ShaderProgram::isDone( void ) const
 	return m_built && m_linked && m_program;
 }
 
-void ShaderProgram::bindAttribLocation( unsigned int index, const char* name ) const
+void ShaderProgram::bindAttribLocation( unsigned int index, const char* name )
 {
 	glBindAttribLocation( m_program, index, name );
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
+
+	m_vertex_index_array.push_back( index );
 }
 
 int ShaderProgram::getUniformLocation( const char* name ) const
@@ -209,6 +212,116 @@ int ShaderProgram::getUniformLocation( const char* name ) const
 	int location = glGetUniformLocation( m_program, name );
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
 	return location;
+}
+
+void ShaderProgram::uniform1i( int location, Shader::int_t x )
+{
+	glUniform1i( location, x );
+}
+
+void ShaderProgram::uniform2i( int location, Shader::int_t x, Shader::int_t y )
+{
+	glUniform2i( location, x, y );
+}
+
+void ShaderProgram::uniform3i( int location, Shader::int_t x, Shader::int_t y, Shader::int_t z )
+{
+	glUniform3i( location, x, y, z );
+}
+
+void ShaderProgram::uniform4i( int location, Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w )
+{
+	glUniform4i( location, x, y, z, w );
+}
+
+void ShaderProgram::uniform1iv( int location, size_t count, const Shader::int_t* v )
+{
+	glUniform1iv( location, count, v );
+}
+
+void ShaderProgram::uniform2iv( int location, size_t count, const Shader::int_t* v )
+{
+	glUniform2iv( location, count, v );
+}
+
+void ShaderProgram::uniform3iv( int location, size_t count, const Shader::int_t* v )
+{
+	glUniform3iv( location, count, v );
+}
+
+void ShaderProgram::uniform4iv( int location, size_t count, const Shader::int_t* v )
+{
+	glUniform4iv( location, count, v );
+}
+
+void ShaderProgram::uniform1f( int location, Shader::float_t x )
+{
+	glUniform1f( location, x );
+}
+
+void ShaderProgram::uniform2f( int location, Shader::float_t x, Shader::float_t y )
+{
+	glUniform2f( location, x, y );
+}
+
+void ShaderProgram::uniform3f( int location, Shader::float_t x, Shader::float_t y, Shader::float_t z )
+{
+	glUniform3f( location, x, y, z );
+}
+
+void ShaderProgram::uniform4f( int location, Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w )
+{
+	glUniform4f( location, x, y, z, w );
+}
+
+void ShaderProgram::uniform1fv( int location, size_t count, const Shader::float_t* v )
+{
+	glUniform1fv( location, count, v );
+}
+
+void ShaderProgram::uniform2fv( int location, size_t count, const Shader::float_t* v )
+{
+	glUniform2fv( location, count, v );
+}
+
+void ShaderProgram::uniform3fv( int location, size_t count, const Shader::float_t* v )
+{
+	glUniform3fv( location, count, v );
+}
+
+void ShaderProgram::uniform4fv( int location, size_t count, const Shader::float_t* v )
+{ 
+	glUniform4fv( location, count, v );
+}
+
+void ShaderProgram::uniform2x2f( int location, size_t count, bool transpose, const Shader::float_t* v )
+{
+	glUniformMatrix2fv( location, count, transpose, v );
+}
+
+void ShaderProgram::uniform2x3f( int location, size_t count, bool transpose, const Shader::float_t* v )
+{
+	glUniformMatrix2x3fv( location, count, transpose, v );
+}
+
+void ShaderProgram::uniform3x3f( int location, size_t count, bool transpose, const Shader::float_t* v )
+{
+	glUniformMatrix3fv( location, count, transpose, v );
+}
+
+void ShaderProgram::uniform3x4f( int location, size_t count, bool transpose, const Shader::float_t* v )
+{
+	glUniformMatrix3x4fv( location, count, transpose, v );
+}
+
+void ShaderProgram::uniform4x3f( int location, size_t count, bool transpose, const Shader::float_t* v )
+{
+	glUniformMatrix4x3fv( location, count, transpose, v );
+}
+
+void ShaderProgram::uniform4x4f( int location, size_t count, bool transpose, const Shader::float_t* v )
+{
+	glUniformMatrix4fv( location, count, transpose, v );
 }
 
 NAMESPACE_END

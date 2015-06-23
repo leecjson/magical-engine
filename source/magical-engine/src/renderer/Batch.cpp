@@ -132,6 +132,7 @@ void Batch::draw( unsigned int draw_mode, size_t vertex_count, size_t indices_co
 
 void Batch::enableVertexAttrib( unsigned int vertex_index, size_t sizeof_vertex )
 {
+	vertex_index = Shader::Attribute::findArrIndex( vertex_index );
 	MAGICAL_ASSERT( m_vertex_count > 0, "Invalid! m_vertex_count should > 0." );
 	MAGICAL_ASSERT( 0 <= vertex_index && vertex_index < Shader::Attribute::Count, "Invalid index!" );
 	MAGICAL_ASSERT( sizeof_vertex > 0, "Invalid sizeof!" );
@@ -168,6 +169,7 @@ void Batch::enableVertexAttrib( unsigned int vertex_index, size_t sizeof_vertex 
 
 void Batch::disableVertexAttrib( unsigned int vertex_index )
 {
+	vertex_index = Shader::Attribute::findArrIndex( vertex_index );
 	MAGICAL_ASSERT( 0 <= vertex_index && vertex_index < Shader::Attribute::Count, "Invalid index!" );
 
 	VertexArray* arr = m_vertex_arrays[ vertex_index ];

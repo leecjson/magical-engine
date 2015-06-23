@@ -28,9 +28,11 @@ SOFTWARE.
 #include "magical-math.h"
 #include "Common.h"
 #include "Reference.h"
+
 #include "RenderDefine.h"
 #include "Batch.h"
 #include "Shaders.h"
+#include <functional>
 
 NAMESPACE_MAGICAL
 
@@ -39,10 +41,20 @@ class RenderCommand
 public:
 	RenderCommand( void );
 	virtual ~RenderCommand( void );
+
+public:
 	int getFeature( void ) const { return m_feature; }
+	ShaderProgram* getProgram( void ) const { return m_program; }
+
+public:
+	void setProgram( ShaderProgram* program );
+	void setUniformFunc( std::function<void( ShaderProgram* )> callback );
+	void callUniformFunc( void );
 
 protected:
-	int m_feature;
+	int m_feature = 0;
+	ShaderProgram* m_program = nullptr;
+	std::function<void( ShaderProgram* )> m_uniform_func;
 };
 
 class BatchCommand : public RenderCommand

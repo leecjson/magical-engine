@@ -34,14 +34,6 @@ NAMESPACE_MAGICAL
 class Shader
 {
 public:
-	enum : int
-	{
-		Simple,
-		Flat,
-		Count
-	};
-
-public:
 	typedef bool bool_t;
 	typedef bool bool2_t[2];
 	typedef bool bool3_t[3];
@@ -101,15 +93,41 @@ public:
 	{
 		enum : unsigned int
 		{
-			iVertex2f   = 50,
-			iVertex3f   = 51,
-			iVertex4f   = 52,
-			iColor3f    = 53,
-			iColor4f    = 54,
-			iNormal3f   = 55,
-			iTexCoord   = 56, 
-			Count = 64, Invalid = -1,
+			iColor3f   = 1 << 0x00,
+			iColor4f   = 1 << 0x01,
+			iVertex2f  = 1 << 0x02,
+			iVertex3f  = 1 << 0x03,
+			iVertex4f  = 1 << 0x04,
+			iNormal3f  = 1 << 0x05,
+			iTexCoord  = 1 << 0x06,
+			i_______   = 1 << 0x07,
+			i_______   = 1 << 0x08,
+			i_______   = 1 << 0x09,
+			i_______   = 1 << 0x0A,
+			i_______   = 1 << 0x0B,
+			i_______   = 1 << 0x0C,
+			i_______   = 1 << 0x0D,
+			i_______   = 1 << 0x0E,
+			i_______   = 1 << 0x0F,
+			iAttrib0   = 1 << 0x10,
+			iAttrib1   = 1 << 0x11,
+			iAttrib2   = 1 << 0x12,
+			iAttrib3   = 1 << 0x13,
+			iAttrib4   = 1 << 0x14,
+			iAttrib5   = 1 << 0x15,
+			iAttrib6   = 1 << 0x16,
+			iAttrib7   = 1 << 0x17,
+			iAttrib8   = 1 << 0x18,
+			iAttrib9   = 1 << 0x19,
+			iAttribA   = 1 << 0x1A,
+			iAttribB   = 1 << 0x1B,
+			iAttribC   = 1 << 0x1C,
+			iAttribD   = 1 << 0x1D,
+			iAttribE   = 1 << 0x1E,
+			iAttribF   = 1 << 0x1F,
+			Count = 32, Invalid = -1,
 		};
+		static const unsigned int findArrIndex( unsigned int index );
 
 		static const char* Vertex;
 		static const char* Color;
@@ -128,13 +146,21 @@ public:
 	};
 
 public:
-	struct Source
+	struct Simple
 	{
-		static const char* SimpleVertex;
-		static const char* SimplePiexl;
-		static const char* FlatVertex;
-		static const char* FlatPiexl;
+		static const char* Vert;
+		static const char* Frag;
+		static const int Idx = 0;
 	};
+
+	struct Flat
+	{
+		static const char* Vert;
+		static const char* Frag;
+		static const int Idx = 1;
+	};
+
+	enum : int { Count = 2 };
 
 public:
 	static void init( void );

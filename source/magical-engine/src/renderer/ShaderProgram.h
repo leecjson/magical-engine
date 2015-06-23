@@ -27,7 +27,10 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
+
 #include "RenderDefine.h"
+#include "Shaders.h"
+#include <vector>
 
 NAMESPACE_MAGICAL
 
@@ -46,13 +49,33 @@ public:
 	bool link( void );
 	void shutdown( void );
 	bool isDone( void ) const;
-
-public:
-	void setUniform4f(  )
-
-public:
-	void bindAttribLocation( unsigned int index, const char* name ) const;
+	void bindAttribLocation( unsigned int index, const char* name );
 	int getUniformLocation( const char* name ) const;
+	std::vector<unsigned int>& getVertexIndexArray( void ) const;
+	
+public:
+	void uniform1i( int location, Shader::int_t x );
+	void uniform2i( int location, Shader::int_t x, Shader::int_t y );
+	void uniform3i( int location, Shader::int_t x, Shader::int_t y, Shader::int_t z );
+	void uniform4i( int location, Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w );
+	void uniform1iv( int location, size_t count, const Shader::int_t* v );
+	void uniform2iv( int location, size_t count, const Shader::int_t* v );
+	void uniform3iv( int location, size_t count, const Shader::int_t* v );
+	void uniform4iv( int location, size_t count, const Shader::int_t* v );
+	void uniform1f( int location, Shader::float_t x );
+	void uniform2f( int location,Shader::float_t x, Shader::float_t y );
+	void uniform3f( int location, Shader::float_t x, Shader::float_t y, Shader::float_t z );
+	void uniform4f( int location, Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
+	void uniform1fv( int location, size_t count, const Shader::float_t* v );
+	void uniform2fv( int location, size_t count, const Shader::float_t* v );
+	void uniform3fv( int location, size_t count, const Shader::float_t* v );
+	void uniform4fv( int location, size_t count, const Shader::float_t* v );
+	void uniform2x2f( int location, size_t count, bool transpose, const Shader::float_t* v );
+	void uniform2x3f( int location, size_t count, bool transpose, const Shader::float_t* v );
+	void uniform3x3f( int location, size_t count, bool transpose, const Shader::float_t* v );
+	void uniform3x4f( int location, size_t count, bool transpose, const Shader::float_t* v );
+	void uniform4x3f( int location, size_t count, bool transpose, const Shader::float_t* v );
+	void uniform4x4f( int location, size_t count, bool transpose, const Shader::float_t* v );
 
 protected: 
 	unsigned int m_program;
@@ -60,6 +83,7 @@ protected:
 	std::string m_frag_src;
 	bool m_built = false;
 	bool m_linked = false;
+	std::vector<unsigned int> m_vertex_index_array;
 };
 
 NAMESPACE_END

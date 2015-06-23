@@ -32,9 +32,25 @@ RenderCommand::RenderCommand( void )
 
 RenderCommand::~RenderCommand( void )
 {
-	
+	if( m_program )
+		m_program->release();
 }
 
+void RenderCommand::setProgram( ShaderProgram* program )
+{
+	SAFE_ASSIGN( m_program, program );
+}
+
+void RenderCommand::setUniformFunc( std::function<void( ShaderProgram* )> uniform_func )
+{
+	m_uniform_func = uniform_func;
+}
+
+void RenderCommand::callUniformFunc( void )
+{
+	if( m_uniform_func )
+		m_uniform_func( m_program );
+}
 
 
 BatchCommand::BatchCommand( void )
@@ -50,8 +66,6 @@ BatchCommand::BatchCommand( void )
 
 void BatchCommand::setBatch( Batch* batch )
 {
-	MAGICAL_ASSERT( batch, "Invalid! should not nullptr" );
-
 	SAFE_ASSIGN( m_batch, batch );
 }
 

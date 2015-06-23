@@ -134,11 +134,7 @@ void Renderer::drawBatchCommands( void )
 	for( auto& itr : s_batch_command_queue )
 	{
 		
-
-
 	}
-
-
 }
 
 NAMESPACE_END

@@ -35,20 +35,17 @@ inline void Batch::copy1b( Shader::bool_t x )
 
 inline void Batch::copy2b( Shader::bool_t x, Shader::bool_t y )
 {
-	const Shader::bool2_t v = { x, y };
-	copy2bv( v );
+	copy2bv( Shader::bool2_t{ x, y } );
 }
 
 inline void Batch::copy3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z )
 {
-	const Shader::bool3_t v = { x, y, z };
-	copy3bv( v );
+	copy3bv( Shader::bool3_t{ x, y, z } );
 }
 
 inline void Batch::copy4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w )
 {
-	const Shader::bool4_t v = { x, y, z, w };
-	copy4bv( v );
+	copy4bv( Shader::bool4_t{ x, y, z, w } );
 }
 
 inline void Batch::copy2bv( const Shader::bool2_t v )
@@ -93,20 +90,17 @@ inline void Batch::copy1i( Shader::int_t x )
 
 inline void Batch::copy2i( Shader::int_t x, Shader::int_t y )
 {
-	const Shader::int2_t v = { x, y };
-	copy2iv( v );
+	copy2iv( Shader::int2_t{ x, y } );
 }
 
 inline void Batch::copy3i( Shader::int_t x, Shader::int_t y, Shader::int_t z )
 {
-	const Shader::int3_t v = { x, y, z };
-	copy3iv( v );
+	copy3iv( Shader::int3_t{ x, y, z } );
 }
 
 inline void Batch::copy4i( Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w )
 {
-	const Shader::int4_t v = { x, y, z, w };
-	copy4iv( v );
+	copy4iv( Shader::int4_t{ x, y, z, w } );
 }
 
 inline void Batch::copy2iv( const Shader::int2_t v )
@@ -151,20 +145,17 @@ inline void Batch::copy1f( Shader::float_t x )
 
 inline void Batch::copy2f( Shader::float_t x, Shader::float_t y )
 {
-	const Shader::float2_t v = { x, y };
-	copy2fv( v );
+	copy2fv( Shader::float2_t{ x, y } );
 }
 
 inline void Batch::copy3f( Shader::float_t x, Shader::float_t y, Shader::float_t z )
 {
-	const Shader::float3_t v = { x, y, z };
-	copy3fv( v );
+	copy3fv( Shader::float3_t{ x, y, z } );
 }
 
 inline void Batch::copy4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w )
 {
-	const Shader::float4_t v = { x, y, z, w };
-	copy4fv( v );
+	copy4fv( Shader::float4_t{ x, y, z, w } );
 }
 
 inline void Batch::copy2fv( const Shader::float2_t v )
