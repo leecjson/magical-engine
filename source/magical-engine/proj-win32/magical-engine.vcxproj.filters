@@ -210,13 +210,13 @@
     <ClCompile Include="..\src\com\System.cpp">
       <Filter>src\com</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\renderer\Batch.cpp">
-      <Filter>src\renderer</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\renderer\gl\Shaders.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
     <ClCompile Include="..\src\renderer\gl\RenderDefine.cpp">
+      <Filter>src\renderer\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\gl\VertexBufferObject.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
   </ItemGroup>
@@ -392,13 +392,13 @@
     <ClInclude Include="..\src\com\System.h">
       <Filter>src\com</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\renderer\Batch.h">
-      <Filter>src\renderer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\renderer\Shaders.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\renderer\RenderDefine.h">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\VertexBufferObject.h">
       <Filter>src\renderer</Filter>
     </ClInclude>
   </ItemGroup>
@@ -471,9 +471,6 @@
     </None>
     <None Include="..\src\math\Quaternion.inl">
       <Filter>src\math\space</Filter>
-    </None>
-    <None Include="..\src\renderer\Batch.inl">
-      <Filter>src\renderer</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -34,33 +34,69 @@ NAMESPACE_MAGICAL
 class Shader
 {
 public:
-	enum : int
+	enum : unsigned int 
 	{
 #ifdef MAGICAL_USING_GL
-		TBool = GL_BOOL,
-		TByte = GL_BYTE,
-		TUByte = GL_UNSIGNED_BYTE,
-		TInt = GL_INT,
-		TUInt = GL_UNSIGNED_INT,
-		TFloat = GL_FLOAT,
+		tBool = GL_BOOL,
+		tFloat = GL_FLOAT,
+		tInt = GL_INT,
+		tUInt = GL_UNSIGNED_INT,
 #endif
 	};
 
 	typedef bool bool_t;
-	typedef char byte_t;
-	typedef unsigned char ubyte_t;
-	typedef int int_t;
-	typedef unsigned uint_t;
-	typedef float float_t;
+	typedef bool bool2_t[2];
+	typedef bool bool3_t[3];
+	typedef bool bool4_t[4];
 
 	enum : size_t
 	{
 		Sizeof_bool_t = sizeof( bool_t ),
-		Sizeof_byte_t = sizeof( byte_t ),
-		Sizeof_ubyte_t = sizeof( ubyte_t ),
+		Sizeof_bool2_t = sizeof( bool2_t ),
+		Sizeof_bool3_t = sizeof( bool3_t ),
+		Sizeof_bool4_t = sizeof( bool4_t ),
+	};
+
+	typedef unsigned uint_t;
+	typedef int int_t;
+	typedef int int2_t[2];
+	typedef int int3_t[3];
+	typedef int int4_t[4];
+
+	enum : size_t
+	{
 		Sizeof_int_t = sizeof( int_t ),
-		Sizeof_uint_t = sizeof( uint_t ),
+		Sizeof_int2_t = sizeof( int2_t ),
+		Sizeof_int3_t = sizeof( int3_t ),
+		Sizeof_int4_t = sizeof( int4_t ),
+	};
+
+	typedef float float_t;
+	typedef float float2_t[2];
+	typedef float float3_t[3];
+	typedef float float4_t[4];
+
+	enum : size_t
+	{
 		Sizeof_float_t = sizeof( float_t ),
+		Sizeof_float2_t = sizeof( float2_t ),
+		Sizeof_float3_t = sizeof( float3_t ),
+		Sizeof_float4_t = sizeof( float4_t ),
+	};
+
+	typedef float float2x2_t[4];
+	typedef float float3x3_t[9];
+	typedef float float3x4_t[12];
+	typedef float float4x3_t[12];
+	typedef float float4x4_t[16];
+
+	enum : size_t
+	{
+		Sizeof_float2x2_t = sizeof( float2x2_t ),
+		Sizeof_float3x3_t = sizeof( float3x3_t ),
+		Sizeof_float3x4_t = sizeof( float3x4_t ),
+		Sizeof_float4x3_t = sizeof( float4x3_t ),
+		Sizeof_float4x4_t = sizeof( float4x4_t ),
 	};
 
 public:

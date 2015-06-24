@@ -21,64 +21,41 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDER_COMMON_H__
-#define __RENDER_COMMON_H__
+#ifndef __RENDERER_H__
+#define __RENDERER_H__
 
 #include "magical-macros.h"
+#include "magical-math.h"
 #include "Common.h"
+#include "ViewChannel.h"
 
-#ifdef MAGICAL_USING_GL
-#ifdef MAGICAL_WIN32
-#include "win32/gl/glew/glew.h"
-#endif
-
-#define MAGICAL_CHECK_GL_ERROR() do {                                              \
-	if( GLenum glerror = glGetError() ) {                                          \
-		MAGICAL_SET_LAST_ERROR( System::format( "GL 0x%04X", glerror ).c_str() );  \
-		MAGICAL_LOG_LAST_ERROR();                                                  \
-	}                                                                              \
-	} while( 0 )
-
-#ifndef MAGICAL_DEBUG
-#define MAGICAL_DEBUG_CHECK_GL_ERROR()
-#else
-#define MAGICAL_DEBUG_CHECK_GL_ERROR() MAGICAL_CHECK_GL_ERROR()
-#endif
-
-MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader, char*& info );
-MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program, char*& info );
-#endif
-
-#ifdef MAGICAL_USING_D3D11
-#endif
+#include "RenderDefine.h"
+#include "ShaderProgram.h"
+#include "Shaders.h"
+#include "RenderCommand.h"
 
 NAMESPACE_MAGICAL
 
-struct DrawMode
+class Renderer
 {
-	static const unsigned int Invalid = -1;
-#ifdef MAGICAL_USING_GL
-	enum : unsigned int
-	{
-		Triangles = GL_TRIANGLES,
-		TrianglesStrip = GL_TRIANGLE_STRIP,
-		Polygon = GL_POLYGON,
-	};
-#endif
-#ifdef MAGICAL_USING_D3D11
-#endif
-};
+public:
+	static const size_t VertexArrayDefaultSize = 1024;
 
-struct VertexArray 
-{
-	char*  data;
-	size_t cursor;
-	size_t capacity;
-	unsigned int vertex_index;
-	unsigned int vertex_type;
-	size_t sizeof_vertex; 
+public:
+	static void init( void );
+	static void delc( void );
+
+public:
+	static void setDefault( void );
+
+public:
+	static void render( const ViewChannel* channel );
+	static void addCommand( RenderCommand* command );
+
+private:
+	static void drawBatchCommands( void );
 };
 
 NAMESPACE_END
 
-#endif //__RENDER_COMMON_H__
+#endif //__RENDERER_H__

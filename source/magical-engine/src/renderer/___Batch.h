@@ -3,14 +3,14 @@ The MIT License (MIT)
 
 Copyright (c) 2014 Jason.lee
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
+Permission is hereby granted, free of charge, to any person obtaining a vertex
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+to use, vertex, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
+The above vertexright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -41,40 +41,37 @@ public:
 	static Ptr<Batch> create( void );
 
 public:
-	void draw( unsigned int draw_mode, size_t vertex_count, size_t indices_count = 0 );
-	void enableVertexAttrib( unsigned int vertex_index, size_t sizeof_vertex );
+	void draw( size_t vertex_count, size_t indices_count = 0 );
+	void enableVertexAttrib( unsigned int vertex_index, unsigned int vertex_type, size_t sizeof_vertex );
 	void disableVertexAttrib( unsigned int vertex_index );
 	void bindVertexAttrib( unsigned int vertex_index );
 
 public:
-	inline void copy1b( Shader::bool_t x );
-	inline void copy2b( Shader::bool_t x, Shader::bool_t y );
-	inline void copy3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z );
-	inline void copy4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w );
-	inline void copy2bv( const Shader::bool2_t v );
-	inline void copy3bv( const Shader::bool3_t v );
-	inline void copy4bv( const Shader::bool4_t v );
-	inline void copy1i( Shader::int_t x );
-	inline void copy2i( Shader::int_t x, Shader::int_t y );
-	inline void copy3i( Shader::int_t x, Shader::int_t y, Shader::int_t z );
-	inline void copy4i( Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w );
-	inline void copy2iv( const Shader::int2_t v );
-	inline void copy3iv( const Shader::int3_t v );
-	inline void copy4iv( const Shader::int4_t v );
-	inline void copy1f( Shader::float_t x );
-	inline void copy2f( Shader::float_t x, Shader::float_t y );
-	inline void copy3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
-	inline void copy4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
-	inline void copy2fv( const Shader::float2_t v );
-	inline void copy3fv( const Shader::float3_t v );
-	inline void copy4fv( const Shader::float4_t v );
-	inline void copyIndex( unsigned int index );
-	
-protected:
-	friend class Renderer;
-	unsigned int m_draw_mode = DrawMode::Invalid;
+	inline void vertex1b( Shader::bool_t x );
+	inline void vertex2b( Shader::bool_t x, Shader::bool_t y );
+	inline void vertex3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z );
+	inline void vertex4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w );
+	inline void vertex2bv( const Shader::bool2_t v );
+	inline void vertex3bv( const Shader::bool3_t v );
+	inline void vertex4bv( const Shader::bool4_t v );
+	inline void vertex1i( Shader::int_t x );
+	inline void vertex2i( Shader::int_t x, Shader::int_t y );
+	inline void vertex3i( Shader::int_t x, Shader::int_t y, Shader::int_t z );
+	inline void vertex4i( Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w );
+	inline void vertex2iv( const Shader::int2_t v );
+	inline void vertex3iv( const Shader::int3_t v );
+	inline void vertex4iv( const Shader::int4_t v );
+	inline void vertex1f( Shader::float_t x );
+	inline void vertex2f( Shader::float_t x, Shader::float_t y );
+	inline void vertex3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
+	inline void vertex4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
+	inline void vertex2fv( const Shader::float2_t v );
+	inline void vertex3fv( const Shader::float3_t v );
+	inline void vertex4fv( const Shader::float4_t v );
+	inline void vertexIndex( Shader::uint_t i );
 
 protected:
+	friend class Renderer;
 	unsigned int m_bind_vertex_index = Shader::Attribute::Invalid;
 	VertexArray* m_bind_vertex_array = nullptr;
 	VertexArray* m_vertex_arrays[ Shader::Attribute::Count ];

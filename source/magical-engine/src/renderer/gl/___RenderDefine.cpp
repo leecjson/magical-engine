@@ -21,45 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __RENDERER_H__
-#define __RENDERER_H__
-
-#include "magical-macros.h"
-#include "magical-math.h"
-#include "Common.h"
-#include "ViewChannel.h"
-
 #include "RenderDefine.h"
-#include "ShaderProgram.h"
-#include "Shaders.h"
-#include "RenderCommand.h"
-#include "VertexBufferObject.h"
 
-NAMESPACE_MAGICAL
-
-class Renderer
+MAGICALAPI bool MAGICAL_GET_SHADER_INFO_LOG( GLuint shader, char*& info )
 {
-//public:
-//	static const size_t VertexArrayDefaultSize = 1024;
-//
-public:
-	static void init( void );
-	static void delc( void );
+	char* info_log;
+	GLint info_length;
+	glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &info_length );
 
-public:
-	static void setDefault( void );
+	info_log = (char*) malloc( info_length );
+	glGetShaderInfoLog( shader, info_length, &info_length, info_log );
 
-public:
-	static void render( const ViewChannel* channel );
-	static void addCommand( RenderCommand* command );
+	if( info_log == nullptr )
+		return false;
 
-	static VertexBufferObject* createVertexBufferObject( void );
-	static void deleteVertexBufferObject( const VertexBufferObject* vbo );
+	info = info_log;
+	return true;
+}
 
-private:
-	static void drawBatchCommands( void );
-};
+MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program, char*& info )
+{
+	char* info_log;
+	GLint info_length;
+	glGetProgramiv( program, GL_INFO_LOG_LENGTH, &info_length );
 
-NAMESPACE_END
+	info_log = (char*) malloc( info_length );
+	glGetProgramInfoLog( program, info_length, &info_length, info_log );
 
-#endif //__RENDERER_H__
+	if( info_log == nullptr )
+		return false;
+
+	info = info_log;
+	return true;
+}

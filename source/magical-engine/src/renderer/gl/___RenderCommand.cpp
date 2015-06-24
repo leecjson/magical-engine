@@ -21,91 +21,52 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Entity.h"
-#include "Scene.h"
-#include "Renderer.h"
+#include "RenderCommand.h"
 
 NAMESPACE_MAGICAL
 
-Entity::Entity( void )
+RenderCommand::RenderCommand( void )
 {
-	m_feature = Entity::Feature;
+	
 }
 
-Entity::~Entity( void )
+RenderCommand::~RenderCommand( void )
 {
-	for( const auto& itr : m_behaviours )
-	{
-		itr.second->onDestroy();
-		itr.second->release();
-	}
+	if( m_program )
+		m_program->release();
 }
 
-Ptr<Entity> Entity::create( void )
+void RenderCommand::setProgram( ShaderProgram* program )
 {
-	Entity* ret = new Entity();
-	MAGICAL_ASSERT( ret, "new Entity() failed" );
-	return Ptr<Entity>( Ptrctor<Entity>( ret ) );
+	SAFE_ASSIGN( m_program, program );
 }
 
-Ptr<Entity> Entity::create( const char* name )
+void RenderCommand::setUniformFunc( std::function<void( ShaderProgram* )> uniform_func )
 {
-	Entity* ret = new Entity();
-	MAGICAL_ASSERT( ret, "new Entity() failed" );
-	ret->setName( name );
-	return Ptr<Entity>( Ptrctor<Entity>( ret ) );
+	m_uniform_func = uniform_func;
 }
 
-void Entity::visit( Camera* camera )
+void RenderCommand::callUniformFunc( void )
 {
-	if( !m_visible )
-		return;
-
-	// frustum cull check
-	if( camera->isFrustumCullEnabled() )
-	{
-		
-	}
-
-	Renderer::addCommand( getLocalToWorldMatrix(), camera->getViewProjectionMatrix() );
-
-	if( !m_children.empty() )
-	{
-		for( auto child : m_children )
-		{
-			child->visit( camera );
-		}
-	}
+	if( m_uniform_func )
+		m_uniform_func( m_program );
 }
 
-void Entity::start( void ) 
-{
-	for( const auto& itr : m_behaviours )
-		itr.second->onStart();
 
-	Object::start();
+BatchCommand::BatchCommand( void )
+{
+	m_feature = BatchCommand::Feature;
 }
 
-void Entity::stop( void )
+BatchCommand::BatchCommand( void )
 {
-	for( const auto& itr : m_behaviours )
-		itr.second->onStop();
-
-	Object::stop();
+	if( m_batch )
+		m_batch->release();
 }
 
-void Entity::prepare( void )
+void BatchCommand::setBatch( Batch* batch )
 {
-
+	SAFE_ASSIGN( m_batch, batch );
 }
-
-void Entity::update( void )
-{
-	for( const auto& itr : m_behaviours )
-	{
-		itr.second->onUpdate();
-	}
-}
-
 
 NAMESPACE_END

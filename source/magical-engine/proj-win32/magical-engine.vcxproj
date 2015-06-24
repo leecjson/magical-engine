@@ -50,12 +50,12 @@
     <ClCompile Include="..\src\math\Vector2.cpp" />
     <ClCompile Include="..\src\math\Vector3.cpp" />
     <ClCompile Include="..\src\math\Vector4.cpp" />
-    <ClCompile Include="..\src\renderer\Batch.cpp" />
     <ClCompile Include="..\src\renderer\gl\RenderCommand.cpp" />
     <ClCompile Include="..\src\renderer\gl\RenderDefine.cpp" />
     <ClCompile Include="..\src\renderer\gl\Renderer.cpp" />
     <ClCompile Include="..\src\renderer\gl\ShaderProgram.cpp" />
     <ClCompile Include="..\src\renderer\gl\Shaders.cpp" />
+    <ClCompile Include="..\src\renderer\gl\VertexBufferObject.cpp" />
     <ClCompile Include="..\src\utils\Data.cpp" />
     <ClCompile Include="..\src\utils\Reference.cpp" />
     <ClCompile Include="..\src\utils\Utils.cpp" />
@@ -108,12 +108,12 @@
     <ClInclude Include="..\src\math\Vector3.h" />
     <ClInclude Include="..\src\math\Vector4.h" />
     <ClInclude Include="..\src\platform\magical-macros.h" />
-    <ClInclude Include="..\src\renderer\Batch.h" />
     <ClInclude Include="..\src\renderer\RenderCommand.h" />
     <ClInclude Include="..\src\renderer\RenderDefine.h" />
     <ClInclude Include="..\src\renderer\Renderer.h" />
     <ClInclude Include="..\src\renderer\ShaderProgram.h" />
     <ClInclude Include="..\src\renderer\Shaders.h" />
+    <ClInclude Include="..\src\renderer\VertexBufferObject.h" />
     <ClInclude Include="..\src\utils\CachePool.h" />
     <ClInclude Include="..\src\utils\Data.h" />
     <ClInclude Include="..\src\utils\Ptr.h" />
@@ -146,7 +146,6 @@
     <None Include="..\src\math\Vector2.inl" />
     <None Include="..\src\math\Vector3.inl" />
     <None Include="..\src\math\Vector4.inl" />
-    <None Include="..\src\renderer\Batch.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB56813F-8606-453E-A972-09246B0ADDE8}</ProjectGuid>

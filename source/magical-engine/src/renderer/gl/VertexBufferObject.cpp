@@ -21,42 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "Batch.h"
+#include "VertexBufferObject.h"
 
 NAMESPACE_MAGICAL
 
-Batch::Batch( void )
+VertexBufferObject::VertexBufferObject( void )
 {
-	memset( m_vertex_arrays, 0, sizeof( VertexArray* ) * Shader::Attribute::Count );
-	//Batch batch;
-	//batch.draw( DrawMode::Triangles, 8, 36 );
-
-	//batch.enableVertexAttrib( Shader::Attribute::iVertex3f, Shader::Sizeof_float3_t );
-	//batch.copy3f( 1, 1, 1 );
-	//batch.copy3f( 4, 5, 6 );
-	//batch.copy3f( 2, 2, 2 );
-
-	//batch.enableVertexAttrib( Shader::Attribute::iColor4f, Shader::Sizeof_float4_t );
-	//batch.copy4f( 1, 1, 1, 1 );
-	//batch.copy4f( 1, 1, 1, 1 );
-	//batch.copy4f( 1, 1, 1, 1 );
-
-	//batch.enableVertexAttrib( Shader::Attribute::iTexCoord, Shader::Sizeof_float2_t );
-	////batch.bindVertexAttrib( Shader::Attribute::iTexCoord );
-	//batch.copy2f( 1, 1 );
-	//batch.copy2f( 1, 1 );
-	//batch.copy2f( 1, 1 );
-
-	//batch.copyIndex( 0 );
-	//batch.copyIndex( 1 );
-	//batch.copyIndex( 2 );
-
-	//RenderCommand comand;
-	//command.setBatch( batch );
-	//Renderer::addCommand( command );
+	
 }
 
-Batch::~Batch( void )
+VertexBufferObject::~VertexBufferObject( void )
 {
 	for( auto& arr : m_vertex_arrays )
 		if( arr ){ ::free( arr->data ); delete arr; }
@@ -65,19 +39,18 @@ Batch::~Batch( void )
 		::free( m_indices );
 }
 
-Ptr<Batch> Batch::create( void )
+Ptr<VertexBufferObject> VertexBufferObject::create( void )
 {
-	Batch* ret = new Batch();
-	MAGICAL_ASSERT( ret, "new Batch() failed" );
-	return Ptr<Batch>( Ptrctor<Batch>( ret ) );
+	VertexBufferObject* ret = new VertexBufferObject();
+	MAGICAL_ASSERT( ret, "new VertexBufferObject() failed" );
+	return Ptr<VertexBufferObject>( Ptrctor<VertexBufferObject>( ret ) );
 }
 
-void Batch::draw( unsigned int draw_mode, size_t vertex_count, size_t indices_count = 0 )
+void VertexBufferObject::draw( size_t vertex_count, size_t indices_count = 0 )
 {
-	MAGICAL_ASSERT( draw_mode != DrawMode::Invalid, "Invalid mode!" );
+	//MAGICAL_ASSERT( draw_mode != DrawMode::Invalid, "Invalid mode!" );
 	MAGICAL_ASSERT( vertex_count > 0, "Invalid count!" );
 
-	m_draw_mode = draw_mode;
 	if( vertex_count != m_vertex_count )
 	{
 		for( auto& arr : m_vertex_arrays )
@@ -130,7 +103,7 @@ void Batch::draw( unsigned int draw_mode, size_t vertex_count, size_t indices_co
 	bindVertexAttrib( Shader::Attribute::Invalid );
 }
 
-void Batch::enableVertexAttrib( unsigned int vertex_index, size_t sizeof_vertex )
+void VertexBufferObject::enableVertexAttrib( unsigned int vertex_index, unsigned int vertex_type, size_t sizeof_vertex )
 {
 	vertex_index = Shader::Attribute::findArrIndex( vertex_index );
 	MAGICAL_ASSERT( m_vertex_count > 0, "Invalid! m_vertex_count should > 0." );
@@ -167,7 +140,7 @@ void Batch::enableVertexAttrib( unsigned int vertex_index, size_t sizeof_vertex 
 	}
 }
 
-void Batch::disableVertexAttrib( unsigned int vertex_index )
+void VertexBufferObject::disableVertexAttrib( unsigned int vertex_index )
 {
 	vertex_index = Shader::Attribute::findArrIndex( vertex_index );
 	MAGICAL_ASSERT( 0 <= vertex_index && vertex_index < Shader::Attribute::Count, "Invalid index!" );
@@ -187,7 +160,7 @@ void Batch::disableVertexAttrib( unsigned int vertex_index )
 	}
 }
 
-void Batch::bindVertexAttrib( unsigned int vertex_index )
+void VertexBufferObject::bindVertexAttrib( unsigned int vertex_index )
 {
 	if( vertex_index == m_bind_vertex_index )
 		return;

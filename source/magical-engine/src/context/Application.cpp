@@ -43,10 +43,6 @@ void Application::init( void )
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 
-	Input::init();
-	MAGICAL_SHOW_LAST_ERROR();
-	MAGICAL_RETURN_IF_ERROR();
-
 	/*Lua::init();
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();*/
@@ -59,11 +55,15 @@ void Application::init( void )
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 
-	Engine::init();
+	Input::init();
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 
 	Renderer::init();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
+
+	Engine::init();
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 
@@ -82,11 +82,15 @@ void Application::init( void )
 
 void Application::delc( void )
 {
+	Engine::delc();
+	MAGICAL_SHOW_LAST_ERROR();
+	MAGICAL_RETURN_IF_ERROR();
+
 	Renderer::delc();
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 
-	Engine::delc();
+	Input::delc();
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 
@@ -101,10 +105,6 @@ void Application::delc( void )
 	/*Lua::delc();
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();*/
-
-	Input::delc();
-	MAGICAL_SHOW_LAST_ERROR();
-	MAGICAL_RETURN_IF_ERROR();
 
 	Assets::delc();
 	MAGICAL_SHOW_LAST_ERROR();

@@ -32,6 +32,8 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
+static VertexArray* s_vertex_arrays[ Shader::Attribute::Count ] = { nullptr };
+static std::vector<BatchCommand*> s_batch_command_queue;
 
 void Renderer::init( void )
 {
@@ -46,6 +48,11 @@ void Renderer::delc( void )
 {
 	Shader::delc();
 	MAGICAL_RETURN_IF_ERROR();
+
+	for( auto& arr : s_vertex_arrays )
+		if( arr ){ ::free( arr->data ); delete arr; }
+
+	s_batch_command_queue.clear();
 }
 
 void Renderer::setDefault( void )
@@ -56,11 +63,6 @@ void Renderer::setDefault( void )
 	glEnable( GL_CULL_FACE );
 
 	MAGICAL_CHECK_GL_ERROR();
-
-	VertexMemoryObject* vbo = Renderer::VertexObject();
-	vbo->vertex3fv(  )
-	m_vertex_container = Renderer::createVertexContainer();
-	m_vertex_container->enableVertexAttrib(  )
 }
 
 void Renderer::render( const ViewChannel* channel )
@@ -78,12 +80,61 @@ void Renderer::render( const ViewChannel* channel )
 
 void Renderer::addCommand( RenderCommand* command )
 {
+	switch( command->getFeature() )
+	{
+	case BatchCommand::Feature:
+		{
+			BatchCommand* batch_command = (BatchCommand*) command;
+			s_batch_command_queue.push_back( batch_command );
 
+			Batch* batch = batch_command->getBatch();
+			for( auto& arr : batch->m_vertex_arrays )
+			{
+				if( !arr ) continue;
+
+				VertexArray* dst_arr = s_vertex_arrays[ arr->vertex_index ];
+				if( dst_arr == nullptr )
+				{
+					dst_arr = new VertexArray();
+					dst_arr->data = (char*) ::malloc( VertexArrayDefaultSize );
+					dst_arr->cursor = 0;
+					dst_arr->capacity = VertexArrayDefaultSize;
+					dst_arr->sizeof_vertex = arr->sizeof_vertex;
+					dst_arr->vertex_index = arr->vertex_index;
+
+					s_vertex_arrays[ arr->vertex_index ] = dst_arr;
+				}
+
+				MAGICAL_ASSERT( arr->cursor == arr->capacity, "Invalid! not finished." );
+				MAGICAL_ASSERT( arr->sizeof_vertex == dst_arr->sizeof_vertex, "Invalid! size not equals" );
+
+				while( arr->cursor + dst_arr->cursor > dst_arr->capacity )
+				{
+					dst_arr->capacity *= 2;
+					dst_arr->data = (char*) ::realloc( dst_arr->data, dst_arr->capacity );
+					MAGICAL_ASSERT( dst_arr->data, "Invalid realloc!" );
+				}
+
+				::memcpy( dst_arr->data + dst_arr->cursor, arr->data, arr->cursor );
+				dst_arr->cursor += arr->cursor;
+			}
+		}
+		break;
+	default:
+		MAGICAL_ASSERT( false, "Invalid!" );
+		break;
+	}
 }
 
 void Renderer::drawBatchCommands( void )
 {
-	
+	if( s_batch_command_queue.empty() )
+		return;
+
+	for( auto& itr : s_batch_command_queue )
+	{
+		
+	}
 }
 
 NAMESPACE_END
