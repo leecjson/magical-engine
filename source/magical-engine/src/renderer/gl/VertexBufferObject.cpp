@@ -26,17 +26,19 @@ SOFTWARE.
 NAMESPACE_MAGICAL
 
 VertexBufferObject::VertexBufferObject( void )
+: m_vbo_vertices( 0 )
+, m_vbo_indices( 0 )
 {
 	
 }
 
 VertexBufferObject::~VertexBufferObject( void )
 {
-	for( auto& arr : m_vertex_arrays )
-		if( arr ){ ::free( arr->data ); delete arr; }
+	if( m_vbo_vertices )
+		glDeleteBuffers( 1, &m_vbo_vertices );
 
-	if( m_indices )
-		::free( m_indices );
+	if( m_vbo_indices )
+		glDeleteBuffers( 1, &m_vbo_indices );
 }
 
 Ptr<VertexBufferObject> VertexBufferObject::create( void )
@@ -46,136 +48,54 @@ Ptr<VertexBufferObject> VertexBufferObject::create( void )
 	return Ptr<VertexBufferObject>( Ptrctor<VertexBufferObject>( ret ) );
 }
 
-void VertexBufferObject::draw( size_t vertex_count, size_t indices_count = 0 )
+void VertexBufferObject::beginCopyData( size_t vertex_count, size_t indices_count )
 {
-	//MAGICAL_ASSERT( draw_mode != DrawMode::Invalid, "Invalid mode!" );
+	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
 	MAGICAL_ASSERT( vertex_count > 0, "Invalid count!" );
+	m_copying = true;
 
-	if( vertex_count != m_vertex_count )
+	if( m_vbo_vertices == 0 )
 	{
-		for( auto& arr : m_vertex_arrays )
-		{
-			if( arr != nullptr )
-			{
-				size_t new_size = vertex_count * arr->sizeof_vertex;
-				if( arr->cursor > new_size )
-					arr->cursor = new_size;
-
-				arr->capacity = new_size;
-				arr->data = (char*) ::realloc( arr->data, new_size );
-				MAGICAL_ASSERT( arr->data, "Invalid realloc!" );
-			}
-		}
-		m_vertex_count = vertex_count;
+		glGenBuffers( 1, &m_vbo_vertices );
 	}
 
-	if( indices_count != m_indices_count )
+	if( indices_count == 0 )
 	{
-		if( indices_count == 0 && m_indices )
-		{
-			::free( m_indices );
-			m_indices = nullptr;
-			m_indices_cursor = 0;
-			m_indices_capacity = 0;
-		}
-		else
-		{
-			size_t new_size = indices_count * sizeof( unsigned int );
-			if( m_indices_cursor > new_size )
-				m_indices_cursor = new_size;
-
-			m_indices_capacity = new_size;
-
-			if( m_indices )
-			{
-				m_indices = (unsigned int*) ::realloc( m_indices, new_size );
-				MAGICAL_ASSERT( m_indices, "Invalid realloc!" );
-			}
-			else
-			{
-				m_indices = (unsigned int*) ::malloc( new_size );
-				MAGICAL_ASSERT( m_indices, "Invalid malloc!" );
-			}
-		}
-		m_indices_count = indices_count;
-	}
-
-	bindVertexAttrib( Shader::Attribute::Invalid );
-}
-
-void VertexBufferObject::enableVertexAttrib( unsigned int vertex_index, unsigned int vertex_type, size_t sizeof_vertex )
-{
-	vertex_index = Shader::Attribute::findArrIndex( vertex_index );
-	MAGICAL_ASSERT( m_vertex_count > 0, "Invalid! m_vertex_count should > 0." );
-	MAGICAL_ASSERT( 0 <= vertex_index && vertex_index < Shader::Attribute::Count, "Invalid index!" );
-	MAGICAL_ASSERT( sizeof_vertex > 0, "Invalid sizeof!" );
-
-	VertexArray* arr = m_vertex_arrays[ vertex_index ];
-	if( arr != nullptr )
-	{
-		::free( arr->data );
-		arr->capacity = sizeof_vertex * m_vertex_count;
-		arr->data = (char*) ::malloc( arr->capacity );
-		MAGICAL_ASSERT( arr->data, "Invalid malloc!" );
-		arr->sizeof_vertex = sizeof_vertex;
-		arr->cursor = 0;
-		arr->vertex_index = vertex_index;
-
-		m_bind_vertex_index = vertex_index;
-		m_bind_vertex_array = arr;
+		if( m_vbo_indices )
+			glDeleteBuffers( 1, &m_vbo_indices );
 	}
 	else
 	{
-		arr = new VertexArray();
-		arr->capacity = sizeof_vertex * m_vertex_count;
-		arr->data = (char*) ::malloc( arr->capacity );
-		MAGICAL_ASSERT( arr->data, "Invalid malloc!" );
-		arr->sizeof_vertex = sizeof_vertex;
-		arr->cursor = 0;
-		arr->vertex_index = vertex_index;
-		m_vertex_arrays[ vertex_index ] = arr;
-
-		m_bind_vertex_index = vertex_index;
-		m_bind_vertex_array = arr;
+		
 	}
 }
 
-void VertexBufferObject::disableVertexAttrib( unsigned int vertex_index )
+void VertexBufferObject::endCopyData( void )
 {
-	vertex_index = Shader::Attribute::findArrIndex( vertex_index );
-	MAGICAL_ASSERT( 0 <= vertex_index && vertex_index < Shader::Attribute::Count, "Invalid index!" );
-
-	VertexArray* arr = m_vertex_arrays[ vertex_index ];
-	if( arr != nullptr )
-	{
-		::free( arr->data );
-		delete arr;
-		m_vertex_arrays[ vertex_index ] = nullptr;
-	}
-
-	if( vertex_index == m_bind_vertex_index )
-	{
-		m_bind_vertex_index = Shader::Attribute::Invalid;
-		m_bind_vertex_array = nullptr;
-	}
+	MAGICAL_ASSERT( m_copying == true, "Invalid!" );
+	m_copying = false;
+	m_empty = false;
 }
 
-void VertexBufferObject::bindVertexAttrib( unsigned int vertex_index )
+void VertexBufferObject::enableVertexAttrib( unsigned int index, size_t size, int type, bool normalized )
 {
-	if( vertex_index == m_bind_vertex_index )
-		return;
+	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
+	MAGICAL_ASSERT( size > 0 && Shader::sizeof_id( type ) != 0, "Invalid!" );
+	MAGICAL_ASSERT( m_empty, "Invalid!" );
 
-	m_bind_vertex_index = vertex_index;
-	if( vertex_index == Shader::Attribute::Invalid )
+	size_t offset;
+	for( auto& itr : m_vertex_attribs )
 	{
-		m_bind_vertex_array = nullptr;
-		return;
+		offset += Shader::sizeof_id( itr.type ) * itr.size;
 	}
 
-	VertexArray* arr = m_vertex_arrays[ vertex_index ];
-	MAGICAL_ASSERT( arr, "Invalid bind index!" );
+	m_vertex_attribs.push_back( VertexAttrib{ index, size, type, normalized, offset } );
+}
 
-	m_bind_vertex_array = arr;
+void VertexBufferObject::clean( void )
+{
+	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
+	m_empty = true;
 }
 
 NAMESPACE_END

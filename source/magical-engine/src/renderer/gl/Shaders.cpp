@@ -78,46 +78,6 @@ const char* Shader::Source::FlatPiexl = R"(
 	}
 )";
 
-unsigned int Shader::Attribute::findArrIndex( unsigned int index )
-{
-	switch( index )
-	{
-		case 1 << 0x00: return 0x00;
-		case 1 << 0x01: return 0x01;
-		case 1 << 0x02: return 0x02;
-		case 1 << 0x03: return 0x03;
-		case 1 << 0x04: return 0x04;
-		case 1 << 0x05: return 0x05;
-		case 1 << 0x06: return 0x06;
-		case 1 << 0x07: return 0x07;
-		case 1 << 0x08: return 0x08;
-		case 1 << 0x09: return 0x09;
-		case 1 << 0x0A: return 0x0A;
-		case 1 << 0x0B: return 0x0B;
-		case 1 << 0x0C: return 0x0C;
-		case 1 << 0x0D: return 0x0D;
-		case 1 << 0x0E: return 0x0E;
-		case 1 << 0x0F: return 0x0F;
-		case 1 << 0x10: return 0x10;
-		case 1 << 0x11: return 0x11;
-		case 1 << 0x12: return 0x12;
-		case 1 << 0x13: return 0x13;
-		case 1 << 0x14: return 0x14;
-		case 1 << 0x15: return 0x15;
-		case 1 << 0x16: return 0x16;
-		case 1 << 0x17: return 0x17;
-		case 1 << 0x18: return 0x18;
-		case 1 << 0x19: return 0x19;
-		case 1 << 0x1A: return 0x1A;
-		case 1 << 0x1B: return 0x1B;
-		case 1 << 0x1C: return 0x1C;
-		case 1 << 0x1D: return 0x1D;
-		case 1 << 0x1E: return 0x1E;
-		case 1 << 0x1F: return 0x1F;
-		default: return Shader::Attribute::Invalid;
-	}
-}
-
 static void assignProgramSource( int index, ShaderProgram* program )
 {
 	switch( index )

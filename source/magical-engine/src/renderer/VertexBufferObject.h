@@ -30,6 +30,7 @@ SOFTWARE.
 
 #include "RenderDefine.h"
 #include "Shaders.h"
+#include <vector>
 
 NAMESPACE_MAGICAL
 
@@ -44,6 +45,7 @@ public:
 	void beginCopyData( size_t vertex_count, size_t indices_count = 0 );
 	void endCopyData( void );
 	void enableVertexAttrib( unsigned int index, size_t size, int type, bool normalized );
+	void clean( void );
 
 public:
 	inline void vertex1b( Shader::bool_t x );
@@ -70,20 +72,26 @@ public:
 	inline void vertexIndex( Shader::uint_t i );
 
 protected:
-	struct VertexAttrib 
-	{
+	friend class Renderer;
+	bool m_copying = false;
+	bool m_empty = true;
+	size_t m_vertices_count = 0;
+	size_t m_indices_count = 0;
+
+protected:
+	struct VertexAttrib {
 		unsigned int index;
 		size_t size;
 		int type;
 		bool normalized;
+		size_t offset;
 	};
-
-protected:
-	friend class Renderer;
-
+	std::vector<VertexAttrib> m_vertex_attribs;
+	
 protected:
 #ifdef MAGICAL_USING_GL
-	GLuint m_vertex_object;
+	GLuint m_vbo_vertices;
+	GLuint m_vbo_indices;
 #endif
 };
 

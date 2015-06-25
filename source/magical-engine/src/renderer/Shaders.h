@@ -37,6 +37,7 @@ public:
 	enum : int
 	{
 #ifdef MAGICAL_USING_GL
+		TNone = GL_ZERO,
 		TBool = GL_BOOL,
 		TByte = GL_BYTE,
 		TUByte = GL_UNSIGNED_BYTE,
@@ -62,6 +63,28 @@ public:
 		Sizeof_uint_t = sizeof( uint_t ),
 		Sizeof_float_t = sizeof( float_t ),
 	};
+
+	static inline size_t sizeof_id( int type )
+	{
+		switch( type )
+		{
+			case TBool:
+				return Shader::Sizeof_bool_t;
+			case TByte:
+				return Shader::Sizeof_byte_t;
+			case TUByte:
+				return Shader::Sizeof_ubyte_t;
+			case TInt:
+				return Shader::Sizeof_int_t;
+			case TUInt:
+				return Shader::Sizeof_uint_t;
+			case TFloat:
+				return Shader::Sizeof_float_t;
+			case TNone:
+			default:
+				MAGICAL_ASSERT( false, "Invalid!" ); return 0;
+		}
+	}
 
 public:
 	struct Attribute
