@@ -29,7 +29,12 @@ VertexBufferObject::VertexBufferObject( void )
 : m_vbo_vertices( 0 )
 , m_vbo_indices( 0 )
 {
-	
+	VertexBufferObject vbo;
+	//vbo.addVertex4iv
+	//vbo.copyVertex3f( 5, 6, 7 );
+
+	//vbo.vertex3f( 5, 6, 7 );
+	//vbo.copyvertex3f( 5, 6, 7 );
 }
 
 VertexBufferObject::~VertexBufferObject( void )

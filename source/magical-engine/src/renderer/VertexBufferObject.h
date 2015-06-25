@@ -48,28 +48,30 @@ public:
 	void clean( void );
 
 public:
-	inline void vertex1b( Shader::bool_t x );
-	inline void vertex2b( Shader::bool_t x, Shader::bool_t y );
-	inline void vertex3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z );
-	inline void vertex4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w );
-	inline void vertex2bv( const Shader::bool_t* v );
-	inline void vertex3bv( const Shader::bool_t* v );
-	inline void vertex4bv( const Shader::bool_t* v );
-	inline void vertex1i( Shader::int_t x );
-	inline void vertex2i( Shader::int_t x, Shader::int_t y );
-	inline void vertex3i( Shader::int_t x, Shader::int_t y, Shader::int_t z );
-	inline void vertex4i( Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w );
-	inline void vertex2iv( const Shader::int_t* v );
-	inline void vertex3iv( const Shader::int_t* v );
-	inline void vertex4iv( const Shader::int_t* v );
-	inline void vertex1f( Shader::float_t x );
-	inline void vertex2f( Shader::float_t x, Shader::float_t y );
-	inline void vertex3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
-	inline void vertex4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
-	inline void vertex2fv( const Shader::float_t* v );
-	inline void vertex3fv( const Shader::float_t* v );
-	inline void vertex4fv( const Shader::float_t* v );
-	inline void vertexIndex( Shader::uint_t i );
+	inline void addVertex1b( Shader::bool_t x );
+	inline void addVertex2b( Shader::bool_t x, Shader::bool_t y );
+	inline void addVertex3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z );
+	inline void addVertex4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w );
+	//inline void copyVertex4b
+	inline void addVertex2bv( const Shader::bool_t* v );
+	inline void addVertex3bv( const Shader::bool_t* v );
+	inline void addVertex4bv( const Shader::bool_t* v );
+	inline void addVertex1i( Shader::int_t x );
+	inline void addVertex2i( Shader::int_t x, Shader::int_t y );
+	inline void addVertex3i( Shader::int_t x, Shader::int_t y, Shader::int_t z );
+	inline void addVertex4i( Shader::int_t x, Shader::int_t y, Shader::int_t z, Shader::int_t w );
+	inline void addVertex2iv( const Shader::int_t* v );
+	inline void addVertex3iv( const Shader::int_t* v );
+	inline void addVertex4iv( const Shader::int_t* v );
+	inline void addVertex1f( Shader::float_t x );
+	inline void addVertex2f( Shader::float_t x, Shader::float_t y );
+	inline void addVertex3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
+	inline void addVertex4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
+	inline void addVertex2fv( const Shader::float_t* v );
+	inline void addVertex3fv( const Shader::float_t* v );
+	inline void addVertex4fv( const Shader::float_t* v );
+
+	inline void addIndex( Shader::uint_t i );
 
 protected:
 	friend class Renderer;
