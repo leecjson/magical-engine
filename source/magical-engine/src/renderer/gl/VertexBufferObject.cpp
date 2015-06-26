@@ -29,12 +29,71 @@ VertexBufferObject::VertexBufferObject( void )
 : m_vbo_vertices( 0 )
 , m_vbo_indices( 0 )
 {
-	VertexBufferObject vbo;
-	//vbo.addVertex4iv
-	//vbo.copyVertex3f( 5, 6, 7 );
+	/*
+		// init
+		VertexBufferObject* vbo = Renderer::createVertexBufferObject();
 
-	//vbo.vertex3f( 5, 6, 7 );
-	//vbo.copyvertex3f( 5, 6, 7 );
+		vbo->allocVertex( 4, VertexBufferObject::Combine );
+		vbo->enableVertexAttrib( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
+		vbo->enableVertexAttrib( Shader::Attribute::iColor, 4, Shader::TUbyte, true );
+		vbo->enableVertexAttrib( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
+		vbo->combine();
+
+		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+
+		vbo->allocIndex( 6 );
+		vbo->index1s( 0 ); vbo->index1s( 1 ); vbo->index1s( 2 );
+		vbo->index1s( 3 ); vbo->index1s( 4 ); vbo->index1s( 5 );
+
+		// update
+		vbo->clearVertexAttribData();
+		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+
+		vbo->clearIndices();
+		vbo->index1s( 0 ); vbo->index1s( 1 ); vbo->index1s( 2 );
+
+		// delete
+		vbo->removeVertices();
+		vbo->removeIndices();
+	*/
+
+	/*
+		VertexBufferObject* vbo = Renderer::createVertexBufferObject();
+
+		vbo->initVertices( 4, VertexBufferObject::Separate );
+		vbo->enableVertexAttrib( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
+		vbo->enableVertexAttrib( Shader::Attribute::iColor, 4, Shader::TUbyte, true );
+		vbo->enableVertexAttrib( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
+
+		vbo->bindVertexAttrib( Shader::Attribute::iVertex );
+		vbo->vertex3f( 1, 1, 1 );
+		vbo->vertex3f( 1, 1, 1 );
+		vbo->vertex3f( 1, 1, 1 );
+		vbo->vertex3f( 1, 1, 1 );
+
+		vbo->bindVertexAttrib( Shader::Attribute::iColor );
+		vbo->vertex4ub( 255, 255, 255, 255 );
+		vbo->vertex4ub( 255, 255, 255, 255 );
+		vbo->vertex4ub( 255, 255, 255, 255 );
+		vbo->vertex4ub( 255, 255, 255, 255 );
+
+		vbo->bindVertexAttrib( Shader::Attribute::iTexCoord );
+		vbo->vertex2f( 0, 1 );
+		vbo->vertex2f( 0, 1 );
+		vbo->vertex2f( 0, 1 );
+		vbo->vertex2f( 0, 1 );
+
+		// update
+		vbo->disableVertexAttrib( Shader::Attribute::iVertex );
+		vbo->enableVertexAttrib( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
+		or 
+		vbo->clearVertexAttribData( Shader::Attribute::iVertex );
+
+		
+	*/
 }
 
 VertexBufferObject::~VertexBufferObject( void )
@@ -51,6 +110,17 @@ Ptr<VertexBufferObject> VertexBufferObject::create( void )
 	VertexBufferObject* ret = new VertexBufferObject();
 	MAGICAL_ASSERT( ret, "new VertexBufferObject() failed" );
 	return Ptr<VertexBufferObject>( Ptrctor<VertexBufferObject>( ret ) );
+}
+
+void VertexBufferObject::build( void )
+{
+
+}
+
+void VertexBufferObject::clean( void )
+{
+	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
+	m_empty = true;
 }
 
 void VertexBufferObject::beginCopyData( size_t vertex_count, size_t indices_count )
@@ -95,12 +165,6 @@ void VertexBufferObject::enableVertexAttrib( unsigned int index, size_t size, in
 	}
 
 	m_vertex_attribs.push_back( VertexAttrib{ index, size, type, normalized, offset } );
-}
-
-void VertexBufferObject::clean( void )
-{
-	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
-	m_empty = true;
 }
 
 NAMESPACE_END
