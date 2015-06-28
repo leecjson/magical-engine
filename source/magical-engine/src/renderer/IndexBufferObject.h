@@ -30,46 +30,26 @@ SOFTWARE.
 
 #include "RenderDefine.h"
 #include "Shaders.h"
-#include "MapVector.h"
+#include <vector>
 
 NAMESPACE_MAGICAL
 
-struct VertexAttrib 
-	{
-		unsigned int vbo;
-		unsigned int index;
-		size_t size;
-		size_t bytesize;
-		int type;
-		bool normalized;
-		size_t offset;
-	};
-
 class VertexBufferObject : public Reference
 {
-public:
-	enum : int 
-	{
-		None = 0,
-		Separate = 1,
-		Combine = 2,
-	};
-
 public:
 	VertexBufferObject( void );
 	virtual ~VertexBufferObject( void );
 	static Ptr<VertexBufferObject> create( void );
 
 public:
-	void alloc( size_t count, int structure );
-	void free( void );
-	void enable( unsigned int index, size_t size, int type, bool normalized );
-	void bind( unsigned int index );
-	void disable( void );
-	void disable( unsigned int index );
-	void clear( void );
-	void clear( unsigned int index );
-	void combine( void );
+	void build( void );
+
+	void enableVertexAttrib( unsigned int index, size_t size, int type, bool normalized );
+	void disableVertexAttrib( unsigned int index );
+	void disableAllVertexAttrib( void );
+
+	void enableIndices( size_t count );
+	void disableIndices( void );
 
 public:
 	inline void vertex1b( Shader::bool_t x );
@@ -94,26 +74,30 @@ public:
 	inline void vertex3fv( const Shader::float_t* v );
 	inline void vertex4fv( const Shader::float_t* v );
 
+	inline void addIndex( Shader::uint_t i );
+
 protected:
 	friend class Renderer;
-	bool m_alloc = false;
-	int m_structure = None;
-	size_t m_count = 0;
+	bool m_copying = false;
+	bool m_empty = true;
+	size_t m_vertices_count = 0;
+	size_t m_indices_count = 0;
 
 protected:
-	VertexAttrib* m_bind_vertex_attrib = nullptr;
-	MapVector<unsigned int, VertexAttrib*> m_vertex_attribs;
+	struct VertexAttrib {
+		unsigned int index;
+		size_t size;
+		int type;
+		bool normalized;
+		size_t offset;
+	};
+	std::vector<VertexAttrib> m_vertex_attribs;
 	
 protected:
-	unsigned int m_combine_vbo;
-};
-
-class IndexBufferObject : public Reference
-{
-public:
-	IndexBufferObject( void );
-	virtual ~IndexBufferObject( void );
-	static Ptr<IndexBufferObject> create( void );
+#ifdef MAGICAL_USING_GL
+	GLuint m_vbo_vertices;
+	GLuint m_vbo_indices;
+#endif
 };
 
 NAMESPACE_END

@@ -26,17 +26,16 @@ SOFTWARE.
 NAMESPACE_MAGICAL
 
 VertexBufferObject::VertexBufferObject( void )
-: m_vbo_vertices( 0 )
-, m_vbo_indices( 0 )
+: m_combine_vbo( 0 )
 {
 	/*
 		// init
 		VertexBufferObject* vbo = Renderer::createVertexBufferObject();
 
-		vbo->allocVertex( 4, VertexBufferObject::Combine );
-		vbo->enableVertexAttrib( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
-		vbo->enableVertexAttrib( Shader::Attribute::iColor, 4, Shader::TUbyte, true );
-		vbo->enableVertexAttrib( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
+		vbo->alloc( 4, VertexBufferObject::Combine );
+		vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
+		vbo->enable( Shader::Attribute::iColor, 4, Shader::TUbyte, true );
+		vbo->enable( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
 		vbo->combine();
 
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
@@ -44,65 +43,59 @@ VertexBufferObject::VertexBufferObject( void )
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 
-		vbo->allocIndex( 6 );
-		vbo->index1s( 0 ); vbo->index1s( 1 ); vbo->index1s( 2 );
-		vbo->index1s( 3 ); vbo->index1s( 4 ); vbo->index1s( 5 );
-
 		// update
-		vbo->clearVertexAttribData();
+		vbo->clear();
+		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 
-		vbo->clearIndices();
-		vbo->index1s( 0 ); vbo->index1s( 1 ); vbo->index1s( 2 );
-
 		// delete
-		vbo->removeVertices();
-		vbo->removeIndices();
+		vbo->free();
 	*/
 
 	/*
 		VertexBufferObject* vbo = Renderer::createVertexBufferObject();
 
-		vbo->initVertices( 4, VertexBufferObject::Separate );
-		vbo->enableVertexAttrib( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
-		vbo->enableVertexAttrib( Shader::Attribute::iColor, 4, Shader::TUbyte, true );
-		vbo->enableVertexAttrib( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
+		vbo->alloc( 4, VertexBufferObject::Separate );
+		vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
+		vbo->enable( Shader::Attribute::iColor, 4, Shader::TUbyte, true );
+		vbo->enable( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
 
-		vbo->bindVertexAttrib( Shader::Attribute::iVertex );
+		vbo->bind( Shader::Attribute::iVertex );
 		vbo->vertex3f( 1, 1, 1 );
 		vbo->vertex3f( 1, 1, 1 );
 		vbo->vertex3f( 1, 1, 1 );
 		vbo->vertex3f( 1, 1, 1 );
 
-		vbo->bindVertexAttrib( Shader::Attribute::iColor );
+		vbo->bind( Shader::Attribute::iColor );
 		vbo->vertex4ub( 255, 255, 255, 255 );
 		vbo->vertex4ub( 255, 255, 255, 255 );
 		vbo->vertex4ub( 255, 255, 255, 255 );
 		vbo->vertex4ub( 255, 255, 255, 255 );
 
-		vbo->bindVertexAttrib( Shader::Attribute::iTexCoord );
+		vbo->bind( Shader::Attribute::iTexCoord );
 		vbo->vertex2f( 0, 1 );
 		vbo->vertex2f( 0, 1 );
 		vbo->vertex2f( 0, 1 );
 		vbo->vertex2f( 0, 1 );
 
 		// update
-		vbo->disableVertexAttrib( Shader::Attribute::iVertex );
-		vbo->enableVertexAttrib( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
+		vbo->disable( Shader::Attribute::iVertex );
+		vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
 		or 
-		vbo->clearVertexAttribData( Shader::Attribute::iVertex );
+		vbo->clear( Shader::Attribute::iVertex );
+		vbo->clear();
 
-		
+		// delete
+		vbo->free();
 	*/
 }
 
 VertexBufferObject::~VertexBufferObject( void )
 {
-	if( m_vbo_vertices )
-		glDeleteBuffers( 1, &m_vbo_vertices );
-
-	if( m_vbo_indices )
-		glDeleteBuffers( 1, &m_vbo_indices );
+	//if( m_vbo_vertices )
+	//	glDeleteBuffers( 1, &m_vbo_vertices );
 }
 
 Ptr<VertexBufferObject> VertexBufferObject::create( void )
@@ -112,59 +105,142 @@ Ptr<VertexBufferObject> VertexBufferObject::create( void )
 	return Ptr<VertexBufferObject>( Ptrctor<VertexBufferObject>( ret ) );
 }
 
-void VertexBufferObject::build( void )
+void VertexBufferObject::alloc( size_t count, int structure )
 {
+	MAGICAL_ASSERT( count > 0, "Invalid count!" );
+	MAGICAL_ASSERT( structure != None, "Invalid structure!" );
 
+	m_count = count;
+	m_structure = structure;
+	m_alloc = true;
 }
 
-void VertexBufferObject::clean( void )
+void VertexBufferObject::free( void )
 {
-	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
-	m_empty = true;
+	
 }
 
-void VertexBufferObject::beginCopyData( size_t vertex_count, size_t indices_count )
+void VertexBufferObject::enable( unsigned int index, size_t size, int type, bool normalized )
 {
-	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
-	MAGICAL_ASSERT( vertex_count > 0, "Invalid count!" );
-	m_copying = true;
+	MAGICAL_ASSERT( m_alloc, "Invalid! call enable after alloc" );
 
-	if( m_vbo_vertices == 0 )
+	switch( m_structure )
 	{
-		glGenBuffers( 1, &m_vbo_vertices );
-	}
+		case Separate:
+			{
+				GLuint vbo = 0;
+				glGenBuffers( 1, &vbo );
+				glBindBuffer( GL_ARRAY_BUFFER, vbo );
 
-	if( indices_count == 0 )
-	{
-		if( m_vbo_indices )
-			glDeleteBuffers( 1, &m_vbo_indices );
-	}
-	else
-	{
-		
+				size_t bytesize = Shader::sizeof_id( type ) * size;
+				glBufferData( GL_ARRAY_BUFFER, Shader::sizeof_id( type ) * size, nullptr, GL_DYNAMIC_DRAW );
+
+				Pair<unsigned int, VertexAttrib*> kv;
+				kv.first = index;
+				kv.second = new VertexAttrib{ vbo, index, size, bytesize, type, normalized, 0 };
+
+				m_vertex_attribs.push_back_unique( std::move( kv ) );
+			}
+			break;
+		case Combine:
+			{
+
+			}
+			break;
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
 	}
 }
 
-void VertexBufferObject::endCopyData( void )
+void VertexBufferObject::bind( unsigned int index )
 {
-	MAGICAL_ASSERT( m_copying == true, "Invalid!" );
-	m_copying = false;
-	m_empty = false;
+	MAGICAL_ASSERT( m_alloc, "Invalid! call bind after alloc and enable" );
+	MAGICAL_ASSERT( m_structure == Separate, "Invalid!" );
+
+	auto itr = m_vertex_attribs.find( index );
+	MAGICAL_ASSERT( itr != m_vertex_attribs.end(), "Invalid bind!" );
+	m_bind_vertex_attrib = itr->second;
 }
 
-void VertexBufferObject::enableVertexAttrib( unsigned int index, size_t size, int type, bool normalized )
+void VertexBufferObject::disable( void )
 {
-	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
-	MAGICAL_ASSERT( size > 0 && Shader::sizeof_id( type ) != 0, "Invalid!" );
-	MAGICAL_ASSERT( m_empty, "Invalid!" );
 
-	size_t offset;
-	for( auto& itr : m_vertex_attribs )
-	{
-		offset += Shader::sizeof_id( itr.type ) * itr.size;
-	}
-
-	m_vertex_attribs.push_back( VertexAttrib{ index, size, type, normalized, offset } );
 }
+
+void VertexBufferObject::disable( unsigned int index )
+{
+	MAGICAL_ASSERT( m_alloc, "Invalid! call disable after alloc" );
+	MAGICAL_ASSERT( m_structure == Separate, "Invalid!" );
+
+	auto itr = m_vertex_attribs.find( index );
+	MAGICAL_ASSERT( itr != m_vertex_attribs.end(), "Invalid disable!" );
+
+	if( m_bind_vertex_attrib == itr->second )
+		m_bind_vertex_attrib = nullptr;
+
+	m_vertex_attribs.erase( itr );
+	glDeleteBuffers( 1, &itr->second->vbo );
+	delete itr->second;
+}
+
+void VertexBufferObject::clear( void )
+{
+
+}
+
+void VertexBufferObject::clear( unsigned int index )
+{
+
+}
+
+void VertexBufferObject::combine( void )
+{
+
+}
+
+//void VertexBufferObject::beginCopyData( size_t vertex_count, size_t indices_count )
+//{
+//	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
+//	MAGICAL_ASSERT( vertex_count > 0, "Invalid count!" );
+//	m_copying = true;
+//
+//	if( m_vbo_vertices == 0 )
+//	{
+//		glGenBuffers( 1, &m_vbo_vertices );
+//	}
+//
+//	if( indices_count == 0 )
+//	{
+//		if( m_vbo_indices )
+//			glDeleteBuffers( 1, &m_vbo_indices );
+//	}
+//	else
+//	{
+//		
+//	}
+//}
+//
+//void VertexBufferObject::endCopyData( void )
+//{
+//	MAGICAL_ASSERT( m_copying == true, "Invalid!" );
+//	m_copying = false;
+//	m_empty = false;
+//}
+//
+//void VertexBufferObject::enableVertexAttrib( unsigned int index, size_t size, int type, bool normalized )
+//{
+//	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
+//	MAGICAL_ASSERT( size > 0 && Shader::sizeof_id( type ) != 0, "Invalid!" );
+//	MAGICAL_ASSERT( m_empty, "Invalid!" );
+//
+//	size_t offset;
+//	for( auto& itr : m_vertex_attribs )
+//	{
+//		offset += Shader::sizeof_id( itr.type ) * itr.size;
+//	}
+//
+//	m_vertex_attribs.push_back( VertexAttrib{ index, size, type, normalized, offset } );
+//}
 
 NAMESPACE_END

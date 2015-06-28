@@ -116,6 +116,7 @@
     <ClInclude Include="..\src\renderer\VertexBufferObject.h" />
     <ClInclude Include="..\src\utils\CachePool.h" />
     <ClInclude Include="..\src\utils\Data.h" />
+    <ClInclude Include="..\src\utils\MapVector.h" />
     <ClInclude Include="..\src\utils\Ptr.h" />
     <ClInclude Include="..\src\utils\Ptrctor.h" />
     <ClInclude Include="..\src\utils\Reference.h" />
