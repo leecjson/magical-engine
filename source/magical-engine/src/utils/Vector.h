@@ -21,16 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __ARRAY_H__
-#define __ARRAY_H__
+#ifndef __VECTOR_H__
+#define __VECTOR_H__
 
-#include <vector>
-
-#include "PlatformMacros.h"
+#include "magical-macros.h"
 #include "Common.h"
 
-template< class T >
-using Array = std::vector< T >;
+#include <vector>
+#include <algorithm>
+
+NAMESPACE_MAGICAL
+
+template< class Ty >
+using Vector = std::vector< Ty >;
+
+NAMESPACE_END
  
 
 #if 0
@@ -235,4 +240,4 @@ private:
 
 #endif
 
-#endif //__ARRAY_H__
+#endif //__VECTOR_H__

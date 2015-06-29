@@ -24,12 +24,15 @@ SOFTWARE.
 #ifndef __LIST_H__
 #define __LIST_H__
 
+#include "magical-macros.h"
+#include "Common.h"
 #include <list>
 
-#include "PlatformMacros.h"
-#include "Common.h"
+NAMESPACE_MAGICAL
 
 template< class T >
 using List = std::list< T >;
+
+NAMESPACE_END
 
 #endif //__LIST_H__

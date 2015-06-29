@@ -34,17 +34,6 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-struct VertexAttrib 
-	{
-		unsigned int vbo;
-		unsigned int index;
-		size_t size;
-		size_t bytesize;
-		int type;
-		bool normalized;
-		size_t offset;
-	};
-
 class VertexBufferObject : public Reference
 {
 public:
@@ -62,23 +51,30 @@ public:
 
 public:
 	void alloc( size_t count, int structure );
-	void free( void );
-	void enable( unsigned int index, size_t size, int type, bool normalized );
+	void enable( unsigned int index, size_t size, int type, bool normalized, void* data );
 	void bind( unsigned int index );
+	void edit( void );
+	void commit( void );
+	void commit( void* data );
 	void disable( void );
-	void disable( unsigned int index );
 	void clear( void );
-	void clear( unsigned int index );
 	void combine( void );
 
 public:
-	inline void vertex1b( Shader::bool_t x );
-	inline void vertex2b( Shader::bool_t x, Shader::bool_t y );
-	inline void vertex3b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z );
-	inline void vertex4b( Shader::bool_t x, Shader::bool_t y, Shader::bool_t z, Shader::bool_t w );
-	inline void vertex2bv( const Shader::bool_t* v );
-	inline void vertex3bv( const Shader::bool_t* v );
-	inline void vertex4bv( const Shader::bool_t* v );
+	inline void vertex1b( Shader::byte_t x );
+	inline void vertex2b( Shader::byte_t x, Shader::byte_t y );
+	inline void vertex3b( Shader::byte_t x, Shader::byte_t y, Shader::byte_t z );
+	inline void vertex4b( Shader::byte_t x, Shader::byte_t y, Shader::byte_t z, Shader::byte_t w );
+	inline void vertex2bv( const Shader::byte_t* v );
+	inline void vertex3bv( const Shader::byte_t* v );
+	inline void vertex4bv( const Shader::byte_t* v );
+	inline void vertex1ub( Shader::ubyte_t x );
+	inline void vertex2ub( Shader::ubyte_t x, Shader::ubyte_t y );
+	inline void vertex3ub( Shader::ubyte_t x, Shader::ubyte_t y, Shader::ubyte_t z );
+	inline void vertex4ub( Shader::ubyte_t x, Shader::ubyte_t y, Shader::ubyte_t z, Shader::ubyte_t w );
+	inline void vertex2ubv( const Shader::ubyte_t* v );
+	inline void vertex3ubv( const Shader::ubyte_t* v );
+	inline void vertex4ubv( const Shader::ubyte_t* v );
 	inline void vertex1i( Shader::int_t x );
 	inline void vertex2i( Shader::int_t x, Shader::int_t y );
 	inline void vertex3i( Shader::int_t x, Shader::int_t y, Shader::int_t z );
@@ -86,26 +82,46 @@ public:
 	inline void vertex2iv( const Shader::int_t* v );
 	inline void vertex3iv( const Shader::int_t* v );
 	inline void vertex4iv( const Shader::int_t* v );
-	inline void vertex1f( Shader::float_t x );
-	inline void vertex2f( Shader::float_t x, Shader::float_t y );
-	inline void vertex3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
-	inline void vertex4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
-	inline void vertex2fv( const Shader::float_t* v );
-	inline void vertex3fv( const Shader::float_t* v );
-	inline void vertex4fv( const Shader::float_t* v );
+	inline void vertex1ui( Shader::uint_t x );
+	inline void vertex2ui( Shader::uint_t x, Shader::uint_t y );
+	inline void vertex3ui( Shader::uint_t x, Shader::uint_t y, Shader::uint_t z );
+	inline void vertex4ui( Shader::uint_t x, Shader::uint_t y, Shader::uint_t z, Shader::uint_t w );
+	inline void vertex2uiv( const Shader::uint_t* v );
+	inline void vertex3uiv( const Shader::uint_t* v );
+	inline void vertex4uiv( const Shader::uint_t* v );
+	//inline void vertex1f( Shader::float_t x );
+	//inline void vertex2f( Shader::float_t x, Shader::float_t y );
+	//inline void vertex3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
+	//inline void vertex4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
+	//inline void vertex2fv( const Shader::float_t* v );
+	//inline void vertex3fv( const Shader::float_t* v );
+	//inline void vertex4fv( const Shader::float_t* v );
 
 protected:
-	friend class Renderer;
-	bool m_alloc = false;
-	int m_structure = None;
-	size_t m_count = 0;
+	struct VertexBuffer
+	{
+		unsigned int vbo;
+		unsigned int index;
+		size_t vertex_count;
+		size_t size;
+		size_t total_size;
+		size_t bytesize;
+		size_t total_bytesize;
+		int type;
+		size_t sizeof_type;
+		bool normalized;
+		size_t offset;
+		void* data;
+		size_t cursor;
+		size_t bytecursor;
+		bool edit;
+	};
 
 protected:
-	VertexAttrib* m_bind_vertex_attrib = nullptr;
-	MapVector<unsigned int, VertexAttrib*> m_vertex_attribs;
-	
-protected:
-	unsigned int m_combine_vbo;
+	size_t m_vertex_count = 0;
+	int m_structure = VertexBufferObject::None;
+	VertexBuffer* m_bound_vertex_buf = nullptr;
+	MapVector<unsigned int, VertexBuffer*> m_vertex_bufs;
 };
 
 class IndexBufferObject : public Reference
@@ -118,5 +134,8 @@ public:
 
 NAMESPACE_END
 
+#if MAGICAL_USING_GL
+#include "gl/VertexBufferObject.inl"
+#endif
 
 #endif //__VERTEX_BUFFER_OBJECT_H__

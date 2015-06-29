@@ -24,16 +24,20 @@ SOFTWARE.
 #ifndef __MAP_H__
 #define __MAP_H__
 
+#include "magical-macros.h"
+#include "Common.h"
+
 #include <unordered_map>
 #include <map>
 
-#include "PlatformMacros.h"
-#include "Common.h"
+NAMESPACE_MAGICAL
 
-template< class K, class T >
-using HashMap = std::unordered_map< K, T >;
+template< class TyKey, class TyValue >
+using UnorderedMap = std::unordered_map< TyKey, TyValue >;
 
-template< class K, class T >
-using Map = std::map< K, T >;
+template< class TyKey, class TyValue >
+using Map = std::map< TyKey, TyValue >;
+
+NAMESPACE_END
 
 #endif //__MAP_H__

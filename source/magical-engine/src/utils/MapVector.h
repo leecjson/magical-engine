@@ -26,14 +26,9 @@ SOFTWARE.
 
 #include "magical-macros.h"
 #include "Common.h"
-
-#include <vector>
-#include <algorithm>
+#include "Vector.h"
 
 NAMESPACE_MAGICAL
-
-template< class Ty >
-using Vector = std::vector< Ty >;
 
 template< class Ty1, class Ty2 >
 using Pair = std::pair< Ty1, Ty2 >;

@@ -116,11 +116,14 @@
     <ClInclude Include="..\src\renderer\VertexBufferObject.h" />
     <ClInclude Include="..\src\utils\CachePool.h" />
     <ClInclude Include="..\src\utils\Data.h" />
+    <ClInclude Include="..\src\utils\List.h" />
+    <ClInclude Include="..\src\utils\Map.h" />
     <ClInclude Include="..\src\utils\MapVector.h" />
     <ClInclude Include="..\src\utils\Ptr.h" />
     <ClInclude Include="..\src\utils\Ptrctor.h" />
     <ClInclude Include="..\src\utils\Reference.h" />
     <ClInclude Include="..\src\utils\Utils.h" />
+    <ClInclude Include="..\src\utils\Vector.h" />
     <ClInclude Include="..\src\utils\WeakPtr.h" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +150,7 @@
     <None Include="..\src\math\Vector2.inl" />
     <None Include="..\src\math\Vector3.inl" />
     <None Include="..\src\math\Vector4.inl" />
+    <None Include="..\src\renderer\gl\VertexBufferObject.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB56813F-8606-453E-A972-09246B0ADDE8}</ProjectGuid>

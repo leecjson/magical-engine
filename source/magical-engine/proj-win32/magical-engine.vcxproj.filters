@@ -404,6 +404,15 @@
     <ClInclude Include="..\src\utils\MapVector.h">
       <Filter>src\utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\utils\Vector.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\Map.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\List.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\engine\Entity.inl">
@@ -474,6 +483,9 @@
     </None>
     <None Include="..\src\math\Quaternion.inl">
       <Filter>src\math\space</Filter>
+    </None>
+    <None Include="..\src\renderer\gl\VertexBufferObject.inl">
+      <Filter>src\renderer\gl</Filter>
     </None>
   </ItemGroup>
 </Project>

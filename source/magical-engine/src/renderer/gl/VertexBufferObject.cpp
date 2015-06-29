@@ -26,7 +26,6 @@ SOFTWARE.
 NAMESPACE_MAGICAL
 
 VertexBufferObject::VertexBufferObject( void )
-: m_combine_vbo( 0 )
 {
 	/*
 		// init
@@ -38,17 +37,22 @@ VertexBufferObject::VertexBufferObject( void )
 		vbo->enable( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
 		vbo->combine();
 
+		vbo->edit();
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+		vbo->commit();
 
 		// update
 		vbo->clear();
+
+		vbo->edit();
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
+		vbo->commit();
 
 		// delete
 		vbo->free();
@@ -63,29 +67,32 @@ VertexBufferObject::VertexBufferObject( void )
 		vbo->enable( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
 
 		vbo->bind( Shader::Attribute::iVertex );
+		vbo->edit();
 		vbo->vertex3f( 1, 1, 1 );
 		vbo->vertex3f( 1, 1, 1 );
 		vbo->vertex3f( 1, 1, 1 );
 		vbo->vertex3f( 1, 1, 1 );
+		vbo->commit();
 
 		vbo->bind( Shader::Attribute::iColor );
+		vbo->edit();
 		vbo->vertex4ub( 255, 255, 255, 255 );
 		vbo->vertex4ub( 255, 255, 255, 255 );
 		vbo->vertex4ub( 255, 255, 255, 255 );
 		vbo->vertex4ub( 255, 255, 255, 255 );
+		vbo->commit();
 
 		vbo->bind( Shader::Attribute::iTexCoord );
-		vbo->vertex2f( 0, 1 );
-		vbo->vertex2f( 0, 1 );
-		vbo->vertex2f( 0, 1 );
-		vbo->vertex2f( 0, 1 );
+		vbo->commit( data );
 
 		// update
-		vbo->disable( Shader::Attribute::iVertex );
+		vbo->bind( Shader::Attribute::iVertex );
+		vbo->disable();
 		vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false );
+		vbo->commit( data );
 		or 
-		vbo->clear( Shader::Attribute::iVertex );
-		vbo->clear();
+		vbo->bind( Shader::Attribute::iVertex );
+		vbo->commit( nullptr );
 
 		// delete
 		vbo->free();
@@ -94,8 +101,12 @@ VertexBufferObject::VertexBufferObject( void )
 
 VertexBufferObject::~VertexBufferObject( void )
 {
-	//if( m_vbo_vertices )
-	//	glDeleteBuffers( 1, &m_vbo_vertices );
+	for( auto& itr : m_vertex_bufs )
+	{
+		if( itr.second->vbo )
+			glDeleteBuffers( 1, &itr.second->vbo );
+		delete itr.second;
+	}
 }
 
 Ptr<VertexBufferObject> VertexBufferObject::create( void )
@@ -108,21 +119,16 @@ Ptr<VertexBufferObject> VertexBufferObject::create( void )
 void VertexBufferObject::alloc( size_t count, int structure )
 {
 	MAGICAL_ASSERT( count > 0, "Invalid count!" );
-	MAGICAL_ASSERT( structure != None, "Invalid structure!" );
+	MAGICAL_ASSERT( structure != VertexBufferObject::None, "Invalid structure!" );
 
-	m_count = count;
+	m_vertex_count = count;
 	m_structure = structure;
-	m_alloc = true;
 }
 
-void VertexBufferObject::free( void )
+void VertexBufferObject::enable( unsigned int index, size_t size, int type, bool normalized, void* data )
 {
-	
-}
-
-void VertexBufferObject::enable( unsigned int index, size_t size, int type, bool normalized )
-{
-	MAGICAL_ASSERT( m_alloc, "Invalid! call enable after alloc" );
+	MAGICAL_ASSERT( m_vertex_count > 0, "Invalid count!" );
+	MAGICAL_ASSERT( size > 0, "Invalid size!" );
 
 	switch( m_structure )
 	{
@@ -132,14 +138,30 @@ void VertexBufferObject::enable( unsigned int index, size_t size, int type, bool
 				glGenBuffers( 1, &vbo );
 				glBindBuffer( GL_ARRAY_BUFFER, vbo );
 
-				size_t bytesize = Shader::sizeof_id( type ) * size;
-				glBufferData( GL_ARRAY_BUFFER, Shader::sizeof_id( type ) * size, nullptr, GL_DYNAMIC_DRAW );
+				size_t sizeof_type = Shader::sizeof_id( type );
+				size_t bytesize = sizeof_type * size;
+				size_t total_bytesize = bytesize * m_vertex_count;
+				glBufferData( GL_ARRAY_BUFFER, total_bytesize, data, GL_DYNAMIC_DRAW );
 
-				Pair<unsigned int, VertexAttrib*> kv;
-				kv.first = index;
-				kv.second = new VertexAttrib{ vbo, index, size, bytesize, type, normalized, 0 };
+				VertexBuffer* buf = new VertexBuffer();
+				buf->vbo = vbo;
+				buf->index = index;
+				buf->vertex_count = m_vertex_count;
+				buf->size = size;
+				buf->total_size = m_vertex_count * size;
+				buf->bytesize = bytesize;
+				buf->total_bytesize = total_bytesize;
+				buf->type = type;
+				buf->sizeof_type = sizeof_type;
+				buf->normalized = normalized;
+				buf->offset = 0;
+				buf->data = nullptr;
+				buf->cursor = 0;
+				buf->bytecursor = 0;
+				buf->edit = false;
 
-				m_vertex_attribs.push_back_unique( std::move( kv ) );
+				m_vertex_bufs.push_back_unique( std::make_pair( index, buf ) );
+				m_bound_vertex_buf = buf;
 			}
 			break;
 		case Combine:
@@ -155,43 +177,121 @@ void VertexBufferObject::enable( unsigned int index, size_t size, int type, bool
 
 void VertexBufferObject::bind( unsigned int index )
 {
-	MAGICAL_ASSERT( m_alloc, "Invalid! call bind after alloc and enable" );
 	MAGICAL_ASSERT( m_structure == Separate, "Invalid!" );
 
-	auto itr = m_vertex_attribs.find( index );
-	MAGICAL_ASSERT( itr != m_vertex_attribs.end(), "Invalid bind!" );
-	m_bind_vertex_attrib = itr->second;
+	auto itr = m_vertex_bufs.find( index );
+	MAGICAL_ASSERT( itr != m_vertex_bufs.end(), "Invalid bind!" );
+	m_bound_vertex_buf = itr->second;
+}
+
+void VertexBufferObject::edit( void )
+{
+	MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
+	MAGICAL_ASSERT( m_bound_vertex_buf->edit == false, "Invalid!" );
+
+	switch( m_structure )
+	{
+		case Separate:
+			{
+				glBindBuffer( GL_ARRAY_BUFFER, m_bound_vertex_buf->vbo );
+				m_bound_vertex_buf->data = glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
+				m_bound_vertex_buf->cursor = 0;
+				m_bound_vertex_buf->edit = true;
+			}
+			break;
+		case Combine:
+			{
+
+			}
+			break;
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
+	}
+}
+
+void VertexBufferObject::commit( void )
+{
+	MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
+	MAGICAL_ASSERT( m_bound_vertex_buf->edit, "Invalid!" );
+
+	switch( m_structure )
+	{
+		case Separate:
+			{
+				glBindBuffer( GL_ARRAY_BUFFER, m_bound_vertex_buf->vbo );
+				glUnmapBuffer( GL_ARRAY_BUFFER );
+				m_bound_vertex_buf->data = nullptr;
+				m_bound_vertex_buf->cursor = 0;
+				m_bound_vertex_buf->edit = false;
+			}
+			break;
+		case Combine:
+			{
+
+			}
+			break;
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
+	}
+}
+
+void VertexBufferObject::commit( void* data )
+{
+	MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
+	MAGICAL_ASSERT( m_bound_vertex_buf->edit == false, "Invalid!" );
+
+	switch( m_structure )
+	{
+		case Separate:
+			{
+				glBindBuffer( GL_ARRAY_BUFFER, m_bound_vertex_buf->vbo );
+				glBufferSubData( GL_ARRAY_BUFFER, 0, m_bound_vertex_buf->total_bytesize, data );
+			}
+			break;
+		case Combine:
+			{
+
+			}
+			break;
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
+	}
 }
 
 void VertexBufferObject::disable( void )
 {
+	switch( m_structure )
+	{
+		case Separate:
+			{
+				MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
+				MAGICAL_ASSERT( m_bound_vertex_buf->edit == false, "Invalid!" );
 
-}
+				auto itr = m_vertex_bufs.find( m_bound_vertex_buf->index );
+				m_vertex_bufs.erase( itr );
 
-void VertexBufferObject::disable( unsigned int index )
-{
-	MAGICAL_ASSERT( m_alloc, "Invalid! call disable after alloc" );
-	MAGICAL_ASSERT( m_structure == Separate, "Invalid!" );
+				glDeleteBuffers( 1, &m_bound_vertex_buf->vbo );
+				delete m_bound_vertex_buf;
+				m_bound_vertex_buf = nullptr;
+			}
+			break;
+		case Combine:
+			{
 
-	auto itr = m_vertex_attribs.find( index );
-	MAGICAL_ASSERT( itr != m_vertex_attribs.end(), "Invalid disable!" );
-
-	if( m_bind_vertex_attrib == itr->second )
-		m_bind_vertex_attrib = nullptr;
-
-	m_vertex_attribs.erase( itr );
-	glDeleteBuffers( 1, &itr->second->vbo );
-	delete itr->second;
+			}
+			break;
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
+	}
 }
 
 void VertexBufferObject::clear( void )
 {
-
-}
-
-void VertexBufferObject::clear( unsigned int index )
-{
-
+	commit( nullptr );
 }
 
 void VertexBufferObject::combine( void )
