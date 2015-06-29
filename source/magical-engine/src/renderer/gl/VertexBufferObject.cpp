@@ -36,6 +36,7 @@ VertexBufferObject::VertexBufferObject( void )
 		vbo->enable( Shader::Attribute::iColor, 4, Shader::TUbyte, true );
 		vbo->enable( Shader::Attribute::iTexCoord, 2, Shader::TFloat, false );
 		vbo->combine();
+		vbo->commit( data );
 
 		vbo->edit();
 		vbo->vertex3f( 1, 1, 1 ); vbo->vertex4ub( 255, 255, 255, 255 ); vbo->vertex2f( 0, 1 );
@@ -105,7 +106,16 @@ VertexBufferObject::~VertexBufferObject( void )
 	{
 		if( itr.second->vbo )
 			glDeleteBuffers( 1, &itr.second->vbo );
+
 		delete itr.second;
+	}
+
+	if( m_combine_vertex_buf )
+	{
+		if( m_combine_vertex_buf->vbo )
+			glDeleteBuffers( 1, &m_combine_vertex_buf->vbo );
+
+		delete m_combine_vertex_buf;
 	}
 }
 
@@ -166,7 +176,36 @@ void VertexBufferObject::enable( unsigned int index, size_t size, int type, bool
 			break;
 		case Combine:
 			{
+				MAGICAL_ASSERT( m_combine_vertex_buf == nullptr, "Invalid!" );
 
+				size_t offset = 0;
+				for( auto& itr : m_vertex_bufs )
+				{
+					offset += itr.second->bytesize;
+				}
+
+				size_t sizeof_type = Shader::sizeof_id( type );
+				size_t bytesize = sizeof_type * size;
+				size_t total_bytesize = bytesize * m_vertex_count;
+
+				VertexBuffer* buf = new VertexBuffer();
+				buf->vbo = 0;
+				buf->index = index;
+				buf->vertex_count = m_vertex_count;
+				buf->size = size;
+				buf->total_size = m_vertex_count * size;
+				buf->bytesize = bytesize;
+				buf->total_bytesize = total_bytesize;
+				buf->type = type;
+				buf->sizeof_type = sizeof_type;
+				buf->normalized = normalized;
+				buf->offset = offset;
+				buf->data = nullptr;
+				buf->cursor = 0;
+				buf->bytecursor = 0;
+				buf->edit = false;
+
+				m_vertex_bufs.push_back_unique( std::make_pair( index, buf ) );
 			}
 			break;
 		default:
@@ -186,13 +225,13 @@ void VertexBufferObject::bind( unsigned int index )
 
 void VertexBufferObject::edit( void )
 {
-	MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
-	MAGICAL_ASSERT( m_bound_vertex_buf->edit == false, "Invalid!" );
-
 	switch( m_structure )
 	{
 		case Separate:
 			{
+				MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
+				MAGICAL_ASSERT( m_bound_vertex_buf->edit == false, "Invalid!" );
+
 				glBindBuffer( GL_ARRAY_BUFFER, m_bound_vertex_buf->vbo );
 				m_bound_vertex_buf->data = glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
 				m_bound_vertex_buf->cursor = 0;
@@ -201,7 +240,13 @@ void VertexBufferObject::edit( void )
 			break;
 		case Combine:
 			{
+				MAGICAL_ASSERT( m_combine_vertex_buf, "Invalid bind!" );
+				MAGICAL_ASSERT( m_combine_vertex_buf->edit == false, "Invalid!" );
 
+				glBindBuffer( GL_ARRAY_BUFFER, m_combine_vertex_buf->vbo );
+				m_combine_vertex_buf->data = glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
+				m_combine_vertex_buf->bytecursor = 0;
+				m_combine_vertex_buf->edit = true;
 			}
 			break;
 		default:
@@ -212,13 +257,13 @@ void VertexBufferObject::edit( void )
 
 void VertexBufferObject::commit( void )
 {
-	MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
-	MAGICAL_ASSERT( m_bound_vertex_buf->edit, "Invalid!" );
-
 	switch( m_structure )
 	{
 		case Separate:
 			{
+				MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
+				MAGICAL_ASSERT( m_bound_vertex_buf->edit, "Invalid!" );
+
 				glBindBuffer( GL_ARRAY_BUFFER, m_bound_vertex_buf->vbo );
 				glUnmapBuffer( GL_ARRAY_BUFFER );
 				m_bound_vertex_buf->data = nullptr;
@@ -228,7 +273,14 @@ void VertexBufferObject::commit( void )
 			break;
 		case Combine:
 			{
+				MAGICAL_ASSERT( m_combine_vertex_buf, "Invalid bind!" );
+				MAGICAL_ASSERT( m_combine_vertex_buf->edit, "Invalid!" );
 
+				glBindBuffer( GL_ARRAY_BUFFER, m_combine_vertex_buf->vbo );
+				glUnmapBuffer( GL_ARRAY_BUFFER );
+				m_combine_vertex_buf->data = nullptr;
+				m_combine_vertex_buf->bytecursor = 0;
+				m_combine_vertex_buf->edit = false;
 			}
 			break;
 		default:
@@ -239,20 +291,24 @@ void VertexBufferObject::commit( void )
 
 void VertexBufferObject::commit( void* data )
 {
-	MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
-	MAGICAL_ASSERT( m_bound_vertex_buf->edit == false, "Invalid!" );
-
 	switch( m_structure )
 	{
 		case Separate:
 			{
+				MAGICAL_ASSERT( m_bound_vertex_buf, "Invalid bind!" );
+				MAGICAL_ASSERT( m_bound_vertex_buf->edit == false, "Invalid!" );
+
 				glBindBuffer( GL_ARRAY_BUFFER, m_bound_vertex_buf->vbo );
 				glBufferSubData( GL_ARRAY_BUFFER, 0, m_bound_vertex_buf->total_bytesize, data );
 			}
 			break;
 		case Combine:
 			{
+				MAGICAL_ASSERT( m_combine_vertex_buf, "Invalid bind!" );
+				MAGICAL_ASSERT( m_combine_vertex_buf->edit == false, "Invalid!" );
 
+				glBindBuffer( GL_ARRAY_BUFFER, m_combine_vertex_buf->vbo );
+				glBufferSubData( GL_ARRAY_BUFFER, 0, m_combine_vertex_buf->total_bytesize, data );
 			}
 			break;
 		default:
@@ -280,7 +336,17 @@ void VertexBufferObject::disable( void )
 			break;
 		case Combine:
 			{
+				MAGICAL_ASSERT( m_combine_vertex_buf, "Invalid bind!" );
+				MAGICAL_ASSERT( m_combine_vertex_buf->edit == false, "Invalid!" );
 
+				glDeleteBuffers( 1, &m_combine_vertex_buf->vbo );
+				delete m_combine_vertex_buf;
+				m_combine_vertex_buf = nullptr;
+
+				for( auto& itr : m_vertex_bufs )
+					delete itr.second;
+
+				m_vertex_bufs.clear();
 			}
 			break;
 		default:
@@ -296,51 +362,35 @@ void VertexBufferObject::clear( void )
 
 void VertexBufferObject::combine( void )
 {
+	MAGICAL_ASSERT( m_structure == Combine, "Invalid!" );
+	MAGICAL_ASSERT( m_vertex_bufs.size() > 1, "Invalid! size should > 1" );
+	MAGICAL_ASSERT( m_combine_vertex_buf == nullptr, "Invalid!" );
 
+	GLuint vbo = 0;
+	glGenBuffers( 1, &vbo );
+
+	m_combine_vertex_buf = new VertexBuffer();
+	m_combine_vertex_buf->vbo = vbo;
+	m_combine_vertex_buf->vertex_count = m_vertex_count;
+	m_combine_vertex_buf->data = nullptr;
+	m_combine_vertex_buf->bytecursor = 0;
+	m_combine_vertex_buf->edit = false;
+
+	m_combine_vertex_buf->size = 0;
+	m_combine_vertex_buf->total_size = 0;
+	m_combine_vertex_buf->bytesize = 0;
+	m_combine_vertex_buf->total_bytesize = 0;
+
+	for( auto& itr : m_vertex_bufs )
+	{
+		m_combine_vertex_buf->size += itr.second->size;
+		m_combine_vertex_buf->total_size += itr.second->total_size;
+		m_combine_vertex_buf->bytesize += itr.second->bytesize;
+		m_combine_vertex_buf->total_bytesize += itr.second->total_bytesize;
+	}
+
+	glBindBuffer( GL_ARRAY_BUFFER, vbo );
+	glBufferData( GL_ARRAY_BUFFER, m_combine_vertex_buf->total_bytesize, nullptr, GL_DYNAMIC_DRAW );
 }
-
-//void VertexBufferObject::beginCopyData( size_t vertex_count, size_t indices_count )
-//{
-//	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
-//	MAGICAL_ASSERT( vertex_count > 0, "Invalid count!" );
-//	m_copying = true;
-//
-//	if( m_vbo_vertices == 0 )
-//	{
-//		glGenBuffers( 1, &m_vbo_vertices );
-//	}
-//
-//	if( indices_count == 0 )
-//	{
-//		if( m_vbo_indices )
-//			glDeleteBuffers( 1, &m_vbo_indices );
-//	}
-//	else
-//	{
-//		
-//	}
-//}
-//
-//void VertexBufferObject::endCopyData( void )
-//{
-//	MAGICAL_ASSERT( m_copying == true, "Invalid!" );
-//	m_copying = false;
-//	m_empty = false;
-//}
-//
-//void VertexBufferObject::enableVertexAttrib( unsigned int index, size_t size, int type, bool normalized )
-//{
-//	MAGICAL_ASSERT( m_copying == false, "Invalid!" );
-//	MAGICAL_ASSERT( size > 0 && Shader::sizeof_id( type ) != 0, "Invalid!" );
-//	MAGICAL_ASSERT( m_empty, "Invalid!" );
-//
-//	size_t offset;
-//	for( auto& itr : m_vertex_attribs )
-//	{
-//		offset += Shader::sizeof_id( itr.type ) * itr.size;
-//	}
-//
-//	m_vertex_attribs.push_back( VertexAttrib{ index, size, type, normalized, offset } );
-//}
 
 NAMESPACE_END

@@ -38,6 +38,12 @@ inline void VertexBufferObject::vertex1b( Shader::byte_t x )
 			m_bound_vertex_buf->cursor += 1;
 			break;
 		case Combine:
+			MAGICAL_ASSERT( m_combine_vertex_buf, "Invalid!" );
+			MAGICAL_ASSERT( m_combine_vertex_buf->edit, "Invalid! call edit first" );
+			MAGICAL_ASSERT( m_combine_vertex_buf->bytecursor + Shader::Sizeof_byte_t <= m_bound_vertex_buf->total_bytesize, "Invalid! out of range" );
+
+			memcpy( m_combine_vertex_buf->data, &x, Shader::Sizeof_byte_t );
+			m_combine_vertex_buf->bytecursor += Shader::Sizeof_byte_t;
 			break;
 		default:
 			MAGICAL_ASSERT( false, "Invalid!" );
@@ -76,6 +82,12 @@ inline void VertexBufferObject::vertex2bv( const Shader::byte_t* v )
 			m_bound_vertex_buf->cursor += 2;
 			break;
 		case Combine:
+			MAGICAL_ASSERT( m_combine_vertex_buf, "Invalid!" );
+			MAGICAL_ASSERT( m_combine_vertex_buf->edit, "Invalid! call edit first" );
+			MAGICAL_ASSERT( m_combine_vertex_buf->bytecursor + 2 * Shader::Sizeof_byte_t <= m_bound_vertex_buf->total_bytesize, "Invalid! out of range" );
+
+			memcpy( m_combine_vertex_buf->data, v, 2 * Shader::Sizeof_byte_t );
+			m_combine_vertex_buf->bytecursor += 2 * Shader::Sizeof_byte_t;
 			break;
 		default:
 			MAGICAL_ASSERT( false, "Invalid!" );
@@ -100,6 +112,12 @@ inline void VertexBufferObject::vertex3bv( const Shader::byte_t* v )
 			m_bound_vertex_buf->cursor += 3;
 			break;
 		case Combine:
+			MAGICAL_ASSERT( m_combine_vertex_buf, "Invalid!" );
+			MAGICAL_ASSERT( m_combine_vertex_buf->edit, "Invalid! call edit first" );
+			MAGICAL_ASSERT( m_combine_vertex_buf->bytecursor + 3 * Shader::Sizeof_byte_t <= m_bound_vertex_buf->total_bytesize, "Invalid! out of range" );
+
+			memcpy( m_combine_vertex_buf->data, v, 3 * Shader::Sizeof_byte_t );
+			m_combine_vertex_buf->bytecursor += 3 * Shader::Sizeof_byte_t;
 			break;
 		default:
 			MAGICAL_ASSERT( false, "Invalid!" );
@@ -125,6 +143,12 @@ inline void VertexBufferObject::vertex4bv( const Shader::byte_t* v )
 			m_bound_vertex_buf->cursor += 4;
 			break;
 		case Combine:
+			MAGICAL_ASSERT( m_combine_vertex_buf, "Invalid!" );
+			MAGICAL_ASSERT( m_combine_vertex_buf->edit, "Invalid! call edit first" );
+			MAGICAL_ASSERT( m_combine_vertex_buf->bytecursor + 4 * Shader::Sizeof_byte_t <= m_bound_vertex_buf->total_bytesize, "Invalid! out of range" );
+
+			memcpy( m_combine_vertex_buf->data, v, 4 * Shader::Sizeof_byte_t );
+			m_combine_vertex_buf->bytecursor += 4 * Shader::Sizeof_byte_t;
 			break;
 		default:
 			MAGICAL_ASSERT( false, "Invalid!" );

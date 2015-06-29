@@ -122,6 +122,7 @@ protected:
 	int m_structure = VertexBufferObject::None;
 	VertexBuffer* m_bound_vertex_buf = nullptr;
 	MapVector<unsigned int, VertexBuffer*> m_vertex_bufs;
+	VertexBuffer* m_combine_vertex_buf = nullptr;
 };
 
 class IndexBufferObject : public Reference
