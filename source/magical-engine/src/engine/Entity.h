@@ -26,13 +26,14 @@ SOFTWARE.
 
 #include "magical-macros.h"
 #include "Common.h"
+#include "Color.h"
+#include "Map.h"
 #include "Behaviour.h"
 #include "Object.h"
-#include <unordered_map>
+#include "VertexBufferObject.h"
+#include "RenderCommand.h"
 
 NAMESPACE_MAGICAL
-
-using ::std::unordered_map;
 
 class Entity : public Object
 {
@@ -56,8 +57,12 @@ public:
 	virtual void prepare( void );
 	virtual void update( void );
 
+	void process( ShaderProgram* program );
+
 protected:
-	unordered_map<size_t, BehaviourFeature*> m_behaviours;
+	UnorderedMap<size_t, BehaviourFeature*> m_behaviours;
+	VertexBufferObject* m_vbo = nullptr;
+	BatchCommand m_command;
 };
 
 #include "Entity.inl"

@@ -25,23 +25,15 @@ SOFTWARE.
 #define __OBJECT_H__
 
 #include "magical-macros.h"
+#include "magical-math.h"
 #include "Common.h"
 #include "Reference.h"
-#include "magical-math.h"
-#include <vector>
+#include "Vector.h"
 
 NAMESPACE_MAGICAL
 
 class Scene;
 class Camera;
-
-enum : int
-{
-	kTsClean = 0x00,
-	kTsTranslationDirty = 0x01,
-	kTsRotationDirty = 0x02,
-	kTsScaleDirty = 0x04,
-};
 
 enum class Space : int
 {
@@ -53,6 +45,13 @@ enum class Space : int
 class Object : public Reference
 {
 public:
+	enum : int
+	{
+		kTsClean = 0x00,
+		kTsTranslationDirty = 0x01,
+		kTsRotationDirty = 0x02,
+		kTsScaleDirty = 0x04,
+	};
 	friend class Scene;
 	enum : int { Feature = 1 };
 
@@ -144,8 +143,7 @@ protected:
 	bool m_visible = true;
 	bool m_running = false;
 	Object* m_parent = nullptr;
-	typedef std::vector<Object*> Children;
-	Children m_children;
+	Vector<Object*> m_children;
 	bool m_inherit_scale = true;
 	bool m_inherit_rotation = true;
 	mutable int m_ts_dirty_info = kTsClean;

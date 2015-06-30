@@ -30,8 +30,8 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-template< class T >
-using List = std::list< T >;
+template< class Ty >
+using List = std::list< Ty >;
 
 NAMESPACE_END
 

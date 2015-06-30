@@ -119,23 +119,23 @@ void Scene::link( Object* child )
 {
 	switch( child->m_feature )
 	{
-	case Object::Feature:
-		break;
-	case Entity::Feature:
-		addEntity( (Entity*)child );
-		break;
-	case Camera::Feature:
-		addCamera( (Camera*)child );
-		addEntity( (Entity*)child );
-		break;
-	/*case Element::Light:
-		break;*/
-	default:
-		MAGICAL_ASSERT( false, "Invalid!" );
-		break;
+		case Object::Feature:
+			break;
+		case Entity::Feature:
+			addEntity( (Entity*)child );
+			break;
+		case Camera::Feature:
+			addCamera( (Camera*)child );
+			addEntity( (Entity*)child );
+			break;
+		/*case Element::Light:
+			break;*/
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
 	}
 
-	for( auto itr : child->m_children )
+	for( auto& itr : child->m_children )
 	{
 		link( itr );
 	}
@@ -145,23 +145,23 @@ void Scene::unlink( Object* child )
 {
 	switch( child->m_feature )
 	{
-	case Object::Feature:
-		break;
-	case Entity::Feature:
-		removeEntity( (Entity*)child );
-		break;
-	case Camera::Feature:
-		removeEntity( (Entity*)child );
-		removeCamera( (Camera*)child );
-		break;
-	/*case Element::Light:
-		break;*/
-	default:
-		MAGICAL_ASSERT( false, "Invalid!" );
-		break;
+		case Object::Feature:
+			break;
+		case Entity::Feature:
+			removeEntity( (Entity*)child );
+			break;
+		case Camera::Feature:
+			removeEntity( (Entity*)child );
+			removeCamera( (Camera*)child );
+			break;
+		/*case Element::Light:
+			break;*/
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
 	}
 
-	for( auto itr : child->m_children )
+	for( auto& itr : child->m_children )
 	{
 		unlink( itr );
 	}

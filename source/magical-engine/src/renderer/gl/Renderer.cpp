@@ -22,16 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Renderer.h"
-#include "magical-math.h"
 #include "Engine.h"
 #include "Application.h"
-#include "ShaderProgram.h"
-#include "Color.h"
+#include "Set.h"
 
-#include <vector>
+#include "ShaderProgram.h"
 
 NAMESPACE_MAGICAL
 
+static Vector<RenderCommand*> s_render_commands;
+static UnorderedSet<VertexBufferObject*> s_vertex_buffer_objects;
 
 void Renderer::init( void )
 {
@@ -46,6 +46,14 @@ void Renderer::delc( void )
 {
 	Shader::delc();
 	MAGICAL_RETURN_IF_ERROR();
+
+	for( auto& itr : s_render_commands )
+		itr->release();
+	s_render_commands.clear();
+
+	for( auto& itr : s_vertex_buffer_objects )
+		itr->release();
+	s_vertex_buffer_objects.clear();
 }
 
 void Renderer::setDefault( void )
@@ -56,11 +64,6 @@ void Renderer::setDefault( void )
 	glEnable( GL_CULL_FACE );
 
 	MAGICAL_CHECK_GL_ERROR();
-
-	VertexMemoryObject* vbo = Renderer::VertexObject();
-	vbo->vertex3fv(  )
-	m_vertex_container = Renderer::createVertexContainer();
-	m_vertex_container->enableVertexAttrib(  )
 }
 
 void Renderer::render( const ViewChannel* channel )
@@ -71,19 +74,62 @@ void Renderer::render( const ViewChannel* channel )
 	glViewport( area.x * win_size.w, area.y * win_size.h, area.w * win_size.w, area.h * win_size.h );
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	drawBatchCommands();
+	processCommands();
 
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
 }
 
 void Renderer::addCommand( RenderCommand* command )
 {
+	MAGICAL_ASSERT( command, "Invalid! nullptr" );
 
+	SAFE_RETAIN( command );
+	s_render_commands.push_back( command );
 }
 
-void Renderer::drawBatchCommands( void )
+VertexBufferObject* Renderer::newVertexBufferObject( void )
 {
-	
+	VertexBufferObject* vbo = new VertexBufferObject();
+	s_vertex_buffer_objects.insert( vbo );
+	return vbo;
+}
+
+void Renderer::deleteVertexBufferObject( VertexBufferObject* vbo )
+{
+	MAGICAL_ASSERT( vbo, "Invalid! nullptr" );
+
+	s_vertex_buffer_objects.erase( vbo );
+	SAFE_RELEASE( vbo );
+}
+
+void Renderer::processCommands( void )
+{
+	for( auto& itr : s_render_commands )
+	{
+		switch( itr->getFeature() )
+		{
+			case BatchCommand::Feature:
+				{
+					BatchCommand* command = (BatchCommand*) itr;
+					Shapes shape = command->getShape();
+					ShaderProgram* program = command->getProgram();
+					VertexBufferObject* vbo = command->getVertexBufferObject();
+					
+					program->use();
+					command->callPreDrawProcess();
+					vbo->use();
+					glDrawArrays( (GLenum) shape, 0, (GLsizei) vbo->count() );
+					vbo->unuse();
+
+					command->release();
+				}
+				break;
+			default:
+				MAGICAL_ASSERT( false, "Invalid!" );
+				break;
+		}
+	}
+	s_render_commands.clear();
 }
 
 NAMESPACE_END

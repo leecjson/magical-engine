@@ -27,16 +27,16 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 
-#include <unordered_map>
 #include <map>
+#include <unordered_map>
 
 NAMESPACE_MAGICAL
 
 template< class TyKey, class TyValue >
-using UnorderedMap = std::unordered_map< TyKey, TyValue >;
+using Map = std::map< TyKey, TyValue >;
 
 template< class TyKey, class TyValue >
-using Map = std::map< TyKey, TyValue >;
+using UnorderedMap = std::unordered_map< TyKey, TyValue >;
 
 NAMESPACE_END
 

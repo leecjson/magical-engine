@@ -25,8 +25,6 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-static ShaderProgram* s_programs[ Shader::Count ] = { nullptr };
-
 const char* Shader::Attribute::Vertex = "a_vertex";
 const char* Shader::Attribute::Color = "a_color";
 const char* Shader::Attribute::TexCoord = "a_tex_coord";
@@ -38,125 +36,55 @@ const char* Shader::Uniform::MvMatrix = "u_mv_matrix";
 const char* Shader::Uniform::PMatrix = "u_p_matrix";
 const char* Shader::Uniform::TexUnit0 = "u_tex_unit0";
 
-const char* Shader::Source::SimpleVertex = R"(
-	attribute vec4 a_vertex;
-
-	void main( void )
-	{
-		gl_Position = a_vertex;
-	}
-)";
-						
-const char* Shader::Source::SimplePiexl = R"(
-	uniform vec4 u_color;
-
-	void main( void )
-	{
-		gl_FragColor = u_color;
-	}
-)";
-
-const char* Shader::Source::FlatVertex = R"(
+const char* Shader::Source::DiffuseVert = 
+R"(
 	uniform mat4 u_mvp_matrix;
 	attribute vec4 a_vertex;
 	attribute vec4 a_color;
 	varying vec4 v_color;
 
-	void main( void )
-	{
+	void main( void ) {
 		v_color = a_color;
 		gl_Position = u_mvp_matrix * a_vertex;
 	}
 )";
 						
-const char* Shader::Source::FlatPiexl = R"(
+const char* Shader::Source::DiffuseFrag = 
+R"(
 	varying vec4 v_color;
 
-	void main( void )
-	{
+	void main( void ) {
 		gl_FragColor = v_color;
 	}
 )";
 
-static void assignProgramSource( int index, ShaderProgram* program )
+static ShaderProgram* createPrograms( void )
 {
-	switch( index )
-	{
-	case Shader::Simple:
-		program->setVertexSource( Shader::Source::SimpleVertex );
-		program->setPixelSource( Shader::Source::SimplePiexl );
-		break;
-	case Shader::Flat:
-		program->setVertexSource( Shader::Source::FlatVertex );
-		program->setPixelSource( Shader::Source::FlatPiexl );
-		break;
-	default:
-		MAGICAL_ASSERT( false, "Invalid!" );
-		break;
-	}
+#define PROGRAM_NEW( var, vert, frag ) var = new ShaderProgram(); var->setSource( vert, frag )
+#define PROGRAM_BUILD( var ) if( !var->build() ) return nullptr
+#define PROGRAM_LINK( var ) if( !var->link() ) return nullptr;
+
+	PROGRAM_NEW( Shader::Diffuse, Shader::Source::DiffuseVert, Shader::Source::DiffuseFrag );
+	PROGRAM_BUILD( Shader::Diffuse );
+	Shader::Diffuse->bindAttribLocation( Shader::Attribute::iVertex, Shader::Attribute::Vertex );
+	Shader::Diffuse->bindAttribLocation( Shader::Attribute::iColor, Shader::Attribute::Color );
+	PROGRAM_LINK( Shader::Diffuse );
 }
 
-static void bindAttribLocation( int index, ShaderProgram* program )
+static void deletePrograms( void )
 {
-	switch( index )
-	{
-	case Shader::Simple:
-		program->bindAttribLocation( Shader::AttribLocation::iVertex, Shader::AttribLocation::Vertex );
-		break;
-	case Shader::Flat:
-		program->bindAttribLocation( Shader::AttribLocation::iVertex, Shader::AttribLocation::Vertex );
-		program->bindAttribLocation( Shader::AttribLocation::iColor, Shader::AttribLocation::Color );
-		break;
-	default:
-		MAGICAL_ASSERT( false, "Invalid!" );
-		break;
-	}
-}
-
-static ShaderProgram* createProgram( int index )
-{
-	ShaderProgram* program = new ShaderProgram();
-
-	assignProgramSource( index, program );
-	if( !program->build() )
-		return nullptr;
-
-	bindAttribLocation( index, program );
-	if( !program->link() )
-		return nullptr;
-	
-	if( !program->isDone() )
-		return nullptr;
-
-	return program;
+	Shader::FlatColor->release();
 }
 
 void Shader::init( void )
 {
-	ShaderProgram* program;
-	for( int index = 0; index < Shader::Count; index ++ )
-	{
-		program = createProgram( index );
-		if( program == nullptr )
-			return;
-
-		s_programs[ index ] = program;
-	}
+	createPrograms();
 }
 
 void Shader::delc( void )
 {
-	for( int index = 0; index < Shader::Count; index ++ )
-	{
-		s_programs[ index ]->release();
-	}
+	deletePrograms();
 }
 
-ShaderProgram* Shader::getProgram( int index )
-{
-	MAGICAL_ASSERT( 0 <= index && index <= Shader::Count, "Invalid index!" );
-
-	return s_programs[ index ];
-}
 
 NAMESPACE_END

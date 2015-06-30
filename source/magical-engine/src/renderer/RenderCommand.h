@@ -30,13 +30,13 @@ SOFTWARE.
 #include "Reference.h"
 
 #include "RenderDefine.h"
-#include "Batch.h"
+#include "VertexBufferObject.h"
 #include "Shaders.h"
 #include <functional>
 
 NAMESPACE_MAGICAL
 
-class RenderCommand
+class RenderCommand : public Reference
 {
 public:
 	RenderCommand( void );
@@ -45,16 +45,16 @@ public:
 public:
 	int getFeature( void ) const { return m_feature; }
 	ShaderProgram* getProgram( void ) const { return m_program; }
+	void setProgram( ShaderProgram* program );
+	void setPreDrawProcess( const std::function<void (ShaderProgram*)> process );
 
 public:
-	void setProgram( ShaderProgram* program );
-	void setUniformFunc( std::function<void( ShaderProgram* )> callback );
-	void callUniformFunc( void );
+	void callPreDrawProcess( void );
 
 protected:
 	int m_feature = 0;
 	ShaderProgram* m_program = nullptr;
-	std::function<void( ShaderProgram* )> m_uniform_func;
+	std::function<void (ShaderProgram*)> m_pre_draw_process = nullptr;
 };
 
 class BatchCommand : public RenderCommand
@@ -67,11 +67,14 @@ public:
 	virtual ~BatchCommand( void );
 
 public:
-	void setBatch( Batch* batch );
-	Batch* getBatch( void ) const { return m_batch; }
+	Shapes getShape( void ) const { return m_shape; }
+	VertexBufferObject* getVertexBufferObject( void ) const { return m_vbo; }
+	void setShape( const Shapes shape );
+	void setVertexBufferObject( VertexBufferObject* vbo );
 
 protected:
-	Batch* m_batch = nullptr;
+	Shapes m_shape = Shapes::Triangles;
+	VertexBufferObject* m_vbo = nullptr;
 };
 
 NAMESPACE_END

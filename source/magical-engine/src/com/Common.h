@@ -59,6 +59,14 @@ NAMESPACE_END
 #define SAFE_MOVE_NULL( lvar, rvar ) do{ MAGICAL_ASSERT( lvar != rvar, "Invalid move operate" ); if( lvar ) lvar->release(); lvar = rvar; rvar = nullptr; } while(0)
 
 /*
+stl function
+*/
+#define MAGICAL_CALLBACK( sel, obj, ... ) std::bind( sel, obj, ##__VA_ARGS__ )
+#define MAGICAL_CALLBACK_1( sel, obj, ... ) std::bind( sel, obj, std::placeholders::_1, ##__VA_ARGS__ )
+#define MAGICAL_CALLBACK_2( sel, obj, ... ) std::bind( sel, obj, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__ )
+#define MAGICAL_CALLBACK_3( sel, obj, ... ) std::bind( sel, obj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, ##__VA_ARGS__ )
+
+/*
 error macros
 */
 #define MAGICAL_ERROR_MAX_LENGTH 1024*128

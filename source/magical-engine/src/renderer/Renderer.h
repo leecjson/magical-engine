@@ -32,16 +32,13 @@ SOFTWARE.
 #include "RenderDefine.h"
 #include "ShaderProgram.h"
 #include "Shaders.h"
-#include "RenderCommand.h"
 #include "VertexBufferObject.h"
+#include "RenderCommand.h"
 
 NAMESPACE_MAGICAL
 
 class Renderer
 {
-//public:
-//	static const size_t VertexArrayDefaultSize = 1024;
-//
 public:
 	static void init( void );
 	static void delc( void );
@@ -53,11 +50,11 @@ public:
 	static void render( const ViewChannel* channel );
 	static void addCommand( RenderCommand* command );
 
-	static VertexBufferObject* createVertexBufferObject( void );
-	static void deleteVertexBufferObject( const VertexBufferObject* vbo );
+	static VertexBufferObject* newVertexBufferObject( void );
+	static void deleteVertexBufferObject( VertexBufferObject* vbo );
 
 private:
-	static void drawBatchCommands( void );
+	static void processCommands( void );
 };
 
 NAMESPACE_END

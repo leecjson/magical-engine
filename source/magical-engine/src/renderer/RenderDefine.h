@@ -54,29 +54,22 @@ MAGICALAPI bool MAGICAL_GET_PROGRAM_INFO_LOG( GLuint program, char*& info );
 
 NAMESPACE_MAGICAL
 
-struct DrawMode
+enum class Shapes : unsigned int
 {
-	static const unsigned int Invalid = -1;
 #ifdef MAGICAL_USING_GL
-	enum : unsigned int
-	{
-		Triangles = GL_TRIANGLES,
-		TrianglesStrip = GL_TRIANGLE_STRIP,
-		Polygon = GL_POLYGON,
-	};
-#endif
-#ifdef MAGICAL_USING_D3D11
+	Triangles = GL_TRIANGLES,
+	TrianglesStrip = GL_TRIANGLE_STRIP,
+	Quads = GL_QUADS,
+	Polygon = GL_POLYGON,
 #endif
 };
 
-struct VertexArray 
+enum class VboUsage : unsigned int
 {
-	char*  data;
-	size_t cursor;
-	size_t capacity;
-	unsigned int vertex_index;
-	unsigned int vertex_type;
-	size_t sizeof_vertex; 
+#ifdef MAGICAL_USING_GL
+	DynamicDraw = GL_DYNAMIC_DRAW,
+	StaticDraw = GL_STATIC_DRAW
+#endif
 };
 
 NAMESPACE_END

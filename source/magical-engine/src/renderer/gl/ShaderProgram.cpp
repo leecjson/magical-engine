@@ -67,7 +67,6 @@ void ShaderProgram::shutdown( void )
 		m_built = false;
 		m_linked = false;
 		m_program = GL_ZERO;
-		m_vertex_index_array.clear();
 
 		MAGICAL_CHECK_GL_ERROR();
 	}
@@ -203,8 +202,6 @@ void ShaderProgram::bindAttribLocation( unsigned int index, const char* name )
 {
 	glBindAttribLocation( m_program, index, name );
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
-
-	m_vertex_index_array.push_back( index );
 }
 
 int ShaderProgram::getUniformLocation( const char* name ) const
@@ -212,6 +209,13 @@ int ShaderProgram::getUniformLocation( const char* name ) const
 	int location = glGetUniformLocation( m_program, name );
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
 	return location;
+}
+
+void ShaderProgram::use( void ) const
+{
+	MAGICAL_ASSERT( isDone(), "Invalid!" );
+
+	glUseProgram( m_program );
 }
 
 void ShaderProgram::uniform1i( int location, Shader::int_t x )

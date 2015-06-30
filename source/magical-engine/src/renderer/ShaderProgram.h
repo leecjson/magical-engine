@@ -44,14 +44,14 @@ public:
 
 public:	
 	void setSource( const char* vert, const char* frag );
-	unsigned int getId( void ) const { return m_program; }
 	bool build( void );
 	bool link( void );
 	void shutdown( void );
 	bool isDone( void ) const;
 	void bindAttribLocation( unsigned int index, const char* name );
+	unsigned int getId( void ) const { return m_program; }
 	int getUniformLocation( const char* name ) const;
-	std::vector<unsigned int>& getVertexIndexArray( void ) const;
+	void use( void ) const;
 	
 public:
 	void uniform1i( int location, Shader::int_t x );
@@ -83,7 +83,6 @@ protected:
 	std::string m_frag_src;
 	bool m_built = false;
 	bool m_linked = false;
-	std::vector<unsigned int> m_vertex_index_array;
 };
 
 NAMESPACE_END

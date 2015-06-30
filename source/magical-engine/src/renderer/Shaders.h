@@ -27,6 +27,7 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
+
 #include "ShaderProgram.h"
 
 NAMESPACE_MAGICAL
@@ -68,64 +69,26 @@ public:
 	{
 		switch( type )
 		{
-			case TBool:
-				return Shader::Sizeof_bool_t;
-			case TByte:
-				return Shader::Sizeof_byte_t;
-			case TUByte:
-				return Shader::Sizeof_ubyte_t;
-			case TInt:
-				return Shader::Sizeof_int_t;
-			case TUInt:
-				return Shader::Sizeof_uint_t;
-			case TFloat:
-				return Shader::Sizeof_float_t;
-			case TNone:
-			default:
-				MAGICAL_ASSERT( false, "Invalid!" ); return 0;
+			case TBool: return Shader::Sizeof_bool_t;
+			case TByte: return Shader::Sizeof_byte_t;
+			case TUByte: return Shader::Sizeof_ubyte_t;
+			case TInt: return Shader::Sizeof_int_t;
+			case TUInt: return Shader::Sizeof_uint_t;
+			case TFloat: return Shader::Sizeof_float_t;
+			case TNone: default: MAGICAL_ASSERT( false, "Invalid!" ); return 0;
 		}
 	}
 
 public:
 	struct Attribute
 	{
-		enum : unsigned int
+		enum : unsigned int 
 		{
-			iColor3f   = 1 << 0x00,
-			iColor4f   = 1 << 0x01,
-			iVertex2f  = 1 << 0x02,
-			iVertex3f  = 1 << 0x03,
-			iVertex4f  = 1 << 0x04,
-			iNormal3f  = 1 << 0x05,
-			iTexCoord  = 1 << 0x06,
-			i______0   = 1 << 0x07,
-			i______1   = 1 << 0x08,
-			i______2   = 1 << 0x09,
-			i______3   = 1 << 0x0A,
-			i______4   = 1 << 0x0B,
-			i______5   = 1 << 0x0C,
-			i______6   = 1 << 0x0D,
-			i______7   = 1 << 0x0E,
-			i______8   = 1 << 0x0F,
-			iAttrib0   = 1 << 0x10,
-			iAttrib1   = 1 << 0x11,
-			iAttrib2   = 1 << 0x12,
-			iAttrib3   = 1 << 0x13,
-			iAttrib4   = 1 << 0x14,
-			iAttrib5   = 1 << 0x15,
-			iAttrib6   = 1 << 0x16,
-			iAttrib7   = 1 << 0x17,
-			iAttrib8   = 1 << 0x18,
-			iAttrib9   = 1 << 0x19,
-			iAttribA   = 1 << 0x1A,
-			iAttribB   = 1 << 0x1B,
-			iAttribC   = 1 << 0x1C,
-			iAttribD   = 1 << 0x1D,
-			iAttribE   = 1 << 0x1E,
-			iAttribF   = 1 << 0x1F,
-			Count = 32, Invalid = -1,
+			iVertex = 1,
+			iColor = 2,
+			iTexCoord = 3,
+			iNormal = 4,
 		};
-		static unsigned int findArrIndex( unsigned int index );
 
 		static const char* Vertex;
 		static const char* Color;
@@ -144,28 +107,17 @@ public:
 	};
 
 public:
-	struct Simple
-	{
-		static const char* Vert;
-		static const char* Frag;
-		static const int Idx = 0;
-	};
+	static ShaderProgram* Diffuse;
 
-	struct Flat
+	struct Source
 	{
-		static const char* Vert;
-		static const char* Frag;
-		static const int Idx = 1;
+		static const char* DiffuseVert;
+		static const char* DiffuseFrag;
 	};
-
-	enum : int { Count = 2 };
 
 public:
 	static void init( void );
 	static void delc( void );
-
-public:
-	static ShaderProgram* getProgram( int index );
 };
 
 NAMESPACE_END

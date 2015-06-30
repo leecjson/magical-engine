@@ -413,6 +413,9 @@
     <ClInclude Include="..\src\utils\List.h">
       <Filter>src\utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\utils\Set.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\engine\Entity.inl">

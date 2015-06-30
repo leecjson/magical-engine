@@ -222,7 +222,7 @@ void Object::removeAllChildren( void )
 {
 	if( !m_children.empty() )
 	{
-		Children children = m_children;
+		auto children = m_children;
 		m_children.clear();
 
 		for( auto child : children )

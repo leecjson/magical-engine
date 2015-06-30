@@ -27,18 +27,13 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
+#include "Set.h"
 #include "Object.h"
 #include "Entity.h"
 #include "Camera.h"
 #include "ViewChannel.h"
 
-#include <vector>
-#include <unordered_set>
-#include <unordered_map>
-
 NAMESPACE_MAGICAL
-
-using ::std::unordered_set;
 
 class Object;
 class Camera;
@@ -72,11 +67,9 @@ protected:
 	void removeEntity( Entity* entity );
 	
 protected:
-	unordered_set<Entity*> m_entities;
-	unordered_set<Camera*> m_cameras;
-	unordered_set<Entity*> m_update_queue;
-
-protected:
+	UnorderedSet<Entity*> m_entities;
+	UnorderedSet<Camera*> m_cameras;
+	UnorderedSet<Entity*> m_update_queue;
 	ViewChannel* m_view_channels[ ViewChannel::Count ];
 };
 

@@ -27,17 +27,18 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
+#include "MapVector.h"
 
 #include "RenderDefine.h"
 #include "Shaders.h"
-#include "MapVector.h"
 
 NAMESPACE_MAGICAL
+ 
 
 class VertexBufferObject : public Reference
 {
 public:
-	enum : int 
+	enum : int
 	{
 		None = 0,
 		Separate = 1,
@@ -51,7 +52,8 @@ public:
 
 public:
 	void alloc( size_t count, int structure );
-	void enable( unsigned int index, size_t size, int type, bool normalized, void* data );
+	size_t count( void ) const { return m_vertex_count; }
+	void enable( unsigned int index, size_t size, int type, bool normalized, void* data, VboUsage usage );
 	void bind( unsigned int index );
 	void edit( void );
 	void commit( void );
@@ -59,6 +61,9 @@ public:
 	void disable( void );
 	void clear( void );
 	void combine( void );
+	void combine( void* data );
+	void use( void );
+	void unuse( void );
 
 public:
 	inline void vertex1b( Shader::byte_t x );
@@ -89,20 +94,20 @@ public:
 	inline void vertex2uiv( const Shader::uint_t* v );
 	inline void vertex3uiv( const Shader::uint_t* v );
 	inline void vertex4uiv( const Shader::uint_t* v );
-	//inline void vertex1f( Shader::float_t x );
-	//inline void vertex2f( Shader::float_t x, Shader::float_t y );
-	//inline void vertex3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
-	//inline void vertex4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
-	//inline void vertex2fv( const Shader::float_t* v );
-	//inline void vertex3fv( const Shader::float_t* v );
-	//inline void vertex4fv( const Shader::float_t* v );
+	inline void vertex1f( Shader::float_t x );
+	inline void vertex2f( Shader::float_t x, Shader::float_t y );
+	inline void vertex3f( Shader::float_t x, Shader::float_t y, Shader::float_t z );
+	inline void vertex4f( Shader::float_t x, Shader::float_t y, Shader::float_t z, Shader::float_t w );
+	inline void vertex2fv( const Shader::float_t* v );
+	inline void vertex3fv( const Shader::float_t* v );
+	inline void vertex4fv( const Shader::float_t* v );
 
 protected:
 	struct VertexBuffer
 	{
 		unsigned int vbo;
 		unsigned int index;
-		size_t vertex_count;
+		VboUsage usage;
 		size_t size;
 		size_t total_size;
 		size_t bytesize;
@@ -115,6 +120,7 @@ protected:
 		size_t cursor;
 		size_t bytecursor;
 		bool edit;
+		bool finish;
 	};
 
 protected:

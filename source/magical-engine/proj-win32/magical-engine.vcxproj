@@ -122,6 +122,7 @@
     <ClInclude Include="..\src\utils\Ptr.h" />
     <ClInclude Include="..\src\utils\Ptrctor.h" />
     <ClInclude Include="..\src\utils\Reference.h" />
+    <ClInclude Include="..\src\utils\Set.h" />
     <ClInclude Include="..\src\utils\Utils.h" />
     <ClInclude Include="..\src\utils\Vector.h" />
     <ClInclude Include="..\src\utils\WeakPtr.h" />

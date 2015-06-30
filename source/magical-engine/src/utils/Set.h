@@ -21,58 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#include "RenderCommand.h"
+#ifndef __SET_H__
+#define __SET_H__
+
+#include "magical-macros.h"
+#include "Common.h"
+
+#include <set>
+#include <unordered_set>
 
 NAMESPACE_MAGICAL
 
-RenderCommand::RenderCommand( void )
-{
-	
-}
+template< class Ty >
+using Set = std::set< Ty >;
 
-RenderCommand::~RenderCommand( void )
-{
-	SAFE_RELEASE( m_program );
-}
-
-void RenderCommand::setProgram( ShaderProgram* program )
-{
-	SAFE_ASSIGN( m_program, program );
-}
-
-void RenderCommand::setPreDrawProcess( const std::function<void (ShaderProgram*)> process )
-{
-	m_pre_draw_process = process;
-}
-
-void RenderCommand::callPreDrawProcess( void )
-{
-	//MAGICAL_ASSERT( m_pre_draw_process, "Invalid! nullptr" );
-	if( m_pre_draw_process )
-	{
-		m_pre_draw_process( m_program );
-	}
-}
-
-
-BatchCommand::BatchCommand( void )
-{
-	m_feature = BatchCommand::Feature;
-}
-
-BatchCommand::BatchCommand( void )
-{
-	SAFE_RELEASE( m_vbo );
-}
-
-void BatchCommand::setShape( const Shapes shape )
-{
-	m_shape = shape;
-}
-
-void BatchCommand::setVertexBufferObject( VertexBufferObject* vbo )
-{
-	SAFE_ASSIGN( m_vbo, vbo );
-}
+template< class Ty >
+using UnorderedSet = std::unordered_set< Ty >;
 
 NAMESPACE_END
+ 
+#endif //__SET_H__

@@ -30,6 +30,33 @@ NAMESPACE_MAGICAL
 Entity::Entity( void )
 {
 	m_feature = Entity::Feature;
+
+	m_vbo = Renderer::newVertexBufferObject();
+	m_vbo->alloc( 24, VertexBufferObject::Separate );
+
+	m_vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false, nullptr, VboUsage::StaticDraw );
+	m_vbo->edit();
+	m_vbo->vertex3f( -0.5f, -0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, -0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, -0.5f );
+	m_vbo->vertex3f( -0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, 0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, 0.5f );
+	m_vbo->vertex3f( -0.5f, -0.5f, 0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, 0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, 0.5f ); m_vbo->vertex3f( 0.5f, -0.5f, 0.5f );
+	m_vbo->vertex3f( -0.5f, -0.5f, -0.5f ); m_vbo->vertex3f( -0.5f, -0.5f, 0.5f ); m_vbo->vertex3f( 0.5f, -0.5f, 0.5f ); m_vbo->vertex3f( 0.5f, -0.5f, -0.5f );
+	m_vbo->vertex3f( -0.5f, -0.5f, 0.5f ); m_vbo->vertex3f( -0.5f, -0.5f, -0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, 0.5f );
+	m_vbo->vertex3f( 0.5f, -0.5f, 0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, 0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, -0.5f, -0.5f );
+	m_vbo->commit();
+
+	Color4b colors[24] = {
+		Color4b::Red, Color4b::Red, Color4b::Red, Color4b::Red, //font
+		Color4b::Black, Color4b::Black, Color4b::Black, Color4b::Black, //top
+		Color4b::Pink, Color4b::Pink, Color4b::Pink, Color4b::Pink,  //back
+		Color4b::Blue, Color4b::Blue, Color4b::Blue, Color4b::Blue, //bottom
+		Color4b::Brown, Color4b::Brown, Color4b::Brown, Color4b::Brown, //left
+		Color4b::Cyan, Color4b::Cyan, Color4b::Cyan, Color4b::Cyan //right
+	};
+	m_vbo->enable( Shader::Attribute::iColor, 4, Shader::TUByte, true, colors, VboUsage::StaticDraw );
+
+	m_command.setProgram( Shader::Diffuse );
+	m_command.setVertexBufferObject( m_vbo );
+	m_command.setPreDrawProcess( MAGICAL_CALLBACK_1( &Entity::process, this ) );
 }
 
 Entity::~Entity( void )
@@ -39,6 +66,9 @@ Entity::~Entity( void )
 		itr.second->onDestroy();
 		itr.second->release();
 	}
+
+	if( m_vbo )
+		Renderer::deleteVertexBufferObject( m_vbo );
 }
 
 Ptr<Entity> Entity::create( void )
@@ -62,12 +92,12 @@ void Entity::visit( Camera* camera )
 		return;
 
 	// frustum cull check
-	if( camera->isFrustumCullEnabled() )
+	/*if( camera->isFrustumCullEnabled() )
 	{
 		
-	}
+	}*/
 
-	Renderer::addCommand( getLocalToWorldMatrix(), camera->getViewProjectionMatrix() );
+	Renderer::addCommand( &m_command );
 
 	if( !m_children.empty() )
 	{
@@ -105,6 +135,12 @@ void Entity::update( void )
 	{
 		itr.second->onUpdate();
 	}
+}
+
+void Entity::process( ShaderProgram* program )
+{
+	int location = program->getUniformLocation( Shader::Uniform::MvpMatrix );
+	//program->uniform4x4f( location, 1, false, getLocal )
 }
 
 
