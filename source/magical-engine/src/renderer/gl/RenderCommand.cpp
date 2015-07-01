@@ -60,7 +60,7 @@ BatchCommand::BatchCommand( void )
 	m_feature = BatchCommand::Feature;
 }
 
-BatchCommand::BatchCommand( void )
+BatchCommand::~BatchCommand( void )
 {
 	SAFE_RELEASE( m_vbo );
 }

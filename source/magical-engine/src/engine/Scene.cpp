@@ -24,26 +24,17 @@ SOFTWARE.
 #include "Scene.h"
 #include "Application.h"
 #include "Renderer.h"
+#include "Director.h"
 
 NAMESPACE_MAGICAL
 
 Scene::Scene( void )
 {
 	m_root_scene = this;
-
-	for( int i = 0; i < ViewChannel::Count; i ++ )
-		m_view_channels[i] = new ViewChannel();
-
-	m_view_channels[0]->setEnabled( true );
 }
 
 Scene::~Scene( void )
 {
-	for( int i = 0; i < ViewChannel::Count; i ++ )
-	{
-		m_view_channels[i]->release();
-	}
-
 	for( auto itr : m_cameras )
 	{
 		itr->release();
@@ -62,49 +53,16 @@ Ptr<Scene> Scene::create( void )
 	return Ptr<Scene>( Ptrctor<Scene>( ret ) );
 }
 
-ViewChannel* Scene::getViewChannel( int index ) const
-{
-	MAGICAL_ASSERT( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
-
-	return m_view_channels[ index ];
-}
-
-void Scene::resize( int width, int height )
-{
-	for( auto camera : m_cameras )
-	{
-		if( camera->isAutoAspectRatio() )
-		{
-			camera->setAspectRatio( (float)width / (float)height );
-		}
-	}
-}
-
-void Scene::visit( void )
-{
-	if( !m_visible )
-		return;
-
-	if( m_children.empty() )
-		return;
-
-	for( int i = 0; i < ViewChannel::Count; i ++ )
-	{
-		ViewChannel* channel = m_view_channels[i];
-		if( channel->isAvailable() )
-		{
-			Camera* camera = channel->getCamera();
-			if( camera->isActive() && camera->isVisiable() )
-			{
-				for( auto child : m_children )
-				{
-					child->visit( camera );
-				}
-				Renderer::render( channel );
-			}
-		}
-	}
-}
+//void Scene::resize( int w, int h )
+//{
+//	for( auto camera : m_cameras )
+//	{
+//		if( camera->isAutoAspectRatio() )
+//		{
+//			camera->setAspectRatio( (float)w / (float)h );
+//		}
+//	}
+//}
 
 void Scene::update( void )
 {
@@ -167,31 +125,6 @@ void Scene::unlink( Object* child )
 	}
 }
 
-void Scene::bindCameraToViewChannel( Camera* camera )
-{
-	ViewChannel* channel = m_view_channels[ camera->getBoundViewChannelIndex() ];
-
-	Camera* lcamera = channel->getCamera();
-	MAGICAL_ASSERT( lcamera != camera, "Invalid!" );
-	if( lcamera != nullptr )
-	{
-		MAGICAL_ASSERT( lcamera->isActive(), "Invalid!" );
-		lcamera->setActive( false );
-	}
-
-	channel->setCamera( camera );
-}
-
-void Scene::unbindCameraFromViewChannel( Camera* camera )
-{
-	ViewChannel* channel = m_view_channels[ camera->getBoundViewChannelIndex() ];
-
-	Camera* lcamera = channel->getCamera();
-	MAGICAL_ASSERT( lcamera == camera, "Invalid!" );
-
-	channel->removeCamera();
-}
-
 void Scene::addCamera( Camera* camera )
 {
 	auto itr = m_cameras.find( camera );
@@ -202,13 +135,7 @@ void Scene::addCamera( Camera* camera )
 
 	if( camera->isActive() )
 	{
-		bindCameraToViewChannel( camera );
-	}
-
-	if( camera->isAutoAspectRatio() )
-	{
-		const Size& size = Application::getWindowSize();
-		camera->setAspectRatio( size.w / size.h );
+		Director::bindCameraToViewChannel( camera );
 	}
 }
 
@@ -222,7 +149,7 @@ void Scene::removeCamera( Camera* camera )
 
 	if( camera->isActive() )
 	{
-		unbindCameraFromViewChannel( camera );
+		Director::unbindCameraFromViewChannel( camera );
 	}
 }
 
@@ -242,6 +169,11 @@ void Scene::removeEntity( Entity* object )
 
 	m_entities.erase( itr );
 	object->release();
+}
+
+void Scene::setVisitingCamera( Camera* camera )
+{
+	m_visiting_camera = camera;
 }
 
 NAMESPACE_END

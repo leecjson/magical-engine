@@ -63,7 +63,7 @@ public:
 
 public:
 	bool isRunning( void ) const { return m_running; }
-	bool isVisiable( void ) const { return m_visible; }
+	bool isVisible( void ) const { return m_visible; }
 	virtual void setName( const char* name );
 	virtual void setVisible( bool visible );
 	const string& getName( void ) const { return m_name; }
@@ -122,7 +122,7 @@ public:
 public:
 	virtual void link( Object* child );
 	virtual void unlink( Object* child );
-	virtual void visit( Camera* camera );
+	virtual void visit( void );
 	//virtual void draw( void );
 	virtual void start( void );
 	virtual void stop( void );

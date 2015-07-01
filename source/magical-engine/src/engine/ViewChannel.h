@@ -28,6 +28,7 @@ SOFTWARE.
 #include "Common.h"
 #include "Reference.h"
 #include "Area.h"
+#include "Size.h"
 
 NAMESPACE_MAGICAL
 
@@ -35,9 +36,11 @@ class Camera;
 
 class ViewChannel : public Reference
 {
+	friend class Director;
+	friend class Renderer;
+
 public:
-	friend class Scene;
-	enum : int { C0 = 0, C1, C2, C3, C4, Count, Default = C0, };
+	enum : unsigned int { C0 = 0, C1, C2, C3, C4, Count, Default = C0, None = 4294967295 };
 
 public:
 	ViewChannel( void );
@@ -47,18 +50,25 @@ public:
 	void setArea( float x, float y, float w, float h );
 	void setArea( const Area& area );
 	void setEnabled( bool enabled );
+	void setOriginalSize( const Size& size );
 
+public:
+	Area calcRealArea( void ) const;
 	const Area& getArea( void ) const { return m_area; }
-	bool isEnabled( void ) const { return m_enabled; }
-	bool isAvailable( void ) const { return isEnabled() && m_camera; }
 	Camera* getCamera( void ) const { return m_camera; }
+	bool isDirty( void ) const { return m_dirty; }
+	bool isEnabled( void ) const { return m_enabled; }
+	bool isOpened( void ) const { return isEnabled() && getCamera(); }
 
 protected:
+	void setDirty( bool dirty );
 	void setCamera( Camera* camera );
 	void removeCamera( void );
 
 protected:
 	Area m_area = Area( 0.0f, 0.0f, 1.0f, 1.0f );
+	Size m_original_size = Size::Zero;
+	bool m_dirty = true;
 	bool m_enabled = false;
 	Camera* m_camera = nullptr;
 };

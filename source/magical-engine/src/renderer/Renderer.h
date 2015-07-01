@@ -47,7 +47,7 @@ public:
 	static void setDefault( void );
 
 public:
-	static void render( const ViewChannel* channel );
+	static void render( unsigned int index, ViewChannel* channel );
 	static void addCommand( RenderCommand* command );
 
 	static VertexBufferObject* newVertexBufferObject( void );

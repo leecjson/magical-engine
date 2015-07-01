@@ -473,7 +473,7 @@ void Object::unlink( Object* child )
 	}
 }
 
-void Object::visit( Camera* camera )
+void Object::visit( void )
 {
 	if( !m_visible )
 		return;
@@ -482,7 +482,7 @@ void Object::visit( Camera* camera )
 	{
 		for( auto child : m_children )
 		{
-			child->visit( camera );
+			child->visit();
 		}
 	}
 }

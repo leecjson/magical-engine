@@ -78,9 +78,6 @@
     <ClCompile Include="..\src\engine\Camera.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\engine\Engine.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\engine\Entity.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
@@ -219,6 +216,9 @@
     <ClCompile Include="..\src\renderer\gl\VertexBufferObject.cpp">
       <Filter>src\renderer\gl</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\engine\Director.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\platform\magical-macros.h">
@@ -228,9 +228,6 @@
       <Filter>src\engine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\engine\Camera.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\engine\Engine.h">
       <Filter>src\engine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\engine\Entity.h">
@@ -415,6 +412,9 @@
     </ClInclude>
     <ClInclude Include="..\src\utils\Set.h">
       <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\Director.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

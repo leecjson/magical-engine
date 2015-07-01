@@ -28,9 +28,9 @@ SOFTWARE.
 NAMESPACE_MAGICAL
 
 static char _buffer[ MAGICAL_LOG_MAX_LENGTH ];
-static FILE* _debug_file = nullptr;
-static FILE* _warning_file = nullptr;
-static FILE* _error_file = nullptr;
+static FILE* _dfile = nullptr;
+static FILE* _wfile = nullptr;
+static FILE* _efile = nullptr;
 
 void Log::init( void )
 {
@@ -42,8 +42,8 @@ void Log::init( void )
 	dir = dir.substr( 0, dir.find_last_of( "/" ) + 1 );
 
 	name = dir + MAGICAL_LOG_DEBUG_FILE;
-	_debug_file = fopen( name.c_str(), "w" );
-	if( _debug_file == nullptr )
+	_dfile = fopen( name.c_str(), "w" );
+	if( _dfile == nullptr )
 	{
 		MAGICAL_SET_LAST_ERROR( System::format( "open file(%s) failed!", MAGICAL_LOG_DEBUG_FILE ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
@@ -51,8 +51,8 @@ void Log::init( void )
 	}
 
 	name = dir + MAGICAL_LOG_WARNING_FILE;
-	_warning_file = fopen( name.c_str(), "w" );
-	if( _warning_file == nullptr )
+	_wfile = fopen( name.c_str(), "w" );
+	if( _wfile == nullptr )
 	{
 		MAGICAL_SET_LAST_ERROR( System::format( "open file(%s) failed!", MAGICAL_LOG_WARNING_FILE ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
@@ -60,8 +60,8 @@ void Log::init( void )
 	}
 
 	name = dir + MAGICAL_LOG_ERROR_FILE;
-	_error_file = fopen( name.c_str(), "w" );
-	if( _error_file == nullptr )
+	_efile = fopen( name.c_str(), "w" );
+	if( _efile == nullptr )
 	{
 		MAGICAL_SET_LAST_ERROR( System::format( "open file(%s) failed!", MAGICAL_LOG_ERROR_FILE ).c_str() );
 		MAGICAL_LOG_LAST_ERROR();
@@ -71,9 +71,9 @@ void Log::init( void )
 
 void Log::delc( void )
 {
-	fclose( _debug_file );
-	fclose( _warning_file );
-	fclose( _error_file );
+	fclose( _dfile );
+	fclose( _wfile );
+	fclose( _efile );
 }
 
 void Log::write( Level level, const char* text )
@@ -91,21 +91,21 @@ void Log::write( Level level, const char* text )
 
 	switch( level )
 	{
-	case Debug:
-		fprintf( _debug_file, "%s", text );
-		fflush( _debug_file );
-		break;
-	case Warning:
-		fprintf( _warning_file, "%s", text );
-		fflush( _warning_file );
-		break;
-	case Error:
-		fprintf( _error_file, "%s", text );
-		fflush( _error_file );
-		break;
-	default:
-		MAGICAL_ASSERT( false, "Invalid!" );
-		break;
+		case Debug:
+			fprintf( _dfile, "%s", text );
+			fflush( _dfile );
+			break;
+		case Warning:
+			fprintf( _wfile, "%s", text );
+			fflush( _wfile );
+			break;
+		case Error:
+			fprintf( _efile, "%s", text );
+			fflush( _efile );
+			break;
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
 	}
 }
 
@@ -124,21 +124,21 @@ void Log::writeLine( Level level, const char* text )
 
 	switch( level )
 	{
-	case Debug:
-		fprintf( _debug_file, "%s\n", text );
-		fflush( _debug_file );
-		break;
-	case Warning:
-		fprintf( _warning_file, "%s\n", text );
-		fflush( _warning_file );
-		break;
-	case Error:
-		fprintf( _error_file, "%s\n", text );
-		fflush( _error_file );
-		break;
-	default:
-		MAGICAL_ASSERT( false, "Invalid!" );
-		break;
+		case Debug:
+			fprintf( _dfile, "%s\n", text );
+			fflush( _dfile );
+			break;
+		case Warning:
+			fprintf( _wfile, "%s\n", text );
+			fflush( _wfile );
+			break;
+		case Error:
+			fprintf( _efile, "%s\n", text );
+			fflush( _efile );
+			break;
+		default:
+			MAGICAL_ASSERT( false, "Invalid!" );
+			break;
 	}
 }
 

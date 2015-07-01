@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Application.h"
-#include "Engine.h"
+#include "Director.h"
 #include "Input.h"
 
 #include <windows.h>
@@ -46,7 +46,7 @@ static void win32CharCallBack( GLFWwindow* window, unsigned int character );
 static void win32KeyCallBack( GLFWwindow* window, int key, int scancode, int action, int mods );
 static void win32WindowPosCallBack( GLFWwindow* windows, int x, int y );
 static void win32FrameBufferSizeCallBack( GLFWwindow* window, int w, int h );
-static void win32WindowSizeCallBack( GLFWwindow* window, int width, int height );
+static void win32WindowSizeCallBack( GLFWwindow* window, int w, int h );
 
 void Application::run( MainDelegate maindelegate )
 {
@@ -68,7 +68,7 @@ void Application::run( MainDelegate maindelegate )
 		{
 			last.QuadPart = now.QuadPart;
 
-			Engine::mainLoop();
+			Director::mainLoop();
 			glfwSwapBuffers( _window );
 
 #ifdef MAGICAL_DEBUG
@@ -171,7 +171,7 @@ void Application::initWindow( void )
 	glfwSetFramebufferSizeCallback( _window, win32FrameBufferSizeCallBack );
 	glfwSetWindowSizeCallback( _window, win32WindowSizeCallBack );
 
-	Engine::resize( _window_size.w, _window_size.h );
+	//Director::resize( _window_size.w, _window_size.h );
 }
 
 void Application::delcWindow( void )
@@ -276,12 +276,12 @@ static void win32FrameBufferSizeCallBack( GLFWwindow* window, int w, int h )
 	//MAGICAL_LOGD( "win32FrameBufferSizeCallBack" );
 }
 
-static void win32WindowSizeCallBack( GLFWwindow* window, int width, int height )
+static void win32WindowSizeCallBack( GLFWwindow* window, int w, int h )
 {
-	_window_size.w = width;
-	_window_size.h = height;
+	_window_size.w = w;
+	_window_size.h = h;
 
-	Engine::resize( width, height );
+	Director::resize( w, h );
 	//MAGICAL_LOGD( "win32WindowSizeCallBack" );
 }
 

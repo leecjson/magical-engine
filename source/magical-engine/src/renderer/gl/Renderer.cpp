@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Renderer.h"
-#include "Engine.h"
+#include "Director.h"
 #include "Application.h"
 #include "Set.h"
 
@@ -30,8 +30,14 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-static Vector<RenderCommand*> s_render_commands;
-static UnorderedSet<VertexBufferObject*> s_vertex_buffer_objects;
+static unsigned int _last_channel_index = ViewChannel::None;
+
+static Vector<RenderCommand*> _render_commands;
+static UnorderedSet<VertexBufferObject*> _vertex_buffer_objects;
+
+
+
+
 
 void Renderer::init( void )
 {
@@ -44,16 +50,18 @@ void Renderer::init( void )
 
 void Renderer::delc( void )
 {
+	for( auto& itr : _render_commands )
+		itr->release();
+
+	_render_commands.clear();
+
+	for( auto& itr : _vertex_buffer_objects )
+		itr->release();
+
+	_vertex_buffer_objects.clear();
+
 	Shader::delc();
 	MAGICAL_RETURN_IF_ERROR();
-
-	for( auto& itr : s_render_commands )
-		itr->release();
-	s_render_commands.clear();
-
-	for( auto& itr : s_vertex_buffer_objects )
-		itr->release();
-	s_vertex_buffer_objects.clear();
 }
 
 void Renderer::setDefault( void )
@@ -66,17 +74,32 @@ void Renderer::setDefault( void )
 	MAGICAL_CHECK_GL_ERROR();
 }
 
-void Renderer::render( const ViewChannel* channel )
+void Renderer::render( unsigned int index, ViewChannel* channel )
 {
-	const Area& area = channel->getArea();
-	const Size& win_size = Application::getWindowSize();
+	if( index != _last_channel_index )
+	{
+		_last_channel_index = index;
 
-	glViewport( area.x * win_size.w, area.y * win_size.h, area.w * win_size.w, area.h * win_size.h );
+		auto real_area = channel->calcRealArea();
+		glViewport( real_area.x, real_area.y, real_area.w, real_area.h );
+		channel->setDirty( false );
+	}
+	else
+	{
+		if( channel->isDirty() )
+		{
+			auto real_area = channel->calcRealArea();
+			glViewport( real_area.x, real_area.y, real_area.w, real_area.h );
+			channel->setDirty( false );
+		}
+	}
+	
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	processCommands();
 
 	MAGICAL_DEBUG_CHECK_GL_ERROR();
+	MAGICAL_CHECK_GL_ERROR();
 }
 
 void Renderer::addCommand( RenderCommand* command )
@@ -84,13 +107,13 @@ void Renderer::addCommand( RenderCommand* command )
 	MAGICAL_ASSERT( command, "Invalid! nullptr" );
 
 	SAFE_RETAIN( command );
-	s_render_commands.push_back( command );
+	_render_commands.push_back( command );
 }
 
 VertexBufferObject* Renderer::newVertexBufferObject( void )
 {
 	VertexBufferObject* vbo = new VertexBufferObject();
-	s_vertex_buffer_objects.insert( vbo );
+	_vertex_buffer_objects.insert( vbo );
 	return vbo;
 }
 
@@ -98,13 +121,13 @@ void Renderer::deleteVertexBufferObject( VertexBufferObject* vbo )
 {
 	MAGICAL_ASSERT( vbo, "Invalid! nullptr" );
 
-	s_vertex_buffer_objects.erase( vbo );
+	_vertex_buffer_objects.erase( vbo );
 	SAFE_RELEASE( vbo );
 }
 
 void Renderer::processCommands( void )
 {
-	for( auto& itr : s_render_commands )
+	for( auto& itr : _render_commands )
 	{
 		switch( itr->getFeature() )
 		{
@@ -115,9 +138,9 @@ void Renderer::processCommands( void )
 					ShaderProgram* program = command->getProgram();
 					VertexBufferObject* vbo = command->getVertexBufferObject();
 					
+					vbo->use();
 					program->use();
 					command->callPreDrawProcess();
-					vbo->use();
 					glDrawArrays( (GLenum) shape, 0, (GLsizei) vbo->count() );
 					vbo->unuse();
 
@@ -129,7 +152,7 @@ void Renderer::processCommands( void )
 				break;
 		}
 	}
-	s_render_commands.clear();
+	_render_commands.clear();
 }
 
 NAMESPACE_END

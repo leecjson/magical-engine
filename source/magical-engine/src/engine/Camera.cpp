@@ -23,6 +23,7 @@ SOFTWARE.
 *******************************************************************************/
 #include "Camera.h"
 #include "Scene.h"
+#include "Director.h"
 
 NAMESPACE_MAGICAL
 
@@ -63,11 +64,11 @@ void Camera::setActive( bool active )
 	{
 		if( active )
 		{
-			m_root_scene->bindCameraToViewChannel( this );
+			Director::bindCameraToViewChannel( this );
 		}
 		else
 		{
-			m_root_scene->unbindCameraFromViewChannel( this );
+			Director::unbindCameraFromViewChannel( this );
 		}
 	}
 }
@@ -86,14 +87,14 @@ void Camera::setVisible( bool visible )
 
 void Camera::bindViewChannel( int index )
 {
-	MAGICAL_ASSERT( 0 <= index && index <= ViewChannel::Count, "Invalid Index!" );
+	MAGICAL_ASSERT( 0 <= index && index < ViewChannel::Count, "Invalid Index!" );
 	if( index == m_view_channel_index  )
 		return;
 
 	m_view_channel_index = index;
 	if( m_active && m_running && m_root_scene )
 	{
-		m_root_scene->bindCameraToViewChannel( this );
+		Director::bindCameraToViewChannel( this );
 	}
 }
 

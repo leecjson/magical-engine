@@ -67,7 +67,7 @@ public:
 	
 public:
 	void bindViewChannel( int index );
-	int getBoundViewChannelIndex( void ) const { return m_view_channel_index; }
+	unsigned int getBoundViewChannelIndex( void ) const { return m_view_channel_index; }
 
 public:
 	void setOrthWindow( float width, float height );
@@ -109,7 +109,7 @@ protected:
 	float m_zfar = 1000.0f;
 
 protected:
-	int m_view_channel_index = ViewChannel::Default;
+	unsigned int m_view_channel_index = ViewChannel::None;
 	bool m_active = true;
 	bool m_frustum_cull_enabled = true;
 	bool m_auto_aspect_ratio = true;

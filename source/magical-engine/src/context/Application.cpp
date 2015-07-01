@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Application.h"
-#include "Engine.h"
+#include "Director.h"
 #include "Log.h"
 #include "Assets.h"
 #include "Input.h"
@@ -63,7 +63,7 @@ void Application::init( void )
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 
-	Engine::init();
+	Director::init();
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 
@@ -82,7 +82,7 @@ void Application::init( void )
 
 void Application::delc( void )
 {
-	Engine::delc();
+	Director::delc();
 	MAGICAL_SHOW_LAST_ERROR();
 	MAGICAL_RETURN_IF_ERROR();
 

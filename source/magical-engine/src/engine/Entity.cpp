@@ -34,7 +34,7 @@ Entity::Entity( void )
 	m_vbo = Renderer::newVertexBufferObject();
 	m_vbo->alloc( 24, VertexBufferObject::Separate );
 
-	m_vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false, nullptr, VboUsage::StaticDraw );
+	m_vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false, nullptr, VboUsage::DynamicDraw );
 	m_vbo->edit();
 	m_vbo->vertex3f( -0.5f, -0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, -0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, -0.5f );
 	m_vbo->vertex3f( -0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, 0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, 0.5f );
@@ -52,7 +52,7 @@ Entity::Entity( void )
 		Color4b::Brown, Color4b::Brown, Color4b::Brown, Color4b::Brown, //left
 		Color4b::Cyan, Color4b::Cyan, Color4b::Cyan, Color4b::Cyan //right
 	};
-	m_vbo->enable( Shader::Attribute::iColor, 4, Shader::TUByte, true, colors, VboUsage::StaticDraw );
+	m_vbo->enable( Shader::Attribute::iColor, 4, Shader::TUByte, true, colors, VboUsage::DynamicDraw );
 
 	m_command.setProgram( Shader::Diffuse );
 	m_command.setVertexBufferObject( m_vbo );
@@ -86,9 +86,9 @@ Ptr<Entity> Entity::create( const char* name )
 	return Ptr<Entity>( Ptrctor<Entity>( ret ) );
 }
 
-void Entity::visit( Camera* camera )
+void Entity::visit( void )
 {
-	if( !m_visible )
+	if( m_visible == false )
 		return;
 
 	// frustum cull check
@@ -103,7 +103,7 @@ void Entity::visit( Camera* camera )
 	{
 		for( auto child : m_children )
 		{
-			child->visit( camera );
+			child->visit();
 		}
 	}
 }
@@ -132,15 +132,15 @@ void Entity::prepare( void )
 void Entity::update( void )
 {
 	for( const auto& itr : m_behaviours )
-	{
 		itr.second->onUpdate();
-	}
 }
 
 void Entity::process( ShaderProgram* program )
 {
+	Camera* camera = m_root_scene->getVisitingCamera();
+
 	int location = program->getUniformLocation( Shader::Uniform::MvpMatrix );
-	//program->uniform4x4f( location, 1, false, getLocal )
+	program->uniform4x4f( location, 1, false, (Shader::float_t*)( &camera->getViewProjectionMatrix() ) );
 }
 
 

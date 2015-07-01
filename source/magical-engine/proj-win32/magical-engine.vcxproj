@@ -20,7 +20,7 @@
     <ClCompile Include="..\src\context\Application.cpp" />
     <ClCompile Include="..\src\context\win32\gl\OGLApplication.cpp" />
     <ClCompile Include="..\src\engine\Camera.cpp" />
-    <ClCompile Include="..\src\engine\Engine.cpp" />
+    <ClCompile Include="..\src\engine\Director.cpp" />
     <ClCompile Include="..\src\engine\Entity.cpp" />
     <ClCompile Include="..\src\engine\Object.cpp" />
     <ClCompile Include="..\src\engine\Scene.cpp" />
@@ -75,7 +75,7 @@
     <ClInclude Include="..\src\context\win32\gl\glfw3\glfw3native.h" />
     <ClInclude Include="..\src\engine\Behaviour.h" />
     <ClInclude Include="..\src\engine\Camera.h" />
-    <ClInclude Include="..\src\engine\Engine.h" />
+    <ClInclude Include="..\src\engine\Director.h" />
     <ClInclude Include="..\src\engine\Entity.h" />
     <ClInclude Include="..\src\engine\Object.h" />
     <ClInclude Include="..\src\engine\Scene.h" />

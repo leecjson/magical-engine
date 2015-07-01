@@ -41,36 +41,37 @@ class Entity;
 
 class Scene : public Object
 {
+	friend class Director;
+
 public:
 	Scene( void );
 	virtual ~Scene( void );
 	static Ptr<Scene> create( void );
 
 public:
-	ViewChannel* getViewChannel( int index ) const;
-
-public:
-	void resize( int width, int height );
-	virtual void visit( void );
 	virtual void update( void );
 	virtual void link( Object* child ) override;
 	virtual void unlink( Object* child ) override;
 
 public:
-	void bindCameraToViewChannel( Camera* camera );
-	void unbindCameraFromViewChannel( Camera* camera );
+	Camera* getVisitingCamera( void ) const { return m_visiting_camera; }
 
 protected:
 	void addCamera( Camera* camera );
 	void removeCamera( Camera* camera );
 	void addEntity( Entity* entity );
 	void removeEntity( Entity* entity );
+
+protected:
+	void setVisitingCamera( Camera* camera );
+
+protected:
+	Camera* m_visiting_camera = nullptr;
 	
 protected:
 	UnorderedSet<Entity*> m_entities;
 	UnorderedSet<Camera*> m_cameras;
 	UnorderedSet<Entity*> m_update_queue;
-	ViewChannel* m_view_channels[ ViewChannel::Count ];
 };
 
 NAMESPACE_END

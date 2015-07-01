@@ -31,6 +31,7 @@ SOFTWARE.
 
 #include "RenderDefine.h"
 #include "VertexBufferObject.h"
+#include "ShaderProgram.h"
 #include "Shaders.h"
 #include <functional>
 

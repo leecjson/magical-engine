@@ -51,18 +51,19 @@ public:
 	template<class TBehaviour> void removeComponent( void );
 
 public:
-	virtual void visit( Camera* camera ) override;
+	virtual void visit( void ) override;
 	virtual void start( void ) override;
 	virtual void stop( void ) override;
+
+public:
 	virtual void prepare( void );
 	virtual void update( void );
-
-	void process( ShaderProgram* program );
+	virtual void process( ShaderProgram* program );
 
 protected:
-	UnorderedMap<size_t, BehaviourFeature*> m_behaviours;
 	VertexBufferObject* m_vbo = nullptr;
 	BatchCommand m_command;
+	UnorderedMap<size_t, BehaviourFeature*> m_behaviours;
 };
 
 #include "Entity.inl"

@@ -40,7 +40,7 @@ void MainCameraScript::onCreate( void )
 
 void MainCameraScript::onStart( void )
 {
-	entity1 = (Entity*) Engine::runningScene()->findChild( "Cube Entity1" );
+	entity1 = (Entity*) Director::getRunningScene()->findChild( "Cube Entity1" );
 
 	MAGICAL_LOGD( "onStart" );
 }
@@ -50,7 +50,7 @@ void MainCameraScript::onUpdate( void )
 	//magicalLog( "onUpdate" );
 
 	static float a = 1.0f;
-	a += 20.0f * Engine::deltaTime();
+	a += 20.0f * Director::getDeltaTime();
 	
 	entity1->setRotation( 
 		Quaternion::createRotationZ( Math::rad( a ) ) );
@@ -168,12 +168,20 @@ void mainDelegate( void )
 
 	Application::setInterval( 1.0 / 60.0 );
 
-	//Application::setWindowSize( Size( 960, 640 ) );
-
 	Ptr<Scene> scene = Scene::create();
-	scene->getViewChannel( ViewChannel::Default )->setEnabled( true );
-	scene->getViewChannel( ViewChannel::Default )->setArea( 0, 0, 1, 1 );
-	Engine::runScene( scene );
+	/*scene->getViewChannel( ViewChannel::Default )->setEnabled( true );
+	scene->getViewChannel( ViewChannel::Default )->setArea( 0, 0, 1, 1 );*/
+	Director::runScene( scene );
+
+	//Director::bindCameraToViewChannel(  )
+	//Director::getViewChannel()->setEnabled( true );
+	//Director::getViewChannel()->disable();
+	//Director::getDeltaTime();
+
+	//Engine::bindCameraToViewChannel(  )
+	//Engine::getViewChannel()->setEnabled( true );
+	//Engine::getViewChannel()->disable();
+	
 
 	Ptr<Camera> camera = Camera::create( "Main Camera" );
 	camera->bindViewChannel( ViewChannel::Default );
@@ -185,15 +193,15 @@ void mainDelegate( void )
 	camera->addComponent<MainCameraScript>();
 	camera->setParent( scene );
 
-	Ptr<Entity> entity = Entity::create( "Cube Entity1" );
+	auto entity = Entity::create( "Cube Entity1" );
 	entity->setPosition( 0, 0, 0 );
 	scene->addChild( entity );
 
-	Ptr<Entity> entity2 = Entity::create( "Cube Entity2" );
+	auto entity2 = Entity::create( "Cube Entity2" );
 	entity2->setPosition( 0, 0, 5 );
 	entity->addChild( entity2 );
 
-	Ptr<Entity> entity3 = Entity::create( "Cube Entity3" );
+	auto entity3 = Entity::create( "Cube Entity3" );
 	entity3->setPosition( 5, 0, 0 );
 	scene->addChild( entity3 );
 }

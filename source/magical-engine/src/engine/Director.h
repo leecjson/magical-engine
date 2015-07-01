@@ -21,8 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
-#ifndef __ENGINE_H__
-#define __ENGINE_H__
+#ifndef __DIRECTOR_H__
+#define __DIRECTOR_H__
 
 #include "magical-macros.h"
 #include "Common.h"
@@ -30,7 +30,7 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-class Engine
+class Director
 {
 public:
 	static void init( void );
@@ -38,10 +38,19 @@ public:
 
 public:
 	static void mainLoop( void );
-	static void resize( int width, int height );
-	static float deltaTime( void );
+	static void resize( int w, int h );
+	
+public:
 	static void runScene( Scene* scene );
-	static Scene* runningScene( void );
+	static Scene* getRunningScene( void );
+
+public:
+	static ViewChannel* getViewChannel( unsigned int index );
+	static float getDeltaTime( void );
+
+public:
+	static void bindCameraToViewChannel( Camera* camera );
+	static void unbindCameraFromViewChannel( Camera* camera );
 
 private:
 	static void calcDeltaTime( void );
@@ -49,4 +58,4 @@ private:
 
 NAMESPACE_END
 
-#endif //__ENGINE_H__
+#endif //__DIRECTOR_H__

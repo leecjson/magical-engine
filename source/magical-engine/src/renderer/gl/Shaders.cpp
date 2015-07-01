@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 #include "Shaders.h"
+#include "ShaderProgram.h"
 
 NAMESPACE_MAGICAL
 
@@ -35,6 +36,8 @@ const char* Shader::Uniform::MvpMatrix = "u_mvp_matrix";
 const char* Shader::Uniform::MvMatrix = "u_mv_matrix";
 const char* Shader::Uniform::PMatrix = "u_p_matrix";
 const char* Shader::Uniform::TexUnit0 = "u_tex_unit0";
+
+ShaderProgram* Shader::Diffuse = nullptr;
 
 const char* Shader::Source::DiffuseVert = 
 R"(
@@ -58,11 +61,11 @@ R"(
 	}
 )";
 
-static ShaderProgram* createPrograms( void )
+static void createPrograms( void )
 {
 #define PROGRAM_NEW( var, vert, frag ) var = new ShaderProgram(); var->setSource( vert, frag )
-#define PROGRAM_BUILD( var ) if( !var->build() ) return nullptr
-#define PROGRAM_LINK( var ) if( !var->link() ) return nullptr;
+#define PROGRAM_BUILD( var ) if( !var->build() ) return
+#define PROGRAM_LINK( var ) if( !var->link() ) return
 
 	PROGRAM_NEW( Shader::Diffuse, Shader::Source::DiffuseVert, Shader::Source::DiffuseFrag );
 	PROGRAM_BUILD( Shader::Diffuse );
@@ -73,7 +76,7 @@ static ShaderProgram* createPrograms( void )
 
 static void deletePrograms( void )
 {
-	Shader::FlatColor->release();
+	Shader::Diffuse->release();
 }
 
 void Shader::init( void )

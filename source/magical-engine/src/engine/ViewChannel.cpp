@@ -44,18 +44,38 @@ void ViewChannel::setArea( float x, float y, float w, float h )
 	m_area.h = h;
 
 	MAGICAL_ASSERT( m_area.isValid(), "Invalid!" );
+	setDirty( true );
 }
 
 void ViewChannel::setArea( const Area& area )
 {
 	MAGICAL_ASSERT( area.isValid(), "Invalid!" );
 
+	setDirty( true );
 	m_area = area;
+}
+
+void ViewChannel::setOriginalSize( const Size& size )
+{
+	MAGICAL_ASSERT( !size.isZero(), "Invalid!" );
+
+	setDirty( true );
+	m_original_size = size;
+}
+
+Area ViewChannel::calcRealArea( void ) const
+{
+	return Area( m_area.x * m_original_size.w, m_area.y * m_original_size.h, m_area.w * m_original_size.w, m_area.h * m_original_size.h );
 }
 
 void ViewChannel::setEnabled( bool enabled )
 {
 	m_enabled = enabled;
+}
+
+void ViewChannel::setDirty( bool dirty )
+{
+	m_dirty = dirty;
 }
 
 void ViewChannel::setCamera( Camera* camera )

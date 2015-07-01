@@ -27,10 +27,11 @@ SOFTWARE.
 #include "magical-macros.h"
 #include "Common.h"
 #include "Reference.h"
-
-#include "ShaderProgram.h"
+#include "RenderDefine.h"
 
 NAMESPACE_MAGICAL
+
+class ShaderProgram;
 
 class Shader
 {

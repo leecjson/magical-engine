@@ -30,9 +30,10 @@ SOFTWARE.
 
 #include "RenderDefine.h"
 #include "Shaders.h"
-#include <vector>
 
 NAMESPACE_MAGICAL
+
+class Shader;
 
 class ShaderProgram : public Reference
 {
