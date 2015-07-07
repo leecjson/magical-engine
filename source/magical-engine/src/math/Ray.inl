@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Ray::Ray( const Vector3& origin, const Vector3& direction ) 
 : origin( origin ), direction( direction )
@@ -102,3 +103,5 @@ inline Ray Ray::createOriginToEnd( const Vector3& origin, const Vector3& end )
 	dst.setOriginToEnd( origin, end );
 	return dst;
 }
+
+NAMESPACE_END

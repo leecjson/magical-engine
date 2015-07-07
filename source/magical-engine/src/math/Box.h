@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __BOX_H__
 #define __BOX_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Box
 {
 	Vector3 min;
@@ -85,5 +89,7 @@ public:
 	inline bool intersects( float& distance, const Ray& ray, bool discard_inside = false ) const;
 	bool containsPoint( const Vector3& point ) const;
 };
+
+NAMESPACE_END
 
 #endif //__BOX_H__

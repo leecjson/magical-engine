@@ -33,6 +33,13 @@ struct Quaternion;
 struct Matrix3x3;
 struct Matrix4x4;
 
+struct Ray;
+struct Box;
+struct Plane;
+struct Sphere;
+
+NAMESPACE_END
+
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -49,11 +56,6 @@ struct Matrix4x4;
 #include "Matrix3x3.inl"
 #include "Matrix4x4.inl"
 
-struct Ray;
-struct Box;
-struct Plane;
-struct Sphere;
-
 #include "Ray.h"
 #include "Box.h"
 #include "Plane.h"
@@ -63,6 +65,8 @@ struct Sphere;
 #include "Box.inl"
 #include "Plane.inl"
 #include "Sphere.inl"
+
+NAMESPACE_MAGICAL
 
 const Ray Ray::Invalid = Ray( Vector3::Zero, Vector3::Zero );
 

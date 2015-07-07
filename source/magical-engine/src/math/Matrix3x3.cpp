@@ -34,6 +34,8 @@ struct Quaternion;
 struct Matrix3x3;
 struct Matrix4x4;
 
+NAMESPACE_END
+
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -49,6 +51,8 @@ struct Matrix4x4;
 #include "Quaternion.inl"
 #include "Matrix3x3.inl"
 #include "Matrix4x4.inl"
+
+NAMESPACE_MAGICAL
 
 const Matrix3x3 Matrix3x3::Identity = Matrix3x3( 1.0f );
 const Matrix3x3 Matrix3x3::Zero = Matrix3x3( 0.0f );

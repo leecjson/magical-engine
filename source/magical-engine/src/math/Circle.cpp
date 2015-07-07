@@ -28,11 +28,15 @@ NAMESPACE_MAGICAL
 struct Vector2;
 struct Circle;
 
+NAMESPACE_END
+
 #include "Vector2.h"
 #include "Vector2.inl"
 
 #include "Circle.h"
 #include "Circle.inl"
+
+NAMESPACE_MAGICAL
 
 const Circle Circle::One = Circle( 0.0f, 0.0f, 1.0f );
 const Circle Circle::Invalid = Circle( 0.0f, 0.0f, -1.0f );

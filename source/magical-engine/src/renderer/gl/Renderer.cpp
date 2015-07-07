@@ -31,13 +31,8 @@ SOFTWARE.
 NAMESPACE_MAGICAL
 
 static unsigned int _last_channel_index = ViewChannel::None;
-
 static Vector<RenderCommand*> _render_commands;
 static UnorderedSet<VertexBufferObject*> _vertex_buffer_objects;
-
-
-
-
 
 void Renderer::init( void )
 {

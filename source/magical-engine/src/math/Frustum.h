@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __FRUSTUM_H__
 #define __FRUSTUM_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Frustum
 {
 	Plane left;
@@ -49,5 +53,7 @@ public:
 	void extract( const Matrix4x4& m );
 	bool containsBox( const Box& box ) const;
 };
+
+NAMESPACE_END
 
 #endif //__FRUSTUM_H__

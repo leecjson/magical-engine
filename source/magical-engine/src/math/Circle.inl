@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Circle::Circle( float x, float y, float r ) 
 : x( x ), y( y ), r( r )
@@ -132,3 +133,5 @@ inline bool Circle::containsPoint( const Vector2& point ) const
 
 	return dx * dx + dy * dy <= r;
 }
+
+NAMESPACE_END

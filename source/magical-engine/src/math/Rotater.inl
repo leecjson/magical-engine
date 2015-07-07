@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Rotater::Rotater( const Quaternion& q )
 {
@@ -369,3 +370,5 @@ inline void Rotater::limit( void )
 {
 	return Rotater::limit( *this, *this );
 }
+
+NAMESPACE_END

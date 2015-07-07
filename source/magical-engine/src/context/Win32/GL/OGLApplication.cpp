@@ -278,6 +278,8 @@ static void win32FrameBufferSizeCallBack( GLFWwindow* window, int w, int h )
 
 static void win32WindowSizeCallBack( GLFWwindow* window, int w, int h )
 {
+	if( !w || !h ) return;
+
 	_window_size.w = w;
 	_window_size.h = h;
 

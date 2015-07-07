@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __BOX2_H__
 #define __BOX2_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Box2
 {
 	Vector2 min;
@@ -78,5 +82,7 @@ public:
 	bool intersects( const Box2& box ) const;
 	bool containsPoint( const Vector2& point ) const;
 };
+
+NAMESPACE_END
 
 #endif //__BOX2_H__

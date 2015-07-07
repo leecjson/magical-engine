@@ -35,6 +35,25 @@ struct Quaternion;
 struct Matrix3x3;
 struct Matrix4x4;
 
+struct Ray2;
+struct Box2;
+struct OrientBox2;
+struct Line2;
+struct Circle;
+struct Triangle2;
+struct Polygon2;
+
+struct Ray;
+struct Box;
+struct OrientBox;
+struct Plane;
+struct Sphere;
+struct Frustum;
+struct Triangle;
+struct Polygon;
+
+NAMESPACE_END
+
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -51,14 +70,6 @@ struct Matrix4x4;
 #include "Matrix3x3.inl"
 #include "Matrix4x4.inl"
 
-struct Ray2;
-struct Box2;
-struct OrientBox2;
-struct Line2;
-struct Circle;
-struct Triangle2;
-struct Polygon2;
-
 #include "Ray2.h"
 #include "Box2.h"
 #include "OrientBox2.h"
@@ -74,15 +85,6 @@ struct Polygon2;
 #include "Circle.inl"
 #include "Triangle2.inl"
 #include "Polygon2.inl"
-
-struct Ray;
-struct Box;
-struct OrientBox;
-struct Plane;
-struct Sphere;
-struct Frustum;
-struct Triangle;
-struct Polygon;
 
 #include "Ray.h"
 #include "Box.h"
@@ -101,7 +103,5 @@ struct Polygon;
 #include "Frustum.inl"
 #include "Triangle.inl"
 #include "Polygon.inl"
-
-NAMESPACE_END
 
 #endif //__MAGICAL_MATH_H__

@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Vector4::Vector4( const Vector3& v ) 
 : x( v.x ), y( v.y ), z( v.z ), w( 0.0f )
@@ -467,3 +468,5 @@ inline void Vector4::set( float x, float y, float z, float w )
 	this->z = z;
 	this->w = w;
 }
+
+NAMESPACE_END

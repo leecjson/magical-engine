@@ -113,7 +113,7 @@ protected:
 	bool m_active = true;
 	bool m_frustum_cull_enabled = true;
 	bool m_auto_aspect_ratio = true;
-	mutable int m_camera_dirty_info = kTsClean;
+	mutable int m_camera_dirty_info = kCameraClean;
 	Frustum m_frustum = Frustum::Invalid;
 	mutable Matrix4x4 m_view_matrix = Matrix4x4::Identity;
 	mutable Matrix4x4 m_projection_matrix = Matrix4x4::Identity;

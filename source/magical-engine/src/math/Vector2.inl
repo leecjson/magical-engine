@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Vector2::Vector2( float v ) : x( v ), y( v )
 {
@@ -511,3 +512,5 @@ inline float Vector2::angle( const Vector2& v ) const
 {
 	return Vector2::angle( *this, v );
 }
+
+NAMESPACE_END

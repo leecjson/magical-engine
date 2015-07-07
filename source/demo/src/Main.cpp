@@ -165,23 +165,13 @@ void MainCameraScript::onMouseMoveEvent( MouseMoveEvent* mousemoveevent )
 void mainDelegate( void )
 {
 	Log::writeLine( Log::Debug, "哈哈" );
-
 	Application::setInterval( 1.0 / 60.0 );
 
+	Director::getViewChannel( ViewChannel::Default )->setEnabled( true );
+	Director::getViewChannel( ViewChannel::Default )->setArea( 0, 0, 1, 1 );
+
 	Ptr<Scene> scene = Scene::create();
-	/*scene->getViewChannel( ViewChannel::Default )->setEnabled( true );
-	scene->getViewChannel( ViewChannel::Default )->setArea( 0, 0, 1, 1 );*/
 	Director::runScene( scene );
-
-	//Director::bindCameraToViewChannel(  )
-	//Director::getViewChannel()->setEnabled( true );
-	//Director::getViewChannel()->disable();
-	//Director::getDeltaTime();
-
-	//Engine::bindCameraToViewChannel(  )
-	//Engine::getViewChannel()->setEnabled( true );
-	//Engine::getViewChannel()->disable();
-	
 
 	Ptr<Camera> camera = Camera::create( "Main Camera" );
 	camera->bindViewChannel( ViewChannel::Default );

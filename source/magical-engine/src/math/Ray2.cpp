@@ -28,12 +28,19 @@ NAMESPACE_MAGICAL
 struct Vector2;
 struct Ray2;
 
+NAMESPACE_END
+
 #include "Vector2.h"
 #include "Vector2.inl"
 
 #include "Ray2.h"
 #include "Ray2.inl"
 
+NAMESPACE_MAGICAL
+
 const Ray2 Ray2::Invalid = Ray2( Vector2::Zero, Vector2::Zero );
 
 NAMESPACE_END
+
+
+

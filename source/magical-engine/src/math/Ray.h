@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __RAY3_H__
 #define __RAY3_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Ray
 {
 	union
@@ -68,5 +72,7 @@ public:
 	bool intersects( float& distance, const Box& box, bool discard_inside = false ) const;
 	bool intersects( float& distance, const Sphere& sphere, bool discard_insid = false ) const;
 };
+
+NAMESPACE_END
 
 #endif //__RAY3_H__

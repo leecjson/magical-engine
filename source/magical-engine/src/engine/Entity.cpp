@@ -34,7 +34,7 @@ Entity::Entity( void )
 	m_vbo = Renderer::newVertexBufferObject();
 	m_vbo->alloc( 24, VertexBufferObject::Separate );
 
-	m_vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false, nullptr, VboUsage::DynamicDraw );
+	m_vbo->enable( Shader::Attribute::iVertex, 3, Shader::TFloat, false, nullptr, VboUsage::StaticDraw );
 	m_vbo->edit();
 	m_vbo->vertex3f( -0.5f, -0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, -0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, -0.5f );
 	m_vbo->vertex3f( -0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, -0.5f ); m_vbo->vertex3f( 0.5f, 0.5f, 0.5f ); m_vbo->vertex3f( -0.5f, 0.5f, 0.5f );
@@ -52,8 +52,9 @@ Entity::Entity( void )
 		Color4b::Brown, Color4b::Brown, Color4b::Brown, Color4b::Brown, //left
 		Color4b::Cyan, Color4b::Cyan, Color4b::Cyan, Color4b::Cyan //right
 	};
-	m_vbo->enable( Shader::Attribute::iColor, 4, Shader::TUByte, true, colors, VboUsage::DynamicDraw );
+	m_vbo->enable( Shader::Attribute::iColor, 4, Shader::TUByte, true, colors, VboUsage::StaticDraw );
 
+	m_command.setShape( Shapes::Quads );
 	m_command.setProgram( Shader::Diffuse );
 	m_command.setVertexBufferObject( m_vbo );
 	m_command.setPreDrawProcess( MAGICAL_CALLBACK_1( &Entity::process, this ) );
@@ -140,7 +141,8 @@ void Entity::process( ShaderProgram* program )
 	Camera* camera = m_root_scene->getVisitingCamera();
 
 	int location = program->getUniformLocation( Shader::Uniform::MvpMatrix );
-	program->uniform4x4f( location, 1, false, (Shader::float_t*)( &camera->getViewProjectionMatrix() ) );
+	Matrix4x4 mvp = getLocalToWorldMatrix() * camera->getViewProjectionMatrix();
+	program->uniform4x4f( location, 1, false, (Shader::float_t*)( &mvp ) );
 }
 
 

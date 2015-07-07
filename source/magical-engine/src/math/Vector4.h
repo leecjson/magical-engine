@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __VECTOR4_H__
 #define __VECTOR4_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Vector4
 {
 	union
@@ -174,5 +178,7 @@ public:
 //	inline float LengthSq( void ) const;
 //	inline float AngleBetween( const Vector4& v ) const;
 };
+
+NAMESPACE_END
 
 #endif //__VECTOR4_H__

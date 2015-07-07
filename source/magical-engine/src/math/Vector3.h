@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __VECTOR3_H__
 #define __VECTOR3_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Vector3
 {
 	union 
@@ -181,5 +185,7 @@ public:
 	inline float lengthSq( void ) const;
 	inline float angle( const Vector3& v ) const;
 };
+
+NAMESPACE_END
 
 #endif //__VECTOR3_H__

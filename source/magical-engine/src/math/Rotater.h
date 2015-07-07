@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __ROTATER_H__
 #define __ROTATER_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Rotater
 {
 	union 
@@ -120,5 +124,7 @@ public:
 	static void limit( Rotater& dst, const Rotater& ea );
 	inline void limit( void );
 };
+
+NAMESPACE_END
 
 #endif //__ROTATER_H__

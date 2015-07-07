@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __SPHERE_H__
 #define __SPHERE_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Sphere
 {
 	union
@@ -76,5 +80,7 @@ public:
 	inline bool intersects( float& distance, const Ray& ray, bool discard_inside = false ) const;
 	inline bool containsPoint( const Vector3& point ) const;
 };
+
+NAMESPACE_END
 
 #endif //__SPHERE_H__

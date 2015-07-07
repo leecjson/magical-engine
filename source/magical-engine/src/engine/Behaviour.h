@@ -40,12 +40,12 @@ public:
 	virtual void onDestroy( void ){}
 };
 
-template< class T >
+template< class Ty >
 class Behaviour : public BehaviourFeature
 {
 protected:
 	friend class Entity;
-	T* object = nullptr;
+	Ty* object = nullptr;
 };
 
 NAMESPACE_END

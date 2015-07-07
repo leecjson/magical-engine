@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __QUATERNION_H__
 #define __QUATERNION_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Quaternion
 {
 	float x;
@@ -132,5 +136,7 @@ public:
 	inline float length( void ) const;
 	inline float lengthSq( void ) const;
 };
+
+NAMESPACE_END
 
 #endif //__QUATERNION_H__ 

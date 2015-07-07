@@ -31,16 +31,11 @@ SOFTWARE.
 
 NAMESPACE_MAGICAL
 
-static long long _last_update_time = 0;
-static double _delta_time = 0.0;
 static Scene* _next_scene = nullptr;
 static Scene* _running_scene = nullptr;
-
+static long long _last_update_time = 0;
+static double _delta_time = 0.0;
 static ViewChannel* _view_channels[ ViewChannel::Count ];
-
-
-
-
 
 void Director::init( void )
 {
@@ -110,8 +105,8 @@ void Director::resize( int w, int h )
 		Camera* camera = itr->getCamera();
 		if( camera != nullptr && camera->isAutoAspectRatio() )
 		{
-			auto real_area = itr->calcRealArea();
-			camera->setAspectRatio( real_area.w / real_area.h );
+			auto area = itr->calcRealArea();
+			camera->setAspectRatio( area.w / area.h );
 		}
 	}
 }
@@ -155,9 +150,8 @@ void Director::bindCameraToViewChannel( Camera* camera )
 
 	if( camera->isAutoAspectRatio() )
 	{
-		const Area& area = channel->getArea();
-		const Size& win_size = Application::getWindowSize();
-		camera->setAspectRatio( area.w * win_size.w / area.h * win_size.h );
+		auto area = channel->calcRealArea();
+		camera->setAspectRatio( area.w / area.h );
 	}
 
 	channel->setCamera( camera );

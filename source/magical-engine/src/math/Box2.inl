@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Box2::Box2( const Vector2& min, const Vector2& max ) 
 : min( min ), max( max )
@@ -175,3 +176,5 @@ inline float Box2::height( void ) const
 {
 	return max.y - min.y;
 }
+
+NAMESPACE_END

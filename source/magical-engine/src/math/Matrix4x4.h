@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __MATRIX4X4_H__
 #define __MATRIX4X4_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Matrix4x4
 {
 	union
@@ -156,5 +160,7 @@ public:
 	inline void transpose( void );
 	inline void negate( void );
 };
+
+NAMESPACE_END
 
 #endif //__MATRIX4X4_H__

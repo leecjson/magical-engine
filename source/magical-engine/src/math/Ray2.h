@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __RAY2D_H__
 #define __RAY2D_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Ray2
 {
 	union
@@ -61,5 +65,7 @@ public:
 	inline void setOriginToEnd( const Vector2& origin, const Vector2& end );
 	static inline Ray2 createOriginToEnd( const Vector2& origin, const Vector2& end );
 };
+
+NAMESPACE_END
 
 #endif //__RAY2D_H__

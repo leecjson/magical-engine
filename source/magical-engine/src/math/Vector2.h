@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __VECTOR2_H__
 #define __VECTOR2_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Vector2
 {
 	float x;
@@ -163,5 +167,7 @@ public:
 	inline float lengthSq( void ) const;
 	inline float angle( const Vector2& v ) const;
 };
+
+NAMESPACE_END
 
 #endif //__VECTOR2_H__

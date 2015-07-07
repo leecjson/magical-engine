@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Matrix3x3::Matrix3x3( float m11, float m22, float m33 ) :
 	m11(  m11 ), m12( 0.0f ), m13( 0.0f ),
@@ -396,3 +397,5 @@ inline void Matrix3x3::negate( void )
 {
 	Matrix3x3::negate( *this, *this );
 }
+
+NAMESPACE_END

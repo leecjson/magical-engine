@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __CIRCLE_H__
 #define __CIRCLE_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Circle
 {
 	union
@@ -71,5 +75,7 @@ public:
 public:
 	inline bool containsPoint( const Vector2& point ) const;
 };
+
+NAMESPACE_END
 
 #endif //__CIRCLE_H__

@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Plane::Plane( float x, float y, float z, float d ) 
 : x( x ), y( y ), z( z ), d( d )
@@ -156,3 +157,5 @@ inline bool Plane::containsPoint( const Vector3& point ) const
 {
 	return Math::isAlmostZero( x * point.x + y * point.y + z * point.z - d, Math::VectorEpsilon );
 }
+
+NAMESPACE_END

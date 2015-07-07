@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Box::Box( const Vector3& min, const Vector3& max ) 
 : min( min ), max( max )
@@ -205,3 +206,5 @@ inline bool Box::intersects( float& distance, const Ray& ray, bool discard_insid
 {
 	return ray.intersects( distance, *this, discard_inside );
 }
+
+NAMESPACE_END

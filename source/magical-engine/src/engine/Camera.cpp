@@ -28,8 +28,6 @@ SOFTWARE.
 NAMESPACE_MAGICAL
 
 Camera::Camera( void )
-: m_view_channel_index( ViewChannel::Default )
-, m_camera_dirty_info( kCameraClean )
 {
 	m_feature = Camera::Feature;
 }

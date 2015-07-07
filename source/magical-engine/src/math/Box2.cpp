@@ -28,11 +28,15 @@ NAMESPACE_MAGICAL
 struct Vector2;
 struct Box2;
 
+NAMESPACE_END
+
 #include "Vector2.h"
 #include "Vector2.inl"
 
 #include "Box2.h"
 #include "Box2.inl"
+
+NAMESPACE_MAGICAL
 
 const Box2 Box2::Invalid = Box2( Vector2::One, -Vector2::One );
 

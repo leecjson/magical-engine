@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
+NAMESPACE_MAGICAL
 
 inline Sphere::Sphere( float x, float y, float z, float r ) 
 : x( x ), y( y ), z( z ), r( r )
@@ -157,3 +158,5 @@ inline bool Sphere::containsPoint( const Vector3& point ) const
 
 	return dx * dx + dy * dy + dz * dz <= r;
 }
+
+NAMESPACE_END

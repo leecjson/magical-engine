@@ -24,6 +24,10 @@ SOFTWARE.
 #ifndef __PLANE_H__
 #define __PLANE_H__
 
+#include "magical-macros.h"
+
+NAMESPACE_MAGICAL
+
 struct Plane
 {
 	union
@@ -95,7 +99,6 @@ public:
 	inline bool containsPoint( const Vector3& point ) const;
 };
 
+NAMESPACE_END
+
 #endif //__PLANE_H__
-
-
-
